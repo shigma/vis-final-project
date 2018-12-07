@@ -1,0 +1,34 @@
+env: 
+  es6: true
+  node: true
+  browser: true
+
+extends:
+  - plugin:vue/essential
+  - eslint:recommended
+
+parserOptions: 
+  ecmaVersion: 2018
+
+globals:
+  d3: true
+  app: true
+  Vue: true
+  config: true
+  echarts: true
+
+rules: 
+  indent:
+    - error
+    - 2
+  quotes:
+    - warn
+    - single
+  semi:
+    - error
+    - never
+  eqeqeq:
+    - error
+    - always
+  no-console: off
+  no-unused-vars: warn
