@@ -1,0 +1,816 @@
+From jaume@tele.ucl.ac.be  Wed Nov  7 01:09:35 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Wed, 7 Nov 2001 02:09:35 +0100 (MET)
+Subject: [Paraview] vtkPDataSetReader.h missing
+Message-ID: <Pine.GSO.4.21.0111070200230.18961-100000@dschubba.tele.ucl.ac.be>
+
+Hello,
+
+vtkPVDataSetReaderInterface.cxx tries to include vtkPDataSetReader.h
+However I cannot find this file.
+So, while compiling Paraview, I've got the following error message:
+
+vtkPVDataSetReaderInterface.cxx:44:31: vtkPDataSetReader.h: No such file
+or directory
+gmake[1]: *** [vtkPVDataSetReaderInterface.o] Error 1
+gmake[1]: Leaving directory `/home/jaume/ParaView/ParaView'
+gmake: *** [build_ParaView] Error 2
+
+
+Anybody knows how to fix it?
+
+Thanks in advance.
+Sylvain
+
+
+From berkgeveci@hotmail.com  Wed Nov  7 12:45:04 2001
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Wed, 07 Nov 2001 07:45:04 -0500
+Subject: [Paraview] vtkPDataSetReader.h missing
+Message-ID: <F183BBVhyemYewQ1N8P00000bfc@hotmail.com>
+
+vtkPDataSetReader was moved to the VTK tree. Did you update VTK ? Are you 
+using ParaView-0-2 branch of both ParaView and VTK ?
+
+-Berk
+
+>From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+>To: paraview@public.kitware.com
+>Subject: [Paraview] vtkPDataSetReader.h missing
+>Date: Wed, 7 Nov 2001 02:09:35 +0100 (MET)
+>
+>Hello,
+>
+>vtkPVDataSetReaderInterface.cxx tries to include vtkPDataSetReader.h
+>However I cannot find this file.
+>So, while compiling Paraview, I've got the following error message:
+>
+>vtkPVDataSetReaderInterface.cxx:44:31: vtkPDataSetReader.h: No such file
+>or directory
+>gmake[1]: *** [vtkPVDataSetReaderInterface.o] Error 1
+>gmake[1]: Leaving directory `/home/jaume/ParaView/ParaView'
+>gmake: *** [build_ParaView] Error 2
+>
+>
+>Anybody knows how to fix it?
+>
+>Thanks in advance.
+>Sylvain
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+
+
+From jaume@tele.ucl.ac.be  Wed Nov  7 21:42:09 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Wed, 7 Nov 2001 22:42:09 +0100 (MET)
+Subject: [Paraview] vtkPDataSetReader.h missing
+In-Reply-To: <F183BBVhyemYewQ1N8P00000bfc@hotmail.com>
+Message-ID: <Pine.GSO.4.21.0111072235490.18961-100000@dschubba.tele.ucl.ac.be>
+
+Hi Berk,
+
+Thanks for your answer.
+I've just downloaded VTK and vtkPDataSetReader.h seems there.
+
+What do you mean by ParaView-0-2 branch?
+I got ParaView from cvs less than one week ago.
+
+BTW, which one of the following line should I type?
+cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co VTK
+cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtk
+cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtknew
+
+Sylvain
+
+On Wed, 7 Nov 2001, Berk Geveci wrote:
+
+> 
+> vtkPDataSetReader was moved to the VTK tree. Did you update VTK ? Are you 
+> using ParaView-0-2 branch of both ParaView and VTK ?
+> 
+> -Berk
+> 
+> >From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+> >To: paraview@public.kitware.com
+> >Subject: [Paraview] vtkPDataSetReader.h missing
+> >Date: Wed, 7 Nov 2001 02:09:35 +0100 (MET)
+> >
+> >Hello,
+> >
+> >vtkPVDataSetReaderInterface.cxx tries to include vtkPDataSetReader.h
+> >However I cannot find this file.
+> >So, while compiling Paraview, I've got the following error message:
+> >
+> >vtkPVDataSetReaderInterface.cxx:44:31: vtkPDataSetReader.h: No such file
+> >or directory
+> >gmake[1]: *** [vtkPVDataSetReaderInterface.o] Error 1
+> >gmake[1]: Leaving directory `/home/jaume/ParaView/ParaView'
+> >gmake: *** [build_ParaView] Error 2
+> >
+> >
+> >Anybody knows how to fix it?
+> >
+> >Thanks in advance.
+> >Sylvain
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@public.kitware.com
+> >http://public.kitware.com/mailman/listinfo/paraview
+> 
+> 
+> _________________________________________________________________
+> Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+> 
+
+
+From amy.henderson@kitware.com  Wed Nov  7 21:53:49 2001
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Wed, 07 Nov 2001 16:53:49 -0500
+Subject: [Paraview] vtkPDataSetReader.h missing
+In-Reply-To: <Pine.GSO.4.21.0111072235490.18961-100000@dschubba.tele.ucl
+ .ac.be>
+References: <F183BBVhyemYewQ1N8P00000bfc@hotmail.com>
+Message-ID: <4.3.2.7.2.20011107164855.0208c238@pop.nycap.rr.com>
+
+At 10:42 PM 11/7/2001 +0100, Sylvain Jaume wrote:
+>Hi Berk,
+>
+>Thanks for your answer.
+>I've just downloaded VTK and vtkPDataSetReader.h seems there.
+>
+>What do you mean by ParaView-0-2 branch?
+>I got ParaView from cvs less than one week ago.
+
+ParaView-0-2 is the branch of ParaView and VTK that we are using for the 
+release.  Use
+cvs -d:pserver:anonymous@public.kitware.com:/cvsroot/VTK co -r ParaView-0-2 
+VTK and
+cvs -d:pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r 
+ParaView-0-2 ParaView
+to get the ParaView-0-2 branch of both ParaView and VTK.
+
+- Amy
+
+>BTW, which one of the following line should I type?
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co VTK
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtk
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtknew
+>
+>Sylvain
+>
+>On Wed, 7 Nov 2001, Berk Geveci wrote:
+>
+> >
+> > vtkPDataSetReader was moved to the VTK tree. Did you update VTK ? Are you
+> > using ParaView-0-2 branch of both ParaView and VTK ?
+> >
+> > -Berk
+> >
+> > >From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+> > >To: paraview@public.kitware.com
+> > >Subject: [Paraview] vtkPDataSetReader.h missing
+> > >Date: Wed, 7 Nov 2001 02:09:35 +0100 (MET)
+> > >
+> > >Hello,
+> > >
+> > >vtkPVDataSetReaderInterface.cxx tries to include vtkPDataSetReader.h
+> > >However I cannot find this file.
+> > >So, while compiling Paraview, I've got the following error message:
+> > >
+> > >vtkPVDataSetReaderInterface.cxx:44:31: vtkPDataSetReader.h: No such file
+> > >or directory
+> > >gmake[1]: *** [vtkPVDataSetReaderInterface.o] Error 1
+> > >gmake[1]: Leaving directory `/home/jaume/ParaView/ParaView'
+> > >gmake: *** [build_ParaView] Error 2
+> > >
+> > >
+> > >Anybody knows how to fix it?
+> > >
+> > >Thanks in advance.
+> > >Sylvain
+> > >
+> > >_______________________________________________
+> > >ParaView mailing list
+> > >ParaView@public.kitware.com
+> > >http://public.kitware.com/mailman/listinfo/paraview
+> >
+> >
+> > _________________________________________________________________
+> > Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@public.kitware.com
+> > http://public.kitware.com/mailman/listinfo/paraview
+> >
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From anast.jm@pg.com  Wed Nov  7 23:25:38 2001
+From: anast.jm@pg.com (anast.jm@pg.com)
+Date: Wed, 7 Nov 2001 18:25:38 -0500
+Subject: [Paraview] vtkPDataSetReader.h missing
+Message-ID: <OF128CB44A.18D431DD-ON85256AFD.007F4B4E@na.pg.com>
+
+Amy/Berk, whats the equivalent in WinCVS if you know it??
+
+Here's what my WinCVS status window says I'm doing
+
+anonymous@public.kitware.com:/cvsroot/ParaView
+cvs checkout -P ParaView (in directory P:\WinCVS)
+
+** This is my long practiced VTK build **
+anonymous@www.visualizationtoolkit.org:/cvsroot/VTK
+cvs checkout -P VTK (in directory P:\WinCVS\vtk40)
+
+Am I getting the right branches...seems not??? Will it matter??
+
+Paraview seems to run except I am seeing some errors in running the tutorial,
+perhaps this is why? I'm a little hesitant to switch vtk builds if indeed the
+Paraview tree is different that my current vtk tree?? yikees......john
+
+
+                                                                
+ Internet Mail Message                                          
+ Received from host:      public.kitware.com                    
+ [208.136.18.25]                                                
+                                                                
+
+
+From: Amy Henderson <amy.henderson@kitware.com>@public.kitware.com on 11/07/2001
+04:53 PM
+                                                                                                     
+      Amy Henderson <amy.henderson@kitware.com>           To:   Sylvain Jaume                        
+                            @public.kitware.com        <jaume@tele.ucl.ac.be>, Berk Geveci           
+                                                       <berkgeveci@hotmail.com>                      
+                                                          Cc:   paraview@public.kitware.com (bcc:    
+    Sent by:  paraview-admin@public.kitware.com        John Anast-JM/PGI)                            
+                            11/07/2001 04:53 PM   Subject:      Re: [Paraview] vtkPDataSetReader.h   
+                                                       missing                                       
+                                                                                                     
+
+
+
+
+At 10:42 PM 11/7/2001 +0100, Sylvain Jaume wrote:
+>Hi Berk,
+>
+>Thanks for your answer.
+>I've just downloaded VTK and vtkPDataSetReader.h seems there.
+>
+>What do you mean by ParaView-0-2 branch?
+>I got ParaView from cvs less than one week ago.
+
+ParaView-0-2 is the branch of ParaView and VTK that we are using for the
+release.  Use
+cvs -d:pserver:anonymous@public.kitware.com:/cvsroot/VTK co -r ParaView-0-2
+VTK and
+cvs -d:pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+ParaView-0-2 ParaView
+to get the ParaView-0-2 branch of both ParaView and VTK.
+
+- Amy
+
+>BTW, which one of the following line should I type?
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co VTK
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtk
+>cvs -d :pserver:anonymous@public.kitware.com:/VTK/cvsroot co vtknew
+>
+>Sylvain
+>
+>On Wed, 7 Nov 2001, Berk Geveci wrote:
+>
+> >
+> > vtkPDataSetReader was moved to the VTK tree. Did you update VTK ? Are you
+> > using ParaView-0-2 branch of both ParaView and VTK ?
+> >
+> > -Berk
+> >
+> > >From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+> > >To: paraview@public.kitware.com
+> > >Subject: [Paraview] vtkPDataSetReader.h missing
+> > >Date: Wed, 7 Nov 2001 02:09:35 +0100 (MET)
+> > >
+> > >Hello,
+> > >
+> > >vtkPVDataSetReaderInterface.cxx tries to include vtkPDataSetReader.h
+> > >However I cannot find this file.
+> > >So, while compiling Paraview, I've got the following error message:
+> > >
+> > >vtkPVDataSetReaderInterface.cxx:44:31: vtkPDataSetReader.h: No such file
+> > >or directory
+> > >gmake[1]: *** [vtkPVDataSetReaderInterface.o] Error 1
+> > >gmake[1]: Leaving directory `/home/jaume/ParaView/ParaView'
+> > >gmake: *** [build_ParaView] Error 2
+> > >
+> > >
+> > >Anybody knows how to fix it?
+> > >
+> > >Thanks in advance.
+> > >Sylvain
+> > >
+> > >_______________________________________________
+> > >ParaView mailing list
+> > >ParaView@public.kitware.com
+> > >http://public.kitware.com/mailman/listinfo/paraview
+> >
+> >
+> > _________________________________________________________________
+> > Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@public.kitware.com
+> > http://public.kitware.com/mailman/listinfo/paraview
+> >
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+_______________________________________________
+ParaView mailing list
+ParaView@public.kitware.com
+http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+From jaume@tele.ucl.ac.be  Thu Nov  8 00:06:11 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Thu, 8 Nov 2001 01:06:11 +0100 (MET)
+Subject: [Paraview] MPI DRIVER
+Message-ID: <Pine.GSO.4.21.0111080055460.18961-100000@dschubba.tele.ucl.ac.be>
+
+Hello again,
+
+First, thanks Amy for your previous answer!
+
+I installed lam-mpi on Linux Red Hat. I set MPI variable in
+CMakeCache.txt, but I cannot any program called mpidriver in my mpi
+implementation mpidriver (so I left MPIDRIVER variable to NOTFOUND).
+Should I use another mpi implementation? Which one do you recommend?
+
+Probably you can quickly solve my 2nd problem:
+When I type gmake install in VTK-build directory, I get the error:
+
+/home/jaume/CMake/Templates/install-sh -c /home/jaume/VTK-build/bin/pvtk
+/home/jaume/VTK-build/bin
+install:  /home/jaume/VTK-build/bin/pvtk does not exist
+gmake[1]: *** [install] Error 1
+gmake[1]: Leaving directory `/home/jaume/VTK-build/Parallel'
+gmake: *** [install_Parallel] Error 2
+
+What's pvtk? How to fix the gmake install problem?
+Sylvain
+
+
+From berkgeveci@hotmail.com  Thu Nov  8 03:25:26 2001
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Wed, 07 Nov 2001 22:25:26 -0500
+Subject: [Paraview] MPI DRIVER
+Message-ID: <F78AadVe5HXC9xubfed00006ec6@hotmail.com>
+
+You don't have to worry about MPIDRIVER. I must have left it in by mistake. 
+I will remove it.
+
+pvtk is a different version of the vtk executable (tcl interpreter) 
+specially designed for running with MPI. If you have VTK_WRAP_TCL and 
+VTK_USE_MPI on, there should be a pvtk executable in the bin directory. You 
+are getting an error because it is not there. Did you get any errors during 
+build ?
+
+-Berk
+
+
+>From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+>To: paraview@public.kitware.com
+>Subject: [Paraview] MPI DRIVER
+>Date: Thu, 8 Nov 2001 01:06:11 +0100 (MET)
+>
+>Hello again,
+>
+>First, thanks Amy for your previous answer!
+>
+>I installed lam-mpi on Linux Red Hat. I set MPI variable in
+>CMakeCache.txt, but I cannot any program called mpidriver in my mpi
+>implementation mpidriver (so I left MPIDRIVER variable to NOTFOUND).
+>Should I use another mpi implementation? Which one do you recommend?
+>
+>Probably you can quickly solve my 2nd problem:
+>When I type gmake install in VTK-build directory, I get the error:
+>
+>/home/jaume/CMake/Templates/install-sh -c /home/jaume/VTK-build/bin/pvtk
+>/home/jaume/VTK-build/bin
+>install:  /home/jaume/VTK-build/bin/pvtk does not exist
+>gmake[1]: *** [install] Error 1
+>gmake[1]: Leaving directory `/home/jaume/VTK-build/Parallel'
+>gmake: *** [install_Parallel] Error 2
+>
+>What's pvtk? How to fix the gmake install problem?
+>Sylvain
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+
+
+From jaume@tele.ucl.ac.be  Thu Nov  8 03:40:26 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Thu, 8 Nov 2001 04:40:26 +0100 (MET)
+Subject: [Paraview] MPI DRIVER
+In-Reply-To: <F78AadVe5HXC9xubfed00006ec6@hotmail.com>
+Message-ID: <Pine.GSO.4.21.0111080437190.19236-100000@dschubba.tele.ucl.ac.be>
+
+Hi Berk,
+
+I ran into the pvtk problem when I typed gmake install.
+I'll check everything and try compiling vtk again.
+I'll tell you if I encounter the same problem.
+
+Thanks.
+Sylvain
+
+On Wed, 7 Nov 2001, Berk Geveci wrote:
+
+> You don't have to worry about MPIDRIVER. I must have left it in by mistake. 
+> I will remove it.
+> 
+> pvtk is a different version of the vtk executable (tcl interpreter) 
+> specially designed for running with MPI. If you have VTK_WRAP_TCL and 
+> VTK_USE_MPI on, there should be a pvtk executable in the bin directory. You 
+> are getting an error because it is not there. Did you get any errors during 
+> build ?
+> 
+> -Berk
+> 
+> 
+> >From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+> >To: paraview@public.kitware.com
+> >Subject: [Paraview] MPI DRIVER
+> >Date: Thu, 8 Nov 2001 01:06:11 +0100 (MET)
+> >
+> >Hello again,
+> >
+> >First, thanks Amy for your previous answer!
+> >
+> >I installed lam-mpi on Linux Red Hat. I set MPI variable in
+> >CMakeCache.txt, but I cannot any program called mpidriver in my mpi
+> >implementation mpidriver (so I left MPIDRIVER variable to NOTFOUND).
+> >Should I use another mpi implementation? Which one do you recommend?
+> >
+> >Probably you can quickly solve my 2nd problem:
+> >When I type gmake install in VTK-build directory, I get the error:
+> >
+> >/home/jaume/CMake/Templates/install-sh -c /home/jaume/VTK-build/bin/pvtk
+> >/home/jaume/VTK-build/bin
+> >install:  /home/jaume/VTK-build/bin/pvtk does not exist
+> >gmake[1]: *** [install] Error 1
+> >gmake[1]: Leaving directory `/home/jaume/VTK-build/Parallel'
+> >gmake: *** [install_Parallel] Error 2
+> >
+> >What's pvtk? How to fix the gmake install problem?
+> >Sylvain
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@public.kitware.com
+> >http://public.kitware.com/mailman/listinfo/paraview
+> 
+> 
+> _________________________________________________________________
+> Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+> 
+> 
+
+
+From jaume@tele.ucl.ac.be  Thu Nov  8 03:52:58 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Thu, 8 Nov 2001 04:52:58 +0100 (MET)
+Subject: [Paraview] purify
+Message-ID: <Pine.GSO.4.21.0111080448590.19236-100000@dschubba.tele.ucl.ac.be>
+
+Do you know of an implementation of purify for Linux Red Hat?
+
+thanks.
+Sylvain
+
+
+From jaume@tele.ucl.ac.be  Thu Nov  8 17:19:43 2001
+From: jaume@tele.ucl.ac.be (Sylvain Jaume)
+Date: Thu, 8 Nov 2001 18:19:43 +0100 (MET)
+Subject: [Paraview] CMake & Java
+Message-ID: <Pine.GSO.4.21.0111081813540.19249-100000@dschubba.tele.ucl.ac.be>
+
+Hello!
+
+In CMakeCache.txt, I can read
+//What is the path where the file jawt.h can be found
+JAVE_AWT_INCLUDE_PATH:PATH=
+
+I don't know if this makes any difference,
+but I guess you meant JAVA_AWT_INCLUDE_PATH
+
+I got an error when typing gmake in VTK 4.0:
+Error opening output file
+/home/jaume/vtk-build/java/vtk/vtkAbstractMapper.java
+gmake[1]: *** [/home/jaume/vtk-build/java/vtk/vtkAbstractMapper.java]
+Error 1
+gmake[1]: Leaving directory `/home/jaume/vtk-build/Common'
+gmake: *** [build_Common] Error 2
+
+Last, what's the program HHC? Where can I find it on the web?
+
+Thanks for answering so many questions!
+Have a nice day!
+Sylvain
+
+
+From berkgeveci@hotmail.com  Thu Nov  8 18:35:39 2001
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Thu, 08 Nov 2001 13:35:39 -0500
+Subject: [Paraview] CMake & Java
+Message-ID: <F161ItgFtG5aUQFwAx000015f37@hotmail.com>
+
+This is a message best posted on the VTK mailing list. I don't think there 
+are any vtk-java users on ParaView list.
+
+
+>From: Sylvain Jaume <jaume@tele.ucl.ac.be>
+>To: paraview@public.kitware.com
+>Subject: [Paraview] CMake & Java
+>Date: Thu, 8 Nov 2001 18:19:43 +0100 (MET)
+>
+>Hello!
+>
+>In CMakeCache.txt, I can read
+>//What is the path where the file jawt.h can be found
+>JAVE_AWT_INCLUDE_PATH:PATH=
+>
+>I don't know if this makes any difference,
+>but I guess you meant JAVA_AWT_INCLUDE_PATH
+>
+>I got an error when typing gmake in VTK 4.0:
+>Error opening output file
+>/home/jaume/vtk-build/java/vtk/vtkAbstractMapper.java
+>gmake[1]: *** [/home/jaume/vtk-build/java/vtk/vtkAbstractMapper.java]
+>Error 1
+>gmake[1]: Leaving directory `/home/jaume/vtk-build/Common'
+>gmake: *** [build_Common] Error 2
+>
+>Last, what's the program HHC? Where can I find it on the web?
+>
+>Thanks for answering so many questions!
+>Have a nice day!
+>Sylvain
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+
+
+From alain.malo@nrc.ca  Thu Nov  8 21:26:09 2001
+From: alain.malo@nrc.ca (Malo, Alain)
+Date: Thu, 8 Nov 2001 16:26:09 -0500
+Subject: [Paraview] ParaView
+Message-ID: <F9288C3063FED211AF270004ACA6E1DBB136DE@nrcbouex1.imi.nrc.ca>
+
+Hello all,
+
+I want to download ParaView via CVS access which procedure can be found at 
+http://public.kitware.com/ParaView/HTML/Download.html
+
+> ParaView can be obtained via CVS using the following procedure. 
+> 
+> cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+> (respond with password paraview) 
+> 
+> Follow this command by checking out the source code:
+> cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+ParaView-0-2 ParaView 
+
+When trying this procedure, I get:
+
+> cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/paraview login (in
+directory C:\CVS)
+> (Logging in to anonymous@public.kitware.com)
+> cvs [login aborted]: connect to public.kitware.com:2401 failed: Connection
+timed out
+> 
+> *****CVS exited normally with code 1*****
+
+Is this procedure correct? Is ParaView still available? Need help to
+download?
+
+Thanks in advance for your help.
+
+Alain Malo
+
+From amy.henderson@kitware.com  Thu Nov  8 21:43:09 2001
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 08 Nov 2001 16:43:09 -0500
+Subject: [Paraview] ParaView
+In-Reply-To: <F9288C3063FED211AF270004ACA6E1DBB136DE@nrcbouex1.imi.nrc.c
+ a>
+Message-ID: <4.3.2.7.2.20011108163718.00b13228@pop.nycap.rr.com>
+
+At 04:26 PM 11/8/2001 -0500, Malo, Alain wrote:
+>Hello all,
+>
+>I want to download ParaView via CVS access which procedure can be found at
+>http://public.kitware.com/ParaView/HTML/Download.html
+>
+> > ParaView can be obtained via CVS using the following procedure.
+> >
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+> > (respond with password paraview)
+> >
+> > Follow this command by checking out the source code:
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+>ParaView-0-2 ParaView
+>
+>When trying this procedure, I get:
+>
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/paraview login (in
+>directory C:\CVS)
+> > (Logging in to anonymous@public.kitware.com)
+> > cvs [login aborted]: connect to public.kitware.com:2401 failed: Connection
+>timed out
+> >
+> > *****CVS exited normally with code 1*****
+>
+>Is this procedure correct? Is ParaView still available? Need help to
+>download?
+
+Yes, ParaView is still available.  The only thing I see wrong with the 
+procedure is that the P and V in ParaView are supposed to be capitalized, 
+so it should be
+
+cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+
+Please
+>Thanks in advance for your help.
+>
+>Alain Malo
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From amy.henderson@kitware.com  Thu Nov  8 21:44:28 2001
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 08 Nov 2001 16:44:28 -0500
+Subject: [Paraview] ParaView
+In-Reply-To: <F9288C3063FED211AF270004ACA6E1DBB136DE@nrcbouex1.imi.nrc.c
+ a>
+Message-ID: <4.3.2.7.2.20011108164346.00b16a98@pop.nycap.rr.com>
+
+Sorry you're seeing most of this twice.  I accidentally sent it before I 
+meant to.
+
+At 04:26 PM 11/8/2001 -0500, Malo, Alain wrote:
+>Hello all,
+>
+>I want to download ParaView via CVS access which procedure can be found at
+>http://public.kitware.com/ParaView/HTML/Download.html
+>
+> > ParaView can be obtained via CVS using the following procedure.
+> >
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+> > (respond with password paraview)
+> >
+> > Follow this command by checking out the source code:
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+>ParaView-0-2 ParaView
+>
+>When trying this procedure, I get:
+>
+> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/paraview login (in
+>directory C:\CVS)
+> > (Logging in to anonymous@public.kitware.com)
+> > cvs [login aborted]: connect to public.kitware.com:2401 failed: Connection
+>timed out
+> >
+> > *****CVS exited normally with code 1*****
+>
+>Is this procedure correct? Is ParaView still available? Need help to
+>download?
+
+Yes, ParaView is still available. The only thing I see wrong with the 
+procedure is that the P and V in ParaView are supposed to be capitalized, 
+so it should be
+
+cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+
+Please try getting ParaView from CVS again.
+
+- Amy
+
+>Thanks in advance for your help.
+>
+>Alain Malo
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From berkgeveci@hotmail.com  Thu Nov  8 22:41:31 2001
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Thu, 08 Nov 2001 17:41:31 -0500
+Subject: [Paraview] ParaView
+Message-ID: <F126oYGTdKUmgdBft65000095b1@hotmail.com>
+
+It might also be a connection problem. We had connectivity problems this 
+morning.
+
+>From: Amy Henderson <amy.henderson@kitware.com>
+>To: "Malo, Alain" <alain.malo@nrc.ca>, "'paraview@public.kitware.com'" 
+><paraview@public.kitware.com>
+>Subject: Re: [Paraview] ParaView
+>Date: Thu, 08 Nov 2001 16:43:09 -0500
+>
+>At 04:26 PM 11/8/2001 -0500, Malo, Alain wrote:
+>>Hello all,
+>>
+>>I want to download ParaView via CVS access which procedure can be found at
+>>http://public.kitware.com/ParaView/HTML/Download.html
+>>
+>> > ParaView can be obtained via CVS using the following procedure.
+>> >
+>> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+>> > (respond with password paraview)
+>> >
+>> > Follow this command by checking out the source code:
+>> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+>>ParaView-0-2 ParaView
+>>
+>>When trying this procedure, I get:
+>>
+>> > cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/paraview login 
+>>(in
+>>directory C:\CVS)
+>> > (Logging in to anonymous@public.kitware.com)
+>> > cvs [login aborted]: connect to public.kitware.com:2401 failed: 
+>>Connection
+>>timed out
+>> >
+>> > *****CVS exited normally with code 1*****
+>>
+>>Is this procedure correct? Is ParaView still available? Need help to
+>>download?
+>
+>Yes, ParaView is still available.  The only thing I see wrong with the
+>procedure is that the P and V in ParaView are supposed to be capitalized,
+>so it should be
+>
+>cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+>
+>Please
+>>Thanks in advance for your help.
+>>
+>>Alain Malo
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@public.kitware.com
+>>http://public.kitware.com/mailman/listinfo/paraview
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp
+
+

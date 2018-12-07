@@ -1,0 +1,3579 @@
+From brad.king at kitware.com  Fri Dec  3 07:27:40 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Dec  3 07:27:47 2004
+Subject: [Paraview] Save View Image in Session Trace
+In-Reply-To: <41B08E95.60401@princeton.edu>
+References: <41AA2A2E.9050700@princeton.edu> <41AC77FE.9040503@kitware.com>
+	<41B08E95.60401@princeton.edu>
+Message-ID: <41B05BBC.7000900@kitware.com>
+
+Benjamin Phillips wrote:
+> Thanks for the help. I can now write images, but while I put 
+> 'SaveAsImage' as the last command in my script, the image is not of the 
+> final state, but of some intermediate view (In particular, it doesn't 
+> account for a rotation done through the 'SetCameraState' command). Can 
+> this be remedied?
+
+Please submit a minimal script that duplicates this problem to the bug 
+tracker:
+
+http://www.paraview.org/Bug
+
+ > Also, I would like to be able to delete modules in my
+> script. I tried using 'DeleteCallback' but this produces an error, 'An 
+> output is used.  We cannot delete this source.' Should I be using 
+> someting else?
+
+You can only delete sources from the end of the pipeline.  Once you 
+connect the output of one source to the input of another, it cannot be 
+deleted.  Your script will have to delete sources in the reverse order 
+that it created them.
+
+ > Better yet, where should I look for listing of commands
+> such as these? I searched around through the vtk and tcl sites, but 
+> didn't find a listing including the above commands and others.
+
+This is an internal driver language for ParaView and is not documented 
+to my knowledge.  You can look in the ParaView source tree under 
+GUI/Widgets and GUI/Client for classes that define these methods.
+
+-Brad
+From hsundar at caip.rutgers.edu  Fri Dec  3 11:51:28 2004
+From: hsundar at caip.rutgers.edu (Hari Sundar)
+Date: Fri Dec  3 11:51:34 2004
+Subject: [Paraview] Visualizing Deformation Fields (ITK)
+Message-ID: <Pine.GSO.4.58.0412031148280.7611@caip.rutgers.edu>
+
+Hi,
+
+I use the ITK deformableregistration8 example programs to register 2
+volumes. The results are good when I compare the diff images and also the
+warped image looks good.
+
+However when I try to visualize the deformation field outputted within
+Paraview, it doesn't look right. One thing that I noticed was that if I
+regate the dx component in the field, it looks right, under paraview.
+
+Is this a bug or a format issue ?
+
+thanks,
+From amy.henderson at kitware.com  Fri Dec  3 14:58:37 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Fri Dec  3 14:58:38 2004
+Subject: [Paraview] The ParaView Guide
+Message-ID: <6.2.0.14.2.20041203145026.03e0eda8@pop.biz.rr.com>
+
+Hi All,
+
+Kitware has recently published a new book, "The ParaView Guide".  It 
+details the use and development of ParaView, a parallel visualization 
+application capable of handling very large data sets.  The book coincides 
+with version 1.8 of the software.  The book is available for purchase from 
+Kitware's on-line store: go to www.kitware.com, and select "ParaView Guide" 
+from the Products/Services menu.  The price of the book is $72, which 
+includes shipping within the US.
+
+Sincerely,
+Amy Henderson
+Kitware, Inc.
+
+
+
+From amy.henderson at kitware.com  Fri Dec  3 14:58:37 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Fri Dec  3 15:08:10 2004
+Subject: [Paraview] [vtkusers] The ParaView Guide
+Message-ID: <6.2.0.14.2.20041203145026.03e0eda8@pop.biz.rr.com>
+
+Hi All,
+
+Kitware has recently published a new book, "The ParaView Guide".  It 
+details the use and development of ParaView, a parallel visualization 
+application capable of handling very large data sets.  The book coincides 
+with version 1.8 of the software.  The book is available for purchase from 
+Kitware's on-line store: go to www.kitware.com, and select "ParaView Guide" 
+from the Products/Services menu.  The price of the book is $72, which 
+includes shipping within the US.
+
+Sincerely,
+Amy Henderson
+Kitware, Inc.
+
+
+
+_______________________________________________
+This is the private VTK discussion list. 
+Please keep messages on-topic. Check the FAQ at: http://www.vtk.org/Wiki/VTK_FAQ
+Follow this link to subscribe/unsubscribe:
+http://www.vtk.org/mailman/listinfo/vtkusers
+
+From rnelias at superig.com.br  Mon Dec  6 06:20:44 2004
+From: rnelias at superig.com.br (Renato Nascimento Elias)
+Date: Mon Dec  6 06:22:29 2004
+Subject: [Paraview] Stream function and vorticity calcs...
+In-Reply-To: <20041203170005.34B1533B73@public.kitware.com>
+Message-ID: <20041206112228.A7D2A2FFF9@public.kitware.com>
+
+ 
+Hello all...
+
+I?d like to know how may I compute stream functions and vorticity with the
+Paraview?s calculator. Is there any VTK filter and/or specific derivative
+function of the calculator to accomplish this task?
+
+Thanks for any help.
+
+Renato N. Elias
+Rio de Janeiro/Brazil
+
+
+From hareeshtk at gmail.com  Mon Dec  6 08:16:33 2004
+From: hareeshtk at gmail.com (Hareesh TK)
+Date: Mon Dec  6 08:16:39 2004
+Subject: [Paraview] Stream function and vorticity calcs...
+In-Reply-To: <20041206112228.A7D2A2FFF9@public.kitware.com>
+References: <20041203170005.34B1533B73@public.kitware.com>
+	<20041206112228.A7D2A2FFF9@public.kitware.com>
+Message-ID: <33693fb60412060516854279e@mail.gmail.com>
+
+Hello all
+
+When I am analysing Paraview code 
+I facing problem with understanding  vtkstd::vector and vtkstd::map
+data structures
+
+can u please tell me where I will get Information about these two data
+structure.
+Thanks for any help
+
+Hareesh T K
+
+On Mon, 6 Dec 2004 09:20:44 -0200, Renato Nascimento Elias
+<rnelias@superig.com.br> wrote:
+> 
+> Hello all...
+> 
+> I?d like to know how may I compute stream functions and vorticity with the
+> Paraview?s calculator. Is there any VTK filter and/or specific derivative
+> function of the calculator to accomplish this task?
+> 
+> Thanks for any help.
+> 
+> Renato N. Elias
+> Rio de Janeiro/Brazil
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From m.janssens at nabla.co.uk  Mon Dec  6 09:16:39 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Mon Dec  6 09:16:48 2004
+Subject: [Paraview] Stream function and vorticity calcs...
+In-Reply-To: <33693fb60412060516854279e@mail.gmail.com>
+References: <20041203170005.34B1533B73@public.kitware.com>	<20041206112228.A7D2A2FFF9@public.kitware.com>
+	<33693fb60412060516854279e@mail.gmail.com>
+Message-ID: <41B469C7.90904@nabla.co.uk>
+
+I think they are just thin wrappers around std::vector, std::map. Any 
+info on the Standard Template Library should tell you more.
+
+Mattijs
+
+Hareesh TK wrote:
+> Hello all
+> 
+> When I am analysing Paraview code 
+> I facing problem with understanding  vtkstd::vector and vtkstd::map
+> data structures
+> 
+> can u please tell me where I will get Information about these two data
+> structure.
+> Thanks for any help
+> 
+> Hareesh T K
+> 
+> On Mon, 6 Dec 2004 09:20:44 -0200, Renato Nascimento Elias
+> <rnelias@superig.com.br> wrote:
+> 
+>>Hello all...
+>>
+>>I?d like to know how may I compute stream functions and vorticity with the
+>>Paraview?s calculator. Is there any VTK filter and/or specific derivative
+>>function of the calculator to accomplish this task?
+>>
+>>Thanks for any help.
+>>
+>>Renato N. Elias
+>>Rio de Janeiro/Brazil
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From tejj at hotmail.com  Wed Dec  8 14:52:13 2004
+From: tejj at hotmail.com (Terry Jordan)
+Date: Wed Dec  8 14:53:05 2004
+Subject: [Paraview] Paraview and VTK:  how to use both
+Message-ID: <BAY2-F369B40A5EF1CFD3F9360BCDEB60@phx.gbl>
+
+I am in need of both VTK and paraview.  Problems is if I do the install of 
+both one overwrites the other's libraries and make one or both not work.  Is 
+there a solution to have both installed on one machine?  Or can paraview's 
+VTk be built entirely?  It does not build the java wrappers and does not 
+have that option available.  Thanks in advance.
+
+
+From billlist at nycap.rr.com  Wed Dec  8 16:52:43 2004
+From: billlist at nycap.rr.com (William A. Hoffman)
+Date: Wed Dec  8 16:54:52 2004
+Subject: [Paraview] Paraview and VTK:  how to use both
+In-Reply-To: <BAY2-F369B40A5EF1CFD3F9360BCDEB60@phx.gbl>
+References: <BAY2-F369B40A5EF1CFD3F9360BCDEB60@phx.gbl>
+Message-ID: <6.1.1.1.2.20041208165225.07a84fa8@pop.nycap.rr.com>
+
+You can use the same source tree, but not the same build tree.
+So, what I do is this:
+
+ParaView <---- Source tree
+ParaViewBuild  <--- binary tree uses ParaView for source
+VTKBuild <--- uses ParaView/VTK as the source tree for VTK
+
+
+You have to run cmake separately for ParaViewBuild and VTKBuild.
+
+-Bill
+
+At 02:52 PM 12/8/2004, Terry Jordan wrote:
+>I am in need of both VTK and paraview.  Problems is if I do the install of both one overwrites the other's libraries and make one or both not work.  Is there a solution to have both installed on one machine?  Or can paraview's VTk be built entirely?  It does not build the java wrappers and does not have that option available.  Thanks in advance.
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From hareeshtk at gmail.com  Thu Dec  9 07:43:30 2004
+From: hareeshtk at gmail.com (Hareesh TK)
+Date: Thu Dec  9 07:43:37 2004
+Subject: [Paraview] Paraview and VTK: how to use both
+In-Reply-To: <6.1.1.1.2.20041208165225.07a84fa8@pop.nycap.rr.com>
+References: <BAY2-F369B40A5EF1CFD3F9360BCDEB60@phx.gbl>
+	<6.1.1.1.2.20041208165225.07a84fa8@pop.nycap.rr.com>
+Message-ID: <33693fb604120904434c88f23@mail.gmail.com>
+
+Hi all
+
+While anlysing the paraview code (1.8 Beta version) I came to know
+that they are inserting class name along with some command functions
+into vector NewInstanceFunctions
+  and mapper ClassToFunctionMap. 
+
+But I donot able to trace out that where they are using these
+functions in future,
+Can any one help me out 
+Thanks in advance
+
+bye
+Hareesh
+From Jason.Beech-Brandt at ed.ac.uk  Mon Dec 13 10:05:12 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Mon Dec 13 10:05:17 2004
+Subject: [Paraview] building paraview-1.8.1 on sparc-solaris 2.8
+Message-ID: <Pine.GSO.4.58.0412131445540.3825@deedee>
+
+Hi,
+
+I'm attempting to compile paraview-1.8.1 on an UltraSparc Sun running
+Solaris 2.8.  My compiler is gcc-3.4.3.  Everything compile fine until I
+get to vtkSocketCommunicator.cxx, at which point I get the following
+compile error.
+
+c++ -o vtkSocketCommunicator.o -DvtkParallel_EXPORTS -Wno-deprecated
+-Wno-deprecated -fPIC
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Utilities
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Hybrid
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Patented
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Rendering
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/IO
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Imaging
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Graphics
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/GenericFiltering
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Filtering
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Common
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Utilities
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Common/Testing/Cxx
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Utilities/DICOMParser
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Utilities/DICOMParser
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Utilities/freetype/include
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Utilities/freetype/include
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Utilities/freetype
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Utilities/ftgl/src
+-I/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Utilities/ftgl
+-I/usr/openwin/share/include -DVTK_PYTHON_BUILD -DVTK_LEAN_AND_MEAN -c
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:
+In member function `virtual int vtkSocketCommunicator::GetPort(int)':
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+error: invalid conversion from `int*' to `socklen_t*'
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+error:  initializing argument 3 of `int getsockname(int, sockaddr*,
+socklen_t*)' gmake[5]: *** [vtkSocketCommunicator.o] Error 1 gmake[5]:
+Leaving directory
+`/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Parallel'
+gmake[4]: *** [default_target] Error 2 gmake[4]: Leaving directory
+`/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/Parallel'
+gmake[3]: *** [default_target_Parallel] Error 2 gmake[3]: Leaving
+directory `/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK'
+gmake[2]: *** [default_target] Error 2 gmake[2]: Leaving directory
+`/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK' gmake[1]:
+*** [default_target_VTK] Error 2 gmake[1]: Leaving directory
+`/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris' gmake: ***
+[default_target] Error 2
+
+Any ideas on how to procede with this?
+
+Thanks for any suggestions.
+
+Jason
+From brad.king at kitware.com  Mon Dec 13 10:58:42 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Dec 13 10:58:44 2004
+Subject: [Paraview] building paraview-1.8.1 on sparc-solaris 2.8
+In-Reply-To: <Pine.GSO.4.58.0412131445540.3825@deedee>
+References: <Pine.GSO.4.58.0412131445540.3825@deedee>
+Message-ID: <41BDBC32.60501@kitware.com>
+
+Jason.Beech-Brandt@ed.ac.uk wrote:
+> Hi,
+> 
+> I'm attempting to compile paraview-1.8.1 on an UltraSparc Sun running
+> Solaris 2.8.  My compiler is gcc-3.4.3.  Everything compile fine until I
+> get to vtkSocketCommunicator.cxx, at which point I get the following
+> compile error.
+[snip]
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:
+> In member function `virtual int vtkSocketCommunicator::GetPort(int)':
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+> error: invalid conversion from `int*' to `socklen_t*'
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+> error:  initializing argument 3 of `int getsockname(int, sockaddr*,
+> socklen_t*)' gmake[5]: *** [vtkSocketCommunicator.o] Error 1 gmake[5]:
+
+Since the getsockname function takes "int" on some platforms and 
+"socklen_t" on others, there is a try-compile that tests which signature 
+is available on your platform.  Look in CMakeError.log for text like this:
+
+"Determining if getsockname accepts socklen_t type"
+
+Somewhere after that text should be the compiler error message 
+indicating why ParaView thinks your platform does not have a getsockname 
+with socklen_t.
+
+-Brad
+From biddisco at cscs.ch  Mon Dec 13 11:19:45 2004
+From: biddisco at cscs.ch (John Biddiscombe (CSCS))
+Date: Mon Dec 13 11:19:50 2004
+Subject: [Paraview] error using new reader
+Message-ID: <41BDC121.9050708@cscs.ch>
+
+Could anyone please point me to the way to solve this problem. Paraview 
+gives me this error before quitting and I'm not sure if I'm missing a 
+member in the reader, or some definition in one of the pvsm or xml 
+files. any clues welcome.
+
+thanks
+
+JB
+
+# Error or warning: There was a VTK Error in file: 
+/local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (550)
+ Object type: vtkPVServerArraySelection, could not find requested 
+method: "GetArraySettings"
+or the method was called with incorrect arguments.
+
+while processing
+Message 2 = Invoke
+  Argument 0 = id_value {1242}
+  Argument 1 = string_value {GetArraySettings}
+  Argument 2 = id_value {1240}
+  Argument 3 = string_value {Point}
+ErrorMessage end
+Object type: vtkPVServerArraySelection, could not find requested method: 
+"GetArraySettings"
+or the method was called with incorrect arguments.
+
+ErrorMessage
+# Error or warning: There was a VTK Error in file: 
+/local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (553)
+ Aborting execution for debugging purposes.
+ErrorMessage end
+Abort (core dumped)
+
+From Jon.H.Kaspersen at sintef.no  Mon Dec 13 11:45:28 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Mon Dec 13 11:45:38 2004
+Subject: [Paraview] ParaView on the Mac
+Message-ID: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Hi
+
+I have installed a new version of TclTk (8.4.9), and I wanted to test  
+this version with
+ParaView.  I am using the framework approach for building ParaView.  The
+build dies with the following error :
+
+Building .o file from CXX:  vtkTkRenderWidget.o...
+In file included from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h: 
+81,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+                  from  
+/Users/jonk/cvs/VTK/Utilities/TclTk/internals/tk8.4/tkInt.h:27,
+                  from  
+/Users/jonk/cvs/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:19,
+                  from  
+/Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:663: error: declaration
+    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  
+int)'
+    conflicts with
+/usr/include/X11/Xlib.h:3792: error: previous declaration `int
+    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:686: error: declaration
+    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+    conflicts with
+/usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+
+-----snip----
+
+
+Any suggestions ?
+
+
+Regards
+Jon
+
+
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From Jason.Beech-Brandt at ed.ac.uk  Mon Dec 13 12:16:12 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Mon Dec 13 12:17:00 2004
+Subject: [Paraview] building paraview-1.8.1 on sparc-solaris 2.8
+In-Reply-To: <41BDBC32.60501@kitware.com>
+References: <Pine.GSO.4.58.0412131445540.3825@deedee>
+	<41BDBC32.60501@kitware.com>
+Message-ID: <Pine.GSO.4.58.0412131712310.3825@deedee>
+
+Hi Brad,
+
+I had a look through the CMakeError.log as you suggest and found the
+following,
+
+
+Determining if getsockname accepts socklen_t type  failed with the
+following output:
+Building object file vtkTestSocklenT.o...
+c++ -o vtkTestSocklenT.o         -Wno-deprecated  -Wno-deprecated     -c
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/CMake/vtkTestSocklenT.cxx
+Building executable
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec...
+c++            -Wno-deprecated  -Wno-deprecated   -fPIC  vtkTestSocklenT.o
+-o
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec
+Undefined			first referenced
+ symbol  			    in file
+getsockname                         vtkTestSocklenT.o
+ld: fatal: Symbol referencing errors. No output written to
+/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec
+collect2: ld returned 1 exit status
+gmake: ***
+[/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec]
+Error 1
+
+So I guess the executable can't be built as getsockname is not defined.
+Can this be fixed by just adding -lsocket to the compile line?
+
+Thanks
+
+Jason
+
+On Mon, 13 Dec 2004, Brad King wrote:
+
+> Jason.Beech-Brandt@ed.ac.uk wrote:
+> > Hi,
+> >
+> > I'm attempting to compile paraview-1.8.1 on an UltraSparc Sun running
+> > Solaris 2.8.  My compiler is gcc-3.4.3.  Everything compile fine until I
+> > get to vtkSocketCommunicator.cxx, at which point I get the following
+> > compile error.
+> [snip]
+> > /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:
+> > In member function `virtual int vtkSocketCommunicator::GetPort(int)':
+> > /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+> > error: invalid conversion from `int*' to `socklen_t*'
+> > /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/Parallel/vtkSocketCommunicator.cxx:295:
+> > error:  initializing argument 3 of `int getsockname(int, sockaddr*,
+> > socklen_t*)' gmake[5]: *** [vtkSocketCommunicator.o] Error 1 gmake[5]:
+>
+> Since the getsockname function takes "int" on some platforms and
+> "socklen_t" on others, there is a try-compile that tests which signature
+> is available on your platform.  Look in CMakeError.log for text like this:
+>
+> "Determining if getsockname accepts socklen_t type"
+>
+> Somewhere after that text should be the compiler error message
+> indicating why ParaView thinks your platform does not have a getsockname
+> with socklen_t.
+>
+> -Brad
+>
+From brad.king at kitware.com  Mon Dec 13 13:10:25 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Dec 13 13:10:31 2004
+Subject: [Paraview] building paraview-1.8.1 on sparc-solaris 2.8
+In-Reply-To: <Pine.GSO.4.58.0412131712310.3825@deedee>
+References: <Pine.GSO.4.58.0412131445540.3825@deedee>
+	<41BDBC32.60501@kitware.com>
+	<Pine.GSO.4.58.0412131712310.3825@deedee>
+Message-ID: <41BDDB11.3070406@kitware.com>
+
+Jason.Beech-Brandt@ed.ac.uk wrote:
+
+> Hi Brad,
+> 
+> I had a look through the CMakeError.log as you suggest and found the
+> following,
+> 
+> 
+> Determining if getsockname accepts socklen_t type  failed with the
+> following output:
+> Building object file vtkTestSocklenT.o...
+> c++ -o vtkTestSocklenT.o         -Wno-deprecated  -Wno-deprecated     -c
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1/VTK/CMake/vtkTestSocklenT.cxx
+> Building executable
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec...
+> c++            -Wno-deprecated  -Wno-deprecated   -fPIC  vtkTestSocklenT.o
+> -o
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec
+> Undefined			first referenced
+>  symbol  			    in file
+> getsockname                         vtkTestSocklenT.o
+> ld: fatal: Symbol referencing errors. No output written to
+> /deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec
+> collect2: ld returned 1 exit status
+> gmake: ***
+> [/deptpc/scratch/jbbrand1/packages/paraview-1.8.1-solaris/VTK/CMakeTmp/SocklenT/CMakeTmp/cmTryCompileExec]
+> Error 1
+> 
+> So I guess the executable can't be built as getsockname is not defined.
+> Can this be fixed by just adding -lsocket to the compile line?
+
+Probably.  I'll have to update the try-compile test to include it.  For 
+now you can work around the problem by manually editing CMakeCache.txt 
+and switching the line
+
+VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=0
+
+to
+
+VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=1
+
+Then run make again.  You might also have to add -lsocket to your 
+CMAKE_EXE_LINKER_FLAGS setting.
+
+-Brad
+
+From tejj at hotmail.com  Mon Dec 13 16:23:47 2004
+From: tejj at hotmail.com (Terry Jordan)
+Date: Mon Dec 13 16:24:18 2004
+Subject: [Paraview] Trying to compile Paraview into a binary like the binary
+	release under linux
+In-Reply-To: <a6bc6cc04120813234682d5b7@mail.gmail.com>
+Message-ID: <BAY103-F24103C7629F1A93CA2DC91DEAB0@phx.gbl>
+
+I have been having massive headaches trying to have Paraview and VTK 
+installed on one machine.  I found a solution the paraview binary release 
+works perfectly, and is not affected by my VTK libraries.  The problem is I 
+need the MPI option, so I need to compile it from source.  I CAN compile it 
+from source no problem, BUT I want the results to be like the paraview 
+release, which is one BIG "paraview" files with no libraries (having 
+libraries causes a problem).
+
+So to reiterate, I know how to compile paraview, but I want to know how I 
+can build paraview to be exactly like the binary release but with MPI 
+support?
+
+Thanks in advance.
+
+
+From dcthomp at sandia.gov  Mon Dec 13 18:16:49 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Mon Dec 13 18:17:23 2004
+Subject: [Paraview] Trying to compile Paraview into a binary like the
+	binary release under linux
+In-Reply-To: <BAY103-F24103C7629F1A93CA2DC91DEAB0@phx.gbl>
+References: <BAY103-F24103C7629F1A93CA2DC91DEAB0@phx.gbl>
+Message-ID: <1102979808.17741.261.camel@fozzy.ran.sandia.gov>
+
+> ...  I CAN compile it 
+> from source no problem, BUT I want the results to be like the paraview 
+> release, which is one BIG "paraview" files with no libraries (having 
+> libraries causes a problem).
+Set BUILD_SHARED_LIBS to OFF. Static versions of the libraries will be
+created, but they need not be installed for ParaView to run.
+
+> So to reiterate, I know how to compile paraview, but I want to know how I 
+> can build paraview to be exactly like the binary release but with MPI 
+> support?
+That will require you to have built MPI as a static library.
+
+	David
+
+From brad.king at kitware.com  Mon Dec 13 18:21:14 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Dec 13 18:21:20 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <41BE23EA.6050202@kitware.com>
+
+Jon H Kaspersen wrote:
+
+> Hi
+> 
+> I have installed a new version of TclTk (8.4.9), and I wanted to test  
+> this version with
+> ParaView.  I am using the framework approach for building ParaView.  The
+> build dies with the following error :
+> 
+> Building .o file from CXX:  vtkTkRenderWidget.o...
+> In file included from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h: 81,
+>                  from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+>                  from  
+> /Users/jonk/cvs/VTK/Utilities/TclTk/internals/tk8.4/tkInt.h:27,
+>                  from  
+> /Users/jonk/cvs/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:19,
+>                  from  
+> /Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+>                  from  
+> /Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+> tkIntXlibDecls.h:663: error: declaration
+>    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  int)'
+>    conflicts with
+> /usr/include/X11/Xlib.h:3792: error: previous declaration `int
+>    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+> tkIntXlibDecls.h:686: error: declaration
+>    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+>    conflicts with
+> /usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+> 
+> -----snip----
+> 
+> 
+> Any suggestions ?
+
+ParaView always builds its own Tcl/Tk (8.4.5) that comes in the source 
+tree, so the version of Tcl on your system does not matter.  As far as 
+this error, I think you have to build ParaView with
+
+VTK_USE_COCOA:BOOL=OFF
+VTK_USE_CARBON:BOOL=OFF
+VTK_USE_X:BOOL=ON
+
+-Brad
+
+From brad.king at kitware.com  Mon Dec 13 18:30:10 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Dec 13 18:30:19 2004
+Subject: [Paraview] error using new reader
+In-Reply-To: <41BDC121.9050708@cscs.ch>
+References: <41BDC121.9050708@cscs.ch>
+Message-ID: <41BE2602.7060204@kitware.com>
+
+John Biddiscombe (CSCS) wrote:
+
+> Could anyone please point me to the way to solve this problem. Paraview 
+> gives me this error before quitting and I'm not sure if I'm missing a 
+> member in the reader, or some definition in one of the pvsm or xml 
+> files. any clues welcome.
+> 
+> thanks
+> 
+> JB
+> 
+> # Error or warning: There was a VTK Error in file: 
+> /local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (550)
+> Object type: vtkPVServerArraySelection, could not find requested method: 
+> "GetArraySettings"
+> or the method was called with incorrect arguments.
+> 
+> while processing
+> Message 2 = Invoke
+>  Argument 0 = id_value {1242}
+>  Argument 1 = string_value {GetArraySettings}
+>  Argument 2 = id_value {1240}
+>  Argument 3 = string_value {Point}
+> ErrorMessage end
+> Object type: vtkPVServerArraySelection, could not find requested method: 
+> "GetArraySettings"
+> or the method was called with incorrect arguments.
+
+This is a bug related to the change of a reader from subclassing off of 
+vtkSource to subclassing off of a different vtkAlgorithm subclass.  I've 
+add it to my to-do list to fix.
+
+-Brad
+
+From Jon.H.Kaspersen at sintef.no  Tue Dec 14 01:38:02 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Tue Dec 14 01:38:07 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <41BE23EA.6050202@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BE23EA.6050202@kitware.com>
+Message-ID: <B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Hi again,
+
+Building ParaView using the X11 libs will work, I know - I have tried 
+that.
+So, I was trying to build ParaView with the Carbon approach in order 
+not to be
+depending on the X11 installation.  ParaView was building with the 
+Carbon
+approach a while back, but was buggy, probably because of the lack of 
+OS X
+support in the Tcl/Tk version I used then.
+
+Regards
+Jon
+
+>
+> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the source 
+> tree, so the version of Tcl on your system does not matter.  As far as 
+> this error, I think you have to build ParaView with
+>
+> VTK_USE_COCOA:BOOL=OFF
+> VTK_USE_CARBON:BOOL=OFF
+> VTK_USE_X:BOOL=ON
+>
+> -Brad
+>
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From biddisco at cscs.ch  Tue Dec 14 02:52:00 2004
+From: biddisco at cscs.ch (John Biddiscombe (CSCS))
+Date: Tue Dec 14 02:52:09 2004
+Subject: [Paraview] error using new reader
+In-Reply-To: <41BE2602.7060204@kitware.com>
+References: <41BDC121.9050708@cscs.ch> <41BE2602.7060204@kitware.com>
+Message-ID: <41BE9BA0.8040405@cscs.ch>
+
+Brad,
+
+> This is a bug related to the change of a reader from subclassing off 
+> of vtkSource to subclassing off of a different vtkAlgorithm subclass.  
+> I've add it to my to-do list to fix.
+
+Thanks, I've changed back to using the sources instead of algorithms and 
+it is behaving a bit more predictably now.
+
+cheers
+
+JB
+PS. If you want to explain what needs fixing I'll be happy to try it 
+later in the week.
+From Jason.Beech-Brandt at ed.ac.uk  Tue Dec 14 06:03:07 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Tue Dec 14 06:03:16 2004
+Subject: [Paraview] building paraview-1.8.1 on sparc-solaris 2.8
+In-Reply-To: <41BDDB11.3070406@kitware.com>
+References: <Pine.GSO.4.58.0412131445540.3825@deedee>
+	<41BDBC32.60501@kitware.com>
+	<Pine.GSO.4.58.0412131712310.3825@deedee>
+	<41BDDB11.3070406@kitware.com>
+Message-ID: <Pine.GSO.4.58.0412141101060.3825@deedee>
+
+Brad,
+
+I changed the line as you suggest below and it now compiles fine.  I
+didn't need to add a -lsocket to CMAKE_EXE_LINKER_FLAGS.
+
+Thanks for the help.
+
+Jason
+
+> Probably.  I'll have to update the try-compile test to include it.  For
+> now you can work around the problem by manually editing CMakeCache.txt
+> and switching the line
+>
+> VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=0
+>
+> to
+>
+> VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=1
+>
+> Then run make again.  You might also have to add -lsocket to your
+> CMAKE_EXE_LINKER_FLAGS setting.
+>
+> -Brad
+>
+>
+From andy.cedilnik at kitware.com  Tue Dec 14 08:07:40 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Tue Dec 14 08:07:27 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <41BEE59C.5000207@kitware.com>
+
+Hi Jon,
+
+ParaView currently only supports builtin TclTk.
+
+The TclTk in ParaView is build using two scripts. The
+configure_tcltk.sh.in does the configure (cmake) step, and
+build_tcltk.sh.in does the actual building. The two scripts are only
+written for standard unix using X11.
+
+       Andy
+
+Jon H Kaspersen wrote:
+
+> Hi again,
+>
+> Building ParaView using the X11 libs will work, I know - I have tried
+> that.
+> So, I was trying to build ParaView with the Carbon approach in order
+> not to be
+> depending on the X11 installation.  ParaView was building with the Carbon
+> approach a while back, but was buggy, probably because of the lack of
+> OS X
+> support in the Tcl/Tk version I used then.
+>
+> Regards
+> Jon
+>
+>>
+>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the
+>> source tree, so the version of Tcl on your system does not matter. 
+>> As far as this error, I think you have to build ParaView with
+>>
+>> VTK_USE_COCOA:BOOL=OFF
+>> VTK_USE_CARBON:BOOL=OFF
+>> VTK_USE_X:BOOL=ON
+>>
+>> -Brad
+>>
+>>
+> ========================================================
+> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+> Ph.D. Mechanical Engineering   
+> Senior Scientist
+> SINTEF Helse
+> N-7465 Trondheim
+> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>                 WEB:    http://www.sintef.no/medtek
+> ========================================================
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+-- 
+Andy Cedilnik
+Kitware Inc.
+
+From r2s2 at gmx.de  Tue Dec 14 09:52:17 2004
+From: r2s2 at gmx.de (Roland Schulz)
+Date: Tue Dec 14 09:52:35 2004
+Subject: [Paraview] Distributed Parallel File
+Message-ID: <200412141552.17183.r2s2@gmx.de>
+
+Hello,
+
+is it possilbe that each serial file out of a parallel file is only saved on 
+one of the nodes. How can one make sure that each node is trying to read the 
+correct one? Saving all serial files on a network file system makes the I/O 
+the bottleneck. 
+
+regards
+Roland Schulz
+
+-- 
+GalileiConsult e.V. - Studentische Unternehmensberatung Heidelberg 
+Roland Schulz - 2. Vorsitzender, IT
+Tel: +49 6221 736969, Mobil: +49 179 5313400, www.galileiconsult.de 
+
+Gru?
+Roland Schulz
+
+-- 
+GalileiConsult e.V. - Studentische Unternehmensberatung Heidelberg 
+Roland Schulz - 2. Vorsitzender, IT
+Tel: +49 6221 736969, Mobil: +49 179 5313400, www.galileiconsult.de 
+From mathieu.malaterre at kitware.com  Tue Dec 14 09:55:26 2004
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Tue Dec 14 09:55:44 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <41BEFEDE.9080405@kitware.com>
+
+Jon,
+
+	Could you try to apply the attached patch to your ParaView source. Go 
+to ParaView/Utilities/TclTk and then type:
+
+patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+
+Let us know how this work, thanks
+Mathieu
+
+Jon H Kaspersen wrote:
+> Hi again,
+> 
+> Building ParaView using the X11 libs will work, I know - I have tried that.
+> So, I was trying to build ParaView with the Carbon approach in order not 
+> to be
+> depending on the X11 installation.  ParaView was building with the Carbon
+> approach a while back, but was buggy, probably because of the lack of OS X
+> support in the Tcl/Tk version I used then.
+> 
+> Regards
+> Jon
+> 
+>>
+>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the source 
+>> tree, so the version of Tcl on your system does not matter.  As far as 
+>> this error, I think you have to build ParaView with
+>>
+>> VTK_USE_COCOA:BOOL=OFF
+>> VTK_USE_CARBON:BOOL=OFF
+>> VTK_USE_X:BOOL=ON
+>>
+>> -Brad
+>>
+>>
+> ========================================================
+> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+> Ph.D. Mechanical Engineering   
+> Senior Scientist
+> SINTEF Helse
+> N-7465 Trondheim
+> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>                 WEB:    http://www.sintef.no/medtek
+> ========================================================
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+
+From laa at lanl.gov  Tue Dec 14 11:15:58 2004
+From: laa at lanl.gov (Lee A Ankeny)
+Date: Tue Dec 14 11:16:08 2004
+Subject: [Paraview] Building Tcl/Tk via paraview (was ParaView on the Mac)
+In-Reply-To: <41BEE59C.5000207@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEE59C.5000207@kitware.com>
+Message-ID: <p0611040cbde4bf13c9cd@[128.165.113.89]>
+
+Andy,
+Your comments about how Tcl/Tk is built reminds me of a problem I have. Can Paraview's cmake files control the build properties of the embedded Tcl/Tk? Or will I have to hack configure_tcltk.sh.in in the source tree?
+
+In my case, I've got a x86_64 platform on which a gcc bug prevents me from building an optimized 64-bit executable. Until I get it solved I'd like to build with -m32, but CMAKE_CXX_FLAGS doesn't propagate to the Tcl build.
+
+Thanks,
+Lee
+
+At 8:07 AM -0500 12/14/04, Andy Cedilnik wrote:
+>Hi Jon,
+>
+>ParaView currently only supports builtin TclTk.
+>
+>The TclTk in ParaView is build using two scripts. The
+>configure_tcltk.sh.in does the configure (cmake) step, and
+>build_tcltk.sh.in does the actual building. The two scripts are only
+>written for standard unix using X11.
+>
+>       Andy
+>
+>Jon H Kaspersen wrote:
+>
+>> Hi again,
+>>
+>> Building ParaView using the X11 libs will work, I know - I have tried
+>> that.
+>> So, I was trying to build ParaView with the Carbon approach in order
+>> not to be
+>> depending on the X11 installation.  ParaView was building with the Carbon
+>> approach a while back, but was buggy, probably because of the lack of
+>> OS X
+>> support in the Tcl/Tk version I used then.
+>>
+>> Regards
+>> Jon
+>>
+>>>
+>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the
+>>> source tree, so the version of Tcl on your system does not matter.
+>>> As far as this error, I think you have to build ParaView with
+>>>
+>>> VTK_USE_COCOA:BOOL=OFF
+>>> VTK_USE_CARBON:BOOL=OFF
+>>> VTK_USE_X:BOOL=ON
+>>>
+>>> -Brad
+>>>
+>>>
+>> ========================================================
+>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>> Ph.D. Mechanical Engineering  
+>> Senior Scientist
+>> SINTEF Helse
+>> N-7465 Trondheim
+>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>                 WEB:    http://www.sintef.no/medtek
+>> ========================================================
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>--
+>Andy Cedilnik
+>Kitware Inc.
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+-- 
+-------------------------------------------------------------------
+Lee Ankeny
+Group CCN-12, MS B295, Los Alamos, NM 87545
+505-665-0195, FAX 505-665-5402, e-mail laa@lanl.gov
+From andy.cedilnik at kitware.com  Tue Dec 14 11:38:58 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Tue Dec 14 11:38:42 2004
+Subject: [Paraview] Re: Building Tcl/Tk via paraview (was ParaView on the
+	Mac)
+In-Reply-To: <p0611040cbde4bf13c9cd@[128.165.113.89]>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEE59C.5000207@kitware.com>
+	<p0611040cbde4bf13c9cd@[128.165.113.89]>
+Message-ID: <41BF1722.70503@kitware.com>
+
+Hi Lee,
+
+All you have to do is add something like:
+
+CFLAGS="@CMAKE_C_FLAGS@"
+export CFLAGS
+
+
+to both build and configure.
+
+       Andy
+
+Lee A Ankeny wrote:
+
+>Andy,
+>Your comments about how Tcl/Tk is built reminds me of a problem I have. Can Paraview's cmake files control the build properties of the embedded Tcl/Tk? Or will I have to hack configure_tcltk.sh.in in the source tree?
+>
+>In my case, I've got a x86_64 platform on which a gcc bug prevents me from building an optimized 64-bit executable. Until I get it solved I'd like to build with -m32, but CMAKE_CXX_FLAGS doesn't propagate to the Tcl build.
+>  
+>
+
+From Jon.H.Kaspersen at sintef.no  Tue Dec 14 15:00:56 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Tue Dec 14 15:01:03 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <41BEFEDE.9080405@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+Message-ID: <DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Mathieu,
+
+There was no attachment to your mail, could you please resend ?
+
+Regards
+Jon
+On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+
+> Jon,
+>
+> 	Could you try to apply the attached patch to your ParaView source. Go 
+> to ParaView/Utilities/TclTk and then type:
+>
+> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>
+> Let us know how this work, thanks
+> Mathieu
+>
+> Jon H Kaspersen wrote:
+>> Hi again,
+>> Building ParaView using the X11 libs will work, I know - I have tried 
+>> that.
+>> So, I was trying to build ParaView with the Carbon approach in order 
+>> not to be
+>> depending on the X11 installation.  ParaView was building with the 
+>> Carbon
+>> approach a while back, but was buggy, probably because of the lack of 
+>> OS X
+>> support in the Tcl/Tk version I used then.
+>> Regards
+>> Jon
+>>>
+>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the 
+>>> source tree, so the version of Tcl on your system does not matter.  
+>>> As far as this error, I think you have to build ParaView with
+>>>
+>>> VTK_USE_COCOA:BOOL=OFF
+>>> VTK_USE_CARBON:BOOL=OFF
+>>> VTK_USE_X:BOOL=ON
+>>>
+>>> -Brad
+>>>
+>>>
+>> ========================================================
+>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>> Ph.D. Mechanical Engineering   Senior Scientist
+>> SINTEF Helse
+>> N-7465 Trondheim
+>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>                 WEB:    http://www.sintef.no/medtek
+>> ========================================================
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From mathieu.malaterre at kitware.com  Tue Dec 14 15:05:04 2004
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Tue Dec 14 15:05:10 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <41BF4770.7000404@kitware.com>
+
+I am sorry, here it is.
+
+Mathieu
+
+Jon H Kaspersen wrote:
+> Mathieu,
+> 
+> There was no attachment to your mail, could you please resend ?
+> 
+> Regards
+> Jon
+> On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+> 
+>> Jon,
+>>
+>>     Could you try to apply the attached patch to your ParaView source. 
+>> Go to ParaView/Utilities/TclTk and then type:
+>>
+>> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>>
+>> Let us know how this work, thanks
+>> Mathieu
+>>
+>> Jon H Kaspersen wrote:
+>>
+>>> Hi again,
+>>> Building ParaView using the X11 libs will work, I know - I have tried 
+>>> that.
+>>> So, I was trying to build ParaView with the Carbon approach in order 
+>>> not to be
+>>> depending on the X11 installation.  ParaView was building with the 
+>>> Carbon
+>>> approach a while back, but was buggy, probably because of the lack of 
+>>> OS X
+>>> support in the Tcl/Tk version I used then.
+>>> Regards
+>>> Jon
+>>>
+>>>>
+>>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the 
+>>>> source tree, so the version of Tcl on your system does not matter.  
+>>>> As far as this error, I think you have to build ParaView with
+>>>>
+>>>> VTK_USE_COCOA:BOOL=OFF
+>>>> VTK_USE_CARBON:BOOL=OFF
+>>>> VTK_USE_X:BOOL=ON
+>>>>
+>>>> -Brad
+>>>>
+>>>>
+>>> ========================================================
+>>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>> SINTEF Helse
+>>> N-7465 Trondheim
+>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>                 WEB:    http://www.sintef.no/medtek
+>>> ========================================================
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>
+>>
+>>
+>>
+> ========================================================
+> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+> Ph.D. Mechanical Engineering   
+> Senior Scientist
+> SINTEF Helse
+> N-7465 Trondheim
+> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>                 WEB:    http://www.sintef.no/medtek
+> ========================================================
+> 
+> 
+
+-------------- next part --------------
+Index: CMakeLists.txt
+===================================================================
+RCS file: /cvsroot/ParaView/ParaView/Utilities/TclTk/CMakeLists.txt,v
+retrieving revision 1.19
+diff -u -3 -p -r1.19 CMakeLists.txt
+--- CMakeLists.txt	20 Aug 2004 15:06:27 -0000	1.19
++++ CMakeLists.txt	13 Dec 2004 16:48:30 -0000
+@@ -13,6 +13,12 @@
+ 
+ PROJECT(TclTk)
+ 
++SET(tk_include_paths "${TclTk_SOURCE_DIR}/tk8.4.5/generic")
++IF(VTK_USE_CARBON)
++  SET(tk_include_paths ${tk_include_paths} "${TclTk_SOURCE_DIR}/tk8.4.5/macosx")
++ENDIF(VTK_USE_CARBON)
++
++
+ IF(UNIX)
+   SET(TCL_TK_STATIC 1 CACHE INTERNAL "Build with static Tcl/Tk support. TCL_LIBRARY and TK_LIBRARY must point to the corresponding Tcl/Tk static libraries (example, tcl84sx.lib, tk84sx.lib)." FORCE)
+   SET(TclTk_BINARY_DIR_TCLBIN "${TclTk_BINARY_DIR}/tcl8.4.5/unix")
+@@ -53,7 +59,7 @@ IF(UNIX)
+   SET(TK_STUB_LIBRARY 
+     ${TclTk_BINARY_DIR_TKBIN}/libtkstub8.4${TCLTK_DEBUG_EXT}.a 
+     CACHE INTERNAL "Path to tk stub library" FORCE)
+-  SET(TK_INCLUDE_PATH ${TclTk_SOURCE_DIR}/tk8.4.5/generic 
++  SET(TK_INCLUDE_PATH "${tk_include_paths}"
+     CACHE INTERNAL "Path to tk include" FORCE)
+ 
+   CONFIGURE_FILE(${TclTk_SOURCE_DIR}/configure_tcltk.sh.in
+From Jon.H.Kaspersen at sintef.no  Tue Dec 14 15:27:39 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Tue Dec 14 15:27:50 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <41BF4770.7000404@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4770.7000404@kitware.com>
+Message-ID: <99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Hi Mathieu,
+
+I did the path and did a new make without make clean which resulted in  
+the
+following error :
+
+Building .o file from CXX:  vtkTkRenderWidget.o...
+In file included from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h: 
+81,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkInt.h:27,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXInt.h: 
+19,
+                  from  
+/Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:663: error: declaration
+    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  
+int)'
+    conflicts with
+/usr/include/X11/Xlib.h:3792: error: previous declaration `int
+    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:686: error: declaration
+    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+    conflicts with
+/usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+------snip-----
+
+Would it be an idea to do a make clean first and then a new make ?
+
+Regards
+Jon
+
+On Dec 14, 2004, at 9:05 PM, Mathieu Malaterre wrote:
+
+> I am sorry, here it is.
+>
+> Mathieu
+>
+> Jon H Kaspersen wrote:
+>> Mathieu,
+>> There was no attachment to your mail, could you please resend ?
+>> Regards
+>> Jon
+>> On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+>>> Jon,
+>>>
+>>>     Could you try to apply the attached patch to your ParaView  
+>>> source. Go to ParaView/Utilities/TclTk and then type:
+>>>
+>>> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>>>
+>>> Let us know how this work, thanks
+>>> Mathieu
+>>>
+>>> Jon H Kaspersen wrote:
+>>>
+>>>> Hi again,
+>>>> Building ParaView using the X11 libs will work, I know - I have  
+>>>> tried that.
+>>>> So, I was trying to build ParaView with the Carbon approach in  
+>>>> order not to be
+>>>> depending on the X11 installation.  ParaView was building with the  
+>>>> Carbon
+>>>> approach a while back, but was buggy, probably because of the lack  
+>>>> of OS X
+>>>> support in the Tcl/Tk version I used then.
+>>>> Regards
+>>>> Jon
+>>>>
+>>>>>
+>>>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the  
+>>>>> source tree, so the version of Tcl on your system does not matter.  
+>>>>>  As far as this error, I think you have to build ParaView with
+>>>>>
+>>>>> VTK_USE_COCOA:BOOL=OFF
+>>>>> VTK_USE_CARBON:BOOL=OFF
+>>>>> VTK_USE_X:BOOL=ON
+>>>>>
+>>>>> -Brad
+>>>>>
+>>>>>
+>>>> ========================================================
+>>>> Jon Harald Kaspersen                        Mob:       +47 93 03 65  
+>>>> 90
+>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>> SINTEF Helse
+>>>> N-7465 Trondheim
+>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>                 WEB:    http://www.sintef.no/medtek
+>>>> ========================================================
+>>>> _______________________________________________
+>>>> ParaView mailing list
+>>>> ParaView@paraview.org
+>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>>>
+>>>
+>>>
+>>>
+>> ========================================================
+>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>> Ph.D. Mechanical Engineering   Senior Scientist
+>> SINTEF Helse
+>> N-7465 Trondheim
+>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>                 WEB:    http://www.sintef.no/medtek
+>> ========================================================
+>
+> Index: CMakeLists.txt
+> ===================================================================
+> RCS file: /cvsroot/ParaView/ParaView/Utilities/TclTk/CMakeLists.txt,v
+> retrieving revision 1.19
+> diff -u -3 -p -r1.19 CMakeLists.txt
+> --- CMakeLists.txt	20 Aug 2004 15:06:27 -0000	1.19
+> +++ CMakeLists.txt	13 Dec 2004 16:48:30 -0000
+> @@ -13,6 +13,12 @@
+>
+>  PROJECT(TclTk)
+>
+> +SET(tk_include_paths "${TclTk_SOURCE_DIR}/tk8.4.5/generic")
+> +IF(VTK_USE_CARBON)
+> +  SET(tk_include_paths ${tk_include_paths}  
+> "${TclTk_SOURCE_DIR}/tk8.4.5/macosx")
+> +ENDIF(VTK_USE_CARBON)
+> +
+> +
+>  IF(UNIX)
+>    SET(TCL_TK_STATIC 1 CACHE INTERNAL "Build with static Tcl/Tk  
+> support. TCL_LIBRARY and TK_LIBRARY must point to the corresponding  
+> Tcl/Tk static libraries (example, tcl84sx.lib, tk84sx.lib)." FORCE)
+>    SET(TclTk_BINARY_DIR_TCLBIN "${TclTk_BINARY_DIR}/tcl8.4.5/unix")
+> @@ -53,7 +59,7 @@ IF(UNIX)
+>    SET(TK_STUB_LIBRARY
+>      ${TclTk_BINARY_DIR_TKBIN}/libtkstub8.4${TCLTK_DEBUG_EXT}.a
+>      CACHE INTERNAL "Path to tk stub library" FORCE)
+> -  SET(TK_INCLUDE_PATH ${TclTk_SOURCE_DIR}/tk8.4.5/generic
+> +  SET(TK_INCLUDE_PATH "${tk_include_paths}"
+>      CACHE INTERNAL "Path to tk include" FORCE)
+>
+>    CONFIGURE_FILE(${TclTk_SOURCE_DIR}/configure_tcltk.sh.in
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From mathieu.malaterre at kitware.com  Tue Dec 14 15:41:06 2004
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Tue Dec 14 15:41:09 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4770.7000404@kitware.com>
+	<99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <41BF4FE2.1000503@kitware.com>
+
+Jon,
+
+	What is the value of this variable from your CMakeCache.txt:
+
+TK_INTERNAL_PATH ?
+
+	Mine look like this :
+
+TK_INTERNAL_PATH:PATH=~/ParaView/VTK/Utilities/TclTk/internals/tk8.4
+
+Thanks
+Mathieu
+
+Jon H Kaspersen wrote:
+> Hi Mathieu,
+> 
+> I did the path and did a new make without make clean which resulted in  the
+> following error :
+> 
+> Building .o file from CXX:  vtkTkRenderWidget.o...
+> In file included from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h: 81,
+>                  from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+>                  from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkInt.h:27,
+>                  from  
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXInt.h: 19,
+>                  from  
+> /Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+>                  from  
+> /Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+> tkIntXlibDecls.h:663: error: declaration
+>    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  int)'
+>    conflicts with
+> /usr/include/X11/Xlib.h:3792: error: previous declaration `int
+>    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+> tkIntXlibDecls.h:686: error: declaration
+>    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+>    conflicts with
+> /usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+> ------snip-----
+> 
+> Would it be an idea to do a make clean first and then a new make ?
+> 
+> Regards
+> Jon
+> 
+> On Dec 14, 2004, at 9:05 PM, Mathieu Malaterre wrote:
+> 
+>> I am sorry, here it is.
+>>
+>> Mathieu
+>>
+>> Jon H Kaspersen wrote:
+>>
+>>> Mathieu,
+>>> There was no attachment to your mail, could you please resend ?
+>>> Regards
+>>> Jon
+>>> On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+>>>
+>>>> Jon,
+>>>>
+>>>>     Could you try to apply the attached patch to your ParaView  
+>>>> source. Go to ParaView/Utilities/TclTk and then type:
+>>>>
+>>>> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>>>>
+>>>> Let us know how this work, thanks
+>>>> Mathieu
+>>>>
+>>>> Jon H Kaspersen wrote:
+>>>>
+>>>>> Hi again,
+>>>>> Building ParaView using the X11 libs will work, I know - I have  
+>>>>> tried that.
+>>>>> So, I was trying to build ParaView with the Carbon approach in  
+>>>>> order not to be
+>>>>> depending on the X11 installation.  ParaView was building with the  
+>>>>> Carbon
+>>>>> approach a while back, but was buggy, probably because of the lack  
+>>>>> of OS X
+>>>>> support in the Tcl/Tk version I used then.
+>>>>> Regards
+>>>>> Jon
+>>>>>
+>>>>>>
+>>>>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the  
+>>>>>> source tree, so the version of Tcl on your system does not 
+>>>>>> matter.   As far as this error, I think you have to build ParaView 
+>>>>>> with
+>>>>>>
+>>>>>> VTK_USE_COCOA:BOOL=OFF
+>>>>>> VTK_USE_CARBON:BOOL=OFF
+>>>>>> VTK_USE_X:BOOL=ON
+>>>>>>
+>>>>>> -Brad
+>>>>>>
+>>>>>>
+>>>>> ========================================================
+>>>>> Jon Harald Kaspersen                        Mob:       +47 93 03 
+>>>>> 65  90
+>>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>>> SINTEF Helse
+>>>>> N-7465 Trondheim
+>>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>>                 WEB:    http://www.sintef.no/medtek
+>>>>> ========================================================
+>>>>> _______________________________________________
+>>>>> ParaView mailing list
+>>>>> ParaView@paraview.org
+>>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>>
+>>>>
+>>>>
+>>>>
+>>>>
+>>>>
+>>> ========================================================
+>>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>> SINTEF Helse
+>>> N-7465 Trondheim
+>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>                 WEB:    http://www.sintef.no/medtek
+>>> ========================================================
+>>
+>>
+>> Index: CMakeLists.txt
+>> ===================================================================
+>> RCS file: /cvsroot/ParaView/ParaView/Utilities/TclTk/CMakeLists.txt,v
+>> retrieving revision 1.19
+>> diff -u -3 -p -r1.19 CMakeLists.txt
+>> --- CMakeLists.txt    20 Aug 2004 15:06:27 -0000    1.19
+>> +++ CMakeLists.txt    13 Dec 2004 16:48:30 -0000
+>> @@ -13,6 +13,12 @@
+>>
+>>  PROJECT(TclTk)
+>>
+>> +SET(tk_include_paths "${TclTk_SOURCE_DIR}/tk8.4.5/generic")
+>> +IF(VTK_USE_CARBON)
+>> +  SET(tk_include_paths ${tk_include_paths}  
+>> "${TclTk_SOURCE_DIR}/tk8.4.5/macosx")
+>> +ENDIF(VTK_USE_CARBON)
+>> +
+>> +
+>>  IF(UNIX)
+>>    SET(TCL_TK_STATIC 1 CACHE INTERNAL "Build with static Tcl/Tk  
+>> support. TCL_LIBRARY and TK_LIBRARY must point to the corresponding  
+>> Tcl/Tk static libraries (example, tcl84sx.lib, tk84sx.lib)." FORCE)
+>>    SET(TclTk_BINARY_DIR_TCLBIN "${TclTk_BINARY_DIR}/tcl8.4.5/unix")
+>> @@ -53,7 +59,7 @@ IF(UNIX)
+>>    SET(TK_STUB_LIBRARY
+>>      ${TclTk_BINARY_DIR_TKBIN}/libtkstub8.4${TCLTK_DEBUG_EXT}.a
+>>      CACHE INTERNAL "Path to tk stub library" FORCE)
+>> -  SET(TK_INCLUDE_PATH ${TclTk_SOURCE_DIR}/tk8.4.5/generic
+>> +  SET(TK_INCLUDE_PATH "${tk_include_paths}"
+>>      CACHE INTERNAL "Path to tk include" FORCE)
+>>
+>>    CONFIGURE_FILE(${TclTk_SOURCE_DIR}/configure_tcltk.sh.in
+>>
+> ========================================================
+> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+> Ph.D. Mechanical Engineering   
+> Senior Scientist
+> SINTEF Helse
+> N-7465 Trondheim
+> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>                 WEB:    http://www.sintef.no/medtek
+> ========================================================
+> 
+> 
+
+
+
+From Jon.H.Kaspersen at sintef.no  Tue Dec 14 15:46:16 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Tue Dec 14 15:46:23 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <41BF4FE2.1000503@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4770.7000404@kitware.com>
+	<99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4FE2.1000503@kitware.com>
+Message-ID: <3384EAEE-4E11-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Mathieu,
+
+Mine looks like :
+
+//The path to the Tk internal headers (tkMacOSXPort.h).
+TK_INTERNAL_PATH:PATH=/Users/jonk/cvs/VTK/Utilities/TclTk/internals/ 
+tk8.4
+
+Regards
+Jon
+On Dec 14, 2004, at 9:41 PM, Mathieu Malaterre wrote:
+
+> Jon,
+>
+> 	What is the value of this variable from your CMakeCache.txt:
+>
+> TK_INTERNAL_PATH ?
+>
+> 	Mine look like this :
+>
+> TK_INTERNAL_PATH:PATH=~/ParaView/VTK/Utilities/TclTk/internals/tk8.4
+>
+> Thanks
+> Mathieu
+>
+> Jon H Kaspersen wrote:
+>> Hi Mathieu,
+>> I did the path and did a new make without make clean which resulted  
+>> in  the
+>> following error :
+>> Building .o file from CXX:  vtkTkRenderWidget.o...
+>> In file included from   
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/ 
+>> tkMacOSXPort.h: 81,
+>>                  from   
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+>>                  from   
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkInt.h:27,
+>>                  from   
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/ 
+>> tkMacOSXInt.h: 19,
+>>                  from   
+>> /Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+>>                  from   
+>> /Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/  
+>> tkIntXlibDecls.h:663: error: declaration
+>>    of C function `void XSetDashes(Display*, _XGC*, int, const char*,   
+>> int)'
+>>    conflicts with
+>> /usr/include/X11/Xlib.h:3792: error: previous declaration `int
+>>    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/  
+>> tkIntXlibDecls.h:686: error: declaration
+>>    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char,  
+>> int)'
+>>    conflicts with
+>> /usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+>> ------snip-----
+>> Would it be an idea to do a make clean first and then a new make ?
+>> Regards
+>> Jon
+>> On Dec 14, 2004, at 9:05 PM, Mathieu Malaterre wrote:
+>>> I am sorry, here it is.
+>>>
+>>> Mathieu
+>>>
+>>> Jon H Kaspersen wrote:
+>>>
+>>>> Mathieu,
+>>>> There was no attachment to your mail, could you please resend ?
+>>>> Regards
+>>>> Jon
+>>>> On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+>>>>
+>>>>> Jon,
+>>>>>
+>>>>>     Could you try to apply the attached patch to your ParaView   
+>>>>> source. Go to ParaView/Utilities/TclTk and then type:
+>>>>>
+>>>>> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>>>>>
+>>>>> Let us know how this work, thanks
+>>>>> Mathieu
+>>>>>
+>>>>> Jon H Kaspersen wrote:
+>>>>>
+>>>>>> Hi again,
+>>>>>> Building ParaView using the X11 libs will work, I know - I have   
+>>>>>> tried that.
+>>>>>> So, I was trying to build ParaView with the Carbon approach in   
+>>>>>> order not to be
+>>>>>> depending on the X11 installation.  ParaView was building with  
+>>>>>> the  Carbon
+>>>>>> approach a while back, but was buggy, probably because of the  
+>>>>>> lack  of OS X
+>>>>>> support in the Tcl/Tk version I used then.
+>>>>>> Regards
+>>>>>> Jon
+>>>>>>
+>>>>>>>
+>>>>>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the   
+>>>>>>> source tree, so the version of Tcl on your system does not  
+>>>>>>> matter.   As far as this error, I think you have to build  
+>>>>>>> ParaView with
+>>>>>>>
+>>>>>>> VTK_USE_COCOA:BOOL=OFF
+>>>>>>> VTK_USE_CARBON:BOOL=OFF
+>>>>>>> VTK_USE_X:BOOL=ON
+>>>>>>>
+>>>>>>> -Brad
+>>>>>>>
+>>>>>>>
+>>>>>> ========================================================
+>>>>>> Jon Harald Kaspersen                        Mob:       +47 93 03  
+>>>>>> 65  90
+>>>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>>>> SINTEF Helse
+>>>>>> N-7465 Trondheim
+>>>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>>>                 WEB:    http://www.sintef.no/medtek
+>>>>>> ========================================================
+>>>>>> _______________________________________________
+>>>>>> ParaView mailing list
+>>>>>> ParaView@paraview.org
+>>>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>> ========================================================
+>>>> Jon Harald Kaspersen                        Mob:       +47 93 03 65  
+>>>> 90
+>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>> SINTEF Helse
+>>>> N-7465 Trondheim
+>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>                 WEB:    http://www.sintef.no/medtek
+>>>> ========================================================
+>>>
+>>>
+>>> Index: CMakeLists.txt
+>>> ===================================================================
+>>> RCS file: /cvsroot/ParaView/ParaView/Utilities/TclTk/CMakeLists.txt,v
+>>> retrieving revision 1.19
+>>> diff -u -3 -p -r1.19 CMakeLists.txt
+>>> --- CMakeLists.txt    20 Aug 2004 15:06:27 -0000    1.19
+>>> +++ CMakeLists.txt    13 Dec 2004 16:48:30 -0000
+>>> @@ -13,6 +13,12 @@
+>>>
+>>>  PROJECT(TclTk)
+>>>
+>>> +SET(tk_include_paths "${TclTk_SOURCE_DIR}/tk8.4.5/generic")
+>>> +IF(VTK_USE_CARBON)
+>>> +  SET(tk_include_paths ${tk_include_paths}   
+>>> "${TclTk_SOURCE_DIR}/tk8.4.5/macosx")
+>>> +ENDIF(VTK_USE_CARBON)
+>>> +
+>>> +
+>>>  IF(UNIX)
+>>>    SET(TCL_TK_STATIC 1 CACHE INTERNAL "Build with static Tcl/Tk   
+>>> support. TCL_LIBRARY and TK_LIBRARY must point to the corresponding   
+>>> Tcl/Tk static libraries (example, tcl84sx.lib, tk84sx.lib)." FORCE)
+>>>    SET(TclTk_BINARY_DIR_TCLBIN "${TclTk_BINARY_DIR}/tcl8.4.5/unix")
+>>> @@ -53,7 +59,7 @@ IF(UNIX)
+>>>    SET(TK_STUB_LIBRARY
+>>>      ${TclTk_BINARY_DIR_TKBIN}/libtkstub8.4${TCLTK_DEBUG_EXT}.a
+>>>      CACHE INTERNAL "Path to tk stub library" FORCE)
+>>> -  SET(TK_INCLUDE_PATH ${TclTk_SOURCE_DIR}/tk8.4.5/generic
+>>> +  SET(TK_INCLUDE_PATH "${tk_include_paths}"
+>>>      CACHE INTERNAL "Path to tk include" FORCE)
+>>>
+>>>    CONFIGURE_FILE(${TclTk_SOURCE_DIR}/configure_tcltk.sh.in
+>>>
+>> ========================================================
+>> Jon Harald Kaspersen                        Mob:       +47 93 03 65 90
+>> Ph.D. Mechanical Engineering   Senior Scientist
+>> SINTEF Helse
+>> N-7465 Trondheim
+>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>                 WEB:    http://www.sintef.no/medtek
+>> ========================================================
+>
+>
+>
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From Jon.H.Kaspersen at sintef.no  Wed Dec 15 03:17:46 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Wed Dec 15 03:17:51 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <3384EAEE-4E11-11D9-90D7-000A95DBC4D8@sintef.no>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4770.7000404@kitware.com>
+	<99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4FE2.1000503@kitware.com>
+	<3384EAEE-4E11-11D9-90D7-000A95DBC4D8@sintef.no>
+Message-ID: <CD6B5082-4E71-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Mathieu,
+
+I did a completely clean build of ParaView using your patch.  Still I  
+am seeing
+this error:
+Building .o file from CXX:  vtkTkRenderWidget.o...
+In file included from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h: 
+81,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkInt.h:27,
+                  from  
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXInt.h: 
+19,
+                  from  
+/Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:663: error: declaration
+    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  
+int)'
+    conflicts with
+/usr/include/X11/Xlib.h:3792: error: previous declaration `int
+    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:686: error: declaration
+    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+    conflicts with
+/usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+
+My TK_INTERNAL_PATH is pointing at the same directory as yours now:
+~/ParaView/VTK/Utilities/TclTk/internals/tk8.4
+
+Any suggestions ?
+
+Regards
+Jon
+On Dec 14, 2004, at 9:46 PM, Jon H Kaspersen wrote:
+
+> Mathieu,
+>
+> Mine looks like :
+>
+> //The path to the Tk internal headers (tkMacOSXPort.h).
+> TK_INTERNAL_PATH:PATH=/Users/jonk/cvs/VTK/Utilities/TclTk/internals/ 
+> tk8.4
+>
+> Regards
+> Jon
+> On Dec 14, 2004, at 9:41 PM, Mathieu Malaterre wrote:
+>
+>> Jon,
+>>
+>> 	What is the value of this variable from your CMakeCache.txt:
+>>
+>> TK_INTERNAL_PATH ?
+>>
+>> 	Mine look like this :
+>>
+>> TK_INTERNAL_PATH:PATH=~/ParaView/VTK/Utilities/TclTk/internals/tk8.4
+>>
+>> Thanks
+>> Mathieu
+>>
+>> Jon H Kaspersen wrote:
+>>> Hi Mathieu,
+>>> I did the path and did a new make without make clean which resulted  
+>>> in  the
+>>> following error :
+>>> Building .o file from CXX:  vtkTkRenderWidget.o...
+>>> In file included from   
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/ 
+>>> tkMacOSXPort.h: 81,
+>>>                  from   
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkPort.h: 
+>>> 32,
+>>>                  from   
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/tkInt.h:27,
+>>>                  from   
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/macosx/ 
+>>> tkMacOSXInt.h: 19,
+>>>                  from   
+>>> /Users/jonk/cvs/ParaViewbin/VTK/Rendering/vtkTkInternals.h:34,
+>>>                  from   
+>>> /Users/jonk/cvs/ParaView/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/  
+>>> tkIntXlibDecls.h:663: error: declaration
+>>>    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  
+>>>  int)'
+>>>    conflicts with
+>>> /usr/include/X11/Xlib.h:3792: error: previous declaration `int
+>>>    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+>>> /Users/jonk/cvs/ParaView/Utilities/TclTk/tk8.4.5/generic/  
+>>> tkIntXlibDecls.h:686: error: declaration
+>>>    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char,  
+>>> int)'
+>>>    conflicts with
+>>> /usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+>>> ------snip-----
+>>> Would it be an idea to do a make clean first and then a new make ?
+>>> Regards
+>>> Jon
+>>> On Dec 14, 2004, at 9:05 PM, Mathieu Malaterre wrote:
+>>>> I am sorry, here it is.
+>>>>
+>>>> Mathieu
+>>>>
+>>>> Jon H Kaspersen wrote:
+>>>>
+>>>>> Mathieu,
+>>>>> There was no attachment to your mail, could you please resend ?
+>>>>> Regards
+>>>>> Jon
+>>>>> On Dec 14, 2004, at 3:55 PM, Mathieu Malaterre wrote:
+>>>>>
+>>>>>> Jon,
+>>>>>>
+>>>>>>     Could you try to apply the attached patch to your ParaView   
+>>>>>> source. Go to ParaView/Utilities/TclTk and then type:
+>>>>>>
+>>>>>> patch -p0 < /tmp/patch (assuming you save the attachment in /tmp)
+>>>>>>
+>>>>>> Let us know how this work, thanks
+>>>>>> Mathieu
+>>>>>>
+>>>>>> Jon H Kaspersen wrote:
+>>>>>>
+>>>>>>> Hi again,
+>>>>>>> Building ParaView using the X11 libs will work, I know - I have   
+>>>>>>> tried that.
+>>>>>>> So, I was trying to build ParaView with the Carbon approach in   
+>>>>>>> order not to be
+>>>>>>> depending on the X11 installation.  ParaView was building with  
+>>>>>>> the  Carbon
+>>>>>>> approach a while back, but was buggy, probably because of the  
+>>>>>>> lack  of OS X
+>>>>>>> support in the Tcl/Tk version I used then.
+>>>>>>> Regards
+>>>>>>> Jon
+>>>>>>>
+>>>>>>>>
+>>>>>>>> ParaView always builds its own Tcl/Tk (8.4.5) that comes in the  
+>>>>>>>>  source tree, so the version of Tcl on your system does not  
+>>>>>>>> matter.   As far as this error, I think you have to build  
+>>>>>>>> ParaView with
+>>>>>>>>
+>>>>>>>> VTK_USE_COCOA:BOOL=OFF
+>>>>>>>> VTK_USE_CARBON:BOOL=OFF
+>>>>>>>> VTK_USE_X:BOOL=ON
+>>>>>>>>
+>>>>>>>> -Brad
+>>>>>>>>
+>>>>>>>>
+>>>>>>> ========================================================
+>>>>>>> Jon Harald Kaspersen                        Mob:       +47 93 03  
+>>>>>>> 65  90
+>>>>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>>>>> SINTEF Helse
+>>>>>>> N-7465 Trondheim
+>>>>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>>>>                 WEB:    http://www.sintef.no/medtek
+>>>>>>> ========================================================
+>>>>>>> _______________________________________________
+>>>>>>> ParaView mailing list
+>>>>>>> ParaView@paraview.org
+>>>>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>> ========================================================
+>>>>> Jon Harald Kaspersen                        Mob:       +47 93 03  
+>>>>> 65 90
+>>>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>>>> SINTEF Helse
+>>>>> N-7465 Trondheim
+>>>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>>>                 WEB:    http://www.sintef.no/medtek
+>>>>> ========================================================
+>>>>
+>>>>
+>>>> Index: CMakeLists.txt
+>>>> ===================================================================
+>>>> RCS file:  
+>>>> /cvsroot/ParaView/ParaView/Utilities/TclTk/CMakeLists.txt,v
+>>>> retrieving revision 1.19
+>>>> diff -u -3 -p -r1.19 CMakeLists.txt
+>>>> --- CMakeLists.txt    20 Aug 2004 15:06:27 -0000    1.19
+>>>> +++ CMakeLists.txt    13 Dec 2004 16:48:30 -0000
+>>>> @@ -13,6 +13,12 @@
+>>>>
+>>>>  PROJECT(TclTk)
+>>>>
+>>>> +SET(tk_include_paths "${TclTk_SOURCE_DIR}/tk8.4.5/generic")
+>>>> +IF(VTK_USE_CARBON)
+>>>> +  SET(tk_include_paths ${tk_include_paths}   
+>>>> "${TclTk_SOURCE_DIR}/tk8.4.5/macosx")
+>>>> +ENDIF(VTK_USE_CARBON)
+>>>> +
+>>>> +
+>>>>  IF(UNIX)
+>>>>    SET(TCL_TK_STATIC 1 CACHE INTERNAL "Build with static Tcl/Tk   
+>>>> support. TCL_LIBRARY and TK_LIBRARY must point to the corresponding  
+>>>>  Tcl/Tk static libraries (example, tcl84sx.lib, tk84sx.lib)."  
+>>>> FORCE)
+>>>>    SET(TclTk_BINARY_DIR_TCLBIN "${TclTk_BINARY_DIR}/tcl8.4.5/unix")
+>>>> @@ -53,7 +59,7 @@ IF(UNIX)
+>>>>    SET(TK_STUB_LIBRARY
+>>>>      ${TclTk_BINARY_DIR_TKBIN}/libtkstub8.4${TCLTK_DEBUG_EXT}.a
+>>>>      CACHE INTERNAL "Path to tk stub library" FORCE)
+>>>> -  SET(TK_INCLUDE_PATH ${TclTk_SOURCE_DIR}/tk8.4.5/generic
+>>>> +  SET(TK_INCLUDE_PATH "${tk_include_paths}"
+>>>>      CACHE INTERNAL "Path to tk include" FORCE)
+>>>>
+>>>>    CONFIGURE_FILE(${TclTk_SOURCE_DIR}/configure_tcltk.sh.in
+>>>>
+>>> ========================================================
+>>> Jon Harald Kaspersen                        Mob:       +47 93 03 65  
+>>> 90
+>>> Ph.D. Mechanical Engineering   Senior Scientist
+>>> SINTEF Helse
+>>> N-7465 Trondheim
+>>> NORWAY            e-mail:    Jon.H.Kaspersen@sintef.no
+>>>                 WEB:    http://www.sintef.no/medtek
+>>> ========================================================
+>>
+>>
+>>
+>>
+> ========================================================
+> Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+> Ph.D. Mechanical Engineering	
+> Senior Scientist
+> SINTEF Helse
+> N-7465 Trondheim
+> NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+> 				WEB:	http://www.sintef.no/medtek
+> ========================================================
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From Berend at tfd.chalmers.se  Wed Dec 15 03:54:43 2004
+From: Berend at tfd.chalmers.se (Berend van Wachem)
+Date: Wed Dec 15 03:57:11 2004
+Subject: [Paraview] integration of a variable
+Message-ID: <41BFFBD3.9060708@tfd.chalmers.se>
+
+Hi,
+
+I would like to integrate a variable over a surface; is this possible in 
+  paraview, and so, how do I do this?
+
+An example of this is, when I have the variables velocity and density 
+defined, and I want to calculate the massflow going through a surface. I 
+need to calculate the cell face velocity times the cell face density 
+times the cell face area times the cell face normal and then sum these 
+values for all cell faces lying on a surface. Can this be done in Paraview?
+
+Thanks,
+
+Berend van Wachem.
+From roland.schulz at galileiconsult.de  Tue Dec 14 09:50:22 2004
+From: roland.schulz at galileiconsult.de (Roland Schulz)
+Date: Wed Dec 15 08:43:13 2004
+Subject: [Paraview] Distributed Parallel File
+Message-ID: <200412141550.22647.roland.schulz@galileiconsult.de>
+
+Hello,
+
+is it possilbe that each serial file out of a parallel file is only saved on 
+one of the nodes. How can one make sure that each node is trying to read the 
+correct one? Saving all serial files on a network file system makes the I/O 
+the bottleneck. 
+
+regards
+Roland Schulz
+
+-- 
+GalileiConsult e.V. - Studentische Unternehmensberatung Heidelberg 
+Roland Schulz - 2. Vorsitzender, IT
+Tel: +49 6221 736969, Mobil: +49 179 5313400, www.galileiconsult.de 
+From ken.martin at kitware.com  Wed Dec 15 08:47:48 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Wed Dec 15 08:49:54 2004
+Subject: [Paraview] ParaView 1.8.2 Released
+Message-ID: <20041215134950.NYTZ8244.fep01.biz.rr.com@Grayson>
+
+We have tagged and placed ParaView 1.8.2 for download from www.paraview.org.
+Changes from 1.8.1 include:
+
+Changes in 1.8.2
+
+- added log10 button to calculator
+- fixed the array calculator to handle cell data
+- fixed memory leak in MPI sends for vtkParallelRenderManager
+- fixed a "no-input" issue with vtkDistributedDataFilter (D3) 
+- fix for non-IceT compositor and offscreen rendering accessing the display
+- fix for the Data Caching on the Animation Tab
+- fix to updating the contour filter scalar range 
+- fix for EnSight readers to better handle valid EnSight files
+
+Thanks
+Ken
+
+
+From brad.king at kitware.com  Wed Dec 15 10:09:38 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed Dec 15 10:09:44 2004
+Subject: [Paraview] Removed windows.h from VTK headers.
+Message-ID: <41C053B2.5060508@kitware.com>
+
+Hello all,
+
+I have committed changes to VTK that completely remove windows.h from
+most of its headers.  This addresses bug #836.  Documentation of this
+change is available in
+VTK/Utilities/Upgrading/FindWindowsMangledMethods.cmake.
+
+Since many files were changes I will not report their individual
+revision numbers.  The CVS tags surrounding this change are:
+
+VTK-RemoveWindowsH-pre
+VTK-RemoveWindowsH-post
+
+This change results in a 70% compile time reduction on Windows
+compilers because the compiler does not have to parse the 280K lines
+of source the preprocessor produces from windows.h.  Only a few OpenGL
+and Tk headers in the Rendering directory and
+Common/vtkCriticalSection.h still include windows.h, and these may be
+removed in the future.  All VTK code that still includes windows.h
+does so through vtkWindows.h which includes a minimal part of the real
+windows.h header.
+
+In order to avoid the windows method mangling problem all three
+possible names for such methods (Foo, FooA, and FooW) are provided
+using a preprocessor trick.  Users can detect places in their own code
+that may need this trick by using the cmake script
+VTK/Utilities/Upgrading/FindWindowsMangledMethods.cmake.
+
+There are two backward-compatibility issues:
+
+1.) User code that used the windows API without including windows.h
+   that worked before because VTK included it will now break until the
+   explicit inclusion is added.  This is considered acceptable because
+   the code was technically wrong in the first place.  As a quick-fix,
+   users can define VTK_INCLUDE_WINDOWS_H in their application and VTK
+   will include windows.h as it did before.
+
+2.) A few virtual functions in VTK were renamed and replaced by
+   non-virtuals that forward their calls to a virtual internal
+   implementation.  User code calling these methods will not be
+   affected.  User code wishing to override these methods in a subclass
+   will have to rename to the internal name.  Such user methods will
+   also be exposed by the above mentioned CMake script.  The most
+   common such method is GetClassName, which has been renamed to
+   GetClassNameInternal.  Since user code is supposed to define this
+   method by using vtkTypeMacro or vtkTypeRevisionMacro, this should
+   not be a problem.
+
+-Brad
+From jfavre at cscs.ch  Wed Dec 15 10:45:18 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Wed Dec 15 10:45:39 2004
+Subject: [Paraview] running pvbach with external library?
+In-Reply-To: <1095858472.15785.1.camel@silverymoon>
+References: <BAY2-F11nLJm2ZBNCog0001eccd@hotmail.com>
+	<1095858472.15785.1.camel@silverymoon>
+Message-ID: <41C05C0E.3060006@cscs.ch>
+
+Hello
+
+I am trying to run pvbatch (version 1.8.1) with the batch files saved by 
+a session of ParaView which loads a local lib. The problem is that the 
+name of the library is given in the XML file, and that the batch file 
+only contains reference to the PVSM file. Thus, pvbatch does not see the 
+library name: Here is the error for PVLocal from the Examples directory:
+========================
+
+ERROR: In 
+/local/apps/paraview-1.8.1/Servers/Common/vtkProcessModule.cxx, line 550
+vtkPVMPIProcessModule (0x805f828): Cannot create object of type 
+"vtkLocalConeSource".
+while processing
+Message 0 = New
+   Argument 0 = string_value {vtkLocalConeSource}
+   Argument 1 = id_value {80}
+
+
+Cannot create object of type "vtkLocalConeSource".
+ERROR: In 
+/local/apps/paraview-1.8.1/Servers/Common/vtkProcessModule.cxx, line 553
+vtkPVMPIProcessModule (0x805f828): Aborting execution for debugging 
+purposes.
+
+Abort
+
+============================
+
+The batch file does an AddConfigurationFile with PVLocal.pvsm but it has 
+no reference to libPVLocal.so
+
+======= batch file executed =============
+# ParaView Version 1.8
+
+
+#Initialization
+
+vtkSMObject foo
+set proxyManager [foo GetProxyManager]
+
+set smApplication [foo GetApplication]
+$smApplication AddConfigurationFile PVLocal.pvsm 
+/local/apps/paraview-1.8.1/Examples/PVLocal
+$smApplication ParseConfigurationFiles
+foo Delete
+
+
+===============================
+
+Thanks for any pointer:
+
+Jean
+====
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From stout.jeremy at gmail.com  Wed Dec 15 13:53:01 2004
+From: stout.jeremy at gmail.com (Jeremy Stout)
+Date: Wed Dec 15 13:53:14 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+Message-ID: <a6bc6cc04121510533f69805f@mail.gmail.com>
+
+Hello, I'm looking for any information related to the algorithms
+employed by Paraview when it is used in parallel mode. I know how to
+setup Paraview to run in parallel mode.  I am interested in learning
+how Paraview distributes the VTK pipeline (I'm assuming it does) and
+how it handles the distribution of data files.  I would like to use
+this information to be able to see if I could do anything to optimize
+my current Paraview installation.
+
+Any help that can be offered in this matter would be greatly appreciated.
+
+Jeremy Stout
+From biddisco at cscs.ch  Thu Dec 16 07:31:00 2004
+From: biddisco at cscs.ch (John Biddiscombe (CSCS))
+Date: Thu Dec 16 07:31:19 2004
+Subject: [Paraview] another error message using custom reader
+Message-ID: <41C18004.8030605@cscs.ch>
+
+I'm using today's cvs (but I've tried with several versions), and I have 
+a new error. the reader generates a heirarchical box dataset with a 
+single uniform grid inside it. The reader reads data ok and pumps out 
+some info for me for debugging, but once it finishes the executedata 
+method, the error below pops up.  I'm not sure where to look for this 
+vtkMPIMoveData data problem. If anyone can point me in the correct 
+direction, please do...
+
+incidentally, notice that the update extent of the box is 0,-1.... which 
+is what I'd expect on first pass, because the pipeline doesn't know how 
+big the data is until  executeinformation has generated the size, but 
+once we get to execute data I would expect the streaming mechanism to 
+have puit something in there. I'm hoping to run the file reader on 8 
+nodes and break the file read up between them. Do the heiracrchical box  
+datasts handle extents the same as structured data...
+
+anyway..thanks in advance for any clues
+
+JB
+ 
+
+ExecuteInformation : UpdateExtent is : 0 -1 0 -1 0 -1
+ExecuteData : UpdateExtent is : 0 -1 0 -1 0 -1
+this->DataExtent : 0 499 0 499 0 99
+Compressed size of /workspace/biddisco/meteo_ieee2004/QGRAUPf12.bin.gz 
+is 74162342
+creating float array QGRAUP
+Range : 0 1e+35
+Vis array was NULL
+Blanked off 103903 Points, out of 25000000
+ErrorMessage
+# Error or warning: There was a VTK Error in file: 
+/local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (550)
+ Object type: vtkMPIMoveData, could not find requested method: "SetInput"
+or the method was called with incorrect arguments.
+
+while processing
+Message 0 = Invoke
+  Argument 0 = id_value {1289}
+  Argument 1 = string_value {SetInput}
+  Argument 2 = id_value {1255}
+ErrorMessage end
+Object type: vtkMPIMoveData, could not find requested method: "SetInput"
+or the method was called with incorrect arguments.
+
+ErrorMessage
+# Error or warning: There was a VTK Error in file: 
+/local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (553)
+ Aborting execution for debugging purposes.
+ErrorMessage end
+Abort (core dumped)
+
+-- 
+John Biddiscombe,                            email:biddisco @ cscs.ch
+http://www.cscs.ch/about/BJohn.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.07
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From brad.king at kitware.com  Thu Dec 16 08:09:46 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Dec 16 08:09:56 2004
+Subject: [Paraview] Distributed Parallel File
+In-Reply-To: <200412141550.22647.roland.schulz@galileiconsult.de>
+References: <200412141550.22647.roland.schulz@galileiconsult.de>
+Message-ID: <41C1891A.9060401@kitware.com>
+
+Roland Schulz wrote:
+> is it possilbe that each serial file out of a parallel file is only saved on 
+> one of the nodes. How can one make sure that each node is trying to read the 
+> correct one? Saving all serial files on a network file system makes the I/O 
+> the bottleneck. 
+
+When running in mpi mode this is the default if the output path is not 
+on a shared disk.  The only restriction is that the path be the same on 
+all the local disks.  If you read it back in using the same set of nodes 
+then each node should only need to read data from the file it wrote.
+
+-Brad
+From brad.king at kitware.com  Thu Dec 16 08:11:20 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Dec 16 08:11:29 2004
+Subject: [Paraview] integration of a variable
+In-Reply-To: <41BFFBD3.9060708@tfd.chalmers.se>
+References: <41BFFBD3.9060708@tfd.chalmers.se>
+Message-ID: <41C18978.90405@kitware.com>
+
+Berend van Wachem wrote:
+> I would like to integrate a variable over a surface; is this possible in 
+>  paraview, and so, how do I do this?
+> 
+> An example of this is, when I have the variables velocity and density 
+> defined, and I want to calculate the massflow going through a surface. I 
+> need to calculate the cell face velocity times the cell face density 
+> times the cell face area times the cell face normal and then sum these 
+> values for all cell faces lying on a surface. Can this be done in Paraview?
+
+Not by default.  ParaView is a visualization tool, not a computation 
+tool.  It has some support for computation but most of it is provided to 
+make interactive visualization more meaningful.  It is possible to write 
+plugins to ParaView that will do whatever computation you want, but 
+you'll have to write the corresponding VTK filter yourself.
+
+-Brad
+From wolfheimer at temf.tu-darmstadt.de  Thu Dec 16 08:15:06 2004
+From: wolfheimer at temf.tu-darmstadt.de (Felix Wolfheimer)
+Date: Thu Dec 16 08:15:15 2004
+Subject: [Paraview] Create an animation out of more than 100 Datafiles
+Message-ID: <41C18A5A.1040602@temf.tu-darmstadt.de>
+
+I want to create a animation using data, which is stored in files with 
+names "efield-{number}.pvd", where {number} is the number of the 
+timestep. I'm only able to create an animation, using the data out of 99 
+datafiles (efield-1.pvd to efield-99.pvd). If there are files, where the 
+{number} is greater than 100, ParaView doesn't recognize the files 
+automatically as it does, when I have less than 100 files. When I try to 
+set the range for the {number} manually in the animation menu, then 
+ParaView dies with a segmentation fault.
+
+Does anyone know how to solve this problem? Thanks in advance!
+
+From brad.king at kitware.com  Thu Dec 16 08:15:38 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Dec 16 08:15:46 2004
+Subject: [Paraview] running pvbach with external library?
+In-Reply-To: <41C05C0E.3060006@cscs.ch>
+References: <BAY2-F11nLJm2ZBNCog0001eccd@hotmail.com>	<1095858472.15785.1.camel@silverymoon>
+	<41C05C0E.3060006@cscs.ch>
+Message-ID: <41C18A7A.6040009@kitware.com>
+
+Jean M. Favre wrote:
+> I am trying to run pvbatch (version 1.8.1) with the batch files saved by 
+> a session of ParaView which loads a local lib. The problem is that the 
+> name of the library is given in the XML file, and that the batch file 
+> only contains reference to the PVSM file. Thus, pvbatch does not see the 
+> library name:
+
+This is a known problem with batch mode.  It is on my to-do list to address.
+
+-Brad
+From brad.king at kitware.com  Thu Dec 16 08:19:51 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Dec 16 08:19:59 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+In-Reply-To: <a6bc6cc04121510533f69805f@mail.gmail.com>
+References: <a6bc6cc04121510533f69805f@mail.gmail.com>
+Message-ID: <41C18B77.8030202@kitware.com>
+
+Jeremy Stout wrote:
+> Hello, I'm looking for any information related to the algorithms
+> employed by Paraview when it is used in parallel mode. I know how to
+> setup Paraview to run in parallel mode.  I am interested in learning
+> how Paraview distributes the VTK pipeline (I'm assuming it does) and
+> how it handles the distribution of data files.  I would like to use
+> this information to be able to see if I could do anything to optimize
+> my current Paraview installation.
+
+Basically the VTK pipeline is duplicated on all the nodes.  Since VTK 
+supports "streaming" data in pieces, each node executes 1 of N pieces 
+for N nodes.  Then one of several approaches for rendering the results 
+on a single screen is taken.  For small data the geometry is collected 
+onto the client process and rendered locally.  For large data the 
+geometry on each node is rendered on the node itself and sent to the 
+client in the form of an image and a z-buffer.  The client composits it 
+for rendering.
+
+For more information you can get the "ParaView Guide" book:
+
+http://www.kitware.com/products/paraviewguide.html
+
+-Brad
+From brad.king at kitware.com  Thu Dec 16 08:22:55 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Dec 16 08:23:03 2004
+Subject: [Paraview] Create an animation out of more than 100 Datafiles
+In-Reply-To: <41C18A5A.1040602@temf.tu-darmstadt.de>
+References: <41C18A5A.1040602@temf.tu-darmstadt.de>
+Message-ID: <41C18C2F.5040205@kitware.com>
+
+Felix Wolfheimer wrote:
+> I want to create a animation using data, which is stored in files with 
+> names "efield-{number}.pvd", where {number} is the number of the 
+> timestep. I'm only able to create an animation, using the data out of 99 
+> datafiles (efield-1.pvd to efield-99.pvd). If there are files, where the 
+> {number} is greater than 100, ParaView doesn't recognize the files 
+> automatically as it does, when I have less than 100 files. When I try to 
+> set the range for the {number} manually in the animation menu, then 
+> ParaView dies with a segmentation fault.
+> 
+> Does anyone know how to solve this problem? Thanks in advance!
+
+This is a known problem and will eventually be fixed.  For now you can 
+extend the limit by editing the source and rebuilding.
+
+Edit the source ParaView/GUI/Client/vtkPVFileEntry.cxx and modify this line:
+#define MAX_FILES_ON_THE_LIST 100
+
+Basically it is there as a hack to prevent ParaView form taking a very 
+long time to display the timesteps when there are millions in one directory.
+
+-Brad
+From berk.geveci at gmail.com  Thu Dec 16 08:44:57 2004
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Thu Dec 16 08:45:08 2004
+Subject: [Paraview] another error message using custom reader
+In-Reply-To: <41C18004.8030605@cscs.ch>
+References: <41C18004.8030605@cscs.ch>
+Message-ID: <a2ab215604121605444f0fb569@mail.gmail.com>
+
+Hi John,
+
+I have been working pretty heavily on adding AMR and multiblock
+pipeline support to VTK. Meanwhile, I stopped supporting AMR in
+ParaView. This is why you are getting that error. The filter simply
+does not recognize the data type. Once I have something working in the
+new pipeline (very close), I will look into getting ParaView working
+again. As far as I can remember, ParaView 1.6 (or maybe even 1.4, I am
+not sure) was the last version that worked with AMR datasets. Please
+remind me to send you some information on the new pipeline stuff as
+well as the changes you will have to make to the reader sometime after
+xmas or new year.  And the hierarchical box datasets do not handle
+extents like structured data. They handle extents more like
+unstructured data (piece based). The smallest update unit is one
+block.  I think it is possible to have a hybrid model. I am still
+thinking about it. If you have questions, feel free to ask them.
+
+-Berk
+
+On Thu, 16 Dec 2004 13:31:00 +0100, John Biddiscombe (CSCS)
+<biddisco@cscs.ch> wrote:
+> I'm using today's cvs (but I've tried with several versions), and I have
+> a new error. the reader generates a heirarchical box dataset with a
+> single uniform grid inside it. The reader reads data ok and pumps out
+> some info for me for debugging, but once it finishes the executedata
+> method, the error below pops up.  I'm not sure where to look for this
+> vtkMPIMoveData data problem. If anyone can point me in the correct
+> direction, please do...
+> 
+> incidentally, notice that the update extent of the box is 0,-1.... which
+> is what I'd expect on first pass, because the pipeline doesn't know how
+> big the data is until  executeinformation has generated the size, but
+> once we get to execute data I would expect the streaming mechanism to
+> have puit something in there. I'm hoping to run the file reader on 8
+> nodes and break the file read up between them. Do the heiracrchical box
+> datasts handle extents the same as structured data...
+> 
+> anyway..thanks in advance for any clues
+> 
+> JB
+> 
+> ExecuteInformation : UpdateExtent is : 0 -1 0 -1 0 -1
+> ExecuteData : UpdateExtent is : 0 -1 0 -1 0 -1
+> this->DataExtent : 0 499 0 499 0 99
+> Compressed size of /workspace/biddisco/meteo_ieee2004/QGRAUPf12.bin.gz
+> is 74162342
+> creating float array QGRAUP
+> Range : 0 1e+35
+> Vis array was NULL
+> Blanked off 103903 Points, out of 25000000
+> ErrorMessage
+> # Error or warning: There was a VTK Error in file:
+> /local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (550)
+>  Object type: vtkMPIMoveData, could not find requested method: "SetInput"
+> or the method was called with incorrect arguments.
+> 
+> while processing
+> Message 0 = Invoke
+>   Argument 0 = id_value {1289}
+>   Argument 1 = string_value {SetInput}
+>   Argument 2 = id_value {1255}
+> ErrorMessage end
+> Object type: vtkMPIMoveData, could not find requested method: "SetInput"
+> or the method was called with incorrect arguments.
+> 
+> ErrorMessage
+> # Error or warning: There was a VTK Error in file:
+> /local/packages/ParaViewCvs/Servers/Common/vtkProcessModule.cxx (553)
+>  Aborting execution for debugging purposes.
+> ErrorMessage end
+> Abort (core dumped)
+> 
+> --
+> John Biddiscombe,                            email:biddisco @ cscs.ch
+> http://www.cscs.ch/about/BJohn.php
+> CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.07
+> Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From Jon.H.Kaspersen at sintef.no  Thu Dec 16 09:14:26 2004
+From: Jon.H.Kaspersen at sintef.no (Jon H Kaspersen)
+Date: Thu Dec 16 09:14:33 2004
+Subject: [Paraview] ParaView on the Mac
+In-Reply-To: <41C0A5CA.2060006@kitware.com>
+References: <655674E0-4D26-11D9-90D7-000A95DBC4D8@sintef.no>	<41BE23EA.6050202@kitware.com>
+	<B4439678-4D9A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BEFEDE.9080405@kitware.com>
+	<DDE2ED17-4E0A-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4770.7000404@kitware.com>
+	<99454EA2-4E0E-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41BF4FE2.1000503@kitware.com>
+	<3384EAEE-4E11-11D9-90D7-000A95DBC4D8@sintef.no>
+	<CD6B5082-4E71-11D9-90D7-000A95DBC4D8@sintef.no>
+	<D61F270E-4EC6-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41C08B70.4050906@kitware.com>
+	<9268CFF4-4ED3-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41C09C00.9080809@kitware.com>
+	<E5EC330F-4EDA-11D9-90D7-000A95DBC4D8@sintef.no>
+	<41C0A5CA.2060006@kitware.com>
+Message-ID: <CB29B059-4F6C-11D9-90D7-000A95DBC4D8@sintef.no>
+
+Mathieu,
+
+Removing the source code in /ParaView/Utilities/TclTk and hacking the
+CMakeCache file to use the installed TclTk version instead did the 
+trick.
+I have a Carbon ParaView running on the Mac now.  There are a few minor 
+GUI
+refresh issues, but apart from that it works.
+
+I also did an Experimental build, so you can see the result on the 
+dashboard in
+an hour or so.
+
+Regards
+Jon
+On Dec 15, 2004, at 9:59 PM, Mathieu Malaterre wrote:
+
+> Jon H Kaspersen wrote:
+>> OK Mathieu,
+>> It seems that ParaView insists on building its own TclTk lib, even if
+>> I change the CMakeCache values (the once that I know must be change, 
+>> but
+>> there might be others).
+>
+> Then go to ParaView/Utilities/TclTk and remove everything:
+>
+> cd ParaView/Utilities/TclTk
+> rm -rf *
+>
+> HTH,
+> Mathieu
+>
+>
+>
+========================================================
+Jon Harald Kaspersen                        Mob:	   +47 93 03 65 90
+Ph.D. Mechanical Engineering	
+Senior Scientist
+SINTEF Helse
+N-7465 Trondheim
+NORWAY			e-mail:	Jon.H.Kaspersen@sintef.no
+				WEB:	http://www.sintef.no/medtek
+========================================================
+
+From charles.law at kitware.com  Thu Dec 16 10:37:35 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Thu Dec 16 10:39:35 2004
+Subject: [Paraview] integration of a variable
+In-Reply-To: <41BFFBD3.9060708@tfd.chalmers.se>
+Message-ID: <5.1.0.14.0.20041216103206.02eb3868@pop.biz.rr.com>
+
+There is an "Integrate attribute" filter that will do this, but it did not 
+make it into the 1.8 release.  It is accessible in the 1.9 (nightly/CVS) 
+version.
+I also wrote filters to compute the cell face velocity, and a filter that 
+uses the above two filters to compute surface flow.  I had not thought 
+about density.  You would have to use the array calculator to include that 
+into the calculation.
+
+If you try these filters, give us some feedback so we know how they work.
+
+Charles.
+
+
+
+At 09:54 AM 12/15/2004 +0100, Berend van Wachem wrote:
+>Hi,
+>
+>I would like to integrate a variable over a surface; is this possible 
+>in  paraview, and so, how do I do this?
+>
+>An example of this is, when I have the variables velocity and density 
+>defined, and I want to calculate the massflow going through a surface. I 
+>need to calculate the cell face velocity times the cell face density times 
+>the cell face area times the cell face normal and then sum these values 
+>for all cell faces lying on a surface. Can this be done in Paraview?
+>
+>Thanks,
+>
+>Berend van Wachem.
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From bnwylie at sandia.gov  Thu Dec 16 10:55:38 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Dec 16 10:56:00 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509D60@ES20SNLNT.srn.sandia.gov>
+
+Also,
+
+There is a filter to move polydata around called 'Balance', the
+limitation is the data has to be poly data.
+
+*** Begin evangelizing ***
+
+For general datasets of any type there is a filter called 'D3'.
+
+D3 is a great filter for doing data distribution and computing ghost
+cells in parallel.
+
+For instance you can load in a single datafile and the 'distribute' it
+to all the nodes just by invoking the D3 filter on it (you can run the
+'Process Id Scalars' filter to see the distribution).
+
+D3 should work on any data type and like a said will compute ghost cells
+for you. The ghost cell computation makes a big difference (external
+faces on 1 dataset went from 80M tris to 2M tris). Also obviously you
+will now get the 'correct' visualization results instead of seeing file
+or processor boundaries.
+
+In addition the nice spatial distribution has the side benefit that your
+parallel rendering (to desktop) and especially to tile-display will be
+accelerated.
+
+A description of this filter should have been included in the ParaView
+users guide... but was not.... grumble...grumble... :) 
+
+*** End evangelizing *** 
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+      (505) 844-2238   FAX (505) 845-0833
+ 
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Brad King
+> Sent: Thursday, December 16, 2004 6:20 AM
+> To: Jeremy Stout
+> Cc: paraview@paraview.org
+> Subject: Re: [Paraview] Parallel Mode Execution Algorithm
+> 
+> Jeremy Stout wrote:
+> > Hello, I'm looking for any information related to the algorithms 
+> > employed by Paraview when it is used in parallel mode. I 
+> know how to 
+> > setup Paraview to run in parallel mode.  I am interested in 
+> learning 
+> > how Paraview distributes the VTK pipeline (I'm assuming it 
+> does) and 
+> > how it handles the distribution of data files.  I would like to use 
+> > this information to be able to see if I could do anything 
+> to optimize 
+> > my current Paraview installation.
+> 
+> Basically the VTK pipeline is duplicated on all the nodes.  
+> Since VTK supports "streaming" data in pieces, each node 
+> executes 1 of N pieces for N nodes.  Then one of several 
+> approaches for rendering the results on a single screen is 
+> taken.  For small data the geometry is collected onto the 
+> client process and rendered locally.  For large data the 
+> geometry on each node is rendered on the node itself and sent 
+> to the client in the form of an image and a z-buffer.  The 
+> client composits it for rendering.
+> 
+> For more information you can get the "ParaView Guide" book:
+> 
+> http://www.kitware.com/products/paraviewguide.html
+> 
+> -Brad
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From amy.henderson at kitware.com  Thu Dec 16 12:57:55 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Thu Dec 16 12:57:50 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509D60@ES20SNLNT.srn.sandi a.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509D60@ES20SNLNT.srn.sandia.gov>
+Message-ID: <6.2.0.14.2.20041216125636.03de6dd8@pop.biz.rr.com>
+
+
+>For general datasets of any type there is a filter called 'D3'.
+>
+>D3 is a great filter for doing data distribution and computing ghost
+>cells in parallel.
+
+
+>A description of this filter should have been included in the ParaView
+>users guide... but was not.... grumble...grumble... :)
+
+D3 is described in "The ParaView Guide".  :)
+
+- Amy 
+
+
+
+From bnwylie at sandia.gov  Thu Dec 16 15:53:56 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Dec 16 15:54:39 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509E3D@ES20SNLNT.srn.sandia.gov>
+
+Ekk...
+
+My apologies Amy, my copy has been on permanent loan since I got it
+(very popular), so I haven't had a chance to read it thoroughly and on
+the 'quick read' I must have missed it.
+
+Sorry for grumbling in error. :)
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+      (505) 844-2238   FAX (505) 845-0833
+ 
+
+> -----Original Message-----
+> From: Amy Henderson [mailto:amy.henderson@kitware.com] 
+> Sent: Thursday, December 16, 2004 10:58 AM
+> To: Wylie, Brian; Brad King; Jeremy Stout
+> Cc: paraview@paraview.org
+> Subject: RE: [Paraview] Parallel Mode Execution Algorithm
+> 
+> 
+> >For general datasets of any type there is a filter called 'D3'.
+> >
+> >D3 is a great filter for doing data distribution and computing ghost 
+> >cells in parallel.
+> 
+> 
+> >A description of this filter should have been included in 
+> the ParaView 
+> >users guide... but was not.... grumble...grumble... :)
+> 
+> D3 is described in "The ParaView Guide".  :)
+> 
+> - Amy 
+> 
+> 
+> 
+> 
+> 
+
+From amy.henderson at kitware.com  Thu Dec 16 16:08:47 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Thu Dec 16 16:08:43 2004
+Subject: [Paraview] Parallel Mode Execution Algorithm
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509E3D@ES20SNLNT.srn.sandi a.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E509E3D@ES20SNLNT.srn.sandia.gov>
+Message-ID: <6.2.0.14.2.20041216160821.03df1838@pop.biz.rr.com>
+
+No problem.  Check appendix B when you get a chance. :)
+- Amy
+
+At 03:53 PM 12/16/2004, Wylie, Brian wrote:
+>Ekk...
+>
+>My apologies Amy, my copy has been on permanent loan since I got it
+>(very popular), so I haven't had a chance to read it thoroughly and on
+>the 'quick read' I must have missed it.
+>
+>Sorry for grumbling in error. :)
+>
+>         Brian Wylie
+>         Sandia National Laboratories
+>         MS 0822 - Org 9227 - Building 880/A1-J
+>       (505) 844-2238   FAX (505) 845-0833
+>
+>
+> > -----Original Message-----
+> > From: Amy Henderson [mailto:amy.henderson@kitware.com]
+> > Sent: Thursday, December 16, 2004 10:58 AM
+> > To: Wylie, Brian; Brad King; Jeremy Stout
+> > Cc: paraview@paraview.org
+> > Subject: RE: [Paraview] Parallel Mode Execution Algorithm
+> >
+> >
+> > >For general datasets of any type there is a filter called 'D3'.
+> > >
+> > >D3 is a great filter for doing data distribution and computing ghost
+> > >cells in parallel.
+> >
+> >
+> > >A description of this filter should have been included in
+> > the ParaView
+> > >users guide... but was not.... grumble...grumble... :)
+> >
+> > D3 is described in "The ParaView Guide".  :)
+> >
+> > - Amy
+> >
+> >
+> >
+> >
+> >
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From wolfheimer at temf.tu-darmstadt.de  Wed Dec 15 13:25:37 2004
+From: wolfheimer at temf.tu-darmstadt.de (Felix Wolfheimer)
+Date: Fri Dec 17 08:36:54 2004
+Subject: [Paraview] Create a animation out of more than 100 data files
+Message-ID: <41C081A1.8020003@temf.tu-darmstadt.de>
+
+I want to create a animation using data, which is stored in files with 
+names "efield-{number}.pvd", where {number} is the number of the 
+timestep. I'm only able to create an animation, using the data out of 99 
+datafiles (efield-1.pvd to efield-99.pvd). If there are files, where the 
+{number} is greater than 100, ParaView doesn't recognize the files 
+automatically as it does, when I have less than 100 files. When I try to 
+set the range for the {number} manually in the animation menu, then 
+ParaView dies with a segmentation fault.
+
+Does anyone know how to solve this problem? Thanks in advance! 
+
+From Berend at tfd.chalmers.se  Fri Dec 17 09:50:11 2004
+From: Berend at tfd.chalmers.se (Berend van Wachem)
+Date: Fri Dec 17 09:50:17 2004
+Subject: [Paraview] integration of a variable
+In-Reply-To: <5.1.0.14.0.20041216103206.02eb3868@pop.biz.rr.com>
+References: <5.1.0.14.0.20041216103206.02eb3868@pop.biz.rr.com>
+Message-ID: <41C2F223.2050806@tfd.chalmers.se>
+
+Dear Charles,
+
+Thanks for this! This does exactly what I want. It can integrate any 
+point variable over a cut; by using the array calculator you can easly 
+get total mass flow - or any other property I presume.
+
+How is the filter called and used to compute cell face velocity? Does 
+that create another array?
+
+Thanks,
+
+Berend.
+
+> There is an "Integrate attribute" filter that will do this, but it did 
+> not make it into the 1.8 release.  It is accessible in the 1.9 
+> (nightly/CVS) version.
+> I also wrote filters to compute the cell face velocity, and a filter 
+> that uses the above two filters to compute surface flow.  I had not 
+> thought about density.  You would have to use the array calculator to 
+> include that into the calculation.
+> 
+> If you try these filters, give us some feedback so we know how they work.
+> 
+> Charles.
+> 
+From brad.king at kitware.com  Fri Dec 17 10:57:32 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Dec 17 10:57:34 2004
+Subject: [Paraview] error using new reader
+In-Reply-To: <41BE9BA0.8040405@cscs.ch>
+References: <41BDC121.9050708@cscs.ch> <41BE2602.7060204@kitware.com>
+	<41BE9BA0.8040405@cscs.ch>
+Message-ID: <41C301EC.4090506@kitware.com>
+
+John Biddiscombe (CSCS) wrote:
+>> This is a bug related to the change of a reader from subclassing off 
+>> of vtkSource to subclassing off of a different vtkAlgorithm subclass.  
+>> I've add it to my to-do list to fix.
+> 
+> Thanks, I've changed back to using the sources instead of algorithms and 
+> it is behaving a bit more predictably now.
+
+I've now committed the fix for your original error message.
+
+-Brad
+From charles.law at kitware.com  Fri Dec 17 12:27:19 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Fri Dec 17 12:29:37 2004
+Subject: [Paraview] integration of a variable
+In-Reply-To: <41C2F223.2050806@tfd.chalmers.se>
+References: <5.1.0.14.0.20041216103206.02eb3868@pop.biz.rr.com>
+	<5.1.0.14.0.20041216103206.02eb3868@pop.biz.rr.com>
+Message-ID: <5.1.0.14.0.20041217101407.00b5db00@pop.biz.rr.com>
+
+At 03:50 PM 12/17/2004 +0100, Berend van Wachem wrote:
+>Dear Charles,
+>
+>Thanks for this! This does exactly what I want. It can integrate any point 
+>variable over a cut; by using the array calculator you can easly get total 
+>mass flow - or any other property I presume.
+>
+>How is the filter called and used to compute cell face velocity? Does that 
+>create another array?
+>
+>Thanks,
+>
+>Berend.
+
+
+Integrate Attributes:
+Only integrates over 2D surfaces for now.
+Creates one point and one vertex.
+Point and cell data for this point and cell contain the integrated values.
+A new "area" cell array is created.
+All of the integrated attribute values are displayed in the GUI.
+
+Surface Vectors
+Will either project vectors onto the surface, or give the component of the 
+vector perpendicular to the surface.
+The new output vector point attribute has the same name as the input vector 
+attribute.  A glyph filter is still needed to show the vectors.
+
+Surface flow.
+Outputs a point and vertex.  It integrates the dot product of a vector 
+field with the surface normal.  It puts the result in a attribute called 
+surface flow.
+The value is also displayed in the GUI.
+
+All three filters have toolbar buttons which are initially hidden.  In 
+version 1.9 the user can customize which buttons are visible in the toolbar.
+
+Charles.
+
+
+From lapan_mv at inbox.ru  Sun Dec 19 15:20:47 2004
+From: lapan_mv at inbox.ru (Max Lapan)
+Date: Sun Dec 19 21:01:08 2004
+Subject: [Paraview] Probe filter datasets limitations
+Message-ID: <87y8fuca5c.fsf@home.homenet.ru>
+
+Hello, All
+
+One question which interests me a lot: 
+
+Is there any way to limit amount of datasets selected by 'Probe'
+filter? 
+
+My concrete problem is:
+
+I have file with several datasets - pressure, velocity, energy and so
+on. I want to display chart which shows changing of these parameters
+along some line. But absolute value of parameters vary a lot, 
+average pressure - 1e6, velocity - 1. 
+
+So, I cannot clearly see changing of parameters on chart. It would be
+great if I could select which datasets will be displayed in
+chart. Another nice feature that would help a lot - logarithmic axis.  
+
+Any ideas?
+
+-- 
+Thanks in advance,				
+Max Lapan
+From jfavre at cscs.ch  Mon Dec 20 02:37:18 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Mon Dec 20 02:37:33 2004
+Subject: [Paraview] Probe filter datasets limitations
+In-Reply-To: <87y8fuca5c.fsf@home.homenet.ru>
+References: <87y8fuca5c.fsf@home.homenet.ru>
+Message-ID: <41C6812E.8010202@cscs.ch>
+
+Max Lapan wrote:
+> Hello, All
+> 
+> One question which interests me a lot: 
+> 
+> Is there any way to limit amount of datasets selected by 'Probe'
+> filter? 
+> 
+
+
+check my posting to this mailing list on May 14. A quick hack was to 
+convert the multi-datasets results to Grace format. If people are 
+interested in the code, I'll be happy to send it. Drop me a note.
+
+Jean
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From m.janssens at opencfd.co.uk  Mon Dec 20 05:09:15 2004
+From: m.janssens at opencfd.co.uk (Mattijs Janssens)
+Date: Mon Dec 20 05:09:20 2004
+Subject: [Paraview] reader module
+In-Reply-To: <41C6812E.8010202@cscs.ch>
+References: <87y8fuca5c.fsf@home.homenet.ru> <41C6812E.8010202@cscs.ch>
+Message-ID: <41C6A4CB.30902@opencfd.co.uk>
+
+Hello all,
+
+we have recently open sourced our CFD code (OpenFOAM) and also the 
+Paraview 1.8.1 reader module that comes with it. The reader module has 
+still some small gui problems but is very useable and might be 
+interesting as an example for people writing their own reader module.
+
+Regards,
+
+Mattijs
+
+-- 
+OpenCFD Ltd.
+The Mews, Picketts Lodge,
+Picketts Lane, Salfords,
+Surrey RH1 5RG.
+Tel: +44 (0)1293 821272
+Email: M.Janssens@OpenCFD.co.uk
+URL: http://www.OpenCFD.co.uk
+
+From bnwylie at sandia.gov  Tue Dec 21 12:01:59 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Tue Dec 21 12:02:19 2004
+Subject: [Paraview] Probe filter datasets limitations
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E5E1F95@ES20SNLNT.srn.sandia.gov>
+
+This is the same issue as bug 492 in the paraview bug tracker.
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+      (505) 844-2238   FAX (505) 845-0833
+ 
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Max Lapan
+> Sent: Sunday, December 19, 2004 1:21 PM
+> To: paraview@paraview.org
+> Subject: [Paraview] Probe filter datasets limitations
+> 
+> Hello, All
+> 
+> One question which interests me a lot: 
+> 
+> Is there any way to limit amount of datasets selected by 'Probe'
+> filter? 
+> 
+> My concrete problem is:
+> 
+> I have file with several datasets - pressure, velocity, 
+> energy and so on. I want to display chart which shows 
+> changing of these parameters along some line. But absolute 
+> value of parameters vary a lot, average pressure - 1e6, velocity - 1. 
+> 
+> So, I cannot clearly see changing of parameters on chart. It 
+> would be great if I could select which datasets will be 
+> displayed in chart. Another nice feature that would help a 
+> lot - logarithmic axis.  
+> 
+> Any ideas?
+> 
+> -- 
+> Thanks in advance,				
+> Max Lapan
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From insley at mcs.anl.gov  Tue Dec 21 21:35:10 2004
+From: insley at mcs.anl.gov (Joseph Insley)
+Date: Tue Dec 21 21:35:17 2004
+Subject: [Paraview] save locations in distributed mode
+Message-ID: <Pine.LNX.4.58.0412211707080.371@terra.mcs.anl.gov>
+
+
+Hi,
+
+I'm running ParaView 1.8.2 in distributed mode and have a few questions 
+about saving images and batch scripts.  When I go to save a batch script 
+ParaView opens a dialog box where I can enter the path and filename of 
+where I want to save the script.  ParaView wants to save it on the local 
+filesystem, that is local to the client.  But what I really want to do is 
+save it on the server side, since that is where I would want to run 
+pvbatch, in order to take advantage of the parallelism of the cluster.  
+Also, all of the data is stored on the server side, so I really couldn't 
+run pvbatch on the client side anyway.  Is there currently a way to 
+specify that you want to save a batch script on the server side, rather 
+than the client side?
+
+Similarly, from the animation view, when I try to save images the dialog 
+box shows the client side filesystem.  Here again I would like to be able 
+to save them on the server side, as I have much more disk space there, 
+among other reasons.  Is this currently possible with 1.8.2? 
+
+In both cases, if it is not currently possible, is it likely that it could 
+be made possible in future releases?
+
+Thanks,
+joe.
+
+
+====================================================================
+joseph a. insley				insley@mcs.anl.gov
+mathematics & computer science division		(630) 252-5649
+argonne national laboratory                     (630) 252-5986 (fax)
+http://www.mcs.anl.gov/~insley
+====================================================================
+From ysh at cardcgs.com  Sat Dec 25 08:37:52 2004
+From: ysh at cardcgs.com (ysh)
+Date: Sat Dec 25 08:37:35 2004
+Subject: [Paraview] help
+Message-ID: <001701c4ea86$f338a6f0$3401a8c0@cardcgs52>
+
+I have a problem about paraview when I uses OpenFoam.
+   I have installed paraview as following:
+   tar -xf paraview.1.8.0.tar
+   when I enter the directory 
+     $HOME/OpenFOAM/linux/paraview1.8.0/bin and run paraview,an error printouts as following:
+-----------------------------------------------
+    ParaView error:initialize Tcl failed
+    TK_Init error:invalid command name "Tcl_findLibrary"
+-----------------------------------------------
+    How can I correct this error?
+    Thanx.
+
+   S.H.Yang
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041225/c50d764f/attachment.htm
+From e.david.huckaby at NETL.DOE.GOV  Sat Dec 25 12:01:00 2004
+From: e.david.huckaby at NETL.DOE.GOV (E David Huckaby)
+Date: Mon Dec 27 08:50:30 2004
+Subject: [Paraview] Re: ParaView Digest, Vol 8, Issue 16
+Message-ID: <s1cd56a2.026@co.mgn.netl.doe.gov>
+
+David is out of the office and will return on  January 10.
+From stout.jeremy at gmail.com  Tue Dec 28 09:44:04 2004
+From: stout.jeremy at gmail.com (Jeremy Stout)
+Date: Tue Dec 28 09:44:06 2004
+Subject: [Paraview] Recommendations for Benchmarking Paraview
+Message-ID: <a6bc6cc041228064452e8805c@mail.gmail.com>
+
+Hello, I am looking for recommendations for benchmarking Paraview. I
+would like to run some tests to obtain some performance measures for a
+few of my Paraview installations.  Has anyone done anything similar to
+this? Any input would be appreciated.
+
+Jeremy Stout
+From bnwylie at sandia.gov  Wed Dec 29 17:49:08 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Wed Dec 29 17:49:27 2004
+Subject: [Paraview] Recommendations for Benchmarking Paraview
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E5E2283@ES20SNLNT.srn.sandia.gov>
+
+Jeremy,
+
+We have done quite a bit of benchmarking here at Sandia. The
+recommendation I would give is to base the benchmark on something
+everyone can easily replicate.
+
+For instance:
+
+If you are benchmarking parallel rendering performance use something
+like Sphere source.
+
+You can easily make just about any number of total triangles you wish. 
+
+Example: Sphere source Theta resolution=800 Phi resolution=800 Num
+tris=1.27 Million
+
+Also things like sphere source will give nice even 'pieces' to each
+processor, so that you don't have to worry about things like load
+balancing.
+
+Run ProcessIDScalars and make sure that you have a reasonable load
+balance. (If you don't have a reasonable load balance... Then run
+'Balance' or 'AllToN' for Poly data or 'D3' for any other kind of data.)
+
+Things that I think are important to record...
+1) You should record times for both the 'interactive render' and 'still
+render'
+2) You should record whether 'Triangle strips' is ON or OFF
+3) You should record whether 'Immediate Mode' is ON or OFF
+4) You should record the version of ParaView
+5) You should record what you used for 'Load balancing'
+6) You should record the average memory usage on the processors (I've
+had folks complain that ParaView was running very slow on their 4M cell
+datasets... The problem was obviously too much mem usage...1% cpu...99%
+disk access)
+
+7) You should look carefully at the timer log for any thing folks might
+find interesting... :)
+8) You should record some of the info under the 'Help...About...'
+dialog, which render module is being used, whether software rendering is
+ON or OFF, etc, etc... (Note older versions of ParaView do not have
+this.... :)
+
+9) You should also record the normal things like...
+I'm using 3.4Ghz P4's with 1Gig mem and using MPI over Myrinet... Or
+whatever...
+
+If you want to benchmark things like 'computing isosurfaces on
+structured data', then I suggest things like Mandelbrot source and
+wavelet source for the same reasons as above.
+
+
+!!! Five cautionary notes !!!
+
+If you are doing a more general benchmark... Like how fast can I
+interact with a 13M Tet10 dataset. Be careful of the following...
+
+1) Run ProcessIDScalars and make sure that you have a reasonable load
+balance. 
+
+2) If you're looking at unstructured data, run 'Extract Surface' and
+look at the information tab to get the number of triangles you are
+actually looking at. Or if you've computed an isosurface, same thing.
+(We had a dataset that we couldn't interact with, 13M unstructured
+dataset. We found out we had generated 80 Million triangles from the
+data when computing 'External Faces' within the vtkDataSetMapper, not
+having ghost cells computed in the load balancing is a killer... We ran
+D3 and then we only had 2 Million triangles...)
+
+3) Mem usage again... We've found that about 1M Unstructured cells per
+processor, gives fairly good performance.
+
+4) LOD is mostly your friend but every once and a while it can shot you
+in the foot. If you have a very large dataset and the size of the LOD
+happens to be just under your composite threshold you may spend a bunch
+of time computing the LOD (server side) and collecting the LOD (client
+side).
+
+5) Related to 4.. Compositing Threshold default of 10MB might be too
+high in my opinion. (I would vote for 5MB perhaps)
+
+Example: Dataset with 400 time steps. Animate through time. Very common
+operation obviously.
+
+Lets say that the geometry generated at each time step is 9.99MB, so
+that it is beneath the threshold and will be delivered to the client.
+Lets do the math... (using 10MB just for easy math).
+
+
+400 time steps x 10MB = 4GB
+
+In this example the 4GB is delivered over a 100T network connection to
+the client.
+
+So 100T gives you about 10MB/sec at best. So 4GB / 10MB/sec = 400 sec or
+6.66 minutes! Obviously an 'evil' amount of time that's basically
+'wasted' on delivering geometry to the client, since the client will
+only render it once and then throw away.
+
+
+Good luck, if you want me to post Sandia's benchmarks just give a
+holler.
+
+Best,
+
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+      (505) 844-2238   FAX (505) 845-0833
+ 
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Jeremy Stout
+> Sent: Tuesday, December 28, 2004 7:44 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] Recommendations for Benchmarking Paraview
+> 
+> Hello, I am looking for recommendations for benchmarking 
+> Paraview. I would like to run some tests to obtain some 
+> performance measures for a few of my Paraview installations.  
+> Has anyone done anything similar to this? Any input would be 
+> appreciated.
+> 
+> Jeremy Stout
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From quanchen at gmail.com  Thu Dec 30 16:08:08 2004
+From: quanchen at gmail.com (Quan Chen)
+Date: Thu Dec 30 16:08:14 2004
+Subject: [Paraview] paraview script (for load data to form an animation)
+Message-ID: <1E2E66102E75104D8C740340EBCD986701BC685A@tomoex.tomotherapy.com>
+
+Hi, I am relatively new to paraview.  I have a series of data files (in vtk
+format).  I can load them individually to view as 3D surface.  Now I want to
+create an animation using each file as individual frame.  I am wondering if
+I can realize that with a script.  Could anyone provide me with an example?
+Also, from my experience, it seems the paraview will automatically adjust
+camera position (and zoom) when new data is loaded (I assume it
+automatically set the view centered on the object).  Can I fix the camera
+position and orientation when new data is loaded? 
+ 
+Thanks for any input.
+ 
+Regards,
+Quan
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041230/4c0fd4ae/attachment.html
+From bnwylie at sandia.gov  Thu Dec 30 16:15:41 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Dec 30 16:15:55 2004
+Subject: [Paraview] paraview script (for load data to form an
+ animation)
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E5E228B@ES20SNLNT.srn.sandia.gov>
+
+Quan,
+ 
+When you open the file. Hit the 'Timesteps' button next to the filename
+widget. Once all the timesteps (numbered files) are loaded...
+ 
+You can go to 'View... Animation....'
+ 
+Select the first file as your 'source'
+Select filename as your 'parameter'
+ 
+and then animate over the files that way. Camera setup should stay and
+not adjust... (that has been my experience anyway).
+ 
+ 
+
+	Brian Wylie 
+	Sandia National Laboratories 
+	MS 0822 - Org 9227 - Building 880/A1-J 
+
+      (505) 844-2238   FAX (505) 845-0833 
+
+ 
+
+
+________________________________
+
+	From: paraview-bounces@paraview.org
+[mailto:paraview-bounces@paraview.org] On Behalf Of Quan Chen
+	Sent: Thursday, December 30, 2004 2:08 PM
+	To: paraview@paraview.org
+	Subject: [Paraview] paraview script (for load data to form an
+animation)
+	
+	
+	Hi, I am relatively new to paraview.  I have a series of data
+files (in vtk format).  I can load them individually to view as 3D
+surface.  Now I want to create an animation using each file as
+individual frame.  I am wondering if I can realize that with a script.
+Could anyone provide me with an example?  Also, from my experience, it
+seems the paraview will automatically adjust camera position (and zoom)
+when new data is loaded (I assume it automatically set the view centered
+on the object).  Can I fix the camera position and orientation when new
+data is loaded? 
+	 
+	Thanks for any input.
+	 
+	Regards,
+	Quan
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041230/d1aa6696/attachment.htm

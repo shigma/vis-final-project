@@ -1,0 +1,515 @@
+From heiland@ncsa.uiuc.edu  Mon Jan 28 22:23:11 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Mon, 28 Jan 2002 16:23:11 -0600
+Subject: [Paraview] version of VTK?
+Message-ID: <1020128162311.ZM13817@kelgia.ncsa.uiuc.edu>
+
+Hi ParaView list,
+
+I didn't see anywhere on the ParaView web pages which version of VTK is
+expected.  I ask because I was attempting to build ParaView using a VTK 4.0
+build I had and got the usual compile problems of undef'd methods assoc'd with
+VTK 3.2:
+
+e.g.
+vtkPVActorComposite.cxx: no matching function for call to
+`vtkPointData::GetActiveScalars ()'
+
+vtkPVArrayCalculator.cxx: no matching function for call to
+`vtkPointData::GetFieldData ()'
+
+Before I go too far down the path of fixing up these compile errors, I just
+thought I'd ask about the status of ParaView & VTK 4.0.
+
+thanks,
+--Randy
+
+From amy.henderson@kitware.com  Mon Jan 28 22:27:07 2002
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Mon, 28 Jan 2002 17:27:07 -0500
+Subject: [Paraview] version of VTK?
+In-Reply-To: <1020128162311.ZM13817@kelgia.ncsa.uiuc.edu>
+Message-ID: <4.3.2.7.2.20020128172559.00b1f3b0@pop.nycap.rr.com>
+
+You should be building ParaView with VTK 4.0.  When did you last update 
+your checkout of ParaView?
+
+- Amy
+
+At 04:23 PM 1/28/2002 -0600, Randy Heiland wrote:
+>Hi ParaView list,
+>
+>I didn't see anywhere on the ParaView web pages which version of VTK is
+>expected.  I ask because I was attempting to build ParaView using a VTK 4.0
+>build I had and got the usual compile problems of undef'd methods assoc'd with
+>VTK 3.2:
+>
+>e.g.
+>vtkPVActorComposite.cxx: no matching function for call to
+>`vtkPointData::GetActiveScalars ()'
+>
+>vtkPVArrayCalculator.cxx: no matching function for call to
+>`vtkPointData::GetFieldData ()'
+>
+>Before I go too far down the path of fixing up these compile errors, I just
+>thought I'd ask about the status of ParaView & VTK 4.0.
+>
+>thanks,
+>--Randy
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From heiland@ncsa.uiuc.edu  Mon Jan 28 22:32:42 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Mon, 28 Jan 2002 16:32:42 -0600
+Subject: [Paraview] version of VTK?
+In-Reply-To: Amy Henderson <amy.henderson@kitware.com>
+ "Re: [Paraview] version of VTK?" (Jan 28,  5:27pm)
+References: <4.3.2.7.2.20020128172559.00b1f3b0@pop.nycap.rr.com>
+Message-ID: <1020128163242.ZM14095@kelgia.ncsa.uiuc.edu>
+
+Jan. 22.  Guess I'll update again...
+
+--Randy
+
+On Jan 28,  5:27pm, Amy Henderson wrote:
+> Subject: Re: [Paraview] version of VTK?
+> You should be building ParaView with VTK 4.0.  When did you last update
+> your checkout of ParaView?
+>
+> - Amy
+>
+> At 04:23 PM 1/28/2002 -0600, Randy Heiland wrote:
+> >Hi ParaView list,
+> >
+> >I didn't see anywhere on the ParaView web pages which version of VTK is
+> >expected.  I ask because I was attempting to build ParaView using a VTK 4.0
+> >build I had and got the usual compile problems of undef'd methods assoc'd
+with
+> >VTK 3.2:
+> >
+> >e.g.
+> >vtkPVActorComposite.cxx: no matching function for call to
+> >`vtkPointData::GetActiveScalars ()'
+> >
+> >vtkPVArrayCalculator.cxx: no matching function for call to
+> >`vtkPointData::GetFieldData ()'
+> >
+> >Before I go too far down the path of fixing up these compile errors, I just
+> >thought I'd ask about the status of ParaView & VTK 4.0.
+> >
+> >thanks,
+> >--Randy
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@public.kitware.com
+> >http://public.kitware.com/mailman/listinfo/paraview
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+>-- End of excerpt from Amy Henderson
+
+
+
+From heiland@ncsa.uiuc.edu  Mon Jan 28 22:36:02 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Mon, 28 Jan 2002 16:36:02 -0600
+Subject: [Paraview] version of VTK?
+In-Reply-To: Amy Henderson <amy.henderson@kitware.com>
+ "Re: [Paraview] version of VTK?" (Jan 28,  5:27pm)
+References: <4.3.2.7.2.20020128172559.00b1f3b0@pop.nycap.rr.com>
+Message-ID: <1020128163602.ZM14102@kelgia.ncsa.uiuc.edu>
+
+No, no, my mistake, I now see that I downloaded a tarball rather than from CVS:
+ParaView-0-2.tar.gz
+
+I'll try to grab the CVS version.
+
+--Randy
+
+On Jan 28,  5:27pm, Amy Henderson wrote:
+> Subject: Re: [Paraview] version of VTK?
+> You should be building ParaView with VTK 4.0.  When did you last update
+> your checkout of ParaView?
+>
+> - Amy
+>
+
+From berkgeveci@hotmail.com  Tue Jan 29 13:50:14 2002
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Tue, 29 Jan 2002 08:50:14 -0500
+Subject: [Paraview] version of VTK?
+Message-ID: <F38XqxsD1Ty9CMdZpDs00005e3b@hotmail.com>
+
+ParaView from CVS goes with VTK from CVS (not the 4.0 release,
+since we, unfortunately, couldn't introduce certain changes
+to VTK before the branch). ParaView release 0.2 goes with a
+CVS tag of VTK (ParaView-0-2). There is a tar file on the web.
+Since you are an advanced VTK user, I recommend going with CVS.
+This way, you'll have the latest ParaView and you won't need
+a separate VTK.
+-Berk
+
+>From: "Randy Heiland" <heiland@ncsa.uiuc.edu>
+>To: paraview@public.kitware.com, Amy Henderson <amy.henderson@kitware.com>
+>Subject: Re: [Paraview] version of VTK?
+>Date: Mon, 28 Jan 2002 16:36:02 -0600
+>
+>No, no, my mistake, I now see that I downloaded a tarball rather than from 
+>CVS:
+>ParaView-0-2.tar.gz
+>
+>I'll try to grab the CVS version.
+>
+>--Randy
+>
+>On Jan 28,  5:27pm, Amy Henderson wrote:
+> > Subject: Re: [Paraview] version of VTK?
+> > You should be building ParaView with VTK 4.0.  When did you last update
+> > your checkout of ParaView?
+> >
+> > - Amy
+> >
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+_________________________________________________________________
+Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp.
+
+
+From heiland@ncsa.uiuc.edu  Tue Jan 29 15:06:44 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Tue, 29 Jan 2002 09:06:44 -0600
+Subject: [Paraview] version of VTK?
+In-Reply-To: "Berk Geveci" <berkgeveci@hotmail.com>
+ "Re: [Paraview] version of VTK?" (Jan 29,  8:50am)
+References: <F38XqxsD1Ty9CMdZpDs00005e3b@hotmail.com>
+Message-ID: <1020129090644.ZM9438@kelgia.ncsa.uiuc.edu>
+
+Sorry, guess I haven't had enough coffee yet, but I'm still confused.
+
+I just got the ParaView from CVS as described here:
+http://public.kitware.com/ParaView/HTML/Download.html
+
+ i.e., I did:
+cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+(passwd: paraview)
+cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+ParaView-0-2 ParaView
+
+then I cmake ParaView, setting VTK_BINARY_PATH to my CVS version of VTK.
+
+However, when trying to compile ParaView, I still get the following:
+
+/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx: In method
+`void vtkPVActorComposite::Initialize()':
+/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx:1221: no
+matching function for call to `vtkPointData::GetActiveScalars ()'
+/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx:1231: no
+matching function for call to `vtkCellData::GetActiveScalars ()'
+
+Sure enough, my version of VTK/vtkPointData doesn't have GetActiveScalars.  So
+am I using the wrong VTK or the wrong ParaView?
+
+thanks,
+--Randy
+
+
+
+On Jan 29,  8:50am, Berk Geveci wrote:
+> Subject: Re: [Paraview] version of VTK?
+>
+> ParaView from CVS goes with VTK from CVS (not the 4.0 release,
+> since we, unfortunately, couldn't introduce certain changes
+> to VTK before the branch). ParaView release 0.2 goes with a
+> CVS tag of VTK (ParaView-0-2). There is a tar file on the web.
+> Since you are an advanced VTK user, I recommend going with CVS.
+> This way, you'll have the latest ParaView and you won't need
+> a separate VTK.
+> -Berk
+>
+> >From: "Randy Heiland" <heiland@ncsa.uiuc.edu>
+> >To: paraview@public.kitware.com, Amy Henderson <amy.henderson@kitware.com>
+> >Subject: Re: [Paraview] version of VTK?
+> >Date: Mon, 28 Jan 2002 16:36:02 -0600
+> >
+> >No, no, my mistake, I now see that I downloaded a tarball rather than from
+> >CVS:
+> >ParaView-0-2.tar.gz
+> >
+> >I'll try to grab the CVS version.
+> >
+> >--Randy
+> >
+> >On Jan 28,  5:27pm, Amy Henderson wrote:
+> > > Subject: Re: [Paraview] version of VTK?
+> > > You should be building ParaView with VTK 4.0.  When did you last update
+> > > your checkout of ParaView?
+> > >
+> > > - Amy
+> > >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@public.kitware.com
+> >http://public.kitware.com/mailman/listinfo/paraview
+>
+>
+>
+>
+> _________________________________________________________________
+> Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp.
+>-- End of excerpt from Berk Geveci
+
+
+
+From amy.henderson@kitware.com  Tue Jan 29 15:14:17 2002
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 29 Jan 2002 10:14:17 -0500
+Subject: [Paraview] version of VTK?
+In-Reply-To: <1020129090644.ZM9438@kelgia.ncsa.uiuc.edu>
+References: <"Berk Geveci" <berkgeveci@hotmail.com>
+ <F38XqxsD1Ty9CMdZpDs00005e3b@hotmail.com>
+Message-ID: <4.3.2.7.2.20020129101115.00b1c050@pop.nycap.rr.com>
+
+At 09:06 AM 1/29/2002 -0600, Randy Heiland wrote:
+>Sorry, guess I haven't had enough coffee yet, but I'm still confused.
+>
+>I just got the ParaView from CVS as described here:
+>http://public.kitware.com/ParaView/HTML/Download.html
+>
+>  i.e., I did:
+>cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView login
+>(passwd: paraview)
+>cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+>ParaView-0-2 ParaView
+
+If you're using the ParaView-0-2 branch of ParaView, you also need to check 
+out the same branch of VTK (cvs co -r ParaView-0-2 VTK).  If you want to 
+use your current checkout of VTK, then do a cvs update -A in your ParaView 
+directory to get the current version of ParaView rather than the branch.
+
+- Amy
+
+>then I cmake ParaView, setting VTK_BINARY_PATH to my CVS version of VTK.
+>
+>However, when trying to compile ParaView, I still get the following:
+>
+>/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx: In method
+>`void vtkPVActorComposite::Initialize()':
+>/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx:1221: no
+>matching function for call to `vtkPointData::GetActiveScalars ()'
+>/usr/local/home/heiland/ParaView/ParaView/vtkPVActorComposite.cxx:1231: no
+>matching function for call to `vtkCellData::GetActiveScalars ()'
+>
+>Sure enough, my version of VTK/vtkPointData doesn't have GetActiveScalars.  So
+>am I using the wrong VTK or the wrong ParaView?
+>
+>thanks,
+>--Randy
+>
+>
+>
+>On Jan 29,  8:50am, Berk Geveci wrote:
+> > Subject: Re: [Paraview] version of VTK?
+> >
+> > ParaView from CVS goes with VTK from CVS (not the 4.0 release,
+> > since we, unfortunately, couldn't introduce certain changes
+> > to VTK before the branch). ParaView release 0.2 goes with a
+> > CVS tag of VTK (ParaView-0-2). There is a tar file on the web.
+> > Since you are an advanced VTK user, I recommend going with CVS.
+> > This way, you'll have the latest ParaView and you won't need
+> > a separate VTK.
+> > -Berk
+> >
+> > >From: "Randy Heiland" <heiland@ncsa.uiuc.edu>
+> > >To: paraview@public.kitware.com, Amy Henderson <amy.henderson@kitware.com>
+> > >Subject: Re: [Paraview] version of VTK?
+> > >Date: Mon, 28 Jan 2002 16:36:02 -0600
+> > >
+> > >No, no, my mistake, I now see that I downloaded a tarball rather than from
+> > >CVS:
+> > >ParaView-0-2.tar.gz
+> > >
+> > >I'll try to grab the CVS version.
+> > >
+> > >--Randy
+> > >
+> > >On Jan 28,  5:27pm, Amy Henderson wrote:
+> > > > Subject: Re: [Paraview] version of VTK?
+> > > > You should be building ParaView with VTK 4.0.  When did you last update
+> > > > your checkout of ParaView?
+> > > >
+> > > > - Amy
+> > > >
+> > >_______________________________________________
+> > >ParaView mailing list
+> > >ParaView@public.kitware.com
+> > >http://public.kitware.com/mailman/listinfo/paraview
+> >
+> >
+> >
+> >
+> > _________________________________________________________________
+> > Get your FREE download of MSN Explorer at http://explorer.msn.com/intl.asp.
+> >-- End of excerpt from Berk Geveci
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From heiland@ncsa.uiuc.edu  Tue Jan 29 16:18:33 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Tue, 29 Jan 2002 10:18:33 -0600
+Subject: [Paraview] version of VTK?
+In-Reply-To: Amy Henderson <amy.henderson@kitware.com>
+ "Re: [Paraview] version of VTK?" (Jan 29, 10:14am)
+References: <"Berk Geveci" <berkgeveci@hotmail.com>
+ <F38XqxsD1Ty9CMdZpDs00005e3b@hotmail.com>
+ <4.3.2.7.2.20020129101115.00b1c050@pop.nycap.rr.com>
+Message-ID: <1020129101833.ZM11415@kelgia.ncsa.uiuc.edu>
+
+Thanks Amy.  Your 'cvs update -A' reply did the trick.
+
+Now, to cause more trouble... what is it about ParaView that requires Tcl/Tk
+8.2.3?  I'd built VTK w/ Tcl 8.3 and so now when I try to run ParaView, get:
+
+mason 464% ./ParaView
+Can't find a usable init.tcl in the following directories:
+    /ThisIsNotAPath/Tcl/lib/tcl8.2
+
+/ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl: version conflict for package "Tcl":
+have 8.3, need 8.2
+version conflict for package "Tcl": have 8.3, need 8.2
+    while executing
+"package require -exact Tcl 8.2"
+    (file "/ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl" line 4)
+    invoked from within
+"source /ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list source $tclfile]"
+
+
+This probably means that Tcl wasn't installed properly.
+ ...
+
+----------
+
+Is there any hope of using Tcl 8.3 with ParaView?
+
+I've tried to flush whatever Tcl knowledge I used to have :), but fwiw, I have:
+TCLLIBPATH=<pathto>/VTK/Wrapping/Tcl
+
+thanks for any insight,
+--Randy
+
+From berkgeveci@hotmail.com  Tue Jan 29 16:57:57 2002
+From: berkgeveci@hotmail.com (Berk Geveci)
+Date: Tue, 29 Jan 2002 11:57:57 -0500
+Subject: [Paraview] version of VTK?
+Message-ID: <F160r90KYHuXzBW76c400004c0d@hotmail.com>
+
+There is always hope :-) Give me a little time to work on it.
+
+
+>From: "Randy Heiland" <heiland@ncsa.uiuc.edu>
+>To: Amy Henderson <amy.henderson@kitware.com>, paraview@public.kitware.com
+>Subject: Re: [Paraview] version of VTK?
+>Date: Tue, 29 Jan 2002 10:18:33 -0600
+>
+>Thanks Amy.  Your 'cvs update -A' reply did the trick.
+>
+>Now, to cause more trouble... what is it about ParaView that requires 
+>Tcl/Tk
+>8.2.3?  I'd built VTK w/ Tcl 8.3 and so now when I try to run ParaView, 
+>get:
+>
+>mason 464% ./ParaView
+>Can't find a usable init.tcl in the following directories:
+>     /ThisIsNotAPath/Tcl/lib/tcl8.2
+>
+>/ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl: version conflict for package 
+>"Tcl":
+>have 8.3, need 8.2
+>version conflict for package "Tcl": have 8.3, need 8.2
+>     while executing
+>"package require -exact Tcl 8.2"
+>     (file "/ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl" line 4)
+>     invoked from within
+>"source /ThisIsNotAPath/Tcl/lib/tcl8.2/init.tcl"
+>     ("uplevel" body line 1)
+>     invoked from within
+>"uplevel #0 [list source $tclfile]"
+>
+>
+>This probably means that Tcl wasn't installed properly.
+>  ...
+>
+>----------
+>
+>Is there any hope of using Tcl 8.3 with ParaView?
+>
+>I've tried to flush whatever Tcl knowledge I used to have :), but fwiw, I 
+>have:
+>TCLLIBPATH=<pathto>/VTK/Wrapping/Tcl
+>
+>thanks for any insight,
+>--Randy
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+_________________________________________________________________
+Chat with friends online, try MSN Messenger: http://messenger.msn.com
+
+
+From berk.geveci@kitware.com  Wed Jan 30 21:44:33 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Wed, 30 Jan 2002 16:44:33 -0500
+Subject: [Paraview] Tcl/Tk 8.3
+Message-ID: <200201302144.g0ULiDu13281@mailout6.nyroc.rr.com>
+
+I added support for Tcl/Tk 8.3 to ParaView. There is an advanced build
+option called HAVE_TCL8_3 which can be used to tell the build system
+that ParaView will be linked against version 8.3. If you are changing this
+for an already existing build, I recommend doing a make clean inside 
+ParaView directory before running make again.
+
+-Berk
+
+From heiland@ncsa.uiuc.edu  Wed Jan 30 22:07:27 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Wed, 30 Jan 2002 16:07:27 -0600
+Subject: [Paraview] Tcl/Tk 8.3
+In-Reply-To: Berk Geveci <berk.geveci@kitware.com>
+ "[Paraview] Tcl/Tk 8.3" (Jan 30,  4:44pm)
+References: <200201302144.g0ULiDu13281@mailout6.nyroc.rr.com>
+Message-ID: <1020130160727.ZM8303@kelgia.ncsa.uiuc.edu>
+
+> I added support for Tcl/Tk 8.3 to ParaView. There is an advanced build
+> option called HAVE_TCL8_3 which can be used to tell the build system
+> that ParaView will be linked against version 8.3. If you are changing this
+> for an already existing build, I recommend doing a make clean inside
+> ParaView directory before running make again.
+
+Woohoo!  Thanks Berk!  It works for me (after doing a cvs update for /ParaView,
+I also had to cvs update /VTK/Parallel)!
+
+--Randy
+

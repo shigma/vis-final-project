@@ -1,0 +1,3600 @@
+From ken.martin at kitware.com  Fri Oct  1 15:15:27 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Fri Oct  1 15:15:30 2004
+Subject: [Paraview] Announce: ParaView 1.6.3
+Message-ID: <20041001191524.EGJW8244.fep01.biz.rr.com@Grayson>
+
+ParaView version 1.6.3 is available for download from www.paraview.org
+<http://www.paraview.org/> . This release includes a number of fixes
+including:
+
+ 
+
+- Compile problem with vtkKWTextProperty on OSF
+
+- Better support for EnSight Gold files with missing parameters
+
+- Better defaults for the clip plane animation tab
+
+- Fix for a tiled display problem when using client/data server/render
+server
+
+- Filtering operations such as isosurfacing are supported even for partial
+arrays
+
+ 
+
+ 
+
+Thanks
+
+Ken
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041001/c2e3d30b/attachment.htm
+From EbertMP at nswccd.navy.mil  Fri Oct  1 19:44:16 2004
+From: EbertMP at nswccd.navy.mil (Ebert Michael P CRBE)
+Date: Fri Oct  1 19:44:50 2004
+Subject: [Paraview] New user looking for demo1.pvs
+Message-ID: <2515D01B904BD411B129009027A8EC4A068E014B@crbeex06.dt.navy.mil>
+
+I have just installed the latest stable release of paraview (1.6.3) and would like to play the demo for a visual introduction to some of the capabilities of the application.  However when I select Help->PlayDemo I get the follwoing error.
+
+"Could not find Demo1.pvs in the installation or build directory. Please make sure that ParaView is installed properly."
+
+I looked for the file Demo1.pvs in the paraview-1.6.3-x86-linux-files.tar file but it is not there.
+
+Where do I get the Demo1.pvs file (and other files neccesary to play the demo) and where should they be installed so that ParaView can find them?
+
+Thank You.
+
+Mike Ebert
+From m.janssens at nabla.co.uk  Tue Oct  5 12:41:18 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Tue Oct  5 12:41:26 2004
+Subject: [Paraview] threshold
+Message-ID: <4162CEAE.9020500@nabla.co.uk>
+
+Hello all,
+
+Does anyone know if it is possible to vary the threshold parameters from 
+the animation module? The min and max don't appear as a Parameter when I 
+select the threshold as action Source.
+
+Mattijs
+
+
+From bnwylie at sandia.gov  Tue Oct  5 23:05:50 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Tue Oct  5 23:06:03 2004
+Subject: [Paraview] Visual C++ 6 and shared lib build
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0F7988@ES20SNLNT.srn.sandia.gov>
+
+Hello All,
+
+Just wondering if anyone knew what Visual C++ 6.0 is 'doing' under the
+following circumstance when building paraview.
+
+Static lib build = change some code, recompile, no problem
+Shared lib build = change some code, try to recompile, Visual 6.0
+'thinks' about something for about 10 minutes and then starts to compile
+files.
+
+Does anyone know what Visual 6.0 is 'thinking' about for 10 minutes when
+building shared lib? Generating indexes or resolving something???
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+	(505) 844-2238   FAX (505) 845-0833
+
+
+From vidya_raghavan at hotmail.com  Wed Oct  6 00:51:09 2004
+From: vidya_raghavan at hotmail.com (Vidya Raghavan)
+Date: Wed Oct  6 00:52:13 2004
+Subject: [Paraview] error when creating filter for paraview
+Message-ID: <BAY2-F11gNjWOiy54Dg0001dd5f@hotmail.com>
+
+Dear VTK and paraview users,
+
+I'm trying to add my own VTK filter to Paraview, and am following the 
+example PVLocal in the "Examples" folder supplied with Paraview code. I've 
+attached the entire code, which has to be first built in CMake and the the 
+.dsw is loaded in vc++ and compiled.
+
+The filter functionaily right now is simple:
+
+When I load a .vtp file in Paraview, I need to select my filter and it 
+calculates the normals of the model data loaded. The code is in 
+TrilateralFiltering.cxx in ExecuteData method.
+
+When compiled, I get 2 errors:
+
+:\vtkProjects\Paraview-plugins\PVTF\vtkTrilateralFiltering.cxx(52) : error 
+C2039: 'AllocateOutputData' : is not a member of 'vtkTrilateralFiltering'
+        C:\vtkProjects\Paraview-plugins\PVTF\vtkTrilateralFiltering.h(10) : 
+see declaration of 'vtkTrilateralFiltering'
+C:\vtkProjects\Paraview-plugins\PVTF\vtkTrilateralFiltering.cxx(56) : error 
+C2039: 'GetOutput' : is not a member of 'vtkPolyData'
+
+
+Please help!
+
+Thanks.
+
+_________________________________________________________________
+Steam up your desktop! Get the hottest wallpapers. 
+http://www.msn.co.in/cinema/ Right here at MSN movies!
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PVTF.zip
+Type: application/x-zip-compressed
+Size: 4052 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20041006/f038b785/PVTF.bin
+From Jason.Beech-Brandt at ed.ac.uk  Wed Oct  6 04:44:14 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Wed Oct  6 04:44:21 2004
+Subject: [Paraview] compiling paraview-1.6.3 
+Message-ID: <Pine.GSO.4.58.0410060927290.4622@deedee>
+
+Hi,
+
+I'm trying to compile paraview-1.6.3 on an SunBlade 1000 running Solaris
+8.  My compiler is gcc/g++-3.4.2.  Everything compiles fine, including the
+paraview executable, however the library libucb.so.1 is linked in, and the
+library path /usr/ucblib is not included in the runtime library search
+path by cmake.  Modifying my LD_LIBRARY_PATH variable to include
+/usr/ucblib seems to fix the problem, as I guess would including
+-L/usr/ucblib -R/usr/ucblib in the linker flags when compiling paraview.
+
+I don't remember having this problem with previous versions of paraview.
+Has something changed to require the use of this library?  Or has it
+always been used by paraview?  I must admit, I'm not even really sure what
+this library is for.
+
+Any comments most welcome.
+
+Cheers
+
+Jason
+From billlist at nycap.rr.com  Wed Oct  6 09:52:24 2004
+From: billlist at nycap.rr.com (William A. Hoffman)
+Date: Wed Oct  6 09:54:04 2004
+Subject: [Paraview] Visual C++ 6 and shared lib build
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0F7988@ES20SNLNT.srn.sandi a.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0F7988@ES20SNLNT.srn.sandia.gov>
+Message-ID: <6.1.1.1.2.20041006094508.080dbeb0@pop.nycap.rr.com>
+
+Sometimes VS 6 builds up junk in the .opt and .ncb files for a project.
+If you remove these files, it should go faster again.  
+
+-Bill
+
+At 11:05 PM 10/5/2004, Wylie, Brian wrote:
+>Hello All,
+>
+>Just wondering if anyone knew what Visual C++ 6.0 is 'doing' under the
+>following circumstance when building paraview.
+>
+>Static lib build = change some code, recompile, no problem
+>Shared lib build = change some code, try to recompile, Visual 6.0
+>'thinks' about something for about 10 minutes and then starts to compile
+>files.
+>
+>Does anyone know what Visual 6.0 is 'thinking' about for 10 minutes when
+>building shared lib? Generating indexes or resolving something???
+>
+>        Brian Wylie
+>        Sandia National Laboratories
+>        MS 0822 - Org 9227 - Building 880/A1-J
+>        (505) 844-2238   FAX (505) 845-0833
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview 
+
+From brad.king at kitware.com  Wed Oct  6 17:49:36 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed Oct  6 17:51:08 2004
+Subject: [Paraview] compiling paraview-1.6.3
+In-Reply-To: <Pine.GSO.4.58.0410060927290.4622@deedee>
+References: <Pine.GSO.4.58.0410060927290.4622@deedee>
+Message-ID: <41646870.9050703@kitware.com>
+
+Jason.Beech-Brandt@ed.ac.uk wrote:
+> I'm trying to compile paraview-1.6.3 on an SunBlade 1000 running Solaris
+> 8.  My compiler is gcc/g++-3.4.2.  Everything compiles fine, including the
+> paraview executable, however the library libucb.so.1 is linked in, and the
+> library path /usr/ucblib is not included in the runtime library search
+> path by cmake.  Modifying my LD_LIBRARY_PATH variable to include
+> /usr/ucblib seems to fix the problem, as I guess would including
+> -L/usr/ucblib -R/usr/ucblib in the linker flags when compiling paraview.
+> 
+> I don't remember having this problem with previous versions of paraview.
+> Has something changed to require the use of this library?  Or has it
+> always been used by paraview?  I must admit, I'm not even really sure what
+> this library is for.
+
+Please try to find what is linking that library.  I do not think the 
+paraview build process tries to link to it explicitly, but it might 
+inherit it by linking to some other library.  Go to the directory 
+containing the paraview executable and run
+
+   ldd ./paraview |grep ucb
+   ldd ./libvtkCommon.so |grep ucb
+   ...
+
+for all the libraries and see which ones try to reference ucb.
+
+Thanks,
+-Brad
+From vidya_raghavan at hotmail.com  Wed Oct  6 19:39:03 2004
+From: vidya_raghavan at hotmail.com (Vidya Raghavan)
+Date: Wed Oct  6 19:40:28 2004
+Subject: [Paraview] How to add a filter in ParaView for vtp files
+Message-ID: <BAY2-F5Jwg2xIpR3Z6c00027be3@hotmail.com>
+
+Hi all,
+
+I'm sorry for being so persistent, but I looked at PVLocal example to add a 
+filter, but it's basically a simple cone display. Basically, I need to 
+enable a filter when I load a vtp file, and obtain the surface normals of 
+the ploygonal data. I have code below which does it, but am finding it 
+difficult to transform the vtk code below as a plug-in to paraview. Several 
+questions that I have unanswered are:
+1) How do I enable the filter when I load a .vtp file?
+2) How do I apply this code below to the current vtp file loaded in 
+Paraview?
+
+If someone can help me with this, I think I can go further with this on my 
+own, since I need to integrate some code with this that does some processing 
+on surface normal values.
+
+I would really appreciate your help!
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+#include "vtkPolyDataMapper.h"
+#include "vtkRenderWindow.h"
+#include "vtkCamera.h"
+#include "vtkActor.h"
+#include "vtkRenderer.h"
+#include "vtkXMLPolyDataReader.h"
+#include "vtkPolyDataNormals.h"
+#include "vtkPolyData.h"
+#include "vtkPointData.h"
+#include "vtkProperty.h"
+
+int main( int argc, char *argv[] )
+{
+	vtkXMLPolyDataReader *reader1 = vtkXMLPolyDataReader::New();
+	reader1->SetFileName("model1.vtp");
+
+	vtkPolyDataMapper *mapper1 = vtkPolyDataMapper::New();
+	mapper1->SetInput(reader1->GetOutput());
+
+	vtkProperty *prop1 = vtkProperty::New();
+                prop1->SetDiffuseColor(0.5, 0.5, 0.5);
+	prop1->SetSpecularPower(50);
+	prop1->SetSpecular(.5);
+	prop1->SetDiffuse(.8);
+
+	vtkActor *actor1 = vtkActor::New();
+	actor1->SetMapper(mapper1);
+	actor1->SetProperty(prop1);
+
+	vtkRenderer *ren= vtkRenderer::New();
+	ren->AddActor(actor1);
+
+	vtkPolyDataNormals *dataset = vtkPolyDataNormals::New();
+	dataset->SetInput(reader1->GetOutput());
+	dataset->SetFeatureAngle(60.0);
+	dataset->FlipNormalsOff();
+	dataset->Update();
+
+
+	//to access the values:
+
+	for (int pointID=0; pointID < dataset->GetOutput()->GetNumberOfPoints(); 
+pointID++) {
+		float *point = 
+(float*)reader1->GetOutput()->GetPointData()->GetNormals()->GetTuple(pointID);
+
+	/*	printf("x -> %f",(float)point[0]);
+		printf("y -> %f",(float)point[1]);
+		printf("z -> %f",(float)point[2]);*/
+	}
+
+
+	vtkRenderWindow *renWin = vtkRenderWindow::New();
+
+
+	renWin->AddRenderer(ren);
+	renWin->SetSize(800, 800 );
+
+	renWin->Render();
+
+               reader1->Delete();
+               dataset->Delete();
+               actor1->Delete();
+               prop1->Delete();
+               ren->Delete();
+              renWin->Delete();
+              return 0;
+}
+
+_________________________________________________________________
+Apply to over 65,000 jobs now. 
+http://www.naukri.com/msn/index.php?source=hottag Post your CV on naukri.com 
+today.
+
+From jfavre at cscs.ch  Thu Oct  7 03:00:36 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Oct  7 03:00:52 2004
+Subject: [Paraview] How to add a filter in ParaView for vtp files
+In-Reply-To: <BAY2-F5Jwg2xIpR3Z6c00027be3@hotmail.com>
+References: <BAY2-F5Jwg2xIpR3Z6c00027be3@hotmail.com>
+Message-ID: <4164E994.9040705@cscs.ch>
+
+Vidya Raghavan wrote:
+
+  Several questions that I have unanswered are:
+> 1) How do I enable the filter when I load a .vtp file?
+
+look at all the examples in your GUI/Client/Resources directory in 
+ParaView. Look at the file called Filters.xml
+
+For example:
+
+     <Filter class="vtkAllToNRedistributePolyData">
+       <Input name="Input"
+              class="vtkPolyData"/>
+     </Filter>
+
+That is the way to specify that your filter requires a vtkPolyData input.
+
+
+> 2) How do I apply this code below to the current vtp file loaded in 
+> Paraview?
+
+If you do step 1 above and if ParaView loads your XML file, then your 
+filter becomes available in the Filters list. Select your vtkPolyData 
+and apply your filter to it just like you would do any other Filter.
+
+
+P.S. No need to send me a personnal mail. I receive both vtk and 
+paraview mailing lists.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From Jason.Beech-Brandt at ed.ac.uk  Thu Oct  7 08:47:39 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Thu Oct  7 08:51:23 2004
+Subject: [Paraview] compiling paraview-1.6.3
+In-Reply-To: <41646870.9050703@kitware.com>
+References: <Pine.GSO.4.58.0410060927290.4622@deedee>
+	<41646870.9050703@kitware.com>
+Message-ID: <Pine.GSO.4.58.0410071341270.24570@deedee>
+
+Hi Brad,
+
+In my build paraview-1.6.3-solaris/bin directory I have the following
+files
+
+ConvertImage*
+H5detect*
+libkwsys.so*
+libvtkClientServer.so*
+libvtkCommon.so*
+libvtkCommonCS.so*
+libvtkCommonTCL.so*
+libvtkDICOMParser.so*
+libvtkexpat.so*
+libvtkFiltering.so*
+libvtkFilteringCS.so*
+libvtkfreetype.so*
+libvtkftgl.so*
+libvtkGraphics.so*
+libvtkGraphicsCS.so*
+libvtkhdf5.so*
+libvtkHybrid.so*
+libvtkHybridCS.so*
+libvtkImaging.so*
+libvtkImagingCS.so*
+libvtkIO.so*
+libvtkIOCS.so*
+libvtkjpeg.so*
+libvtkKWCommon.so*
+libvtkKWParaView.so*
+libvtkKWParaViewCS.so*
+libvtkKWWidgetsTCL.so*
+libvtkParallel.so*
+libvtkParallelCS.so*
+libvtkPatented.so*
+libvtkPatentedCS.so*
+libvtkpng.so*
+libvtkPVCommon.so*
+libvtkPVCommonCS.so*
+libvtkPVFilters.so*
+libvtkPVFiltersCS.so*
+libvtkPVServerManager.so*
+libvtkPVServerManagerTCL.so*
+libvtkRendering.so*
+libvtkRenderingCS.so*
+libvtktiff.so*
+libvtkXdmf.so*
+libvtkXdmfCS.so*
+libvtkzlib.so*
+libXdmf.so*
+mkg3states*
+paraview*
+ProcessXML*
+pvTestDriver*
+vtkTestFilters*
+vtkWrapClientServer*
+vtkWrapTcl*
+vtkWrapTclInit*
+
+Of these the following contain a reference to libucb.so.1
+
+libvtkKWParaView.so
+libvtkKWParaViewCS.so
+libvtkPVCommon.so
+libvtkPVCommonCS.so
+libvtkPVFilters.so
+libvtkPVFiltersCS.so
+libvtkPVServerManager.so
+libvtkPVServerManagerTCL.so
+libvtkXdmf.so
+libvtkXdmfCS.so
+libXdmf.so
+paraview
+vtkTestFilters
+
+Any ideas?
+
+Thanks,
+Jason
+
+On Wed, 6 Oct 2004, Brad King wrote:
+
+> Jason.Beech-Brandt@ed.ac.uk wrote:
+> > I'm trying to compile paraview-1.6.3 on an SunBlade 1000 running Solaris
+> > 8.  My compiler is gcc/g++-3.4.2.  Everything compiles fine, including the
+> > paraview executable, however the library libucb.so.1 is linked in, and the
+> > library path /usr/ucblib is not included in the runtime library search
+> > path by cmake.  Modifying my LD_LIBRARY_PATH variable to include
+> > /usr/ucblib seems to fix the problem, as I guess would including
+> > -L/usr/ucblib -R/usr/ucblib in the linker flags when compiling paraview.
+> >
+> > I don't remember having this problem with previous versions of paraview.
+> > Has something changed to require the use of this library?  Or has it
+> > always been used by paraview?  I must admit, I'm not even really sure what
+> > this library is for.
+>
+> Please try to find what is linking that library.  I do not think the
+> paraview build process tries to link to it explicitly, but it might
+> inherit it by linking to some other library.  Go to the directory
+> containing the paraview executable and run
+>
+>    ldd ./paraview |grep ucb
+>    ldd ./libvtkCommon.so |grep ucb
+>    ...
+>
+> for all the libraries and see which ones try to reference ucb.
+>
+> Thanks,
+> -Brad
+>
+From alex at orion.duhs.duke.edu  Thu Oct  7 15:13:49 2004
+From: alex at orion.duhs.duke.edu (Alexandra Badea)
+Date: Thu Oct  7 15:12:59 2004
+Subject: [Paraview] problems compiling Paraview
+Message-ID: <049734D2-1895-11D9-B8D6-000A95B635F0@orion.duhs.duke.edu>
+
+Greetings!
+
+I am trying to install Paraview 1.6.3 on a MAC OS X 10.3.5 and I use  
+CMake 2.0.3.
+I have specified for cmake :
+
+backwards_compatibility to 1.8
+and asked for vtk_use_x in the hope that I will avoid the type of  
+conflicts listed below
+shared_libraries are off.
+al other options for cmake are the default ones.
+
+I will be grateful for receiving some guidance in solving my  
+installation problems.
+I attach my list of errors and apologize for the lengthy email.
+
+Alexandra
+
+_______________________
+
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:663: error: declaration
+    of C function `void XSetDashes(Display*, _XGC*, int, const char*,  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3792: error: previous declaration `int
+    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:686: error: declaration
+    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+    XKeycodeToKeysym(Display*, unsigned int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:697: error: declaration
+    of C function `void XBell(Display*, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2253: error: previous declaration `int
+    XBell(Display*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:701: error: declaration
+    of C function `void XChangeProperty(Display*, long unsigned int, long
+    unsigned int, long unsigned int, int, int, const unsigned char*,  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:2337: error: previous declaration `int
+    XChangeProperty(Display*, long unsigned int, long unsigned int, long
+    unsigned int, int, int, const unsigned char*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:705: error: declaration
+    of C function `void XChangeWindowAttributes(Display*, long unsigned  
+int,
+    long unsigned int, XSetWindowAttributes*)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2354: error: previous declaration `int
+    XChangeWindowAttributes(Display*, long unsigned int, long unsigned  
+int,
+    XSetWindowAttributes*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:708: error: declaration
+    of C function `void XConfigureWindow(Display*, long unsigned int,  
+unsigned
+    int, XWindowChanges*)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2459: error: previous declaration `int
+    XConfigureWindow(Display*, long unsigned int, unsigned int,  
+XWindowChanges*)
+    ' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:713: error: declaration
+    of C function `void XCopyArea(Display*, long unsigned int, long  
+unsigned
+    int, _XGC*, int, int, unsigned int, unsigned int, int, int)'  
+conflicts with
+/usr/X11R6/include/X11/Xlib.h:2491: error: previous declaration `int
+    XCopyArea(Display*, long unsigned int, long unsigned int, _XGC*,  
+int, int,
+    unsigned int, unsigned int, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:718: error: declaration
+    of C function `void XCopyPlane(Display*, long unsigned int, long  
+unsigned
+    int, _XGC*, int, int, unsigned int, unsigned int, int, int, long  
+unsigned
+    int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2516: error: previous declaration `int
+    XCopyPlane(Display*, long unsigned int, long unsigned int, _XGC*,  
+int, int,
+    unsigned int, unsigned int, int, int, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:725: error: declaration
+    of C function `void XDefineCursor(Display*, long unsigned int, long  
+unsigned
+    int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2543: error: previous declaration `int
+    XDefineCursor(Display*, long unsigned int, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:727: error: declaration
+    of C function `void XDestroyWindow(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:2558: error: previous declaration `int
+    XDestroyWindow(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:731: error: declaration
+    of C function `void XDrawArc(Display*, long unsigned int, _XGC*,  
+int, int,
+    unsigned int, unsigned int, int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2648: error: previous declaration `int
+    XDrawArc(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+    unsigned int, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:734: error: declaration
+    of C function `void XDrawLines(Display*, long unsigned int, _XGC*,  
+XPoint*,
+    int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2705: error: previous declaration `int
+    XDrawLines(Display*, long unsigned int, _XGC*, XPoint*, int, int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:738: error: declaration
+    of C function `void XDrawRectangle(Display*, long unsigned int,  
+_XGC*, int,
+    int, unsigned int, unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2738: error: previous declaration `int
+    XDrawRectangle(Display*, long unsigned int, _XGC*, int, int,  
+unsigned int,
+    unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:742: error: declaration
+    of C function `void XFillArc(Display*, long unsigned int, _XGC*,  
+int, int,
+    unsigned int, unsigned int, int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2841: error: previous declaration `int
+    XFillArc(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+    unsigned int, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:745: error: declaration
+    of C function `void XFillPolygon(Display*, long unsigned int, _XGC*,
+    XPoint*, int, int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2863: error: previous declaration `int
+    XFillPolygon(Display*, long unsigned int, _XGC*, XPoint*, int, int,  
+int)'
+    here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:748: error: declaration
+    of C function `void XFillRectangles(Display*, long unsigned int,  
+_XGC*,
+    XRectangle*, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2885: error: previous declaration `int
+    XFillRectangles(Display*, long unsigned int, _XGC*, XRectangle*,  
+int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:750: error: declaration
+    of C function `void XFreeColormap(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:2911: error: previous declaration `int
+    XFreeColormap(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:753: error: declaration
+    of C function `void XFreeColors(Display*, long unsigned int, long  
+unsigned
+    int*, int, long unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2921: error: previous declaration `int
+    XFreeColors(Display*, long unsigned int, long unsigned int*, int,  
+long
+    unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:755: error: declaration
+    of C function `void XFreeModifiermap(XModifierKeymap*)' conflicts  
+with
+/usr/X11R6/include/X11/Xlib.h:2974: error: previous declaration `int
+    XFreeModifiermap(XModifierKeymap*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:776: error: declaration
+    of C function `void XMapWindow(Display*, long unsigned int)'  
+conflicts with
+/usr/X11R6/include/X11/Xlib.h:3283: error: previous declaration `int
+    XMapWindow(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:780: error: declaration
+    of C function `void XMoveResizeWindow(Display*, long unsigned int,  
+int, int,
+    unsigned int, unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3314: error: previous declaration `int
+    XMoveResizeWindow(Display*, long unsigned int, int, int, unsigned  
+int,
+    unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:783: error: declaration
+    of C function `void XMoveWindow(Display*, long unsigned int, int,  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3323: error: previous declaration `int
+    XMoveWindow(Display*, long unsigned int, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:789: error: declaration
+    of C function `void XRaiseWindow(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:3568: error: previous declaration `int
+    XRaiseWindow(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:792: error: declaration
+    of C function `void XRefreshKeyboardMapping(XMappingEvent*)'  
+conflicts with
+/usr/X11R6/include/X11/Xlib.h:3618: error: previous declaration `int
+    XRefreshKeyboardMapping(XMappingEvent*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:795: error: declaration
+    of C function `void XResizeWindow(Display*, long unsigned int,  
+unsigned int,
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3665: error: previous declaration `int
+    XResizeWindow(Display*, long unsigned int, unsigned int, unsigned  
+int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:798: error: declaration
+    of C function `void XSelectInput(Display*, long unsigned int, long  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3704: error: previous declaration `int
+    XSelectInput(Display*, long unsigned int, long int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:804: error: declaration
+    of C function `void XSetIconName(Display*, long unsigned int, const  
+char*)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3856: error: previous declaration `int
+    XSetIconName(Display*, long unsigned int, const char*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:807: error: declaration
+    of C function `void XSetInputFocus(Display*, long unsigned int, int,  
+long
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3865: error: previous declaration `int
+    XSetInputFocus(Display*, long unsigned int, int, long unsigned int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:810: error: declaration
+    of C function `void XSetSelectionOwner(Display*, long unsigned int,  
+long
+    unsigned int, long unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3918: error: previous declaration `int
+    XSetSelectionOwner(Display*, long unsigned int, long unsigned int,  
+long
+    unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:813: error: declaration
+    of C function `void XSetWindowBackground(Display*, long unsigned  
+int, long
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3970: error: previous declaration `int
+    XSetWindowBackground(Display*, long unsigned int, long unsigned  
+int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:816: error: declaration
+    of C function `void XSetWindowBackgroundPixmap(Display*, long  
+unsigned int,
+    long unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3978: error: previous declaration `int
+    XSetWindowBackgroundPixmap(Display*, long unsigned int, long  
+unsigned int)'
+    here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:819: error: declaration
+    of C function `void XSetWindowBorder(Display*, long unsigned int,  
+long
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3986: error: previous declaration `int
+    XSetWindowBorder(Display*, long unsigned int, long unsigned int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:822: error: declaration
+    of C function `void XSetWindowBorderPixmap(Display*, long unsigned  
+int, long
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3994: error: previous declaration `int
+    XSetWindowBorderPixmap(Display*, long unsigned int, long unsigned  
+int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:825: error: declaration
+    of C function `void XSetWindowBorderWidth(Display*, long unsigned  
+int,
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:4002: error: previous declaration `int
+    XSetWindowBorderWidth(Display*, long unsigned int, unsigned int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:828: error: declaration
+    of C function `void XSetWindowColormap(Display*, long unsigned int,  
+long
+    unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:4010: error: previous declaration `int
+    XSetWindowColormap(Display*, long unsigned int, long unsigned int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:830: error: declaration
+    of C function `void XUngrabKeyboard(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:4154: error: previous declaration `int
+    XUngrabKeyboard(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:832: error: declaration
+    of C function `void XUngrabPointer(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:4161: error: previous declaration `int
+    XUngrabPointer(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:834: error: declaration
+    of C function `void XUnmapWindow(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:4195: error: previous declaration `int
+    XUnmapWindow(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:849: error: declaration
+    of C function `void XFreeGC(Display*, _XGC*)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2968: error: previous declaration `int
+    XFreeGC(Display*, _XGC*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:855: error: declaration
+    of C function `void XSetBackground(Display*, _XGC*, long unsigned  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3737: error: previous declaration `int
+    XSetBackground(Display*, _XGC*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:858: error: declaration
+    of C function `void XSetForeground(Display*, _XGC*, long unsigned  
+int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3832: error: previous declaration `int
+    XSetForeground(Display*, _XGC*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:861: error: declaration
+    of C function `void XSetClipMask(Display*, _XGC*, long unsigned int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3745: error: previous declaration `int
+    XSetClipMask(Display*, _XGC*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:864: error: declaration
+    of C function `void XSetClipOrigin(Display*, _XGC*, int, int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:3754: error: previous declaration `int
+    XSetClipOrigin(Display*, _XGC*, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:867: error: declaration
+    of C function `void XSetTSOrigin(Display*, _XGC*, int, int)'  
+conflicts with
+/usr/X11R6/include/X11/Xlib.h:3954: error: previous declaration `int
+    XSetTSOrigin(Display*, _XGC*, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:870: error: declaration
+    of C function `void XChangeGC(Display*, _XGC*, long unsigned int,
+    XGCValues*)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2295: error: previous declaration `int
+    XChangeGC(Display*, _XGC*, long unsigned int, XGCValues*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:873: error: declaration
+    of C function `void XSetFont(Display*, _XGC*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:3816: error: previous declaration `int
+    XSetFont(Display*, _XGC*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:876: error: declaration
+    of C function `void XSetArcMode(Display*, _XGC*, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3729: error: previous declaration `int
+    XSetArcMode(Display*, _XGC*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:879: error: declaration
+    of C function `void XSetStipple(Display*, _XGC*, long unsigned int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3937: error: previous declaration `int
+    XSetStipple(Display*, _XGC*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:882: error: declaration
+    of C function `void XSetFillRule(Display*, _XGC*, int)' conflicts  
+with
+/usr/X11R6/include/X11/Xlib.h:3800: error: previous declaration `int
+    XSetFillRule(Display*, _XGC*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:885: error: declaration
+    of C function `void XSetFillStyle(Display*, _XGC*, int)' conflicts  
+with
+/usr/X11R6/include/X11/Xlib.h:3808: error: previous declaration `int
+    XSetFillStyle(Display*, _XGC*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:888: error: declaration
+    of C function `void XSetFunction(Display*, _XGC*, int)' conflicts  
+with
+/usr/X11R6/include/X11/Xlib.h:3840: error: previous declaration `int
+    XSetFunction(Display*, _XGC*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:893: error: declaration
+    of C function `void XSetLineAttributes(Display*, _XGC*, unsigned  
+int, int,
+    int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:3876: error: previous declaration `int
+    XSetLineAttributes(Display*, _XGC*, unsigned int, int, int, int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:897: error: declaration
+    of C function `_XIC* XCreateIC()' conflicts with
+/usr/X11R6/include/X11/Xlib.h:4644: error: previous declaration `_XIC*
+    XCreateIC(_XIM*, ...)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:911: error: declaration
+    of C function `void XDrawSegments(Display*, long unsigned int, _XGC*,
+    XSegment*, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2758: error: previous declaration `int
+    XDrawSegments(Display*, long unsigned int, _XGC*, XSegment*, int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:914: error: declaration
+    of C function `void XForceScreenSaver(Display*, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2898: error: previous declaration `int
+    XForceScreenSaver(Display*, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:917: error: declaration
+    of C function `void XDrawLine(Display*, long unsigned int, _XGC*,  
+int, int,
+    int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2694: error: previous declaration `int
+    XDrawLine(Display*, long unsigned int, _XGC*, int, int, int, int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:921: error: declaration
+    of C function `void XFillRectangle(Display*, long unsigned int,  
+_XGC*, int,
+    int, unsigned int, unsigned int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2875: error: previous declaration `int
+    XFillRectangle(Display*, long unsigned int, _XGC*, int, int,  
+unsigned int,
+    unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:923: error: declaration
+    of C function `void XClearWindow(Display*, long unsigned int)'  
+conflicts
+    with
+/usr/X11R6/include/X11/Xlib.h:2444: error: previous declaration `int
+    XClearWindow(Display*, long unsigned int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:926: error: declaration
+    of C function `void XDrawPoint(Display*, long unsigned int, _XGC*,  
+int, int)
+    ' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2715: error: previous declaration `int
+    XDrawPoint(Display*, long unsigned int, _XGC*, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:930: error: declaration
+    of C function `void XDrawPoints(Display*, long unsigned int, _XGC*,  
+XPoint*,
+    int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:2726: error: previous declaration `int
+    XDrawPoints(Display*, long unsigned int, _XGC*, XPoint*, int, int)'  
+here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:936: error: declaration
+    of C function `void XWarpPointer(Display*, long unsigned int, long  
+unsigned
+    int, int, int, unsigned int, unsigned int, int, int)' conflicts with
+/usr/X11R6/include/X11/Xlib.h:4215: error: previous declaration `int
+    XWarpPointer(Display*, long unsigned int, long unsigned int, int,  
+int,
+    unsigned int, unsigned int, int, int)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:939: error: declaration
+    of C function `void XQueryColor(Display*, long unsigned int,  
+XColor*)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3484: error: previous declaration `int
+    XQueryColor(Display*, long unsigned int, XColor*)' here
+/Users/alex/software/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/ 
+tkIntXlibDecls.h:943: error: declaration
+    of C function `void XQueryColors(Display*, long unsigned int,  
+XColor*, int)'
+    conflicts with
+/usr/X11R6/include/X11/Xlib.h:3493: error: previous declaration `int
+    XQueryColors(Display*, long unsigned int, XColor*, int)' here
+In file included from  
+/Users/alex/software/paraviewbuild/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx:21:
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:27:22: tkMacOSX.h: No such file or directory
+In file included from  
+/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ 
+QD.framework/Headers/QD.h:42,
+                  from  
+/System/Library/Frameworks/ApplicationServices.framework/Headers/ 
+ApplicationServices.h:30,
+                  from  
+/System/Library/Frameworks/Carbon.framework/Headers/Carbon.h:24,
+                  from  
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:34,
+                  from  
+/Users/alex/software/paraviewbuild/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx:21:
+/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ 
+QD.framework/Headers/Quickdraw.h:262: error: conflicting
+    types for `struct Cursor'
+/usr/X11R6/include/X11/X.h:108: error: previous declaration as `typedef  
+XID
+    Cursor'
+/System/Library/Frameworks/ApplicationServices.framework/Frameworks/ 
+QD.framework/Headers/Quickdraw.h:267: error: conflicting
+    types for `typedef struct Cursor Cursor'
+/usr/X11R6/include/X11/X.h:108: error: previous declaration as `typedef  
+XID
+    Cursor'
+In file included from  
+/Users/alex/software/paraviewbuild/VTK/Rendering/vtkTkInternals.h:34,
+                  from  
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx:21:
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:89: error: syntax
+    error before `*' token
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:90: error: syntax
+    error before `*' token
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:91: error: syntax
+    error before `*' token
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:92: error: syntax
+    error before `*' token
+/Users/alex/software/paraview-1.6.3/VTK/Utilities/TclTk/internals/ 
+tk8.4/tkMacOSXInt.h:93: error: syntax
+    error before `*' token
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx: In
+    function `int  
+vtkTkRenderWidget_MakeRenderWindow(vtkTkRenderWidget*)':
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx:1102: error: `
+    TkMacOSXGetDrawablePort' undeclared (first use this function)
+/Users/alex/software/paraview-1.6.3/VTK/Rendering/ 
+vtkTkRenderWidget.cxx:1102: error: (Each
+    undeclared identifier is reported only once for each function it  
+appears
+    in.)
+make[3]: *** [vtkTkRenderWidget.o] Error 1
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_Utilities_VTKTclWrapping] Error 2
+make: *** [default_target] Error 2
+[ithaka:~/software/paraviewbuild] alex%
+
+From pknotz at sandia.gov  Thu Oct  7 17:17:48 2004
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Thu Oct  7 17:18:04 2004
+Subject: [Paraview] problems compiling Paraview
+In-Reply-To: <049734D2-1895-11D9-B8D6-000A95B635F0@orion.duhs.duke.edu>
+References: <049734D2-1895-11D9-B8D6-000A95B635F0@orion.duhs.duke.edu>
+Message-ID: <56DA8C06-18A6-11D9-9C8F-000A958840C6@sandia.gov>
+
+I'm not sure about the errors but I built the same code (ParaView 
+1.6.3, OS X 10.3.5 and CMake 2.0.3) with out problems.  I used 
+backwards compatibility of 2.0.  VTK_USE_X=ON and VTK_USE_COCOA=OFF and 
+VTK_USE_CARBON=OFF.  I built with ExodusII import modules so my exact 
+setup is different...
+
+~ Pat
+
+
+On Oct 7, 2004, at 1:13 PM, Alexandra Badea wrote:
+
+> Greetings!
+>
+> I am trying to install Paraview 1.6.3 on a MAC OS X 10.3.5 and I use 
+> CMake 2.0.3.
+> I have specified for cmake :
+>
+> backwards_compatibility to 1.8
+> and asked for vtk_use_x in the hope that I will avoid the type of 
+> conflicts listed below
+> shared_libraries are off.
+> al other options for cmake are the default ones.
+>
+> I will be grateful for receiving some guidance in solving my 
+> installation problems.
+> I attach my list of errors and apologize for the lengthy email.
+>
+> Alexandra
+>
+[snip]
+
+
+From alex at orion.duhs.duke.edu  Thu Oct  7 19:49:58 2004
+From: alex at orion.duhs.duke.edu (Alexandra Badea)
+Date: Thu Oct  7 19:49:15 2004
+Subject: [Paraview] problems compiling Paraview
+In-Reply-To: <56DA8C06-18A6-11D9-9C8F-000A958840C6@sandia.gov>
+References: <049734D2-1895-11D9-B8D6-000A95B635F0@orion.duhs.duke.edu>
+	<56DA8C06-18A6-11D9-9C8F-000A958840C6@sandia.gov>
+Message-ID: <98D734C4-18BB-11D9-A250-000A95B635F0@orion.duhs.duke.edu>
+
+Thanks a lot Patrick!
+I had not set VTK_USE_CARBON=OFF , after changing as you said it it 
+works!!!
+I am very grateful! and joyful!
+Alexandra
+
+
+On Oct 7, 2004, at 5:17 PM, Patrick Notz wrote:
+
+> I'm not sure about the errors but I built the same code (ParaView 
+> 1.6.3, OS X 10.3.5 and CMake 2.0.3) with out problems.  I used 
+> backwards compatibility of 2.0.  VTK_USE_X=ON and VTK_USE_COCOA=OFF 
+> and VTK_USE_CARBON=OFF.  I built with ExodusII import modules so my 
+> exact setup is different...
+>
+> ~ Pat
+>
+>
+> On Oct 7, 2004, at 1:13 PM, Alexandra Badea wrote:
+
+From brad.king at kitware.com  Thu Oct  7 20:30:45 2004
+From: brad.king at kitware.com (Brad King)
+Date: Thu Oct  7 20:30:53 2004
+Subject: [Paraview] compiling paraview-1.6.3
+In-Reply-To: <Pine.GSO.4.58.0410071341270.24570@deedee>
+References: <Pine.GSO.4.58.0410060927290.4622@deedee>	<41646870.9050703@kitware.com>
+	<Pine.GSO.4.58.0410071341270.24570@deedee>
+Message-ID: <4165DFB5.1090901@kitware.com>
+
+Jason.Beech-Brandt@ed.ac.uk wrote:
+> Of these the following contain a reference to libucb.so.1
+> 
+> libvtkKWParaView.so
+> libvtkKWParaViewCS.so
+> libvtkPVCommon.so
+> libvtkPVCommonCS.so
+> libvtkPVFilters.so
+> libvtkPVFiltersCS.so
+> libvtkPVServerManager.so
+> libvtkPVServerManagerTCL.so
+> libvtkXdmf.so
+> libvtkXdmfCS.so
+> libXdmf.so
+> paraview
+> vtkTestFilters
+
+Nothing seems to stick out here to me.  Each of these reference other 
+system libraries as well as libucb.so.1.  Can you refine the search by 
+running ldd on each of the system libraries to see if any are bringing 
+in libucb.so.1?
+
+Thanks,
+-Brad
+
+From alex at orion.duhs.duke.edu  Fri Oct  8 07:49:04 2004
+From: alex at orion.duhs.duke.edu (Alexandra Badea)
+Date: Fri Oct  8 07:48:22 2004
+Subject: [Paraview] problems compiling Paraview
+In-Reply-To: <002901c4ad23$3b0a5510$2d1519ac@Rangeletti>
+References: <049734D2-1895-11D9-B8D6-000A95B635F0@orion.duhs.duke.edu><56DA8C06-18A6-11D9-9C8F-000A958840C6@sandia.gov>
+	<98D734C4-18BB-11D9-A250-000A95B635F0@orion.duhs.duke.edu>
+	<002901c4ad23$3b0a5510$2d1519ac@Rangeletti>
+Message-ID: <0D8D9936-1920-11D9-A250-000A95B635F0@orion.duhs.duke.edu>
+
+Greetings!
+
+I think it's best to send attached the CMakeCahe.txt file.
+And because it's too long I will also specify the changes from the 
+default settings for CMake.
+I am sorry if my explanations are simplistic too.
+
+1. I created a directory (paraviewbuild) at the same level with the 
+paraview source directory (paraview-1.6.3);
+2. I had to use CMake2.0.3 since my old good friend 1.8.3 was not good 
+enough for building paraview.
+3. cd to the paraviewbuild directory
+3. run ccmake from the build directory.
+in my case:
+[ithaka:/Users/alex/software/paraviewbuild] alex% /usr/local/bin/ccmake 
+/Users/alex/software/paraview-1.6.3
+4.  as Patrick said I used
+> backwards compatibility of 2.0. ;VTK_USE_X=ON ;VTK_USE_COCOA=OFF; 
+> VTK_USE_CARBON=OFF.
+so:
+BUILD_SHARED_LIBS                OFF
+CMAKE_BACKWARDS_COMPATIBILITY    2.0
+CMAKE_BUILD_TYPE
+CMAKE_INSTALL_PREFIX             /usr/local
+PARAVIEW_USE_SYSTEM_HDF5         OFF
+VTK_APPLE_RESOURCE               /Developer/Tools/Rez
+VTK_USE_CARBON                   OFF
+VTK_USE_COCOA                    OFF
+VTK_USE_MPI                      OFF
+VTK_USE_X                        ON
+
+5. Most of the times I recompiled I deleted the old build directory and 
+started anew.
+I already had vtk installed so perhaps there is a smarter way to 
+install paraview without rebuilding all the vtk functions but I am not 
+sure how so I just went for the "default" settings.
+
+Hope this could help somebody.
+
+Ciao!
+Alexandra
+
+On Oct 8, 2004, at 6:40 AM, Roberto Angeletti wrote:
+
+> Alexandra,
+>
+> Do you can send to the forum a list of the steps you followed to 
+> recompile
+> ParaView on MacOSX ?
+>
+> Best Regards
+>
+> Roberto Angeletti
+>
+>
+
+From dcthomp at sandia.gov  Fri Oct  8 17:18:54 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Fri Oct  8 17:19:05 2004
+Subject: [Paraview] threshold
+In-Reply-To: <4162CEAE.9020500@nabla.co.uk>
+References: <4162CEAE.9020500@nabla.co.uk>
+Message-ID: <1097270334.4586.12218.camel@fozzy.ran.sandia.gov>
+
+> Does anyone know if it is possible to vary the threshold parameters
+> from the animation module? The min and max don't appear as a Parameter
+> when I select the threshold as action Source.
+Use the Script functionality and write:
+
+[vtkTempXXX GetPVWidget "MinMax"] SetMinValue [expr $globalPVTime * whatever + something ]
+[vtkTempXXX GetPVWidget "MinMax"] SetMaxValue [expr $globalPVTime * whatever + something ]
+vtkTempXXX AcceptCallback
+
+
+From m.nawijn at lr.tudelft.nl  Mon Oct 11 06:59:29 2004
+From: m.nawijn at lr.tudelft.nl (M. Nawijn)
+Date: Mon Oct 11 06:53:29 2004
+Subject: [Paraview] Add cell edges to 'surface' visualistion mode
+Message-ID: <416A6791.9030206@lr.tudelft.nl>
+
+Hello all,
+
+In the surface rendering mode, I would like to see the cell vertices. At 
+the moment it seems that you show either in
+'surface' or in 'wireframe of surface' mode. is it possible to add this 
+functionality?
+
+Regards,
+
+Marco Nawijn
+From brad.king at kitware.com  Mon Oct 11 08:25:26 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Oct 11 08:29:52 2004
+Subject: [Paraview] Add cell edges to 'surface' visualistion mode
+In-Reply-To: <416A6791.9030206@lr.tudelft.nl>
+References: <416A6791.9030206@lr.tudelft.nl>
+Message-ID: <416A7BB6.9010708@kitware.com>
+
+M. Nawijn wrote:
+> In the surface rendering mode, I would like to see the cell vertices. At 
+> the moment it seems that you show either in
+> 'surface' or in 'wireframe of surface' mode. is it possible to add this 
+> functionality?
+
+You can use the "Glyph" filter to put a sphere at every vertex that is 
+large enough to stick out from the surface.
+
+-Brad
+From stephen.wornom at inria.fr  Mon Oct 11 11:13:16 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Mon Oct 11 11:13:46 2004
+Subject: [Paraview] multiple profiles
+Message-ID: <416AA30C.9080906@inria.fr>
+
+I would like to write several profiles on the same .vtk file for example:
+
+# vtk DataFile Version 2.0
+My data/n
+ASCII
+
+DATASET UNSTRUCTURED_GRID
+POINTS 35053 float
+...
+
+CELLS 172722 863610
+...
+
+CELL_TYPES 172722
+...
+
+POINT_DATA 35053
+
+SCALARS Maillage1 float 2
+LOOKUP_TABLE Pressure
+...
+LOOKUP_TABLE Density
+...
+ when I start paraview only the last profile is veriable with the name 
+"point Maillage1 (2)." How should I write the vtk file so that
+point Pressure
+point Density
+are both available?
+Stephen
+From f.dupros at brgm.fr  Tue Oct 12 05:43:17 2004
+From: f.dupros at brgm.fr (Dupros Fabrice)
+Date: Tue Oct 12 05:44:37 2004
+Subject: [Paraview] multiple profiles
+Message-ID: <D965434E9D6BD511AE3500306E01C8BE06E25411@SRV0015>
+
+I have the same problem trying to read multiple fields in a single .vtk file
+with an unstructured mesh, only the first set of data is available.
+
+I have made some test with the Visit software and it seems ok to read these
+two fields
+
+Fabrice
+
+------------------------------------------------------------------------
+----------------
+Fabrice Dupros
+
+BRGM -  Systemes et Technologies de l'Information
+Unite Calcul, 3D et Realite Virtuelle
+
+3, Avenue Claude Guillemin 
+45 060 Orleans Cedex 2
+Telephone : 02 38 64 46 76
+Fax : 02 38 64 39 70
+Email : f.dupros@brgm.fr
+------------------------------------------------------------------------
+----------------
+
+	 
+
+
+
+
+
+
+
+
+> -----Message d'origine-----
+> De: Stephen Wornom [mailto:stephen.wornom@inria.fr]
+> Date: lundi 11 octobre 2004 17.13
+> ?: pview
+> Objet: [Paraview] multiple profiles
+> 
+> 
+> I would like to write several profiles on the same .vtk file 
+> for example:
+> 
+> # vtk DataFile Version 2.0
+> My data/n
+> ASCII
+> 
+> DATASET UNSTRUCTURED_GRID
+> POINTS 35053 float
+> ...
+> 
+> CELLS 172722 863610
+> ...
+> 
+> CELL_TYPES 172722
+> ...
+> 
+> POINT_DATA 35053
+> 
+> SCALARS Maillage1 float 2
+> LOOKUP_TABLE Pressure
+> ...
+> LOOKUP_TABLE Density
+> ...
+>  when I start paraview only the last profile is veriable with 
+> the name 
+> "point Maillage1 (2)." How should I write the vtk file so that
+> point Pressure
+> point Density
+> are both available?
+> Stephen
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+***
+Le contenu de cet e-mail et de ses pi?ces jointes est destin? ? l'usage exclusif du 
+(des) destinataire(s) express?ment d?sign?(s) comme tel(s). En cas de r?ception de cet 
+ e-mail par erreur, le signaler ? son exp?diteur et ne pas en divulguer le contenu. 
+L'absence de virus a ?t? v?rifi? ?  l'?mission du message. Il convient n?anmoins de 
+v?rifier l'absence de corruption ? sa r?ception.
+
+The contents of this email and any attachments are confidential. They are intended for 
+the named recipient(s) only. If you have received this email in error please notify the 
+system manager or  the sender immediately and do not disclose the contents to 
+anyone or make copies. eSafe scanned this email for viruses, vandals and malicious 
+content.
+***
+From amy.henderson at kitware.com  Tue Oct 12 08:16:01 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Tue Oct 12 08:17:43 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416AA30C.9080906@inria.fr>
+References: <416AA30C.9080906@inria.fr>
+Message-ID: <6.1.2.0.2.20041012081330.039bfd88@pop.biz.rr.com>
+
+Hi Stephen,
+
+Try adding Pressure and Density to your VTK file as SCALARS instead of as 
+LOOKUP_TABLE.  There is a PDF file available at www.vtk.org that explains 
+VTK's file formats (http://www.vtk.org/pdf/file-formats.pdf).
+
+- Amy
+
+At 11:13 AM 10/11/2004, Stephen Wornom wrote:
+>I would like to write several profiles on the same .vtk file for example:
+>
+># vtk DataFile Version 2.0
+>My data/n
+>ASCII
+>
+>DATASET UNSTRUCTURED_GRID
+>POINTS 35053 float
+>...
+>
+>CELLS 172722 863610
+>...
+>
+>CELL_TYPES 172722
+>...
+>
+>POINT_DATA 35053
+>
+>SCALARS Maillage1 float 2
+>LOOKUP_TABLE Pressure
+>...
+>LOOKUP_TABLE Density
+>...
+>when I start paraview only the last profile is veriable with the name 
+>"point Maillage1 (2)." How should I write the vtk file so that
+>point Pressure
+>point Density
+>are both available?
+>Stephen
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From amy.henderson at kitware.com  Tue Oct 12 09:30:40 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Tue Oct 12 09:32:44 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416BDAE7.7010606@inria.fr>
+References: <416AA30C.9080906@inria.fr> <416AAA48.40302@nabla.co.uk>
+	<416BDAE7.7010606@inria.fr>
+Message-ID: <6.1.2.0.2.20041012092522.0393c3b0@pop.biz.rr.com>
+
+Hi Stephen,
+
+The second version (in your e-mail below) of your VTK data file is what I 
+was suggesting that you try.  You said that it works in ParaView v. 
+1.6.  If it works in the more recent version, is there a reason why it 
+matters to you whether it works in ParaView v. 1.2?  (Maybe this was a bug 
+that was fixed in for a later version.)
+
+The method that I suggested that you use to add scalars to your VTK file 
+will work fine for unstructured data.
+
+- Amy
+
+PS  I'm copying this back to the ParaView user's list so others can benefit 
+from (and contribute to) the discussion.
+
+At 09:23 AM 10/12/2004, you wrote:
+>Hi Amy,
+>My data is unstructured which may or not be important.
+>Method in vtk documentation as I interpreted it (does not work for me,):
+>
+>SCALARS Maillage1 float 2
+>LOOKUP_TABLE Pressure
+>...
+>LOOKUP_TABLE Density
+>...
+>
+>The following works for me using version 1.6.1 (version 1.2 no):
+>SCALARS Pressure float
+>LOOKUP_TABLE Pressure
+>...
+>SCALARS Density float
+>LOOKUP_TABLE Density
+>..
+>
+>Once I open my file containing Pressure and Density, I can select either
+>one.
+>
+>Stephen
+>
+
+
+
+From stephen.wornom at inria.fr  Tue Oct 12 09:52:51 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Tue Oct 12 09:53:20 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416AAA48.40302@nabla.co.uk>
+References: <416AA30C.9080906@inria.fr> <416AAA48.40302@nabla.co.uk>
+Message-ID: <416BE1B3.2080108@inria.fr>
+
+Mattijs Janssens wrote:
+
+> I don't use scalars but use a field with multiple attributes. E.g on a 
+> mesh with 400 cells and variables p,rho:
+>
+> CELL_DATA 400
+> FIELD attributes 2
+> p 1 400 float
+> ..
+> rho 1 400 float
+
+Hi Mattijs,
+Thanks for your help. Before I received your e-mail tried this which
+works. I cc fabrice has the same problem, My data is unstructured
+
+Method in documentation as I interpreted it (does not work for me,):
+
+SCALARS Maillage1 float 2
+LOOKUP_TABLE Pressure
+...
+LOOKUP_TABLE Density
+...
+
+This works for me using version 1.6 (version 1.2 no):
+SCALARS Pressure float
+LOOKUP_TABLE Pressure
+...
+SCALARS Density float
+LOOKUP_TABLE Density
+..
+
+Once I open my file containing Pressure and Density, I can select either
+one.
+
+I will try your way as well. On another subject the animations using
+multiple files (file0, file1, file...)using version 1.2 worked fine but
+does not yet work correctly in version 1.6.
+
+
+Stephen
+
+
+From m.janssens at nabla.co.uk  Tue Oct 12 10:05:14 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Tue Oct 12 10:05:22 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416BE1B3.2080108@inria.fr>
+References: <416AA30C.9080906@inria.fr> <416AAA48.40302@nabla.co.uk>
+	<416BE1B3.2080108@inria.fr>
+Message-ID: <416BE49A.9060300@nabla.co.uk>
+
+No problems there for us. We use 1.6.2 and write out files named e.g.
+
+cavity_0.vtk
+cavity_1.vtk
+cavity_2.vtk
+..
+
+When I load these into vtk I get the slider for the Timestep and can use 
+the animate module with 'Filename' as parameter without any problem.
+
+Mattijs
+
+
+Stephen Wornom wrote:
+> 
+> On another subject the animations using
+> multiple files (file0, file1, file...)using version 1.2 worked fine but
+> does not yet work correctly in version 1.6.
+> 
+> 
+> Stephen
+> 
+> 
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From stephen.wornom at inria.fr  Tue Oct 12 11:01:37 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Tue Oct 12 11:02:17 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416BE49A.9060300@nabla.co.uk>
+References: <416AA30C.9080906@inria.fr>
+	<416AAA48.40302@nabla.co.uk>	<416BE1B3.2080108@inria.fr>
+	<416BE49A.9060300@nabla.co.uk>
+Message-ID: <416BF1D1.4060706@inria.fr>
+
+Mattijs Janssens wrote:
+
+> No problems there for us. We use 1.6.2 and write out files named e.g.
+>
+> cavity_0.vtk
+> cavity_1.vtk
+> cavity_2.vtk
+> ..
+>
+> When I load these into vtk I get the slider for the Timestep and can 
+> use the animate module with 'Filename' as parameter without any problem.
+>
+> Mattijs
+
+The reason it did not work for me was that I loaded file0.vtk whose 
+max/min values were less (or greater than) than the max/min of the 
+complete time series. Therefore all the other files that had values 
+greater or less than the max/min values for File0.vtk are not seen. When 
+I loaded File10.vtk which contained both the min/max of the complete 
+series, the .jpg were correct. Is there a way to specify what the 
+max/min values are for the complete Time series? I can forsee a problem 
+where the global max is on one file and the global is on another file.
+Appreciate your help,
+Stephen
+
+>
+>
+> Stephen Wornom wrote:
+>
+>>
+>> On another subject the animations using
+>> multiple files (file0, file1, file...)using version 1.2 worked fine but
+>> does not yet work correctly in version 1.6.
+>>
+>>
+>> Stephen
+>>
+>>
+>>
+>
+
+From m.janssens at nabla.co.uk  Tue Oct 12 11:44:29 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Tue Oct 12 11:44:40 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416BF1D1.4060706@inria.fr>
+References: <416AA30C.9080906@inria.fr>	<416AAA48.40302@nabla.co.uk>	<416BE1B3.2080108@inria.fr>	<416BE49A.9060300@nabla.co.uk>
+	<416BF1D1.4060706@inria.fr>
+Message-ID: <416BFBDD.4090502@nabla.co.uk>
+
+? Change your colour scale (Display -> Edit Color Map) and set it to the 
+wanted min and max value before doing your animation.
+
+Or do I misunderstand the problem?
+
+Mattijs
+
+Stephen Wornom wrote:
+> Mattijs Janssens wrote:
+> 
+>> No problems there for us. We use 1.6.2 and write out files named e.g.
+>>
+>> cavity_0.vtk
+>> cavity_1.vtk
+>> cavity_2.vtk
+>> ..
+>>
+>> When I load these into vtk I get the slider for the Timestep and can 
+>> use the animate module with 'Filename' as parameter without any problem.
+>>
+>> Mattijs
+> 
+> 
+> The reason it did not work for me was that I loaded file0.vtk whose 
+> max/min values were less (or greater than) than the max/min of the 
+> complete time series. Therefore all the other files that had values 
+> greater or less than the max/min values for File0.vtk are not seen. When 
+> I loaded File10.vtk which contained both the min/max of the complete 
+> series, the .jpg were correct. Is there a way to specify what the 
+> max/min values are for the complete Time series? I can forsee a problem 
+> where the global max is on one file and the global is on another file.
+> Appreciate your help,
+> Stephen
+> 
+>>
+>>
+>> Stephen Wornom wrote:
+>>
+>>>
+>>> On another subject the animations using
+>>> multiple files (file0, file1, file...)using version 1.2 worked fine but
+>>> does not yet work correctly in version 1.6.
+>>>
+>>>
+>>> Stephen
+>>>
+>>>
+>>>
+>>
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From semeraro at ncsa.uiuc.edu  Tue Oct 12 16:01:31 2004
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Tue Oct 12 16:01:45 2004
+Subject: [Paraview] tiled display mode
+Message-ID: <5.1.0.14.2.20041012145830.0284ed90@mail.ncsa.uiuc.edu>
+
+
+Hello,
+
+I just installed paraview 1.6.2 and am unable to run it on a tiled display 
+in the same way as
+previous releases. That is running a server on several display nodes and 
+then running a client
+with the -td -tdx=n -tdy=m doesnt work. A connection is made but only the 
+upper left tile
+displays anything ( in my setup ). I know there is a way to use IceT to do 
+this but I have all the
+scripts set up to do it the other way and I am a lazy slug. So does the old 
+tiled display option
+still work and if so how has it changed?
+
+Regards,
+Dave
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+From stephen.wornom at inria.fr  Wed Oct 13 03:07:36 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Wed Oct 13 03:08:13 2004
+Subject: [Paraview] multiple profiles
+In-Reply-To: <416BFBDD.4090502@nabla.co.uk>
+References: <416AA30C.9080906@inria.fr>	<416AAA48.40302@nabla.co.uk>	<416BE1B3.2080108@inria.fr>	<416BE49A.9060300@nabla.co.uk>	<416BF1D1.4060706@inria.fr>
+	<416BFBDD.4090502@nabla.co.uk>
+Message-ID: <416CD438.8090809@inria.fr>
+
+Mattijs Janssens wrote:
+
+> ? Change your colour scale (Display -> Edit Color Map) and set it to 
+> the wanted min and max value before doing your animation.
+
+Thanks, works correctly.
+Stephen
+
+>
+> Or do I misunderstand the problem?
+>
+> Mattijs
+>
+> Stephen Wornom wrote:
+>
+>> Mattijs Janssens wrote:
+>>
+>>> No problems there for us. We use 1.6.2 and write out files named e.g.
+>>>
+>>> cavity_0.vtk
+>>> cavity_1.vtk
+>>> cavity_2.vtk
+>>> ..
+>>>
+>>> When I load these into vtk I get the slider for the Timestep and can 
+>>> use the animate module with 'Filename' as parameter without any 
+>>> problem.
+>>>
+>>> Mattijs
+>>
+>>
+>>
+>> The reason it did not work for me was that I loaded file0.vtk whose 
+>> max/min values were less (or greater than) than the max/min of the 
+>> complete time series. Therefore all the other files that had values 
+>> greater or less than the max/min values for File0.vtk are not seen. 
+>> When I loaded File10.vtk which contained both the min/max of the 
+>> complete series, the .jpg were correct. Is there a way to specify 
+>> what the max/min values are for the complete Time series? I can 
+>> forsee a problem where the global max is on one file and the global 
+>> is on another file.
+>> Appreciate your help,
+>> Stephen
+>>
+>>>
+>>>
+>>> Stephen Wornom wrote:
+>>>
+>>>>
+>>>> On another subject the animations using
+>>>> multiple files (file0, file1, file...)using version 1.2 worked fine 
+>>>> but
+>>>> does not yet work correctly in version 1.6.
+>>>>
+>>>>
+>>>> Stephen
+>>>>
+>>>>
+>>>>
+>>>
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>
+
+From yangyanchun at sjtu.edu.cn  Wed Oct 13 05:07:02 2004
+From: yangyanchun at sjtu.edu.cn (=?GB2312?Q?=D1=EE=D1=DE=B4=BA?=)
+Date: Wed Oct 13 05:07:25 2004
+Subject: [Paraview] how to add reader to the paraview loader
+Message-ID: <20041013090818.6D3547B0215@mx1.sjtu.edu.cn>
+
+hi, all
+   I'm new user of Paraview,Could anyone tell me how to add a reader such as vtkJPEGReader or vtkBMPReader to the Paraview loader?
+thank you in advance!
+
+yang
+
+
+	
+
+
+
+
+From semeraro at ncsa.uiuc.edu  Wed Oct 13 15:31:02 2004
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Wed Oct 13 15:31:51 2004
+Subject: [Paraview] compiling 1.6 on sgi altix
+Message-ID: <5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+
+
+Hello,
+
+Does anyone have any experience in building paraview on an sgi altix 
+system? I have been trying
+to build paraview on ours and have had no luck. I started with the gnu 
+compilers but they dont
+seem to be able to do the job. The first failure occurred building the 
+vtkTestFilters. There was
+a problem linking to vtkCommon.a. Other errors occurred as I tried various 
+things to get the
+system to compile. I would be interested in hearing from anyone who has had 
+success with
+building on an altix. In particular some indication of what cmake options 
+have to be enabled
+or disabled would be great.
+
+Thanks
+Dave
+
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+From Jason.Beech-Brandt at ed.ac.uk  Fri Oct 15 05:16:20 2004
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Fri Oct 15 05:16:31 2004
+Subject: [Paraview] compiling paraview-1.6.3
+In-Reply-To: <4165DFB5.1090901@kitware.com>
+References: <Pine.GSO.4.58.0410060927290.4622@deedee>
+	<41646870.9050703@kitware.com>
+	<Pine.GSO.4.58.0410071341270.24570@deedee>
+	<4165DFB5.1090901@kitware.com>
+Message-ID: <Pine.GSO.4.58.0410151012550.13767@deedee>
+
+Hi Brad,
+
+I was never able to find any system libraries referencing libucb.so.1.
+However, I noticed that /usr/ucb was in my path.  I removed this directory
+from my path, recompiled paraview, and the reference to libucb.so.1 in
+paraview has disappeared.
+
+Thanks for the help.
+
+Jason
+
+On Thu, 7 Oct 2004, Brad King wrote:
+
+> Jason.Beech-Brandt@ed.ac.uk wrote:
+> > Of these the following contain a reference to libucb.so.1
+> >
+> > libvtkKWParaView.so
+> > libvtkKWParaViewCS.so
+> > libvtkPVCommon.so
+> > libvtkPVCommonCS.so
+> > libvtkPVFilters.so
+> > libvtkPVFiltersCS.so
+> > libvtkPVServerManager.so
+> > libvtkPVServerManagerTCL.so
+> > libvtkXdmf.so
+> > libvtkXdmfCS.so
+> > libXdmf.so
+> > paraview
+> > vtkTestFilters
+>
+> Nothing seems to stick out here to me.  Each of these reference other
+> system libraries as well as libucb.so.1.  Can you refine the search by
+> running ldd on each of the system libraries to see if any are bringing
+> in libucb.so.1?
+>
+> Thanks,
+> -Brad
+>
+>
+From brad.king at kitware.com  Fri Oct 15 07:19:25 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 15 07:19:30 2004
+Subject: [Paraview] compiling 1.6 on sgi altix
+In-Reply-To: <5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+Message-ID: <416FB23D.5010908@kitware.com>
+
+Dave Semeraro wrote:
+> Does anyone have any experience in building paraview on an sgi altix 
+> system? I have been trying
+> to build paraview on ours and have had no luck. I started with the gnu 
+> compilers but they dont
+> seem to be able to do the job. The first failure occurred building the 
+> vtkTestFilters. There was
+> a problem linking to vtkCommon.a. Other errors occurred as I tried 
+> various things to get the
+> system to compile.
+
+If you post the errors that occur we can probably work through them.
+
+-Brad
+From brad.king at kitware.com  Fri Oct 15 07:21:37 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 15 07:21:41 2004
+Subject: [Paraview] how to add reader to the paraview loader
+In-Reply-To: <20041013090818.6D3547B0215@mx1.sjtu.edu.cn>
+References: <20041013090818.6D3547B0215@mx1.sjtu.edu.cn>
+Message-ID: <416FB2C1.4040806@kitware.com>
+
+>    I'm new user of Paraview,Could anyone tell me how to add a reader such as vtkJPEGReader or vtkBMPReader to the Paraview loader?
+> thank you in advance!
+
+The current readers are configured in
+ParaView/Servers/ServerManager/Resources/readers.xml and
+ParaView/GUI/Client/Resources/Readers.xml.
+
+You can try copying one of the existing reader entries and modifying it
+to add another reader.  Currently there is no documentation on how to do
+this, though, because things are changing right now.
+
+-Brad
+From semeraro at ncsa.uiuc.edu  Fri Oct 15 13:15:25 2004
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Fri Oct 15 13:16:20 2004
+Subject: [Paraview] compiling 1.6 on sgi altix
+In-Reply-To: <416FB23D.5010908@kitware.com>
+References: <5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+	<5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.2.20041015120243.01ace4f0@mail.ncsa.uiuc.edu>
+
+
+The build fails trying to build vtkTestFilters. I dont know if this 
+executable is necessary or
+not. The test.c program compiles but there is a link error. The error 
+messages I get are
+attached below. I am using the gnu c++ compiler version 2.96.
+
+errors ---
+Building executable /u/ncsa/semeraro/PV/bin/vtkTestFilters...
+
+c++      -Wno-deprecated -fPIC  test.o    -o 
+/u/ncsa/semeraro/PV/bin/vtkTestFilters -rdynamic -L/u/ncsa/semeraro/PV/bin 
+-L/usr/X11R6/lib -L/u/ncsa/semeraro/lib -lm -lXt -lSM -lICE -lX11 -lXext 
+-lvtkPVFiltersCS -lvtkPVCommonCS -lvtkPVFilters -lvtkPVCommonCS 
+-lvtkPVCommon -lvtkKWCommon -lvtkHybridCS -lvtkHybrid -lvtkParallelCS 
+-lvtkParallel -lmpi -lmpi++ -lvtkKWCommon -lkwsys -lvtkhdf5 -lm -ldl 
+-lvtkPatentedCS -lvtkPatented -lvtkRenderingCS -lvtkRendering -lvtkftgl 
+-lvtkfreetype -lGL -lOSMesa -lvtkGraphicsCS -lvtkGraphics -lvtkImagingCS 
+-lvtkImaging -lvtkIOCS -lvtkIO -lvtkDICOMParser -lvtkpng -lvtktiff 
+-lvtkzlib -lvtkjpeg -lvtkexpat -lvtkFilteringCS -lvtkFiltering 
+-lvtkCommonCS -lvtkClientServer -lvtkCommon -lm -lXt -lSM -lICE -lX11 
+-lXext -lpthread -ldl -lm 
+-Wl,-rpath,/u/ncsa/semeraro/PV/bin:/usr/X11R6/lib:/u/ncsa/semeraro/lib
+
+/u/ncsa/semeraro/PV/bin/libvtkCommon.a(vtkDataArray.o): In function `void 
+vtkCopyTuples<double, double>(double *, double *, int, vtkIdList *)':
+
+vtkDataArray.o(.void gnu.linkonce.t.vtkCopyTuples<double, double>(double *, 
+double *, int, vtkIdList *)+0x82): relocation truncated to fit: PCREL21B 
+vtkIdList::GetNumberOfIds(void)
+
+collect2: ld returned 1 exit status
+
+make[5]: *** [/u/ncsa/semeraro/PV/bin/vtkTestFilters] Error 1
+
+make[5]: Leaving directory `/u/ncsa/semeraro/PV/Servers/Filters'
+
+make[4]: *** [default_target] Error 2
+
+make[4]: Leaving directory `/u/ncsa/semeraro/PV/Servers/Filters'
+
+make[3]: *** [default_target_Filters] Error 2
+
+make[3]: Leaving directory `/u/ncsa/semeraro/PV/Servers'
+
+make[2]: *** [default_target] Error 2
+
+make[2]: Leaving directory `/u/ncsa/semeraro/PV/Servers'
+
+make[1]: *** [default_target_Servers] Error 2
+
+make[1]: Leaving directory `/u/ncsa/semeraro/PV'
+make: *** [default_target] Error 2
+
+Any help would be great.
+
+Dave
+
+
+At 07:19 AM 10/15/2004 -0400, Brad King wrote:
+>Dave Semeraro wrote:
+>>Does anyone have any experience in building paraview on an sgi altix 
+>>system? I have been trying
+>>to build paraview on ours and have had no luck. I started with the gnu 
+>>compilers but they dont
+>>seem to be able to do the job. The first failure occurred building the 
+>>vtkTestFilters. There was
+>>a problem linking to vtkCommon.a. Other errors occurred as I tried 
+>>various things to get the
+>>system to compile.
+>
+>If you post the errors that occur we can probably work through them.
+>
+>-Brad
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+From brad.king at kitware.com  Fri Oct 15 17:01:22 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 15 17:01:24 2004
+Subject: [Paraview] compiling 1.6 on sgi altix
+In-Reply-To: <5.1.0.14.2.20041015120243.01ace4f0@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>	<5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+	<5.1.0.14.2.20041015120243.01ace4f0@mail.ncsa.uiuc.edu>
+Message-ID: <41703AA2.7060204@kitware.com>
+
+Dave Semeraro wrote:
+> The build fails trying to build vtkTestFilters. I dont know if this 
+> executable is necessary or not.
+
+It is only necessary for testing.  Did the actual "paraview" executable 
+get built in the "bin" directory under the build tree?
+
+> vtkDataArray.o(.void gnu.linkonce.t.vtkCopyTuples<double, double>(double 
+> *, double *, int, vtkIdList *)+0x82): relocation truncated to fit: 
+> PCREL21B vtkIdList::GetNumberOfIds(void)
+
+I've not seen this error before, but the word "relocation" makes it look 
+like a -fPIC problem.  Are you building with or without 
+BUILD_SHARED_LIBS set to ON?
+
+-Brad
+From yangyanchun at sjtu.edu.cn  Mon Oct 18 07:30:04 2004
+From: yangyanchun at sjtu.edu.cn (=?GB2312?Q?=D1=EE=D1=DE=B4=BA?=)
+Date: Mon Oct 18 07:30:25 2004
+Subject: [Paraview] how to add reader to the paraview loader
+Message-ID: <20041018113123.C76157B02BC@mx1.sjtu.edu.cn>
+
+hi,all
+I have modified ParaView/Servers/ServerManager/Resources/readers.xml and ParaView/GUI/Client/Resources/Readers.xml.And i also followed the three step Berk proposed:
+1. Create a directory to put the module descriptions in,
+(I have a ${HOME}/etc/paraview directory for ex.)
+2. Add a variable called PV_INTERFACE_PATH to your environment
+pointing to this directory
+(I do "export PV_INTERFACE_PATH=${HOME}/etc/paraview)
+3. Create a file with xml extension to describe the reader module.
+
+I find that vtkBMPReaderClientServer.cxx vtkBMPReader.obj vtkBMPReaderClientServer.obj were generated.and in the Open Data dialog it seemed change properly,but it still can not open the BMP or JPG files finally!? Could anyone tell me how to figure it out?
+thanks a lot!
+
+yang
+	
+
+======= 2004-10-13 17:07:00 ????????=======
+
+>hi, all
+>   I'm new user of Paraview,Could anyone tell me how to add a reader such as vtkJPEGReader or vtkBMPReader to the Paraview loader?
+>thank you in advance!
+>
+>yang
+>
+>
+>	
+>
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+= = = = = = = = = = = = = = = = = = = =
+			
+
+?????????
+??
+ 
+				 
+???????????
+????????yangyanchun@sjtu.edu.cn
+??????????2004-10-18
+
+
+
+From semeraro at ncsa.uiuc.edu  Tue Oct 19 09:52:54 2004
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Tue Oct 19 09:53:11 2004
+Subject: [Paraview] compiling 1.6 on sgi altix
+In-Reply-To: <41703AA2.7060204@kitware.com>
+References: <5.1.0.14.2.20041015120243.01ace4f0@mail.ncsa.uiuc.edu>
+	<5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+	<5.1.0.14.2.20041013142454.01ac5af0@mail.ncsa.uiuc.edu>
+	<5.1.0.14.2.20041015120243.01ace4f0@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.2.20041019085010.01ad0c90@mail.ncsa.uiuc.edu>
+
+
+In case anyone on this list is interested I solved my problem in building 
+on the Altix by
+switching to the intel compilers. It seems the strange error I was getting 
+was due to the binutils
+package being a wrong version or some such thing. Instead of monkeying 
+around with gnu
+compilers and utilities I thought I would grasp at the easy straw and try 
+icc instead of gcc.
+Not a very satisfying result but one I can live with for now until I have a 
+chance to go back and
+figure out what happened. Today I test.
+
+thanks for the help
+Dave
+
+At 05:01 PM 10/15/2004 -0400, Brad King wrote:
+>Dave Semeraro wrote:
+>>The build fails trying to build vtkTestFilters. I dont know if this 
+>>executable is necessary or not.
+>
+>It is only necessary for testing.  Did the actual "paraview" executable 
+>get built in the "bin" directory under the build tree?
+>
+>>vtkDataArray.o(.void gnu.linkonce.t.vtkCopyTuples<double, double>(double 
+>>*, double *, int, vtkIdList *)+0x82): relocation truncated to fit: 
+>>PCREL21B vtkIdList::GetNumberOfIds(void)
+>
+>I've not seen this error before, but the word "relocation" makes it look 
+>like a -fPIC problem.  Are you building with or without BUILD_SHARED_LIBS 
+>set to ON?
+>
+>-Brad
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+From brad.king at kitware.com  Tue Oct 19 10:33:10 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Oct 19 10:33:20 2004
+Subject: [Paraview] how to add reader to the paraview loader
+In-Reply-To: <20041018113123.C76157B02BC@mx1.sjtu.edu.cn>
+References: <20041018113123.C76157B02BC@mx1.sjtu.edu.cn>
+Message-ID: <417525A6.7040703@kitware.com>
+
+??? wrote:
+> hi,all
+> I have modified ParaView/Servers/ServerManager/Resources/readers.xml and ParaView/GUI/Client/Resources/Readers.xml.And i also followed the three step Berk proposed:
+> 1. Create a directory to put the module descriptions in,
+> (I have a ${HOME}/etc/paraview directory for ex.)
+> 2. Add a variable called PV_INTERFACE_PATH to your environment
+> pointing to this directory
+> (I do "export PV_INTERFACE_PATH=${HOME}/etc/paraview)
+> 3. Create a file with xml extension to describe the reader module.
+
+This looks like it should work to me.  Try putting a syntax error in the
+.xml file.  If it is really being loaded then ParaView should complain
+about the error during startup.
+
+-Brad
+From brad.king at kitware.com  Tue Oct 19 10:38:23 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Oct 19 10:38:32 2004
+Subject: [Paraview] how to add reader to the paraview loader
+In-Reply-To: <417525A6.7040703@kitware.com>
+References: <20041018113123.C76157B02BC@mx1.sjtu.edu.cn>
+	<417525A6.7040703@kitware.com>
+Message-ID: <417526DF.2070801@kitware.com>
+
+Brad King wrote:
+> ??? wrote:
+> 
+>>hi,all
+>>I have modified ParaView/Servers/ServerManager/Resources/readers.xml and ParaView/GUI/Client/Resources/Readers.xml.And i also followed the three step Berk proposed:
+>>1. Create a directory to put the module descriptions in,
+>>(I have a ${HOME}/etc/paraview directory for ex.)
+>>2. Add a variable called PV_INTERFACE_PATH to your environment
+>>pointing to this directory
+>>(I do "export PV_INTERFACE_PATH=${HOME}/etc/paraview)
+>>3. Create a file with xml extension to describe the reader module.
+
+I just noticed that you created only a .xml file.  You also need a .pvsm
+file to which the .xml file points.  Take a look at
+ParaView/Examples/PVLocal in the source tree for an example.
+
+-Brad
+From eschenbe at psc.edu  Tue Oct 19 15:49:54 2004
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Tue Oct 19 15:50:06 2004
+Subject: [Paraview] Is the ParaView Directory Hardcoded?
+Message-ID: <D3C5536E17E4696A5D743F0D@harpo.psc.edu>
+
+Is the ParaView 1.6.3 directory hardcoded? I get hundreds of error messages 
+from cmake when I try to install ParaView under Redhat Fedora in 
+/usr/local/PV (the source is in /usr/local/PVdev) using my own copy of VTK 
+(its already installed elsewhere on the system so I removed the copy in 
+ParaView). I expected the cmake system to adapt or ask me where things are 
+located but it did neither.
+
+Kent
+
+From berk.geveci at gmail.com  Tue Oct 19 16:01:57 2004
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 19 16:02:01 2004
+Subject: [Paraview] Is the ParaView Directory Hardcoded?
+In-Reply-To: <D3C5536E17E4696A5D743F0D@harpo.psc.edu>
+References: <D3C5536E17E4696A5D743F0D@harpo.psc.edu>
+Message-ID: <a2ab21560410191301425f1f14@mail.gmail.com>
+
+A few things:
+
+1. Paraview install path is specified with CMAKE_INSTALL_PREFIX. The
+installation path cannot be changed after compilation.
+2. You should always use the VTK distributed with ParaView because a.
+we branch VTK specially for each paraview release b. we build vtk
+differently (special wrapping for example) in paraview
+
+
+On Tue, 19 Oct 2004 15:49:54 -0400, Kent Eschenberg <eschenbe@psc.edu> wrote:
+> Is the ParaView 1.6.3 directory hardcoded? I get hundreds of error messages
+> from cmake when I try to install ParaView under Redhat Fedora in
+> /usr/local/PV (the source is in /usr/local/PVdev) using my own copy of VTK
+> (its already installed elsewhere on the system so I removed the copy in
+> ParaView). I expected the cmake system to adapt or ask me where things are
+> located but it did neither.
+> 
+> Kent
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From stephen.wornom at inria.fr  Wed Oct 20 03:55:37 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Wed Oct 20 03:58:31 2004
+Subject: [Paraview] color map digits
+Message-ID: <417619F9.1000808@inria.fr>
+
+My max/min values have 4 place accuracy
+max/min = 14.1402/13.3445
+the display rounds these to 14.1 and 13.3. How does one increase the 
+number of decimal places in the scalar bar?
+Stephen
+From stephen.wornom at inria.fr  Wed Oct 20 03:59:14 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Wed Oct 20 04:01:59 2004
+Subject: [Paraview] off screen rendering of images
+Message-ID: <41761AD2.70702@inria.fr>
+
+I have time series data, I am using v 1.6.1. Is it possible to render 
+the images offscreen so that my workstation is not blocked until all the 
+images have been completed.
+Hope my question is clear,
+Stepen
+From stephen.wornom at inria.fr  Wed Oct 20 04:03:59 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Wed Oct 20 04:07:41 2004
+Subject: [Paraview] saving images
+Message-ID: <41761BEF.7080206@inria.fr>
+
+When I save images using v 1.6.1 the popup save window appears in the 
+middle of my plot. If I don't move it outside of the plot before 
+clicking "save" the window appears as part of the saved image. I can and 
+do move outside of the image to be saved before clicking "save." When I 
+save a other images I must repeat this time consuming process. Is there 
+a way to maintain the position outside of the plot?
+Stephen
+From m.janssens at nabla.co.uk  Wed Oct 20 04:12:19 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Wed Oct 20 04:12:26 2004
+Subject: [Paraview] off screen rendering of images
+In-Reply-To: <41761AD2.70702@inria.fr>
+References: <41761AD2.70702@inria.fr>
+Message-ID: <41761DE3.8010702@nabla.co.uk>
+
+You could try setting up an offscreen display using e.g. vnc or xfrb. 
+I've never tried this but it should work ok. Start up a vncserver and a 
+vncviewer and start up paraview inside the vncserver. You can start the 
+animation and close/minimize the vncviewer once it has started. You will 
+need a recent vnc which supports GLX. It will use software rendering 
+though so might be slow.
+
+Mattijs
+
+Stephen Wornom wrote:
+> I have time series data, I am using v 1.6.1. Is it possible to render 
+> the images offscreen so that my workstation is not blocked until all the 
+> images have been completed.
+> Hope my question is clear,
+> Stepen
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From amy.henderson at kitware.com  Wed Oct 20 09:42:10 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Wed Oct 20 09:54:50 2004
+Subject: [Paraview] color map digits
+In-Reply-To: <417619F9.1000808@inria.fr>
+References: <417619F9.1000808@inria.fr>
+Message-ID: <6.1.2.0.2.20041020093719.03b5b0f0@pop.biz.rr.com>
+
+Hi Stephen,
+
+On the Display tab where you turned on the scalar bar, there is a button 
+called "Edit Color Map". When you click this button, a set of controls for 
+the scalar bar is displayed. In that set of controls, there is an entry box 
+called "Labels". The value in that entry box is a format specification (the 
+same specification as used with printf()) for the numeric labels on the 
+scalar bar. By default the specification ends with "3g", meaning that 3 
+significant digits will be used for the labels. Changing this to "4g" 
+should accomplish what you want.
+
+- Amy
+
+At 03:55 AM 10/20/2004, Stephen Wornom wrote:
+>My max/min values have 4 place accuracy
+>max/min = 14.1402/13.3445
+>the display rounds these to 14.1 and 13.3. How does one increase the 
+>number of decimal places in the scalar bar?
+>Stephen
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From rnelias at superig.com.br  Wed Oct 20 18:57:59 2004
+From: rnelias at superig.com.br (Renato Nascimento Elias)
+Date: Wed Oct 20 19:46:56 2004
+Subject: [Paraview] Ensight reader problems...
+In-Reply-To: <20041020160008.597CA2CD3B@public.kitware.com>
+Message-ID: <20041020234652.B89DB2DFC4@public.kitware.com>
+
+ 
+I've been getting some problems when trying to read an Ensight (not GOLD)
+file generated by a Fortran routine written by myself. This routine writes
+multiparts geometry files and three variable files (2 scalar and 1 vectorial
+fields) in binary format. 
+
+I've already checked the case file with the ens_checker.exe utility provided
+by CEI and everything appears to be fine with my file (see ens_checker.out
+file attached). When I try to read the file with the Ensight reader of the
+Paraview (in little and big endian byte orders) nothing happens. What could
+be happening?  
+
+Another little question (or suggestion...):
+Is there any way to shown labels in iso-contour plots?
+
+Thanks for any help
+
+Renato N. Elias
+"A new Paraview/VTK enthusiast..."
+
+-----Mensagem original-----
+De: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org] Em
+nome de paraview-request@paraview.org
+Enviada em: quarta-feira, 20 de outubro de 2004 14:00
+Para: paraview@paraview.org
+Assunto: ParaView Digest, Vol 6, Issue 15
+
+Send ParaView mailing list submissions to
+	paraview@paraview.org
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	http://www.paraview.org/mailman/listinfo/paraview
+or, via email, send a message with subject or body 'help' to
+	paraview-request@paraview.org
+
+You can reach the person managing the list at
+	paraview-owner@paraview.org
+
+When replying, please edit your Subject line so it is more specific than
+"Re: Contents of ParaView digest..."
+
+
+Today's Topics:
+
+   1. Is the ParaView Directory Hardcoded? (Kent Eschenberg)
+   2. Re: Is the ParaView Directory Hardcoded? (Berk Geveci)
+   3. color map digits (Stephen Wornom)
+   4. off screen rendering of images (Stephen Wornom)
+   5. saving images (Stephen Wornom)
+   6. Re: off screen rendering of images (Mattijs Janssens)
+   7. Re: color map digits (Amy Henderson)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Tue, 19 Oct 2004 15:49:54 -0400
+From: Kent Eschenberg <eschenbe@psc.edu>
+Subject: [Paraview] Is the ParaView Directory Hardcoded?
+To: paraview@paraview.org
+Message-ID: <D3C5536E17E4696A5D743F0D@harpo.psc.edu>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+Is the ParaView 1.6.3 directory hardcoded? I get hundreds of error messages
+from cmake when I try to install ParaView under Redhat Fedora in
+/usr/local/PV (the source is in /usr/local/PVdev) using my own copy of VTK
+(its already installed elsewhere on the system so I removed the copy in
+ParaView). I expected the cmake system to adapt or ask me where things are
+located but it did neither.
+
+Kent
+
+
+
+------------------------------
+
+Message: 2
+Date: Tue, 19 Oct 2004 16:01:57 -0400
+From: Berk Geveci <berk.geveci@gmail.com>
+Subject: Re: [Paraview] Is the ParaView Directory Hardcoded?
+To: Kent Eschenberg <eschenbe@psc.edu>,	ParaView Mailing List
+	<paraview@paraview.org>
+Message-ID: <a2ab21560410191301425f1f14@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+
+A few things:
+
+1. Paraview install path is specified with CMAKE_INSTALL_PREFIX. The
+installation path cannot be changed after compilation.
+2. You should always use the VTK distributed with ParaView because a.
+we branch VTK specially for each paraview release b. we build vtk
+differently (special wrapping for example) in paraview
+
+
+On Tue, 19 Oct 2004 15:49:54 -0400, Kent Eschenberg <eschenbe@psc.edu>
+wrote:
+> Is the ParaView 1.6.3 directory hardcoded? I get hundreds of error
+messages
+> from cmake when I try to install ParaView under Redhat Fedora in
+> /usr/local/PV (the source is in /usr/local/PVdev) using my own copy of VTK
+> (its already installed elsewhere on the system so I removed the copy in
+> ParaView). I expected the cmake system to adapt or ask me where things are
+> located but it did neither.
+> 
+> Kent
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+------------------------------
+
+Message: 3
+Date: Wed, 20 Oct 2004 09:55:37 +0200
+From: Stephen Wornom <stephen.wornom@inria.fr>
+Subject: [Paraview] color map digits
+To: pview <paraview@paraview.org>
+Message-ID: <417619F9.1000808@inria.fr>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+My max/min values have 4 place accuracy
+max/min = 14.1402/13.3445
+the display rounds these to 14.1 and 13.3. How does one increase the 
+number of decimal places in the scalar bar?
+Stephen
+
+
+------------------------------
+
+Message: 4
+Date: Wed, 20 Oct 2004 09:59:14 +0200
+From: Stephen Wornom <stephen.wornom@inria.fr>
+Subject: [Paraview] off screen rendering of images
+To: pview <paraview@paraview.org>
+Message-ID: <41761AD2.70702@inria.fr>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+I have time series data, I am using v 1.6.1. Is it possible to render 
+the images offscreen so that my workstation is not blocked until all the 
+images have been completed.
+Hope my question is clear,
+Stepen
+
+
+------------------------------
+
+Message: 5
+Date: Wed, 20 Oct 2004 10:03:59 +0200
+From: Stephen Wornom <stephen.wornom@inria.fr>
+Subject: [Paraview] saving images
+To: pview <paraview@paraview.org>
+Message-ID: <41761BEF.7080206@inria.fr>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+When I save images using v 1.6.1 the popup save window appears in the 
+middle of my plot. If I don't move it outside of the plot before 
+clicking "save" the window appears as part of the saved image. I can and 
+do move outside of the image to be saved before clicking "save." When I 
+save a other images I must repeat this time consuming process. Is there 
+a way to maintain the position outside of the plot?
+Stephen
+
+
+------------------------------
+
+Message: 6
+Date: Wed, 20 Oct 2004 09:12:19 +0100
+From: Mattijs Janssens <m.janssens@nabla.co.uk>
+Subject: Re: [Paraview] off screen rendering of images
+Cc: pview <paraview@paraview.org>
+Message-ID: <41761DE3.8010702@nabla.co.uk>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+You could try setting up an offscreen display using e.g. vnc or xfrb. 
+I've never tried this but it should work ok. Start up a vncserver and a 
+vncviewer and start up paraview inside the vncserver. You can start the 
+animation and close/minimize the vncviewer once it has started. You will 
+need a recent vnc which supports GLX. It will use software rendering 
+though so might be slow.
+
+Mattijs
+
+Stephen Wornom wrote:
+> I have time series data, I am using v 1.6.1. Is it possible to render 
+> the images offscreen so that my workstation is not blocked until all the 
+> images have been completed.
+> Hope my question is clear,
+> Stepen
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+
+------------------------------
+
+Message: 7
+Date: Wed, 20 Oct 2004 09:42:10 -0400
+From: Amy Henderson <amy.henderson@kitware.com>
+Subject: Re: [Paraview] color map digits
+To: pview <paraview@paraview.org>
+Message-ID: <6.1.2.0.2.20041020093719.03b5b0f0@pop.biz.rr.com>
+Content-Type: text/plain; charset="us-ascii"; format=flowed
+
+Hi Stephen,
+
+On the Display tab where you turned on the scalar bar, there is a button 
+called "Edit Color Map". When you click this button, a set of controls for 
+the scalar bar is displayed. In that set of controls, there is an entry box 
+called "Labels". The value in that entry box is a format specification (the 
+same specification as used with printf()) for the numeric labels on the 
+scalar bar. By default the specification ends with "3g", meaning that 3 
+significant digits will be used for the labels. Changing this to "4g" 
+should accomplish what you want.
+
+- Amy
+
+At 03:55 AM 10/20/2004, Stephen Wornom wrote:
+>My max/min values have 4 place accuracy
+>max/min = 14.1402/13.3445
+>the display rounds these to 14.1 and 13.3. How does one increase the 
+>number of decimal places in the scalar bar?
+>Stephen
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+
+------------------------------
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+End of ParaView Digest, Vol 6, Issue 15
+***************************************
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ens_checker.zip
+Type: application/octet-stream
+Size: 1220 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20041020/ec442c07/ens_checker.obj
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pl075_4.zip
+Type: application/octet-stream
+Size: 298 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20041020/ec442c07/pl075_4.obj
+From yangyanchun at sjtu.edu.cn  Thu Oct 21 04:18:13 2004
+From: yangyanchun at sjtu.edu.cn (=?GB2312?Q?=D1=EE=D1=DE=B4=BA?=)
+Date: Thu Oct 21 04:18:34 2004
+Subject: [Paraview] Add filter problem
+Message-ID: <20041021081937.588747B0341@mx1.sjtu.edu.cn>
+
+hi all,
+
+   In the filter lists,my filter is alwaly being grey(whatever datatype opened) !For example, if i want to apply my filter to vtkDataSet,where and how to setup?any suggestion will be helpful.
+   thank you in advance.
+
+yang
+
+
+From steuwer at ill.fr  Thu Oct 21 05:41:30 2004
+From: steuwer at ill.fr (A Steuwer)
+Date: Thu Oct 21 05:42:22 2004
+Subject: [Paraview] Add filter problem
+In-Reply-To: <20041021081937.588747B0341@mx1.sjtu.edu.cn>
+Message-ID: <200410210941.i9L9fRjv013806@mail.ill.fr>
+
+Hi,
+
+I've noticed the same effect on my custom filters when moving from 1.4 to
+1.6 using e.g. the Delaunay2D filter, and would be interested
+why that happens? It works in 1.4 on my data sets, but not in 1.6 (grayed
+out) on the same data sets.
+
+Axel
+
+
+--------------------------------------------
+FaME38 at the ESRF-ILL
+6, rue J. Horowitz, 38042 Grenoble CEDEX France
+Tel.: ++33-476-207945
+Fax.: ++33-476-207943  
+--------------------------------------------
+
+-----Original Message-----
+From: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org]
+On Behalf Of ???
+Sent: jeudi 21 octobre 2004 10:18
+To: paraview@paraview.org
+
+hi all,
+
+   In the filter lists,my filter is alwaly being grey(whatever datatype
+opened) !For example, if i want to apply my filter to vtkDataSet,where and
+how to setup?any suggestion will be helpful.
+   thank you in advance.
+
+yang
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+Defend your privacy! Encrypt your email today! 
+http://www.bytefusion.com/secexmail 
+
+
+---Tag My Public Key---
+
+a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+
+
+---End SecExMail Tag---
+
+
+---Tag My Public Key---
+
+a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+
+
+---End SecExMail Tag---
+
+From jfavre at cscs.ch  Thu Oct 21 08:42:51 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Oct 21 08:43:05 2004
+Subject: [Paraview] Add filter problem
+In-Reply-To: <200410210941.i9L9fRjv013806@mail.ill.fr>
+References: <200410210941.i9L9fRjv013806@mail.ill.fr>
+Message-ID: <4177AECB.1040108@cscs.ch>
+
+A Steuwer wrote:
+> Hi,
+> 
+> I've noticed the same effect on my custom filters when moving from 1.4 to
+> 1.6 using e.g. the Delaunay2D filter, and would be interested
+> why that happens? It works in 1.4 on my data sets, but not in 1.6 (grayed
+> out) on the same data sets.
+
+This was explained by Brad King on his mail of October 19.
+
+"You also need a .pvsm file to which the .xml file points."
+
+I have prepared the Delaunay3D example, tested with 1.6.3 on my Linux 
+box. Both files (xml and pvsm) need to be in the same directory. You may 
+use the Import Package menu to load an xml file.
+
+Examples of the syntax to use for xml and pvsm files can be found in
+./GUI/Client/Resources/Filters.xml and 
+./Servers/ServerManager/Resources/filters.xml
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+-------------- next part --------------
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+   <SourceProxy name="Delaunay3D" class="vtkDelaunay3D">
+      <InputProperty
+         name="Input"
+         command="SetInput">
+           <ProxyGroupDomain name="groups">
+             <Group name="sources"/>
+             <Group name="filters"/>
+           </ProxyGroupDomain>
+           <DataTypeDomain name="input_type">
+             <DataType value="vtkPointSet"/>
+           </DataTypeDomain>
+      </InputProperty>
+
+     <DoubleVectorProperty
+        name="Tolerance"
+        command="SetTolerance"
+        number_of_elements="1"
+        default_values="0.001">
+       <DoubleRangeDomain name="range" min="0.0" max="1.0" />
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty
+        name="Alpha"
+        command="SetAlpha"
+        number_of_elements="1"
+        default_values="2.0">
+       <DoubleRangeDomain name="range" min="0.0" max="10.0" />
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty
+        name="Offset"
+        command="SetOffset"
+        number_of_elements="1"
+        default_values="2.5">
+       <DoubleRangeDomain name="range" min="2.5" max="10.0" />
+     </DoubleVectorProperty>
+
+     <IntVectorProperty
+        name="BoundingTriangulation"
+        command="SetBoundingTriangulation"
+        number_of_elements="1"
+        default_values="0">
+       <BooleanDomain name="bool"/>
+     </IntVectorProperty>
+
+   </SourceProxy>
+ </ProxyGroup>
+
+</ServerManagerConfiguration>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Delaunay3D.xml
+Type: text/xml
+Size: 1818 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20041021/de34bb5c/Delaunay3D.bin
+From amy.henderson at kitware.com  Thu Oct 21 09:12:13 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Thu Oct 21 09:14:27 2004
+Subject: [Paraview] Add filter problem
+In-Reply-To: <200410210941.i9L9fRjv013806@mail.ill.fr>
+References: <20041021081937.588747B0341@mx1.sjtu.edu.cn>
+	<200410210941.i9L9fRjv013806@mail.ill.fr>
+Message-ID: <6.1.2.0.2.20041021091017.03a0efb0@pop.biz.rr.com>
+
+Do you have both a .xml (XML for ParaView's user interface) and a .pvsm 
+(XML for the server manager) file for your custom filters?
+- Amy
+
+At 05:41 AM 10/21/2004, A Steuwer wrote:
+>Hi,
+>
+>I've noticed the same effect on my custom filters when moving from 1.4 to
+>1.6 using e.g. the Delaunay2D filter, and would be interested
+>why that happens? It works in 1.4 on my data sets, but not in 1.6 (grayed
+>out) on the same data sets.
+>
+>Axel
+>
+>
+>--------------------------------------------
+>FaME38 at the ESRF-ILL
+>6, rue J. Horowitz, 38042 Grenoble CEDEX France
+>Tel.: ++33-476-207945
+>Fax.: ++33-476-207943
+>--------------------------------------------
+>
+>-----Original Message-----
+>From: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org]
+>On Behalf Of ???
+>Sent: jeudi 21 octobre 2004 10:18
+>To: paraview@paraview.org
+>
+>hi all,
+>
+>    In the filter lists,my filter is alwaly being grey(whatever datatype
+>opened) !For example, if i want to apply my filter to vtkDataSet,where and
+>how to setup?any suggestion will be helpful.
+>    thank you in advance.
+>
+>yang
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>
+>Defend your privacy! Encrypt your email today!
+>http://www.bytefusion.com/secexmail
+>
+>
+>---Tag My Public Key---
+>
+>a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+>Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+>bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+>aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+>S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+>NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+>VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+>TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+>c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+>TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+>U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+>d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+>Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+>SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+>MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+>ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+>NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+>Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+>MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+>VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+>SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+>WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+>RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+>RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+>UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+>
+>
+>---End SecExMail Tag---
+>
+>
+>---Tag My Public Key---
+>
+>a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+>Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+>bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+>aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+>S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+>NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+>VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+>TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+>c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+>TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+>U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+>d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+>Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+>SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+>MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+>ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+>NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+>Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+>MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+>VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+>SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+>WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+>RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+>RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+>UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+>
+>
+>---End SecExMail Tag---
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From jfavre at cscs.ch  Thu Oct 21 09:49:25 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Oct 21 09:49:37 2004
+Subject: [Paraview] Ensight reader problems...
+In-Reply-To: <20041020234652.B89DB2DFC4@public.kitware.com>
+References: <20041020234652.B89DB2DFC4@public.kitware.com>
+Message-ID: <4177BE65.6050508@cscs.ch>
+
+Renato Nascimento Elias wrote:
+>  
+> I've been getting some problems when trying to read an Ensight (not GOLD)
+> file generated by a Fortran routine written by myself. This routine writes
+> multiparts geometry files and three variable files (2 scalar and 1 vectorial
+> fields) in binary format. 
+> 
+> I've already checked the case file with the ens_checker.exe utility provided
+> by CEI and everything appears to be fine with my file (see ens_checker.out
+> file attached). When I try to read the file with the Ensight reader of the
+> Paraview (in little and big endian byte orders) nothing happens.
+
+ParaView actually returns silently because the following check returns 
+an error:
+
+int vtkEnSight6BinaryReader::ReadGeometryFile()
+
+   lineRead = this->ReadLine(line);
+   fprintf(stderr,"line0 = %s\n", line);
+   sscanf(line, " %*s %s", subLine);
+   if (strcmp(subLine, "Binary") != 0 &&
+       strcmp(subLine, "binary") != 0)
+     {
+     vtkErrorMacro("This is not an EnSight6 binary file. Try "
+                   << "vtkEnSight6Reader.");
+     return 0;
+     }
+
+Readline(line) only reads up 80 characters and since the binary was 
+writen in FORTRAN, it actually has 4-byte offsets added before and after 
+the data item. I took a look at the data with "od" and it shows the 
+following:
+
+od -A decimal -s80 pl075-pqn_4.geo | more
+
+0000004 Fortran Binary 
+
+0000092  Created by WriteEnsightMesh Routine 
+
+0000180 Preprocessor2D program 
+
+0000268 node id given 
+
+0000356 element id given
+
+Notice the decimal offsets. The VTK EnSight readers parse the data on 
+80-byte blocks as extracted by Readline(line). I suspect that is the 
+source of the problem.
+
+Hope this helps track down the problem.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From rnelias at superig.com.br  Thu Oct 21 12:25:57 2004
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Thu Oct 21 12:30:33 2004
+Subject: [Paraview] Re: Ensight reader problems...
+In-Reply-To: <20041021160006.775772F9DD@public.kitware.com>
+Message-ID: <20041021163028.A5F972E937@public.kitware.com>
+
+ 
+Thanks for your support Jean. 
+
+I've already fixed my Fortran routine and everything is working fine now.
+I was opening the Ensight files as "unformatted" instead "binary".
+
+Renato N. Elias
+
+-----Mensagem original-----
+De: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org] Em
+nome de paraview-request@paraview.org
+Enviada em: quinta-feira, 21 de outubro de 2004 13:00
+Para: paraview@paraview.org
+Assunto: ParaView Digest, Vol 6, Issue 17
+
+Send ParaView mailing list submissions to
+	paraview@paraview.org
+
+To subscribe or unsubscribe via the World Wide Web, visit
+	http://www.paraview.org/mailman/listinfo/paraview
+or, via email, send a message with subject or body 'help' to
+	paraview-request@paraview.org
+
+You can reach the person managing the list at
+	paraview-owner@paraview.org
+
+When replying, please edit your Subject line so it is more specific than
+"Re: Contents of ParaView digest..."
+
+
+Today's Topics:
+
+   1. Re: Ensight reader problems... (Jean M. Favre)
+
+
+----------------------------------------------------------------------
+
+Message: 1
+Date: Thu, 21 Oct 2004 15:49:25 +0200
+From: "Jean M. Favre" <jfavre@cscs.ch>
+Subject: Re: [Paraview] Ensight reader problems...
+To: Renato Nascimento Elias <rnelias@superig.com.br>
+Cc: paraview@paraview.org
+Message-ID: <4177BE65.6050508@cscs.ch>
+Content-Type: text/plain; charset=us-ascii; format=flowed
+
+Renato Nascimento Elias wrote:
+>  
+> I've been getting some problems when trying to read an Ensight (not 
+> GOLD) file generated by a Fortran routine written by myself. This 
+> routine writes multiparts geometry files and three variable files (2 
+> scalar and 1 vectorial
+> fields) in binary format. 
+> 
+> I've already checked the case file with the ens_checker.exe utility 
+> provided by CEI and everything appears to be fine with my file (see 
+> ens_checker.out file attached). When I try to read the file with the 
+> Ensight reader of the Paraview (in little and big endian byte orders)
+nothing happens.
+
+ParaView actually returns silently because the following check returns an
+error:
+
+int vtkEnSight6BinaryReader::ReadGeometryFile()
+
+   lineRead = this->ReadLine(line);
+   fprintf(stderr,"line0 = %s\n", line);
+   sscanf(line, " %*s %s", subLine);
+   if (strcmp(subLine, "Binary") != 0 &&
+       strcmp(subLine, "binary") != 0)
+     {
+     vtkErrorMacro("This is not an EnSight6 binary file. Try "
+                   << "vtkEnSight6Reader.");
+     return 0;
+     }
+
+Readline(line) only reads up 80 characters and since the binary was writen
+in FORTRAN, it actually has 4-byte offsets added before and after the data
+item. I took a look at the data with "od" and it shows the
+following:
+
+od -A decimal -s80 pl075-pqn_4.geo | more
+
+0000004 Fortran Binary 
+
+0000092  Created by WriteEnsightMesh Routine 
+
+0000180 Preprocessor2D program 
+
+0000268 node id given 
+
+0000356 element id given
+
+Notice the decimal offsets. The VTK EnSight readers parse the data on
+80-byte blocks as extracted by Readline(line). I suspect that is the source
+of the problem.
+
+Hope this helps track down the problem.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+
+------------------------------
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+End of ParaView Digest, Vol 6, Issue 17
+***************************************
+
+
+From guglielmo.pasa at bluewin.ch  Mon Oct 25 07:55:08 2004
+From: guglielmo.pasa at bluewin.ch (Guglielmo Pasa)
+Date: Mon Oct 25 07:55:48 2004
+Subject: [Paraview] problem with displaying zoomed data
+Message-ID: <417CE191000005BC@mail21.bluewin.ch> (added by
+	postmaster@bluewin.ch)
+
+
+I forgot to mention that I'm using Paraview 1.6.2 on windows XP and Linux on
+my laptop and XP on my desktop (ATI) (XPsp2 to be precise).
+
+
+--
+
+Sincerely yours,
+            Pasa Guglielmo
+
+
+--------------
+
+ guglielmo.pasa@bluewin.ch      |  tel. :  +41 (0)24 485 50 40 |
+
+ mailing : Pasa Guglielmo       |  fax  :  +41 (0)24 485 50 44 |
+           Rte des Cases 17A    |                              | 
+           CH-1890 St-Maurice   |  prof.: physicist,teacher    |
+           (Switzerland)        |         & PhD Student        | 
+
+ Ph.D.Student at:
+                 IPEQ -EPFL
+                 PHB-Ecublens
+                 CH-1015 Lausanne
+                 (Switzerland)
+
+
+
+From guglielmo.pasa at bluewin.ch  Mon Oct 25 08:03:01 2004
+From: guglielmo.pasa at bluewin.ch (Guglielmo Pasa)
+Date: Mon Oct 25 08:04:05 2004
+Subject: [Paraview] problem with displaying zoomed data
+Message-ID: <417CE01500000B4B@mail13.bluewin.ch> (added by
+	postmaster@bluewin.ch)
+
+Hi,
+I'm trying to display my data (here enclosed in the zip) with paraview. On
+my laptop (equipped with an NVidia GeForce 4200 Go) there are no problem,
+neither with my desktop PC (equiped with an ATI Radeon 9700 and last
+driver).
+
+The problem appears when I set a z-zoom factor of 300. On my GeForce-laptop,
+no problems, I can see at the data. But on my desktop PC, the image is very
+dark, and not usable. The problem appears only in the surface mode display.
+
+I thought it may be the driver of my ATI card that is at fault. I didn't get
+any answer from ATI, and the last driver showed the same result. Or is it a
+normal feature of OpenGL which is not taken into account by NVidia ?
+
+Can anybody tell me what is the problem ?
+
+--
+
+Sincerely yours,
+            Pasa Guglielmo
+
+
+--------------
+
+ guglielmo.pasa@bluewin.ch      |  tel. :  +41 (0)24 485 50 40 |
+
+ mailing : Pasa Guglielmo       |  fax  :  +41 (0)24 485 50 44 |
+           Rte des Cases 17A    |                              | 
+           CH-1890 St-Maurice   |  prof.: physicist,teacher    |
+           (Switzerland)        |         & PhD Student        | 
+
+ Ph.D.Student at:
+                 IPEQ -EPFL
+                 PHB-Ecublens
+                 CH-1015 Lausanne
+                 (Switzerland)
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: plot001.vtk.zip
+Type: application/x-zip-compressed
+Size: 25126 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20041025/cdb98060/plot001.vtk-0001.bin
+From jsjones at sandia.gov  Mon Oct 25 15:03:16 2004
+From: jsjones at sandia.gov (Jones, Jake S)
+Date: Mon Oct 25 15:04:21 2004
+Subject: [Paraview] Hdf5/windows issue
+Message-ID: <B3C96748EBF3194EA5C8C48CAB5192A11726A5@ES23SNLNT.srn.sandia.gov>
+
+I am having trouble with the function H5Fis_hdf5() in the HDF5 code
+included in the ParaView tree. 
+
+On a windows system, H5Fis_hdf5() returns false for files that I know
+are valid hdf5 files. With another non-paraview installation of
+hdf5-1.6.2 on the same system, H5Fis_hdf5() returns true for these
+files.
+
+This problem doesn't happen on my Linux system.
+
+Has the HDF5 code in the paraview tree been doctored at all? Are there
+HDF-related cmake flags that should be set? Other compiler options? Does
+anyone have an idea what might be happening here?
+
+Thanks,
+
+Jake
+
+
+------------------
+Jake S. Jones
+Sandia National Labs, Dept 9326
+jsjones@sandia.gov
+(505)844-1733
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041025/df63f60c/attachment.htm
+From yangyanchun at sjtu.edu.cn  Tue Oct 26 00:39:10 2004
+From: yangyanchun at sjtu.edu.cn (yang)
+Date: Tue Oct 26 00:39:34 2004
+Subject: [Paraview] Is there any way to set texture to vtkActor in Paraview?
+Message-ID: <20041026044036.CD8447B028C@mx1.sjtu.edu.cn>
+
+hi all?
+      Did anyone do some related works,any suggestion will be helpful!
+thank you in advance.
+
+regards,	
+yang
+ yangyanchun@sjtu.edu.cn
+ 2004-10-26
+
+
+From brad.king at kitware.com  Tue Oct 26 17:23:36 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Oct 26 17:23:39 2004
+Subject: [Paraview] Hdf5/windows issue
+In-Reply-To: <B3C96748EBF3194EA5C8C48CAB5192A11726A5@ES23SNLNT.srn.sandia.gov>
+References: <B3C96748EBF3194EA5C8C48CAB5192A11726A5@ES23SNLNT.srn.sandia.gov>
+Message-ID: <417EC058.3060501@kitware.com>
+
+Jones, Jake S wrote:
+> I am having trouble with the function H5Fis_hdf5() in the HDF5 code 
+> included in the ParaView tree.
+> 
+> On a windows system, H5Fis_hdf5() returns false for files that I know 
+> are valid hdf5 files. With another non-paraview installation of 
+> hdf5-1.6.2 on the same system, H5Fis_hdf5() returns true for these files.
+> 
+> This problem doesn?t happen on my Linux system.
+> 
+> Has the HDF5 code in the paraview tree been doctored at all? Are there 
+> HDF-related cmake flags that should be set? Other compiler options? Does 
+> anyone have an idea what might be happening here?
+
+This is probably a bug.  Please submit a report here:
+
+http://www.paraview.org/Bug
+
+so that it will be investigated.
+
+Thanks,
+-Brad
+From eschenbe at psc.edu  Thu Oct 28 12:37:11 2004
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct 28 12:37:21 2004
+Subject: [Paraview] Searching This List
+Message-ID: <3E60D13D63160ED40B6808EB@harpo.psc.edu>
+
+Is there a way to search the archives for this list?
+From eschenbe at psc.edu  Thu Oct 28 12:45:38 2004
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct 28 12:45:50 2004
+Subject: [Paraview] Scripts With Animations
+Message-ID: <0840310B5DC81F0158F4EA56@harpo.psc.edu>
+
+It seems that animations are not saved correctly n a session state file.
+
+Upon loading the state file, the error message includes "could not find 
+requested method: SetLabelAndScript or the method was called with incorrect 
+arguments". The animator actions are incomplete.
+
+I can't quite figure out the syntax of the state file to perform a manual 
+fix. Is there a guide to the content of these files?
+
+Session trace files work fine.
+
+I'm using binary version 1.6.3 with Redhat Fedora core 1.
+
+Thanks!
+Kent
+
+From eschenbe at psc.edu  Thu Oct 28 13:13:39 2004
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct 28 13:13:47 2004
+Subject: [Paraview] Adding Delays In Session Trace Files
+Message-ID: <F4740F6D30EE2DA0375E8CEA@harpo.psc.edu>
+
+A carefully conducted session, recorded in a session trace file, almost 
+makes for a good demo but it needs delays (half a second to several 
+seconds) inserted between steps. How could I add such commands to the file?
+
+Thanks!
+Kent
+
+From eschenbe at psc.edu  Thu Oct 28 13:16:53 2004
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct 28 13:17:02 2004
+Subject: [Paraview] Lights and Lighting
+Message-ID: <831CC714C9EFF710A97468C6@harpo.psc.edu>
+
+Can the location, number and characteristics of the VTK lights be set?
+
+Can the surface lighting (ambient, diffuse, specular levels) be set for a 
+particular object? For example, cut planes grow dim very rapidly as they 
+are turned away from the viewer - on other systems, cranking up the ambient 
+level solves this problem.
+
+Thanks!
+Kent
+
+From Patrick.Brockmann at cea.fr  Fri Oct 29 05:35:52 2004
+From: Patrick.Brockmann at cea.fr (Patrick Brockmann)
+Date: Fri Oct 29 05:36:34 2004
+Subject: [Paraview] Camera clipping planes
+Message-ID: <41820EF8.6030308@cea.fr>
+
+Hi all,
+
+In paraview, is there a way to set a camera with your own location of
+the near and far clipping planes ?
+
+I really need this feature to hide the far scene of my objets
+(climate earth models watched with orthographic projection).
+
+With VTK API in python, I have been able to compute this with the 
+following lines:
+def ProjOrthoResetClippingRange(obj, event):
+       camera=ren1.GetActiveCamera()
+       camera.SetFocalPoint(0,0,0)
+       camera_dist=camera.GetDistance()
+       camera.SetClippingRange(0.1,camera_dist)
+
+ren1=vtk.vtkRenderer()
+ren1.AddObserver("ResetCameraEvent",ProjOrthoResetClippingRange)
+ren1.AddObserver("EndEvent",ProjOrthoResetClippingRange)
+
+Let me know if this feature could be add in paraview ?
+
+Patrick
+From brad.king at kitware.com  Fri Oct 29 08:16:45 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 29 08:16:55 2004
+Subject: [Paraview] Scripts With Animations
+In-Reply-To: <0840310B5DC81F0158F4EA56@harpo.psc.edu>
+References: <0840310B5DC81F0158F4EA56@harpo.psc.edu>
+Message-ID: <418234AD.30405@kitware.com>
+
+Kent Eschenberg wrote:
+> It seems that animations are not saved correctly n a session state file.
+> 
+> Upon loading the state file, the error message includes "could not find 
+> requested method: SetLabelAndScript or the method was called with 
+> incorrect arguments". The animator actions are incomplete.
+
+This is a bug, and it looks like it is still in the CVS version.  Please 
+report it to the bug tracker:
+
+http://www.paraview.org/Bug
+
+Thanks.
+
+> I can't quite figure out the syntax of the state file to perform a 
+> manual fix. Is there a guide to the content of these files?
+
+Not currently.  It basically just invokes methods on ParaView objects 
+through Tcl wrappers.  You can look in that paraview source tree under 
+ParaView/Servers/ServerManager and ParaView/GUI/Client for classes on 
+which most methods are called.
+
+-Brad
+From brad.king at kitware.com  Fri Oct 29 08:18:17 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 29 08:18:25 2004
+Subject: [Paraview] Adding Delays In Session Trace Files
+In-Reply-To: <F4740F6D30EE2DA0375E8CEA@harpo.psc.edu>
+References: <F4740F6D30EE2DA0375E8CEA@harpo.psc.edu>
+Message-ID: <41823509.3080505@kitware.com>
+
+Kent Eschenberg wrote:
+> A carefully conducted session, recorded in a session trace file, almost 
+> makes for a good demo but it needs delays (half a second to several 
+> seconds) inserted between steps. How could I add such commands to the file?
+
+The demo available in the help menu is implemented as a session file and 
+it has delays.  Take a look at the source code in 
+ParaView/GUI/Demos/Demo1.pvs.  It just uses the "after" command in Tcl.
+
+-Brad
+From brad.king at kitware.com  Fri Oct 29 14:19:00 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Oct 29 14:19:02 2004
+Subject: [Paraview] Searching This List
+In-Reply-To: <3E60D13D63160ED40B6808EB@harpo.psc.edu>
+References: <3E60D13D63160ED40B6808EB@harpo.psc.edu>
+Message-ID: <41828994.1050705@kitware.com>
+
+Kent Eschenberg wrote:
+> Is there a way to search the archives for this list?
+
+At www.paraview.org there is a search box in the upper right of the 
+page.  Include "paraview" in your search because the box will search all 
+our projects' lists.
+
+-Brad
+From Patrick.Brockmann at cea.fr  Fri Oct 29 05:18:27 2004
+From: Patrick.Brockmann at cea.fr (Patrick Brockmann)
+Date: Mon Nov  1 09:15:33 2004
+Subject: [Paraview] Camera clipping planes
+Message-ID: <41820AE3.4010605@cea.fr>
+
+Hi all,
+
+In paraview, is there a way to set a camera with your own location of
+the near and far clipping planes ?
+
+I need this to hide the far scene of my objets (climate earth modelling 
+with orthographic projection).
+
+With VTK API in python, I have been able to compute this with the 
+following lines:
+def ProjOrthoResetClippingRange(obj, event):
+        camera=ren1.GetActiveCamera()
+        camera.SetFocalPoint(0,0,0)
+        camera_dist=camera.GetDistance()
+        camera.SetClippingRange(0.1,camera_dist)
+
+ren1=vtk.vtkRenderer()
+ren1.AddObserver("ResetCameraEvent",ProjOrthoResetClippingRange)
+ren1.AddObserver("EndEvent",ProjOrthoResetClippingRange)
+
+Let me know if this feature can be add in paraview ?
+
+Patrick

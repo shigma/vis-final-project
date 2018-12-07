@@ -1,0 +1,2426 @@
+From Chris.Hood@noaa.gov  Tue Sep  2 21:29:48 2003
+From: Chris.Hood@noaa.gov (Chris Hood)
+Date: Tue, 02 Sep 2003 14:29:48 -0600
+Subject: [Paraview] Grid in Demo
+Message-ID: <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+
+   Does anyone know how the paraview demos were done? It self destructs 
+after when I hit stop so I can't look at it. I want to find out how the 
+grid in the streamtracer demo was created and eventually put it into a 
+java-vtk program.
+
+____________________________________
+Chris Hood
+Graduate Student Research Assistant
+University of Colorado, Boulder
+Space Environment Center - NOAA 
+
+
+From berklist@nycap.rr.com  Tue Sep  2 21:53:11 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 02 Sep 2003 16:53:11 -0400
+Subject: [Paraview] Grid in Demo
+In-Reply-To: <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+References: <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+Message-ID: <1062535990.3138.6.camel@caemlyn.kitwarein.com>
+
+The demo is a simple paraview script. Find Demo1.pvs and take out all
+the lines that have DeleteCallback in them.
+
+On Tue, 2003-09-02 at 16:29, Chris Hood wrote:
+>    Does anyone know how the paraview demos were done? It self destructs 
+> after when I hit stop so I can't look at it. I want to find out how the 
+> grid in the streamtracer demo was created and eventually put it into a 
+> java-vtk program.
+> 
+> ____________________________________
+> Chris Hood
+> Graduate Student Research Assistant
+> University of Colorado, Boulder
+> Space Environment Center - NOAA 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From Chris.Hood@noaa.gov  Tue Sep  2 23:46:17 2003
+From: Chris.Hood@noaa.gov (Chris Hood)
+Date: Tue, 02 Sep 2003 16:46:17 -0600
+Subject: [Paraview] Grid in Demo
+In-Reply-To: <1062535990.3138.6.camel@caemlyn.kitwarein.com>
+References: <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+ <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+Message-ID: <5.2.1.1.0.20030902164138.01890f88@cripplecreek.sec.noaa.gov>
+
+There's is no DeleteCallback in the file. Are there any paraview scripts 
+somewhere with just the streamtracer demo that won't exit or tutorials on 
+how to add a grid?
+
+At 04:53 PM 9/2/2003 -0400, Berk Geveci wrote:
+>The demo is a simple paraview script. Find Demo1.pvs and take out all
+>the lines that have DeleteCallback in them.
+>
+>On Tue, 2003-09-02 at 16:29, Chris Hood wrote:
+> >    Does anyone know how the paraview demos were done? It self destructs
+> > after when I hit stop so I can't look at it. I want to find out how the
+> > grid in the streamtracer demo was created and eventually put it into a
+> > java-vtk program.
+
+____________________________________
+Chris Hood
+Graduate Student Research Assistant
+University of Colorado, Boulder
+Space Environment Center - NOAA 
+
+
+From berklist@nycap.rr.com  Wed Sep  3 14:52:16 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 03 Sep 2003 09:52:16 -0400
+Subject: [Paraview] Grid in Demo
+In-Reply-To: <5.2.1.1.0.20030902164138.01890f88@cripplecreek.sec.noaa.gov>
+References: <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+ <5.2.1.1.0.20030902142226.00b58f10@cripplecreek.sec.noaa.gov>
+ <5.2.1.1.0.20030902164138.01890f88@cripplecreek.sec.noaa.gov>
+Message-ID: <1062597136.3136.37.camel@caemlyn.kitwarein.com>
+
+There are bunch of line that look like:
+
+    if { [info exists pvDemoCommandLine] } {
+        $Application Exit
+    } else {
+        global clip extract iso streams threshold warp
+
+        catch {$clip(vtkTemp572) DeleteCallback}
+        catch {$clip(vtkTemp507) DeleteCallback}
+        catch {$clip(vtkTemp384) DeleteCallback}
+        
+        catch {$extract(vtkTemp780) DeleteCallback}
+        catch {$extract(vtkTemp598) DeleteCallback}
+        catch {$extract(vtkTemp478) DeleteCallback}
+        catch {$extract(vtkTemp384) DeleteCallback}
+
+at the end of Demo1.pvs. Just delete those.
+You can also look at the quick start guide. There is a section on
+extracting sub-grids there. The "grid" is nothing but a 2d sub-grid
+displayed as wireframe.
+
+-Berk
+
+
+On Tue, 2003-09-02 at 18:46, Chris Hood wrote:
+> There's is no DeleteCallback in the file. Are there any paraview scripts 
+> somewhere with just the streamtracer demo that won't exit or tutorials on 
+> how to add a grid?
+> 
+> 
+
+
+From ga5in@psu.edu  Wed Sep  3 20:11:19 2003
+From: ga5in@psu.edu (Gavin W. Burris aka 86)
+Date: Wed, 3 Sep 2003 15:11:19 -0400
+Subject: [Paraview] VTK Error w/ MPICH parallel demo
+Message-ID: <16214.15575.692035.382961@gargle.gargle.HOWL>
+
+I am getting the following error while "ParaView demo initializing:
+Please Wait" with ParaView Alpha Release 1.0.1 built from source with
+MPICH.  I will be trying the CVS version next.  Cheers.
+
+
+/usr/global/mpich-1.2.5/bin/mpirun -np 13 -machinefile /usr/global/mpich-1.2.5/etc/machinefile /usr/global/paraview-1.0.1/bin/paraview -td -tdx=4 -tdy=3 -pd
+
+# Error or warning: There was a VTK Error in file: /usr/global/src/paraview-1.0.1/VTK/Graphics/vtkThreshold.cxx (127)
+ No scalar data to threshold
+# Error or warning: There was a VTK Error in file: /usr/global/src/paraview-1.0.1/VTK/Graphics/vtkStreamTracer.cxx (582)
+ Input 0does not contain a velocity vector.
+# Error or warning: There was a VTK Error in file: /usr/global/src/paraview-1.0.1/VTK/Graphics/vtkStreamTracer.cxx (596)
+ No appropriate inputs have been found. Can not execute.
+# Error or warning: There was a VTK Error in file: /usr/global/src/paraview-1.0.1/VTK/Parallel/vtkPStreamTracer.cxx (314)
+ No appropriate inputs have been found. Can not execute.
+
+
+-- 
+Gavin W. Burris aka 86
+Research Programmer
+Penn State Visualization Group
+http://gears.aset.psu.edu/viz
+
+From JFord@golder.com  Wed Sep  3 20:32:45 2003
+From: JFord@golder.com (Ford, Josh)
+Date: Wed, 3 Sep 2003 12:32:45 -0700
+Subject: [Paraview] tiff
+Message-ID: <467F753CC7F3C543AF9D381625F8441859BADB@PHLEXCHANGE>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_001_01C37252.26C64A80
+Content-Type: text/plain
+
+I'm a new user and I'm trying to find a simple way to import tiff's.  I
+tried the .raw importer, but the image was skewed.  Is there an "automatic"
+tiff importer for paraview?  Can I use the VTK tiff reader somehow?
+
+Any help is greatly appreciated.
+
+Thanks,
+
+Josh
+
+------_=_NextPart_001_01C37252.26C64A80
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3DUS-ASCII">
+<META NAME=3D"Generator" CONTENT=3D"MS Exchange Server version =
+5.5.2653.12">
+<TITLE>tiff</TITLE>
+</HEAD>
+<BODY>
+
+<P><FONT SIZE=3D2 FACE=3D"Arial">I'm a new user and I'm trying to find =
+a simple way to import tiff's.&nbsp; I tried the .raw importer, but the =
+image was skewed.&nbsp; Is there an &quot;automatic&quot; tiff importer =
+for paraview?&nbsp; Can I use the VTK tiff reader somehow?</FONT></P>
+
+<P><FONT SIZE=3D2 FACE=3D"Arial">Any help is greatly =
+appreciated.</FONT>
+</P>
+
+<P><FONT SIZE=3D2 FACE=3D"Arial">Thanks,</FONT>
+</P>
+
+<P><FONT SIZE=3D2 FACE=3D"Arial">Josh</FONT>
+</P>
+
+</BODY>
+</HTML>
+------_=_NextPart_001_01C37252.26C64A80--
+
+From ferrell@diablotech.com  Wed Sep  3 23:10:16 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Wed, 3 Sep 2003 22:10:16 -0000 (GMT)
+Subject: [Paraview] Display graph
+Message-ID: <2584.128.165.144.120.1062627016.squirrel@webmail.pair.com>
+
+What would be a good way to display a graph in Paraview.  I've got a list
+of vertices (points) and their location in 3-space.  I've also got a list
+of edges (pairs of points).  I've also got point data.  I can massage the
+lists into any appropriate format.
+
+What I'd like to do is display the points and the edges, essentially like
+an unstructured mesh.  And then I'd like to make spherical glyphs at each
+point, with the diameter of the sphere proporitional to some field data at
+the points.
+
+Is that possible?
+
+thanks,
+-robert
+
+
+
+From jfavre@cscs.ch  Thu Sep  4 07:51:37 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 04 Sep 2003 08:51:37 +0200
+Subject: [Paraview] Display graph
+References: <2584.128.165.144.120.1062627016.squirrel@webmail.pair.com>
+Message-ID: <3F56E0F9.C9881A4A@cscs.ch>
+
+Robert Ferrell wrote:
+> 
+> What would be a good way to display a graph in Paraview.  I've got a list
+> of vertices (points) and their location in 3-space.  I've also got a list
+> of edges (pairs of points).  I've also got point data.
+
+It seems like you need to format your data in exactly the
+UNSTRUCTURED_GRID format, using LINES as cells, and you're done. Here is
+an example of a graph using 3 nodes and 3 edges
+
+<?xml version="1.0"?>
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian"
+compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="3" NumberOfCells="3">
+      <PointData Scalars="data">
+        <DataArray type="Float32" Name="data" NumberOfComponents="1"/>
+        0. 1. 2.
+      </PointData>
+      <Points>
+        <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+          0 0 0
+          1 0 0
+          0 1 0
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int32" Name="connectivity" format="ascii">
+          0 1 1 2 2 0
+        </DataArray>
+        <DataArray type="Int32" Name="offsets" format="ascii">
+          2 4 6
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="ascii">
+         3 3 3
+        </DataArray>
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+</VTKFile>
+
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From Chris.Hood@noaa.gov  Thu Sep  4 23:37:24 2003
+From: Chris.Hood@noaa.gov (Chris Hood)
+Date: Thu, 04 Sep 2003 16:37:24 -0600
+Subject: [Paraview] XML - .VTS File Errors
+Message-ID: <5.2.1.1.0.20030904163231.00b5cd48@cripplecreek.sec.noaa.gov>
+
+   When trying to save a structured grid loaded from a .vtk file to a xml 
+file (.vts) I get the following error:
+
+
+There was a VTK Error in file: 
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx 
+(407)
+
+     Script:
+writer SetFileName C:/Documents and Settings/My Documents/1test1.vts
+     Returned Error on line 1:
+Object named: writer, could not find requested method: SetFileName
+or the method was called with incorrect arguments.
+There was a VTK Error in file: 
+C:\kitware\ParaView\ParaViewComplete\VTK\IO\vtkXMLWriter.cxx (243)
+  Write() called with no FileName set.
+
+
+
+   Also when I try to load xml files (in binary or ascii format) that I 
+created, Paraview crashes. Are these bugs in paraview or is something set 
+wrong? I'm trying to test the xml files I've been creating to make sure I 
+did it right.
+   Thanks.
+
+
+____________________________________
+Chris Hood
+Graduate Student Research Assistant
+University of Colorado, Boulder
+Space Environment Center - NOAA 
+
+
+From Stephen.Wornom@sophia.inria.fr  Fri Sep  5 09:00:50 2003
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Fri, 05 Sep 2003 10:00:50 +0200
+Subject: [Paraview] viewing cut planes as 2d planes
+Message-ID: <3F5842B2.D17A77F8@sophia.inria.fr>
+
+If I set opacity = 0 for a single cut plane, only the cut plane can be
+seen but is orientated in 3d space. Is it possible to snap to a plane
+normal to the viewer? When ParaView starts with a rectangular box as
+data the view is a plane normal to the viewer so there must be
+parameters that will do this for a single cut plane.
+Stephen
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From charles.law@kitware.com  Fri Sep  5 15:24:55 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 05 Sep 2003 10:24:55 -0400
+Subject: [Paraview] XML - .VTS File Errors
+In-Reply-To: <5.2.1.1.0.20030904163231.00b5cd48@cripplecreek.sec.noaa.go
+ v>
+Message-ID: <5.1.0.14.0.20030905101443.030e6f20@pop.biz.rr.com>
+
+Chris,
+
+Thank you for reporting the problem.  The error message was very useful for 
+replicating the problem.
+I have found the filename problem (spaces in the file name) and will fix it 
+in the 1.0 release as well as the CVS development branch.
+
+
+
+
+I do not have enough information to answer your second question.  ParaView 
+seems to be reading XML files properly.   I suspect that you are putting 
+something in your files that the readers are not expecting.
+
+
+Charles.
+
+
+
+At 04:37 PM 9/4/2003 -0600, Chris Hood wrote:
+>   When trying to save a structured grid loaded from a .vtk file to a xml 
+> file (.vts) I get the following error:
+>
+>
+>There was a VTK Error in file: 
+>C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx 
+>(407)
+>
+>     Script:
+>writer SetFileName C:/Documents and Settings/My Documents/1test1.vts
+>     Returned Error on line 1:
+>Object named: writer, could not find requested method: SetFileName
+>or the method was called with incorrect arguments.
+>There was a VTK Error in file: 
+>C:\kitware\ParaView\ParaViewComplete\VTK\IO\vtkXMLWriter.cxx (243)
+>  Write() called with no FileName set.
+>
+
+
+>   Also when I try to load xml files (in binary or ascii format) that I 
+> created, Paraview crashes. Are these bugs in paraview or is something set 
+> wrong? I'm trying to test the xml files I've been creating to make sure I 
+> did it right.
+>   Thanks.
+>
+>
+>____________________________________
+>Chris Hood
+>Graduate Student Research Assistant
+>University of Colorado, Boulder
+>Space Environment Center - NOAA
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From liaoli@iapcm.ac.cn  Mon Sep  8 04:25:19 2003
+From: liaoli@iapcm.ac.cn (liaoli@iapcm.ac.cn)
+Date: Mon, 08 Sep 2003 11:25:19 +0800
+Subject: [Paraview] error when reading  pvtk file
+Message-ID: <9f237909.79099f23@iapcm.ac.cn>
+
+Hello=2C
+When I tried to read a pvtk file with ParaView1=2E0 version=2Cit failed=2E=
+
+But ParaView0=2E6 can do it correctly=2EWhy this happens=3F
+
+
+From citeli@mat.puc-rio.br  Wed Sep 10 20:40:13 2003
+From: citeli@mat.puc-rio.br (Marcos Citeli)
+Date: Wed, 10 Sep 2003 16:40:13 -0300
+Subject: [Paraview] .segy file
+Message-ID: <1063222812.3823.71.camel@marge.mat.puc-rio.br>
+
+Does someone know how to open .segy seismic binary file with ParaView?
+Or how to convert it to a .extension that ParaView can read?
+
+-- 
+Marcos Citeli <citeli@mat.puc-rio.br>
+Grupo MatMídia
+Depto de Matemática
+PUC-Rio
+
+
+From charles.law@kitware.com  Wed Sep 10 20:51:26 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Wed, 10 Sep 2003 15:51:26 -0400
+Subject: [Paraview] error when reading  pvtk file
+In-Reply-To: <9f237909.79099f23@iapcm.ac.cn>
+Message-ID: <5.1.0.14.0.20030910154956.034f3988@pop.biz.rr.com>
+
+
+This bug has been fixed.  To get the fix you must either checkout and 
+recompile ParaView or wait until we release the next binary patch.
+
+Charles.
+
+At 11:25 AM 9/8/2003 +0800, liaoli@iapcm.ac.cn wrote:
+>Hello,
+>When I tried to read a pvtk file with ParaView1.0 version,it failed.
+>But ParaView0.6 can do it correctly.Why this happens?
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From jlee@ariel.met.tamu.edu  Wed Sep 10 21:08:52 2003
+From: jlee@ariel.met.tamu.edu (Joonsuk Lee)
+Date: Wed, 10 Sep 2003 15:08:52 -0500 (CDT)
+Subject: [Paraview] Loading data from ParaView
+Message-ID: <Pine.SOL.3.91.1030910145231.870A-100000@ariel>
+
+Dear All:
+
+I am a really beginner in using ParaView.
+This could be a naive qeustion but
+please let me know how I can read the
+data produced by FORTRAN?
+The file I want to read is function file,
+not Q file.
+And also how should I set output format
+in FORTRAN to be read by ParaView.
+
+Thanks in advance.
+
+Joonsuk
+----------------------------------
+Joonsuk Lee
+Department of Atmoshperic Sciences
+Texas A&M University
+3150 TAMU
+College Station, TX 77843-3150
+Phone: (979) 845-1680
+E-mail: jlee@ariel.met.tamu.edu
+
+
+
+From jlee@ariel.met.tamu.edu  Thu Sep 11 04:45:07 2003
+From: jlee@ariel.met.tamu.edu (Joonsuk Lee)
+Date: Wed, 10 Sep 2003 22:45:07 -0500 (CDT)
+Subject: [Paraview] Loading PLOT3D data from ParaView
+Message-ID: <Pine.SOL.3.91.1030910223537.5887B-100000@ariel>
+
+Dear All:
+
+I read some documents about loading PLOT3D
+file in ParaView. And I knew that unformatted
+PLOT3D file cannot be ready by ParaView.
+Then, how can I convert this unformatted
+PLOT3D file into VTK file or how can I
+make the formatted PLOT3D file from FORTRAN?
+How do I set the output format in FORTRAN
+to produce the formatted PLOT3D file?
+I will appreciate it if you attach the actual
+example which shows that method.
+
+Thanks again.
+
+Joonsuk
+----------------------------------
+Joonsuk Lee
+Department of Atmoshperic Sciences
+Texas A&M University
+3150 TAMU
+College Station, TX 77843-3150
+Phone: (979) 845-1680
+E-mail: jlee@ariel.met.tamu.edu
+
+
+
+
+From Michael Gronager" <mpg@uni-c.dk  Thu Sep 11 13:58:27 2003
+From: Michael Gronager" <mpg@uni-c.dk (Michael Gronager)
+Date: Thu, 11 Sep 2003 13:58:27 +0100
+Subject: [Paraview] Loading data from ParaView
+References: <Pine.SOL.3.91.1030910145231.870A-100000@ariel>
+Message-ID: <003c01c37864$6496e820$d903e482@F2GO>
+
+Hi Joonsuk Lee,
+
+I have a student that has actually written a Plot3D function file importer
+for
+VTK.
+If you can use the code you are free to get it.
+
+Actually we want to integrate it into ParaView as a loader. The docu says
+something about
+using an XML descriptionfile should actully be enough to add a new loader to
+Paraview, however,
+We haven't been able to find an actual pointer to how to do it or even an
+example ...
+
+Do you (or anyone else) know how to do it?
+
+Regards,
+
+Michael
+
+--
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Building 304
+DK2800 Lyngby
+DENMARK
+
+Phone:  +45 3587 8889
+Fax:    +45 3587 8990
+Direct: +45 3587 8966
+Mobile: +45 2424 8207
+
+Email:   mpg@uni-c.dk
+
+----- Original Message -----
+From: "Joonsuk Lee" <jlee@ariel.met.tamu.edu>
+To: <paraview@paraview.org>
+Sent: Wednesday, September 10, 2003 9:08 PM
+Subject: [Paraview] Loading data from ParaView
+
+
+> Dear All:
+>
+> I am a really beginner in using ParaView.
+> This could be a naive qeustion but
+> please let me know how I can read the
+> data produced by FORTRAN?
+> The file I want to read is function file,
+> not Q file.
+> And also how should I set output format
+> in FORTRAN to be read by ParaView.
+>
+> Thanks in advance.
+>
+> Joonsuk
+> ----------------------------------
+> Joonsuk Lee
+> Department of Atmoshperic Sciences
+> Texas A&M University
+> 3150 TAMU
+> College Station, TX 77843-3150
+> Phone: (979) 845-1680
+> E-mail: jlee@ariel.met.tamu.edu
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From berk.geveci@kitware.com  Thu Sep 11 14:51:53 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 11 Sep 2003 09:51:53 -0400
+Subject: [Paraview] Loading data from ParaView
+In-Reply-To: <003c01c37864$6496e820$d903e482@F2GO>
+References: <Pine.SOL.3.91.1030910145231.870A-100000@ariel>
+ <003c01c37864$6496e820$d903e482@F2GO>
+Message-ID: <1063288312.13685.33.camel@caemlyn.kitwarein.com>
+
+I didn't have time to write documentation on importing modules
+using XML configuration files so far. However, it is really
+not that hard. Here is how to do it:
+
+1. Create a directory to put the module descriptions in,
+(I have a ${HOME}/etc/paraview directory for ex.)
+2. Add a variable called PV_INTERFACE_PATH to your environment
+pointing to this directory
+(I do "export PV_INTERFACE_PATH=${HOME}/etc/paraview)
+3. Create a file with xml extension to describe the reader module.
+I have a modules.xml file that looks like:
+
+<ModuleInterfaces>
+ 
+<!- modules skipped ... -->
+
+ <Library name="vtkChomboReaderTCL"/>
+ <Module name="ChomboReader" root_name="ChomboReader"
+   output="vtkImageData"
+   class="vtkPVAdvancedReaderModule" module_type="Reader"
+   extensions=".hdf5" file_description="Chombo AMR files">
+  <Source class="vtkChomboReader"/>
+  <VectorEntry variable="MinimumLevel" type="int"/>
+  <VectorEntry variable="MaximumLevel" type="int"/>
+  <LabeledToggle variable="UseRealBoxes" trace_name="UseRealBoxes"/>
+ </Module>
+
+</ModuleInterfaces>
+
+
+Here is a brief description:
+
+ <Library name="vtkChomboReaderTCL"/>
+
+This tells ParaView to load a dynamic library that I created.
+Essentially, this is built very similarly to any VTK library.
+There are instructions on how to build your own library in
+the VTK distribution. Make sure that you have TCL wrapping on.
+The Library attribute should point to the TCL wrapped library.
+If you added your reader to the VTK distribution, this step
+is not required.
+
+ <Module name="ChomboReader" root_name="ChomboReader"
+   output="vtkImageData"
+   class="vtkPVAdvancedReaderModule" module_type="Reader"
+   extensions=".hdf5" file_description="Chombo AMR files">
+
+This should be pretty straightforward. The class is usually
+either vtkPVReaderModule (for readers that do not require
+any user defined parameters, this module loads the file
+immediatly after the user click "Open" in the file dialog)
+or vtkPVAdvancedReaderModule (for more sophisticated readers
+that allow the user to, for example, select arrays to be
+loaded before opening the file the first time). Note that
+the PLOT3D reader uses a different class since it has a 
+special way of handling the initial parameters (it does
+not read the whole file until the user gets all the
+parameters right and after that all the parameters are
+disabled). 
+ 
+  <VectorEntry variable="MinimumLevel" type="int"/>
+  <VectorEntry variable="MaximumLevel" type="int"/>
+  <LabeledToggle variable="UseRealBoxes" trace_name="UseRealBoxes"/>
+
+A few widgets (parameters) that the user can use the modify
+the reader. Note that there has to be a pair of Set/Get
+methods for each property ( Set(Get)MinimumLevel, Set(Get)MaximumLevel
+etc.)
+
+For more examples, you can look at 
+Filters.xml  Manipulators.xml  Readers.xml  Sources.xml  Writers.xml
+in the ParaView (1.0 or newer) source distribution (in
+ParaView/ParaView/Resources).
+
+-Berk
+ 
+
+On Thu, 2003-09-11 at 08:58, Michael Gronager wrote:
+> Hi Joonsuk Lee,
+> 
+> I have a student that has actually written a Plot3D function file importer
+> for
+> VTK.
+> If you can use the code you are free to get it.
+> 
+> Actually we want to integrate it into ParaView as a loader. The docu says
+> something about
+> using an XML descriptionfile should actully be enough to add a new loader to
+> Paraview, however,
+> We haven't been able to find an actual pointer to how to do it or even an
+> example ...
+> 
+> Do you (or anyone else) know how to do it?
+> 
+> Regards,
+> 
+> Michael
+> 
+> --
+> Michael Gronager, PhD
+> Research and Developement, VR-C
+> UNI-C
+> DTU Building 304
+> DK2800 Lyngby
+> DENMARK
+> 
+> Phone:  +45 3587 8889
+> Fax:    +45 3587 8990
+> Direct: +45 3587 8966
+> Mobile: +45 2424 8207
+> 
+> Email:   mpg@uni-c.dk
+> 
+> ----- Original Message -----
+> From: "Joonsuk Lee" <jlee@ariel.met.tamu.edu>
+> To: <paraview@paraview.org>
+> Sent: Wednesday, September 10, 2003 9:08 PM
+> Subject: [Paraview] Loading data from ParaView
+> 
+> 
+> > Dear All:
+> >
+> > I am a really beginner in using ParaView.
+> > This could be a naive qeustion but
+> > please let me know how I can read the
+> > data produced by FORTRAN?
+> > The file I want to read is function file,
+> > not Q file.
+> > And also how should I set output format
+> > in FORTRAN to be read by ParaView.
+> >
+> > Thanks in advance.
+> >
+> > Joonsuk
+> > ----------------------------------
+> > Joonsuk Lee
+> > Department of Atmoshperic Sciences
+> > Texas A&M University
+> > 3150 TAMU
+> > College Station, TX 77843-3150
+> > Phone: (979) 845-1680
+> > E-mail: jlee@ariel.met.tamu.edu
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From berk.geveci@kitware.com  Thu Sep 11 14:53:49 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 11 Sep 2003 09:53:49 -0400
+Subject: [Paraview] Loading data from ParaView
+In-Reply-To: <003c01c37864$6496e820$d903e482@F2GO>
+References: <Pine.SOL.3.91.1030910145231.870A-100000@ariel>
+ <003c01c37864$6496e820$d903e482@F2GO>
+Message-ID: <1063288428.13785.36.camel@caemlyn.kitwarein.com>
+
+By the way, if anybody has code for reading unstructured PLOT3D
+files or functions that they want to contribute, I would be
+more than happy to clean it up and put it in VTK.
+
+-Berk
+
+
+On Thu, 2003-09-11 at 08:58, Michael Gronager wrote:
+> Hi Joonsuk Lee,
+> 
+> I have a student that has actually written a Plot3D function file importer
+> for
+> VTK.
+> If you can use the code you are free to get it.
+> 
+> Actually we want to integrate it into ParaView as a loader. The docu says
+> something about
+> using an XML descriptionfile should actully be enough to add a new loader to
+> Paraview, however,
+> We haven't been able to find an actual pointer to how to do it or even an
+> example ...
+> 
+> Do you (or anyone else) know how to do it?
+> 
+> Regards,
+> 
+> Michael
+> 
+> --
+> Michael Gronager, PhD
+> Research and Developement, VR-C
+> UNI-C
+> DTU Building 304
+> DK2800 Lyngby
+> DENMARK
+> 
+> Phone:  +45 3587 8889
+> Fax:    +45 3587 8990
+> Direct: +45 3587 8966
+> Mobile: +45 2424 8207
+> 
+> Email:   mpg@uni-c.dk
+> 
+> ----- Original Message -----
+> From: "Joonsuk Lee" <jlee@ariel.met.tamu.edu>
+> To: <paraview@paraview.org>
+> Sent: Wednesday, September 10, 2003 9:08 PM
+> Subject: [Paraview] Loading data from ParaView
+> 
+> 
+> > Dear All:
+> >
+> > I am a really beginner in using ParaView.
+> > This could be a naive qeustion but
+> > please let me know how I can read the
+> > data produced by FORTRAN?
+> > The file I want to read is function file,
+> > not Q file.
+> > And also how should I set output format
+> > in FORTRAN to be read by ParaView.
+> >
+> > Thanks in advance.
+> >
+> > Joonsuk
+> > ----------------------------------
+> > Joonsuk Lee
+> > Department of Atmoshperic Sciences
+> > Texas A&M University
+> > 3150 TAMU
+> > College Station, TX 77843-3150
+> > Phone: (979) 845-1680
+> > E-mail: jlee@ariel.met.tamu.edu
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From berklist@nycap.rr.com  Thu Sep 11 15:11:42 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 11 Sep 2003 10:11:42 -0400
+Subject: [Paraview] Loading PLOT3D data from ParaView
+In-Reply-To: <Pine.SOL.3.91.1030910223537.5887B-100000@ariel>
+References: <Pine.SOL.3.91.1030910223537.5887B-100000@ariel>
+Message-ID: <1063289502.13685.47.camel@caemlyn.kitwarein.com>
+
+Hi Joonsuk,
+
+ParaView can read unformatted PLOT3D files (fortan or C,
+single or multi-block). ParaView can not read:
+
+1. unstructured grid PLOT3D files
+2. function files
+
+Although adding support for reading function files is not hard,
+I haven't done it so far because no one asked for it.
+
+If you have access to the code that produces the PLOT3D files,
+you can change it so that it writes out files of type ParaView
+can read (VTK, EnSight etc. see ParaView documentation for the
+complete list). You could also write a converter from PLOT3D
+to one of those formats. I recommend using the VTK format
+(legacy or the new XML based ones). For a description of the
+VTK file formats, look at:
+
+http://www.vtk.org/pdf/file-formats.pdf
+
+-Berk
+
+On Wed, 2003-09-10 at 23:45, Joonsuk Lee wrote:
+> Dear All:
+> 
+> I read some documents about loading PLOT3D
+> file in ParaView. And I knew that unformatted
+> PLOT3D file cannot be ready by ParaView.
+> Then, how can I convert this unformatted
+> PLOT3D file into VTK file or how can I
+> make the formatted PLOT3D file from FORTRAN?
+> How do I set the output format in FORTRAN
+> to produce the formatted PLOT3D file?
+> I will appreciate it if you attach the actual
+> example which shows that method.
+> 
+> Thanks again.
+> 
+> Joonsuk
+> ----------------------------------
+> Joonsuk Lee
+> Department of Atmoshperic Sciences
+> Texas A&M University
+> 3150 TAMU
+> College Station, TX 77843-3150
+> Phone: (979) 845-1680
+> E-mail: jlee@ariel.met.tamu.edu
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From Michael Gronager" <mpg@uni-c.dk  Thu Sep 11 21:30:46 2003
+From: Michael Gronager" <mpg@uni-c.dk (Michael Gronager)
+Date: Thu, 11 Sep 2003 21:30:46 +0100
+Subject: [Paraview] Loading data from ParaView
+References: <Pine.SOL.3.91.1030910145231.870A-100000@ariel> <003c01c37864$6496e820$d903e482@F2GO> <1063288428.13785.36.camel@caemlyn.kitwarein.com>
+Message-ID: <002801c378a3$94d70df0$04361cac@F2GO>
+
+Hi Berk,
+
+Thanks for your reply! We would be happy to contribute our Polt3D
+functionreader to the
+ParaView project!
+
+Actually we have also written a CFX/5 (result/transient file) loader, but it
+depends on some CFX
+libraries to function - so that part at least cannot be open source...
+
+Anyway, I'll try to make a XML description for this reader so data can go
+directly into ParaView.
+
+Also (perhaps of interest to some) I wrote a simple vtk2osg (OpenSceneGraph)
+translator so you can use
+OpenSceneGraph as viewer it is on www.openscenegraph.org -> Download ->
+Bazar. It is much in the
+line of the Performer code from Paul Ralijh (?).
+
+Cheers,
+
+Michael
+
+----- Original Message -----
+From: "Berk Geveci" <berk.geveci@kitware.com>
+To: "Michael Gronager" <mpg@uni-c.dk>
+Cc: <paraview@paraview.org>
+Sent: Thursday, September 11, 2003 2:53 PM
+Subject: Re: [Paraview] Loading data from ParaView
+
+
+> By the way, if anybody has code for reading unstructured PLOT3D
+> files or functions that they want to contribute, I would be
+> more than happy to clean it up and put it in VTK.
+>
+> -Berk
+>
+>
+> On Thu, 2003-09-11 at 08:58, Michael Gronager wrote:
+> > Hi Joonsuk Lee,
+> >
+> > I have a student that has actually written a Plot3D function file
+importer
+> > for
+> > VTK.
+> > If you can use the code you are free to get it.
+> >
+> > Actually we want to integrate it into ParaView as a loader. The docu
+says
+> > something about
+> > using an XML descriptionfile should actully be enough to add a new
+loader to
+> > Paraview, however,
+> > We haven't been able to find an actual pointer to how to do it or even
+an
+> > example ...
+> >
+> > Do you (or anyone else) know how to do it?
+> >
+> > Regards,
+> >
+> > Michael
+> >
+> > --
+> > Michael Gronager, PhD
+> > Research and Developement, VR-C
+> > UNI-C
+> > DTU Building 304
+> > DK2800 Lyngby
+> > DENMARK
+> >
+> > Phone:  +45 3587 8889
+> > Fax:    +45 3587 8990
+> > Direct: +45 3587 8966
+> > Mobile: +45 2424 8207
+> >
+> > Email:   mpg@uni-c.dk
+> >
+> > ----- Original Message -----
+> > From: "Joonsuk Lee" <jlee@ariel.met.tamu.edu>
+> > To: <paraview@paraview.org>
+> > Sent: Wednesday, September 10, 2003 9:08 PM
+> > Subject: [Paraview] Loading data from ParaView
+> >
+> >
+> > > Dear All:
+> > >
+> > > I am a really beginner in using ParaView.
+> > > This could be a naive qeustion but
+> > > please let me know how I can read the
+> > > data produced by FORTRAN?
+> > > The file I want to read is function file,
+> > > not Q file.
+> > > And also how should I set output format
+> > > in FORTRAN to be read by ParaView.
+> > >
+> > > Thanks in advance.
+> > >
+> > > Joonsuk
+> > > ----------------------------------
+> > > Joonsuk Lee
+> > > Department of Atmoshperic Sciences
+> > > Texas A&M University
+> > > 3150 TAMU
+> > > College Station, TX 77843-3150
+> > > Phone: (979) 845-1680
+> > > E-mail: jlee@ariel.met.tamu.edu
+> > >
+> > >
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From Michael Gronager" <mpg@uni-c.dk  Thu Sep 11 21:41:43 2003
+From: Michael Gronager" <mpg@uni-c.dk (Michael Gronager)
+Date: Thu, 11 Sep 2003 21:41:43 +0100
+Subject: [Paraview] Stereo and zoom
+Message-ID: <003e01c378a5$37d4dd60$04361cac@F2GO>
+
+Hi ParaViewers!
+
+We are using ParaView for visualizing CFD as well as Oil related Streamline
+data and often use
+ParaViews --stereo option. However, when you use zoom or flyin/out to move
+very close to a small
+object you endup with a quite stressing eyeseparation (which is actully
+right - try looking at closely at
+a grain of sand - you end up having it quite close to your eyes...). Anyway,
+quite often we want to
+make a nice flyin real close to a object and for that to look nice in stereo
+we would either need to change
+our eyesepartion as we moved closer - or - simply scale the object.
+
+And now the question: Wouln't it be nice (leading question;-) to have a
+motionmodel option called scale ?
+
+- Or am I missing something that is already there?
+
+Cheers,
+
+Michael
+
+--
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Building 304
+DK2800 Lyngby
+DENMARK
+
+Phone:  +45 3587 8889
+Fax:    +45 3587 8990
+Direct: +45 3587 8966
+Mobile: +45 2424 8207
+
+Email:   mpg@uni-c.dk
+
+
+From Jouke.Hylkema@onecert.fr  Fri Sep 12 09:32:07 2003
+From: Jouke.Hylkema@onecert.fr (jouke hylkema)
+Date: Fri, 12 Sep 2003 10:32:07 +0200
+Subject: [Paraview] iso lines or surfaces
+Message-ID: <20030912103207.754ef27d.hylkema@cert.fr>
+
+Hello,
+
+I've been testing paraview for some time now and I think it has great
+potential. However, what I'm really missing is the possibility to define
+more then one contour value in the contour filter. I think it would be
+very useful to define the number of iso values in a/the scalar range and
+have paraview distributing them in a uniform (or other) manner. Defining
+iso values by hand is OK if you want 2 or 3 but get really annoying if you
+want 50. Another wish is to have labeled contours showing the contour
+value. With a little assistance I'm willing to lend a hand to implement
+these features :-)
+
+Jouke
+
+From jfavre@cscs.ch  Fri Sep 12 10:21:33 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Fri, 12 Sep 2003 11:21:33 +0200
+Subject: [Paraview] iso lines or surfaces
+References: <20030912103207.754ef27d.hylkema@cert.fr>
+Message-ID: <3F61901D.838DDF30@cscs.ch>
+
+jouke hylkema wrote:
+> 
+> Hello,
+> 
+> I've been testing paraview for some time now and I think it has great
+> potential. However, what I'm really missing is the possibility to define
+> more then one contour value in the contour filter. I think it would be
+> very useful to define the number of iso values in a/the scalar range and
+> have paraview distributing them in a uniform (or other) manner. Defining
+> iso values by hand is OK if you want 2 or 3 but get really annoying if you
+> want 50. 
+
+I can offer partial help, but the solution is not 100% satisfying.
+
+1) Create a contour filter. You must execute it at least once via the
+"Accept" button.
+if it is your first filter, it's called "Contour0" (and so on)
+2) Open the command prompt.
+
+Then you may type:
+
+Contour0 GenerateValues 50 -1 +1  (will generate 50 values between -1
+and +1)
+Contour0 Modified            (will cause an update of the GUI with all
+values set)
+
+And that is where I am missing something to be completely satisfied:
+
+The only way I know to force an update, is to delete one value (using
+the "Delete" button), and then "Accept" will trigger the update. I do
+not know how to force the update without this trick.
+
+Let's see what the more experienced people can suggest...
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From Jouke.Hylkema@onecert.fr  Fri Sep 12 10:28:14 2003
+From: Jouke.Hylkema@onecert.fr (jouke hylkema)
+Date: Fri, 12 Sep 2003 11:28:14 +0200
+Subject: [Paraview] iso lines or surfaces
+In-Reply-To: <3F61901D.838DDF30@cscs.ch>
+References: <20030912103207.754ef27d.hylkema@cert.fr>
+ <3F61901D.838DDF30@cscs.ch>
+Message-ID: <20030912112814.7aa13e11.hylkema@cert.fr>
+
+WOW thanks a lot, that is realy much better ! Is there a place where I can
+find this type of commands ?
+
+Jouke
+
+On Fri, 12 Sep 2003 11:21:33 +0200
+"Jean M. Favre" <jfavre@cscs.ch> wrote:
+
+> jouke hylkema wrote:
+> > 
+> > Hello,
+> > 
+> > I've been testing paraview for some time now and I think it has great
+> > potential. However, what I'm really missing is the possibility to
+> > define more then one contour value in the contour filter. I think it
+> > would be very useful to define the number of iso values in a/the
+> > scalar range and have paraview distributing them in a uniform (or
+> > other) manner. Defining iso values by hand is OK if you want 2 or 3
+> > but get really annoying if you want 50. 
+> 
+> I can offer partial help, but the solution is not 100% satisfying.
+> 
+> 1) Create a contour filter. You must execute it at least once via the
+> "Accept" button.
+> if it is your first filter, it's called "Contour0" (and so on)
+> 2) Open the command prompt.
+> 
+> Then you may type:
+> 
+> Contour0 GenerateValues 50 -1 +1  (will generate 50 values between -1
+> and +1)
+> Contour0 Modified            (will cause an update of the GUI with all
+> values set)
+> 
+> And that is where I am missing something to be completely satisfied:
+> 
+> The only way I know to force an update, is to delete one value (using
+> the "Delete" button), and then "Accept" will trigger the update. I do
+> not know how to force the update without this trick.
+> 
+> Let's see what the more experienced people can suggest...
+> 
+> -- 
+> Dr. Jean M. Favre,                            email:favre@cscs.ch
+> http://www.cscs.ch/people/Favre.html
+> CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+> Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From jfavre@cscs.ch  Fri Sep 12 12:26:55 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Fri, 12 Sep 2003 13:26:55 +0200
+Subject: [Paraview] iso lines or surfaces
+References: <20030912103207.754ef27d.hylkema@cert.fr>
+ <3F61901D.838DDF30@cscs.ch> <20030912112814.7aa13e11.hylkema@cert.fr>
+Message-ID: <3F61AD7F.40E9623E@cscs.ch>
+
+jouke hylkema wrote:
+> 
+> WOW thanks a lot, that is realy much better ! Is there a place where I can
+> find this type of commands ?
+
+The filter is of class type: vtkPVkitwareContourFilter (look at its GUI
+panel)
+You can then go the doxygen pages:
+
+http://www.paraview.org//doc (choose the class hierarchy view) and you
+will find:
+
+vtkContourFilter [external]
+   vtkKitwareContourFilter [external]
+      vtkPVKitwareContourFilter
+
+the contour filter inherits everything from above.
+
+You will find a description of the GenerateValues method in the
+following page:
+
+http://www.vtk.org/doc/release/4.2/html/classvtkContourFilter.html
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From berk.geveci@kitware.com  Fri Sep 12 14:46:06 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 12 Sep 2003 09:46:06 -0400
+Subject: [Paraview] iso lines or surfaces
+In-Reply-To: <20030912103207.754ef27d.hylkema@cert.fr>
+References: <20030912103207.754ef27d.hylkema@cert.fr>
+Message-ID: <1063374366.25437.3.camel@caemlyn.kitwarein.com>
+
+I wanted to improve the contour widget for a long time. I agree
+that it is a real pain to create more than a few contours. I will
+put it in the ParaView "feature request" list. Hopefully, we'll
+get to it in the near future.
+
+-Berk
+
+On Fri, 2003-09-12 at 04:32, jouke hylkema wrote:
+> Hello,
+> 
+> I've been testing paraview for some time now and I think it has great
+> potential. However, what I'm really missing is the possibility to define
+> more then one contour value in the contour filter. I think it would be
+> very useful to define the number of iso values in a/the scalar range and
+> have paraview distributing them in a uniform (or other) manner. Defining
+> iso values by hand is OK if you want 2 or 3 but get really annoying if you
+> want 50. Another wish is to have labeled contours showing the contour
+> value. With a little assistance I'm willing to lend a hand to implement
+> these features :-)
+> 
+> Jouke
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From Michael Gronager" <mpg@uni-c.dk  Mon Sep 15 11:02:22 2003
+From: Michael Gronager" <mpg@uni-c.dk (Michael Gronager)
+Date: Mon, 15 Sep 2003 11:02:22 +0100
+Subject: [Paraview] Loading data from ParaView
+References: <Pine.SOL.3.91.1030910145231.870A-100000@ariel> <003c01c37864$6496e820$d903e482@F2GO> <1063288428.13785.36.camel@caemlyn.kitwarein.com>
+Message-ID: <00ae01c37b70$75375520$d903e482@F2GO>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_00AB_01C37B78.D6E32C10
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+
+Hi Berk,
+
+Attached please find a zip file containing the Plot3D function reader.
+
+The README states:
+This is compiled under vtkMy/IO/
+It is based on a copy of the vtkPLOT3DReader, maby I should have done it
+throug inheritance. But on the other hand the data selection mechanism(the
+compute function) don't work properly becaus of missing data ie. VTK_RHOINF,
+VTK_CINF ... .
+I have encountered different types of blockmarkers. The reader is hardcoded
+to read the specific plot3d files eksported from CFX.
+I will gladly answer any quiestions about the reader to have it cleand up
+and genralized.
+ps. I'm sorry but I can not give you any of my test PLOT3D files.
+pps. If you find any bugs please let me know.
+
+Best Regards
+Ulfar Mani Fridjonsson
+(ulfar.mani.fridjonsson@uni-c.dk)
+
+
+Best regards,
+
+Michael
+
+
+----- Original Message -----
+From: "Berk Geveci" <berk.geveci@kitware.com>
+To: "Michael Gronager" <mpg@uni-c.dk>
+Cc: <paraview@paraview.org>
+Sent: Thursday, September 11, 2003 2:53 PM
+Subject: Re: [Paraview] Loading data from ParaView
+
+
+> By the way, if anybody has code for reading unstructured PLOT3D
+> files or functions that they want to contribute, I would be
+> more than happy to clean it up and put it in VTK.
+>
+> -Berk
+>
+>
+> On Thu, 2003-09-11 at 08:58, Michael Gronager wrote:
+> > Hi Joonsuk Lee,
+> >
+> > I have a student that has actually written a Plot3D function file
+importer
+> > for
+> > VTK.
+> > If you can use the code you are free to get it.
+> >
+> > Actually we want to integrate it into ParaView as a loader. The docu
+says
+> > something about
+> > using an XML descriptionfile should actully be enough to add a new
+loader to
+> > Paraview, however,
+> > We haven't been able to find an actual pointer to how to do it or even
+an
+> > example ...
+> >
+> > Do you (or anyone else) know how to do it?
+> >
+> > Regards,
+> >
+> > Michael
+> >
+> > --
+> > Michael Gronager, PhD
+> > Research and Developement, VR-C
+> > UNI-C
+> > DTU Building 304
+> > DK2800 Lyngby
+> > DENMARK
+> >
+> > Phone:  +45 3587 8889
+> > Fax:    +45 3587 8990
+> > Direct: +45 3587 8966
+> > Mobile: +45 2424 8207
+> >
+> > Email:   mpg@uni-c.dk
+> >
+> > ----- Original Message -----
+> > From: "Joonsuk Lee" <jlee@ariel.met.tamu.edu>
+> > To: <paraview@paraview.org>
+> > Sent: Wednesday, September 10, 2003 9:08 PM
+> > Subject: [Paraview] Loading data from ParaView
+> >
+> >
+> > > Dear All:
+> > >
+> > > I am a really beginner in using ParaView.
+> > > This could be a naive qeustion but
+> > > please let me know how I can read the
+> > > data produced by FORTRAN?
+> > > The file I want to read is function file,
+> > > not Q file.
+> > > And also how should I set output format
+> > > in FORTRAN to be read by ParaView.
+> > >
+> > > Thanks in advance.
+> > >
+> > > Joonsuk
+> > > ----------------------------------
+> > > Joonsuk Lee
+> > > Department of Atmoshperic Sciences
+> > > Texas A&M University
+> > > 3150 TAMU
+> > > College Station, TX 77843-3150
+> > > Phone: (979) 845-1680
+> > > E-mail: jlee@ariel.met.tamu.edu
+> > >
+> > >
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+------=_NextPart_000_00AB_01C37B78.D6E32C10
+Content-Type: application/x-zip-compressed;
+	name="Plot3D.zip"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="Plot3D.zip"
+
+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
+BAAEAAQBAADYOAAAAAA=
+
+------=_NextPart_000_00AB_01C37B78.D6E32C10--
+
+
+From liaoli@iapcm.ac.cn  Mon Sep 15 10:18:07 2003
+From: liaoli@iapcm.ac.cn (liaoli@iapcm.ac.cn)
+Date: Mon, 15 Sep 2003 17:18:07 +0800
+Subject: [Paraview] Is paraview able to read hdf5 file?
+Message-ID: <14856f0ac.f0ac14856@iapcm.ac.cn>
+
+Hi=2C
+I happened to see there is a hdf5 reader in paraview=2EBut when I tried a=
+ h5 file=2Cit failed=2E
+Is paraview really able to read hdf5 file=3F
+Or=2Cit require special format of h5=2Cthat is possible=2EThen=2Cwhat is =
+this format like=3FCan I get a real Sample file=3F
+
+Best Regards
+liaoli
+
+
+From liaoli@iapcm.ac.cn  Mon Sep 15 10:25:17 2003
+From: liaoli@iapcm.ac.cn (liaoli@iapcm.ac.cn)
+Date: Mon, 15 Sep 2003 17:25:17 +0800
+Subject: [Paraview] How to check for the bug which has been fixed in the program?
+Message-ID: <d53bf5ff.f5ffd53b@iapcm.ac.cn>
+
+Hi=2C
+I got to know that the bug that a pvtk file cann=27t be read into paravie=
+w 1=2E0 had been fixed=2E
+But how can I check for the modified program=2Cor modified version=3F
+Thanks in advance=2E
+liaoli
+
+
+
+From jfavre@cscs.ch  Mon Sep 22 12:18:05 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 22 Sep 2003 13:18:05 +0200
+Subject: [Paraview] PVTK XML StructuredGridReader missing a method?
+Message-ID: <3F6EDA6D.8090000@cscs.ch>
+
+Dear all,
+
+This is my first test with a real case of a Parallel XML Structured Grid 
+solution. Each *.vts file can be read individually without trouble.
+
+ParaView run in client-server mode with 16 nodes fails to read my 
+parallel dataset element *.pvts with the following error.
+
+
+Process id: 0 >> ERROR: In 
+/local/apps/ParaView/Widgets/vtkKWApplication.cxx, line 423
+vtkPVApplication (0x80ddf48):
+     Script:
+set XMLPStructuredGridReader0Output1 [XMLPStructuredGridReader0 GetOutput 0]
+     Returned Error on line 1:
+Object named: XMLPStructuredGridReader0, could not find requested 
+method: GetOutput
+or the method was called with incorrect arguments.
+
+After checking things out, it seems that the culprit is the class 
+vtkXMLPStructuredGridReader, which unlike all the other vtkXMLP* 
+classes, is missing the non-default GetOutput(int idx) method. I use vtk 
+and paraview nightly and
+
+vtkStructuredGrid * 	GetOutput (int idx)
+
+seems to be missing.
+
+I added it to my own source
+
+vtkStructuredGrid* vtkXMLPStructuredGridReader::GetOutput(int idx)
+{
+   return static_cast<vtkStructuredGrid*>(this->Superclass::GetOutput(idx));
+}
+
+recompiled, and voila, it works.
+
+Can the developpers verify I am not saying anything stupid and make the 
+correction?
+
+Thanks
+Jean
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From charles.law@kitware.com  Mon Sep 22 17:05:20 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Mon, 22 Sep 2003 12:05:20 -0400
+Subject: [Paraview] PVTK XML StructuredGridReader missing a method?
+In-Reply-To: <3F6EDA6D.8090000@cscs.ch>
+Message-ID: <5.1.0.14.0.20030922120157.05135de8@pop.biz.rr.com>
+
+Jean,
+
+You are correct.  This GetOutput(int idx) method is defined in the source 
+super classes like vtkUnstructuredGridSource.  If a reader or filter 
+inherits directly from vtkSource, then it needs to define this method or 
+ParaView will complain.
+
+I will check in your fix into to the development branch and add it to the 
+1.0 release.
+
+Charles.
+
+
+
+At 01:18 PM 9/22/2003 +0200, Jean M. Favre wrote:
+>Dear all,
+>
+>This is my first test with a real case of a Parallel XML Structured Grid 
+>solution. Each *.vts file can be read individually without trouble.
+>
+>ParaView run in client-server mode with 16 nodes fails to read my parallel 
+>dataset element *.pvts with the following error.
+>
+>
+>Process id: 0 >> ERROR: In 
+>/local/apps/ParaView/Widgets/vtkKWApplication.cxx, line 423
+>vtkPVApplication (0x80ddf48):
+>     Script:
+>set XMLPStructuredGridReader0Output1 [XMLPStructuredGridReader0 GetOutput 0]
+>     Returned Error on line 1:
+>Object named: XMLPStructuredGridReader0, could not find requested method: 
+>GetOutput
+>or the method was called with incorrect arguments.
+>
+>After checking things out, it seems that the culprit is the class 
+>vtkXMLPStructuredGridReader, which unlike all the other vtkXMLP* classes, 
+>is missing the non-default GetOutput(int idx) method. I use vtk and 
+>paraview nightly and
+>
+>vtkStructuredGrid *     GetOutput (int idx)
+>
+>seems to be missing.
+>
+>I added it to my own source
+>
+>vtkStructuredGrid* vtkXMLPStructuredGridReader::GetOutput(int idx)
+>{
+>   return static_cast<vtkStructuredGrid*>(this->Superclass::GetOutput(idx));
+>}
+>
+>recompiled, and voila, it works.
+>
+>Can the developpers verify I am not saying anything stupid and make the 
+>correction?
+>
+>Thanks
+>Jean
+>
+>--
+>Dr. Jean M. Favre,                            email:favre@cscs.ch
+>http://www.cscs.ch/people/Favre.html
+>CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+>Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From hstreit@cnwra.swri.edu  Mon Sep 22 17:15:17 2003
+From: hstreit@cnwra.swri.edu (H. F. Streit)
+Date: Mon, 22 Sep 2003 11:15:17 -0500
+Subject: [Paraview] Licensing Question
+Message-ID: <3F6F2015.2050303@cnwra.swri.edu>
+
+Greetings,
+    I'm a comp. admin. here in Texas.  One of my users would *love* to 
+have ParaView installed on his WinXP box.  But I've come across a kind 
+of problem.  The president of our division has recently freaked-out 
+about copyright infringment and Intellecutal Property violations and 
+such.  As a result, he's decided to pry into my life as an Admin and 
+demand to see a license for every piece of software (once I explained 
+what a license is and what it means).  Since ParaView has open-source, 
+I'm sure I could tell him that it was Open-Source (and then explain what 
+that ment and avoid further issues).  But I feel that ParaView, while 
+having open sourcecode, that it isn't Open-Source.   I've dug thru the 
+website, the documentation from the binary packages, and the docs with 
+the sourcecode.  I still cannot find a "License" file, or an EULA, or 
+anything outlining the usage permitted in clear terms.  The closest I 
+can find is a copyright notice.
+
+Any ideas?
+
+
+From berk.geveci@kitware.com  Mon Sep 22 18:28:03 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 22 Sep 2003 13:28:03 -0400
+Subject: [Paraview] Licensing Question
+In-Reply-To: <3F6F2015.2050303@cnwra.swri.edu>
+References: <3F6F2015.2050303@cnwra.swri.edu>
+Message-ID: <1064251683.2089.52.camel@caemlyn.kitwarein.com>
+
+ParaView is open source in source or binary form (however shocking
+this may be :-) You can find the license on top of any header (*.h
+file). I will add a license.txt file when we release the next
+binary. The license and copyright text is as follows:
+
+Copyright (c) 2000-2001 Kitware Inc. 469 Clifton Corporate Parkway,
+Clifton Park, NY, 12065, USA.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+ * Neither the name of Kitware nor the names of any contributors may be
+   used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+ * Modified source versions must be plainly marked as such, and must not
+   be misrepresented as being the original software.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS
+IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHORS OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+On Mon, 2003-09-22 at 12:15, H. F. Streit wrote:
+> Greetings,
+>     I'm a comp. admin. here in Texas.  One of my users would *love* to 
+> have ParaView installed on his WinXP box.  But I've come across a kind 
+> of problem.  The president of our division has recently freaked-out 
+> about copyright infringment and Intellecutal Property violations and 
+> such.  As a result, he's decided to pry into my life as an Admin and 
+> demand to see a license for every piece of software (once I explained 
+> what a license is and what it means).  Since ParaView has open-source, 
+> I'm sure I could tell him that it was Open-Source (and then explain what 
+> that ment and avoid further issues).  But I feel that ParaView, while 
+> having open sourcecode, that it isn't Open-Source.   I've dug thru the 
+> website, the documentation from the binary packages, and the docs with 
+> the sourcecode.  I still cannot find a "License" file, or an EULA, or 
+> anything outlining the usage permitted in clear terms.  The closest I 
+> can find is a copyright notice.
+> 
+> Any ideas?
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From apneto@mat.puc-rio.br  Mon Sep 22 18:37:18 2003
+From: apneto@mat.puc-rio.br (Afonso Paiva Neto)
+Date: 22 Sep 2003 14:37:18 -0300
+Subject: [Paraview] STRUCTURED_POINTS in parallel
+Message-ID: <1064252238.5598.5.camel@persefone>
+
+Dear all,
+
+when i run .vtk files with STRUCTURED_POINTS data type in a single node
+of my cluster paraview works well, but when i use one more node i have
+the follow error message:
+
+$ Process id: 1 >> ERROR: In
+/home/apneto/paraview/paraview-1.0.0/VTK/Parallel/vtkPDataSetReader.cxx,
+line 216
+vtkPDataSetReader (0x81c28e8): Unknown data type.
+                                                                                
+Process id: 1 >> ERROR: In
+/home/apneto/paraview/paraview-1.0.0/ParaView/Widgets/vtkKWApplication.cxx, line 407
+vtkPVApplication (0x819b338):
+    Script:
+${LegaVTK0Output1} SetExtentTranslator LegaVTK0Translator0
+    Returned Error on line 1:
+invalid command name ""
+                                                                                                                                                 
+Process id: 1 >> ERROR: In
+/home/apneto/paraview/paraview-1.0.0/VTK/Filtering/vtkDataSetToDataSetFilter.cxx, line 69
+vtkStructuredCacheFilter (0x81c23b0): Abstract filters require input to
+be set before output can be retrieved
+                                                                                
+Process id: 1 >> ERROR: In
+/home/apneto/paraview/paraview-1.0.0/ParaView/ParaView/vtkPVMPIProcessModule.cxx, line 318
+vtkPVMPIProcessModule (0x819a4e8): Object tcl name must be wrong.
+
+
+any help is welcome.
+
+-- 
+Afonso Paiva Neto
+e-mail: apneto@mat.puc-rio.br
+MatMidia Lab. - PUC-RIO
+Rio de Janeiro - Brazil
+
+
+From gva03@elai.upm.es  Mon Sep 22 18:54:48 2003
+From: gva03@elai.upm.es (Marta)
+Date: Mon, 22 Sep 2003 19:54:48 +0200
+Subject: [Paraview] Cluster with ParaView
+Message-ID: <002501c38132$a02d5820$8a64648a@galileo>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0022_01C38143.60A0F8E0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+        I'm trying to make a worstation cluster. I know that ParaView =
+uses the data parallel mode in which the data is broken into  pieces to =
+be processed by different processes...  but I have no idea about how to =
+do this.
+
+Can some body please suggest me a way to do the cluster?
+
+Thanks
+------=_NextPart_000_0022_01C38143.60A0F8E0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1106" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>Hi,</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; =
+I'm trying to=20
+make a worstation <STRONG>cluster</STRONG>. I know that ParaView uses =
+the data=20
+parallel mode in which the data is broken into&nbsp; pieces to be =
+processed by=20
+different processes...&nbsp; </FONT><FONT face=3DArial size=3D2><EM>but =
+I have no=20
+idea about how to do this.</EM></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV>Can some body please suggest me a way to do the cluster?</DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Thanks</FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_0022_01C38143.60A0F8E0--
+
+
+From berk.geveci@kitware.com  Mon Sep 22 19:12:50 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 22 Sep 2003 14:12:50 -0400
+Subject: [Paraview] Cluster with ParaView
+In-Reply-To: <002501c38132$a02d5820$8a64648a@galileo>
+References: <002501c38132$a02d5820$8a64648a@galileo>
+Message-ID: <1064254369.2438.97.camel@caemlyn.kitwarein.com>
+
+Here is a simple recipe:
+
+1. Buy a cluster (I'd go for Unix or Linux instead of Windows but
+that's my personal preference)
+2. Install MPI (I use mpich)
+3. Compile ParaView with MPI
+4. Test ParaView with MPI. There might be some initial issues such
+   as setting displays. Search through the mailing archives for hints.
+   If you are stuck, ask the mailing list
+5. Learn about the parallel data formats ParaView supports. I recommend
+   using the new XML based formats.
+
+-Berk
+
+On Mon, 2003-09-22 at 13:54, Marta wrote:
+> Hi,
+>  
+>         I'm trying to make a worstation cluster. I know that ParaView
+> uses the data parallel mode in which the data is broken into  pieces
+> to be processed by different processes...  but I have no idea about
+> how to do this.
+>  
+> Can some body please suggest me a way to do the cluster?
+>  
+> Thanks
+
+
+
+From gva03@elai.upm.es  Wed Sep 24 17:17:38 2003
+From: gva03@elai.upm.es (Marta)
+Date: Wed, 24 Sep 2003 18:17:38 +0200
+Subject: [Paraview] Cluster with ParaView in Windows
+Message-ID: <000701c382b7$627fe200$8a64648a@galileo>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0004_01C382C8.22AC1980
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+I have to do the cluster with ParaView in Windows. Berk, thanks a lot =
+for your help, but I need a little more.=20
+
+Any other help is welcome.
+
+Marta
+
+------=_NextPart_000_0004_01C382C8.22AC1980
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1106" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>I have to do the cluster with ParaView =
+in Windows.=20
+Berk, thanks a lot for your help, but I need a little more. =
+</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><FONT face=3D"Times New Roman" =
+size=3D3>Any=20
+other&nbsp;help is welcome.</FONT></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Marta</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV></BODY></HTML>
+
+------=_NextPart_000_0004_01C382C8.22AC1980--
+
+
+From andy.cedilnik@kitware.com  Thu Sep 25 23:36:13 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 25 Sep 2003 18:36:13 -0400
+Subject: [Paraview] Filters are in the separate kit
+Message-ID: <1064529373.3190.232.camel@andoria>
+
+Hi All,
+
+Just wanted to let everybody know that I moved most of the filters to
+the separate kit called Filters. It right now only creates library
+vtkFiltersTCL and links it into ParaView, but eventually I will put some
+tests in.
+
+Let me know if there are any issues.
+
+			Andy Cedilnik
+			Kitware Inc.
+
+
+From jfavre@cscs.ch  Mon Sep 29 10:24:25 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 29 Sep 2003 11:24:25 +0200
+Subject: [Paraview] Filters are in the separate kit
+In-Reply-To: <1064529373.3190.232.camel@andoria>
+References: <1064529373.3190.232.camel@andoria>
+Message-ID: <3F77FA49.3090009@cscs.ch>
+
+Andy Cedilnik wrote:
+> Hi All,
+> 
+> Just wanted to let everybody know that I moved most of the filters to
+> the separate kit called Filters. It right now only creates library
+> vtkFiltersTCL and links it into ParaView, but eventually I will put some
+> tests in.
+> 
+> Let me know if there are any issues.
+
+Andy,
+
+One problem is that the lib does not get "installed"
+
+I modified Filters/CMakeLists.txt and added to the end the following:
+
+IF(BUILD_SHARED_LIBS)
+   # Let parent project set KW_INSTALL_LIB_DIR to control library install
+   # location.
+   IF(NOT KW_INSTALL_LIB_DIR)
+     SET(KW_INSTALL_LIB_DIR /lib)
+   ENDIF(NOT KW_INSTALL_LIB_DIR)
+   INSTALL_TARGETS(${KW_INSTALL_LIB_DIR} vtkPVFiltersTCL)
+ENDIF(BUILD_SHARED_LIBS)
+
+"make install" now correctly works.
+
+Jean
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From andy.cedilnik@kitware.com  Mon Sep 29 12:31:52 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 29 Sep 2003 07:31:52 -0400
+Subject: [Paraview] Filters are in the separate kit
+In-Reply-To: <3F77FA49.3090009@cscs.ch>
+References: <1064529373.3190.232.camel@andoria>  <3F77FA49.3090009@cscs.ch>
+Message-ID: <1064835111.3183.281.camel@andoria>
+
+Hi Jean,
+
+Thank you. Looks like we need make install test.
+
+			Andy
+
+On Mon, 2003-09-29 at 05:24, Jean M. Favre wrote:
+> One problem is that the lib does not get "installed"
+> 
+> I modified Filters/CMakeLists.txt and added to the end the following:
+> 
+> IF(BUILD_SHARED_LIBS)
+>    # Let parent project set KW_INSTALL_LIB_DIR to control library install
+>    # location.
+>    IF(NOT KW_INSTALL_LIB_DIR)
+>      SET(KW_INSTALL_LIB_DIR /lib)
+>    ENDIF(NOT KW_INSTALL_LIB_DIR)
+>    INSTALL_TARGETS(${KW_INSTALL_LIB_DIR} vtkPVFiltersTCL)
+> ENDIF(BUILD_SHARED_LIBS)
+> 
+> "make install" now correctly works.
+
+
+
+From andy.cedilnik@kitware.com  Mon Sep 29 20:08:54 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 29 Sep 2003 15:08:54 -0400
+Subject: [Paraview] Filters are in the separate kit
+In-Reply-To: <1064835111.3183.281.camel@andoria>
+References: <1064529373.3190.232.camel@andoria>  <3F77FA49.3090009@cscs.ch>
+ <1064835111.3183.281.camel@andoria>
+Message-ID: <1064862534.3192.302.camel@andoria>
+
+Hi Jean,
+
+We now have a "make install" test, which will verify that you can
+install ParaView.
+
+			Andy
+
+On Mon, 2003-09-29 at 07:31, Andy Cedilnik wrote:
+> Thank you. Looks like we need make install test.
+
+> On Mon, 2003-09-29 at 05:24, Jean M. Favre wrote:
+> > One problem is that the lib does not get "installed"
+
+
+
+From semeraro@ncsa.uiuc.edu  Mon Sep 29 22:39:06 2003
+From: semeraro@ncsa.uiuc.edu (Dave Semeraro)
+Date: Mon, 29 Sep 2003 16:39:06 -0500
+Subject: [Paraview] client/server with mpich-gm
+Message-ID: <5.1.0.14.2.20030929163550.02372eb0@mail.ncsa.uiuc.edu>
+
+Hi paraviewers,
+
+I have a question about how to use paraview in client server mode with 
+mpich-gm. I have no
+problem with doing this under regular mpich. The situation with mpichgm is 
+this. I start a bunch
+of server nodes via the mpirun command with the -server argument to 
+paraview. I then try to
+start the client without using mpirun ( ie just paraview -client ... etc) 
+and I get an error asking
+me for some GM magic number. I know this description of my problem is not 
+the best but
+I was just wondering if anyone had run in this mode before.
+
+Regards,
+Dave
+
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+
+From dcthomp@sandia.gov  Mon Sep 29 23:23:41 2003
+From: dcthomp@sandia.gov (David Thompson)
+Date: Mon, 29 Sep 2003 15:23:41 -0700
+Subject: [Paraview] client/server with mpich-gm
+In-Reply-To: <5.1.0.14.2.20030929163550.02372eb0@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.2.20030929163550.02372eb0@mail.ncsa.uiuc.edu>
+Message-ID: <1064874221.1087.3.camel@fozzy.ran.sandia.gov>
+
+> I have a question about how to use paraview in client server mode with 
+> mpich-gm. ... I then try to start the client without using mpirun ( ie
+> just paraview -client ... etc) and I get an error asking me for some
+> GM magic number.
+There are a couple of solutions...
+1. Use a different binary (compiled with plain mpich) for the client.
+   This works because the client/server communication is done over 
+   sockets, not MPI.
+2. Set up environment variables with dummy values to satisfy the
+   mpich gm device initialization; MPI isn't used, so you just
+   have to survive MPI_Init().
+
+		David
+
+
+From Stephen.Wornom@sophia.inria.fr  Tue Sep 30 10:31:42 2003
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 30 Sep 2003 11:31:42 +0200
+Subject: [Paraview] viewing cut planes
+Message-ID: <3F794D7E.F7E1B7E4@sophia.inria.fr>
+
+I would like to orient a cut plane looking face on (the normal of the
+plane is pointing out of the screen at me). I can use the rotation to
+get it but what are the display parameter settings that will give me the
+view directly?
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From berk.geveci@kitware.com  Tue Sep 30 14:11:30 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 30 Sep 2003 09:11:30 -0400
+Subject: [Paraview] viewing cut planes
+In-Reply-To: <3F794D7E.F7E1B7E4@sophia.inria.fr>
+References: <3F794D7E.F7E1B7E4@sophia.inria.fr>
+Message-ID: <1064927490.26109.3.camel@caemlyn.kitwarein.com>
+
+I am confused. Doesn't "Use Camera Normal" do what you want?
+
+-Berk
+
+On Tue, 2003-09-30 at 05:31, Stephen Wornom wrote:
+> I would like to orient a cut plane looking face on (the normal of the
+> plane is pointing out of the screen at me). I can use the rotation to
+> get it but what are the display parameter settings that will give me the
+> view directly?
+> Stephen
+
+
+
+From Stephen.Wornom@sophia.inria.fr  Tue Sep 30 14:18:50 2003
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 30 Sep 2003 15:18:50 +0200
+Subject: [Paraview] viewing cut planes
+References: <3F794D7E.F7E1B7E4@sophia.inria.fr> <1064927490.26109.3.camel@caemlyn.kitwarein.com>
+Message-ID: <3F7982BA.6E52038E@sophia.inria.fr>
+
+Berk,
+One would think so but it does not work for me. Do a single cut and see
+if it works for you, let me know. I downloaded the binary version. If it
+works for you perhaps I need to start with the source.
+Stephen
+
+Berk Geveci wrote:
+> 
+> I am confused. Doesn't "Use Camera Normal" do what you want?
+> 
+> -Berk
+> 
+> On Tue, 2003-09-30 at 05:31, Stephen Wornom wrote:
+> > I would like to orient a cut plane looking face on (the normal of the
+> > plane is pointing out of the screen at me). I can use the rotation to
+> > get it but what are the display parameter settings that will give me the
+> > view directly?
+> > Stephen
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+

@@ -1,0 +1,2067 @@
+From leonardopessanha74 at gmail.com  Tue Sep  4 18:31:22 2018
+From: leonardopessanha74 at gmail.com (=?UTF-8?Q?L=C3=A9o_Pessanha?=)
+Date: Tue, 4 Sep 2018 19:31:22 -0300
+Subject: [Paraview] Changes in Sources/Filters applied in all RenderView's
+Message-ID: <CAE=GJrbYYFNkd6baiqNiD7Dj+8H2gaH33dY3qFBUjkv2esbpSQ@mail.gmail.com>
+
+Hi!
+
+Is there a way to apply in all the RenderView's  the modifications made in
+the data sources/filters of the pipeline browser?
+
+I've tried linking them but with no sucess.
+
+Best regards,
+Leonardo Pessanha
+Laboratory of Computational Methods in Engineering
+Federal University of Rio de Janeiro - COPPE
+Rio de Janeiro, RJ, Brasil
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180904/cc2433f0/attachment.html>
+
+From mathieu.westphal at kitware.com  Wed Sep  5 05:39:46 2018
+From: mathieu.westphal at kitware.com (Mathieu Westphal)
+Date: Wed, 5 Sep 2018 11:39:46 +0200
+Subject: [Paraview] Changes in Sources/Filters applied in all
+ RenderView's
+In-Reply-To: <CAE=GJrbYYFNkd6baiqNiD7Dj+8H2gaH33dY3qFBUjkv2esbpSQ@mail.gmail.com>
+References: <CAE=GJrbYYFNkd6baiqNiD7Dj+8H2gaH33dY3qFBUjkv2esbpSQ@mail.gmail.com>
+Message-ID: <CAC2t4UQW7bOuF-DiJ51TkzfAg6c=801qiRsee9sQkV6bn_rQLg@mail.gmail.com>
+
+Hi,
+
+What you are asking for is the default behavior of ParaView.
+
+You may want to give a more precise description of what your are trying to
+achieve.
+
+Best regards,
+
+Mathieu Westphal
+
+On Wed, Sep 5, 2018 at 12:31 AM, L?o Pessanha <leonardopessanha74 at gmail.com>
+wrote:
+
+> Hi!
+>
+> Is there a way to apply in all the RenderView's  the modifications made in
+> the data sources/filters of the pipeline browser?
+>
+> I've tried linking them but with no sucess.
+>
+> Best regards,
+> Leonardo Pessanha
+> Laboratory of Computational Methods in Engineering
+> Federal University of Rio de Janeiro - COPPE
+> Rio de Janeiro, RJ, Brasil
+>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.
+> org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180905/b21919ef/attachment.html>
+
+From cory.quammen at kitware.com  Wed Sep  5 08:41:57 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Wed, 5 Sep 2018 08:41:57 -0400
+Subject: [Paraview] Changes in Sources/Filters applied in all
+ RenderView's
+In-Reply-To: <CAC2t4UQW7bOuF-DiJ51TkzfAg6c=801qiRsee9sQkV6bn_rQLg@mail.gmail.com>
+References: <CAE=GJrbYYFNkd6baiqNiD7Dj+8H2gaH33dY3qFBUjkv2esbpSQ@mail.gmail.com>
+ <CAC2t4UQW7bOuF-DiJ51TkzfAg6c=801qiRsee9sQkV6bn_rQLg@mail.gmail.com>
+Message-ID: <CAB5Fpx4fmxxwmnHAsbM1aXO6aMi_GT9T9+QJWLZ8CoxJAR_n2A@mail.gmail.com>
+
+On Wed, Sep 5, 2018 at 5:40 AM Mathieu Westphal
+<mathieu.westphal at kitware.com> wrote:
+>
+> Hi,
+>
+> What you are asking for is the default behavior of ParaView.
+
+To elaborate, any changes under the "Properties" section of the
+Properties panel will be reflected in all open RenderViews. Changes
+under the "Display" and "View" sections, however, apply only to
+objects in the active RenderView (the one with the blue box drawn
+around it). I believe this is what Leonardo would like to have updated
+all at once.
+
+There is no setting to link all "Display" and "View" properties
+because not all display types (also called representations) have the
+same properties, nor do all view types have the same properties. You
+could do this programmatically with Python with a bit of somewhat
+involved code. Easier may be to click the "Copy display properties"
+button to the right of the "Display" header in the Properties Panel,
+switch to another display in the other view, and click the "Paste
+copied display properties".
+
+HTH,
+Cory
+
+p.s. ParaView discussion has moved to https://discourse.paraview.org.
+Please post future questions on that forum.
+
+> You may want to give a more precise description of what your are trying to achieve.
+>
+> Best regards,
+>
+> Mathieu Westphal
+>
+> On Wed, Sep 5, 2018 at 12:31 AM, L?o Pessanha <leonardopessanha74 at gmail.com> wrote:
+>>
+>> Hi!
+>>
+>> Is there a way to apply in all the RenderView's  the modifications made in the data sources/filters of the pipeline browser?
+>>
+>> I've tried linking them but with no sucess.
+>>
+>> Best regards,
+>> Leonardo Pessanha
+>> Laboratory of Computational Methods in Engineering
+>> Federal University of Rio de Janeiro - COPPE
+>> Rio de Janeiro, RJ, Brasil
+>>
+>>
+>> _______________________________________________
+>> Powered by www.kitware.com
+>>
+>> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>>
+>> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>>
+>> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>>
+>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>>
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview
+>>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From archaerolog at mail.ru  Wed Sep  5 09:20:22 2018
+From: archaerolog at mail.ru (Gena Bug)
+Date: Wed, 5 Sep 2018 16:20:22 +0300
+Subject: [Paraview] [EXTERNAL] Re:  hangs after choosing a view
+In-Reply-To: <D8B24196-D559-4B1B-95CA-3AAB9B56E01C@sandia.gov>
+References: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+ <CAC2t4URFbHehMN0ut7N1Ef0LeEPnKaRPDTCcWsAb7i9ztSae7w@mail.gmail.com>
+ <fe4ccc7c-6cc3-0e52-1d05-768e36b5b7e6@mail.ru>
+ <D8B24196-D559-4B1B-95CA-3AAB9B56E01C@sandia.gov>
+Message-ID: <ae38026d-0557-d6fb-c77f-56335ebcc0cf@mail.ru>
+
+Hi, Alan!
+
+Thanks for sharing, I'll use the trick after solve the issue. Indeed it 
+doesn't related to the fontconfig errors and currently I'm stuck with 
+it... Don't think it's somehow related to pv, seems the problem is in my 
+system -- it glitches here and there! Testing is testing:)
+
+On 01.09.2018 04:11, Scott, W Alan wrote:
+> Sorry for getting behind.
+> 
+> Gena, I have these warnings all the time on Linux.  I get rid of them by placing the following into a script called "paraview".
+> 
+> /..../paraview  |& grep -v Fontconfig
+> 
+> Alan
+> 
+> ?On 8/24/18, 10:26 AM, "ParaView on behalf of Gena Bug via ParaView" <paraview-bounces at public.kitware.com on behalf of paraview at public.kitware.com> wrote:
+> 
+>      On 24.08.2018 15:50, Mathieu Westphal wrote:
+>      > Hi Gena,
+>      Hi Mathieu,
+>      
+>      > The fontconfig errors are probably unrelated to the hang you see
+>      > https://gitlab.kitware.com/paraview/paraview/issues/18107#note_421653
+>      > The error must be somewhere else.
+>      Indeed, seems it is unrelated. I tried latest nightly (810-g3c83280) and
+>      it seems to start normally. It has some regressions (for example, plots
+>      on LineChartView aren't smooth) but it works. Thanks, Mathieu!
+>      
+>      > Mathieu Westphal
+>      >
+>      > On Fri, Aug 24, 2018 at 1:52 PM, Gena Bug via ParaView <
+>      > paraview at public.kitware.com> wrote:
+>      >
+>      >> Hi!
+>      >>
+>      >> I've noticed that PV 5.5.2 (downloaded from the site) stopped working on
+>      >> my debian testing amd64. It starts correctly (except a tons of warnings and
+>      >> errors from fontconfig) but hangs after choosing a view (any of them). Here
+>      >> are the console output:
+>      >>
+>      >> Fontconfig warning: line 5: unknown element "its:rules"
+>      >> Fontconfig warning: line 6: unknown element "its:translateRule"
+>      >> Fontconfig error: line 6: invalid attribute 'translate'
+>      >> Fontconfig error: line 6: invalid attribute 'selector'
+>      >> Fontconfig error: line 7: invalid attribute 'xmlns:its'
+>      >> Fontconfig error: line 7: invalid attribute 'version'
+>      >> Fontconfig warning: line 9: unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 8:
+>      >> unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>      >> 4: unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>      >> 5: unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>      >> 8: unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>      >> 4: unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>      >> 5: unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>      >> 8: unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>      >> 4: unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>      >> 5: unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>      >> 8: unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 8:
+>      >> unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 8:
+>      >> unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 34:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>      >> invalid attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>      >> invalid attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+>      >> invalid attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+>      >> invalid attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 8: unknown
+>      >> element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 4: unknown
+>      >> element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 5: unknown
+>      >> element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 8:
+>      >> unknown element "description"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 4:
+>      >> unknown element "its:rules"
+>      >> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 5:
+>      >> unknown element "its:translateRule"
+>      >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+>      >> attribute 'translate'
+>      >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+>      >> attribute 'selector'
+>      >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+>      >> attribute 'xmlns:its'
+>      >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+>      >> attribute 'version'
+>      >> Fontconfig error: Cannot load default config file
+>      >> _______________________________________________
+>      >> Powered by www.kitware.com
+>      >>
+>      >> ParaView discussion is moving! Please visit https://discourse.paraview.org
+>      >> / for future posts.
+>      >>
+>      >> Visit other Kitware open-source projects at http://www.kitware.com/opensou
+>      >> rce/opensource.html
+>      >>
+>      >> Please keep messages on-topic and check the ParaView Wiki at:
+>      >> http://paraview.org/Wiki/ParaView
+>      >>
+>      >> Search the list archives at: http://markmail.org/search/?q=ParaView
+>      >>
+>      >> Follow this link to subscribe/unsubscribe:
+>      >> https://public.kitware.com/mailman/listinfo/paraview
+>      >>
+>      >
+>      _______________________________________________
+>      Powered by www.kitware.com
+>      
+>      ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>      
+>      Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>      
+>      Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>      
+>      Search the list archives at: http://markmail.org/search/?q=ParaView
+>      
+>      Follow this link to subscribe/unsubscribe:
+>      https://public.kitware.com/mailman/listinfo/paraview
+>      
+> 
+
+From cory.quammen at kitware.com  Wed Sep  5 09:22:00 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Wed, 5 Sep 2018 09:22:00 -0400
+Subject: [Paraview] Solid Color Option Not Recorded In Trace
+In-Reply-To: <3d929d46-09dd-91f6-ae64-a5e3b5083c13@ucmerced.edu>
+References: <3d929d46-09dd-91f6-ae64-a5e3b5083c13@ucmerced.edu>
+Message-ID: <CAB5Fpx4qUx_0N-q=-6dOvHkDQUFKasCEu-UCfZByRvRx-8nv-g@mail.gmail.com>
+
+Closing the loop, this is now fixed in ParaView master and will be
+available in ParaView 5.6.
+
+See https://gitlab.kitware.com/paraview/paraview/merge_requests/2720
+On Mon, Jul 16, 2018 at 7:31 PM Jeremias Gonzalez
+<jgonzalez49 at ucmerced.edu> wrote:
+>
+> Hi, I've noticed that selecting the Solid Color option is not recorded
+> when tracing. Here are the steps I'm taking in Paraview 5.5.2:
+>
+> 1. Start trace in Paraview, with full tracing and incremental display.
+> 2. Open VTK produced in FreeFEM++ (example attached).
+> 3. Apply the new view in the left panel, and I see a red square.
+> 4. From the drop down in the menu bar, I switch from "Label" to "Solid
+> Color" (the only change in the trace here is
+> "HideScalarBarIfNotNeeded(labelLUT, renderView1)", while the GUI changes
+> from the red square to a white one).
+> 5. I save the output of the trace to a new file (example attached) and
+> run it in a new paraview instance (this time I see only a red square at
+> the end instead of a white one as expected).
+>
+> It's may also be worth noting that if I simply copy and paste the output
+> into a terminal in a new paraview instance, the
+> "HideScalarBarIfNotNeeded(labelLUT, renderView1)" line results in a text
+> output of "False".
+>
+> Is there a command I need to put in by hand to resolve this?
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From utkarsh.ayachit at kitware.com  Wed Sep  5 11:57:40 2018
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Wed, 5 Sep 2018 11:57:40 -0400
+Subject: [Paraview] time to kill the mailing lists?
+Message-ID: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+
+Folks,
+
+We have moved to Discourse (quite successfully). Given the latest
+round of phishing emails, with spam email masquerading as being sent
+by legitimate users, may be it's time to close the paraview mailing
+list? I expect we can shut down the mailing list with a default reply
+message instructing any sender to use discourse.paraview.org instead.
+
+Thoughts? Objections?
+
+Utkarsh
+
+From mathieu.westphal at kitware.com  Wed Sep  5 11:59:15 2018
+From: mathieu.westphal at kitware.com (Mathieu Westphal)
+Date: Wed, 5 Sep 2018 17:59:15 +0200
+Subject: [Paraview] [Paraview-developers] time to kill the mailing lists?
+In-Reply-To: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+Message-ID: <CAC2t4US7XurbazNKiCYRJO6fBN++Zd3KEem1e09bFYZ9NVS3+g@mail.gmail.com>
+
+It is time indeed.
+
+Mathieu Westphal
+
+On Wed, Sep 5, 2018 at 5:57 PM, Utkarsh Ayachit <utkarsh.ayachit at kitware.com
+> wrote:
+
+> Folks,
+>
+> We have moved to Discourse (quite successfully). Given the latest
+> round of phishing emails, with spam email masquerading as being sent
+> by legitimate users, may be it's time to close the paraview mailing
+> list? I expect we can shut down the mailing list with a default reply
+> message instructing any sender to use discourse.paraview.org instead.
+>
+> Thoughts? Objections?
+>
+> Utkarsh
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView development discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+>
+> Search the list archives at: http://markmail.org/search/?q=
+> Paraview-developers
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview-developers
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180905/73ac447b/attachment.html>
+
+From wascott at sandia.gov  Wed Sep  5 12:01:08 2018
+From: wascott at sandia.gov (Scott, W Alan)
+Date: Wed, 5 Sep 2018 16:01:08 +0000
+Subject: [Paraview] [EXTERNAL] [Paraview-developers] time to kill the
+ mailing lists?
+In-Reply-To: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+Message-ID: <D788B4F8-5837-4A07-809C-5285FE46B446@sandia.gov>
+
++1
+
+Alan
+
+?On 9/5/18, 9:58 AM, "Paraview-developers on behalf of Utkarsh Ayachit" <paraview-developers-bounces at public.kitware.com on behalf of utkarsh.ayachit at kitware.com> wrote:
+
+    Folks,
+    
+    We have moved to Discourse (quite successfully). Given the latest
+    round of phishing emails, with spam email masquerading as being sent
+    by legitimate users, may be it's time to close the paraview mailing
+    list? I expect we can shut down the mailing list with a default reply
+    message instructing any sender to use discourse.paraview.org instead.
+    
+    Thoughts? Objections?
+    
+    Utkarsh
+    _______________________________________________
+    Powered by www.kitware.com
+    
+    ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+    
+    Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+    
+    Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+    
+    Follow this link to subscribe/unsubscribe:
+    https://public.kitware.com/mailman/listinfo/paraview-developers
+    
+
+
+From cory.quammen at kitware.com  Wed Sep  5 12:05:50 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Wed, 5 Sep 2018 12:05:50 -0400
+Subject: [Paraview] [Paraview-developers] [EXTERNAL] time to kill the
+ mailing lists?
+In-Reply-To: <D788B4F8-5837-4A07-809C-5285FE46B446@sandia.gov>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+ <D788B4F8-5837-4A07-809C-5285FE46B446@sandia.gov>
+Message-ID: <CAB5Fpx5oXfo4dr7DMWyhfX4OJmwP=OhD-WPeJK7W5JKAZA6qKQ@mail.gmail.com>
+
+Yep. Traffic on the mailing list is very low now, and activity on
+Discourse is up to around ~14 messages a day on weekdays, which I take
+to be a sign of healthy usage.
+On Wed, Sep 5, 2018 at 12:01 PM Scott, W Alan via Paraview-developers
+<paraview-developers at public.kitware.com> wrote:
+>
+> +1
+>
+> Alan
+>
+> ?On 9/5/18, 9:58 AM, "Paraview-developers on behalf of Utkarsh Ayachit" <paraview-developers-bounces at public.kitware.com on behalf of utkarsh.ayachit at kitware.com> wrote:
+>
+>     Folks,
+>
+>     We have moved to Discourse (quite successfully). Given the latest
+>     round of phishing emails, with spam email masquerading as being sent
+>     by legitimate users, may be it's time to close the paraview mailing
+>     list? I expect we can shut down the mailing list with a default reply
+>     message instructing any sender to use discourse.paraview.org instead.
+>
+>     Thoughts? Objections?
+>
+>     Utkarsh
+>     _______________________________________________
+>     Powered by www.kitware.com
+>
+>     ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+>     Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+>     Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+>
+>     Follow this link to subscribe/unsubscribe:
+>     https://public.kitware.com/mailman/listinfo/paraview-developers
+>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview-developers
+
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From benson.muite at ut.ee  Wed Sep  5 12:14:22 2018
+From: benson.muite at ut.ee (Benson Muite)
+Date: Wed, 5 Sep 2018 19:14:22 +0300
+Subject: [Paraview] time to kill the mailing lists?
+In-Reply-To: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+Message-ID: <8a23d168-9911-4ca7-c3f8-1845b6417499@ut.ee>
+
+The current paraview website has a link to mailing lists:
+
+https://www.paraview.org/
+
+buried within that is a message that the lists have been deprecated and 
+a link to the discourse forum:
+
+https://discourse.paraview.org/
+
+It may be helpful to make the forum a little more prominent on the 
+Paraview website
+
+
+On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+> Folks,
+>
+> We have moved to Discourse (quite successfully). Given the latest
+> round of phishing emails, with spam email masquerading as being sent
+> by legitimate users, may be it's time to close the paraview mailing
+> list? I expect we can shut down the mailing list with a default reply
+> message instructing any sender to use discourse.paraview.org instead.
+>
+> Thoughts? Objections?
+>
+> Utkarsh
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+From utkarsh.ayachit at kitware.com  Wed Sep  5 12:54:52 2018
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Wed, 5 Sep 2018 12:54:52 -0400
+Subject: [Paraview] time to kill the mailing lists?
+In-Reply-To: <8a23d168-9911-4ca7-c3f8-1845b6417499@ut.ee>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+ <8a23d168-9911-4ca7-c3f8-1845b6417499@ut.ee>
+Message-ID: <CADHSJjCKMdaPVrboiZZoish9J9Ot74kHwYf11YSAMQ4fBddj8A@mail.gmail.com>
+
+Thanks, Benson. I've cleaned up the webpage. Let me know if that's
+still confusing: https://www.paraview.org/community-support/
+On Wed, Sep 5, 2018 at 12:14 PM Benson Muite <benson.muite at ut.ee> wrote:
+>
+> The current paraview website has a link to mailing lists:
+>
+> https://www.paraview.org/
+>
+> buried within that is a message that the lists have been deprecated and
+> a link to the discourse forum:
+>
+> https://discourse.paraview.org/
+>
+> It may be helpful to make the forum a little more prominent on the
+> Paraview website
+>
+>
+> On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+> > Folks,
+> >
+> > We have moved to Discourse (quite successfully). Given the latest
+> > round of phishing emails, with spam email masquerading as being sent
+> > by legitimate users, may be it's time to close the paraview mailing
+> > list? I expect we can shut down the mailing list with a default reply
+> > message instructing any sender to use discourse.paraview.org instead.
+> >
+> > Thoughts? Objections?
+> >
+> > Utkarsh
+> > _______________________________________________
+> > Powered by www.kitware.com
+> >
+> > ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+> >
+> > Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+> >
+> > Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+> >
+> > Search the list archives at: http://markmail.org/search/?q=ParaView
+> >
+> > Follow this link to subscribe/unsubscribe:
+> > https://public.kitware.com/mailman/listinfo/paraview
+>
+
+From thomas_sgouros at brown.edu  Wed Sep  5 22:00:25 2018
+From: thomas_sgouros at brown.edu (Sgouros, Thomas)
+Date: Wed, 5 Sep 2018 18:00:25 -0800
+Subject: [Paraview] [Paraview-developers] time to kill the mailing lists?
+In-Reply-To: <CADHSJjCKMdaPVrboiZZoish9J9Ot74kHwYf11YSAMQ4fBddj8A@mail.gmail.com>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+ <8a23d168-9911-4ca7-c3f8-1845b6417499@ut.ee>
+ <CADHSJjCKMdaPVrboiZZoish9J9Ot74kHwYf11YSAMQ4fBddj8A@mail.gmail.com>
+Message-ID: <CABrYh3ogcgctsP604G-0Ac6c8jZ+-o3_0fib8aAYuo1x3v1EzQ@mail.gmail.com>
+
+Do subscribers to the lists have to unsubscribe, or will they just go
+quietly away?
+
+Thank you,
+
+ -Tom
+
+On Wed, Sep 5, 2018 at 8:54 AM, Utkarsh Ayachit <utkarsh.ayachit at kitware.com
+> wrote:
+
+> Thanks, Benson. I've cleaned up the webpage. Let me know if that's
+> still confusing: https://www.paraview.org/community-support/
+> On Wed, Sep 5, 2018 at 12:14 PM Benson Muite <benson.muite at ut.ee> wrote:
+> >
+> > The current paraview website has a link to mailing lists:
+> >
+> > https://www.paraview.org/
+> >
+> > buried within that is a message that the lists have been deprecated and
+> > a link to the discourse forum:
+> >
+> > https://discourse.paraview.org/
+> >
+> > It may be helpful to make the forum a little more prominent on the
+> > Paraview website
+> >
+> >
+> > On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+> > > Folks,
+> > >
+> > > We have moved to Discourse (quite successfully). Given the latest
+> > > round of phishing emails, with spam email masquerading as being sent
+> > > by legitimate users, may be it's time to close the paraview mailing
+> > > list? I expect we can shut down the mailing list with a default reply
+> > > message instructing any sender to use discourse.paraview.org instead.
+> > >
+> > > Thoughts? Objections?
+> > >
+> > > Utkarsh
+> > > _______________________________________________
+> > > Powered by www.kitware.com
+> > >
+> > > ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+> > >
+> > > Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+> > >
+> > > Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+> > >
+> > > Search the list archives at: http://markmail.org/search/?q=ParaView
+> > >
+> > > Follow this link to subscribe/unsubscribe:
+> > > https://public.kitware.com/mailman/listinfo/paraview
+> >
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView development discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+>
+> Search the list archives at: http://markmail.org/search/?q=
+> Paraview-developers
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview-developers
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180905/454902f5/attachment.html>
+
+From cory.quammen at kitware.com  Wed Sep  5 22:06:37 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Wed, 5 Sep 2018 22:06:37 -0400
+Subject: [Paraview] [Paraview-developers] time to kill the mailing lists?
+In-Reply-To: <CABrYh3ogcgctsP604G-0Ac6c8jZ+-o3_0fib8aAYuo1x3v1EzQ@mail.gmail.com>
+References: <CADHSJjDfbF9bpyf7DE1+ny1gBeom37AJfhcDoEXG_Dczy41Yag@mail.gmail.com>
+ <8a23d168-9911-4ca7-c3f8-1845b6417499@ut.ee>
+ <CADHSJjCKMdaPVrboiZZoish9J9Ot74kHwYf11YSAMQ4fBddj8A@mail.gmail.com>
+ <CABrYh3ogcgctsP604G-0Ac6c8jZ+-o3_0fib8aAYuo1x3v1EzQ@mail.gmail.com>
+Message-ID: <CAB5Fpx4vDS1ZH80mTf=X2YUbG88trdn3Vy3bwgzTzrbtQUJ45w@mail.gmail.com>
+
+Tom,
+
+No one will be required to unsubscribe. Whether you are subscribed or
+unsubscribed, you won't receive any new messages once the list is
+shuttered.
+
+- Cory
+On Wed, Sep 5, 2018 at 10:01 PM Sgouros, Thomas
+<thomas_sgouros at brown.edu> wrote:
+>
+> Do subscribers to the lists have to unsubscribe, or will they just go quietly away?
+>
+> Thank you,
+>
+>  -Tom
+>
+> On Wed, Sep 5, 2018 at 8:54 AM, Utkarsh Ayachit <utkarsh.ayachit at kitware.com> wrote:
+>>
+>> Thanks, Benson. I've cleaned up the webpage. Let me know if that's
+>> still confusing: https://www.paraview.org/community-support/
+>> On Wed, Sep 5, 2018 at 12:14 PM Benson Muite <benson.muite at ut.ee> wrote:
+>> >
+>> > The current paraview website has a link to mailing lists:
+>> >
+>> > https://www.paraview.org/
+>> >
+>> > buried within that is a message that the lists have been deprecated and
+>> > a link to the discourse forum:
+>> >
+>> > https://discourse.paraview.org/
+>> >
+>> > It may be helpful to make the forum a little more prominent on the
+>> > Paraview website
+>> >
+>> >
+>> > On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+>> > > Folks,
+>> > >
+>> > > We have moved to Discourse (quite successfully). Given the latest
+>> > > round of phishing emails, with spam email masquerading as being sent
+>> > > by legitimate users, may be it's time to close the paraview mailing
+>> > > list? I expect we can shut down the mailing list with a default reply
+>> > > message instructing any sender to use discourse.paraview.org instead.
+>> > >
+>> > > Thoughts? Objections?
+>> > >
+>> > > Utkarsh
+>> > > _______________________________________________
+>> > > Powered by www.kitware.com
+>> > >
+>> > > ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>> > >
+>> > > Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>> > >
+>> > > Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>> > >
+>> > > Search the list archives at: http://markmail.org/search/?q=ParaView
+>> > >
+>> > > Follow this link to subscribe/unsubscribe:
+>> > > https://public.kitware.com/mailman/listinfo/paraview
+>> >
+>> _______________________________________________
+>> Powered by www.kitware.com
+>>
+>> ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>>
+>> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>>
+>> Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+>>
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview-developers
+>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From kmorel at sandia.gov  Thu Sep  6 10:44:33 2018
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Thu, 6 Sep 2018 14:44:33 +0000
+Subject: [Paraview] [Paraview-developers] time to kill the mailing lists?
+Message-ID: <2d6469245b9e4ec681acc415856c9d85@ES08AMSNLNT.srn.sandia.gov>
+
+When you close the mailing lists, would it be possible to set it up so that anyone who attempts to email to those addresses gets an email back with a clear message about the mailing lists being closed down and instructions on posting to discourse?
+
+-Ken
+
+-----Original Message-----
+From: Paraview-developers [mailto:paraview-developers-bounces at public.kitware.com] On Behalf Of Utkarsh Ayachit
+Sent: Wednesday, September 5, 2018 10:55 AM
+To: benson.muite at ut.ee
+Cc: ParaView Developers <paraview-developers at paraview.org>; ParaView <paraview at paraview.org>
+Subject: [EXTERNAL] Re: [Paraview-developers] [Paraview] time to kill the mailing lists?
+
+Thanks, Benson. I've cleaned up the webpage. Let me know if that's still confusing: https://www.paraview.org/community-support/
+On Wed, Sep 5, 2018 at 12:14 PM Benson Muite <benson.muite at ut.ee> wrote:
+>
+> The current paraview website has a link to mailing lists:
+>
+> https://www.paraview.org/
+>
+> buried within that is a message that the lists have been deprecated 
+> and a link to the discourse forum:
+>
+> https://discourse.paraview.org/
+>
+> It may be helpful to make the forum a little more prominent on the 
+> Paraview website
+>
+>
+> On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+> > Folks,
+> >
+> > We have moved to Discourse (quite successfully). Given the latest 
+> > round of phishing emails, with spam email masquerading as being sent 
+> > by legitimate users, may be it's time to close the paraview mailing 
+> > list? I expect we can shut down the mailing list with a default 
+> > reply message instructing any sender to use discourse.paraview.org instead.
+> >
+> > Thoughts? Objections?
+> >
+> > Utkarsh
+> > _______________________________________________
+> > Powered by www.kitware.com
+> >
+> > ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+> >
+> > Visit other Kitware open-source projects at 
+> > http://www.kitware.com/opensource/opensource.html
+> >
+> > Please keep messages on-topic and check the ParaView Wiki at: 
+> > http://paraview.org/Wiki/ParaView
+> >
+> > Search the list archives at: http://markmail.org/search/?q=ParaView
+> >
+> > Follow this link to subscribe/unsubscribe:
+> > https://public.kitware.com/mailman/listinfo/paraview
+>
+_______________________________________________
+Powered by www.kitware.com
+
+ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+
+Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+
+Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+
+Follow this link to subscribe/unsubscribe:
+https://public.kitware.com/mailman/listinfo/paraview-developers
+
+From cory.quammen at kitware.com  Thu Sep  6 10:50:03 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Thu, 6 Sep 2018 10:50:03 -0400
+Subject: [Paraview] [Paraview-developers] time to kill the mailing lists?
+In-Reply-To: <2d6469245b9e4ec681acc415856c9d85@ES08AMSNLNT.srn.sandia.gov>
+References: <2d6469245b9e4ec681acc415856c9d85@ES08AMSNLNT.srn.sandia.gov>
+Message-ID: <CAB5Fpx7xeo=+MruELMdO98jG09_MHRNfuVgyMr5c9UFS5wuGUQ@mail.gmail.com>
+
+On Thu, Sep 6, 2018 at 10:44 AM Moreland, Kenneth via ParaView
+<paraview at public.kitware.com> wrote:
+>
+> When you close the mailing lists, would it be possible to set it up so that anyone who attempts to email to those addresses gets an email back with a clear message about the mailing lists being closed down and instructions on posting to discourse?
+
+Ken,
+
+That is exactly the plan.
+
+- Cory
+
+>
+> -Ken
+>
+> -----Original Message-----
+> From: Paraview-developers [mailto:paraview-developers-bounces at public.kitware.com] On Behalf Of Utkarsh Ayachit
+> Sent: Wednesday, September 5, 2018 10:55 AM
+> To: benson.muite at ut.ee
+> Cc: ParaView Developers <paraview-developers at paraview.org>; ParaView <paraview at paraview.org>
+> Subject: [EXTERNAL] Re: [Paraview-developers] [Paraview] time to kill the mailing lists?
+>
+> Thanks, Benson. I've cleaned up the webpage. Let me know if that's still confusing: https://www.paraview.org/community-support/
+> On Wed, Sep 5, 2018 at 12:14 PM Benson Muite <benson.muite at ut.ee> wrote:
+> >
+> > The current paraview website has a link to mailing lists:
+> >
+> > https://www.paraview.org/
+> >
+> > buried within that is a message that the lists have been deprecated
+> > and a link to the discourse forum:
+> >
+> > https://discourse.paraview.org/
+> >
+> > It may be helpful to make the forum a little more prominent on the
+> > Paraview website
+> >
+> >
+> > On 09/05/2018 06:57 PM, Utkarsh Ayachit wrote:
+> > > Folks,
+> > >
+> > > We have moved to Discourse (quite successfully). Given the latest
+> > > round of phishing emails, with spam email masquerading as being sent
+> > > by legitimate users, may be it's time to close the paraview mailing
+> > > list? I expect we can shut down the mailing list with a default
+> > > reply message instructing any sender to use discourse.paraview.org instead.
+> > >
+> > > Thoughts? Objections?
+> > >
+> > > Utkarsh
+> > > _______________________________________________
+> > > Powered by www.kitware.com
+> > >
+> > > ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+> > >
+> > > Visit other Kitware open-source projects at
+> > > http://www.kitware.com/opensource/opensource.html
+> > >
+> > > Please keep messages on-topic and check the ParaView Wiki at:
+> > > http://paraview.org/Wiki/ParaView
+> > >
+> > > Search the list archives at: http://markmail.org/search/?q=ParaView
+> > >
+> > > Follow this link to subscribe/unsubscribe:
+> > > https://public.kitware.com/mailman/listinfo/paraview
+> >
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView development discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Search the list archives at: http://markmail.org/search/?q=Paraview-developers
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview-developers
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From mdorier at anl.gov  Wed Sep 12 17:19:58 2018
+From: mdorier at anl.gov (Dorier, Matthieu)
+Date: Wed, 12 Sep 2018 21:19:58 +0000
+Subject: [Paraview] Issue with Catalyst spack package
+In-Reply-To: <89084a8b-6640-e0d5-d42c-1e5801663945@esi-group.com>
+References: <CY1PR09MB1132FFE6552BD30645E1740EA3400@CY1PR09MB1132.namprd09.prod.outlook.com>,
+ <89084a8b-6640-e0d5-d42c-1e5801663945@esi-group.com>
+Message-ID: <SN6PR09MB2862AC3627DB99B72097C473A31B0@SN6PR09MB2862.namprd09.prod.outlook.com>
+
+Hi,
+
+
+I was wondering if there has been any development in this issue since July?
+
+
+We will soon provide a Spack package for Damaris. Damaris now supports Catalyst as an in-situ visualization backend, so it would be great to be able to support Damaris+Catalyst through Spack.
+
+
+Thanks!
+
+
+Matthieu
+
+________________________________
+From: Mark Olesen <Mark.Olesen at esi-group.com>
+Sent: Thursday, July 5, 2018 11:07:27 AM
+To: Dorier, Matthieu; paraview at public.kitware.com
+Subject: Re: [Paraview] Issue with Catalyst spack package
+
+Yes this is something that Simone has been trying to tackle:
+
+https://github.com/RemoteConnectionManager/spack/commits/packages/update_paraview
+
+You can try a few different things, but nothing really helps.
+In the spack package it might help to set the GIT_DIR env to point to
+the catalyst directory before the patch/staging part, but that might
+just prevent the warning about exploring across file boundaries.
+
+On top of that someone (Andy!) probably needs to adjust the catalyze.py
+script to add the checks there, since this error will always occur when
+building from a tarball.
+
+/mark
+
+
+On 07/05/18 11:23, Dorier, Matthieu wrote:
+> Hi,
+>
+>
+> I've been trying to install Catalyst using Spack, but ran into an issue
+> that I think is caused by Catalyst (some python script in the ParaView
+> source tree trying to use git on a directory that isn't managed by git).
+> At least that's my first guess...
+>
+>
+> Here is the full issue described on the Spack google group:
+>
+> https://groups.google.com/forum/#!topic/spack/Pzn3C7KrF7w
+>
+>
+> Thanks,
+>
+>
+> Matthieu
+>
+>
+>
+> _______________________________________________
+> Powered by www.kitware.com<http://www.kitware.com>
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+
+--
+Dr Mark OLESEN
+Principal Engineer, ESI-OpenCFD
+ESI GmbH | Einsteinring 24 | 85609 Munich | GERMANY
+Mob. +49 171 9710 149
+www.openfoam.com<http://www.openfoam.com> | www.esi-group.com<http://www.esi-group.com> | mark.olesen at esi-group.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180912/4413c974/attachment.html>
+
+From manoch at iris.washington.edu  Fri Sep 14 15:40:23 2018
+From: manoch at iris.washington.edu (Manochehr Bahavar)
+Date: Fri, 14 Sep 2018 12:40:23 -0700
+Subject: [Paraview] Structured Grid display
+Message-ID: <F247BFF2-F26D-457B-B372-17F647039958@iris.washington.edu>
+
+Hello,
+
+I have created a structured grid and when I select ?Point Gaussian? for representation, I can see all the points with proper color representation (attached image). However, when I change the representation to ?Points? or ?Surface", I only see the top set of points and points on two edges (attached image)! Any suggestions? 
+
+Thanks,
+
+?manoch
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/1c0cd581/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.07 PM.png
+Type: image/png
+Size: 313791 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/1c0cd581/attachment-0002.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.31 PM.png
+Type: image/png
+Size: 34086 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/1c0cd581/attachment-0003.png>
+
+From dave.demarle at kitware.com  Fri Sep 14 17:55:52 2018
+From: dave.demarle at kitware.com (David E DeMarle)
+Date: Fri, 14 Sep 2018 17:55:52 -0400
+Subject: [Paraview] Structured Grid display
+In-Reply-To: <F247BFF2-F26D-457B-B372-17F647039958@iris.washington.edu>
+References: <F247BFF2-F26D-457B-B372-17F647039958@iris.washington.edu>
+Message-ID: <CANjZAi8v7gHFyyzSCUdge3Ag+oa=9OdntLpuHCCbbE-h_4D4bA@mail.gmail.com>
+
+I would expect points/lines representation to only show the outer surface
+(all surface rendering does an extract surface behind the scenes), so none
+of the inner points should be visible, but it is strange that you aren't
+seeing both top and bottom sides.
+
+I am thinking that the extent defined wrong. Can you share the dataset?
+
+Also note that this mailing list is moving to discourse.paraview.org and
+will be shut down in the very near future.
+
+David E DeMarle
+Kitware, Inc.
+Principal Engineer
+21 Corporate Drive
+Clifton Park, NY 12065-8662
+Phone: 518-881-4909
+
+
+On Fri, Sep 14, 2018 at 4:30 PM Manochehr Bahavar <
+manoch at iris.washington.edu> wrote:
+
+> Hello,
+>
+> I have created a structured grid and when I select ?Point Gaussian? for
+> representation, I can see all the points with proper color representation
+> (attached image). However, when I change the representation to ?Points? or
+> ?Surface", I only see the top set of points and points on two edges
+> (attached image)! Any suggestions?
+>
+> Thanks,
+>
+> ?manoch
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/b2856193/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.07 PM.png
+Type: image/png
+Size: 313791 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/b2856193/attachment-0004.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.31 PM.png
+Type: image/png
+Size: 34086 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/b2856193/attachment-0005.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.31 PM.png
+Type: image/png
+Size: 34086 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/b2856193/attachment-0006.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.07 PM.png
+Type: image/png
+Size: 313791 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/b2856193/attachment-0007.png>
+
+From manoch at iris.washington.edu  Fri Sep 14 23:34:41 2018
+From: manoch at iris.washington.edu (Manoch Bahavar)
+Date: Fri, 14 Sep 2018 20:34:41 -0700
+Subject: [Paraview] Structured Grid display
+In-Reply-To: <CANjZAi8v7gHFyyzSCUdge3Ag+oa=9OdntLpuHCCbbE-h_4D4bA@mail.gmail.com>
+References: <F247BFF2-F26D-457B-B372-17F647039958@iris.washington.edu>
+ <CANjZAi8v7gHFyyzSCUdge3Ag+oa=9OdntLpuHCCbbE-h_4D4bA@mail.gmail.com>
+Message-ID: <0094018B-DCEF-4AE5-B807-668FA3EEF16B@iris.washington.edu>
+
+Hi David,
+
+Perfect! That was exactly the problem. My grid was 26x5x29 and I was setting the extent to 0,26 ,0,5 ,0,29 and as soon as I changed it to 0,25,0,4,0,28 it worked perfectly. I really appreciate your help.
+
+Best,
+?manoch
+
+> On Sep 14, 2018, at 2:55 PM, David E DeMarle <dave.demarle at kitware.com> wrote:
+> 
+> I would expect points/lines representation to only show the outer surface (all surface rendering does an extract surface behind the scenes), so none of the inner points should be visible, but it is strange that you aren't seeing both top and bottom sides.
+> 
+> I am thinking that the extent defined wrong. Can you share the dataset?
+> 
+> Also note that this mailing list is moving to discourse.paraview.org and will be shut down in the very near future.
+> 
+> David E DeMarle
+> Kitware, Inc.
+> Principal Engineer
+> 21 Corporate Drive
+> Clifton Park, NY 12065-8662
+> Phone: 518-881-4909
+> 
+> 
+>> On Fri, Sep 14, 2018 at 4:30 PM Manochehr Bahavar <manoch at iris.washington.edu> wrote:
+>> Hello,
+>> 
+>> I have created a structured grid and when I select ?Point Gaussian? for representation, I can see all the points with proper color representation (attached image). However, when I change the representation to ?Points? or ?Surface", I only see the top set of points and points on two edges (attached image)! Any suggestions? 
+>> 
+>> Thanks,
+>> 
+>> ?manoch
+>> 
+>> 
+>> _______________________________________________
+>> Powered by www.kitware.com
+>> 
+>> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>> 
+>> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>> 
+>> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>> 
+>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>> 
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview
+> <Screen Shot 2018-09-14 at 12.31.31 PM.png>
+> <Screen Shot 2018-09-14 at 12.31.07 PM.png>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/ec36a14b/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.07 PM.png
+Type: image/png
+Size: 313791 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/ec36a14b/attachment-0002.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Screen Shot 2018-09-14 at 12.31.31 PM.png
+Type: image/png
+Size: 34086 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180914/ec36a14b/attachment-0003.png>
+
+From edgar at openmail.cc  Wed Sep 19 23:56:18 2018
+From: edgar at openmail.cc (edgar at openmail.cc)
+Date: Thu, 20 Sep 2018 03:56:18 +0000
+Subject: [Paraview] Sequence of TIFF
+Message-ID: <fe2e54bbbe321c3188c7a49a2adc4eb5@openmail.cc>
+
+Hello,
+
+I am a beginner in the use of ParaView. I would like to show the 
+deformation of a mesh on top of a series of tiff images, where
+0001.tiff
+0002.tiff
+...
+
+correspond to instants 1, 2, etc. I can open the TIFF files in ParaView. 
+I tried setting a Force Time filter on each of them. The images are 
+displayed, but I would like to show them only at the specified time 
+frame. Is that possible? Thanks!
+
+-------------------------------------------------
+
+ONLY AT VFEmail! - Use our Metadata Mitigator to keep your email out of the NSA's hands!
+$24.95 ONETIME Lifetime accounts with Privacy Features!  
+15GB disk! No bandwidth quotas!
+Commercial and Bulk Mail Options!  
+
+From rccm.kyoshimi at gmail.com  Thu Sep 20 20:15:53 2018
+From: rccm.kyoshimi at gmail.com (kenichiro yoshimi)
+Date: Fri, 21 Sep 2018 09:15:53 +0900
+Subject: [Paraview] Sequence of TIFF
+In-Reply-To: <fe2e54bbbe321c3188c7a49a2adc4eb5@openmail.cc>
+References: <fe2e54bbbe321c3188c7a49a2adc4eb5@openmail.cc>
+Message-ID: <CAHDyfPDaYpEx3rAht2VOuhGNy9ubNsZ=ChsDj8-7cabmy0pkpw@mail.gmail.com>
+
+Hi,
+
+If you want to animate tiff file series, you need to append specific
+name to them like something below.
+foo_0001.tiff
+foo_0002.tiff
+...
+
+Then ParaView can recognize them as a tiff sequence, and the file
+browser should look like foo_..tiff. In reading it, uncheck "Read As
+Image Stack" so as not to read a list as a volume.
+
+Best,
+
+p.s. ParaView discussion has moved to https://discourse.paraview.org.
+Please post future questions on that forum.
+2018?9?20?(?) 13:03 <edgar at openmail.cc>:
+>
+> Hello,
+>
+> I am a beginner in the use of ParaView. I would like to show the
+> deformation of a mesh on top of a series of tiff images, where
+> 0001.tiff
+> 0002.tiff
+> ...
+>
+> correspond to instants 1, 2, etc. I can open the TIFF files in ParaView.
+> I tried setting a Force Time filter on each of them. The images are
+> displayed, but I would like to show them only at the specified time
+> frame. Is that possible? Thanks!
+>
+> -------------------------------------------------
+>
+> ONLY AT VFEmail! - Use our Metadata Mitigator to keep your email out of the NSA's hands!
+> $24.95 ONETIME Lifetime accounts with Privacy Features!
+> 15GB disk! No bandwidth quotas!
+> Commercial and Bulk Mail Options!
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+From sdavyd at gmail.com  Mon Sep 24 10:37:21 2018
+From: sdavyd at gmail.com (Sonya Davydycheva)
+Date: Mon, 24 Sep 2018 09:37:21 -0500
+Subject: [Paraview] glyph/pattern of a vector field
+Message-ID: <CAMDHuzZFE0VrdYDp-E2DMS3DA=o768SO3LsKqnwGJ+ZN+Y_Wdw@mail.gmail.com>
+
+Hello,
+
+I have a question on how to make a glyph/pattern of a vector field: a
+current distribution on a regular rectangular grid in my case.
+Which file format does better suit for this?
+
+Looks like vtk files can be only used for scalars (?),
+and vtu files are only designed for a complex unstructured grid (?) (I may
+be wrong.)
+
+2D distribution is fine for me, to start with; 3D would be appreciated as
+well.
+
+Thanks,
+
+Sonya Davydycheva <http://3demholding.com>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180924/5949b260/attachment.html>
+
+From guanw at rhpcs.mcmaster.ca  Mon Sep 24 11:02:11 2018
+From: guanw at rhpcs.mcmaster.ca (Weiguang Guan)
+Date: Mon, 24 Sep 2018 11:02:11 -0400
+Subject: [Paraview] Install python packages
+Message-ID: <5BA8FC73.8020502@rhpcs.mcmaster.ca>
+
+Hello,
+
+I write a programmable source in python, in which I hard code the path 
+to a data file. Now I want to use a file dialog in the python script. I 
+have installed easygui in .local of my home directory and it works fine 
+with python 2.7. But "import easygui" doesn't work in the python shell 
+from Paraview. Any suggestion about how to install a python package so 
+that it can be imported into Paraview? Thanks.
+
+There was a post on the mailing list discussing the topic with subject 
+"installing additional Python modules" back in Dec 18, 2017.
+
+Best,
+Weiguang
+
+
+From hadrien.calmet at bsc.es  Tue Sep 25 10:04:27 2018
+From: hadrien.calmet at bsc.es (hadrien calmet)
+Date: Tue, 25 Sep 2018 16:04:27 +0200
+Subject: [Paraview] point to surface
+Message-ID: <786ab57b-c772-85ae-bfad-c6fe19a1974a@bsc.es>
+
+Hi every one
+
+I have a list of point (coordinate x,y,z), using*table to point* I can 
+visualize it on PV.
+But I would like to know the total area of those points.
+So I tried *glyph* (sphere, all the points) than *integrate variable 
+*and I obtained the area.
+But the area is depending of the radius that I put on *glyph* parameter.
+
+those points are the deposition of particles in a complex geometry(human 
+nasal cavity)
+They are calculated when they intersect the surface mesh of the nasal 
+cavity.
+
+my question:
+There is a way to "project" those points on the mesh surface (then 
+filtering and *integrate variable* to calculate the total area) ?
+
+thank you
+
+
+
+Hadrien Calmet
+Dpt. Computer Applications in Science and Engineering
+Barcelona Supercomputing Center (BSC-CNS)
+Edificio Nexus II - Planta 3
+C/ JORDI GIRONA, 29
+08034 Barcelona, Spain
+Tel: +34 93 413 79 40
+Fax: +34 93 413 7721
+www: www.bsc.es
+
+
+
+http://bsc.es/disclaimer
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180925/17e58d35/attachment.html>
+
+From kmorel at sandia.gov  Tue Sep 25 10:52:05 2018
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Tue, 25 Sep 2018 14:52:05 +0000
+Subject: [Paraview] point to surface
+Message-ID: <35eaeb9fc3ad4b9f996dd39614432d82@ES08AMSNLNT.srn.sandia.gov>
+
+Hadrien,
+
+I?m not sure what you mean by the ?area? of points. As I?m sure you know, particles are 0D elements and themselves have no area to speak of. As you said, you can use the glyph operation to create a surface around each point, but the surface area in that case is simply the surface area of the sphere size you chose times the number of points.
+
+You?ve asked if you can project the points onto an existing mesh surface. I don?t know of an easy way to do that, but let?s put that problem aside for a moment. Assuming you could, what good would that do? Points on a surface are still just points. The surface area of your mesh (nasal cavity) will be the same surface area regardless of how many points are in it and where they are.
+
+Can you more precisely describe what it is you are trying to measure?
+
+-Ken
+
+(By the way, the ParaView team has been transitioning from using this mailing list to using a tool called discourse to ask questions and archive results. In the future, I suggest posting questions to https://discourse.paraview.org/ rather on this list.)
+
+From: ParaView [mailto:paraview-bounces at public.kitware.com] On Behalf Of hadrien calmet
+Sent: Tuesday, September 25, 2018 8:04 AM
+To: paraview at public.kitware.com
+Subject: [EXTERNAL] [Paraview] point to surface
+
+
+Hi every one
+I have a list of point (coordinate x,y,z), using table to point I can visualize it on PV.
+But I would like to know the total area of those points.
+So I tried glyph (sphere, all the points) than integrate variable and I obtained the area.
+But the area is depending of the radius that I put on glyph parameter.
+
+those points are the deposition of particles in a complex geometry(human nasal cavity)
+They are calculated when they intersect the surface mesh of the nasal cavity.
+
+my question:
+There is a way to "project" those points on the mesh surface (then filtering and integrate variable to calculate the total area) ?
+
+thank you
+
+
+
+
+
+Hadrien Calmet
+
+Dpt. Computer Applications in Science and Engineering
+
+Barcelona Supercomputing Center (BSC-CNS)
+
+Edificio Nexus II - Planta 3
+
+C/ JORDI GIRONA, 29
+
+08034 Barcelona, Spain
+
+Tel: +34 93 413 79 40
+
+Fax: +34 93 413 7721
+
+www: www.bsc.es<http://www.bsc.es>
+
+
+WARNING / LEGAL TEXT: This message is intended only for the use of the individual or entity to which it is addressed and may contain information which is privileged, confidential, proprietary, or exempt from disclosure under applicable law. If you are not the intended recipient or the person responsible for delivering the message to the intended recipient, you are strictly prohibited from disclosing, distributing, copying, or in any way using this message. If you have received this communication in error, please notify the sender and destroy and delete any copies you may have received.
+
+http://www.bsc.es/disclaimer
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180925/c71a737e/attachment.html>
+
+From david.owens at kitware.com  Wed Sep 26 14:20:20 2018
+From: david.owens at kitware.com (David Owens)
+Date: Wed, 26 Sep 2018 14:20:20 -0400
+Subject: [Paraview] test from sysadmin
+Message-ID: <4c6d8129b190e39c52884f4abeffa17d@mail.gmail.com>
+
+test
+
+
+
+David Owens
+
+Systems Administrator | Kitware
+
+david.owens at kitware.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180926/54be9580/attachment.html>
+
+From grothausmann.roman at mh-hannover.de  Thu Sep 27 05:08:55 2018
+From: grothausmann.roman at mh-hannover.de (Grothausmann, Roman Dr.)
+Date: Thu, 27 Sep 2018 11:08:55 +0200
+Subject: [Paraview] compile itk (VTKGlue ON) with vtk from paraview
+Message-ID: <9a61918c-9465-aba8-7abc-29f5dc0e8891@mh-hannover.de>
+
+Dear mailing list members,
+
+
+I have problems compiling ITK (4.13.1) with VTK from PV>5.2.0 (it works for 
+PV-5.2.0) and it was suggested that it is likely a PV issue 
+(https://discourse.itk.org/t/compile-itk-vtkglue-on-with-vtk-from-paraview/1289) 
+so I created an issue here:
+https://gitlab.kitware.com/paraview/paraview/issues/18454
+But I am not sure if that is the best place to ask.
+Any ideas what could cause the problem for PV > 5.2.0?
+
+Any help or hints are very much appreciated
+Roman
+
+-- 
+Dr. Roman Grothausmann
+
+Tomographie und Digitale Bildverarbeitung
+Tomography and Digital Image Analysis
+
+Medizinische Hochschule Hannover
+Institut f?r Funktionelle und Angewandte Anatomie
+OE 4120, Carl-Neuberg-Str. 1, 30625 Hannover, Deutschland
+
+Tel. +49 511 532-2900
+grothausmann.roman at mh-hannover.de
+http://www.mh-hannover.de/anatomie.html
+
+From gsharma4189 at gmail.com  Fri Sep 28 07:38:37 2018
+From: gsharma4189 at gmail.com (govind sharma)
+Date: Fri, 28 Sep 2018 17:08:37 +0530
+Subject: [Paraview] SOURCE_CODE_BUILD_ERROR
+Message-ID: <CAGRS4a4d8BM_3hPwX=T+5cNGem0JA4X-XX7ngj1KhrA640-_tg@mail.gmail.com>
+
+Hello,
+
+I am trying to install Paraview with source code and following the steps as:
+
+1: git pull source code - directory name is paraview
+2. to build in paraview in separate directory - directory name
+paraview-build
+3. from inside the paraview-build directory  ccmake ../paraview
+4. Try to configure but error related to VTK
+5. So checked that VTK directory is there in paraview but empty
+6. git pull VTK source code in paraview/VTK
+7. ccmake ../paraview
+8. No VTK error but error related to protobuf:
+
+                                    CMake Error at
+VTK/CMake/vtkModuleMacros.cmake:934 (add_subdirectory):
+                                    add_subdirectory given source
+"vtkprotobuf" which is not an existing
+                                    directory.
+                                    Call Stack (most recent call first):
+                                    ThirdParty/protobuf/CMakeLists.txt:40
+(vtk_module_third_party)
+
+                                    CMake Error at VTK/CMakeLists.txt:138
+(export):
+                                    export given target "protobuf" which is
+not built by this project.
+
+                                    CMake Error at VTK/CMakeLists.txt:146
+(export):
+                                     export given target "protoc_compiler"
+which is not built by this project.
+
+9. My solution:
+                   created protobuf directory in
+/ParaView/VTK/ThirdParty/protobuf and extracted source code of protocol
+buffer
+
+Still I am getting same error statements upon configuration.
+
+How do I proceed for successful paraview build.
+
+Regards,
+Govind Sharma
+PhD Student
+Indian Institute of Technology, Delhi
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180928/a19bca67/attachment.html>
+
+From c.coutinho at redstack.nl  Fri Sep 28 07:58:43 2018
+From: c.coutinho at redstack.nl (Chris Coutinho)
+Date: Fri, 28 Sep 2018 13:58:43 +0200
+Subject: [Paraview] SOURCE_CODE_BUILD_ERROR
+In-Reply-To: <CAGRS4a4d8BM_3hPwX=T+5cNGem0JA4X-XX7ngj1KhrA640-_tg@mail.gmail.com>
+References: <CAGRS4a4d8BM_3hPwX=T+5cNGem0JA4X-XX7ngj1KhrA640-_tg@mail.gmail.com>
+Message-ID: <20180928115843.gnitmhw3nhyjnfnm@hak14099>
+
+Hi Govind,
+
+ParaView has a number of dependencies it handles using `git submodules`.  
+The normal way that I download and install ParaView is by first cloning 
+the main repository, then checking out which branch I need, and finally 
+checking out the submodules like this:
+
+	git submodule update --init --recursive
+
+This downloads the submodules (such as VTK) into their proper locations.  
+I would delete your separate copy of VTK and use the submodules instead 
+because there may be a mismatch between the two.
+
+You could also clone the repository including the submodules all at once 
+using the following:
+
+	git clone --recurse-submodules <repo url>
+
+or by pulling the latest commits from the remote with:
+
+	git pull --recurse-submodules
+
+NOTE: This mailing list is being deprecated, and further discussion 
+occurs on the ParaView discourse
+
+Regards,
+Chris
+
+On Sep-28-18, govind sharma wrote:
+>Hello,
+>
+>I am trying to install Paraview with source code and following the steps as:
+>
+>1: git pull source code - directory name is paraview
+>2. to build in paraview in separate directory - directory name
+>paraview-build
+>3. from inside the paraview-build directory  ccmake ../paraview
+>4. Try to configure but error related to VTK
+>5. So checked that VTK directory is there in paraview but empty
+>6. git pull VTK source code in paraview/VTK
+>7. ccmake ../paraview
+>8. No VTK error but error related to protobuf:
+>
+>                                    CMake Error at
+>VTK/CMake/vtkModuleMacros.cmake:934 (add_subdirectory):
+>                                    add_subdirectory given source
+>"vtkprotobuf" which is not an existing
+>                                    directory.
+>                                    Call Stack (most recent call first):
+>                                    ThirdParty/protobuf/CMakeLists.txt:40
+>(vtk_module_third_party)
+>
+>                                    CMake Error at VTK/CMakeLists.txt:138
+>(export):
+>                                    export given target "protobuf" which is
+>not built by this project.
+>
+>                                    CMake Error at VTK/CMakeLists.txt:146
+>(export):
+>                                     export given target "protoc_compiler"
+>which is not built by this project.
+>
+>9. My solution:
+>                   created protobuf directory in
+>/ParaView/VTK/ThirdParty/protobuf and extracted source code of protocol
+>buffer
+>
+>Still I am getting same error statements upon configuration.
+>
+>How do I proceed for successful paraview build.
+>
+>Regards,
+>Govind Sharma
+>PhD Student
+>Indian Institute of Technology, Delhi
+
+>_______________________________________________
+>Powered by https://emea01.safelinks.protection.outlook.com/?url=www.kitware.com&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315433700913&amp;sdata=do55f00EIPQRzKyNok%2BK9OwNfDk8HpSYaayClg5lLQ4%3D&amp;reserved=0
+>
+>ParaView discussion is moving! Please visit https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdiscourse.paraview.org%2F&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315433700913&amp;sdata=aeNCegk2l%2FhZTg882WE0Qootcpvle1b1PlFw37Gp%2Byo%3D&amp;reserved=0 for future posts.
+>
+>Visit other Kitware open-source projects at https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com%2Fopensource%2Fopensource.html&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315433700913&amp;sdata=lTkHDP0UQNmDb1DvLaHlg0s9J%2BwXJEb%2BF%2F23AuWtDV4%3D&amp;reserved=0
+>
+>Please keep messages on-topic and check the ParaView Wiki at: https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fparaview.org%2FWiki%2FParaView&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315433700913&amp;sdata=h5kCCLfWb%2FLaMInjHBTy12klWRqj%2BFUm6qZkwUA6CjQ%3D&amp;reserved=0
+>
+>Search the list archives at: https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmarkmail.org%2Fsearch%2F%3Fq%3DParaView&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315433700913&amp;sdata=MXYZ0VoHqgzi29Bs6gy9Bupb69Ael5ey9ItCt8RHvRo%3D&amp;reserved=0
+>
+>Follow this link to subscribe/unsubscribe:
+>https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublic.kitware.com%2Fmailman%2Flistinfo%2Fparaview&amp;data=02%7C01%7Cc.coutinho%40redstack.nl%7C8da9208b1924468be8e808d62536fc68%7Ceea7d51815bf4e07834271208871a965%7C0%7C0%7C636737315435392102&amp;sdata=afsM40x55kx7EvVRFlXBQykeR%2BCpBl8MZMWy50YUhNQ%3D&amp;reserved=0
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 833 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180928/8e85483d/attachment.sig>
+
+From andrealphus at gmail.com  Fri Sep 28 15:18:49 2018
+From: andrealphus at gmail.com (A)
+Date: Fri, 28 Sep 2018 12:18:49 -0700
+Subject: [Paraview] Vive and Linux
+In-Reply-To: <5B721F7E-616E-4FB2-BF63-61D054EC0313@kitware.com>
+References: <CAHhX17dUObdfd7HaYtZW1mM76f1ku=Egu2BL3XhyA9tsT2ohgg@mail.gmail.com>
+ <CANXz0SbgGqrdeYHeS+nn3VJFmxaJcsOsFUzq9ZE0C1-1w=3V0w@mail.gmail.com>
+ <5B721F7E-616E-4FB2-BF63-61D054EC0313@kitware.com>
+Message-ID: <CAHhX17dox1o7cv63SgXVrJRsLRQgE-zK=ey-0XqCwLoSsKvjBg@mail.gmail.com>
+
+Any update on Vive+PV? I'm looking to finally take my Vive out of the box
+this weekend. If not, any non-PV suggestions? I'm on Ubuntu 16.04.
+
+thanks!
+-a
+
+On Tue, Jun 26, 2018 at 7:02 AM David Thompson <david.thompson at kitware.com>
+wrote:
+
+> > I think in the past PV with OpenVR has been built on Linux and worked.
+> But that was months ago so I'm not sure the current state of it.
+>
+> I did manage to build and run it, but the drivers caused frequent hangs
+> and crashes (not just ParaView, but all of Steam's apps, too).
+>
+>         David
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180928/b3bdad3c/attachment.html>
+
+From gsharma4189 at gmail.com  Sat Sep 29 03:11:48 2018
+From: gsharma4189 at gmail.com (govind sharma)
+Date: Sat, 29 Sep 2018 12:41:48 +0530
+Subject: [Paraview] DO_NOT_PARAVIEW_EXECUTABLE_AFTER_BUILD
+Message-ID: <CAGRS4a4iO00-rBYOjHniZoNc2htO-=gafsh2TNqR20ArkjGrhA@mail.gmail.com>
+
+Hi All,
+Paraview build has been done successfully but as I am not able to run with
+./bin/paraview
+
+I have checked bin directory in paraview_build, there is not paraview
+executable.
+Only executable with paraview name is paraview-config.
+
+How do I resolve this?
+
+Regards,
+Govind Sharma
+PhD Student
+Indian Institute of Delhi
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180929/59631a5f/attachment.html>
+
+From c.coutinho at redstack.nl  Sat Sep 29 13:12:30 2018
+From: c.coutinho at redstack.nl (Chris Coutinho)
+Date: Sat, 29 Sep 2018 17:12:30 +0000
+Subject: [Paraview] DO_NOT_PARAVIEW_EXECUTABLE_AFTER_BUILD
+In-Reply-To: <CAGRS4a4iO00-rBYOjHniZoNc2htO-=gafsh2TNqR20ArkjGrhA@mail.gmail.com>
+References: <CAGRS4a4iO00-rBYOjHniZoNc2htO-=gafsh2TNqR20ArkjGrhA@mail.gmail.com>
+Message-ID: <AM6PR07MB386274AEA87E59963E6E1EC28BED0@AM6PR07MB3862.eurprd07.prod.outlook.com>
+
+Please post to the paraview discourse site, this mailing list is deprecated.
+
+
+Groeten,
+Chris
+
+________________________________
+From: ParaView <paraview-bounces at public.kitware.com> on behalf of govind sharma <gsharma4189 at gmail.com>
+Sent: Saturday, September 29, 2018 9:11:48 AM
+To: paraview-request at paraview.org; paraview at public.kitware.com
+Subject: [Paraview] DO_NOT_PARAVIEW_EXECUTABLE_AFTER_BUILD
+
+Hi All,
+Paraview build has been done successfully but as I am not able to run with
+./bin/paraview
+
+I have checked bin directory in paraview_build, there is not paraview executable.
+Only executable with paraview name is paraview-config.
+
+How do I resolve this?
+
+Regards,
+Govind Sharma
+PhD Student
+Indian Institute of Delhi
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180929/1d923a15/attachment.html>
+

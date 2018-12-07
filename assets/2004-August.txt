@@ -1,0 +1,424 @@
+From insley at mcs.anl.gov  Fri Aug  6 15:03:48 2004
+From: insley at mcs.anl.gov (Joseph Insley)
+Date: Fri Aug  6 15:03:56 2004
+Subject: [Paraview] paraview in client/server mode
+Message-ID: <Pine.LNX.4.58.0408061136010.2025@terra.mcs.anl.gov>
+
+
+Hello all,
+
+My apologies if this question has been previously asked and answered. 
+I did a brief search of the archive of the mailing list, but didn't find 
+anything.
+
+I have been able to successfully run ParaView in client/server mode, 
+starting the server on a set of linux nodes, and connecting to it via a 
+client running from a remote desktop machine.  In my experience, once a 
+client connects to the server, the server will exit when the client 
+disconnects.  My question is, is there any way to change this behavior?  
+What I would like to be able to do is run ParaView as a service.  That is, 
+start up ParaView in server mode, allow a client to connect to it.  When 
+that client is done using the server for whatever computation/rendering it 
+needs, allow the client to disconnect, but keep the server running.  I 
+would then like to be able to connect to that same server from a different 
+client, running on a different desktop.  The two client sessions would be 
+completely independant of each other.  Is there currently a way to invoke 
+this type of behavior in the server?
+
+thanks for your help,
+joe.
+
+
+====================================================================
+joseph a. insley				insley@mcs.anl.gov
+mathematics & computer science division		(630) 252-5649
+argonne national laboratory                     (630) 252-5986 (fax)
+http://www.mcs.anl.gov/~insley
+====================================================================
+From welling at stat.cmu.edu  Mon Aug  9 16:28:50 2004
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Mon Aug  9 16:29:00 2004
+Subject: [Paraview] cmake is making bad decisions on our compiler
+Message-ID: <200408092028.i79KSoGT014140@tingenek.stat.cmu.edu>
+
+
+Hi folks;
+  We're trying to compile ParaView on our Compaq Alpha Tru64 platform using 
+Compaq's cxx and cc compilers rather than GNU, and I've noticed that the cmake 
+process seems to be making some incorrect inferences.  So far, I have found 
+that it is incorrectly setting VTK_OSTREAM_SUPPORTS_LONG_LONG and 
+VTK_ISTREAM_SUPPORTS_LONG_LONG to false, even though the tests in HDF5Tests.c 
+seem to produce the correct result.  Also, H5_HAVE_ATTRIBUTE in H5pubconf.h is 
+being inappropriately set to 1, even though the test for that in HDF5Tests.c 
+seems to fail appropriately.
+  Is there any way I can debug this further?  I hate to just modify the 
+created .h files and carry on, knowing they will be overwritten with incorrect 
+values the next time I run cmake.  Is there any test I can perform on cmake to 
+verify that *it* has built correctly on this machine?
+
+Thanks,
+-Joel
+ welling@psc.edu
+
+
+From brad.king at kitware.com  Mon Aug  9 17:57:11 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Aug  9 17:56:32 2004
+Subject: [Paraview] cmake is making bad decisions on our compiler
+In-Reply-To: <200408092028.i79KSoGT014140@tingenek.stat.cmu.edu>
+References: <200408092028.i79KSoGT014140@tingenek.stat.cmu.edu>
+Message-ID: <4117F337.5030204@kitware.com>
+
+Joel Welling wrote:
+> Hi folks;
+>   We're trying to compile ParaView on our Compaq Alpha Tru64 platform using 
+> Compaq's cxx and cc compilers rather than GNU, and I've noticed that the cmake 
+> process seems to be making some incorrect inferences.  So far, I have found 
+> that it is incorrectly setting VTK_OSTREAM_SUPPORTS_LONG_LONG and 
+> VTK_ISTREAM_SUPPORTS_LONG_LONG to false, even though the tests in HDF5Tests.c 
+> seem to produce the correct result.  Also, H5_HAVE_ATTRIBUTE in H5pubconf.h is 
+> being inappropriately set to 1, even though the test for that in HDF5Tests.c 
+> seems to fail appropriately.
+
+Look at the test results reported in CMakeError.log and CMakeOutput.log 
+at the top of the build tree.  One of those files should have the output 
+from the try-compile used to check for long long support in the streams. 
+  The content of the output should tell you why the wrong result is 
+being determined.
+
+>   Is there any way I can debug this further?  I hate to just modify the 
+> created .h files and carry on, knowing they will be overwritten with incorrect 
+> values the next time I run cmake.
+
+The generated build system automatically re-runs CMake when files are 
+modified in order to rebuild dependencies.  This will also cause the .h 
+to be overwritten.
+
+ > Is there any test I can perform on cmake to
+> verify that *it* has built correctly on this machine?
+
+If you are building CMake yourself then you can just go to the build 
+tree and run "bin/ctest" or "make test" to run its tests.
+
+-Brad
+From welling at stat.cmu.edu  Tue Aug 10 16:08:02 2004
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Tue Aug 10 16:08:09 2004
+Subject: [Paraview] Re:  cmake is making bad decisions on our compiler
+In-Reply-To: Your message of "Tue, 10 Aug 2004 12:00:07 EDT."
+	<20040810160007.3D782192BF@public.kitware.com> 
+Message-ID: <200408102008.i7AK82wl016972@tingenek.stat.cmu.edu>
+
+
+Joel Welling wrote:
+> Hi folks;
+>   We're trying to compile ParaView on our Compaq Alpha Tru64 platform using 
+> Compaq's cxx and cc compilers rather than GNU, and I've noticed that the cmake 
+> process seems to be making some incorrect inferences.  So far, I have found 
+> that it is incorrectly setting VTK_OSTREAM_SUPPORTS_LONG_LONG and 
+> VTK_ISTREAM_SUPPORTS_LONG_LONG to false, even though the tests in HDF5Tests.c 
+> seem to produce the correct result.  Also, H5_HAVE_ATTRIBUTE in H5pubconf.h is 
+> being inappropriately set to 1, even though the test for that in HDF5Tests.c 
+> seems to fail appropriately.
+
+The root cause of this problem seems to be that I was trying to use ccmake to 
+change my choice of compiler.  Apparently some configuration options get 
+frozen in the first time cmake does a 'configure', and that must happen before 
+ccmake can change the compiler.  The result is that those options are always 
+frozen in based on the default compiler, which in our case is gnu.  If the 
+options are different from those required with the desired compiler, well, 
+tough noogies on you.
+
+One solution is to always specify the compilers by setting the CXX and CC 
+environment variables before starting up ccmake for the first time.  I was 
+able to solve my problem by deleting everything back down to an empty binary 
+tree, setting those environment variables, and then doing ccmake.  (Thanks, 
+Bill!)
+
+-Joel
+
+From johannes.barner at web.de  Wed Aug 11 11:31:20 2004
+From: johannes.barner at web.de (Johannes Barner)
+Date: Wed Aug 11 11:31:32 2004
+Subject: [Paraview] error importing vts on IRIX
+Message-ID: <613878207@web.de>
+
+Hello,
+
+I tried to import the following vts file into paraview-1.4.2
+
+<?xml version="1.0"?>
+<VTKFile type="StructuredGrid" version="0.1">
+  <StructuredGrid WholeExtent="0 2 0 2 0 0">
+    <Piece Extent="0 2 0 2 0 0">
+      <Points>
+        <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+           -1.0 -1.0  0.0  0.0 -1.0  0.5  1.0 -1.0  0.0
+           -1.0  0.0  0.4  0.0  0.0  0.3  1.0  0.0  0.4
+           -1.0  1.0  0.0  0.0  1.0  0.5  1.0  1.0  0.8
+        </DataArray>
+      </Points>
+      <PointData Scalars="Height">
+        <DataArray type="Float32" Name="Height" format="ascii">
+          0. .5 0. 0.4  0.3  0.4 0. .5 .8
+        </DataArray>
+      </PointData>
+    </Piece>
+  </StructuredGrid>
+</VTKFile>
+
+This works fine on a Linux box, but with IRIX 6.5 I got the
+following message and no visualization of the contents:
+
+ErrorMessage
+# Error or warning: There was a VTK Error in file: /usr/local/src/paraview-1.4.2/VTK/IO/vtkXMLStructuredDataReader.cxx (277)
+ Error reading extent 0 2 0 2 0 0 from piece 0
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file: /usr/local/src/paraview-1.4.2/VTK/IO/vtkXMLStructuredDataReader.cxx (277)
+ Error reading extent 0 2 0 2 0 0 from piece 0
+ErrorMessage end
+
+Any suggestions?
+Thanks, Johannes
+_______________________________________________________
+WEB.DE Video-Mail - Sagen Sie mehr mit bewegten Bildern
+Informationen unter: http://freemail.web.de/?mc=021199
+
+From brad.king at kitware.com  Wed Aug 11 16:39:04 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed Aug 11 16:38:27 2004
+Subject: [Paraview] error importing vts on IRIX
+In-Reply-To: <613878207@web.de>
+References: <613878207@web.de>
+Message-ID: <411A83E8.2010006@kitware.com>
+
+Johannes Barner wrote:
+> This works fine on a Linux box, but with IRIX 6.5 I got the
+> following message and no visualization of the contents:
+> 
+> ErrorMessage
+> # Error or warning: There was a VTK Error in file: /usr/local/src/paraview-1.4.2/VTK/IO/vtkXMLStructuredDataReader.cxx (277)
+>  Error reading extent 0 2 0 2 0 0 from piece 0
+> ErrorMessage end
+
+Several major MIPSpro compiler versions were released with a buggy 
+streams library.  A huge amount of work has been put into tracking down 
+these bugs and putting work-arounds in VTK.  This may be yet another 
+such problem.
+
+What is your compiler version (output of CC -version)?
+
+Also, please go to the top level of the build tree.  There should be 
+files called CMakeError.log and CMakeCache.txt.  Please send me the 
+CMakeError.log via private email (no need to clutter the list) along 
+with the output of running
+
+  grep EOF_RESULT CMakeCache.txt
+
+in that directory.
+
+Thanks,
+-Brad
+From johannes.barner at web.de  Thu Aug 12 06:52:46 2004
+From: johannes.barner at web.de (Johannes Barner)
+Date: Thu Aug 12 06:53:02 2004
+Subject: [Paraview] error importing vts on IRIX
+Message-ID: <614887821@web.de>
+
+Brad King <brad.king@kitware.com> schrieb am 11.08.04 22:38:29:
+> 
+> Johannes Barner wrote:
+> > This works fine on a Linux box, but with IRIX 6.5 I got the
+> > following message and no visualization of the contents:
+> > 
+> > ErrorMessage
+> > # Error or warning: There was a VTK Error in file: /usr/local/src/paraview-1.4.2/VTK/IO/vtkXMLStructuredDataReader.cxx (277)
+> >  Error reading extent 0 2 0 2 0 0 from piece 0
+> > ErrorMessage end
+> 
+> Several major MIPSpro compiler versions were released with a buggy 
+> streams library.  A huge amount of work has been put into tracking down 
+> these bugs and putting work-arounds in VTK.  This may be yet another 
+> such problem.
+> 
+> What is your compiler version (output of CC -version)?
+
+I have built with MIPSpro Compilers: Version 7.3.1.2m,
+but we have also have MIPSpro Compilers: Version 7.41 installed
+on one of our machines.
+Some people told me, that V7.41 is much better,
+so I will make a new build with the newer version.
+
+> 
+> Also, please go to the top level of the build tree.  There should be 
+> files called CMakeError.log and CMakeCache.txt.  Please send me the 
+> CMakeError.log via private email (no need to clutter the list) along 
+> with the output of running
+> 
+>   grep EOF_RESULT CMakeCache.txt
+
+no longer vailable
+
+> 
+> in that directory.
+> 
+> Thanks,
+> -Brad
+
+Thanks a lot
+Johannes
+____________________________________________________
+Aufnehmen, abschicken, nah sein - So einfach ist 
+WEB.DE Video-Mail: http://freemail.web.de/?mc=021200
+
+From johannes.barner at web.de  Thu Aug 12 11:27:49 2004
+From: johannes.barner at web.de (Johannes Barner)
+Date: Thu Aug 12 11:27:55 2004
+Subject: [Paraview] error importing vts on IRIX
+Message-ID: <615254580@web.de>
+
+Hello,
+
+I tried to build paraview-1.4.3 on IRIX 6.5 with
+the new MIPSpro Compiler Version 7.41 and got the following error:
+
+/home/cp0885/disk1/mid/IRIX64/Common/KWCommon: building default_target
+Building object file ProcessXML.o...
+cc-1324 CC: ERROR File = /usr/local/src/paraview-1.4.3/Common/KWCommon/ProcessXML.cxx, Line = 54
+  More than one operator "-" matches the specified operands.
+
+            Built-in operator "arithmetic - arithmetic" has an overloading
+                      ambiguity.
+            Function symbol function
+                      "std::fpos<std::mbstate_t>::operator-(std::streamoff)"
+                      is ambiguous by inheritance.
+            The operand types are:  std::basic_ostream<char,
+                      std::char_traits<char>>::pos_type - long.
+      if ( (this->Stream.tellp() - this->CurrentPosition) > this->MaxLen ||
+                                 ^
+
+1 error detected in the compilation of "/usr/local/src/paraview-1.4.3/Common/KWCommon/ProcessXML.cxx".
+
+Any hints? I am no C++ expert.
+Thanks Johannes
+____________________________________________________
+Aufnehmen, abschicken, nah sein - So einfach ist 
+WEB.DE Video-Mail: http://freemail.web.de/?mc=021200
+
+From rreis at aero.ist.utl.pt  Mon Aug 23 16:45:48 2004
+From: rreis at aero.ist.utl.pt (Ricardo Reis)
+Date: Mon Aug 23 16:46:00 2004
+Subject: [Paraview] image generation
+Message-ID: <Pine.LNX.4.60.0408232144330.23760@aero.ist.utl.pt>
+
+
+hi!
+
+I'm using linux and just wondering how does the save image works in 
+paraview because when i try to do it, generally end with the save box 
+plastered in the file...
+
+greets!,
+
+
+  Ricardo Reis
+
+  "Non Serviam"
+
+  n.p.: Mola Dudle, O Futuro s? se diz em particular
+  n.r.:
+
+                     <- Send with Pine Linux/Unix/Win/Mac OS->
+From welling at stat.cmu.edu  Mon Aug 23 20:25:14 2004
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Mon Aug 23 21:12:51 2004
+Subject: [Paraview] More cmake issues on Compaq Alpha OSF1
+Message-ID: <200408240025.i7O0PEbu017593@tingenek.stat.cmu.edu>
+
+
+Hi folks;
+  I'm building ParaView on a Compaq Alpha under OSF1 using MPI and OSMesa.  My 
+settings for the various CMAKE MESA lines are:
+
+OPENGL_INCLUDE_DIR /usr/local/packages/paraview/Mesa/include
+OPENGL_gl_LIBRARY /usr/local/packages/paraview/Mesa/lib/libGL.a
+OPENGL_glu_LIBRARY /usr/local/packages/paraview/Mesa/lib/libGLU.a
+OPENGL_xmesa_INCLUDE_DIR /usr/local/packages/paraview/Mesa/include
+OSMESA_INCLUDE_DIR /usr/local/packages/paraview/Mesa/include
+OSMESA_LIBRARY /usr/local/packages/paraview/Mesa/lib/libOSMesa.a
+
+Unfortunately my make is failing because cmake constructs Makefiles for which 
+the command line places -lGL before -lOSMesa.  libOSMesa refers to entry 
+points in libGL not needed elsewhere, and the linker is too stupid to look 
+backwards up its lib list to resolve the missing entry points.  I'm able to 
+work around the problem by manually editing the Makefiles to swap the order of 
+the libs.  This is happening in the VTK/whatever/Testing/Cxx directories, 
+where 'whatever' is  Graphics, Imaging, Rendering, Hybrid, or Parallel.  There 
+may be other directories as well, but Parallel is as far as my build has made 
+it.
+
+Thanks,
+-Joel
+ welling@psc.edu
+
+From sohail1979pk at yahoo.com  Sun Aug 29 10:30:59 2004
+From: sohail1979pk at yahoo.com (Sohail Ahmed)
+Date: Sun Aug 29 10:31:05 2004
+Subject: [Paraview] Paraview running under MPI
+Message-ID: <20040829143059.36817.qmail@web52305.mail.yahoo.com>
+
+hello 
+
+I tried to run paraview under MPI in client server
+mode on two nodes, each having two processors.I used
+the following command line: 
+mpirun -np 2 -machinefile ./mfile4p
+PARAVIEW/bin/paraview -v 
+(I am executing this command at master) 
+
+It gave me following error, something about not
+binding to the port. 
+Error message:"Waiting for client.......cannot bind
+socket to port 11111" 
+Can you help me out?? 
+Regards. 
+
+Sohail 
+....... 
+TU Braunschweig, Germany. 
+
+
+
+		
+_______________________________
+Do you Yahoo!?
+Win 1 of 4,000 free domain names from Yahoo! Enter now.
+http://promotions.yahoo.com/goldrush
+From dcthomp at speakeasy.net  Sun Aug 29 14:42:41 2004
+From: dcthomp at speakeasy.net (David Thompson)
+Date: Sun Aug 29 14:42:59 2004
+Subject: [Paraview] Paraview running under MPI
+In-Reply-To: <20040829143059.36817.qmail@web52305.mail.yahoo.com>
+References: <20040829143059.36817.qmail@web52305.mail.yahoo.com>
+Message-ID: <353E3168-F9EB-11D8-81E7-000D93C1CE72@speakeasy.net>
+
+> I tried to run paraview under MPI in client server
+> mode on two nodes, each having two processors.I used
+> the following command line:
+> mpirun -np 2 -machinefile ./mfile4p
+> PARAVIEW/bin/paraview -v
+> (I am executing this command at master)
+>
+> It gave me following error, something about not
+> binding to the port.
+> Error message:"Waiting for client.......cannot bind
+> socket to port 11111"
+> Can you help me out??
+Usually, you get this message when some other program is already using 
+that port. Perhaps another instance of ParaView is using the port? If 
+not, you might run "netstat -nlp" as root (Linux) to see if some other 
+program is occupying the port.
+
+         David
+

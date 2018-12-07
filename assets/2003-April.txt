@@ -1,0 +1,323 @@
+From heiland@ncsa.uiuc.edu  Thu Apr  3 17:13:26 2003
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Thu, 3 Apr 2003 11:13:26 -0600
+Subject: [Paraview] client-server
+Message-ID: <1030403111326.ZM3656@pecos.ncsa.uiuc.edu>
+
+Howdy,
+
+I was wondering if someone (Berk? Charles?) would care to comment on plans for
+evolving ParaView into a client-server app.  I think I've seen this mentioned
+in past posts, but maybe I was wishfully dreaming :)  If there are indeed plans
+(or if it's already underway), could you share at least the rough design?
+
+thanks,
+--Randy
+
+From berklist@nycap.rr.com  Thu Apr  3 18:15:54 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 03 Apr 2003 13:15:54 -0500
+Subject: [Paraview] client-server
+In-Reply-To: <1030403111326.ZM3656@pecos.ncsa.uiuc.edu>
+References: <1030403111326.ZM3656@pecos.ncsa.uiuc.edu>
+Message-ID: <1049393755.11036.50.camel@caemlyn.kitwarein.com>
+
+Hi Randy,
+
+ParaView has a client-server mode.  However, as it is, this is
+mainly to allow separation between the visualization server/cluster
+and a display workstation/cluster (so that the display 
+workstation/cluster does not have to belong to the same MPI group
+as the visualization server). The client connects to the server
+using sockets. This doesn't mean that it is easy to
+write your own client. The main issue is that the server is pretty
+dumb. It is essentially a parallel tcl interpreter which receives
+commands from the client and executes them in parallel. There is
+some additional logic in there to collect things like array bounds
+but it is quite limited. The client stores all the higher level
+objects and generates the necessary tcl commands to be passed to
+the server. Unfortunately, a lot of the higher level objects are
+very closely tied with the GUI objects (sometimes, a GUI object
+contains code which manages the server commands AND the user
+interface). Because of this, it is not that easy to create a smarter
+server or even a middle tier that does not have any GUI code.
+Currently, we have no plans to work on such a separation. I think
+that it would be a nice feature but our resources are limited
+and we are focused on other features.
+
+-Berk
+
+On Thu, 2003-04-03 at 12:13, Randy Heiland wrote:
+> Howdy,
+> 
+> I was wondering if someone (Berk? Charles?) would care to comment on plans for
+> evolving ParaView into a client-server app.  I think I've seen this mentioned
+> in past posts, but maybe I was wishfully dreaming :)  If there are indeed plans
+> (or if it's already underway), could you share at least the rough design?
+> 
+> thanks,
+> --Randy
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From harel@gocre.ocre.cea.fr  Mon Apr 14 11:51:29 2003
+From: harel@gocre.ocre.cea.fr (Guenole HAREL)
+Date: Mon, 14 Apr 2003 11:51:29 +0100
+Subject: [Paraview] Advanced Reader
+Message-ID: <200304141051.h3EApTG03588@gocre.ocre.cea.fr>
+
+	Hi,
+
+	I want to know why in the "Advanced Reader" MMI there is obligatorily the
+field "FileName". Indeed, if we change the source file name the MMI becomes
+wrong. For example I put in "standardReader.XML" an "ArraySelection" tag, so
+the reader builds a menu with the name of all the arrays in the file. But if
+I change the path to select a new file, the arrays menu is not update.
+
+So my question is: how can I remove the field "FileName" ?
+
+Thanks,
+Guénolé Harel
+
+From nipedersen@grundfos.com  Wed Apr 16 10:33:31 2003
+From: nipedersen@grundfos.com (nipedersen@grundfos.com)
+Date: Wed, 16 Apr 2003 11:33:31 +0200
+Subject: [Paraview] VRML reader in Paraview
+Message-ID: <OF12A9B637.78B05918-ONC1256D0A.00333195@grundfos.com>
+
+Hi
+
+For the purpose of visualizing CFD- or experimentally generated velocity
+vector data on top of a CAD-generated VRML-file (of a corresponding 3D
+machine geometry), I need to figure out how to import VRML-files into
+Paraview.
+
+The 'features list' of Paraview says that any VTK filter can be added by
+providing a simple XML description.
+
+But, being new to both VTK, Paraview and XML, a simple example of such an
+XML code would come very handy for me at this stage. If somebody has
+experience in importing VRML-files into Paraview I would be happy to get
+some hints.
+
+I know that MayaVi is capable of importing/showing VRML-files, but it is my
+impression that Paraview is generally more flexible.
+
+Any hints are welcome,
+
+Regards,
+
+Nicholas Pedersen
+
+---------------------------------------------------------------------------------------------------------
+
+Nicholas Pedersen, Ph.D.            Email: nipedersen@grundfos.com
+Development Engineer                 Tel: +45 8750 4767 (direct)
+Fluid Dynamic Engineering          Fax: +45 8750 1491
+Grundfos Management A/S
+Poul Due Jensens Vej 7
+DK-8850 Bjerringbro
+---------------------------------------------------------------------------------------------------------
+
+
+
+From charles.law@kitware.com  Thu Apr 17 16:10:42 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 17 Apr 2003 11:10:42 -0400
+Subject: [Paraview] VRML reader in Paraview
+In-Reply-To: <OF12A9B637.78B05918-ONC1256D0A.00333195@grundfos.com>
+Message-ID: <5.1.0.14.0.20030417110558.02ed7180@pop.biz.rr.com>
+
+Hello Nicholas,
+
+We do not currently have a method for using VTK Importers in ParaView.  I 
+added a vtkSource to ParaView that reads VRML geometry.  This works, but 
+you lose parts colors, texture maps, lights ...
+
+I just checked in the new reader into ParaView CVS.
+
+Charles.
+
+
+
+At 11:33 AM 4/16/2003 +0200, nipedersen@grundfos.com wrote:
+>Hi
+>
+>For the purpose of visualizing CFD- or experimentally generated velocity
+>vector data on top of a CAD-generated VRML-file (of a corresponding 3D
+>machine geometry), I need to figure out how to import VRML-files into
+>Paraview.
+>
+>The 'features list' of Paraview says that any VTK filter can be added by
+>providing a simple XML description.
+>
+>But, being new to both VTK, Paraview and XML, a simple example of such an
+>XML code would come very handy for me at this stage. If somebody has
+>experience in importing VRML-files into Paraview I would be happy to get
+>some hints.
+>
+>I know that MayaVi is capable of importing/showing VRML-files, but it is my
+>impression that Paraview is generally more flexible.
+>
+>Any hints are welcome,
+>
+>Regards,
+>
+>Nicholas Pedersen
+>
+>---------------------------------------------------------------------------------------------------------
+>
+>Nicholas Pedersen, Ph.D.            Email: nipedersen@grundfos.com
+>Development Engineer                 Tel: +45 8750 4767 (direct)
+>Fluid Dynamic Engineering          Fax: +45 8750 1491
+>Grundfos Management A/S
+>Poul Due Jensens Vej 7
+>DK-8850 Bjerringbro
+>---------------------------------------------------------------------------------------------------------
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From berk.geveci@kitware.com  Fri Apr 18 16:34:36 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 18 Apr 2003 11:34:36 -0400
+Subject: [Paraview] Re: Asking for information
+In-Reply-To: <000801c305a1$03d6ace0$c513d293@pinacotheque>
+References: <000801c305a1$03d6ace0$c513d293@pinacotheque>
+Message-ID: <1050680083.18842.133.camel@caemlyn.kitwarein.com>
+
+Hi,
+
+In the future, please send a copy of your questions to the ParaView
+mailing list so that other users may benefit from the answers. Also,
+you might want to take a look at the archives, the answer to your
+question might be there.
+
+> Currently, i'm trying to add a new forma of reader to Paraview but i find a lot of difficulties.
+> Can you, please, describe me the main steps of adding  a new modules or indique me a complete tutorial.
+
+Here is part of a message I posted to the ParaView mailing list
+some time ago:
+
+The reason we have not provided any documentation nor a DTD for 
+the XML used in ParaView is that it is still changing rapidly
+and that we did not want to tie ourselves to anything before
+we have something we believe is final. Having said that, I can
+give you some pointers:
+
+1. When ParaView starts, it looks in a directory pointed by
+the PV_INTERFACE_PATH env. variable and tries to load all
+.xml files there.
+
+2. If you compiled your own sources and filters into a separate
+library, you have to tell ParaView to load it in the XML. NOTE:
+You need to generate the TCL wrapped library as well. Here is
+how to do it:
+
+<ModuleInterfaces>
+  <Library name="vtkMyLibraryTCL"/>
+  <!-- interface description for the modules goes here-->
+</ModuleInterfaces>
+
+You also have to setup your TCLLIBPATH and PATH to include
+where the library is.
+
+3. Look at ParaView/vtkPVDefaultModules.h to see how the
+modules in ParaView are done. It is a little hard to read
+but should contain all the information you need. 
+(Note: In the current cvs version of ParaView, vtkPVDefaultModules.h
+is no more. The default configuration are stored in
+ParaView/Resource/*.xml instead)
+
+4. Keep in mind that the XML can change and you might end up
+having to update your XML files in future.
+
+-Berk
+
+
+
+
+From benhamza@enseirb.fr  Sat Apr 19 16:27:32 2003
+From: benhamza@enseirb.fr (BENHAMZA Amine)
+Date: Sat, 19 Apr 2003 17:27:32 +0200 (CEST)
+Subject: [Paraview] Asking for information.
+Message-ID: <Pine.LNX.4.33.0304191715340.9937-100000@marmottan>
+
+Hi every body,
+I'm student, needing some help.
+I hae some questions about adding new modules to Paraview. 
+I think there is two ways to do it.
+If i consider the new module as default module, what are the makefiles do 
+i have to update. The second case is to compile the new module in a 
+separate library; that's what i did.the problem i found is how to built 
+dynamic library to be charged in the execution.
+
+Thanks.
+
+Amine. 
+
+
+From benhamza@enseirb.fr  Fri Apr 25 16:44:39 2003
+From: benhamza@enseirb.fr (BENHAMZA Amine)
+Date: Fri, 25 Apr 2003 17:44:39 +0200 (CEST)
+Subject: [Paraview] locking for prototypes.
+Message-ID: <Pine.LNX.4.33.0304251738110.1969-100000@prado>
+
+hi every body,
+i'm trying to add a new source to paraview. To do so, i need to consult 
+the prototypes of the existing sources.
+i couldn't find the xml configuration file to be parsed for instantiate 
+clones.
+
+Can you tell me where can i find this file .
+
+Thank you.
+
+Bye.
+
+Amine.
+
+
+From berklist@nycap.rr.com  Fri Apr 25 18:16:09 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 25 Apr 2003 13:16:09 -0400
+Subject: [Paraview] locking for prototypes.
+In-Reply-To: <Pine.LNX.4.33.0304251738110.1969-100000@prado>
+References: <Pine.LNX.4.33.0304251738110.1969-100000@prado>
+Message-ID: <1051290969.3463.0.camel@caemlyn.kitwarein.com>
+
+I have already answered this question. Look at
+
+http://public.kitware.com/pipermail/paraview/2003-April/000138.html
+
+On Fri, 2003-04-25 at 11:44, BENHAMZA Amine wrote:
+> hi every body,
+> i'm trying to add a new source to paraview. To do so, i need to consult 
+> the prototypes of the existing sources.
+> i couldn't find the xml configuration file to be parsed for instantiate 
+> clones.
+> 
+> Can you tell me where can i find this file .
+> 
+> Thank you.
+> 
+> Bye.
+> 
+> Amine.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+

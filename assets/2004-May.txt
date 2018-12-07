@@ -1,0 +1,4019 @@
+From Stephen.Wornom@sophia.inria.fr  Tue May  4 10:06:42 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 04 May 2004 11:06:42 +0200
+Subject: [Paraview] Wish list
+References: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+ <1079475094.22820.167.camel@silverymoon> <2888.128.165.144.120.1079479892.squirrel@webmail2.pair.com>
+Message-ID: <40975D22.79777848@sophia.inria.fr>
+
+I would like to add an item to the wish list for transient data. I save
+my data at let's say every 50 time steps.
+...
+solf.002150.Rho.vtk
+solf.002200.Rho.vtk
+solf.002250.Rho.vtk 
+
+There sets of data the last being solf.002250.data
+
+When I do an animation with ParaView the files must be numbered
+consecutively therefore I must do two
+Things:
+1-mv solf.002250.Rho.vtk solf.0046.vtk and likewise for each data file.
+2-remove the .Rho
+which is an time consuming and I need to note that solf.0046.vtk is
+really time step 2250 and it is my density file. What would be nice is
+to specify the number of time steps and the interval (2250 50).
+Stephen
+
+
+
+
+
+Robert Ferrell wrote:
+> 
+> <quote who="Berk Geveci">
+> > Thanks Robert. This is great feedback. Comments are embedded below:
+> >
+> >> Time Series
+> >> ====================
+> 
+> <snip>
+> 
+> > I understand your requirements. We need to seriously consider how we
+> > need to handle time (and potentially other attributes associated with
+> > datasets). This is in our todo list but not necessarily a short term
+> > goal.
+> 
+> If there is something you can do "short term" which doesn't take too much
+> time away from other important stuff :) that would be extremely helpful.
+> 
+> >
+> >> Data Interrogation
+> >> ====================
+> >> I haven't had much luck using the line probe.  Among other things, I'd
+> >> like a line which changes with my animation.  Also, I can't figure out
+> >> how to tell it which field to plot.  And, it would be great if I could
+> >> display a few probed values in the image view.
+> >
+> > This is in active development. Charles is working on improving it.
+> >
+> >> I'd also like to be able to interogate along a contour and generate a
+> >> line plot.
+> >
+> > I don't exactly understand what "along a contour" means. How would you
+> > define the (poly)line along which to interrogate?
+> 
+> Define a curve by a contour, e.g. all X such that T(X) = 137.5.  Then,
+> make a line plot of some other variable, e.g. pressure, along that curve.
+> This would be even more useful if I could create contour of cell center
+> coordinates.
+> 
+> >
+> >> Finally, it would be really nice if I could enter a mode where I could
+> >> mouse around and interrogate field values interactively.
+> >
+> > I wholeheartedly agree. This is on top of my personal wish list too.
+> > ParaView needs much better interrogation capabilities, including picking
+> > (cells, points, on surfaces), labeling (cells ids, point ids) and
+> > probing.
+> 
+> Excellent.  Looking forward to it.
+> 
+> thanks
+> -robert
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From Stephen.Wornom@sophia.inria.fr  Tue May  4 13:19:43 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 04 May 2004 14:19:43 +0200
+Subject: [Paraview] paraview.1.2.1 pvb
+Message-ID: <40978A5F.E096B5DD@sophia.inria.fr>
+
+I am creating time-dependent images using paraview (44 sets of data). It
+works correctly in the interactive mode (creates 44 jpg images).
+However, if I save batch file, select offscreen rendering, and
+/net/home/swornom/paraview-1.2.1/bin/paraview -dr -b water.pvb
+where water.pvb is the batch file, it creates 44 indentical jpg images
+using only the first set of data. Any idea what  I am doing wrong?
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From berklist@nycap.rr.com  Tue May  4 14:36:53 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Tue, 04 May 2004 09:36:53 -0400
+Subject: [Paraview] paraview.1.2.1 pvb
+In-Reply-To: <40978A5F.E096B5DD@sophia.inria.fr>
+References: <40978A5F.E096B5DD@sophia.inria.fr>
+Message-ID: <1083677813.17618.40.camel@silverymoon>
+
+This should work in 1.4. We have already released a beta (currently
+Window binary only). Linux binaries and source tarball are on the way.
+
+On Tue, 2004-05-04 at 08:19, Stephen Wornom wrote:
+> I am creating time-dependent images using paraview (44 sets of data). It
+> works correctly in the interactive mode (creates 44 jpg images).
+> However, if I save batch file, select offscreen rendering, and
+> /net/home/swornom/paraview-1.2.1/bin/paraview -dr -b water.pvb
+> where water.pvb is the batch file, it creates 44 indentical jpg images
+> using only the first set of data. Any idea what  I am doing wrong?
+> Stephen
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From ferrell@lanl.gov  Tue May  4 15:38:48 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Tue, 4 May 2004 08:38:48 -0600 (MDT)
+Subject: [Paraview] Wish list
+In-Reply-To: <40975D22.79777848@sophia.inria.fr>
+References: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+ <1079475094.22820.167.camel@silverymoon>
+ <2888.128.165.144.120.1079479892.squirrel@webmail2.pair.com>
+ <40975D22.79777848@sophia.inria.fr>
+Message-ID: <3747.128.165.144.120.1083681528.squirrel@webmail3.pair.com>
+
+I think, but am not certain, that if you use a .pvd file containing a
+collection you can get around this problem.
+
+A .pvd file contains "meta-data" about the files which contain the
+timestep data.  In my case it looks like:
+
+<?xml version="1.0" ?>
+<VTKFile type="Collection" version="0.1">
+	<Collection>
+		<DataSet ComputationalStep="0" TimeValue="0.0" file="BoomOut.0.vtu"
+timestep="0"/>
+		<DataSet ComputationalStep="10000" TimeValue="1699.24599473"
+file="BoomOut.100.vtu" timestep="1"/>
+		<DataSet ComputationalStep="20000" TimeValue="3935.72359908"
+file="BoomOut.20.vtu" timestep="2"/>
+		<DataSet ComputationalStep="30000" TimeValue="6885.17303258"
+file="BoomOut.3.vtu" timestep="3"/>	</Collection>
+</VTKFile>
+
+The only attributes that ParaView looks for (currently) are the file and
+timestep attributes.  The ordering of the time series depends on the
+timestep attribute, not the file name.  (At least, it seems that way.  I'm
+not certain.)
+
+I'm using XML file formats.
+
+-robert
+
+From michael.gronager@uni-c.dk  Wed May  5 13:23:30 2004
+From: michael.gronager@uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Wed, 5 May 2004 14:23:30 +0200 (CEST)
+Subject: [Paraview] vtkMy on ParaView
+Message-ID: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk>
+
+Hi Berk (and others...),
+
+In the process of converting some code to a plugin for Paraview I tried to
+make vtkMy into a XML-module filter for paraview. And discovered that that
+was extremely hard:
+In order to compile vtkMy with TCL support VTK_WRAP_TCL has to be true,
+in the ParaView/CMakeLists.txt the following line:
+SET(VTK_WRAP_TCL OFF CACHE INTERNAL "" FORCE)
+enforces VTK_WRAP_TCL to be OFF and hence I cannot configure vtkMy with TCL
+wrapping ON (VTKMY_WRAP_TCL).
+I guess I need TCL wrapping in order to make extra ParaView Filters
+and also it seems like ParaView uses (some kind of?) TCL wrapping.
+
+How do I solve this problem.
+
+Once I get everything up and running the code will be opensourced - so
+others will be able to benefit from this as well..
+Best regards,
+
+Michael
+
+
+-- 
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+2800 Lyngby
+DENMARK
+
+Phone: +45 35878889
+Fax: +45 35878990
+Direct: +45 35878966
+Mobile: +45 24248207
+Email: mpg@uni-c.dk
+
+
+
+From berk.geveci@kitware.com  Wed May  5 14:19:05 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Wed, 05 May 2004 09:19:05 -0400
+Subject: [Paraview] vtkMy on ParaView
+In-Reply-To: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk>
+References: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk>
+Message-ID: <1083763145.17618.128.camel@silverymoon>
+
+Hi Michael,
+
+ParaView no longer requires TCL wrapping (1.2 and above). It uses a
+simple binary-stream wrapping for its internal communication. There is a
+way to have your own classes wrapped into this but I haven't done it so
+far. I'll let someone who knows more about this answer (Brad? Jean?).
+
+-Berk
+
+On Wed, 2004-05-05 at 08:23, Michael Grønager wrote:
+> Hi Berk (and others...),
+> 
+> In the process of converting some code to a plugin for Paraview I tried to
+> make vtkMy into a XML-module filter for paraview. And discovered that that
+> was extremely hard:
+> In order to compile vtkMy with TCL support VTK_WRAP_TCL has to be true,
+> in the ParaView/CMakeLists.txt the following line:
+> SET(VTK_WRAP_TCL OFF CACHE INTERNAL "" FORCE)
+> enforces VTK_WRAP_TCL to be OFF and hence I cannot configure vtkMy with TCL
+> wrapping ON (VTKMY_WRAP_TCL).
+> I guess I need TCL wrapping in order to make extra ParaView Filters
+> and also it seems like ParaView uses (some kind of?) TCL wrapping.
+> 
+> How do I solve this problem.
+> 
+> Once I get everything up and running the code will be opensourced - so
+> others will be able to benefit from this as well..
+> Best regards,
+> 
+> Michael
+
+
+
+From jfavre@cscs.ch  Wed May  5 16:12:51 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Wed, 05 May 2004 17:12:51 +0200
+Subject: [Paraview] vtkMy on ParaView
+In-Reply-To: <1083763145.17618.128.camel@silverymoon>
+References: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk> <1083763145.17618.128.camel@silverymoon>
+Message-ID: <40990473.7040906@cscs.ch>
+
+Berk Geveci wrote:
+>  I'll let someone who knows more about this answer (Brad? Jean?).
+
+Dang, I was hoping Berk would answer that. :-) I pulled my hair on this 
+issue and the only solution I could find is to build in 2 independent 
+directories, where the 1st CMakeLists.txt uses a VTK installation 
+independent of ParaView, and where the 2nd CMakeLists uses the ParaView 
+install.
+
+All the pertinent information about wrapping in ParaView were posted on 
+this list before.
+
+Jean
+-
+
+
+From brad.king@kitware.com  Wed May  5 16:17:16 2004
+From: brad.king@kitware.com (Brad King)
+Date: Wed, 05 May 2004 11:17:16 -0400
+Subject: [Paraview] vtkMy on ParaView
+In-Reply-To: <1083763145.17618.128.camel@silverymoon>
+References: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk> <1083763145.17618.128.camel@silverymoon>
+Message-ID: <4099057C.1070006@kitware.com>
+
+Berk Geveci wrote:
+> Hi Michael,
+> 
+> ParaView no longer requires TCL wrapping (1.2 and above). It uses a
+> simple binary-stream wrapping for its internal communication. There is a
+> way to have your own classes wrapped into this but I haven't done it so
+> far. I'll let someone who knows more about this answer (Brad? Jean?).
+
+I've created an example in the new ParaView source tree under 
+ParaView/Examples/PVLocal.  The directory contains a sample plugin and a 
+README.txt describing how to copy the sample and create your own plugin.
+
+-Brad
+
+From michael.gronager@uni-c.dk  Thu May  6 20:08:38 2004
+From: michael.gronager@uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Thu, 6 May 2004 21:08:38 +0200 (CEST)
+Subject: [Paraview] vtkMy on ParaView
+In-Reply-To: <4099057C.1070006@kitware.com>
+References: <1945.130.225.213.80.1083759810.squirrel@webmail.uni-c.dk>
+ <1083763145.17618.128.camel@silverymoon>
+ <4099057C.1070006@kitware.com>
+Message-ID: <3221.172.28.54.100.1083870518.squirrel@webmail.uni-c.dk>
+
+Hi Bart,
+
+I got your example up and running and everything works just fine! SO
+thanks again.
+However, now I have another problem: I want to watch a running calculation,
+and preferably I want the visualization to update as the data becomes
+awailable. I could implement this with an animation like loop of a dummy
+variable (timestep) going from 0 to infinity (=1000000). However, doing it
+this way stalls the interaction - I cannot rotate or change the
+visualization while the animation is on. I have also tried to overload the
+virtual Execute method and issue a Modified() at the end of Execute(), but
+it doesnt force a new call to execute :-(
+How do I solve this issue best?
+
+Regards,
+
+Michael
+
+
+> Berk Geveci wrote:
+>> Hi Michael,
+>>
+>> ParaView no longer requires TCL wrapping (1.2 and above). It uses a
+>> simple binary-stream wrapping for its internal communication. There is
+>> a way to have your own classes wrapped into this but I haven't done it
+>> so far. I'll let someone who knows more about this answer (Brad?
+>> Jean?).
+>
+> I've created an example in the new ParaView source tree under
+> ParaView/Examples/PVLocal.  The directory contains a sample plugin and
+> a  README.txt describing how to copy the sample and create your own
+> plugin.
+>
+> -Brad
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+-- 
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+2800 Lyngby
+DENMARK
+
+Phone: +45 35878889
+Fax: +45 35878990
+Direct: +45 35878966
+Mobile: +45 24248207
+Email: mpg@uni-c.dk
+
+
+
+From ezequiel@ipna.csic.es  Fri May  7 18:48:13 2004
+From: ezequiel@ipna.csic.es (Ezequiel Quintana)
+Date: Fri, 07 May 2004 17:48:13 +0000
+Subject: [Paraview] Calculating Volumes
+Message-ID: <409BCBDD.370853E8@ipna.csic.es>
+
+Hi,
+I'm new to paraview but I would like to say I find it very useful to my
+work (computational chemistry). I would like to ask you if there is any
+way to calculate the volume which is inside of an isosurface.
+I read a structured data set, h5 format, directly from an output
+produced by a molecular modeling program. I generate the contour and
+clip (using a sphere) the part of the surface I want to calculate the
+volume of, wich is like a 3D ballon. So, how can I calculate the volume
+of that ballon?
+
+Thanks,
+Ezequiel
+
+
+
+From gleicon@terra.com.br  Sat May  8 05:00:32 2004
+From: gleicon@terra.com.br (Gleicon Moraes)
+Date: Sat, 08 May 2004 01:00:32 -0300
+Subject: [Paraview] Paraview 1.2.1 metaimage header issue
+In-Reply-To: <20040507102559.6196.34704.Mailman@public.kitware.com>
+References: <20040507102559.6196.34704.Mailman@public.kitware.com>
+Message-ID: <409C5B60.3060408@terra.com.br>
+
+Hello !
+
+First post to the list, but have been reading it one way or another for 
+some time.
+I am having some issues regarding metaimage files (.mha or .mhd ).
+I have a raw dataset which loads and render ok into paraview, once I do 
+the proper tuning using the raw loader.
+Following the itk documentation instructions, I've edited a header for 
+it like that:
+
+NDims = 3
+DimSize = 17 20 19
+ElementType = MET_LONG
+ElementSpacing = 1.0 1.0 1.0
+ElementByteOrderMSB = TRUE
+ElementDataFile = my_data.raw
+
+(http://www.itk.org/HTML/Data.htm)
+
+The problem is, dont matter if I put true of false as 
+ElementByteOrderMSB value, it behaves as it's set to false.
+I even tried to write with capital letters, changing the raw dataset, 
+etc and all the way it gives me the same result as setting little endian 
+with the raw loader.
+I am using paraview-1.2.1, the binary package for linux, slackware 9.0 
+with all needed updates, almost current, but I got this error also with 
+  a debian-based machine.
+The other filters I tried are all ok, although I am pretty discovering 
+paraview and vtk yet.
+Thank you in advance for your attention, and forgive me if this is a 
+silly error, I just cant find any reference at the documentation I got.
+
+Best regards !
+
+
+-- 
+Gleicon S. Moraes
+gleicon [a] terra.com.br
+http://videodog.cjb.net
+
+
+From vitusm@rpi.edu  Sat May  8 17:37:29 2004
+From: vitusm@rpi.edu (Michael P. Vitus)
+Date: Sat, 8 May 2004 12:37:29 -0400
+Subject: [Paraview] Adding a Filter
+Message-ID: <002c01c4351a$c131ba60$60907180@stangz>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0029_01C434F9.3A093700
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+    I am using ParaView 1.3 and VTK 4.5.  I am trying to add in an =
+additional filter (vtkExtractGeometry), but I am having trouble figuring =
+out where to put the XML for the filter.  Someone at ParaView told me =
+create a new modules.xml file and set the environment variable =
+PV_INTERFACE_MODULE to the location of the modules.xml file, but =
+ParaView didn't show any sign of reading the modules.xml file.  I put in =
+an obvious error into the modules.xml file, but ParaView didn't throw an =
+error.
+
+    I then tried to put my XML code into =
+/ParaView/ParaView/Resources/Filters.xml file but it still didn't =
+produce any results.  I also, removed all of the XML within the =
+Filters.xml file to see if it was reading it, and it didn't produce any =
+results.  So that leads to me to question whether the XML file is =
+dynamically read when ParaView is initializing, or is it built into =
+ParaView during build time?  Also, what is the "correct" way to add a =
+new module/filter into ParaView?
+
+Thank You in advance for your help,
+
+Mike
+------=_NextPart_000_0029_01C434F9.3A093700
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>Hello,</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; I am using ParaView =
+1.3 and VTK=20
+4.5.&nbsp; I am trying to add in an additional filter =
+(vtkExtractGeometry), but=20
+I am having trouble figuring out where to put the XML for the =
+filter.&nbsp;=20
+Someone at ParaView told me create a new modules.xml file and set the=20
+environment variable PV_INTERFACE_MODULE to the location of the =
+modules.xml=20
+file, but ParaView didn't show any sign of reading the modules.xml =
+file.&nbsp; I=20
+put in an obvious error into the modules.xml file, but ParaView didn't =
+throw an=20
+error.</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; I then tried to put =
+my XML code=20
+into /ParaView/ParaView/Resources/Filters.xml file but it still didn't =
+produce=20
+any results.&nbsp; I also, removed all of the XML within the Filters.xml =
+file to=20
+see if it was reading it, and it didn't produce any results.&nbsp; So =
+that leads=20
+to me to question whether the XML file is dynamically read when ParaView =
+is=20
+initializing, or is it built into ParaView during build time?&nbsp; =
+Also, what=20
+is the "correct" way to add a new module/filter into =
+ParaView?</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Thank You in advance for your =
+help,</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Mike</FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_0029_01C434F9.3A093700--
+
+
+From michael.gronager@uni-c.dk  Sat May  8 21:18:26 2004
+From: michael.gronager@uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Sat, 8 May 2004 22:18:26 +0200 (CEST)
+Subject: [Paraview] animations in pv1.2 vs. pv1.5
+Message-ID: <1363.172.28.54.104.1084047506.squirrel@webmail.uni-c.dk>
+
+Hi,
+
+Regardig by last post... It is quite strange cos. when Im using paraview
+1.2 I can fully interact with GUI as well as 3D graphics while an
+animation is running. But in 1.5 the GUI and interaction is locked !?!
+Is this the intention ? - Personally I find the 1.2 way with interaction
+much more appealing... What needs to be changed (back) in order for
+animations not to block the GUI ?
+Btw. Im using Paraview on Windows XP (if this matters ...)
+
+Cheers,
+
+Michael
+
+
+-- 
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+2800 Lyngby
+DENMARK
+
+Phone: +45 35878889
+Fax: +45 35878990
+Direct: +45 35878966
+Mobile: +45 24248207
+Email: mpg@uni-c.dk
+
+
+
+From julien.alizier-ausy@irsn.fr  Mon May 10 08:13:00 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Mon, 10 May 2004 09:13:00 +0200
+Subject: [Paraview] Adding a Filter
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1D3@OREADE.ipsn.fr>
+
+Hi Michael,
+
+For testing, you can load an external XML file in ParaView using the
+"File/Import Package" menu.
+
+If you want to load it dynamically at start up, you must set
+PV_INTERFACE_PATH to point to the folder containing your *.xml files.
+PV_INTERFACE_PATH has the following TCL syntax: (forward slashes and =
+space
+separated path sequence)
+PV_INTERFACE_PATH=3D"C:/My plugin/autoloadxml" "C:/my second =
+plugin/xml"
+
+Once your xml file has been read succesfully, you should see your =
+filter in
+the filter menu.
+
+The XML code into /ParaView/ParaView/Resources/Filters.xml is compiled =
+into
+a c++ file (or sthg like that) so it is not loaded at run-time.
+
+(I use paraview 1.2.1)
+
+HTH
+
+-- Julien
+
+
+
+
+-----Message d'origine-----
+De : Michael P. Vitus [mailto:vitusm@rpi.edu]
+Envoy=E9 : samedi 8 mai 2004 18:37
+=C0 : paraview@paraview.org
+Cc : Kenneth Jansen
+Objet : [Paraview] Adding a Filter
+
+
+Hello,
+
+    I am using ParaView 1.3 and VTK 4.5.  I am trying to add in an
+additional filter (vtkExtractGeometry), but I am having trouble =
+figuring out
+where to put the XML for the filter.  Someone at ParaView told me =
+create a
+new modules.xml file and set the environment variable =
+PV_INTERFACE_MODULE to
+the location of the modules.xml file, but ParaView didn't show any sign =
+of
+reading the modules.xml file.  I put in an obvious error into the
+modules.xml file, but ParaView didn't throw an error.
+
+    I then tried to put my XML code into
+/ParaView/ParaView/Resources/Filters.xml file but it still didn't =
+produce
+any results.  I also, removed all of the XML within the Filters.xml =
+file to
+see if it was reading it, and it didn't produce any results.  So that =
+leads
+to me to question whether the XML file is dynamically read when =
+ParaView is
+initializing, or is it built into ParaView during build time?  Also, =
+what is
+the "correct" way to add a new module/filter into ParaView?
+
+Thank You in advance for your help,
+
+Mike
+
+From andy.cedilnik@kitware.com  Mon May 10 13:49:36 2004
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: Mon, 10 May 2004 08:49:36 -0400
+Subject: [Paraview] Paraview 1.2.1 metaimage header issue
+In-Reply-To: <409C5B60.3060408@terra.com.br>
+References: <20040507102559.6196.34704.Mailman@public.kitware.com>
+ <409C5B60.3060408@terra.com.br>
+Message-ID: <1084193376.11420.63.camel@andoria>
+
+Hi Gleicon,
+
+There were some issues with Meta Image reader. The new version of
+ParaView (1.4) soon to be released should fix all of them.
+
+				Andy
+
+On Sat, 2004-05-08 at 00:00, Gleicon Moraes wrote:
+> Hello !
+> 
+> First post to the list, but have been reading it one way or another for 
+> some time.
+> I am having some issues regarding metaimage files (.mha or .mhd ).
+> I have a raw dataset which loads and render ok into paraview, once I do 
+> the proper tuning using the raw loader.
+> Following the itk documentation instructions, I've edited a header for 
+> it like that:
+> 
+> NDims = 3
+> DimSize = 17 20 19
+> ElementType = MET_LONG
+> ElementSpacing = 1.0 1.0 1.0
+> ElementByteOrderMSB = TRUE
+> ElementDataFile = my_data.raw
+> 
+> (http://www.itk.org/HTML/Data.htm)
+> 
+> The problem is, dont matter if I put true of false as 
+> ElementByteOrderMSB value, it behaves as it's set to false.
+> I even tried to write with capital letters, changing the raw dataset, 
+> etc and all the way it gives me the same result as setting little endian 
+> with the raw loader.
+> I am using paraview-1.2.1, the binary package for linux, slackware 9.0 
+> with all needed updates, almost current, but I got this error also with 
+>   a debian-based machine.
+> The other filters I tried are all ok, although I am pretty discovering 
+> paraview and vtk yet.
+> Thank you in advance for your attention, and forgive me if this is a 
+> silly error, I just cant find any reference at the documentation I got.
+> 
+> Best regards !
+
+
+
+From charles.law@kitware.com  Mon May 10 17:13:03 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Mon, 10 May 2004 12:13:03 -0400
+Subject: [Paraview] Calculating Volumes
+In-Reply-To: <409BCBDD.370853E8@ipna.csic.es>
+References: <409BCBDD.370853E8@ipna.csic.es>
+Message-ID: <6.0.3.0.0.20040510120635.01c21be8@pop.biz.rr.com>
+
+Ezequiel,
+
+Although VTK has a filter (vtkMassProperties) that calculates the volume of 
+a closed surface, it has not been integrated into ParaView.  You could save 
+out the data and use a VTK script to compute the volume.
+
+Although it will not probably help you, you can get an estimate of the 
+volume if your structured data set is a uniform grid (image).  Just use 
+threshold instead of contour and look at the number of cells on the 
+information page.
+
+Charles.
+
+
+
+
+
+At 01:48 PM 5/7/2004, Ezequiel Quintana wrote:
+>Hi,
+>I'm new to paraview but I would like to say I find it very useful to my
+>work (computational chemistry). I would like to ask you if there is any
+>way to calculate the volume which is inside of an isosurface.
+>I read a structured data set, h5 format, directly from an output
+>produced by a molecular modeling program. I generate the contour and
+>clip (using a sphere) the part of the surface I want to calculate the
+>volume of, wich is like a 3D ballon. So, how can I calculate the volume
+>of that ballon?
+>
+>Thanks,
+>Ezequiel
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From ezequiel@ipna.csic.es  Mon May 10 17:35:12 2004
+From: ezequiel@ipna.csic.es (Ezequiel Quintana)
+Date: 10 May 2004 16:35:12 +0000
+Subject: [Paraview] Calculating Volumes
+In-Reply-To: <6.0.3.0.0.20040510120635.01c21be8@pop.biz.rr.com>
+References: <409BCBDD.370853E8@ipna.csic.es>
+ <6.0.3.0.0.20040510120635.01c21be8@pop.biz.rr.com>
+Message-ID: <1084206911.2264.4.camel@octane.ipna.csic.es>
+
+Charles,
+
+Thanks for your answer. Reading the ParaView documentation it's supposed
+I can use any VTK filter in ParaView (eventually,:-)), so I will make a
+try.
+
+Thanks again,
+Ezequiel
+
+
+On Mon, 2004-05-10 at 16:13, Charles Law wrote:
+> Ezequiel,
+> 
+> Although VTK has a filter (vtkMassProperties) that calculates the volume of 
+> a closed surface, it has not been integrated into ParaView.  You could save 
+> out the data and use a VTK script to compute the volume.
+> 
+> Although it will not probably help you, you can get an estimate of the 
+> volume if your structured data set is a uniform grid (image).  Just use 
+> threshold instead of contour and look at the number of cells on the 
+> information page.
+> 
+> Charles.
+> 
+> 
+> 
+> 
+> 
+> At 01:48 PM 5/7/2004, Ezequiel Quintana wrote:
+> >Hi,
+> >I'm new to paraview but I would like to say I find it very useful to my
+> >work (computational chemistry). I would like to ask you if there is any
+> >way to calculate the volume which is inside of an isosurface.
+> >I read a structured data set, h5 format, directly from an output
+> >produced by a molecular modeling program. I generate the contour and
+> >clip (using a sphere) the part of the surface I want to calculate the
+> >volume of, wich is like a 3D ballon. So, how can I calculate the volume
+> >of that ballon?
+> >
+> >Thanks,
+> >Ezequiel
+> >
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+
+From gleicon@terra.com.br  Mon May 10 21:12:27 2004
+From: gleicon@terra.com.br (Gleicon Moraes)
+Date: Mon, 10 May 2004 17:12:27 -0300
+Subject: [Paraview] Paraview 1.2.1 metaimage header issue
+In-Reply-To: <1084193376.11420.63.camel@andoria>
+References: <20040507102559.6196.34704.Mailman@public.kitware.com>	 <409C5B60.3060408@terra.com.br> <1084193376.11420.63.camel@andoria>
+Message-ID: <409FE22B.30402@terra.com.br>
+
+Hi Andy.
+Let me know if I can help testing it. My paraview version is 1.2.1 ( 
+binary package) but I am trying to build an source code version from cvs.
+Also, I know a bit of C++ , so if you think I can be of any use in this 
+issue, drop a line.
+Thank you for the feedback.
+
+Best regards,
+
+Gleicon S. Moraes
+
+
+Andy Cedilnik wrote:
+> Hi Gleicon,
+> 
+> There were some issues with Meta Image reader. The new version of
+> ParaView (1.4) soon to be released should fix all of them.
+> 
+> 				Andy
+> 
+> On Sat, 2004-05-08 at 00:00, Gleicon Moraes wrote:
+> 
+>>Hello !
+>>
+>>First post to the list, but have been reading it one way or another for 
+>>some time.
+>>I am having some issues regarding metaimage files (.mha or .mhd ).
+>>I have a raw dataset which loads and render ok into paraview, once I do 
+>>the proper tuning using the raw loader.
+>>Following the itk documentation instructions, I've edited a header for 
+>>it like that:
+>>
+>>NDims = 3
+>>DimSize = 17 20 19
+>>ElementType = MET_LONG
+>>ElementSpacing = 1.0 1.0 1.0
+>>ElementByteOrderMSB = TRUE
+>>ElementDataFile = my_data.raw
+>>
+>>(http://www.itk.org/HTML/Data.htm)
+>>
+>>The problem is, dont matter if I put true of false as 
+>>ElementByteOrderMSB value, it behaves as it's set to false.
+>>I even tried to write with capital letters, changing the raw dataset, 
+>>etc and all the way it gives me the same result as setting little endian 
+>>with the raw loader.
+>>I am using paraview-1.2.1, the binary package for linux, slackware 9.0 
+>>with all needed updates, almost current, but I got this error also with 
+>>  a debian-based machine.
+>>The other filters I tried are all ok, although I am pretty discovering 
+>>paraview and vtk yet.
+>>Thank you in advance for your attention, and forgive me if this is a 
+>>silly error, I just cant find any reference at the documentation I got.
+>>
+>>Best regards !
+> 
+> 
+> 
+> 
+> 
+
+-- 
+Gleicon S. Moraes
+gleicon [a] terra.com.br
+http://videodog.cjb.net
+
+
+From andy.cedilnik@kitware.com  Mon May 10 21:18:04 2004
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: Mon, 10 May 2004 16:18:04 -0400
+Subject: [Paraview] Paraview 1.2.1 metaimage header issue
+In-Reply-To: <409FE22B.30402@terra.com.br>
+References: <20040507102559.6196.34704.Mailman@public.kitware.com>
+ <409C5B60.3060408@terra.com.br> <1084193376.11420.63.camel@andoria>
+ <409FE22B.30402@terra.com.br>
+Message-ID: <1084220284.11420.78.camel@andoria>
+
+Hi Gleicon,
+
+Please try to update your CVS ParaView to ParaView-1-4 tag. Then let me
+know if there are any issues with MHD.
+
+			Andy
+
+On Mon, 2004-05-10 at 16:12, Gleicon Moraes wrote:
+> Hi Andy.
+> Let me know if I can help testing it. My paraview version is 1.2.1 ( 
+> binary package) but I am trying to build an source code version from cvs.
+> Also, I know a bit of C++ , so if you think I can be of any use in this 
+> issue, drop a line.
+> Thank you for the feedback.
+> 
+> Best regards,
+> 
+> Gleicon S. Moraes
+> 
+> 
+> Andy Cedilnik wrote:
+> > Hi Gleicon,
+> > 
+> > There were some issues with Meta Image reader. The new version of
+> > ParaView (1.4) soon to be released should fix all of them.
+> > 
+> > 				Andy
+> > 
+> > On Sat, 2004-05-08 at 00:00, Gleicon Moraes wrote:
+> > 
+> >>Hello !
+> >>
+> >>First post to the list, but have been reading it one way or another for 
+> >>some time.
+> >>I am having some issues regarding metaimage files (.mha or .mhd ).
+> >>I have a raw dataset which loads and render ok into paraview, once I do 
+> >>the proper tuning using the raw loader.
+> >>Following the itk documentation instructions, I've edited a header for 
+> >>it like that:
+> >>
+> >>NDims = 3
+> >>DimSize = 17 20 19
+> >>ElementType = MET_LONG
+> >>ElementSpacing = 1.0 1.0 1.0
+> >>ElementByteOrderMSB = TRUE
+> >>ElementDataFile = my_data.raw
+> >>
+> >>(http://www.itk.org/HTML/Data.htm)
+> >>
+> >>The problem is, dont matter if I put true of false as 
+> >>ElementByteOrderMSB value, it behaves as it's set to false.
+> >>I even tried to write with capital letters, changing the raw dataset, 
+> >>etc and all the way it gives me the same result as setting little endian 
+> >>with the raw loader.
+> >>I am using paraview-1.2.1, the binary package for linux, slackware 9.0 
+> >>with all needed updates, almost current, but I got this error also with 
+> >>  a debian-based machine.
+> >>The other filters I tried are all ok, although I am pretty discovering 
+> >>paraview and vtk yet.
+> >>Thank you in advance for your attention, and forgive me if this is a 
+> >>silly error, I just cant find any reference at the documentation I got.
+
+
+
+From freud@cab.bau.tu-bs.de  Thu May 13 18:07:53 2004
+From: freud@cab.bau.tu-bs.de (=?iso-8859-1?Q?S=F6ren_Freudiger?=)
+Date: Thu, 13 May 2004 19:07:53 +0200
+Subject: [Paraview] Combine vect
+Message-ID: <20040513170657.BB7EB21AC1@elrond.cab.bau.tu-bs.de>
+
+Hello
+Is it possible to combine scalars to a vector?
+I only have got scalars and want to visualise streamlines...
+Best regards,
+
+--
+Dipl.-Ing. Soeren Freudiger
+Institut fuer ComputerAnwendungen im Bauingenieurwesen
+TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+email: freud@cab.bau.tu-bs.de
+http://www.cab.bau.tu-bs.de/
+
+
+From amy.henderson@kitware.com  Thu May 13 18:28:04 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 13 May 2004 13:28:04 -0400
+Subject: [Paraview] Combine vect
+In-Reply-To: <20040513170657.BB7EB21AC1@elrond.cab.bau.tu-bs.de>
+References: <20040513170657.BB7EB21AC1@elrond.cab.bau.tu-bs.de>
+Message-ID: <6.1.0.6.2.20040513132355.0384f708@pop.biz.rr.com>
+
+Hi S=F6ren,
+
+Yes, it is possible. Run the Calculator filter on your data. iHat, jHat,=20
+and kHat are unit vectors in each of the i, j, and k directions, so your=20
+expression you want to enter would look like:
+iHat * scalars1 + jHat * scalars2 + kHat * scalars3
+(Substitute the 3 scalar arrays you want to use for X, Y, and Z in your=20
+vector for scalars1, scalars2, and scalars3, respectively.) The array=20
+specified in the "Result Array Name" entry will contain your new vector=
+ array.
+
+- Amy
+
+At 01:07 PM 5/13/2004, S=F6ren Freudiger wrote:
+>Hello
+>Is it possible to combine scalars to a vector?
+>I only have got scalars and want to visualise streamlines...
+>Best regards,
+>
+>--
+>Dipl.-Ing. Soeren Freudiger
+>Institut fuer ComputerAnwendungen im Bauingenieurwesen
+>TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>email: freud@cab.bau.tu-bs.de
+>http://www.cab.bau.tu-bs.de/
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From ken.martin@kitware.com  Thu May 13 19:03:03 2004
+From: ken.martin@kitware.com (Ken Martin)
+Date: Thu, 13 May 2004 14:03:03 -0400
+Subject: [Paraview] ParaView 1.4 Released
+Message-ID: <0bae01c43914$88fcbb10$6901a8c0@kitwarein.com>
+
+We have released ParaView version 1.4 and it can be downloaded from
+www.paraview.org as usual. This release contains some significant =
+changes.
+ParaView 1.4 has better stereo rendering support including on tiled
+displays. It includes support for compute-server render-server splits =
+where
+the visualization pipeline is computed on the compute-server where the =
+data
+is and then the resulting polygons are sent to the render-server (which =
+may
+have fewer nodes) for rendering. This is in addition to the usual =
+support
+for the client running on node zero or across sockets to another =
+computer.
+ParaView 1.4 includes progress reporting to help you gauge how long an
+operation will take (you cannot cancel the operation but at least you =
+can go
+grab a cup of coffee). Writing batch files in ParaView 1.2 was mostly =
+broken
+and this has been fixed in 1.4. The accept button is now green :-) and a
+bunch of other minor tweaks and bug fixes.
+
+Having said that, there are still some know issues with 1.4.1 (this =
+release)
+that will be fixed in 1.4.2 which will probably be released late next =
+week.
+These include a problem with progress reporting in some cases locking up =
+the
+GUI and a few less critical issues.
+
+Thanks to all the developers at Kitware, Los Alamos, Sandia, and the =
+Army
+Research Lab, and thanks for the feedback from everyone. If you run into =
+any
+problems please post them to the bug tracker or email the mailing list.
+
+Thanks Again
+Ken
+
+
+Ken Martin, PhD
+518 371 3971 x101
+Kitware Inc. Suite 204
+28 Corporate Drive
+Clifton Park NY 12065
+
+
+
+
+From amy.henderson@kitware.com  Thu May 13 19:58:19 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 13 May 2004 14:58:19 -0400
+Subject: AW: [Paraview] Combine vect
+Message-ID: <6.1.0.6.2.20040513145706.038d4420@pop.biz.rr.com>
+
+S=F6ren,
+
+I'm copying this to the paraview mailing list so others can benefit from=20
+the answers.
+
+- Amy
+
+>Date: Thu, 13 May 2004 14:56:25 -0400
+>To: S=F6ren Freudiger <freud@cab.bau.tu-bs.de>, "'Amy Henderson'"=20
+><amy.henderson@kitware.com>
+>From: Amy Henderson <amy.henderson@kitware.com>
+>Subject: Re: AW: [Paraview] Combine vect
+>
+>At 02:52 PM 5/13/2004, S=F6ren Freudiger wrote:
+>>Hello again...
+>>Thanks for that very quick answer.
+>>But this does ot seem to work...
+>>I only got absolutly straight streamlines by doing this.
+>>
+>>iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel
+>>
+>>If I write
+>>
+>>(iHat * x1-vel)  + (jHat * x3-vel) + (kHat * x3-vel)
+>>
+>>I'll get totaly differnet results...
+>
+>If you want the components of your vector to be x1-vel, x2-vel, and=20
+>x3-vel, then your equation should be:
+>iHat * (x1-vel) + jHat * (x2-vel) + kHat * (x3-vel)
+>
+>The standard mathematical order of operations applies. In your=20
+>expressions, things in parentheses are computed first, followed by=20
+>multiplication, followed by addition and subtraction.
+>
+>- Amy
+>
+>>--
+>>Dipl.-Ing. Soeren Freudiger
+>>Institut fuer ComputerAnwendungen im Bauingenieurwesen
+>>TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+>>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>>email: freud@cab.bau.tu-bs.de
+>>http://www.cab.bau.tu-bs.de/
+>>-----Urspr=FCngliche Nachricht-----
+>>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+>>Gesendet: Donnerstag, 13. Mai 2004 19:28
+>>An: S=F6ren Freudiger; paraview@paraview.org
+>>Betreff: Re: [Paraview] Combine vect
+>>
+>>Hi S=F6ren,
+>>
+>>Yes, it is possible. Run the Calculator filter on your data. iHat, jHat,=
+ and
+>>kHat are unit vectors in each of the i, j, and k directions, so your
+>>expression you want to enter would look like:
+>>iHat * scalars1 + jHat * scalars2 + kHat * scalars3 (Substitute the 3=
+ scalar
+>>arrays you want to use for X, Y, and Z in your vector for scalars1,
+>>scalars2, and scalars3, respectively.) The array specified in the "Result
+>>Array Name" entry will contain your new vector array.
+>>
+>>- Amy
+>>
+>>At 01:07 PM 5/13/2004, S=F6ren Freudiger wrote:
+>> >Hello
+>> >Is it possible to combine scalars to a vector?
+>> >I only have got scalars and want to visualise streamlines...
+>> >Best regards,
+>> >
+>> >--
+>> >Dipl.-Ing. Soeren Freudiger
+>> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU Braunschweig,
+>> >Pockelsstr. 3, D-38106 Braunschweig
+>> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>> >email: freud@cab.bau.tu-bs.de
+>> >http://www.cab.bau.tu-bs.de/
+>> >
+>> >_______________________________________________
+>> >ParaView mailing list
+>> >ParaView@paraview.org
+>> >http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From amy.henderson@kitware.com  Thu May 13 20:42:06 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 13 May 2004 15:42:06 -0400
+Subject: AW: AW: [Paraview] Combine vect
+In-Reply-To: <20040513193123.E957E21AC1@elrond.cab.bau.tu-bs.de>
+References: <6.1.0.6.2.20040513145706.038d4420@pop.biz.rr.com>
+ <20040513193123.E957E21AC1@elrond.cab.bau.tu-bs.de>
+Message-ID: <6.1.0.6.2.20040513154112.039a8e30@pop.biz.rr.com>
+
+Please keep the discussion on the ParaView mailing list.  Also, what=20
+version of ParaView are you using?
+
+- Amy
+
+At 03:32 PM 5/13/2004, you wrote:
+>Ahh.. Now I think I've got the problem...
+>I really need a vector for the streamlines... But after "calc" I only get a
+>scalar value again...
+>
+>
+>--
+>Dipl.-Ing. Soeren Freudiger
+>Institut fuer ComputerAnwendungen im Bauingenieurwesen
+>TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>email: freud@cab.bau.tu-bs.de
+>http://www.cab.bau.tu-bs.de/
+>-----Urspr=FCngliche Nachricht-----
+>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+>Gesendet: Donnerstag, 13. Mai 2004 20:58
+>An: paraview@paraview.org
+>Cc: freud@cab.bau.tu-bs.de
+>Betreff: Re: AW: [Paraview] Combine vect
+>
+>S=F6ren,
+>
+>I'm copying this to the paraview mailing list so others can benefit from=
+ the
+>answers.
+>
+>- Amy
+>
+> >Date: Thu, 13 May 2004 14:56:25 -0400
+> >To: S=F6ren Freudiger <freud@cab.bau.tu-bs.de>, "'Amy Henderson'"
+> ><amy.henderson@kitware.com>
+> >From: Amy Henderson <amy.henderson@kitware.com>
+> >Subject: Re: AW: [Paraview] Combine vect
+> >
+> >At 02:52 PM 5/13/2004, S=F6ren Freudiger wrote:
+> >>Hello again...
+> >>Thanks for that very quick answer.
+> >>But this does ot seem to work...
+> >>I only got absolutly straight streamlines by doing this.
+> >>
+> >>iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel
+> >>
+> >>If I write
+> >>
+> >>(iHat * x1-vel)  + (jHat * x3-vel) + (kHat * x3-vel)
+> >>
+> >>I'll get totaly differnet results...
+> >
+> >If you want the components of your vector to be x1-vel, x2-vel, and
+> >x3-vel, then your equation should be:
+> >iHat * (x1-vel) + jHat * (x2-vel) + kHat * (x3-vel)
+> >
+> >The standard mathematical order of operations applies. In your
+> >expressions, things in parentheses are computed first, followed by
+> >multiplication, followed by addition and subtraction.
+> >
+> >- Amy
+> >
+> >>--
+> >>Dipl.-Ing. Soeren Freudiger
+> >>Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> >>Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> >>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> >>email: freud@cab.bau.tu-bs.de
+> >>http://www.cab.bau.tu-bs.de/
+> >>-----Urspr=FCngliche Nachricht-----
+> >>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> >>Gesendet: Donnerstag, 13. Mai 2004 19:28
+> >>An: S=F6ren Freudiger; paraview@paraview.org
+> >>Betreff: Re: [Paraview] Combine vect
+> >>
+> >>Hi S=F6ren,
+> >>
+> >>Yes, it is possible. Run the Calculator filter on your data. iHat,
+> >>jHat, and kHat are unit vectors in each of the i, j, and k directions,
+> >>so your expression you want to enter would look like:
+> >>iHat * scalars1 + jHat * scalars2 + kHat * scalars3 (Substitute the 3
+> >>scalar arrays you want to use for X, Y, and Z in your vector for
+> >>scalars1, scalars2, and scalars3, respectively.) The array specified
+> >>in the "Result Array Name" entry will contain your new vector array.
+> >>
+> >>- Amy
+> >>
+> >>At 01:07 PM 5/13/2004, S=F6ren Freudiger wrote:
+> >> >Hello
+> >> >Is it possible to combine scalars to a vector?
+> >> >I only have got scalars and want to visualise streamlines...
+> >> >Best regards,
+> >> >
+> >> >--
+> >> >Dipl.-Ing. Soeren Freudiger
+> >> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> >> >Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> >> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> >> >email: freud@cab.bau.tu-bs.de
+> >> >http://www.cab.bau.tu-bs.de/
+> >> >
+> >> >_______________________________________________
+> >> >ParaView mailing list
+> >> >ParaView@paraview.org
+> >> >http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From amy.henderson@kitware.com  Thu May 13 20:53:12 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 13 May 2004 15:53:12 -0400
+Subject: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <20040513194546.4D95021AC1@elrond.cab.bau.tu-bs.de>
+References: <6.1.0.6.2.20040513154112.039a8e30@pop.biz.rr.com>
+ <20040513194546.4D95021AC1@elrond.cab.bau.tu-bs.de>
+Message-ID: <6.1.0.6.2.20040513155107.039b3b88@pop.biz.rr.com>
+
+I just tried to reproduce this behavior on the ParaView 1.4 release, but I=
+=20
+did not get the same results you did. After I ran the data through the=20
+Calculator filter, it was still being colored by the same scalar array as=20
+before, but the array produced as a result of running the filter was a=20
+3-component vector array.
+
+- Amy
+
+At 03:46 PM 5/13/2004, S=F6ren Freudiger wrote:
+>We are using paraview 1.4 (the newest release)
+>
+>
+>--
+>Dipl.-Ing. Soeren Freudiger
+>Institut fuer ComputerAnwendungen im Bauingenieurwesen
+>TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>email: freud@cab.bau.tu-bs.de
+>http://www.cab.bau.tu-bs.de/
+>-----Urspr=FCngliche Nachricht-----
+>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+>Gesendet: Donnerstag, 13. Mai 2004 21:42
+>An: S=F6ren Freudiger
+>Cc: paraview@paraview.org
+>Betreff: Re: AW: AW: [Paraview] Combine vect
+>
+>Please keep the discussion on the ParaView mailing list.  Also, what=
+ version
+>of ParaView are you using?
+>
+>- Amy
+>
+>At 03:32 PM 5/13/2004, you wrote:
+> >Ahh.. Now I think I've got the problem...
+> >I really need a vector for the streamlines... But after "calc" I only
+> >get a scalar value again...
+> >
+> >
+> >--
+> >Dipl.-Ing. Soeren Freudiger
+> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU Braunschweig,
+> >Pockelsstr. 3, D-38106 Braunschweig
+> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> >email: freud@cab.bau.tu-bs.de
+> >http://www.cab.bau.tu-bs.de/
+> >-----Urspr=FCngliche Nachricht-----
+> >Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> >Gesendet: Donnerstag, 13. Mai 2004 20:58
+> >An: paraview@paraview.org
+> >Cc: freud@cab.bau.tu-bs.de
+> >Betreff: Re: AW: [Paraview] Combine vect
+> >
+> >S=F6ren,
+> >
+> >I'm copying this to the paraview mailing list so others can benefit
+> >from the answers.
+> >
+> >- Amy
+> >
+> > >Date: Thu, 13 May 2004 14:56:25 -0400
+> > >To: S=F6ren Freudiger <freud@cab.bau.tu-bs.de>, "'Amy Henderson'"
+> > ><amy.henderson@kitware.com>
+> > >From: Amy Henderson <amy.henderson@kitware.com>
+> > >Subject: Re: AW: [Paraview] Combine vect
+> > >
+> > >At 02:52 PM 5/13/2004, S=F6ren Freudiger wrote:
+> > >>Hello again...
+> > >>Thanks for that very quick answer.
+> > >>But this does ot seem to work...
+> > >>I only got absolutly straight streamlines by doing this.
+> > >>
+> > >>iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel
+> > >>
+> > >>If I write
+> > >>
+> > >>(iHat * x1-vel)  + (jHat * x3-vel) + (kHat * x3-vel)
+> > >>
+> > >>I'll get totaly differnet results...
+> > >
+> > >If you want the components of your vector to be x1-vel, x2-vel, and
+> > >x3-vel, then your equation should be:
+> > >iHat * (x1-vel) + jHat * (x2-vel) + kHat * (x3-vel)
+> > >
+> > >The standard mathematical order of operations applies. In your
+> > >expressions, things in parentheses are computed first, followed by
+> > >multiplication, followed by addition and subtraction.
+> > >
+> > >- Amy
+> > >
+> > >>--
+> > >>Dipl.-Ing. Soeren Freudiger
+> > >>Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> > >>Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> > >>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> > >>email: freud@cab.bau.tu-bs.de
+> > >>http://www.cab.bau.tu-bs.de/
+> > >>-----Urspr=FCngliche Nachricht-----
+> > >>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> > >>Gesendet: Donnerstag, 13. Mai 2004 19:28
+> > >>An: S=F6ren Freudiger; paraview@paraview.org
+> > >>Betreff: Re: [Paraview] Combine vect
+> > >>
+> > >>Hi S=F6ren,
+> > >>
+> > >>Yes, it is possible. Run the Calculator filter on your data. iHat,
+> > >>jHat, and kHat are unit vectors in each of the i, j, and k
+> > >>directions, so your expression you want to enter would look like:
+> > >>iHat * scalars1 + jHat * scalars2 + kHat * scalars3 (Substitute the
+> > >>3 scalar arrays you want to use for X, Y, and Z in your vector for
+> > >>scalars1, scalars2, and scalars3, respectively.) The array specified
+> > >>in the "Result Array Name" entry will contain your new vector array.
+> > >>
+> > >>- Amy
+> > >>
+> > >>At 01:07 PM 5/13/2004, S=F6ren Freudiger wrote:
+> > >> >Hello
+> > >> >Is it possible to combine scalars to a vector?
+> > >> >I only have got scalars and want to visualise streamlines...
+> > >> >Best regards,
+> > >> >
+> > >> >--
+> > >> >Dipl.-Ing. Soeren Freudiger
+> > >> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> > >> >Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> > >> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> > >> >email: freud@cab.bau.tu-bs.de
+> > >> >http://www.cab.bau.tu-bs.de/
+> > >> >
+> > >> >_______________________________________________
+> > >> >ParaView mailing list
+> > >> >ParaView@paraview.org
+> > >> >http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From amy.henderson@kitware.com  Thu May 13 21:16:17 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 13 May 2004 16:16:17 -0400
+Subject: AW: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <20040513195956.C37EA21AC1@elrond.cab.bau.tu-bs.de>
+References: <6.1.0.6.2.20040513155107.039b3b88@pop.biz.rr.com>
+ <20040513195956.C37EA21AC1@elrond.cab.bau.tu-bs.de>
+Message-ID: <6.1.0.6.2.20040513161254.039a6738@pop.biz.rr.com>
+
+To my knowledge, there is not a problem with your file format or the=20
+magnitude of the velocity components.
+
+Earlier in this thread, you said that the expression you were evaluating=20
+with the calculator was iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel. Was=
+=20
+this a typo? It looks to me like you should not be multiplying the same=20
+scalar array by both jHat and kHat. If this really is the expression you=20
+input to the calculator, it would explain why your streamlines are not=20
+doing what you expect them to.
+
+- Amy
+
+At 04:00 PM 5/13/2004, S=F6ren Freudiger wrote:
+>But the rusltung streamlines look different.
+>In paraview I only have straight lines, although a obstacle is in the=
+ middle
+>of the field...
+>When I am colouring the lines by choosing the components (x1vel, x2vel or
+>x3vel) I can clearly see, were the line should turn up/left/down.
+>We are using binary ucd files and our velocity components are around 0.01.
+>Is this a problem?
+>
+>
+>--
+>Dipl.-Ing. Soeren Freudiger
+>Institut fuer ComputerAnwendungen im Bauingenieurwesen
+>TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+>email: freud@cab.bau.tu-bs.de
+>http://www.cab.bau.tu-bs.de/
+>-----Urspr=FCngliche Nachricht-----
+>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+>Gesendet: Donnerstag, 13. Mai 2004 21:53
+>An: S=F6ren Freudiger
+>Cc: paraview@paraview.org
+>Betreff: Re: AW: AW: AW: [Paraview] Combine vect
+>
+>I just tried to reproduce this behavior on the ParaView 1.4 release, but I
+>did not get the same results you did. After I ran the data through the
+>Calculator filter, it was still being colored by the same scalar array as
+>before, but the array produced as a result of running the filter was a
+>3-component vector array.
+>
+>- Amy
+>
+>At 03:46 PM 5/13/2004, S=F6ren Freudiger wrote:
+> >We are using paraview 1.4 (the newest release)
+> >
+> >
+> >--
+> >Dipl.-Ing. Soeren Freudiger
+> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU Braunschweig,
+> >Pockelsstr. 3, D-38106 Braunschweig
+> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> >email: freud@cab.bau.tu-bs.de
+> >http://www.cab.bau.tu-bs.de/
+> >-----Urspr=FCngliche Nachricht-----
+> >Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> >Gesendet: Donnerstag, 13. Mai 2004 21:42
+> >An: S=F6ren Freudiger
+> >Cc: paraview@paraview.org
+> >Betreff: Re: AW: AW: [Paraview] Combine vect
+> >
+> >Please keep the discussion on the ParaView mailing list.  Also, what
+> >version of ParaView are you using?
+> >
+> >- Amy
+> >
+> >At 03:32 PM 5/13/2004, you wrote:
+> > >Ahh.. Now I think I've got the problem...
+> > >I really need a vector for the streamlines... But after "calc" I only
+> > >get a scalar value again...
+> > >
+> > >
+> > >--
+> > >Dipl.-Ing. Soeren Freudiger
+> > >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> > >Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> > >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> > >email: freud@cab.bau.tu-bs.de
+> > >http://www.cab.bau.tu-bs.de/
+> > >-----Urspr=FCngliche Nachricht-----
+> > >Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> > >Gesendet: Donnerstag, 13. Mai 2004 20:58
+> > >An: paraview@paraview.org
+> > >Cc: freud@cab.bau.tu-bs.de
+> > >Betreff: Re: AW: [Paraview] Combine vect
+> > >
+> > >S=F6ren,
+> > >
+> > >I'm copying this to the paraview mailing list so others can benefit
+> > >from the answers.
+> > >
+> > >- Amy
+> > >
+> > > >Date: Thu, 13 May 2004 14:56:25 -0400
+> > > >To: S=F6ren Freudiger <freud@cab.bau.tu-bs.de>, "'Amy Henderson'"
+> > > ><amy.henderson@kitware.com>
+> > > >From: Amy Henderson <amy.henderson@kitware.com>
+> > > >Subject: Re: AW: [Paraview] Combine vect
+> > > >
+> > > >At 02:52 PM 5/13/2004, S=F6ren Freudiger wrote:
+> > > >>Hello again...
+> > > >>Thanks for that very quick answer.
+> > > >>But this does ot seem to work...
+> > > >>I only got absolutly straight streamlines by doing this.
+> > > >>
+> > > >>iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel
+> > > >>
+> > > >>If I write
+> > > >>
+> > > >>(iHat * x1-vel)  + (jHat * x3-vel) + (kHat * x3-vel)
+> > > >>
+> > > >>I'll get totaly differnet results...
+> > > >
+> > > >If you want the components of your vector to be x1-vel, x2-vel, and
+> > > >x3-vel, then your equation should be:
+> > > >iHat * (x1-vel) + jHat * (x2-vel) + kHat * (x3-vel)
+> > > >
+> > > >The standard mathematical order of operations applies. In your
+> > > >expressions, things in parentheses are computed first, followed by
+> > > >multiplication, followed by addition and subtraction.
+> > > >
+> > > >- Amy
+> > > >
+> > > >>--
+> > > >>Dipl.-Ing. Soeren Freudiger
+> > > >>Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> > > >>Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> > > >>Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> > > >>email: freud@cab.bau.tu-bs.de
+> > > >>http://www.cab.bau.tu-bs.de/
+> > > >>-----Urspr=FCngliche Nachricht-----
+> > > >>Von: Amy Henderson [mailto:amy.henderson@kitware.com]
+> > > >>Gesendet: Donnerstag, 13. Mai 2004 19:28
+> > > >>An: S=F6ren Freudiger; paraview@paraview.org
+> > > >>Betreff: Re: [Paraview] Combine vect
+> > > >>
+> > > >>Hi S=F6ren,
+> > > >>
+> > > >>Yes, it is possible. Run the Calculator filter on your data. iHat,
+> > > >>jHat, and kHat are unit vectors in each of the i, j, and k
+> > > >>directions, so your expression you want to enter would look like:
+> > > >>iHat * scalars1 + jHat * scalars2 + kHat * scalars3 (Substitute
+> > > >>the
+> > > >>3 scalar arrays you want to use for X, Y, and Z in your vector for
+> > > >>scalars1, scalars2, and scalars3, respectively.) The array
+> > > >>specified in the "Result Array Name" entry will contain your new
+>vector array.
+> > > >>
+> > > >>- Amy
+> > > >>
+> > > >>At 01:07 PM 5/13/2004, S=F6ren Freudiger wrote:
+> > > >> >Hello
+> > > >> >Is it possible to combine scalars to a vector?
+> > > >> >I only have got scalars and want to visualise streamlines...
+> > > >> >Best regards,
+> > > >> >
+> > > >> >--
+> > > >> >Dipl.-Ing. Soeren Freudiger
+> > > >> >Institut fuer ComputerAnwendungen im Bauingenieurwesen TU
+> > > >> >Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+> > > >> >Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+> > > >> >email: freud@cab.bau.tu-bs.de
+> > > >> >http://www.cab.bau.tu-bs.de/
+> > > >> >
+> > > >> >_______________________________________________
+> > > >> >ParaView mailing list
+> > > >> >ParaView@paraview.org
+> > > >> >http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From michael.gronager@uni-c.dk  Thu May 13 21:47:10 2004
+From: michael.gronager@uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Thu, 13 May 2004 22:47:10 +0200 (CEST)
+Subject: [Paraview] ParaView 1.4 Released
+Message-ID: <1325.172.28.54.4.1084481230.squirrel@webmail.uni-c.dk>
+
+Congratulations!
+
+Downloaded and tried, works great except for the blocking 3D/GUI
+interaction while running an animation.
+Nice with the new users tutorial.
+
+Well done!
+
+Cheers,
+
+Michael
+
+
+> We have released ParaView version 1.4 and it can be downloaded from
+> www.paraview.org as usual. This release contains some significant
+> changes. ParaView 1.4 has better stereo rendering support including on
+> tiled displays. It includes support for compute-server render-server
+> splits where the visualization pipeline is computed on the
+> compute-server where the data is and then the resulting polygons are
+> sent to the render-server (which may have fewer nodes) for rendering.
+> This is in addition to the usual support for the client running on node
+> zero or across sockets to another computer. ParaView 1.4 includes
+> progress reporting to help you gauge how long an operation will take
+> (you cannot cancel the operation but at least you can go grab a cup of
+> coffee). Writing batch files in ParaView 1.2 was mostly broken and this
+> has been fixed in 1.4. The accept button is now green :-) and a bunch
+> of other minor tweaks and bug fixes.
+>
+> Having said that, there are still some know issues with 1.4.1 (this
+> release) that will be fixed in 1.4.2 which will probably be released
+> late next week. These include a problem with progress reporting in some
+> cases locking up the GUI and a few less critical issues.
+>
+> Thanks to all the developers at Kitware, Los Alamos, Sandia, and the
+> Army Research Lab, and thanks for the feedback from everyone. If you
+> run into any problems please post them to the bug tracker or email the
+> mailing list.
+>
+> Thanks Again
+> Ken
+>
+>
+> Ken Martin, PhD
+> 518 371 3971 x101
+> Kitware Inc. Suite 204
+> 28 Corporate Drive
+> Clifton Park NY 12065
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+-- 
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+2800 Lyngby
+DENMARK
+
+Phone: +45 35878889
+Fax: +45 35878990
+Direct: +45 35878966
+Mobile: +45 24248207
+Email: mpg@uni-c.dk
+
+
+-- 
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+2800 Lyngby
+DENMARK
+
+Phone: +45 35878889
+Fax: +45 35878990
+Direct: +45 35878966
+Mobile: +45 24248207
+Email: mpg@uni-c.dk
+
+
+
+From jfavre@cscs.ch  Fri May 14 09:51:03 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Fri, 14 May 2004 10:51:03 +0200
+Subject: [Paraview] Probe just made a little bit easier
+In-Reply-To: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+References: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+Message-ID: <40A48877.7080307@cscs.ch>
+
+Someone recently made suggestions for improvements of the Probe filter 
+in his wish-list. I also checked bug #492, and paraView 1.4 does not 
+quite answer these problems.
+
+The biggest pain, is that Probe plots *all* variables and auto-scaling 
+can make it impossible to look at your data in range [0-1] when you have 
+another field in range [1e6-1e9].
+
+To overcome this, I wrote a converter which takes as input the 
+XMLPolyData file saved when selecting the Probe filter in "Line mode" 
+and using "save data". The data is saved in binary with no option to 
+switch to ASCII, so that is also hard on my eyesight.
+
+My converter reads the XML PolyData and outputs ASCII data fit for Grace 
+in NXY format. It also creates the small parameter file for the legend 
+of each sets. I use Grace-5.1.14.
+
+Take the RectGrid2.vtk example file, do a line probe, save the data.
+The converters creates the following parameter file:
+
+title "Title"
+subtitle "Title"
+s0 legend "scalars"
+s1 legend "vectors_0"
+s2 legend "vectors_1"
+s3 legend "vectors_2"
+
+and saves your data in Grace NXY format. You don't have to be an expert 
+user of Grace (I started 2 hours ago) to learn to turn each plot on/off, 
+and make nice-looking graphs.
+
+I thought the converter would be useful to the ParaView community. It is 
+available in source code, with the accompanying CmakeList.txt.
+
+Drop me a note if you are interested. The code is 2 hours old, I am sure 
+other users can contribute their 2cents to help improve it.
+
+Jean
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From dcthomp@speakeasy.net  Fri May 14 06:13:06 2004
+From: dcthomp@speakeasy.net (David Thompson)
+Date: Thu, 13 May 2004 22:13:06 -0700
+Subject: AW: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <6.1.0.6.2.20040513161254.039a6738@pop.biz.rr.com>
+References: <6.1.0.6.2.20040513155107.039b3b88@pop.biz.rr.com>
+ <20040513195956.C37EA21AC1@elrond.cab.bau.tu-bs.de>
+ <6.1.0.6.2.20040513161254.039a6738@pop.biz.rr.com>
+Message-ID: <1084511586.2949.3.camel@localhost.localdomain>
+
+On Thu, 2004-05-13 at 13:16, Amy Henderson wrote:
+> To my knowledge, there is not a problem with your file format or the 
+> magnitude of the velocity components.
+> 
+> Earlier in this thread, you said that the expression you were evaluating 
+> with the calculator was iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel. Was 
+> this a typo? It looks to me like you should not be multiplying the same 
+> scalar array by both jHat and kHat. If this really is the expression you 
+> input to the calculator, it would explain why your streamlines are not 
+> doing what you expect them to.
+Actually, I noticed a similar problem on the CVS trunk yesterday. To
+replicate it, load multicomb_0.vtu, run the "Extract Surface" filter,
+and then create an Array Calculator. If you enter
+	Result = iHat*Density+jHat*Momentum_0
+you'll get an incorrect scalar field. However, if you enter
+	Result = Density*iHat+Momentum_0*jHat
+you'll get the correct result. For some reason, multiplication by the
+unit vectors isn't commutative. I've tried this on two different
+machines with recent CVS checkouts and got the same results.
+
+		David
+
+
+From amy.henderson@kitware.com  Fri May 14 13:57:08 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Fri, 14 May 2004 08:57:08 -0400
+Subject: AW: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <1084511586.2949.3.camel@localhost.localdomain>
+References: <6.1.0.6.2.20040513155107.039b3b88@pop.biz.rr.com>
+ <20040513195956.C37EA21AC1@elrond.cab.bau.tu-bs.de>
+ <6.1.0.6.2.20040513161254.039a6738@pop.biz.rr.com>
+ <1084511586.2949.3.camel@localhost.localdomain>
+Message-ID: <6.1.0.6.2.20040514085551.039a3a90@pop.biz.rr.com>
+
+David,
+
+Thanks for sending a simple, reproducible example demonstrating the 
+problem.  I'll look into what's going wrong.
+
+- Amy
+
+At 01:13 AM 5/14/2004, David Thompson wrote:
+>On Thu, 2004-05-13 at 13:16, Amy Henderson wrote:
+> > To my knowledge, there is not a problem with your file format or the
+> > magnitude of the velocity components.
+> >
+> > Earlier in this thread, you said that the expression you were evaluating
+> > with the calculator was iHat * x1-vel  + jHat * x3-vel + kHat * x3-vel. 
+> Was
+> > this a typo? It looks to me like you should not be multiplying the same
+> > scalar array by both jHat and kHat. If this really is the expression you
+> > input to the calculator, it would explain why your streamlines are not
+> > doing what you expect them to.
+>Actually, I noticed a similar problem on the CVS trunk yesterday. To
+>replicate it, load multicomb_0.vtu, run the "Extract Surface" filter,
+>and then create an Array Calculator. If you enter
+>         Result = iHat*Density+jHat*Momentum_0
+>you'll get an incorrect scalar field. However, if you enter
+>         Result = Density*iHat+Momentum_0*jHat
+>you'll get the correct result. For some reason, multiplication by the
+>unit vectors isn't commutative. I've tried this on two different
+>machines with recent CVS checkouts and got the same results.
+>
+>                 David
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From freud@cab.bau.tu-bs.de  Fri May 14 12:14:57 2004
+From: freud@cab.bau.tu-bs.de (=?iso-8859-1?Q?S=F6ren_Freudiger?=)
+Date: Fri, 14 May 2004 13:14:57 +0200
+Subject: AW: AW: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <1084511586.2949.3.camel@localhost.localdomain>
+Message-ID: <20040514111402.A386621AC1@elrond.cab.bau.tu-bs.de>
+
+Thank you very much!
+That's the point!
+After changing the component names from x1-vel to x1vel and switch the
+calcation direction from iHat*x1vel to x1vel*ihat everything works =
+fine...
+
+
+--
+Dipl.-Ing. Soeren Freudiger
+Institut fuer ComputerAnwendungen im Bauingenieurwesen
+TU Braunschweig, Pockelsstr. 3, D-38106 Braunschweig
+Tel.: +49 531/391-7595, Mobil: +49 176/210 17 444
+email: freud@cab.bau.tu-bs.de
+http://www.cab.bau.tu-bs.de/
+-----Urspr=FCngliche Nachricht-----
+Von: David Thompson [mailto:dcthomp@speakeasy.net]=20
+Gesendet: Freitag, 14. Mai 2004 07:13
+An: Amy Henderson
+Cc: S=F6ren Freudiger; ParaView mailing list
+Betreff: Re: AW: AW: AW: AW: [Paraview] Combine vect
+
+On Thu, 2004-05-13 at 13:16, Amy Henderson wrote:
+> To my knowledge, there is not a problem with your file format or the=20
+> magnitude of the velocity components.
+>=20
+> Earlier in this thread, you said that the expression you were=20
+> evaluating with the calculator was iHat * x1-vel  + jHat * x3-vel +=20
+> kHat * x3-vel. Was this a typo? It looks to me like you should not be=20
+> multiplying the same scalar array by both jHat and kHat. If this=20
+> really is the expression you input to the calculator, it would explain =
+
+> why your streamlines are not doing what you expect them to.
+Actually, I noticed a similar problem on the CVS trunk yesterday. To
+replicate it, load multicomb_0.vtu, run the "Extract Surface" filter, =
+and
+then create an Array Calculator. If you enter
+	Result =3D iHat*Density+jHat*Momentum_0
+you'll get an incorrect scalar field. However, if you enter
+	Result =3D Density*iHat+Momentum_0*jHat
+you'll get the correct result. For some reason, multiplication by the =
+unit
+vectors isn't commutative. I've tried this on two different machines =
+with
+recent CVS checkouts and got the same results.
+
+		David
+
+
+
+From OpenGL.orgwebmaster  Fri May 14 16:58:26 2004
+From: OpenGL.orgwebmaster (OpenGL.orgwebmaster)
+Date: Fri, 14 May 2004 08:58:26 -0700
+Subject: [Paraview] Application submitted to OpenGL.org
+Message-ID: <8901E52E-A5BF-11D8-B9D2-000A9599600A@opengl.org>
+
+You had submitted your Paraview application to OpenGL.org, but I cannot 
+find mention of OpenGL or an OpenGL logo on your website.
+
+Does the application support OpenGL acceleration and if so, where is 
+this information on your website?
+
+Thanks
+
+
+From gleicon@terra.com.br  Fri May 14 17:51:59 2004
+From: gleicon@terra.com.br (Gleicon Moraes)
+Date: Fri, 14 May 2004 13:51:59 -0300
+Subject: [Paraview] ParaView 1.4 Released
+In-Reply-To: <20040513204802.2301.35957.Mailman@public.kitware.com>
+References: <20040513204802.2301.35957.Mailman@public.kitware.com>
+Message-ID: <40A4F92F.80602@terra.com.br>
+
+Hi,
+Congratulations - the user guide is great.
+I've tested it and everything ( at least that I use so far ) is working
+great, except for the metaheader file loader, which I had fixed and sent
+a patch to Mr. Cedilnik this week.
+I think my mail system must have messed up the message, or it got lost
+anywhere, because I got an error message today, so, if someone needs to
+load a Big Endian mhd file and wants the diff I did, just drop me a
+line. So far it's working ok with CVS version.
+Also, I will try to resend it later tomorrow, after re-check what went
+wrong.
+
+BEst regards, and thanks
+
+
+> 
+> Message: 3
+> From: "Ken Martin" <ken.martin@kitware.com>
+> To: "'ParaView Mailing List'" <paraview@paraview.org>
+> Date: Thu, 13 May 2004 14:03:03 -0400
+> Subject: [Paraview] ParaView 1.4 Released
+> 
+> We have released ParaView version 1.4 and it can be downloaded from
+> www.paraview.org as usual. This release contains some significant =
+> changes.
+> ParaView 1.4 has better stereo rendering support including on tiled
+> displays. It includes support for compute-server render-server splits =
+> where
+> the visualization pipeline is computed on the compute-server where the =
+> data
+> is and then the resulting polygons are sent to the render-server (which =
+> may
+> have fewer nodes) for rendering. This is in addition to the usual =
+> support
+> for the client running on node zero or across sockets to another =
+> computer.
+> ParaView 1.4 includes progress reporting to help you gauge how long an
+> operation will take (you cannot cancel the operation but at least you =
+> can go
+> grab a cup of coffee). Writing batch files in ParaView 1.2 was mostly =
+> broken
+> and this has been fixed in 1.4. The accept button is now green :-) and a
+> bunch of other minor tweaks and bug fixes.
+> 
+> Having said that, there are still some know issues with 1.4.1 (this =
+> release)
+> that will be fixed in 1.4.2 which will probably be released late next =
+> week.
+> These include a problem with progress reporting in some cases locking up =
+> the
+> GUI and a few less critical issues.
+> 
+> Thanks to all the developers at Kitware, Los Alamos, Sandia, and the =
+> Army
+> Research Lab, and thanks for the feedback from everyone. If you run into =
+> any
+> problems please post them to the bug tracker or email the mailing list.
+> 
+> Thanks Again
+> Ken
+> 
+> 
+> Ken Martin, PhD
+> 518 371 3971 x101
+> Kitware Inc. Suite 204
+> 28 Corporate Drive
+> Clifton Park NY 12065
+> 
+> 
+> 
+
+-- 
+Gleicon S. Moraes
+gleicon [a] terra.com.br
+http://videodog.cjb.net
+
+
+
+From amy.henderson@kitware.com  Fri May 14 18:08:27 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Fri, 14 May 2004 13:08:27 -0400
+Subject: AW: AW: AW: AW: [Paraview] Combine vect
+In-Reply-To: <6.1.0.6.2.20040514085551.039a3a90@pop.biz.rr.com>
+References: <6.1.0.6.2.20040513155107.039b3b88@pop.biz.rr.com>
+ <20040513195956.C37EA21AC1@elrond.cab.bau.tu-bs.de>
+ <6.1.0.6.2.20040513161254.039a6738@pop.biz.rr.com>
+ <1084511586.2949.3.camel@localhost.localdomain>
+ <6.1.0.6.2.20040514085551.039a3a90@pop.biz.rr.com>
+Message-ID: <6.1.0.6.2.20040514130703.0397a228@pop.biz.rr.com>
+
+I have made a change in vtkFunctionParser.cxx to fix this problem on the 
+main ParaView CVS branch.
+
+- Amy
+
+At 08:57 AM 5/14/2004, Amy Henderson wrote:
+>David,
+>
+>Thanks for sending a simple, reproducible example demonstrating the 
+>problem.  I'll look into what's going wrong.
+>
+>- Amy
+>
+>At 01:13 AM 5/14/2004, David Thompson wrote:
+>>On Thu, 2004-05-13 at 13:16, Amy Henderson wrote:
+>> > To my knowledge, there is not a problem with your file format or the
+>> > magnitude of the velocity components.
+>> >
+>> > Earlier in this thread, you said that the expression you were evaluating
+>> > with the calculator was iHat * x1-vel  + jHat * x3-vel + kHat * 
+>> x3-vel. Was
+>> > this a typo? It looks to me like you should not be multiplying the same
+>> > scalar array by both jHat and kHat. If this really is the expression you
+>> > input to the calculator, it would explain why your streamlines are not
+>> > doing what you expect them to.
+>>Actually, I noticed a similar problem on the CVS trunk yesterday. To
+>>replicate it, load multicomb_0.vtu, run the "Extract Surface" filter,
+>>and then create an Array Calculator. If you enter
+>>         Result = iHat*Density+jHat*Momentum_0
+>>you'll get an incorrect scalar field. However, if you enter
+>>         Result = Density*iHat+Momentum_0*jHat
+>>you'll get the correct result. For some reason, multiplication by the
+>>unit vectors isn't commutative. I've tried this on two different
+>>machines with recent CVS checkouts and got the same results.
+>>
+>>                 David
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From berklist@nycap.rr.com  Fri May 14 18:16:39 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Fri, 14 May 2004 13:16:39 -0400
+Subject: [Paraview] ParaView 1.4 Released
+In-Reply-To: <1325.172.28.54.4.1084481230.squirrel@webmail.uni-c.dk>
+References: <1325.172.28.54.4.1084481230.squirrel@webmail.uni-c.dk>
+Message-ID: <1084554999.9205.12.camel@silverymoon>
+
+> Downloaded and tried, works great except for the blocking 3D/GUI
+> interaction while running an animation.
+
+The interaction is fixed. It'll be in the next minor release.
+
+-Berk
+
+
+
+From berk.geveci@kitware.com  Mon May 17 18:38:55 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Mon, 17 May 2004 13:38:55 -0400
+Subject: [Paraview] [Bug 848] New - Conmplete Application Lock on XP + implicit volume
+ legacy VTK
+Message-ID: <1084815535.3049.35.camel@silverymoon>
+
+This is a known bug. It will be fixed in the patch we will release later
+this week.
+
+-Berk
+
+
+
+From rasmus.hemph@me.chalmers.se  Tue May 18 17:21:24 2004
+From: rasmus.hemph@me.chalmers.se (Rasmus Hemph)
+Date: Tue, 18 May 2004 18:21:24 +0200
+Subject: [Paraview] Animation with more than 100 files
+Message-ID: <1084897283.21644.27.camel@tfdpc236.tfd.chalmers.se>
+
+Thanks for the new version! It is working smoothly for me on linux so
+far. However, when I have more than 100 numbered files in a series
+(file_1.vtk,file_2.vtk,...,file_105,vtk), the slider does not appear, 
+and Paraview does no longer treat my files as a time series.
+This prohibits me from creating an animation of the simulation.
+
+This is not a new problem, and I saw a note in the bugtracker  
+(Bug #656) mentioning that this was a set limit to optimize performance.
+I tried compiling from CVS today, as the bugtracker mentioned something
+about it being fixed (2004-05-10), but I did not notice any improvement.
+Is there a way around this, for me annoying limitation ? I frequently 
+encounter small timesteps and many files.
+
+Best regards
+
+-- 
+Rasmus Hemph
+Phd student multiphase flow
+
+Email:	rasmus.hemph@me.chalmers.se
+Tel:	+46-(0)31-772 3589
+Address:Thermo and Fluid Dynamics
+	Chalmers Universtity of Technology
+	S-412 96 Göteborg
+	SWEDEN
+
+
+
+From s_n_warren@hotmail.com  Wed May 19 14:21:38 2004
+From: s_n_warren@hotmail.com (S. N. Warren)
+Date: Wed, 19 May 2004 10:21:38 -0300
+Subject: [Paraview] Geophysical XYZ data - which format is best?
+Message-ID: <BAY16-F21yGT2yLYXrO0002fc69@hotmail.com>
+
+Good day.
+
+I just got myself a copy of ParaView for the purpose of plotting geophysical 
+data exported from the commercial software RES3DINV. Here is the format 
+(.xyz):
+
+/Name of survey line is Conversion of RES2DINV data files
+/Number of blocks is 384
+/Results for iteration 7
+/The x, y and z coordinates the centres of the model blocks, and
+/the resistivity, conductivity and IP value of each block is given below.
+/The I.P. is given in terms of Chargeability with units in mV/V
+/       X            Y        Elevation  Resistivity  Conductivity       
+I.P.    Sensitivity
+     137.439      649.996       99.450    80306.586     0.00001245        
+21.018  7.4934e-001
+     162.377      649.998      100.875    15099.280     0.00006623         
+9.732  1.9640e+000
+     187.142      649.996       98.675    68860.805     0.00001452         
+7.808  5.4303e-001
+     211.869      649.997       95.275    46299.848     0.00002160         
+6.606  1.4108e+000
+
+The output that I am looking for is a couple of 3D plots (the conductivity 
+plotted at the x,y,z locations and the resistivity plotted at the x,y,z 
+locations). The "ground" surface (in the x-y plane) will be irregular as it 
+represents the topography. I would like to be able to contour the data 
+cubes.
+
+My question is: What is the most appropriate data format to use for data 
+like this? I figure probably VTK format or PLOT3D format. The PLOT3D format 
+looks a little bit more complicated than what I need - probably would be 
+counter-productive to convert my data to that... But, honestly, I'm totally 
+unsure. Has anyone else worked with a simple xyz data set like this? What 
+should I use?
+
+Any advice would help so much!
+
+Thanks,
+
+Steve
+
+_________________________________________________________________
+Tired of spam? Get advanced junk mail protection with MSN Premium   
+http://join.msn.com/?pgmarket=en-ca&page=byoa/prem&xAPID=1994&DI=1034&SU=http://hotmail.com/enca&HL=Market_MSNIS_Taglines
+
+
+From keith@mcs.st-and.ac.uk  Wed May 19 17:26:12 2004
+From: keith@mcs.st-and.ac.uk (Keith Bennett)
+Date: Wed, 19 May 2004 17:26:12 +0100
+Subject: [Paraview] Reading multiblock pvtr files
+Message-ID: <20040519162612.GA14662@gillespies.mcs.st-and.ac.uk>
+
+Hi All,
+
+This is my first post to the list. Sorry if it's a dumb question.
+
+I've been trying to read in a multi-part rectilinear grid but I'm
+not having much success. Reading and writing the files works fine
+using VTK but when I try it with paraview I get the following error:
+
+ErrorMessage
+# Error or warning: There was a VTK Error in file: /home/kitware/ParaViewReleaseRoot/paraview-1.4.1/VTK/Common/vtkTableExtentTranslator.cxx (99)
+ Cannot change the number of pieces from 2 to 1
+ErrorMessage end
+
+My test files are as follows:
+
+out.pvtr:
+<?xml version="1.0"?>
+<VTKFile type="PRectilinearGrid" version="0.1" byte_order="LittleEndian" compressor="vtkZLibDataCompressor">
+  <PRectilinearGrid WholeExtent="0 1 0 1 0 2" GhostLevel="0">
+    <PCoordinates>
+      <PDataArray type="Float32"/>
+      <PDataArray type="Float32"/>
+      <PDataArray type="Float32"/>
+    </PCoordinates>
+    <Piece Extent="0 1 0 1 0 1" Source="out_0.vtr"/>
+    <Piece Extent="0 1 0 1 1 2" Source="out_1.vtr"/>
+  </PRectilinearGrid>
+</VTKFile>
+
+out_0.vtr:
+<?xml version="1.0"?>
+<VTKFile type="RectilinearGrid" version="0.1" byte_order="LittleEndian" compressor="vtkZLibDataCompressor">
+  <RectilinearGrid WholeExtent="0 1 0 1 0 1">
+  <Piece Extent="0 1 0 1 0 1">
+    <PointData>
+    </PointData>
+    <CellData>
+    </CellData>
+    <Coordinates>
+      <DataArray type="Float32" format="ascii">
+        0 1
+      </DataArray>
+      <DataArray type="Float32" format="ascii">
+        0 1
+      </DataArray>
+      <DataArray type="Float32" format="ascii">
+        0 0.5
+      </DataArray>
+    </Coordinates>
+  </Piece>
+  </RectilinearGrid>
+</VTKFile>
+
+out_2.vtr:
+<?xml version="1.0"?>
+<VTKFile type="RectilinearGrid" version="0.1" byte_order="LittleEndian" compressor="vtkZLibDataCompressor">
+  <RectilinearGrid WholeExtent="0 1 0 1 1 2">
+  <Piece Extent="0 1 0 1 1 2">
+    <PointData>
+    </PointData>
+    <CellData>
+    </CellData>
+    <Coordinates>
+      <DataArray type="Float32" format="ascii">
+        0 1
+      </DataArray>
+      <DataArray type="Float32" format="ascii">
+        0 1
+      </DataArray>
+      <DataArray type="Float32" format="ascii">
+        0.5 1
+      </DataArray>
+    </Coordinates>
+  </Piece>
+  </RectilinearGrid>
+</VTKFile>
+
+Can anyone tell me where I'm going wrong? Or is it a bug?
+
+Thanks,
+
+Keith.
+
+
+
+From keith@mcs.st-and.ac.uk  Thu May 20 04:27:10 2004
+From: keith@mcs.st-and.ac.uk (Keith Bennett)
+Date: Thu, 20 May 2004 04:27:10 +0100
+Subject: [Paraview] Reading multiblock pvtr files
+In-Reply-To: <20040519162612.GA14662@gillespies.mcs.st-and.ac.uk>
+References: <20040519162612.GA14662@gillespies.mcs.st-and.ac.uk>
+Message-ID: <20040520032710.GA17456@gillespies.mcs.st-and.ac.uk>
+
+Hi All,
+
+Following on from my previous email, I noticed a previous thread in
+which the "pvd" meta-data file was mentioned. I tried that and it
+appears to work.
+
+My question now is why doesn't the pvtr file work? The documentation
+claims it is supported, but it doesn't seem to do the right thing.
+
+Or am I missing something?
+
+Keith.
+
+
+From jfavre@cscs.ch  Thu May 20 06:20:00 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 20 May 2004 07:20:00 +0200
+Subject: [Paraview] Reading multiblock pvtr files
+In-Reply-To: <20040519162612.GA14662@gillespies.mcs.st-and.ac.uk>
+References: <20040519162612.GA14662@gillespies.mcs.st-and.ac.uk>
+Message-ID: <40AC4000.8060802@cscs.ch>
+
+Keith Bennett wrote:
+> Hi All,
+> 
+> This is my first post to the list. Sorry if it's a dumb question.
+> 
+> I've been trying to read in a multi-part rectilinear grid but I'm
+> not having much success. Reading and writing the files works fine
+> using VTK but when I try it with paraview I get the following error:
+> 
+
+You can use a collection to read your data. The files out_?.vtr do not 
+have to be edited. Just use the following file out.pvd:
+
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian" 
+compressor="vtkZLibDataCompressor">
+   <Collection>
+     <DataSet part="0" file="out_0.vtr"/>
+     <DataSet part="1" file="out_1.vtr"/>
+   </Collection>
+</VTKFile>
+
+Yet, I agree that there is something fishy. I have tried others setups, 
+  getting the same error message. This works and is inspired from the 
+chombo3D example distributed with v1.4.1
+
+Jean
+
+
+From ken.martin@kitware.com  Fri May 21 20:00:28 2004
+From: ken.martin@kitware.com (Ken Martin)
+Date: Fri, 21 May 2004 15:00:28 -0400
+Subject: [Paraview] ParaView 1.4.2 released
+Message-ID: <001701c43f65$e2cdee50$6901a8c0@kitwarein.com>
+
+Hello Folks,
+
+We are pleased to announce the release of ParaView 1.4.2. This release =
+fixes
+a number of bugs and build-issues that were in 1.4.1. Please let us know =
+if
+you run into problems. Some specific fixes include:
+
+- Fixes to Glyph3D to pass all input point data.
+
+- Fix the enable state of the UI after progress reports
+
+- Fix interaction with the window during animations
+
+- Fixes for IceT tiled display support
+
+- Fixes to the MetaImage reader code
+
+- ParaView should not crash (just don't load module) if input_menu =
+element
+is wrong (bug #557)
+
+- Redistribute Data filters put back in and fixed
+
+- vtkBalancedRedistributePolyData has to actually be built (bug #691)
+
+- Better support for nodes with no data (ribbons, cutting)
+
+- fix to support short data
+
+- a fix for an array bounds write error when using tensors
+
+- a fix for passing data between nodes when using the M To N =
+redistribution
+(empty "" array names)
+
+- Particle files were being read incorrectly (bug #830)
+
+- BUG: When clicking on ellipsis and adding files, widget should be
+modified. Closes Bug #656 - If there are more than 100 files, time =
+slider is
+not created
+
+
+
+
+Thanks
+Ken
+
+
+Ken Martin, PhD
+518 371 3971 x101
+Kitware Inc. Suite 204
+28 Corporate Drive
+Clifton Park NY 12065
+
+
+
+
+From andy.cedilnik at kitware.com  Tue May 25 13:17:34 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Tue May 25 13:17:28 2004
+Subject: [Paraview] Test if the list works
+Message-ID: <1085505454.3425.34.camel@andoria>
+
+Hello All,
+
+First of all, I would like to apologize for the downtime of the server.
+Looks like computers are not as robust as they want you to think. 
+
+If you received this e-mail, that means the mailing lists do send mails.
+I will make sure couple of things are resolved before I open mailing
+lists.
+
+Thank you.
+
+-- 
+				Andy Cedilnik
+				Kitware Inc.
+
+From Rupert.Shute at awe.co.uk  Mon May 24 06:55:51 2004
+From: Rupert.Shute at awe.co.uk (Rupert Shute)
+Date: Tue May 25 15:04:40 2004
+Subject: [Paraview] Creating a reader for Paraview
+Message-ID: <LAF29587@awe.co.uk>
+
+
+Hi,
+   I am trying to write data reader to plug into Paraview. I have
+successfully created a vtk class called 'vtkLSPReader' (inheriting from
+vtkDataSetSource), TCL wrapped it and created an XML description file.
+However, when I start Paraview I get the following error message:
+
+Error: In ParaView/ClientServer/vtkClientServerInterpreter.cxx, line 840 ...
+: Cannot find function "vtkLSPReaderTCL_Initialize" in libvtkLSPReaderTCL.so
+
+I have tried adding a function called 'Initialize' to my class (even though
+I don't think it needs one) but I still get the same error.
+
+I'm using Paraview 1.2 and use the VTK and TCL/TK source that came with it
+to build my data reader.
+
+Anyone got any ideas how I can get this working.
+
+Cheers
+Rupert
+--
+_______________________________________________________________________________
+
+The information in this email and in any attachment(s) is commercial in confidence. If you are not the named addressee(s) or if you receive this email in error then any distribution, copying or use of this communication or the information in it is strictly prohibited.  Please notify us immediately by email at intadmin@awe.co.uk, and then delete this message from your computer.  While attachments are virus checked, AWE plc does not accept any liability in respect of any virus which is not detected.
+
+From Rupert.Shute at awe.co.uk  Tue May 25 10:14:08 2004
+From: Rupert.Shute at awe.co.uk (Rupert Shute)
+Date: Tue May 25 15:04:42 2004
+Subject: [Paraview] Creating a reader for Paraview
+Message-ID: <PAC14986@awe.co.uk>
+
+
+Hi,
+   I am trying to write data reader to plug into Paraview. I have
+successfully created a vtk class called 'vtkLSPReader' (inheriting from
+vtkDataSetSource), TCL wrapped it and created an XML description file.
+However, when I start Paraview I get the following error message:
+
+Error: In ParaView/ClientServer/vtkClientServerInterpreter.cxx, line 840 ...
+: Cannot find function "vtkLSPReaderTCL_Initialize" in libvtkLSPReaderTCL.so
+
+I have tried adding a function called 'Initialize' to my class (even though
+I don't think it needs one) but I still get the same error.
+
+I'm using Paraview 1.2 and use the VTK and TCL/TK source that came with it
+to build my data reader.
+
+Anyone got any ideas how I can get this working.
+
+Cheers
+Rupert
+--
+_______________________________________________________________________________
+
+The information in this email and in any attachment(s) is commercial in confidence. If you are not the named addressee(s) or if you receive this email in error then any distribution, copying or use of this communication or the information in it is strictly prohibited.  Please notify us immediately by email at intadmin@awe.co.uk, and then delete this message from your computer.  While attachments are virus checked, AWE plc does not accept any liability in respect of any virus which is not detected.
+
+From whk at iapcm.ac.cn  Mon May 24 20:59:58 2004
+From: whk at iapcm.ac.cn (whk@iapcm.ac.cn)
+Date: Tue May 25 15:16:08 2004
+Subject: [Paraview] I can't make the paraview 1.21 exectute after some
+	simple change
+Message-ID: <6ad6b6b520.6b5206ad6b@iapcm.ac.cn>
+
+Hi,
+     I download the package paraview1.21 and installed in SGI o2. There is no mistake in first make.  I insert some lines in paraview1.21 source code. Then I failed in makeing the executeable (linix,SGI o2).Below is the information returned:
+
+Building static library /asm13/jsy34z2/paraview121/paraview-1.2.1/bin/libvtkKWPa
+raViewTCL.a...
+C++ prelinker: error: std::basic_string<char,std::char_traits<char>,std::allocat
+or<char> >::append(const char*,const char*,std::forward_iterator_tag) assigned t
+o vtkPVServerArraySelection.o and vtkPVApplication.o
+C++ prelinker: error: bad instantiation request file -- instantiation assigned t
+o more than one file
+*** Error code 2 (bu21)
+*** Error code 1 (bu21)
+*** Error code 1 (bu21)
+*** Error code 1 (bu21)
+*** Error code 1 (bu21)
+*** Error code 1 (bu21)
+
+I want to know what is the reason and how to correct it.
+thanks
+
+howard
+
+
+From dcthomp at sandia.gov  Tue May 25 16:06:38 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Tue May 25 16:06:55 2004
+Subject: [Paraview] Creating a reader for Paraview
+In-Reply-To: <PAC14986@awe.co.uk>
+References: <PAC14986@awe.co.uk>
+Message-ID: <1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+
+> I am trying to write data reader to plug into Paraview. I have
+> successfully created a vtk class called 'vtkLSPReader' (inheriting from
+> vtkDataSetSource), TCL wrapped it and created an XML description file.
+> However, when I start Paraview I get the following error message:
+> 
+> Error: In ParaView/ClientServer/vtkClientServerInterpreter.cxx, line 840 ...
+> : Cannot find function "vtkLSPReaderTCL_Initialize" in libvtkLSPReaderTCL.so
+> 
+> I have tried adding a function called 'Initialize' to my class (even though
+> I don't think it needs one) but I still get the same error.
+> 
+> I'm using Paraview 1.2 and use the VTK and TCL/TK source that came with it
+> to build my data reader.
+> 
+> Anyone got any ideas how I can get this working.
+
+I think what you need to do is produce Client/Server wrappings for the
+reader. Look in ParaView/Utilities/VTKClientServer to see how ParaView
+wraps VTK.
+
+		David
+
+
+From etstant at sandia.gov  Wed May 26 12:28:28 2004
+From: etstant at sandia.gov (Stanton, Eric T)
+Date: Wed May 26 12:28:54 2004
+Subject: [Paraview] FW: problem compiling paraview 1.4.2 on windows
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E7@es10snlnt.sandia.gov>
+
+
+
+>  -----Original Message-----
+> From: 	Stanton, Eric T  
+> Sent:	Wednesday, May 26, 2004 10:25 AM
+> To:	'ParaView@paraview.org'
+> Subject:	problem compiling paraview 1.4.2 on windows
+> 
+> 
+> In trying to compile paraview 1.4.2 I'm getting the following error
+> output.  I'm not sure why the files aren't being created. Below the error
+> output is my CMakeCache.txt file in case it helps. Thanks in advance for
+> any suggestions.
+> 
+> Eric Stanton
+> 
+> 
+> 
+> 
+> --------------------Configuration: vtkCommonCS - Win32
+> Debug--------------------
+> Cannot start tool.
+> The parameter is incorrect.
+> Error spawning 'vcspawn.exe'. The build could not be performed.
+> Compiling...
+> vtkAbstractMapperClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAbstractMapperClientServer.cxx': No such file or directory
+> vtkAbstractTransformClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAbstractTransformClientServer.cxx': No such file or directory
+> vtkActor2DClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkActor2DClientServer.cxx': No such file or directory
+> vtkActor2DCollectionClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkActor2DCollectionClientServer.cxx': No such file or directory
+> vtkAlgorithmClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAlgorithmClientServer.cxx': No such file or directory
+> vtkAlgorithmOutputClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAlgorithmOutputClientServer.cxx': No such file or directory
+> vtkAmoebaMinimizerClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAmoebaMinimizerClientServer.cxx': No such file or directory
+> vtkAssemblyNodeClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAssemblyNodeClientServer.cxx': No such file or directory
+> vtkAssemblyPathClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAssemblyPathClientServer.cxx': No such file or directory
+> vtkAssemblyPathsClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkAssemblyPathsClientServer.cxx': No such file or directory
+> vtkBitArrayClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkBitArrayClientServer.cxx': No such file or directory
+> vtkBoxClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkBoxClientServer.cxx': No such file or directory
+> vtkByteSwapClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkByteSwapClientServer.cxx': No such file or directory
+> vtkCellClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCellClientServer.cxx': No such file or directory
+> vtkCell3DClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCell3DClientServer.cxx': No such file or directory
+> vtkCellArrayClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCellArrayClientServer.cxx': No such file or directory
+> vtkCellDataClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCellDataClientServer.cxx': No such file or directory
+> vtkCellLinksClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCellLinksClientServer.cxx': No such file or directory
+> vtkCellTypesClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCellTypesClientServer.cxx': No such file or directory
+> vtkCharArrayClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCharArrayClientServer.cxx': No such file or directory
+> Generating Code...
+> Compiling...
+> vtkCollectionClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCollectionClientServer.cxx': No such file or directory
+> vtkCollectionIteratorClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCollectionIteratorClientServer.cxx': No such file or directory
+> vtkCompositeDataIteratorClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCompositeDataIteratorClientServer.cxx': No such file or directory
+> vtkCompositeDataSetClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCompositeDataSetClientServer.cxx': No such file or directory
+> vtkCompositeDataVisitorClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCompositeDataVisitorClientServer.cxx': No such file or directory
+> vtkCompositeDataCommandClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkCompositeDataCommandClientServer.cxx': No such file or directory
+> vtkContourValuesClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkContourValuesClientServer.cxx': No such file
+> .
+> .
+> .
+> .
+> .
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkVoidArrayClientServer.cxx': No such file or directory
+> vtkVoxelClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkVoxelClientServer.cxx': No such file or directory
+> vtkWarpTransformClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWarpTransformClientServer.cxx': No such file or directory
+> vtkWedgeClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWedgeClientServer.cxx': No such file or directory
+> vtkWindowClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWindowClientServer.cxx': No such file or directory
+> vtkWindowLevelLookupTableClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWindowLevelLookupTableClientServer.cxx': No such file or directory
+> Generating Code...
+> Compiling...
+> vtkXMLFileOutputWindowClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkXMLFileOutputWindowClientServer.cxx': No such file or directory
+> vtkWin32OutputWindowClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWin32OutputWindowClientServer.cxx': No such file or directory
+> vtkWin32ProcessOutputWindowClientServer.cxx
+> fatal error C1083: Cannot open source file: 'C:\Program
+> Files\paraview-1.4.2\paraview-1.4.2-build\Utilities\VTKClientServer\Common
+> \vtkWin32ProcessOutputWindowClientServer.cxx': No such file or directory
+> Generating Code...
+> Error executing cl.exe.
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> # This is the CMakeCache file.
+> # For build in directory: c:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build
+> # You can edit this file to change values found and used by cmake.
+> # If you do not want to change any of the values, simply exit the editor.
+> # If you do want to change a value, simply edit, save, and exit the
+> editor.
+> # The syntax for the file is as follows:
+> # KEY:TYPE=VALUE
+> # KEY is the name of a variable in the cache.
+> # TYPE is a hint to GUI's for the type of VALUE, DO NOT EDIT TYPE!.
+> # VALUE is the current value for the KEY.
+> 
+> ########################
+> # EXTERNAL cache entries
+> ########################
+> 
+> //Build the documentation (Doxygen).
+> BUILD_DOCUMENTATION:BOOL=OFF
+> 
+> //Build VTK examples.
+> BUILD_EXAMPLES:BOOL=OFF
+> 
+> //Build VTK with shared libraries.
+> BUILD_SHARED_LIBS:BOOL=OFF
+> 
+> //Build ParaView Complete Testing
+> BUILD_TESTING:BOOL=ON
+> 
+> //Library is used for debug links only
+> "C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win.lib_LINK_TYPE":S
+> TATIC=optimized
+> 
+> //Library is used for debug links only
+> "C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win_debug.lib_LINK_T
+> YPE":STATIC=debug
+> 
+> //Library is used for debug links only
+> "C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win.lib_LINK_TYPE":S
+> TATIC=optimized
+> 
+> //Library is used for debug links only
+> "C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win_debug.lib_LINK_T
+> YPE":STATIC=debug
+> 
+> //Path to a program.
+> CMAKE_AR:FILEPATH=CMAKE_AR-NOTFOUND
+> 
+> //For backwards compatibility, what version of CMake commands and
+> // syntax should this version of CMake allow.
+> CMAKE_BACKWARDS_COMPATIBILITY:STRING=1.8
+> 
+> //Path to a program.
+> CMAKE_CTEST_COMMAND:FILEPATH=C:/PROGRA~1/CMake/bin/ctest.exe
+> 
+> //C++ compiler
+> CMAKE_CXX_COMPILER:STRING=cl
+> 
+> //Flags used by the compiler during all build types.
+> CMAKE_CXX_FLAGS:STRING=  /W3 /Zm1000 /GX /GR
+> 
+> //Flags used by the compiler during debug builds.
+> CMAKE_CXX_FLAGS_DEBUG:STRING=/MDd /Zi /Od /GZ
+> 
+> //Flags used by the compiler during release minsize builds.
+> CMAKE_CXX_FLAGS_MINSIZEREL:STRING=/MD /O1
+> 
+> //Flags used by the compiler during release builds (/MD /Ob1 /Oi
+> // /Ot /Oy /Gs will produce slightly less optimized but smaller
+> // files).
+> CMAKE_CXX_FLAGS_RELEASE:STRING=/MD /O2
+> 
+> //Flags used by the compiler during Release with Debug Info builds.
+> //
+> CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=/MD /Zi /O2
+> 
+> //C compiler
+> CMAKE_C_COMPILER:STRING=cl
+> 
+> //Flags for C compiler.
+> CMAKE_C_FLAGS:STRING=  /W3 /Zm1000
+> 
+> //Flags used by the compiler during debug builds.
+> CMAKE_C_FLAGS_DEBUG:STRING=/MDd /Zi /Od /GZ
+> 
+> //Flags used by the compiler during release minsize builds.
+> CMAKE_C_FLAGS_MINSIZEREL:STRING=/MD /O1
+> 
+> //Flags used by the compiler during release builds (/MD /Ob1 /Oi
+> // /Ot /Oy /Gs will produce slightly less optimized but smaller
+> // files).
+> CMAKE_C_FLAGS_RELEASE:STRING=/MD /O2
+> 
+> //Flags used by the compiler during Release with Debug Info builds.
+> //
+> CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=/MD /Zi /O2
+> 
+> //Flags used by the linker.
+> CMAKE_EXE_LINKER_FLAGS:STRING=/STACK:10000000 /machine:I386
+> /INCREMENTAL:YES
+> 
+> //Flags used by the linker during debug builds.
+> CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=/debug /pdbtype:sept
+> 
+> //Flags used by the linker during release minsize builds.
+> CMAKE_EXE_LINKER_FLAGS_MINSIZEREL:STRING=
+> 
+> //Flags used by the linker during release builds.
+> CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
+> 
+> //Flags used by the linker during Release with Debug Info builds.
+> //
+> CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /pdbtype:sept
+> 
+> //Install path prefix, prepended onto install directories.
+> CMAKE_INSTALL_PREFIX:PATH=/usr/local
+> 
+> //make program
+> CMAKE_MAKE_PROGRAM:FILEPATH=C:/PROGRA~1/MICROS~3/Common/MSDev98/Bin/msdev.
+> com
+> 
+> //Flags used by the linker during the creation of modules.
+> CMAKE_MODULE_LINKER_FLAGS:STRING=/STACK:10000000 /machine:I386
+> /INCREMENTAL:YES
+> 
+> //Flags used by the linker during debug builds.
+> CMAKE_MODULE_LINKER_FLAGS_DEBUG:STRING=/debug /pdbtype:sept
+> 
+> //Flags used by the linker during release minsize builds.
+> CMAKE_MODULE_LINKER_FLAGS_MINSIZEREL:STRING=
+> 
+> //Flags used by the linker during release builds.
+> CMAKE_MODULE_LINKER_FLAGS_RELEASE:STRING=
+> 
+> //Flags used by the linker during Release with Debug Info builds.
+> //
+> CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /pdbtype:sept
+> 
+> //Flags used by the linker during the creation of dll's.
+> CMAKE_SHARED_LINKER_FLAGS:STRING=/STACK:10000000 /machine:I386
+> /INCREMENTAL:YES
+> 
+> //Flags used by the linker during debug builds.
+> CMAKE_SHARED_LINKER_FLAGS_DEBUG:STRING=/debug /pdbtype:sept
+> 
+> //Flags used by the linker during release minsize builds.
+> CMAKE_SHARED_LINKER_FLAGS_MINSIZEREL:STRING=
+> 
+> //Flags used by the linker during release builds.
+> CMAKE_SHARED_LINKER_FLAGS_RELEASE:STRING=
+> 
+> //Flags used by the linker during Release with Debug Info builds.
+> //
+> CMAKE_SHARED_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /pdbtype:sept
+> 
+> //If set, runtime paths are not added when using shared libraries.
+> //
+> CMAKE_SKIP_RPATH:BOOL=OFF
+> 
+> //Libraries linked by defalut with all applications.
+> CMAKE_STANDARD_LIBRARIES:STRING=kernel32.lib user32.lib gdi32.lib
+> winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib
+> uuid.lib odbc32.lib odbccp32.lib  kernel32.lib user32.lib gdi32.lib
+> winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib
+> uuid.lib odbc32.lib odbccp32.lib
+> 
+> //Use the win32 thread library.
+> CMAKE_USE_WIN32_THREADS:BOOL=ON
+> 
+> //If this value is on, makefiles will be generated without the
+> // .SILENT directive, and all commands will be echoed to the console
+> // during the make.  This is useful for debugging only.
+> CMAKE_VERBOSE_MAKEFILE:BOOL=OFF
+> 
+> //Path to program used to compress files for transfer to the dart
+> // server
+> COMPRESSIONCOMMAND:FILEPATH=COMPRESSIONCOMMAND-NOTFOUND
+> 
+> //Path to a program.
+> CVSCOMMAND:FILEPATH=CVSCOMMAND-NOTFOUND
+> 
+> //Options passed to the cvs update command.
+> CVS_UPDATE_OPTIONS:STRING=-d -A -P
+> 
+> //Limit of reported errors, -1 reports all.
+> DART_BUILD_ERROR_REPORT_LIMIT:BOOL=OFF
+> 
+> //Limit of reported warnings, -1 reports all.
+> DART_BUILD_WARNING_REPORT_LIMIT:BOOL=OFF
+> 
+> //Time alloted for a test before Dart will kill the test.
+> DART_TESTING_TIMEOUT:STRING=1500
+> 
+> //Show the actual output of the build, or if off show a . for each
+> // 1024 bytes.
+> DART_VERBOSE_BUILD:BOOL=OFF
+> 
+> //Should Dart server send email when build errors are found in
+> // Continuous builds?
+> DELIVER_CONTINUOUS_EMAIL:BOOL=OFF
+> 
+> //Value Computed by CMake
+> DICOMParser_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/DICOMParser
+> 
+> //Value Computed by CMake
+> DICOMParser_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/DICOMParser
+> 
+> //Where can the exodus_win_debug library be found
+> EXODUS_DEBUG_LIBRARY:FILEPATH=C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win_debug.lib
+> 
+> //Library is used for debug links only
+> EXODUS_DEBUG_LIBRARY-NOTFOUND_LINK_TYPE:STATIC=debug
+> 
+> //What is the path where the file exodusII.h can be found
+> EXODUS_INCLUDE_DIR:PATH=C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include
+> 
+> //Where can one of the exoIIv2c or exodusII libraries be found
+> EXODUS_LIBRARY:FILEPATH=C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win.lib
+> 
+> //Library is used for debug links only
+> EXODUS_LIBRARY-NOTFOUND_LINK_TYPE:STATIC=optimized
+> 
+> //What is the path where the file EXODUSParaViewImport.cmake can
+> // be found
+> EXODUS_SOURCE_DIR:PATH=C:/vtkSNL/IO
+> 
+> //Path to gunzip executable
+> GUNZIPCOMMAND:FILEPATH=GUNZIPCOMMAND-NOTFOUND
+> 
+> //Enable datasets larger than memory
+> HDF5_ENABLE_HSIZET:BOOL=ON
+> 
+> //Compile Stream Virtual File Driver support
+> HDF5_STREAM_VFD:BOOL=ON
+> 
+> //Where can the htmlhelp library be found
+> HTML_HELP_LIBRARY:FILEPATH=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/HtmlHelp/htmlhelp.lib
+> 
+> //What is the path where the file htmlhelp.h can be found
+> HTML_HELP_PATH:PATH=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/HtmlHelp
+> 
+> //Value Computed by CMake
+> ICE_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/Xdmf/Ice
+> 
+> //What is the path where the file fcntl.h can be found
+> ICE_HAVE_FCNTL:PATH=ICE_HAVE_FCNTL-NOTFOUND
+> 
+> //What is the path where the file mman.h can be found
+> ICE_HAVE_MMAN:PATH=ICE_HAVE_MMAN-NOTFOUND
+> 
+> //What is the path where the file in.h can be found
+> ICE_HAVE_NETINET:PATH=ICE_HAVE_NETINET-NOTFOUND
+> 
+> //Value Computed by CMake
+> ICE_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/Xdmf/Ice
+> 
+> //Path to java command, used by the Dart server to create html.
+> //
+> JAVACOMMAND:FILEPATH=JAVACOMMAND-NOTFOUND
+> 
+> //Value Computed by CMake
+> KWCommon_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Common/KWCommon
+> 
+> //Value Computed by CMake
+> KWCommon_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Common/KWCommon
+> 
+> //Value Computed by CMake
+> KWWidgets_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/GUI/Widgets
+> 
+> //Value Computed by CMake
+> KWWidgets_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/GUI/Widgets
+> 
+> //Command used to build entire project from the command line.
+> MAKECOMMAND:STRING='"C:/Program Files/Microsoft Visual
+> Studio/Common/MSDev98/Bin/msdev.com" ParaView.dsw /MAKE "ALL_BUILD -
+> Release" '
+> 
+> //Where can the netcdf_win_debug library be found
+> NETCDF_DEBUG_LIBRARY:FILEPATH=C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win_debug.lib
+> 
+> //Library is used for debug links only
+> NETCDF_DEBUG_LIBRARY-NOTFOUND_LINK_TYPE:STATIC=debug
+> 
+> //Where can one of the netcdf or netcdfs libraries be found
+> NETCDF_LIBRARY:FILEPATH=C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win.lib
+> 
+> //Library is used for debug links only
+> NETCDF_LIBRARY-NOTFOUND_LINK_TYPE:STATIC=optimized
+> 
+> //OpenGL library for win32
+> OPENGL_gl_LIBRARY:STRING=opengl32
+> 
+> //GLU library for win32
+> OPENGL_glu_LIBRARY:STRING=glu32
+> 
+> //Use ParaView tree for Dart server. Should be OFF
+> PARAVIEW_TESTING_DART_SERVER:BOOL=OFF
+> 
+> //Use the ANSI standard iostream library.
+> PARAVIEW_USE_ANSI_STDLIB:BOOL=OFF
+> 
+> //Build using EXODUS library. Requires access to EXODUS libraries
+> //
+> PARAVIEW_USE_EXODUS:BOOL=ON
+> 
+> //Build using SAF library. Requires access to SAF libraries
+> PARAVIEW_USE_SAF:BOOL=OFF
+> 
+> //Use system installed HDF5. Has to be version 1.6 or higher
+> PARAVIEW_USE_SYSTEM_HDF5:BOOL=OFF
+> 
+> //Path to Rational purify command, used for memory error detection.
+> //
+> PURIFYCOMMAND:FILEPATH=PURIFYCOMMAND-NOTFOUND
+> 
+> //Value Computed by CMake
+> PVClientTests_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/GUI/Testing
+> 
+> //Value Computed by CMake
+> PVClientTests_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/GUI/Testing
+> 
+> //Value Computed by CMake
+> PVClient_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/GUI/Client
+> 
+> //Value Computed by CMake
+> PVClient_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/GUI/Client
+> 
+> //Value Computed by CMake
+> PVCommon_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Servers/Common
+> 
+> //Value Computed by CMake
+> PVCommon_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Servers/Common
+> 
+> //Value Computed by CMake
+> PVFilters_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Servers/Filters
+> 
+> //Value Computed by CMake
+> PVFilters_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Servers/Filters
+> 
+> //Value Computed by CMake
+> PVGUI_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/GUI
+> 
+> //Value Computed by CMake
+> PVGUI_SOURCE_DIR:STATIC=C:/Program Files/paraview-1.4.2/paraview-1.4.2/GUI
+> 
+> //Value Computed by CMake
+> PVServer_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Servers
+> 
+> //Value Computed by CMake
+> PVServer_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Servers
+> 
+> //Path to a program.
+> PYTHON_EXECUTABLE:FILEPATH=PYTHON_EXECUTABLE-NOTFOUND
+> 
+> //Value Computed by CMake
+> ParaView_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build
+> 
+> //Value Computed by CMake
+> ParaView_SOURCE_DIR:STATIC=C:/Program Files/paraview-1.4.2/paraview-1.4.2
+> 
+> //Path to scp command, used by some Dart clients for submitting
+> // results to a Dart server (when not using ftp for submissions)
+> //
+> SCPCOMMAND:FILEPATH=SCPCOMMAND-NOTFOUND
+> 
+> //Name of the computer/site where compile is being run
+> SITE:STRING=S848381
+> 
+> //Value Computed by CMake
+> ServerManager_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Servers/ServerManager
+> 
+> //Value Computed by CMake
+> ServerManager_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Servers/ServerManager
+> 
+> //Path to a program.
+> TCL_TCLSH:FILEPATH=TCL_TCLSH-NOTFOUND
+> 
+> //What is the path where the file tkWinInt.h can be found
+> TK_INTERNAL_PATH:PATH=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/TclTk/internals/tk8.4
+> 
+> //Value Computed by CMake
+> TclTk_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/TclTk
+> 
+> //Value Computed by CMake
+> TclTk_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/TclTk
+> 
+> //Display Notebook with icons.
+> USE_NOTEBOOK_ICONS:BOOL=OFF
+> 
+> //Value Computed by CMake
+> VTKCS_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/VTKClientServer
+> 
+> //Value Computed by CMake
+> VTKCS_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/VTKClientServer
+> 
+> //Value Computed by CMake
+> VTKEXPAT_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/expat
+> 
+> //Value Computed by CMake
+> VTKEXPAT_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/expat
+> 
+> //Value Computed by CMake
+> VTKFREETYPE_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/freetype
+> 
+> //Value Computed by CMake
+> VTKFREETYPE_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/freetype
+> 
+> //Value Computed by CMake
+> VTKFTGL_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/ftgl
+> 
+> //Value Computed by CMake
+> VTKFTGL_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/ftgl
+> 
+> //Value Computed by CMake
+> VTKHDF5_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/hdf5
+> 
+> //Value Computed by CMake
+> VTKHDF5_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/hdf5
+> 
+> //Value Computed by CMake
+> VTKJPEG_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/jpeg
+> 
+> //Value Computed by CMake
+> VTKJPEG_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/jpeg
+> 
+> //Value Computed by CMake
+> VTKPNG_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/png
+> 
+> //Value Computed by CMake
+> VTKPNG_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/png
+> 
+> //Value Computed by CMake
+> VTKTIFF_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/tiff
+> 
+> //Value Computed by CMake
+> VTKTIFF_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/tiff
+> 
+> //Value Computed by CMake
+> VTKTclWrapping_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/VTKTclWrapping
+> 
+> //Value Computed by CMake
+> VTKTclWrapping_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/VTKTclWrapping
+> 
+> //Value Computed by CMake
+> VTKZLIB_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK/Utilities/zlib
+> 
+> //Value Computed by CMake
+> VTKZLIB_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/VTK/Utilities/zlib
+> 
+> //Value Computed by CMake
+> VTK_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/VTK
+> 
+> //What is the path where the file VTKData.readme can be found
+> VTK_DATA_ROOT:PATH=VTK_DATA_ROOT-NOTFOUND
+> 
+> //Build leak checking support into VTK.
+> VTK_DEBUG_LEAKS:BOOL=OFF
+> 
+> //Value Computed by CMake
+> VTK_SOURCE_DIR:STATIC=C:/Program Files/paraview-1.4.2/paraview-1.4.2/VTK
+> 
+> //Build VTK with 64 bit ids
+> VTK_USE_64BIT_IDS:BOOL=OFF
+> 
+> //Turn this option off and tests will not popup windows
+> VTK_USE_DISPLAY:BOOL=ON
+> 
+> //Use mangled Mesa with OpenGL.
+> VTK_USE_MANGLED_MESA:BOOL=OFF
+> 
+> //Use Message Passing Interface (MPI) library for parallel support.
+> //
+> VTK_USE_MPI:BOOL=OFF
+> 
+> //Use the system's expat library.
+> VTK_USE_SYSTEM_EXPAT:BOOL=OFF
+> 
+> //Use the system's jpeg library.
+> VTK_USE_SYSTEM_JPEG:BOOL=OFF
+> 
+> //Use the system's png library.
+> VTK_USE_SYSTEM_PNG:BOOL=OFF
+> 
+> //Use the system's tiff library.
+> VTK_USE_SYSTEM_TIFF:BOOL=OFF
+> 
+> //Use the system's zlib library.
+> VTK_USE_SYSTEM_ZLIB:BOOL=OFF
+> 
+> //Path to an internal program.
+> VTK_WRAP_ClientServer_EXE:FILEPATH=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/bin/$(IntDir)/vtkWrapClientServe
+> r.exe
+> 
+> //Value Computed by CMake
+> Xdmf_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/Xdmf
+> 
+> //Dependencies for the target
+> Xdmf_LIB_DEPENDS:STATIC=vtkhdf5;vtkexpat;
+> 
+> //Value Computed by CMake
+> Xdmf_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/Xdmf
+> 
+> //Value Computed by CMake
+> kwsys_BINARY_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2-build/Utilities/KWSys
+> 
+> //Dependencies for target
+> kwsys_LIB_DEPENDS:STATIC=
+> 
+> //Value Computed by CMake
+> kwsys_SOURCE_DIR:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/KWSys
+> 
+> //Dependencies for the target
+> vtkClientServer_LIB_DEPENDS:STATIC=vtkCommon;
+> 
+> //Dependencies for the target
+> vtkCommonCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkCommon;
+> 
+> //Dependencies for the target
+> vtkCommonTCL_LIB_DEPENDS:STATIC=vtkCommon;vtkRendering;C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/TclTk/TclTk8.4.5Win/lib/tcl8
+> 4.lib;C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/TclTk/TclTk8.4.5Win/lib/tk84
+> .lib;
+> 
+> //Dependencies for target
+> vtkCommon_LIB_DEPENDS:STATIC=
+> 
+> //Dependencies for target
+> vtkDICOMParser_LIB_DEPENDS:STATIC=
+> 
+> //Dependencies for the target
+> vtkFilteringCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkFiltering;vtkCommonCS
+> ;
+> 
+> //Dependencies for the target
+> vtkFiltering_LIB_DEPENDS:STATIC=vtkCommon;
+> 
+> //Dependencies for the target
+> vtkGraphicsCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkGraphics;vtkFilteringC
+> S;
+> 
+> //Dependencies for the target
+> vtkGraphics_LIB_DEPENDS:STATIC=vtkFiltering;
+> 
+> //Dependencies for the target
+> vtkHybridCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkHybrid;vtkRenderingCS;
+> 
+> //Dependencies for the target
+> vtkHybrid_LIB_DEPENDS:STATIC=vtkRendering;vtkIO;
+> 
+> //Dependencies for the target
+> vtkIOCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkIO;vtkFilteringCS;
+> 
+> //Dependencies for the target
+> vtkIO_LIB_DEPENDS:STATIC=vtkFiltering;vtkDICOMParser;vtkpng;vtkzlib;vtkjpe
+> g;vtktiff;vtkexpat;
+> 
+> //Dependencies for the target
+> vtkImagingCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkImaging;vtkFilteringCS;
+> 
+> //Dependencies for the target
+> vtkImaging_LIB_DEPENDS:STATIC=vtkFiltering;
+> 
+> //Dependencies for the target
+> vtkKWCommon_LIB_DEPENDS:STATIC=kwsys;vtkFiltering;vtkGraphics;vtkIO;vtkIma
+> ging;vtkRendering;
+> 
+> //Dependencies for the target
+> vtkKWParaViewCS_LIB_DEPENDS:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/HtmlHelp/htmlhelp.lib;vtkCli
+> entServer;vtkKWParaView;vtkPVFiltersCS;
+> 
+> //Dependencies for the target
+> vtkKWParaView_LIB_DEPENDS:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/HtmlHelp/htmlhelp.lib;vtkKWW
+> idgetsTCL;vtkPVServerManagerTCL;C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win_debug.lib;C:/Pro
+> gram
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win_debug.lib;C:/Pro
+> gram
+> Files/paraview-1.2.1/exodus/exodus_lib_include/exodus_win.lib;C:/Program
+> Files/paraview-1.2.1/exodus/exodus_lib_include/netcdf_win.lib;vtkPVFilters
+> ;vtkXdmfCS;
+> 
+> //Dependencies for the target
+> vtkKWWidgetsTCL_LIB_DEPENDS:STATIC=C:/Program
+> Files/paraview-1.4.2/paraview-1.4.2/Utilities/HtmlHelp/htmlhelp.lib;vtkKWC
+> ommon;vtkHybrid;vtkCommonTCL;
+> 
+> //Dependencies for the target
+> vtkPVCommonCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkPVCommon;vtkPatentedCS
+> ;
+> 
+> //Dependencies for the target
+> vtkPVCommon_LIB_DEPENDS:STATIC=vtkKWCommon;vtkHybridCS;vtkParallelCS;vtkKW
+> Common;vtkPatented;vtkhdf5;vtkClientServer;
+> 
+> //Dependencies for the target
+> vtkPVFiltersCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkPVFilters;vtkPatented
+> CS;
+> 
+> //Dependencies for the target
+> vtkPVFilters_LIB_DEPENDS:STATIC=vtkKWCommon;vtkPVCommon;vtkHybridCS;vtkPar
+> allelCS;vtkKWCommon;vtkPatented;vtkhdf5;vtkClientServer;
+> 
+> //Dependencies for the target
+> vtkPVServerManagerTCL_LIB_DEPENDS:STATIC=vtkPVServerManager;vtkCommonTCL;
+> 
+> //Dependencies for the target
+> vtkPVServerManager_LIB_DEPENDS:STATIC=vtkPVFiltersCS;vtkClientServer;
+> 
+> //Dependencies for the target
+> vtkParallelCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkParallel;vtkRenderingC
+> S;
+> 
+> //Dependencies for the target
+> vtkParallel_LIB_DEPENDS:STATIC=vtkRendering;vtkIO;wsock32;
+> 
+> //Dependencies for the target
+> vtkPatentedCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkPatented;vtkRenderingC
+> S;
+> 
+> //Dependencies for the target
+> vtkPatented_LIB_DEPENDS:STATIC=vtkGraphics;vtkImaging;vtkIO;
+> 
+> //Dependencies for the target
+> vtkRenderingCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkRendering;vtkGraphics
+> CS;vtkImagingCS;vtkIOCS;
+> 
+> //Dependencies for the target
+> vtkRendering_LIB_DEPENDS:STATIC=vtkGraphics;vtkImaging;vtkIO;vtkftgl;vtkfr
+> eetype;opengl32;
+> 
+> //Dependencies for the target
+> vtkXdmfCS_LIB_DEPENDS:STATIC=vtkClientServer;vtkXdmf;vtkRenderingCS;
+> 
+> //Dependencies for the target
+> vtkXdmf_LIB_DEPENDS:STATIC=vtkIO;Xdmf;vtkRendering;
+> 
+> //Dependencies for target
+> vtkexpat_LIB_DEPENDS:STATIC=
+> 
+> //Dependencies for target
+> vtkfreetype_LIB_DEPENDS:STATIC=
+> 
+> //Dependencies for the target
+> vtkftgl_LIB_DEPENDS:STATIC=opengl32;vtkfreetype;
+> 
+> //Dependencies for the target
+> vtkhdf5_LIB_DEPENDS:STATIC=ws2_32;wsock32;vtkzlib;
+> 
+> //Dependencies for target
+> vtkjpeg_LIB_DEPENDS:STATIC=
+> 
+> //Dependencies for the target
+> vtkpng_LIB_DEPENDS:STATIC=vtkzlib;
+> 
+> //Dependencies for the target
+> vtktiff_LIB_DEPENDS:STATIC=vtkzlib;vtkjpeg;
+> 
+> //Dependencies for target
+> vtkzlib_LIB_DEPENDS:STATIC=
+> 
+
+From etstant at sandia.gov  Wed May 26 13:21:35 2004
+From: etstant at sandia.gov (Stanton, Eric T)
+Date: Wed May 26 13:22:02 2004
+Subject: [Paraview] compiling paraview 1.4.2
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E9@es10snlnt.sandia.gov>
+
+
+I checked out the latest ParaView distribution to my Sun Solaris computer.
+When I choose configure in cmake I get the error: 
+
+"ParaView requires out of source build. Please create a separate binary
+directory and run CMake there." 
+
+The thing is, I did all that. I have a directory paraview-1.4.2/ and another
+one paraview-1.4.2-build both in the same parent directory. I cd to paraview
+1.4.2-build and run ccmake ../paraview-1.4.2. 
+
+What am I doing wrong? 
+
+Eric Stanton
+Sandia National Laboratories
+Programmer and Analyst
+Dept. 9521 - Business Systems Support 
+(505) 284-4422 / MS-0806
+etstant@sandia.gov
+
+
+
+From ken.martin at kitware.com  Wed May 26 13:31:59 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Wed May 26 13:33:13 2004
+Subject: [Paraview] compiling paraview 1.4.2
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E9@es10snlnt.sandia.gov>
+Message-ID: <015a01c44347$5a6a4730$6901a8c0@kitwarein.com>
+
+> I checked out the latest ParaView distribution to my Sun Solaris computer.
+> When I choose configure in cmake I get the error:
+> 
+> "ParaView requires out of source build. Please create a separate binary
+> directory and run CMake there."
+> 
+> The thing is, I did all that. I have a directory paraview-1.4.2/ and
+> another
+> one paraview-1.4.2-build both in the same parent directory. I cd to
+> paraview
+> 1.4.2-build and run ccmake ../paraview-1.4.2.
+> 
+> What am I doing wrong?
+
+The CMakeLists code that checks for this is pretty straight forward:
+
+# Disallow in-source build
+IF("x${ParaView_SOURCE_DIR}x" MATCHES "^x${ParaView_BINARY_DIR}x$")
+  MESSAGE(FATAL_ERROR "ParaView requiers out of source Build. Please create
+a separate binary directory and run CMake there.")
+ENDIF("x${ParaView_SOURCE_DIR}x" MATCHES "^x${ParaView_BINARY_DIR}x$")
+
+You should only see that message if your source and binary directories are
+the same. Double check your settings/directories and if you still have the
+problem email your CMakeCache.txt file. You can also try sticking a 
+
+MESSAGE("MY BIN DIR IS ${ParaView_BINARY_DIR} my src dir is
+${ParaView_SOURCE_DIR}")
+ Into the CMakeLists.txt file at the top of your source directory to see
+what those values are.
+
+Thanks
+Ken
+
+
+> 
+> Eric Stanton
+> Sandia National Laboratories
+> Programmer and Analyst
+> Dept. 9521 - Business Systems Support
+> (505) 284-4422 / MS-0806
+> etstant@sandia.gov
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+From brad.king at kitware.com  Wed May 26 13:32:36 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed May 26 13:33:37 2004
+Subject: [Paraview] compiling paraview 1.4.2
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E9@es10snlnt.sandia.gov>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E9@es10snlnt.sandia.gov>
+Message-ID: <40B4D4B4.4040602@kitware.com>
+
+Stanton, Eric T wrote:
+> I checked out the latest ParaView distribution to my Sun Solaris computer.
+> When I choose configure in cmake I get the error: 
+> 
+> "ParaView requires out of source build. Please create a separate binary
+> directory and run CMake there." 
+> 
+> The thing is, I did all that. I have a directory paraview-1.4.2/ and another
+> one paraview-1.4.2-build both in the same parent directory. I cd to paraview
+> 1.4.2-build and run ccmake ../paraview-1.4.2. 
+> 
+> What am I doing wrong? 
+
+You probably tried an in-source build first, got the error message, and 
+then switched to an out-of-source build.  Since there is a 
+CMakeCache.txt file left in the source tree, cmake thinks that is the 
+build tree.  Re-extract the source tarball into a fresh source tree and 
+then try again.
+
+-Brad
+From etstant at sandia.gov  Wed May 26 13:40:52 2004
+From: etstant at sandia.gov (Stanton, Eric T)
+Date: Wed May 26 13:41:21 2004
+Subject: [Paraview] compiling paraview 1.4.2
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7EA@es10snlnt.sandia.gov>
+
+
+> You probably tried an in-source build first, got the error 
+> message, and 
+> then switched to an out-of-source build.  Since there is a 
+> CMakeCache.txt file left in the source tree, cmake thinks that is the 
+> build tree.  Re-extract the source tarball into a fresh 
+> source tree and 
+> then try again.
+> 
+> -Brad
+> 
+
+That's what it was. Deleting the CMakeCache.txt file and rerunning worked.
+Thanks for the responses.
+
+Eric
+
+From ken.martin at kitware.com  Wed May 26 13:44:50 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Wed May 26 13:46:21 2004
+Subject: [Paraview] FW: problem compiling paraview 1.4.2 on windows
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B7E7@es10snlnt.sandia.gov>
+Message-ID: <015b01c44349$2ac93700$6901a8c0@kitwarein.com>
+
+> > The parameter is incorrect.
+> > Error spawning 'vcspawn.exe'. The build could not be performed.
+> > Compiling...
+> > vtkAbstractMapperClientServer.cxx
+> > fatal error C1083: Cannot open source file: 'C:\Program
+> > Files\paraview-1.4.2\paraview-1.4.2-
+> build\Utilities\VTKClientServer\Common
+> > \vtkAbstractMapperClientServer.cxx': No such file or directory
+
+There are two possibilities here. The first test you can do is from visual
+studio try right clicking on vtkAbstractMapperClientServer.h, it should be
+in the vtkCommonCS target under the header files folder. Right clicking will
+give you a menu with a Compile option. Try that option. If the file compiles
+correctly then the problem lies with visual studio 6. VS6 has a problem
+handling large projects with many custom commands. We do have a vs6
+dashboard but our path is a little shorter so maybe a shorter path would
+solve the problem for you. The second possibility is that we have a problem
+with the specific path you are using. That is less likely but still
+possible, We have a vs6 dashboard with a space in the path but maybe the .
+and - cause some problems.
+
+Either way let me know how the one file .h compile goes. If that works fine
+it is probably the path length.
+
+Thanks
+Ken
+
+
+
+
+
+From whk at iapcm.ac.cn  Wed May 26 21:53:20 2004
+From: whk at iapcm.ac.cn (whk@iapcm.ac.cn)
+Date: Wed May 26 21:55:01 2004
+Subject: [Paraview] =?gb2312?b?u9i4tA==?= :ParaView Digest, Vol 1, Issue 257
+Message-ID: <6d0666de23.6de236d066@iapcm.ac.cn>
+
+Hi,
+
+   I have come across the same problem. I unzip the source code in different directory with shallower depth. I tried again and came through. you can have a try again.
+
+howard
+
+----- ??? -----
+?: paraview-request@paraview.org
+??: ???, ?? 27?, 2004 ??0:28
+??: ParaView Digest, Vol 1, Issue 257
+
+-------------- next part --------------
+An embedded message was scrubbed...
+From: paraview-request@paraview.org
+Subject: ParaView Digest, Vol 1, Issue 257
+Date: Wed, 26 May 2004 12:28:56 -0400 (EDT)
+Size: 35440
+Url: http://public.kitware.com/pipermail/paraview/attachments/20040527/67bed8d8/attachment-0001.mht
+From fxl at sccas.cn  Thu May 27 04:36:15 2004
+From: fxl at sccas.cn (fxl@sccas.cn)
+Date: Thu May 27 04:31:54 2004
+Subject: [Paraview] How to add a reader into paraview
+Message-ID: <20040527083151.89C2828D1@public.kitware.com>
+
+Hello all,
+
+I am trying to add a reader into into Paraview. I want to know what steps would I follow. Any suggestion will be helpful for me. Thank you!
+
+Thanks
+Fancy
+
+
+From whk at iapcm.ac.cn  Thu May 27 04:40:55 2004
+From: whk at iapcm.ac.cn (whk@iapcm.ac.cn)
+Date: Thu May 27 04:42:13 2004
+Subject: [Paraview] a error in compiling unix version
+Message-ID: <733a06dd3f.6dd3f733a0@iapcm.ac.cn>
+
+After I configure paraview1.42 in sgi o2, I run 'make' to build EXE. Then I got an error related to the defination of "VTK_HAVE_SOCKLEN_T" in 'GetPort()' method while compiling 'vtkSocketCommunicator.cxx' . So I change the line :
+
+VTK_HAVE_SOCKLEN_T:INTERNAL=1  to   VTK_HAVE_SOCKLEN_T:INTERNAL=0
+ 
+in file CMakeCache.txt.  So I can finish building of paraview1.4.2. While runing in server/client mode with server runing in unix and client in windows on pc, the client cannot connect to server with error info. below:
+
+vtkSocketCommunicator (0x130294a0): Requested size (1) is different than the size that was sent (16777216)
+
+
+ERROR: In /asm13/jsy34z2/paraview-1.4.2/VTK/Parallel/vtkSocketCommunicator.cxx, line 350
+vtkSocketCommunicator (0x130294a0): Endian handshake failed.
+
+
+ERROR: In /asm13/jsy34z2/paraview-1.4.2/GUI/Client/vtkPVClientServerModule.cxx, line 587
+vtkPVClientServerModule (0x13029a20): Wait timed out or could not initialize socket.
+
+I have check the IP and port is correct. And server/client both in Unix or in Windows,the connection is right.  What is the reason about this?  
+
+thanks,
+Howard
+
+
+From g.gorman at imperial.ac.uk  Thu May 27 10:03:06 2004
+From: g.gorman at imperial.ac.uk (Gerard Gorman)
+Date: Thu May 27 10:04:24 2004
+Subject: [Paraview] Searching mail archives
+Message-ID: <40B5F51A.3000803@imperial.ac.uk>
+
+Hi
+
+I'm new to the list and I have a few questions - but I get tired of my 
+own voice very quickly. Is these a search page for the paraview mail 
+archive akin to http://www.kitware.com/search.html which allows the vtk 
+mailing list to be searched (allowing me to avoid asking questions 
+already answered)?
+
+Cheers
+g
+
+
+-- 
+----------------------------------------------------------
+Gerard Gorman
+Applied Modelling and Computation Group
+Earth Science and Engineering
+Imperial College
+Prince Consort Road		Tel. 00 44 +207 594 9323
+London SW7 2BP			Fax. 00 44 +207 594 9321
+U.K.                    o~o A good slogan beats a good solution.
+-----------------------w-v-w------------------------------
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: signature.asc
+Type: application/pgp-signature
+Size: 252 bytes
+Desc: OpenPGP digital signature
+Url : http://public.kitware.com/pipermail/paraview/attachments/20040527/2d62f55f/signature.pgp
+From andy.cedilnik at kitware.com  Thu May 27 10:32:48 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Thu May 27 10:32:43 2004
+Subject: [Paraview] Searching mail archives
+In-Reply-To: <40B5F51A.3000803@imperial.ac.uk>
+References: <40B5F51A.3000803@imperial.ac.uk>
+Message-ID: <1085668368.3425.123.camel@andoria>
+
+Hi Gerard,
+
+The http://www.kitware.com/search.html will also search PAraView, CMake,
+ITK, .. mailing lists.
+
+		Andy
+
+On Thu, 2004-05-27 at 10:03, Gerard Gorman wrote:
+> Hi
+> 
+> I'm new to the list and I have a few questions - but I get tired of my 
+> own voice very quickly. Is these a search page for the paraview mail 
+> archive akin to http://www.kitware.com/search.html which allows the vtk 
+> mailing list to be searched (allowing me to avoid asking questions 
+> already answered)?
+
+
+From jsjones at sandia.gov  Thu May 27 13:49:01 2004
+From: jsjones at sandia.gov (Jones, Jake S)
+Date: Thu May 27 13:49:32 2004
+Subject: [Paraview] time filters in paraview
+Message-ID: <16F54D8E44BBEE4BBBDB5EFB3AEEB86DBC516F@es06snlnt.sandia.gov>
+
+Hello,
+
+I want to create some vtk (and paraview) filters that do time filtering of
+data (e.g. low-pass filtering, integrals, derivatives). 
+
+For example, in paraview the user would read a data file, then choose 'DSP
+Filter' from the 'Filter' pull-down menu. The user would then either choose
+a stock filter setting, or enter their own filter weights. Finally the user
+would select a cell or point variable array from the input data set. The
+filter would be applied to this array.
+
+The big problem is that it seems that paraview (and vtk) is geared toward
+accessing one timestep (one vtkDataSet) at a time. These kinds of filters
+need to access multiple input timesteps (and previous output timesteps) in
+order to generate an output.  I havent seen any examples of multiple
+timesteps being passed through the pipeline.
+
+Has anyone looked at this before? Can anyone direct me to examples of
+something related that has been done?
+
+Thanks,
+
+Jake Jones
+Sandia National Labs
+jsjones@sandia.gov
+
+
+
+From dcthomp at sandia.gov  Thu May 27 15:50:39 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Thu May 27 15:51:09 2004
+Subject: [Paraview] time filters in paraview
+In-Reply-To: <16F54D8E44BBEE4BBBDB5EFB3AEEB86DBC516F@es06snlnt.sandia.gov>
+References: <16F54D8E44BBEE4BBBDB5EFB3AEEB86DBC516F@es06snlnt.sandia.gov>
+Message-ID: <1085687439.10172.13.camel@fozzy.ran.sandia.gov>
+
+> I want to create some vtk (and paraview) filters that do time filtering of
+> data (e.g. low-pass filtering, integrals, derivatives). 
+> 
+> For example, in paraview the user would read a data file, then choose 'DSP
+> Filter' from the 'Filter' pull-down menu. The user would then either choose
+> a stock filter setting, or enter their own filter weights. Finally the user
+> would select a cell or point variable array from the input data set. The
+> filter would be applied to this array.
+> 
+> The big problem is that it seems that paraview (and vtk) is geared toward
+> accessing one timestep (one vtkDataSet) at a time. These kinds of filters
+> need to access multiple input timesteps (and previous output timesteps) in
+> order to generate an output.  I havent seen any examples of multiple
+> timesteps being passed through the pipeline.
+> 
+> Has anyone looked at this before? Can anyone direct me to examples of
+> something related that has been done?
+
+I think the current recommendation is to create a vtkDataSet for each
+time step and use a filter that accepts multiple inputs (such as
+vtkInterpolateDataSetAttributes) to perform filtering on them. This is
+fine for work such as computing derivatives/integrals but can be
+problematic when a computation requires small subsets of a mesh but over
+a large time span since many readers don't allow you to request a
+particular spatial subset of a grid be read.
+
+	David
+
+
+From jfavre at cscs.ch  Fri May 28 10:36:51 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Fri May 28 10:37:12 2004
+Subject: [Paraview] tips on batch animation & EnSight Case files
+In-Reply-To: <1085687439.10172.13.camel@fozzy.ran.sandia.gov>
+References: <16F54D8E44BBEE4BBBDB5EFB3AEEB86DBC516F@es06snlnt.sandia.gov>
+	<1085687439.10172.13.camel@fozzy.ran.sandia.gov>
+Message-ID: <40B74E83.6060808@cscs.ch>
+
+ParaView users
+
+I just wanted to share some simple tricks to work-around some 
+limitations of paraview v1.4.2 with EnSight (or other) time-dependent 
+datasets.
+
+The animation interface cannot handle time-values with varying time 
+increments (it assumes constant time increments throughout the 
+animation), and it has round-off troubles in some cases.
+
+There is a simple workaround. Save the batch script and edit the Tcl 
+code. It's trivial and will produce the correct answer.
+
+example: I have an Ensight case file with a timeset of:
+
+TIME
+time set:                  1
+number of steps:           20
+filename start number:     1
+filename increment:        1
+time values:
+0.00 0.025 0.05 0.075 0.10 0.125 0.15 0.175 0.2 0.225
+0.25 0.3 0.35 0.40 0.45 0.50 0.55 0.60 0.65 0.70
+
+ParaView unrolls the loop and writes the following stuff:
+
+[$pvTemp109 GetProperty SetTimeValue] SetElement 0 [expr round(0)]
+$pvTemp109 UpdateVTKObjects
+$Ren1 UpdateVTKObjects
+$Ren1 WriteImage {/tmp/b00000.jpg} vtkJPEGWriter
+
+[$pvTemp109 GetProperty SetTimeValue] SetElement 0 [expr round(0.0368421)]
+$pvTemp109 UpdateVTKObjects
+$Ren1 UpdateVTKObjects
+$Ren1 WriteImage {/tmp/b00001.jpg} vtkJPEGWriter
+
+etc...
+
+you can simply replace this with a Tcl loop
+
+set i 0
+foreach t {0.00 0.025 0.05 0.075 0.10 0.125 0.15 0.175} {
+   [$pvTemp111 GetProperty SetTimeValue] SetElement 0 $t
+   $pvTemp111 UpdateVTKObjects
+   $Ren1 UpdateVTKObjects
+   set fname [format "batch%03d.jpg" $i]
+   $Ren1 WriteImage $fname vtkJPEGWriter
+   incr i
+}
+
+Now, the last thing I have not been able to figure out is how to write a 
+CornerAnnotation with the correct time step.
+
+my trick is to add the following line in the foreach loop above
+
+puts [format "convert -fill white -draw \'text 550,500 \"t = %6.3f\"' %s 
+%s" $t $fname new$fname]
+
+I run paraview like this:
+
+paraview --batch batch.pvd > annotate_script.tcl
+
+and then execute annotate_script.tcl
+
+Hope this can be useful to some users.
+
+Cheers.
+
+Jean
+
+From YKRETCHM at altera.com  Fri May 28 16:55:48 2004
+From: YKRETCHM at altera.com (Yaron Kretchmer)
+Date: Fri May 28 16:56:08 2004
+Subject: [Paraview] using paraview with PETSC?
+Message-ID: <C86E588AF86FAA4FA4381F05FC9FD5F703C27B70@sj-ismsg03.altera.com>
+
+Hi All.
+
+I'm trying to find ways of visualizing parallel PETSC-based code. Are
+there interfaces between Paraview and PETSC? Or any other visualization
+techniques that will work with Petsc? Any information will be most
+welcome
+
+ 
+
+Best regards,
+
+_______________ 
+Yaron Kretchmer 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040528/4bff060d/attachment.html
+From gleicon at terra.com.br  Fri May 28 17:24:36 2004
+From: gleicon at terra.com.br (Gleicon Moraes)
+Date: Fri May 28 17:20:08 2004
+Subject: [Paraview] request for information
+Message-ID: <40B7AE14.40103@terra.com.br>
+
+Gentlemen,
+
+	I would like to ask you about some paper or indication, even informal, 
+analysing Paraview over similar systems, as AVS or any other, for 
+reference in a work I am doing.
+	So far I've acomplished comparing the same procedure between Paraview 
+and AVS, with good results, but I would like to read more about other 
+experiences.
+	My main area is medical imaging.
+	Best regards,
+
+
+-- 
+Gleicon S. Moraes
+gleicon [a] terra.com.br
+http://videodog.cjb.net
+
+From suz at mito.ssd.ssg.fujitsu.com  Mon May 31 06:04:09 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Mon May 31 06:07:37 2004
+Subject: [Paraview] make paraview-1.4.2 on Solaris8
+Message-ID: <20040531183924.AD96.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hello
+
+ I compiled  paraview-1.4.2 on Solaris 8 (with gcc 2.95), but the
+following error occurrs.
+
+					:
+Building object file vtkGraphicsFactory.o...
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:56,
+                 from /wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:38,
+                 from /wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xlib.h:2099: ANSI C++ forbids declaration `XSetTransientForHint' with no type
+/usr/openwin/share/include/X11/Xlib.h:2107: ANSI C++ forbids declaration `XActivateScreenSaver' with no type
+/usr/openwin/share/include/X11/Xlib.h:2114: ANSI C++ forbids declaration `XAddHost' with no type
+/usr/openwin/share/include/X11/Xlib.h:2122: ANSI C++ forbids declaration `XAddHosts' with no type
+/usr/openwin/share/include/X11/Xlib.h:2129: ANSI C++ forbids declaration `XAddToExtensionList' with no type
+/usr/openwin/share/include/X11/Xlib.h:2136: ANSI C++ forbids declaration `XAddToSaveSet' with no type
+					:
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:58,
+                 from /wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:38,
+                 from /wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xresource.h:249: ANSI C++ forbids declaration `XrmQGetResource' with no type
+make[5]: *** [vtkGraphicsFactory.o] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Rendering] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_VTK] Error 2
+make: *** [default_target] Error 2
+
+
+ Can we make paraview with /usr/openwin ?
+ Or do we have to use the latest X11 ?
+
+I really appreciate your reply.
+
+Best regards.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+

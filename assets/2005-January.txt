@@ -1,0 +1,2424 @@
+From rnelias at superig.com.br  Sun Jan  9 17:28:51 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Sun Jan  9 17:29:00 2005
+Subject: [Paraview] Problem running Paraview in client/server mode
+In-Reply-To: <20041231170008.C4AB4344D4@public.kitware.com>
+Message-ID: <20050109222857.E59043470A@public.kitware.com>
+
+ 
+Dear ParaView Developers
+
+I've been trying to run Paraview (v.1.8.2) in client/server mode as
+exemplified in page 91 of the Paraview Guide over a two very simple Windows
+system (2 AMD Athlons running Win2K conected through a TCP/IP network over a
+10/100 swith), but when I tried to open my data file in the client machine
+(menu File\Open data) I received the following message from the machine
+runing the pvserver:
+
+"ERROR: In
+C:\martink\ParaView\ParaView18\Servers\Filters\vtkPVServerFileListing.cxx,
+line 170 vtkPVServerFileListing(038555F0): Error calling FindNextFile:
+Invalid identifier."
+
+Is there any extra procedure not described in ParaView Guide to fix this
+problem?
+
+Thanks for any help
+
+Renato N. Elias
+COPPE/UFRJ
+Rio de Janeiro/Brasil
+
+
+p.s.: I don't have a directory called "C:\martink" in my machine. I think
+that this directory is regarding to "Ken Martin" ParaView's developer ;-)
+
+
+From brad.king at kitware.com  Mon Jan 10 11:28:19 2005
+From: brad.king at kitware.com (Brad King)
+Date: Mon Jan 10 11:28:23 2005
+Subject: [Paraview] Problem running Paraview in client/server mode
+In-Reply-To: <20050109222857.E59043470A@public.kitware.com>
+References: <20050109222857.E59043470A@public.kitware.com>
+Message-ID: <41E2AD23.3080204@kitware.com>
+
+Renato N. Elias wrote:
+> I've been trying to run Paraview (v.1.8.2) in client/server mode as
+> exemplified in page 91 of the Paraview Guide over a two very simple Windows
+> system (2 AMD Athlons running Win2K conected through a TCP/IP network over a
+> 10/100 swith), but when I tried to open my data file in the client machine
+> (menu File\Open data) I received the following message from the machine
+> runing the pvserver:
+> 
+> "ERROR: In
+> C:\martink\ParaView\ParaView18\Servers\Filters\vtkPVServerFileListing.cxx,
+> line 170 vtkPVServerFileListing(038555F0): Error calling FindNextFile:
+> Invalid identifier."
+
+What is the name of the directory at which the dialog is pointing when 
+you get this error?
+
+-Brad
+From billlist at nycap.rr.com  Mon Jan 10 12:37:27 2005
+From: billlist at nycap.rr.com (William A. Hoffman)
+Date: Mon Jan 10 12:39:27 2005
+Subject: [Paraview] Problem running Paraview in client/server mode
+In-Reply-To: <20050109222857.E59043470A@public.kitware.com>
+References: <20041231170008.C4AB4344D4@public.kitware.com>
+	<20050109222857.E59043470A@public.kitware.com>
+Message-ID: <6.1.1.1.2.20050110122748.08da77d0@pop.nycap.rr.com>
+
+
+I think we found the problem.   It is a bit complicated, but I think
+if you run paraview in non-client/server mode, and open a file in a directory
+that exists on BOTH machines.   Then run client/server it should work.
+I think the problem is the recently used file is in a directory that does
+not exist on the server machine, and due to a bug in the file chooser it gets
+stuck and you can't load any files.
+
+-Bill
+
+
+At 05:28 PM 1/9/2005, Renato N. Elias wrote:
+> 
+>Dear ParaView Developers
+>
+>I've been trying to run Paraview (v.1.8.2) in client/server mode as
+>exemplified in page 91 of the Paraview Guide over a two very simple Windows
+>system (2 AMD Athlons running Win2K conected through a TCP/IP network over a
+>10/100 swith), but when I tried to open my data file in the client machine
+>(menu File\Open data) I received the following message from the machine
+>runing the pvserver:
+>
+>"ERROR: In
+>C:\martink\ParaView\ParaView18\Servers\Filters\vtkPVServerFileListing.cxx,
+>line 170 vtkPVServerFileListing(038555F0): Error calling FindNextFile:
+>Invalid identifier."
+>
+>Is there any extra procedure not described in ParaView Guide to fix this
+>problem?
+>
+>Thanks for any help
+>
+>Renato N. Elias
+>COPPE/UFRJ
+>Rio de Janeiro/Brasil
+>
+>
+>p.s.: I don't have a directory called "C:\martink" in my machine. I think
+>that this directory is regarding to "Ken Martin" ParaView's developer ;-)
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview 
+
+From wolfganglechner at gmx.at  Mon Jan 10 14:31:42 2005
+From: wolfganglechner at gmx.at (Wolfgang Lechner)
+Date: Mon Jan 10 14:29:20 2005
+Subject: [Paraview] Animation Statistics
+Message-ID: <005301c4f74b$0371bd10$6164a8c0@wolf>
+
+Hello
+
+When opening vtk files information like range, size,... is avaliable
+on the "information" tab. Is it possible to get such statistics 
+(e.g. MAX value, MIN value) for a whole animation (which is 
+a set of vtk files in my case) maybe even programmatically
+in scripts?
+
+thanks in advance
+Wolfgang Lechner
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050110/1ed9f877/attachment.htm
+From rnelias at superig.com.br  Tue Jan 11 17:00:19 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Tue Jan 11 17:00:40 2005
+Subject: [Paraview] Saving camera position...
+In-Reply-To: <20050111170006.C5C8F3478F@public.kitware.com>
+Message-ID: <20050111220039.432803480A@public.kitware.com>
+
+ 
+Hi all,
+
+Does anybody know if there is any way to save/restore camera position in
+Paraview?
+
+Thanks
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+
+
+From amy.henderson at kitware.com  Tue Jan 11 17:16:08 2005
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Tue Jan 11 17:14:17 2005
+Subject: [Paraview] Saving camera position...
+In-Reply-To: <20050111220039.432803480A@public.kitware.com>
+References: <20050111170006.C5C8F3478F@public.kitware.com>
+	<20050111220039.432803480A@public.kitware.com>
+Message-ID: <6.2.0.14.2.20050111171235.03f41150@pop.biz.rr.com>
+
+Hi Renato,
+
+Do you mean within a single ParaView session?  If so, then from the View 
+menu, select "3D View Properties" and click on the Camera tab.  Near the 
+top of that tab is a section called "Stored Camera Positions".  Right-click 
+on one of the buttons in that section to save the current camera position 
+in that button.  (A small image of the current state of the display area 
+will be drawn on that button.)  After changing the camera position, you can 
+restore it by left-clicking on the button where you previously stored the 
+camera information.
+
+- Amy
+
+At 05:00 PM 1/11/2005, Renato N. Elias wrote:
+>
+>Hi all,
+>
+>Does anybody know if there is any way to save/restore camera position in
+>Paraview?
+>
+>Thanks
+>
+>Renato N. Elias
+>Rio de Janeiro/Brasil
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From rnelias at superig.com.br  Tue Jan 11 17:16:31 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Tue Jan 11 17:16:57 2005
+Subject: [Paraview] Storing camera position to a file...
+In-Reply-To: <20050111170006.C5C8F3478F@public.kitware.com>
+Message-ID: <20050111221652.969073479F@public.kitware.com>
+
+ 
+I will reformulate my question better...
+
+I know that Paraview is able to save the camera position through "camera
+painel" (right click on an empty panel button), but, I'd like to reproduce a
+specific camera position for several Paraview sessions. Therefore, I was
+think to save camera parameters to a file and restore these parameters in
+another Paraview session. If it's possible, how could I do that?
+
+Thanks
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+
+
+From pknotz at sandia.gov  Tue Jan 11 17:19:32 2005
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Tue Jan 11 17:19:50 2005
+Subject: [Paraview] Storing camera position to a file...
+In-Reply-To: <20050111221652.969073479F@public.kitware.com>
+Message-ID: <BE099F04.ACA4%pknotz@sandia.gov>
+
+Sounds like you need the bleeding edge "Lookmarks" feature.  Unfortunately,
+I'm not sure which version will include it.
+
+
+On 1/11/05 3:16 PM, "Renato N. Elias" <rnelias@superig.com.br> wrote:
+
+>  
+> I will reformulate my question better...
+> 
+> I know that Paraview is able to save the camera position through "camera
+> painel" (right click on an empty panel button), but, I'd like to reproduce a
+> specific camera position for several Paraview sessions. Therefore, I was
+> think to save camera parameters to a file and restore these parameters in
+> another Paraview session. If it's possible, how could I do that?
+> 
+> Thanks
+> 
+> Renato N. Elias
+> Rio de Janeiro/Brasil
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From etstant at sandia.gov  Tue Jan 11 17:34:22 2005
+From: etstant at sandia.gov (Stanton, Eric T)
+Date: Tue Jan 11 17:34:35 2005
+Subject: [Paraview] Storing camera position to a file...
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E177F67@ES20SNLNT.srn.sandia.gov>
+
+Renato,
+
+Lookmarks will allow you to create a "visual bookmark" of a view of your
+data. It leverages the "Save Session State" feature currently in
+ParaView but has the added benefit of letting you apply multiple
+lookmarks to a single dataset and changing the dataset to which a
+lookmark is applied all in the same paraview session. There is also a
+Lookmark Manager which let's you view and organize your lookmarks
+(represented by a thumbnail, name, dataset name, and comments field).
+You can save the lookmarks in the Lookmark Manager to a file that can
+then be "imported" into a different paraview session. I could also add
+an option to "only save camera settings" to replace the functionality in
+the Camera tab. As far as availability goes, I am working with Kitware
+to get it into standard ParaView. Shouldn't be too much longer.
+
+Best,
+
+Eric
+
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Patrick Notz
+> Sent: Tuesday, January 11, 2005 3:20 PM
+> To: Renato N. Elias; paraview@paraview.org
+> Subject: Re: [Paraview] Storing camera position to a file...
+> 
+> Sounds like you need the bleeding edge "Lookmarks" feature.  
+> Unfortunately, I'm not sure which version will include it.
+> 
+> 
+> On 1/11/05 3:16 PM, "Renato N. Elias" <rnelias@superig.com.br> wrote:
+> 
+> >  
+> > I will reformulate my question better...
+> > 
+> > I know that Paraview is able to save the camera position through 
+> > "camera painel" (right click on an empty panel button), 
+> but, I'd like 
+> > to reproduce a specific camera position for several 
+> Paraview sessions. 
+> > Therefore, I was think to save camera parameters to a file 
+> and restore 
+> > these parameters in another Paraview session. If it's 
+> possible, how could I do that?
+> > 
+> > Thanks
+> > 
+> > Renato N. Elias
+> > Rio de Janeiro/Brasil
+> > 
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From rnelias at superig.com.br  Tue Jan 11 17:39:40 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Tue Jan 11 17:40:04 2005
+Subject: [Paraview] Storing camera position to a file... 
+In-Reply-To: <20050111170006.C5C8F3478F@public.kitware.com>
+Message-ID: <20050111224002.8197628DC0@public.kitware.com>
+
+
+I found out a possible solution...
+
+I see that when a state file is saved, Paraview record a command line
+regarding to camera position. This line is something like:
+
+"SetCameraState 7.24881 -31.6254 -0.072037 1.44765 89.1608 -0.295244
+-8.85497e-005 0.0018437 0.999998"
+
+If this line (and others regarding camera issues) is saved to another file
+and loaded through "file\load session" Paraview get these parameters and
+plays them.
+
+[]'s
+
+Renato
+
+
+From soeren.gebbert at inpro.de  Thu Jan 13 04:17:27 2005
+From: soeren.gebbert at inpro.de (Soeren Gebbert)
+Date: Thu Jan 13 04:16:05 2005
+Subject: [Paraview] Quadratic elements visualisation
+Message-ID: <41E63CA7.1040901@inpro.de>
+
+Dear paraview users and developer's,
+i'm using paraview 1.8.2 and vtk-4.4 on linux and windows, and have the
+following questions:
+
+I want to add new quadratic elements (like a quadratic quad with center
+point) to vtk and i want to visualize them in vtk like in paraview with
+the "TempTessellatorFilter". But the "TempTessellatorFilter" is not a
+part of vtk and it is marked
+as temporary in paraview. So want i know if there is another way to
+visualize quadratic elements with curved surface
+in vtk 4.4 or in future versions of vtk, or is that only a feature of
+paraview which will be not implemented in vtk?
+
+Thanks alot and best regards
+S?ren Gebbert
+
+
+From mathieu.malaterre at kitware.com  Thu Jan 13 15:53:13 2005
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Thu Jan 13 15:53:21 2005
+Subject: [Paraview] Quadratic elements visualisation
+In-Reply-To: <41E63CA7.1040901@inpro.de>
+References: <41E63CA7.1040901@inpro.de>
+Message-ID: <41E6DFB9.303@kitware.com>
+
+Soeren Gebbert wrote:
+> Dear paraview users and developer's,
+> i'm using paraview 1.8.2 and vtk-4.4 on linux and windows, and have the
+> following questions:
+> 
+> I want to add new quadratic elements (like a quadratic quad with center
+> point) to vtk and i want to visualize them in vtk like in paraview with
+> the "TempTessellatorFilter". But the "TempTessellatorFilter" is not a
+> part of vtk and it is marked
+> as temporary in paraview. So want i know if there is another way to
+> visualize quadratic elements with curved surface
+> in vtk 4.4 or in future versions of vtk, or is that only a feature of
+> paraview which will be not implemented in vtk?
+
+S?ren,
+
+	I'd say that this should be fairly easy to copy/paste/modify the class 
+vtkQuadraticQuad. As internally we are already using the center point 
+you are trying to add. I have seen other people from vtkusers mailing 
+list have attempted this solution.
+
+	As for your second question about the fact that TessellatorFilter is 
+marked as Temp is because we are working on a more generic approach than 
+this filter. You'll find more information in VTK, especially in the 
+VTK/GenericFiltering subdir.
+
+HTH
+Mathieu
+
+
+From laa at lanl.gov  Fri Jan 14 19:04:34 2005
+From: laa at lanl.gov (Lee A Ankeny)
+Date: Fri Jan 14 19:04:42 2005
+Subject: [Paraview] WriteVTKFile from pvbatch?
+In-Reply-To: <41E6DFB9.303@kitware.com>
+References: <41E63CA7.1040901@inpro.de> <41E6DFB9.303@kitware.com>
+Message-ID: <p06110405be0dfb604722@[128.165.113.89]>
+
+I'm trying to use pvbatch to preprocess large datasets by running filters (e.g. contours), and then writing those contours to .pvd filesets. However such a paraview session uses WriteVTKFile, which is found in paraview but not pvbatch. Perhaps that's why the 'Save Data' step isn't recorded to the batch script.
+
+I think WriteVTKFile ultimately boils down to vtkXMLPVDWriter::WriteData, so I think that's what I should be calling. Has anybody done this? Is it possible? Thanks,
+
+Lee
+-- 
+-------------------------------------------------------------------
+Lee Ankeny 
+Group CCN-12, MS B295, Los Alamos, NM 87545
+505-665-0195, FAX 505-665-5402, e-mail laa@lanl.gov
+From r2s2 at gmx.de  Mon Jan 17 17:59:41 2005
+From: r2s2 at gmx.de (Roland Schulz)
+Date: Mon Jan 17 17:59:50 2005
+Subject: [Paraview] Gouraud, parallel files
+Message-ID: <200501172359.41243.r2s2@gmx.de>
+
+Hey,
+
+I made the observation, that Gouraud shading is always working for spheres. 
+But for iso-planes it is only working on some machines. Should I look closer 
+why it is working only sometimes, or is it a known problem?
+
+Reading in a PVTI containing e.g. 32 pieces with 16 processors only gives me 
+half of the data. Reading it in with either 32 or 1 processor(s) works 
+correct? Is this known?
+
+I use paraview 1.8.2.
+
+regards
+Roland Schulz
+From berk.geveci at gmail.com  Tue Jan 18 09:09:22 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Jan 18 09:09:29 2005
+Subject: [Paraview] Gouraud, parallel files
+In-Reply-To: <200501172359.41243.r2s2@gmx.de>
+References: <200501172359.41243.r2s2@gmx.de>
+Message-ID: <a2ab21560501180609d805717@mail.gmail.com>
+
+> I made the observation, that Gouraud shading is always working for spheres.
+> But for iso-planes it is only working on some machines. Should I look closer
+> why it is working only sometimes, or is it a known problem?
+
+This is known. And it is really not a problem but a feature :-) The
+patented algorithms that computes the isosurfaces for structured
+datasets can also compute normals. If use any other algorithm or input
+type, no normals will be generated during isosurface computation. To
+get smooth shading, you have to apply the normals generation filter to
+the isosurface.
+
+> Reading in a PVTI containing e.g. 32 pieces with 16 processors only gives me
+> half of the data. Reading it in with either 32 or 1 processor(s) works
+> correct? Is this known?
+
+This is a known problem and I believe is in our list of things to fix.
+
+-Berk
+From eschenbe at psc.edu  Tue Jan 18 11:01:00 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Tue Jan 18 11:01:12 2005
+Subject: [Paraview] Gouraud, parallel files
+In-Reply-To: <a2ab21560501180609d805717@mail.gmail.com>
+References: <200501172359.41243.r2s2@gmx.de>
+	<a2ab21560501180609d805717@mail.gmail.com>
+Message-ID: <6EC92069E5D8B09D0DC48559@harpo.psc.edu>
+
+> ... Gouraud shading ... for iso-planes it is only working
+> on some machines ...
+
+Isn't Gouraud and flat shading the same for planes? I'd think one would 
+want the faster flat shading for planes.
+
+Kent
+From dustin at gandalf.acomp.usf.edu  Tue Jan 18 11:43:04 2005
+From: dustin at gandalf.acomp.usf.edu (Dustin)
+Date: Tue Jan 18 11:43:11 2005
+Subject: [Paraview] paraview and mpi
+Message-ID: <1106066584.4204.26.camel@gandalf>
+
+Hello,
+
+	I am having a little trouble in starting Paraview with MPI. I have
+version 1.2.6 of MPICH and Paraview 1.8.2 running on CentOS 3.1. Here is
+my command-line to start the server:
+
+> mpirun -np 6 /usr/local/bin/paraview --server --port 50000
+
+I get an error stating there is a problem parsing a command-line
+argument, -p4pg and then the options for paraview and then am returned
+to the command-line. I believe the -p4pg argument has something to do
+with MPICH, but I can't exactly figure where the argument is being
+thrown in. If anyone knows of this problem and has a solution any help
+would be greatly appreciated. Thank you.
+
+Dustin Binge
+University of South Florida
+Academic Computing - Research Computing Core Facility
+
+
+From berk.geveci at gmail.com  Tue Jan 18 12:06:28 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Jan 18 12:06:35 2005
+Subject: [Paraview] paraview and mpi
+In-Reply-To: <1106066584.4204.26.camel@gandalf>
+References: <1106066584.4204.26.camel@gandalf>
+Message-ID: <a2ab2156050118090671389b42@mail.gmail.com>
+
+You must have a paraview that is compiled without mpi support, the
+binary on Kitware web site for example. You have to compile paraview
+from source and enable mpi support.
+
+
+On Tue, 18 Jan 2005 11:43:04 -0500, Dustin <dustin@gandalf.acomp.usf.edu> wrote:
+> Hello,
+> 
+>         I am having a little trouble in starting Paraview with MPI. I have
+> version 1.2.6 of MPICH and Paraview 1.8.2 running on CentOS 3.1. Here is
+> my command-line to start the server:
+> 
+> > mpirun -np 6 /usr/local/bin/paraview --server --port 50000
+> 
+> I get an error stating there is a problem parsing a command-line
+> argument, -p4pg and then the options for paraview and then am returned
+> to the command-line. I believe the -p4pg argument has something to do
+> with MPICH, but I can't exactly figure where the argument is being
+> thrown in. If anyone knows of this problem and has a solution any help
+> would be greatly appreciated. Thank you.
+> 
+> Dustin Binge
+> University of South Florida
+> Academic Computing - Research Computing Core Facility
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From m.janssens at opencfd.co.uk  Tue Jan 18 12:11:09 2005
+From: m.janssens at opencfd.co.uk (Mattijs Janssens)
+Date: Tue Jan 18 12:08:24 2005
+Subject: [Paraview] paraview and mpi
+In-Reply-To: <1106066584.4204.26.camel@gandalf>
+References: <1106066584.4204.26.camel@gandalf>
+Message-ID: <41ED432D.90805@opencfd.co.uk>
+
+ From what I remember mpirun passes all info to other nodes via 
+commandline arguments. It will add arguments like -p4pg (which gives the 
+exact path of the executable per processor) when starting the other 
+nodes which they then filter out. Add a few echo statements to mpirun (I 
+think there is even a command line option to print some more info)
+
+Could it be that Paraview expects LAM (which adds different commandline 
+args)?
+
+By the way we found LAM to be more reliable than mpich (we stopped using 
+it at mpich1.2.4 so maybe it has improved)
+
+Mattijs
+
+Dustin wrote:
+> Hello,
+> 
+> 	I am having a little trouble in starting Paraview with MPI. I have
+> version 1.2.6 of MPICH and Paraview 1.8.2 running on CentOS 3.1. Here is
+> my command-line to start the server:
+> 
+> 
+>>mpirun -np 6 /usr/local/bin/paraview --server --port 50000
+> 
+> 
+> I get an error stating there is a problem parsing a command-line
+> argument, -p4pg and then the options for paraview and then am returned
+> to the command-line. I believe the -p4pg argument has something to do
+> with MPICH, but I can't exactly figure where the argument is being
+> thrown in. If anyone knows of this problem and has a solution any help
+> would be greatly appreciated. Thank you.
+> 
+> Dustin Binge
+> University of South Florida
+> Academic Computing - Research Computing Core Facility
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+-- 
+OpenCFD Ltd.
+The Mews, Picketts Lodge,
+Picketts Lane, Salfords,
+Surrey RH1 5RG.
+Tel: +44 (0)1293 821272
+Email: M.Janssens@OpenCFD.co.uk
+URL: http://www.OpenCFD.co.uk
+From Bernhard.Gschaider at unileoben.ac.at  Wed Jan 19 13:00:16 2005
+From: Bernhard.Gschaider at unileoben.ac.at (Bernhard Gschaider)
+Date: Wed Jan 19 13:00:28 2005
+Subject: [Paraview] Reloading changed data
+Message-ID: <ridacr5fgen.fsf@gcdw42.cdratfd.unileoben.ac.at>
+
+
+I'm using ParaView (v 1.8) to visualize data from a simulation program
+I am currently developing.
+
+My problem is the following: during development I usually do
+simulations on rather small data sets, but I do them often (every time
+I change something in the program).
+
+Usually ParaView is running. After each run the data on the disk has
+changed, but ParaView doesn't know this (which is perfectly
+understandable). 
+
+My question: is there a way to tell ParaView to reread the data from
+the disk? I tried the "Reset" Button of the data importer, but this
+doesn't change anything.
+
+The only workaround I found was to have two "timesteps" in the
+DataImporter and switch between them with the slider.
+
+The other possibility would be to delete the Importer and create a new
+one, which is even less satisfying.
+
+Is there a way to reload the data in current versions? If no: would it
+be possible to add such a capability to the GUI? 
+
+From jfavre at cscs.ch  Wed Jan 19 17:23:51 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Wed Jan 19 17:23:59 2005
+Subject: [Paraview] batch mode problem in CVS version?
+Message-ID: <20050119222351.6813D1A812@aquila.cscs.ch>
+
+Hello
+
+I am running the CVS version from this morning on a Linux system (gcc
+2.9). After loading a time-dependent EnSight case file with multiple outputs, I
+have 2 problems running the animation in batch mode:
+
+1) All InputMask of the ExtractParts are set to 0 in this manner:
+
+[$pvTemp1346 GetProperty InputMask] SetElement 0 0
+
+etc...
+
+If I correct the batch script by hand by putting the 1s in the second
+column, it executes correctly. With all 0s, I have of course no
+images. :-(
+
+2) Seems like the batch script writer assumes a Perspective Camera. Unlike
+the "Save State" which correctly saves the CameraParallelScale value
+and a Parallel Projection flag, the "Save Batch" menu does not save these
+values. I tried to do it by hand, guessing the correct syntax to force
+Parallel Projection and a ParallelScale, but did not succeed. I guessed
+wrong or it is not supported. What's the trick?
+
+Thanks for the help.
+JeanF
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+From hareeshtk at gmail.com  Thu Jan 20 08:08:18 2005
+From: hareeshtk at gmail.com (Hareesh TK)
+Date: Thu Jan 20 08:08:27 2005
+Subject: [Paraview] Will decimation filters affects the attributes
+In-Reply-To: <20050119222351.6813D1A812@aquila.cscs.ch>
+References: <20050119222351.6813D1A812@aquila.cscs.ch>
+Message-ID: <33693fb6050120050863e8cfc7@mail.gmail.com>
+
+Hi all
+I am working on a different file formats, there in my polyData
+(vtkPolyData) number of cells (Triangles) are very high (approx
+40,000), because of that I am facing performance problem, all my newly
+writtened filters are becomming very slow.
+Now I planned to use VTK decimation filters to reduce the number of
+cells in my polydata.
+I want know using decimation filters helps  in solving my problem, and
+also to know decimation filters affect the attrbutes of the points.
+Or else where I will get the complete information about these
+decimation filters.
+
+Is there any other solution to solve my problem.
+
+Thanks in Advance
+Regards
+Hareesh
+From vm1757 at yahoo.com  Fri Jan 21 12:46:27 2005
+From: vm1757 at yahoo.com (Vishal Majithia)
+Date: Fri Jan 21 12:46:42 2005
+Subject: [Paraview] Surface Extraction
+Message-ID: <20050121174627.12523.qmail@web50810.mail.yahoo.com>
+
+I'm quite new to Paraview/VTK. If I have a 3D volume
+and then extract a surface, how do I save just the
+surface as a VTK file? I want to do 3D image
+registration on surfaces, and this seems to be the
+best approach.
+
+Sincerely,
+VM
+
+
+
+		
+__________________________________ 
+Do you Yahoo!? 
+All your favorites on one personal page – Try My Yahoo!
+http://my.yahoo.com 
+From m.janssens at opencfd.co.uk  Fri Jan 21 12:50:26 2005
+From: m.janssens at opencfd.co.uk (Mattijs Janssens)
+Date: Fri Jan 21 12:50:35 2005
+Subject: [Paraview] Surface Extraction
+In-Reply-To: <20050121174627.12523.qmail@web50810.mail.yahoo.com>
+References: <20050121174627.12523.qmail@web50810.mail.yahoo.com>
+Message-ID: <41F140E2.5080100@opencfd.co.uk>
+
+File->Save data
+
+
+Vishal Majithia wrote:
+> I'm quite new to Paraview/VTK. If I have a 3D volume
+> and then extract a surface, how do I save just the
+> surface as a VTK file? I want to do 3D image
+> registration on surfaces, and this seems to be the
+> best approach.
+> 
+> Sincerely,
+> VM
+> 
+> 
+> 
+> 		
+> __________________________________ 
+> Do you Yahoo!? 
+> All your favorites on one personal page ? Try My Yahoo!
+> http://my.yahoo.com 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+-- 
+OpenCFD Ltd.
+The Mews, Picketts Lodge,
+Picketts Lane, Salfords,
+Surrey RH1 5RG.
+Tel: +44 (0)1293 821272
+Email: M.Janssens@OpenCFD.co.uk
+URL: http://www.OpenCFD.co.uk
+From amy.henderson at kitware.com  Fri Jan 21 12:58:46 2005
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Fri Jan 21 12:56:40 2005
+Subject: [Paraview] Surface Extraction
+In-Reply-To: <41F140E2.5080100@opencfd.co.uk>
+References: <20050121174627.12523.qmail@web50810.mail.yahoo.com>
+	<41F140E2.5080100@opencfd.co.uk>
+Message-ID: <6.2.0.14.2.20050121125808.03eb7110@pop.biz.rr.com>
+
+And make sure that the contour filter is selected in the Selection / 
+Navigation window.
+
+At 12:50 PM 1/21/2005, Mattijs Janssens wrote:
+>File->Save data
+>
+>
+>Vishal Majithia wrote:
+>>I'm quite new to Paraview/VTK. If I have a 3D volume
+>>and then extract a surface, how do I save just the
+>>surface as a VTK file? I want to do 3D image
+>>registration on surfaces, and this seems to be the
+>>best approach.
+>>Sincerely,
+>>VM
+>>
+>>
+>>__________________________________ Do you Yahoo!? All your favorites on 
+>>one personal page ? Try My Yahoo!
+>>http://my.yahoo.com _______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>--
+>OpenCFD Ltd.
+>The Mews, Picketts Lodge,
+>Picketts Lane, Salfords,
+>Surrey RH1 5RG.
+>Tel: +44 (0)1293 821272
+>Email: M.Janssens@OpenCFD.co.uk
+>URL: http://www.OpenCFD.co.uk
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From samuelkey at comcast.net  Fri Jan 21 12:54:30 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Fri Jan 21 13:38:45 2005
+Subject: [Paraview] A name="abc" feature *.pvd?
+Message-ID: <001b01c4ffe2$424b0100$6e01a8c0@last>
+
+Dear paraview users and developer's,
+
+I'm using paraview 1.8.3 on linux and windows.
+
+I have the following question: Is there a name-feature 
+in the *.pvd file whereby I can assign a descriptive 
+string to each part that will then show in the face-sheet
+for the "Extract Parts" filter?   
+
+Something like:  name="Traction BC"
+
+ParaView is a most incredible post-processor!!! My
+meshes have side-sets, node-sets, and element-sets
+that are referenced by boundary conditions etc. in my
+analysis program.  I have successfully written out the
+individual item-sets as vtk unstructured mesh objects.  
+
+I then use a *.pvd file to read in the mesh as part="1" 
+and the node-sets, side-sets, and element-sets as
+part="2" et cetera. When I use the "Extract Parts" filter, 
+I get a list of parts ID'ed as "Unstructured Grid: nnn cells"
+
+For a large complex model I have no idea how many 
+cells are in each of the item-sets?  When I write out 
+the *.pvd file from my analysis code, it would very very
+useful ( and easy) to be able to attach a name-string
+to each of the item-sets as I have already assigned 
+names to these mesh objects in my analysis code.
+
+If the feature is absent, what are the prospects of getting
+it added to the "to-do list" for ParaView?
+
+Regards,
+
+Samuel Key,  FMA Development, LLC
+(Fma-3D is an OpenSource FEM simulation program)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Samuel W. Key.vcf
+Type: text/x-vcard
+Size: 677 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050121/1685f8d6/SamuelW.Key.vcf
+From jsg3 at psu.edu  Fri Jan 21 14:53:23 2005
+From: jsg3 at psu.edu (Jack Gundrum)
+Date: Fri Jan 21 14:55:42 2005
+Subject: [Paraview] distributed processing
+Message-ID: <41F15DB3.3020105@psu.edu>
+
+I read in the Paraview Guide that paraview automagically decides wether 
+to create
+processes on other machines when run in parallel. I am running a server 
+with the command
+
+mpirun -nolocal -np 2 -machinefile /usr/global/jsg3/machines.LINUX 
+/usr/global/paraview-1.8.1/bin/paraview --server
+
+which should use 2 machines from the machine list specified. I then 
+connect with a client using
+
+ paraview -c --host=128.118.xxx.xx
+
+My question is why I dont see a process spawned on the second machine in 
+the list?
+
+It does create a file called PIxxxx with the following contents?
+
+jib   0 /usr/global/paraview-1.8.1/bin/paraview
+jem 1 /usr/global/paraview-1.8.1/bin/paraview
+
+From samuelkey at comcast.net  Fri Jan 21 15:33:58 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Fri Jan 21 15:32:33 2005
+Subject: [Paraview] A name="abc" feature in *.pvd???
+Message-ID: <004201c4fff8$895703d0$6e01a8c0@last>
+
+Dear paraview users and developer's,
+
+I'm using paraview 1.8.3 on linux and windows.
+
+I have the following question: Is there a name-feature 
+in the *.pvd file whereby I can assign a descriptive 
+string to each part that will then show in the face-sheet
+for the "Extract Parts" filter?   
+
+Something like:  name="Traction BC"
+
+ParaView is a most incredible post-processor!!! My
+meshes have side-sets, node-sets, and element-sets
+that are referenced by boundary conditions etc. in my
+analysis program.  I have successfully written out the
+individual item-sets as vtk unstructured mesh objects.  
+
+I then use a *.pvd file to read in the mesh as part="1" 
+and the node-sets, side-sets, and element-sets as
+part="2" et cetera. When I use the "Extract Parts" filter, 
+I get a list of parts ID'ed as "Unstructured Grid: nnn cells"
+
+For a large complex model I have no idea how many 
+cells are in each of the item-sets?  When I write out 
+the *.pvd file from my analysis code, it be would very
+useful ( and easy) to be able to attach a name-string
+to each of the item-sets as I have already assigned 
+names to these mesh objects in my analysis code.
+
+If the feature is absent, what are the prospects of getting
+it added to the "to-do list" for ParaView?
+
+Regards,
+
+Samuel Key,  FMA Development, LLC
+(Fma-3D is an OpenSource FEM simulation program)
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Samuel W. Key.vcf
+Type: text/x-vcard
+Size: 677 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050121/b649f81b/SamuelW.Key.vcf
+From dustin at gandalf.acomp.usf.edu  Fri Jan 21 15:57:01 2005
+From: dustin at gandalf.acomp.usf.edu (Dustin)
+Date: Fri Jan 21 15:57:04 2005
+Subject: [Paraview] paraview and mpi
+In-Reply-To: <a2ab2156050118090671389b42@mail.gmail.com>
+References: <1106066584.4204.26.camel@gandalf>
+	<a2ab2156050118090671389b42@mail.gmail.com>
+Message-ID: <1106341021.4204.32.camel@gandalf>
+
+On Tue, 2005-01-18 at 12:06, Berk Geveci wrote:
+> You must have a paraview that is compiled without mpi support, the
+> binary on Kitware web site for example. You have to compile paraview
+> from source and enable mpi support.
+> 
+> 
+> On Tue, 18 Jan 2005 11:43:04 -0500, Dustin <dustin@gandalf.acomp.usf.edu> wrote:
+> > Hello,
+> > 
+> >         I am having a little trouble in starting Paraview with MPI. I have
+> > version 1.2.6 of MPICH and Paraview 1.8.2 running on CentOS 3.1. Here is
+> > my command-line to start the server:
+> > 
+> > > mpirun -np 6 /usr/local/bin/paraview --server --port 50000
+> > 
+> > I get an error stating there is a problem parsing a command-line
+> > argument, -p4pg and then the options for paraview and then am returned
+> > to the command-line. I believe the -p4pg argument has something to do
+> > with MPICH, but I can't exactly figure where the argument is being
+> > thrown in. If anyone knows of this problem and has a solution any help
+> > would be greatly appreciated. Thank you.
+> > 
+> > Dustin Binge
+> > University of South Florida
+> > Academic Computing - Research Computing Core Facility
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+
+From suz at mito.ssd.ssg.fujitsu.com  Mon Jan 24 01:49:31 2005
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Mon Jan 24 01:49:46 2005
+Subject: [Paraview] Can I get properties in paraview script?
+Message-ID: <20050124144321.9EA4.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hello all.
+
+I'm trying to controll ParaView with scripts interactively.
+I know that ParaView is controlled by a batch script (.pvb) or a session
+script (.pvs), and in these scripts we can find the segment to put a
+value into the property.
+
+Can I write the script(or command) to get property-values from the
+objects?
+For example, 
+I can set the center of rotation with the following command.
+	$kw(vtkTemp5) SetCenterOfRotation 3.273228 4.163779 2.862126
+
+But if I didn't know the center of coordinates, can I get the bounds for
+x,y,z to calculte this?
+
+Regards,
+
+---------------
+Koichiro Suzuki
+suz@ssd.ssg.fujitsu.com
+
+From r2s2 at gmx.de  Tue Jan 25 04:19:48 2005
+From: r2s2 at gmx.de (Roland Schulz)
+Date: Tue Jan 25 04:20:01 2005
+Subject: [Paraview] PImageData and vtkGhostLevels
+Message-ID: <41F60F34.80206@gmx.de>
+
+Hey,
+
+why is the vtkGhostLevels array needed also for a structured grid 
+(ImageData)? This information is already in the difference between the 
+piece extend  of the pvti and the whole extent of the vti.
+So why is it needed again?
+
+Also very strange is, that I get the error message
+vtkImageData (0x9c90d98): Point array vtkGhostLevels with 1 components, 
+only has
+ 2317259 tuples but there are 2405700 points
+
+Even though there is no "vtkGhostLevels" Array specified anywhere. AND I 
+get this first for the 3rd frame.
+
+regards
+Roland Schulz
+From brad.king at kitware.com  Tue Jan 25 08:42:50 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 08:42:55 2005
+Subject: [Paraview] A name="abc" feature *.pvd?
+In-Reply-To: <001b01c4ffe2$424b0100$6e01a8c0@last>
+References: <001b01c4ffe2$424b0100$6e01a8c0@last>
+Message-ID: <41F64CDA.4090005@kitware.com>
+
+SamuelKey wrote:
+> I have the following question: Is there a name-feature 
+> in the *.pvd file whereby I can assign a descriptive 
+> string to each part that will then show in the face-sheet
+> for the "Extract Parts" filter?   
+> 
+> Something like:  name="Traction BC"
+[snip]
+> If the feature is absent, what are the prospects of getting
+> it added to the "to-do list" for ParaView?
+
+The feature is not currently present and I think it is actually 
+non-trivial to add.  With the new VTK pipeline it shouldn't be too hard 
+to get the information propagated from the reader to the extract-parts 
+filter, but we have higher priorities right now.
+
+You can add a feature request here:
+
+http://www.paraview.org/Bug
+
+It should be safe to add the name="..." attribute to the .pvd file now. 
+  It won't be used but it shouldn't hurt.  Then when the feature is 
+implemented your old files will work automatically.
+
+-Brad
+From charles.law at kitware.com  Tue Jan 25 08:48:34 2005
+From: charles.law at kitware.com (Charles Law)
+Date: Tue Jan 25 08:50:43 2005
+Subject: [Paraview] PImageData and vtkGhostLevels
+In-Reply-To: <41F60F34.80206@gmx.de>
+Message-ID: <5.1.0.14.0.20050125084549.0292ae88@pop.biz.rr.com>
+
+Roland,
+
+Ghost levels are needed for images when they are processed by filters that 
+do not know their input is an image (vtkDataSet API).
+
+The error message indicates that the ghost levels are not being generated 
+correctly, or that they are not being updated for the new frame.  This 
+check keeps filters from looking past the end of an array and crashing 
+paraview.
+
+Charles.
+
+
+At 10:19 AM 1/25/2005 +0100, Roland Schulz wrote:
+>Hey,
+>
+>why is the vtkGhostLevels array needed also for a structured grid 
+>(ImageData)? This information is already in the difference between the 
+>piece extend  of the pvti and the whole extent of the vti.
+>So why is it needed again?
+>
+>Also very strange is, that I get the error message
+>vtkImageData (0x9c90d98): Point array vtkGhostLevels with 1 components, 
+>only has
+>2317259 tuples but there are 2405700 points
+>
+>Even though there is no "vtkGhostLevels" Array specified anywhere. AND I 
+>get this first for the 3rd frame.
+>
+>regards
+>Roland Schulz
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From brad.king at kitware.com  Tue Jan 25 09:15:28 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 09:15:33 2005
+Subject: [Paraview] batch mode problem in CVS version?
+In-Reply-To: <20050119222351.6813D1A812@aquila.cscs.ch>
+References: <20050119222351.6813D1A812@aquila.cscs.ch>
+Message-ID: <41F65480.1060800@kitware.com>
+
+Jean M. Favre wrote:
+> Hello
+> 
+> I am running the CVS version from this morning on a Linux system (gcc
+> 2.9). After loading a time-dependent EnSight case file with multiple outputs, I
+> have 2 problems running the animation in batch mode:
+> 
+> 1) All InputMask of the ExtractParts are set to 0 in this manner:
+> 
+> [$pvTemp1346 GetProperty InputMask] SetElement 0 0
+> 
+> etc...
+> 
+> If I correct the batch script by hand by putting the 1s in the second
+> column, it executes correctly. With all 0s, I have of course no
+> images. :-(
+> 
+> 2) Seems like the batch script writer assumes a Perspective Camera. Unlike
+> the "Save State" which correctly saves the CameraParallelScale value
+> and a Parallel Projection flag, the "Save Batch" menu does not save these
+> values. I tried to do it by hand, guessing the correct syntax to force
+> Parallel Projection and a ParallelScale, but did not succeed. I guessed
+> wrong or it is not supported. What's the trick?
+
+This looks like a bug.  Please report it here:
+
+http://www.paraview.org/Bug
+
+Thanks,
+-Brad
+From brad.king at kitware.com  Tue Jan 25 09:16:09 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 09:16:14 2005
+Subject: [Paraview] Reloading changed data
+In-Reply-To: <ridacr5fgen.fsf@gcdw42.cdratfd.unileoben.ac.at>
+References: <ridacr5fgen.fsf@gcdw42.cdratfd.unileoben.ac.at>
+Message-ID: <41F654A9.3040408@kitware.com>
+
+Bernhard Gschaider wrote:
+> Is there a way to reload the data in current versions? If no: would it
+> be possible to add such a capability to the GUI? 
+
+This sounds like a good idea.  Please add this as a feature request here:
+
+http://www.paraview.org/Bug
+
+Thanks,
+-Brad
+From brad.king at kitware.com  Tue Jan 25 09:16:52 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 09:16:57 2005
+Subject: [Paraview] distributed processing
+In-Reply-To: <41F15DB3.3020105@psu.edu>
+References: <41F15DB3.3020105@psu.edu>
+Message-ID: <41F654D4.3080903@kitware.com>
+
+Jack Gundrum wrote:
+> I read in the Paraview Guide that paraview automagically decides wether 
+> to create
+> processes on other machines when run in parallel. I am running a server 
+> with the command
+> 
+> mpirun -nolocal -np 2 -machinefile /usr/global/jsg3/machines.LINUX 
+> /usr/global/paraview-1.8.1/bin/paraview --server
+> 
+> which should use 2 machines from the machine list specified. I then 
+> connect with a client using
+> 
+> paraview -c --host=128.118.xxx.xx
+> 
+> My question is why I dont see a process spawned on the second machine in 
+> the list?
+> 
+> It does create a file called PIxxxx with the following contents?
+> 
+> jib   0 /usr/global/paraview-1.8.1/bin/paraview
+> jem 1 /usr/global/paraview-1.8.1/bin/paraview
+
+This looks like an MPI configuration problem.  Please take the question 
+to an MPI mailing list or newsgroup.
+
+-Brad
+From brad.king at kitware.com  Tue Jan 25 09:29:49 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 09:29:54 2005
+Subject: [Paraview] A name="abc" feature *.pvd?
+In-Reply-To: <41F64CDA.4090005@kitware.com>
+References: <001b01c4ffe2$424b0100$6e01a8c0@last>
+	<41F64CDA.4090005@kitware.com>
+Message-ID: <41F657DD.1030709@kitware.com>
+
+Brad King wrote:
+> SamuelKey wrote:
+>> I have the following question: Is there a name-feature in the *.pvd 
+>> file whereby I can assign a descriptive string to each part that will 
+>> then show in the face-sheet
+>> for the "Extract Parts" filter?  
+>> Something like:  name="Traction BC"
+> The feature is not currently present and I think it is actually 
+> non-trivial to add.
+
+Upon further investigation I discovered that the support was already 
+there for the EnSight reader, so adding it to the XMLCollecitonReader 
+was trivial.  It is present as of revision 1.10 of 
+vtkXMLCollectionReader.cxx in the CVS version of ParaView.
+
+-Brad
+From jzj at force.dk  Tue Jan 25 10:55:48 2005
+From: jzj at force.dk (=?utf-8?B?SmFuIErDuHJnZW5zZW4=?=)
+Date: Tue Jan 25 10:55:54 2005
+Subject: [Paraview] Creating new widgets in paraview interface
+Message-ID: <5A116463188A2540B67FD188A32D00B54EBD7F@wbrb07.ft.corp>
+
+Hi
+
+I am new to Paraview but have a little experience in tcl/tk. I am working with a project that involves sequential import of data from a transient CFD calculation. The import function is running via a script on a standard Paraview installation and works for now.
+
+My problem is that i have been asked to extend the functionality of the import function, by placing a button and a checkbox in paraview to control manual/automatic import of the data. The -command part of the widgets is no problem, but i am having trouble getting the widgets displayed in the Paraview GUI 
+
+I have tried to implement the widgets through standard tk with "." as the parent window. I get no error from Paraview but i dont get my widgets either. Does anyone know of a way to extend the left panel with user-programmable widgets, if possible with a script so it can be distributed with the standard Paraview installation. It would be nice if a new tab on the "Source" panel could be created that could hold them, so as not to clutter up the standard tabs.
+
+
+regards
+
+Jan J?rgensen 
+
+Project Engineer 
+Industrial Aerodynamics 
+
+FORCE Technology
+Denmark
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050125/6c232869/attachment.html
+From brad.king at kitware.com  Tue Jan 25 11:06:27 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Jan 25 11:06:29 2005
+Subject: [Paraview] Creating new widgets in paraview interface
+In-Reply-To: <5A116463188A2540B67FD188A32D00B54EBD7F@wbrb07.ft.corp>
+References: <5A116463188A2540B67FD188A32D00B54EBD7F@wbrb07.ft.corp>
+Message-ID: <41F66E83.7020001@kitware.com>
+
+Jan J?rgensen wrote:
+> My problem is that i have been asked to extend the functionality of the 
+> import function, by placing a button and a checkbox in paraview to 
+> control manual/automatic import of the data. The -command part of the 
+> widgets is no problem, but i am having trouble getting the widgets 
+> displayed in the Paraview GUI
+
+The Tk widgets you see displayed are not directly created.  Look in 
+GUI/Client/Resources/Readers.xml and similar files to see how the GUI 
+components are configured.  To add a new widget with some special 
+functionality you'll need to look at the other code in GUI/Client.  You 
+can also get the ParaView Guide which has a developers section:
+
+http://www.kitware.com/products/paraviewguide.html
+
+-Brad
+From berk.geveci at gmail.com  Wed Jan 26 08:40:54 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Jan 26 08:41:12 2005
+Subject: [Paraview] Can I get properties in paraview script?
+In-Reply-To: <20050124144321.9EA4.SUZ@mito.ssd.ssg.fujitsu.com>
+References: <20050124144321.9EA4.SUZ@mito.ssd.ssg.fujitsu.com>
+Message-ID: <a2ab21560501260540183ff568@mail.gmail.com>
+
+Unfortunately, you can't. The C++ API has methods to obtain this
+information but some of the classes used are not Tcl wrapped. It would
+be relatively easy to change this but unfortunately, I do not have
+time to do it right now. You might want to add this to the bug tracker
+as a feature request.
+
+
+On Mon, 24 Jan 2005 15:49:31 +0900, Koichiro Suzuki
+<suz@mito.ssd.ssg.fujitsu.com> wrote:
+> Hello all.
+> 
+> I'm trying to controll ParaView with scripts interactively.
+> I know that ParaView is controlled by a batch script (.pvb) or a session
+> script (.pvs), and in these scripts we can find the segment to put a
+> value into the property.
+> 
+> Can I write the script(or command) to get property-values from the
+> objects?
+> For example,
+> I can set the center of rotation with the following command.
+>         $kw(vtkTemp5) SetCenterOfRotation 3.273228 4.163779 2.862126
+> 
+> But if I didn't know the center of coordinates, can I get the bounds for
+> x,y,z to calculte this?
+> 
+> Regards,
+> 
+> ---------------
+> Koichiro Suzuki
+> suz@ssd.ssg.fujitsu.com
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Wed Jan 26 08:44:07 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Jan 26 08:44:14 2005
+Subject: [Paraview] Will decimation filters affects the attributes
+In-Reply-To: <33693fb6050120050863e8cfc7@mail.gmail.com>
+References: <20050119222351.6813D1A812@aquila.cscs.ch>
+	<33693fb6050120050863e8cfc7@mail.gmail.com>
+Message-ID: <a2ab21560501260544189752da@mail.gmail.com>
+
+The decimation filter will copy/interpolate the attributes
+appropriately. The way this is done depends on the filter. However,
+you shouldn't need this in ParaView because of the LOD functionality.
+Look at View -> 3D View Properties. The ParaView Guide has more
+information on this.
+
+
+On Thu, 20 Jan 2005 18:38:18 +0530, Hareesh TK <hareeshtk@gmail.com> wrote:
+> Hi all
+> I am working on a different file formats, there in my polyData
+> (vtkPolyData) number of cells (Triangles) are very high (approx
+> 40,000), because of that I am facing performance problem, all my newly
+> writtened filters are becomming very slow.
+> Now I planned to use VTK decimation filters to reduce the number of
+> cells in my polydata.
+> I want know using decimation filters helps  in solving my problem, and
+> also to know decimation filters affect the attrbutes of the points.
+> Or else where I will get the complete information about these
+> decimation filters.
+> 
+> Is there any other solution to solve my problem.
+> 
+> Thanks in Advance
+> Regards
+> Hareesh
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From tdubuis at scconsultants.com  Thu Jan 27 03:59:43 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Thu Jan 27 04:01:47 2005
+Subject: [Paraview] Question about avi output
+Message-ID: <004d01c5044e$8b5152d0$41c809c0@jupiter>
+
+Hello,
+
+For 1 month, I try to use Paraview to visualize the vtk output of a scientist software.
+
+When I see the last version 1.8.3 I download it to see the last modifications.
+
+I see in the last version, you add 2 files movies outputs : mp2 and avi.
+First I use the mp2 and when I try to reload this files in application which read mp2 files. it gives me an file format error.
+Second I try to use the avi output. And I have this error message :
+"There was a VTK Error in file: C: martink ParaView ParaView18 GUI Client vtkAVIWriter.cxx (139)
+ Unable to compress C:/TEMP/test.avi" in the Paraview Error log window
+
+Could you explain me where is the problem ?
+
+Thank you very much for your help.
+
+Best regards,
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050127/129899f2/attachment.html
+From cosmoh2o at hotmail.com  Thu Jan 27 07:56:30 2005
+From: cosmoh2o at hotmail.com (Richard Haney)
+Date: Thu Jan 27 07:57:22 2005
+Subject: [Paraview] Input XML data source
+Message-ID: <BAY24-F3BACE244ED3F2EBD0AF2287780@phx.gbl>
+
+Please help,
+
+I have created an XML file that contains points and connectivity and am 
+using this file to read as a source through "Xdmf Reader Reader" in 
+Paraview. The data will load fine and display perfectly until I create a 
+file with a large number of points. If I try to read in data with this large 
+count of points paraview.exe throws an "unhandled exception". Is it my 
+format or is it something to do with Paraview itself (I am using the Win32 
+on Windows XP version)? I am very new to paraview and hopefully this is 
+something simple.
+
+Thanks to anyone with hint/help.
+
+
+Below is a copy of the XML file that causes the "crash" once the number of 
+elements goes beyond 317:
+
+<?xml version="1.0"?>
+<!DOCTYPE Xdmf SYSTEM "xdmf.dtd">
+<Xdmf>
+<Domain><Grid Name="Part Example">
+<Topology Type="Triangle" NumberOfElements="736" BaseOffset="0">
+<DataStructure Format="XML" Dimensions="736 3" DataType="Int">
+           11          10           1
+            1           2          11
+            2           3          11
+           12          11           3
+           13          12           3
+            3           4          13
+            4           5          13
+           14          13           5
+           15          14           5
+            5           6          15
+            6           7          15
+           16          15           7
+           17          16           7
+            7           8          17
+            8           9          17
+           18          17           9
+           10          11          19
+           20          19          11
+           21          20          11
+           11          12          21
+           12          13          21
+           22          21          13
+           23          22          13
+           13          14          23
+           14          15          23
+           24          23          15
+           25          24          15
+           15          16          25
+           16          17          25
+           26          25          17
+           27          26          17
+           17          18          27
+           29          28          19
+           19          20          29
+           20          21          29
+           30          29          21
+           31          30          21
+           21          22          31
+           22          23          31
+           32          31          23
+           33          32          23
+           23          24          33
+           24          25          33
+           34          33          25
+           35          34          25
+           25          26          35
+           26          27          35
+           36          35          27
+           28          29          37
+           38          37          29
+           39          38          29
+           29          30          39
+           30          31          39
+           40          39          31
+           41          40          31
+           31          32          41
+           32          33          41
+           42          41          33
+           43          42          33
+           33          34          43
+           34          35          43
+           44          43          35
+           45          44          35
+           35          36          45
+           47          46          37
+           37          38          47
+           38          39          47
+           48          47          39
+           49          48          39
+           39          40          49
+           40          41          49
+           50          49          41
+           51          50          41
+           41          42          51
+           42          43          51
+           52          51          43
+           53          52          43
+           43          44          53
+           44          45          53
+           54          53          45
+           46          47          55
+           56          55          47
+           57          56          47
+           47          48          57
+           48          49          57
+           58          57          49
+           59          58          49
+           49          50          59
+           50          51          59
+           60          59          51
+           61          60          51
+           51          52          61
+           52          53          61
+           62          61          53
+           63          62          53
+           53          54          63
+           65          64          55
+           55          56          65
+           56          57          65
+           66          65          57
+           67          66          57
+           57          58          67
+           58          59          67
+           68          67          59
+           69          68          59
+           59          60          69
+           60          61          69
+           70          69          61
+           71          70          61
+           61          62          71
+           62          63          71
+           72          71          63
+           64          65          73
+           74          73          65
+           75          74          65
+           65          66          75
+           66          67          75
+           76          75          67
+           77          76          67
+           67          68          77
+           68          69          77
+           78          77          69
+           79          78          69
+           69          70          79
+           70          71          79
+           80          79          71
+           81          80          71
+           71          72          81
+           83          82          73
+           73          74          83
+           74          75          83
+           84          83          75
+           85          84          75
+           75          76          85
+           76          77          85
+           86          85          77
+           87          86          77
+           77          78          87
+           78          79          87
+           88          87          79
+           89          88          79
+           79          80          89
+           80          81          89
+           90          89          81
+           82          83          91
+           92          91          83
+           93          92          83
+           83          84          93
+           84          85          93
+           94          93          85
+           95          94          85
+           85          86          95
+           86          87          95
+           96          95          87
+           97          96          87
+           87          88          97
+           88          89          97
+           98          97          89
+           99          98          89
+           89          90          99
+          101         100          91
+           91          92         101
+           92          93         101
+          102         101          93
+          103         102          93
+           93          94         103
+           94          95         103
+          104         103          95
+          105         104          95
+           95          96         105
+           96          97         105
+          106         105          97
+          107         106          97
+           97          98         107
+           98          99         107
+          108         107          99
+          100         101         109
+          110         109         101
+          111         110         101
+          101         102         111
+          102         103         111
+          112         111         103
+          113         112         103
+          103         104         113
+          104         105         113
+          114         113         105
+          115         114         105
+          105         106         115
+          106         107         115
+          116         115         107
+          117         116         107
+          107         108         117
+          119         118         109
+          109         110         119
+          110         111         119
+          120         119         111
+          121         120         111
+          111         112         121
+          112         113         121
+          122         121         113
+          123         122         113
+          113         114         123
+          114         115         123
+          124         123         115
+          125         124         115
+          115         116         125
+          116         117         125
+          126         125         117
+          118         119         127
+          128         127         119
+          129         128         119
+          119         120         129
+          120         121         129
+          130         129         121
+          131         130         121
+          121         122         131
+          122         123         131
+          132         131         123
+          133         132         123
+          123         124         133
+          124         125         133
+          134         133         125
+          135         134         125
+          125         126         135
+          137         136         127
+          127         128         137
+          128         129         137
+          138         137         129
+          139         138         129
+          129         130         139
+          130         131         139
+          140         139         131
+          141         140         131
+          131         132         141
+          132         133         141
+          142         141         133
+          143         142         133
+          133         134         143
+          134         135         143
+          144         143         135
+          136         137         145
+          146         145         137
+          147         146         137
+          137         138         147
+          138         139         147
+          148         147         139
+          149         148         139
+          139         140         149
+          140         141         149
+          150         149         141
+          151         150         141
+          141         142         151
+          142         143         151
+          152         151         143
+          153         152         143
+          143         144         153
+          155         154         145
+          145         146         155
+          146         147         155
+          156         155         147
+          157         156         147
+          147         148         157
+          148         149         157
+          158         157         149
+          159         158         149
+          149         150         159
+          150         151         159
+          160         159         151
+          161         160         151
+          151         152         161
+          152         153         161
+          162         161         153
+          154         155         163
+          164         163         155
+          165         164         155
+          155         156         165
+          156         157         165
+          166         165         157
+          167         166         157
+          157         158         167
+          158         159         167
+          168         167         159
+          169         168         159
+          159         160         169
+          160         161         169
+          170         169         161
+          171         170         161
+          161         162         171
+          173         172         163
+          163         164         173
+          164         165         173
+          174         173         165
+          175         174         165
+          165         166         175
+          166         167         175
+          176         175         167
+          177         176         167
+          167         168         177
+          168         169         177
+          178         177         169
+          179         178         169
+          169         170         179
+          170         171         179
+          180         179         171
+          172         173         181
+          182         181         173
+          183         182         173
+          173         174         183
+          174         175         183
+          184         183         175
+          185         184         175
+          175         176         185
+          176         177         185
+          186         185         177
+          187         186         177
+          177         178         187
+          178         179         187
+          188         187         179
+          189         188         179
+          179         180         189
+          191         190         181
+          181         182         191
+          182         183         191
+          192         191         183
+          193         192         183
+          183         184         193
+          184         185         193
+          194         193         185
+          195         194         185
+          185         186         195
+          186         187         195
+          196         195         187
+          197         196         187
+          187         188         197
+          188         189         197
+          198         197         189
+          190         191         199
+          200         199         191
+          201         200         191
+          191         192         201
+          192         193         201
+          202         201         193
+          203         202         193
+          193         194         203
+          194         195         203
+          204         203         195
+          205         204         195
+          195         196         205
+          196         197         205
+          206         205         197
+          207         206         197
+          197         198         207
+          209         208         199
+          199         200         209
+          200         201         209
+          210         209         201
+          211         210         201
+          201         202         211
+          202         203         211
+          212         211         203
+          213         212         203
+          203         204         213
+          204         205         213
+          214         213         205
+          215         214         205
+          205         206         215
+          206         207         215
+          216         215         207
+</DataStructure>
+</Topology>
+<Geometry Type="XYZ">
+<DataStructure Format="XML" Dimensions="216 3" DataType="Float">
+0.2000000000E+02 0.0000000000E+00 0.0000000000E+00
+0.1961570358E+02 0.3901820421E+01 0.0000000000E+00
+0.1847758102E+02 0.7653691292E+01 0.0000000000E+00
+0.1662937355E+02 0.1111143208E+02 0.0000000000E+00
+0.1414210510E+02 0.1414216614E+02 0.0000000000E+00
+0.1111135960E+02 0.1662942314E+02 0.0000000000E+00
+0.7653611660E+01 0.1847761345E+02 0.0000000000E+00
+0.3901736259E+01 0.1961571884E+02 0.0000000000E+00
+-0.3258413699E-05 0.2000000000E+02 0.0000000000E+00
+0.1806039619E+02 0.0000000000E+00 0.0000000000E+00
+0.1771336746E+02 0.3523421049E+01 0.0000000000E+00
+0.1668562126E+02 0.6911435604E+01 0.0000000000E+00
+0.1501665306E+02 0.1003384495E+02 0.0000000000E+00
+0.1277059937E+02 0.1277065754E+02 0.0000000000E+00
+0.1003377533E+02 0.1501669884E+02 0.0000000000E+00
+0.6911361217E+01 0.1668565178E+02 0.0000000000E+00
+0.3523342133E+01 0.1771338463E+02 0.0000000000E+00
+-0.2942412038E-05 0.1806039619E+02 0.0000000000E+00
+0.1630776596E+02 0.0000000000E+00 0.0000000000E+00
+0.1599441528E+02 0.3181499243E+01 0.0000000000E+00
+0.1506640339E+02 0.6240731716E+01 0.0000000000E+00
+0.1355939579E+02 0.9060134888E+01 0.0000000000E+00
+0.1153130531E+02 0.1153135967E+02 0.0000000000E+00
+0.9060069084E+01 0.1355943966E+02 0.0000000000E+00
+0.6240660667E+01 0.1506643295E+02 0.0000000000E+00
+0.3181424618E+01 0.1599442959E+02 0.0000000000E+00
+-0.2656872539E-05 0.1630776596E+02 0.0000000000E+00
+0.1472408676E+02 0.0000000000E+00 0.0000000000E+00
+0.1444116497E+02 0.2872537374E+01 0.0000000000E+00
+0.1360327435E+02 0.5634682178E+01 0.0000000000E+00
+0.1224261475E+02 0.8180287361E+01 0.0000000000E+00
+0.1041147518E+02 0.1041152668E+02 0.0000000000E+00
+0.8180226326E+01 0.1224265480E+02 0.0000000000E+00
+0.5634615421E+01 0.1360330200E+02 0.0000000000E+00
+0.2872467518E+01 0.1444117928E+02 0.0000000000E+00
+-0.2398858214E-05 0.1472408581E+02 0.0000000000E+00
+0.1329306984E+02 0.0000000000E+00 0.0000000000E+00
+0.1303764534E+02 0.2593358994E+01 0.0000000000E+00
+0.1228118896E+02 0.5087054729E+01 0.0000000000E+00
+0.1105276966E+02 0.7385256290E+01 0.0000000000E+00
+0.9399596214E+01 0.9399644852E+01 0.0000000000E+00
+0.7385198593E+01 0.1105280781E+02 0.0000000000E+00
+0.5086991310E+01 0.1228121471E+02 0.0000000000E+00
+0.2593293190E+01 0.1303765869E+02 0.0000000000E+00
+-0.2165716069E-05 0.1329306984E+02 0.0000000000E+00
+0.1200000000E+02 0.0000000000E+00 0.0000000000E+00
+0.1176942158E+02 0.2341092825E+01 0.0000000000E+00
+0.1108654785E+02 0.4592216969E+01 0.0000000000E+00
+0.9977621078E+01 0.6666863918E+01 0.0000000000E+00
+0.8485258102E+01 0.8485304832E+01 0.0000000000E+00
+0.6666809082E+01 0.9977658272E+01 0.0000000000E+00
+0.4592157364E+01 0.1108657265E+02 0.0000000000E+00
+0.2341030836E+01 0.1176943398E+02 0.0000000000E+00
+-0.1955048219E-05 0.1200000000E+02 0.0000000000E+00
+0.1078912258E+02 0.0000000000E+00 0.0000000000E+00
+0.1058181095E+02 0.2104863405E+01 0.0000000000E+00
+0.9967841148E+01 0.4128839016E+01 0.0000000000E+00
+0.8970808029E+01 0.5994144917E+01 0.0000000000E+00
+0.7629027367E+01 0.7629096031E+01 0.0000000000E+00
+0.5994069576E+01 0.8970858574E+01 0.0000000000E+00
+0.4128761768E+01 0.9967872620E+01 0.0000000000E+00
+0.2104799747E+01 0.1058182335E+02 0.0000000000E+00
+-0.1757771201E-05 0.1078912258E+02 0.0000000000E+00
+0.9731324196E+01 0.0000000000E+00 0.0000000000E+00
+0.9544338226E+01 0.1898494244E+01 0.0000000000E+00
+0.8990565300E+01 0.3724030733E+01 0.0000000000E+00
+0.8091286659E+01 0.5406454086E+01 0.0000000000E+00
+0.6881061554E+01 0.6881108761E+01 0.0000000000E+00
+0.5406402588E+01 0.8091320992E+01 0.0000000000E+00
+0.3723977566E+01 0.8990587234E+01 0.0000000000E+00
+0.1898448825E+01 0.9544346809E+01 0.0000000000E+00
+-0.1585433893E-05 0.9731324196E+01 0.0000000000E+00
+0.8807250977E+01 0.0000000000E+00 0.0000000000E+00
+0.8638021469E+01 0.1718214393E+01 0.0000000000E+00
+0.8136835098E+01 0.3370398283E+01 0.0000000000E+00
+0.7322953224E+01 0.4893059254E+01 0.0000000000E+00
+0.6227652550E+01 0.6227681637E+01 0.0000000000E+00
+0.4893027306E+01 0.7322974682E+01 0.0000000000E+00
+0.3370364666E+01 0.8136849403E+01 0.0000000000E+00
+0.1718182445E+01 0.8638028145E+01 0.0000000000E+00
+-0.1434883302E-05 0.8807250977E+01 0.0000000000E+00
+0.8000000000E+01 0.0000000000E+00 0.0000000000E+00
+0.7846281528E+01 0.1560725689E+01 0.0000000000E+00
+0.7391034126E+01 0.3061472654E+01 0.0000000000E+00
+0.6651752472E+01 0.4444568634E+01 0.0000000000E+00
+0.5656847000E+01 0.5656861782E+01 0.0000000000E+00
+0.4444551468E+01 0.6651763916E+01 0.0000000000E+00
+0.3061453819E+01 0.7391041756E+01 0.0000000000E+00
+0.1560705066E+01 0.7846285820E+01 0.0000000000E+00
+-0.1303365480E-05 0.8000000000E+01 0.0000000000E+00
+0.7191280842E+01 0.0000000000E+00 0.0000000000E+00
+0.7053101063E+01 0.1402954936E+01 0.0000000000E+00
+0.6643873215E+01 0.2751992702E+01 0.0000000000E+00
+0.5979323864E+01 0.3995272636E+01 0.0000000000E+00
+0.5084989548E+01 0.5085017204E+01 0.0000000000E+00
+0.3995244026E+01 0.5979342937E+01 0.0000000000E+00
+0.2751957893E+01 0.6643887997E+01 0.0000000000E+00
+0.1402918816E+01 0.7053108215E+01 0.0000000000E+00
+-0.1171608346E-05 0.7191280842E+01 0.0000000000E+00
+0.6445553780E+01 0.0000000000E+00 0.0000000000E+00
+0.6321703434E+01 0.1257470846E+01 0.0000000000E+00
+0.5954911709E+01 0.2466615915E+01 0.0000000000E+00
+0.5359274387E+01 0.3580969572E+01 0.0000000000E+00
+0.4557681561E+01 0.4557708263E+01 0.0000000000E+00
+0.3580940008E+01 0.5359294415E+01 0.0000000000E+00
+0.2466580391E+01 0.5954926491E+01 0.0000000000E+00
+0.1257431984E+01 0.6321711063E+01 0.0000000000E+00
+-0.1050114065E-05 0.6445553780E+01 0.0000000000E+00
+0.5757913589E+01 0.0000000000E+00 0.0000000000E+00
+0.5647275925E+01 0.1123318911E+01 0.0000000000E+00
+0.5319614887E+01 0.2203467607E+01 0.0000000000E+00
+0.4787522316E+01 0.3198937416E+01 0.0000000000E+00
+0.4071446419E+01 0.4071473598E+01 0.0000000000E+00
+0.3198906422E+01 0.4787543297E+01 0.0000000000E+00
+0.2203430891E+01 0.5319630146E+01 0.0000000000E+00
+0.1123278379E+01 0.5647284031E+01 0.0000000000E+00
+-0.9380832466E-06 0.5757913589E+01 0.0000000000E+00
+0.5123835564E+01 0.0000000000E+00 0.0000000000E+00
+0.5025381565E+01 0.9996163249E+00 0.0000000000E+00
+0.4733802795E+01 0.1960816741E+01 0.0000000000E+00
+0.4260305405E+01 0.2846662760E+01 0.0000000000E+00
+0.3623085022E+01 0.3623112679E+01 0.0000000000E+00
+0.2846630812E+01 0.4260326862E+01 0.0000000000E+00
+0.1960778832E+01 0.4733818531E+01 0.0000000000E+00
+0.9995746613E+00 0.5025389671E+01 0.0000000000E+00
+-0.8347787457E-06 0.5123835564E+01 0.0000000000E+00
+0.4539146423E+01 0.0000000000E+00 0.0000000000E+00
+0.4451926708E+01 0.8855490685E+00 0.0000000000E+00
+0.4193620205E+01 0.1737065911E+01 0.0000000000E+00
+0.3774153471E+01 0.2521827459E+01 0.0000000000E+00
+0.3209646702E+01 0.3209675550E+01 0.0000000000E+00
+0.2521793365E+01 0.3774176121E+01 0.0000000000E+00
+0.1737026930E+01 0.4193636417E+01 0.0000000000E+00
+0.8855066299E+00 0.4451935291E+01 0.0000000000E+00
+-0.7395207717E-06 0.4539145947E+01 0.0000000000E+00
+0.4000000000E+01 0.0000000000E+00 0.0000000000E+00
+0.3923140049E+01 0.7803667188E+00 0.0000000000E+00
+0.3695513964E+01 0.1530743957E+01 0.0000000000E+00
+0.3325869322E+01 0.2222294569E+01 0.0000000000E+00
+0.2828411818E+01 0.2828442335E+01 0.0000000000E+00
+0.2222258568E+01 0.3325893402E+01 0.0000000000E+00
+0.1530703783E+01 0.3695530653E+01 0.0000000000E+00
+0.7803242803E+00 0.3923148394E+01 0.0000000000E+00
+-0.6516827398E-06 0.4000000000E+01 0.0000000000E+00
+0.3396921635E+01 0.0000000000E+00 0.0000000000E+00
+0.3331649065E+01 0.6627148986E+00 0.0000000000E+00
+0.3138339520E+01 0.1299962044E+01 0.0000000000E+00
+0.2824422598E+01 0.1887250304E+01 0.0000000000E+00
+0.2401961565E+01 0.2402010918E+01 0.0000000000E+00
+0.1887193680E+01 0.2824460506E+01 0.0000000000E+00
+0.1299898744E+01 0.3138365746E+01 0.0000000000E+00
+0.6626511812E+00 0.3331661701E+01 0.0000000000E+00
+-0.5534287766E-06 0.3396921635E+01 0.0000000000E+00
+0.2850699186E+01 0.0000000000E+00 0.0000000000E+00
+0.2795922279E+01 0.5561518669E+00 0.0000000000E+00
+0.2633696795E+01 0.1090929508E+01 0.0000000000E+00
+0.2370258093E+01 0.1583781362E+01 0.0000000000E+00
+0.2015729189E+01 0.2015768290E+01 0.0000000000E+00
+0.1583735228E+01 0.2370288849E+01 0.0000000000E+00
+0.1090874553E+01 0.2633719683E+01 0.0000000000E+00
+0.5560900569E+00 0.2795934439E+01 0.0000000000E+00
+-0.4644378464E-06 0.2850699186E+01 0.0000000000E+00
+0.2355973005E+01 0.0000000000E+00 0.0000000000E+00
+0.2310702085E+01 0.4596349597E+00 0.0000000000E+00
+0.2176630020E+01 0.9016040564E+00 0.0000000000E+00
+0.1958910108E+01 0.1308922887E+01 0.0000000000E+00
+0.1665908575E+01 0.1665940285E+01 0.0000000000E+00
+0.1308884740E+01 0.1958935618E+01 0.0000000000E+00
+0.9015563726E+00 0.2176649809E+01 0.0000000000E+00
+0.4595768452E+00 0.2310713530E+01 0.0000000000E+00
+-0.3838366922E-06 0.2355972767E+01 0.0000000000E+00
+0.1907887220E+01 0.0000000000E+00 0.0000000000E+00
+0.1871226430E+01 0.3722170293E+00 0.0000000000E+00
+0.1762653708E+01 0.7301273942E+00 0.0000000000E+00
+0.1586342216E+01 0.1059977531E+01 0.0000000000E+00
+0.1349066854E+01 0.1349093199E+01 0.0000000000E+00
+0.1059945345E+01 0.1586363673E+01 0.0000000000E+00
+0.7300859690E+00 0.1762670755E+01 0.0000000000E+00
+0.3721643090E+00 0.1871236920E+01 0.0000000000E+00
+-0.3108342810E-06 0.1907887220E+01 0.0000000000E+00
+0.1502045870E+01 0.0000000000E+00 0.0000000000E+00
+0.1473183274E+01 0.2930404842E+00 0.0000000000E+00
+0.1387705684E+01 0.5748171806E+00 0.0000000000E+00
+0.1248898506E+01 0.8345024586E+00 0.0000000000E+00
+0.1062095523E+01 0.1062118053E+01 0.0000000000E+00
+0.8344746828E+00 0.1248916984E+01 0.0000000000E+00
+0.5747812390E+00 0.1387720466E+01 0.0000000000E+00
+0.2929939628E+00 0.1473192573E+01 0.0000000000E+00
+-0.2447143288E-06 0.1502045870E+01 0.0000000000E+00
+0.1134465456E+01 0.0000000000E+00 0.0000000000E+00
+0.1112666011E+01 0.2213282138E+00 0.0000000000E+00
+0.1048106194E+01 0.4341489971E+00 0.0000000000E+00
+0.9432673454E+00 0.6302845478E+00 0.0000000000E+00
+0.8021781445E+00 0.8021982908E+00 0.0000000000E+00
+0.6302598119E+00 0.9432838559E+00 0.0000000000E+00
+0.4341177940E+00 0.1048119068E+01 0.0000000000E+00
+0.2212885767E+00 0.1112673879E+01 0.0000000000E+00
+-0.1848278828E-06 0.1134465456E+01 0.0000000000E+00
+0.8015393615E+00 0.0000000000E+00 0.0000000000E+00
+0.7861372232E+00 0.1563766152E+00 0.0000000000E+00
+0.7405229807E+00 0.3067426682E+00 0.0000000000E+00
+0.6664499640E+00 0.4453198612E+00 0.0000000000E+00
+0.5667645335E+00 0.5667832494E+00 0.0000000000E+00
+0.4452973008E+00 0.6664650440E+00 0.0000000000E+00
+0.3067154586E+00 0.7405342460E+00 0.0000000000E+00
+0.1563442051E+00 0.7861436605E+00 0.0000000000E+00
+-0.1305873383E-06 0.8015393615E+00 0.0000000000E+00
+0.5000000000E+00 0.0000000000E+00 0.0000000000E+00
+0.4903920293E+00 0.9754828364E-01 0.0000000000E+00
+0.4619373083E+00 0.1913476139E+00 0.0000000000E+00
+0.4157294929E+00 0.2777930498E+00 0.0000000000E+00
+0.3535443544E+00 0.3535624146E+00 0.0000000000E+00
+0.2777718306E+00 0.4157436788E+00 0.0000000000E+00
+0.1913240254E+00 0.4619470835E+00 0.0000000000E+00
+0.9752324969E-01 0.4903970063E+00 0.0000000000E+00
+-0.8146034247E-07 0.5000000000E+00 0.0000000000E+00
+</DataStructure>
+</Geometry>
+</Grid>
+</Domain>
+</Xdmf>
+
+
+From ken.martin at kitware.com  Thu Jan 27 10:36:37 2005
+From: ken.martin at kitware.com (Ken Martin)
+Date: Thu Jan 27 10:35:50 2005
+Subject: [Paraview] Question about avi output
+In-Reply-To: <004d01c5044e$8b5152d0$41c809c0@jupiter>
+Message-ID: <20050127153543.CGE2221.rrcs-fep-11.hrndva.rr.com@Grayson>
+
+> I see in the last version, you add 2 files movies outputs : mp2 and avi.
+> First I use the mp2 and when I try to reload this files in application
+> which read mp2 files. it gives me an file format error.
+
+Sounds like a bad mp2 player. WindowsMediaPlayer with a mpeg2 codec works
+fine for me.
+
+> Second I try to use the avi output. And I have this error message :
+> "There was a VTK Error in file: C: martink ParaView ParaView18 GUI Client
+> vtkAVIWriter.cxx (139)
+>  Unable to compress C:/TEMP/test.avi" in the Paraview Error log window
+
+This could be because of a recent change in Intel's licensing of their
+indeo5 codec. We have since switched to a different codec for AVI which will
+be in 1.8.4
+
+Ken
+
+
+From dvanvliet at gto.net  Thu Jan 27 12:06:09 2005
+From: dvanvliet at gto.net (David Van Vliet (Personal))
+Date: Thu Jan 27 12:06:30 2005
+Subject: [Paraview] Questions about Paraview
+In-Reply-To: <20050127170004.7954134B3F@public.kitware.com>
+Message-ID: <AIEOJMAFIPAFJFFBBCANEEMGCHAA.dvanvliet@gto.net>
+
+Hello folks
+
+I'm trying to evaluate the potential to use Paraview to visualize water
+resources and hydrogeology data in 3D.  Can anybody help me with the
+following questions?
+
+a)  is there any way for paraview to import/display topographic base maps
+(i.e. roads, streams) provided in a format such as AutoCAD DWG or DXF?
+b)  Does Paraview include any 2D and 3D interpolation routines (i.e.
+kriging) that would allow me to visualize randomly scattered data?
+c)  Is the VTK format suitable for me to import and visualize
+one-dimensional line segments?
+d)  has anybody out there use Paraview for this type of application?
+
+thanks,
+David Van Vliet
+
+From brad.king at kitware.com  Fri Jan 28 07:58:07 2005
+From: brad.king at kitware.com (Brad King)
+Date: Fri Jan 28 07:58:11 2005
+Subject: [Paraview] Input XML data source
+In-Reply-To: <BAY24-F3BACE244ED3F2EBD0AF2287780@phx.gbl>
+References: <BAY24-F3BACE244ED3F2EBD0AF2287780@phx.gbl>
+Message-ID: <41FA36DF.1040304@kitware.com>
+
+Richard Haney wrote:
+> Below is a copy of the XML file that causes the "crash" once the number 
+> of elements goes beyond 317:
+> 
+> <?xml version="1.0"?>
+> <!DOCTYPE Xdmf SYSTEM "xdmf.dtd">
+> <Xdmf>
+> <Domain><Grid Name="Part Example">
+> <Topology Type="Triangle" NumberOfElements="736" BaseOffset="0">
+> <DataStructure Format="XML" Dimensions="736 3" DataType="Int">
+
+I have reproduced the problem with your file.  There are two problems here:
+
+1.) ParaView should not crash no matter the input given.  We'll fix that.
+
+2.) You specify that the number of elements is 736 and the dimensions of 
+the array are 736x3 but only give 368 elements.  If I change the 
+736->368 then the crash goes away.
+
+-Brad
+From samuelkey at comcast.net  Fri Jan 28 12:56:52 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Fri Jan 28 12:59:29 2005
+Subject: [Paraview] Questions about Paraview from David Van Vliet
+References: <AIEOJMAFIPAFJFFBBCANEEMGCHAA.dvanvliet@gto.net>
+Message-ID: <001101c50562$bfe83fd0$6e01a8c0@last>
+
+David,
+
+I am not entirely qualified to answer your questions.
+I am a relatively new user. My experience is that if
+you will meet Paraview halfway, ParaView will provide
+you with outstanding post-processing. The time spent
+writing  *.pvd *.vtu *.pvtu etc files will pay huge dividends.
+
+I checked the web and found free kriging packages, so
+if you are willing to generate an intermediate grid of display 
+points (with data) you can supply these to ParaView via one
+ the XML-based vtk file formats. 
+
+I have attached a *.pdf file that discribes the various vtk-based 
+input-file options.  I must caution you, the document is concise, 
+precise, complete and says it only once (and not where you 
+might expect to find it as you are coding a file writer IMHO).
+
+Writing a vtk-based input file for ParaView to read does
+indeed allow you to enter one-dimensional line segments
+(vtk_line or vtk_poly_line on page 9). ParaView does 
+expect you to supply data with these lines if you want it
+to display something other than the grid itself.
+
+If you code in Fortran-90/95, I can send you (off line) example
+coding to create vtk-based files for ParaView to read.
+
+Regards,
+
+Sam Key
+
+----- Original Message ----- 
+From: "David Van Vliet (Personal)" <dvanvliet@gto.net>
+To: <paraview@paraview.org>
+Sent: Thursday, January 27, 2005 10:06 AM
+Subject: [Paraview] Questions about Paraview
+
+
+> Hello folks
+> 
+> I'm trying to evaluate the potential to use Paraview to visualize water
+> resources and hydrogeology data in 3D.  Can anybody help me with the
+> following questions?
+> 
+> a)  is there any way for paraview to import/display topographic base maps
+> (i.e. roads, streams) provided in a format such as AutoCAD DWG or DXF?
+> b)  Does Paraview include any 2D and 3D interpolation routines (i.e.
+> kriging) that would allow me to visualize randomly scattered data?
+> c)  Is the VTK format suitable for me to import and visualize
+> one-dimensional line segments?
+> d)  has anybody out there use Paraview for this type of application?
+> 
+> thanks,
+> David Van Vliet
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vtk-file-formats.pdf
+Type: application/pdf
+Size: 256044 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050128/b30b7e21/vtk-file-formats-0001.pdf
+From pknotz at sandia.gov  Fri Jan 28 13:37:18 2005
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Fri Jan 28 13:38:22 2005
+Subject: [Paraview] Animating deforming geometry
+Message-ID: <BE1FD46E.C1AA%pknotz@sandia.gov>
+
+Hi,
+
+I have a simulation where I compute mesh displacements and solutions to
+equations on the displaced mesh.  I can view the deformed mesh in ParaView
+using the warp (vector) filter and that works fine for a single time step.
+However, when I got to make an animation I can view the deformation in time.
+If I select the data file as the source then I can animate on time steps but
+that's the undeformed mesh.  If I select the Warp filter as the source then
+I can only animate on the scale factor, not time steps.  Is there anyway to
+do such an animation in ParaView?  Or do I have to apply the displacements
+to the coordinate data before loading it into ParaView?
+
+On a related note, I'm using the ExodusII data reader (which does not ship
+with the standard ParaView distribution).  This reader has a boolean option
+called "Apply Displacements" but there's no documentation about what that's
+supposed to do. Anyone familiar with that?
+
+Thanks ~ Pat
+
+
+From jagreen at sandia.gov  Fri Jan 28 14:25:53 2005
+From: jagreen at sandia.gov (Greenfield, John A)
+Date: Fri Jan 28 14:26:16 2005
+Subject: [Paraview] Animating deforming geometry
+Message-ID: <3349FA897FC2B546A807430165E419043D545B@ES20SNLNT.srn.sandia.gov>
+
+ 
+Pat,
+
+It is probably faster to ask these questions of paraview-help@sandia.gov
+than of the paraview@paraview.org list, since they usually are at least
+in part Sandia specific, and we are here to answer your questions.
+
+When you select the undeformed mesh as the input, what you see in the
+animation will be the deformed mesh as long as the warp filter is what
+is visible. The animation menu uses the original input because that is
+where the timesteps are. The animation menu then runs the whole pipeline
+and shows you the output from whatever you have selected as visible.
+
+The "Apply Displacements" check box should automatically do the same
+thing as the warp filter, as long as the reader can recognize your
+displacement vector (if it uses one of the usual names like displ it
+should find it, but you can't select something else like you can with
+the warp filter).
+
+-----------------------------------------------------------
+John Greenfield
+American Staff Augmentation Providers
+
+Sandia National Laboratories, MS 0915
+Org 9326 - Building T7/6
+(505) 284-2263   FAX (505) 845-0833
+----------------------------------------------------------
+
+
+
+-----Original Message-----
+From: paraview-bounces@paraview.org
+[mailto:paraview-bounces@paraview.org] On Behalf Of Patrick Notz
+Sent: Friday, January 28, 2005 11:37 AM
+To: paraview@paraview.org
+Subject: [Paraview] Animating deforming geometry
+
+Hi,
+
+I have a simulation where I compute mesh displacements and solutions to
+equations on the displaced mesh.  I can view the deformed mesh in
+ParaView using the warp (vector) filter and that works fine for a single
+time step.
+However, when I got to make an animation I can view the deformation in
+time.
+If I select the data file as the source then I can animate on time steps
+but that's the undeformed mesh.  If I select the Warp filter as the
+source then I can only animate on the scale factor, not time steps.  Is
+there anyway to do such an animation in ParaView?  Or do I have to apply
+the displacements to the coordinate data before loading it into
+ParaView?
+
+On a related note, I'm using the ExodusII data reader (which does not
+ship with the standard ParaView distribution).  This reader has a
+boolean option called "Apply Displacements" but there's no documentation
+about what that's supposed to do. Anyone familiar with that?
+
+Thanks ~ Pat
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+From pknotz at sandia.gov  Fri Jan 28 16:03:03 2005
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Fri Jan 28 16:03:35 2005
+Subject: [Paraview] Animating deforming geometry
+In-Reply-To: <3349FA897FC2B546A807430165E419043D545B@ES20SNLNT.srn.sandia.gov>
+Message-ID: <BE1FF697.C1C2%pknotz@sandia.gov>
+
+Hi John,
+
+Thanks for the insight.  It might be a nice enhancement if the ExodusII
+reader let you specify the field to use as the displacements.
+
+I also came to realize that I could animate the deformed geometry (like you
+said) once.  On subsequent attempts it looked like ParaView was caching the
+geometry.  I can either re-load the first time step manually or disable he
+geometry caching and then re-enable it to make it work...
+
+Thanks ~ Pat
+
+
+
+On 1/28/05 12:25 PM, "Greenfield, John A" <jagreen@sandia.gov> wrote:
+
+>  
+> Pat,
+> 
+> It is probably faster to ask these questions of paraview-help@sandia.gov
+> than of the paraview@paraview.org list, since they usually are at least
+> in part Sandia specific, and we are here to answer your questions.
+> 
+> When you select the undeformed mesh as the input, what you see in the
+> animation will be the deformed mesh as long as the warp filter is what
+> is visible. The animation menu uses the original input because that is
+> where the timesteps are. The animation menu then runs the whole pipeline
+> and shows you the output from whatever you have selected as visible.
+> 
+> The "Apply Displacements" check box should automatically do the same
+> thing as the warp filter, as long as the reader can recognize your
+> displacement vector (if it uses one of the usual names like displ it
+> should find it, but you can't select something else like you can with
+> the warp filter).
+> 
+> -----------------------------------------------------------
+> John Greenfield
+> American Staff Augmentation Providers
+> 
+> Sandia National Laboratories, MS 0915
+> Org 9326 - Building T7/6
+> (505) 284-2263   FAX (505) 845-0833
+> ----------------------------------------------------------
+> 
+> 
+> 
+> -----Original Message-----
+> From: paraview-bounces@paraview.org
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Patrick Notz
+> Sent: Friday, January 28, 2005 11:37 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] Animating deforming geometry
+> 
+> Hi,
+> 
+> I have a simulation where I compute mesh displacements and solutions to
+> equations on the displaced mesh.  I can view the deformed mesh in
+> ParaView using the warp (vector) filter and that works fine for a single
+> time step.
+> However, when I got to make an animation I can view the deformation in
+> time.
+> If I select the data file as the source then I can animate on time steps
+> but that's the undeformed mesh.  If I select the Warp filter as the
+> source then I can only animate on the scale factor, not time steps.  Is
+> there anyway to do such an animation in ParaView?  Or do I have to apply
+> the displacements to the coordinate data before loading it into
+> ParaView?
+> 
+> On a related note, I'm using the ExodusII data reader (which does not
+> ship with the standard ParaView distribution).  This reader has a
+> boolean option called "Apply Displacements" but there's no documentation
+> about what that's supposed to do. Anyone familiar with that?
+> 
+> Thanks ~ Pat
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From samuelkey at comcast.net  Sun Jan 30 14:29:18 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Sun Jan 30 14:29:30 2005
+Subject: [Paraview] Confusion Over Proper Use of *.pvd Files
+References: <BAY24-F3BACE244ED3F2EBD0AF2287780@phx.gbl>
+	<41FA36DF.1040304@kitware.com>
+Message-ID: <002a01c50701$fe70e360$6e01a8c0@last>
+
+Greetings Developers & Users,
+
+It looks to me that I don't understand something
+about the interaction of *.pvd files and animation?
+
+I have a file called "abc.results.pvd"   It is a 'Collection'
+file with entries like --
+    <DataSet timestep="001" part="001" file="abc.m001.t001.vtu" name="rst"/>
+The 'timestep' entries run from 001 to 100.
+The 'part' entries run from 001 to 004.
+That is, I have files for 100 time steps by four parts -- 400 entries.
+
+The source face-sheet works just fine -- I have a single 4-part
+object that can be sliced and diced with the Extract Parts
+filter, and a time-step slider that runs from 0 to 99 that lets
+me examine results at any time step (the deformation is
+incorporated into the x,y,z-coordinates of the object at
+each time step and is large enough to be easily visable).
+
+Animation.
+When I go to animation and select Source as abc.results.pvd,
+the Parameter selection offers either Timesteps or Filename
+for which I choose Timesteps. The face-sheet correctly shows
+that there are 0 to 99 time steps in the object's data set.
+
+Now The Problem.
+Only part="001" is animated.  The remaining three parts
+are not processed by the animation???  (I can tell visually
+and by the time it takes to perform the animation.)
+
+Alternate Approach Tried.
+I surmised that the animation-engine might be confused
+about the grouping since 'timestep' and 'part' were at the
+same level, so I created a family of 100 files "abc.tnnn.pvd"
+where nnn ran from 001 to 100, that is, the entries were of
+the form
+    <DataSet part="001" file="abc.m001.t001.vtu" name="rst"/>
+The PVDReader was only asked to group 'parts.' Again the
+source face-sheet worked as before now seeing the time steps
+via the sequential file names.
+
+Animation --Same Problem as Before.
+The Parameter selection this time was by Filename and
+100 time steps were appropriately identified. However,
+as before, only the portion of the object identified by
+part="001" was animated???
+
+Where am I going wrong?
+
+Regards,
+
+SamKey
+(ps: name="rst" is a new entry that will show up on the
+Extract Parts filter face sheet in PV version 1.10, courtesy
+of Brad King -- a very welcome addition for ease-of-use.)
+
+

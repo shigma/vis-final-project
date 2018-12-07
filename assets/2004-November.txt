@@ -1,0 +1,2266 @@
+From Michael.Gronager at uni-c.dk  Mon Nov  1 07:04:06 2004
+From: Michael.Gronager at uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Mon Nov  1 07:04:20 2004
+Subject: [Paraview] render modules and preloading packages
+Message-ID: <BJENKJNJBLPBOJNGAPAKCELDCAAA.Michael.Gronager@uni-c.dk>
+
+Hi PV'ers
+
+I am currently trying to create a render-module using OpenSceneGraph.
+I can see several ways to do this, but probably I'll subclass from
+RenderModule to instantiate an OSGPartDisplay...
+
+I can see that it is possible to load the render-nodule at start-up using
+--render-moduel=OSGRenderModule, however to do this it seems that I have to
+compile OSGPartModule into ParaView - and I don't want that... Isn't there
+a method to preload modules/packages specified using .xml files and then
+make an .xml file for the render-module and load it all at start up...
+(otherwise I cannot understand the --empty option - if its not meant for
+costumizing...)
+
+Cheers,
+
+Michael
+
+
+Michael Gr?nager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Build. 304
+DK2800 Lyngby
+DENMARK
+Phone: +45 35878889
+Direct: +45 24248207
+Fax: +45 35878990
+Email: mpg@uni-c.dk
+---
+Outgoing mail is certified Virus Free.
+Checked by AVG anti-virus system (http://www.grisoft.com).
+Version: 6.0.784 / Virus Database: 530 - Release Date: 27-10-2004
+
+From brad.king at kitware.com  Mon Nov  1 21:21:37 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Nov  1 20:21:45 2004
+Subject: [Paraview] Camera clipping planes
+In-Reply-To: <41820EF8.6030308@cea.fr>
+References: <41820EF8.6030308@cea.fr>
+Message-ID: <4186EF31.2090804@kitware.com>
+
+Patrick Brockmann wrote:
+> Hi all,
+> 
+> In paraview, is there a way to set a camera with your own location of
+> the near and far clipping planes ?
+> 
+> I really need this feature to hide the far scene of my objets
+> (climate earth models watched with orthographic projection).
+
+I do not think this is currently possible.  For a particular viewpoint 
+you can use a clip filter to chop away one side of the data.
+
+> With VTK API in python, I have been able to compute this with the 
+> following lines:
+> def ProjOrthoResetClippingRange(obj, event):
+>       camera=ren1.GetActiveCamera()
+>       camera.SetFocalPoint(0,0,0)
+>       camera_dist=camera.GetDistance()
+>       camera.SetClippingRange(0.1,camera_dist)
+> 
+> ren1=vtk.vtkRenderer()
+> ren1.AddObserver("ResetCameraEvent",ProjOrthoResetClippingRange)
+> ren1.AddObserver("EndEvent",ProjOrthoResetClippingRange)
+> 
+> Let me know if this feature could be add in paraview ?
+
+You can add it as a feature request:
+
+http://www.paraview.org/Bug
+
+-Brad
+From brad.king at kitware.com  Mon Nov  1 21:23:30 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Nov  1 20:23:39 2004
+Subject: [Paraview] render modules and preloading packages
+In-Reply-To: <BJENKJNJBLPBOJNGAPAKCELDCAAA.Michael.Gronager@uni-c.dk>
+References: <BJENKJNJBLPBOJNGAPAKCELDCAAA.Michael.Gronager@uni-c.dk>
+Message-ID: <4186EFA2.9080606@kitware.com>
+
+Michael Gr?nager wrote:
+> I am currently trying to create a render-module using OpenSceneGraph.
+> I can see several ways to do this, but probably I'll subclass from
+> RenderModule to instantiate an OSGPartDisplay...
+> 
+> I can see that it is possible to load the render-nodule at start-up using
+> --render-moduel=OSGRenderModule, however to do this it seems that I have to
+> compile OSGPartModule into ParaView - and I don't want that... Isn't there
+> a method to preload modules/packages specified using .xml files and then
+> make an .xml file for the render-module and load it all at start up...
+> (otherwise I cannot understand the --empty option - if its not meant for
+> costumizing...)
+
+You can use the PV_INTERFACE_PATH environment variable to point at 
+directories containing .xml packages and they will be loaded 
+automatically.  I do not know if this is early enough to load a render 
+module though.
+
+-Brad
+From semeraro at ncsa.uiuc.edu  Wed Nov  3 10:06:47 2004
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Wed Nov  3 10:07:16 2004
+Subject: [Paraview] off screen rendering
+Message-ID: <5.1.0.14.2.20041103090015.01bd49c0@mail.ncsa.uiuc.edu>
+
+
+Hello,
+
+I am trying to run paraview in client server mode with off screen 
+rendering. The server is running
+on nodes that do not have an X server. I have compiled paraview 1.6.2 
+against Mesa 5.0.2. When
+I start the server with mpirun I give it the --server and -os option. I 
+start the server and when I
+try to connect with the client I vtkXOpenGLRenderWindow gives a bad X 
+server connection
+error. Is there a way to accomplish software rendering on nodes with no X 
+server? I compiles
+with the osmesa option in cmake enabled. What am I doing wrong?
+
+Dave
+
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+From the_witch at mac.com  Fri Nov  5 08:10:06 2004
+From: the_witch at mac.com (Andrew Blanshard)
+Date: Fri Nov  5 08:10:18 2004
+Subject: [Paraview] Help
+Message-ID: <8881176.1099660206722.JavaMail.the_witch@mac.com>
+
+I am having alsorts of problems getting paraview to run on my mac (OSX 10.3.5). I have attached the recent error codes, gotten whilst trying to 'make'
+
+In file included from /Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h:81,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkInt.h:27,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:19,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3-osx/VTK/Rendering/vtkTkInternals.h:34,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:663: error: declaration
+   of C function `void XSetDashes(Display*, _XGC*, int, const char*, int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3792: error: previous declaration `int
+   XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:686: error: declaration
+   of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)'
+   conflicts with
+/usr/include/X11/Xlib.h:1799: error: previous declaration `KeySym
+   XKeycodeToKeysym(Display*, unsigned int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:697: error: declaration
+   of C function `void XBell(Display*, int)' conflicts with
+/usr/include/X11/Xlib.h:2253: error: previous declaration `int XBell(Display*,
+   int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:701: error: declaration
+   of C function `void XChangeProperty(Display*, long unsigned int, long
+   unsigned int, long unsigned int, int, int, const unsigned char*, int)'
+   conflicts with
+/usr/include/X11/Xlib.h:2337: error: previous declaration `int
+   XChangeProperty(Display*, long unsigned int, long unsigned int, long
+   unsigned int, int, int, const unsigned char*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:705: error: declaration
+   of C function `void XChangeWindowAttributes(Display*, long unsigned int,
+   long unsigned int, XSetWindowAttributes*)' conflicts with
+/usr/include/X11/Xlib.h:2354: error: previous declaration `int
+   XChangeWindowAttributes(Display*, long unsigned int, long unsigned int,
+   XSetWindowAttributes*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:708: error: declaration
+   of C function `void XConfigureWindow(Display*, long unsigned int, unsigned
+   int, XWindowChanges*)' conflicts with
+/usr/include/X11/Xlib.h:2459: error: previous declaration `int
+   XConfigureWindow(Display*, long unsigned int, unsigned int, XWindowChanges*)
+   ' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:713: error: declaration
+   of C function `void XCopyArea(Display*, long unsigned int, long unsigned
+   int, _XGC*, int, int, unsigned int, unsigned int, int, int)' conflicts with
+/usr/include/X11/Xlib.h:2491: error: previous declaration `int
+   XCopyArea(Display*, long unsigned int, long unsigned int, _XGC*, int, int,
+   unsigned int, unsigned int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:718: error: declaration
+   of C function `void XCopyPlane(Display*, long unsigned int, long unsigned
+   int, _XGC*, int, int, unsigned int, unsigned int, int, int, long unsigned
+   int)' conflicts with
+/usr/include/X11/Xlib.h:2516: error: previous declaration `int
+   XCopyPlane(Display*, long unsigned int, long unsigned int, _XGC*, int, int,
+   unsigned int, unsigned int, int, int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:725: error: declaration
+   of C function `void XDefineCursor(Display*, long unsigned int, long unsigned
+   int)' conflicts with
+/usr/include/X11/Xlib.h:2543: error: previous declaration `int
+   XDefineCursor(Display*, long unsigned int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:727: error: declaration
+   of C function `void XDestroyWindow(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:2558: error: previous declaration `int
+   XDestroyWindow(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:731: error: declaration
+   of C function `void XDrawArc(Display*, long unsigned int, _XGC*, int, int,
+   unsigned int, unsigned int, int, int)' conflicts with
+/usr/include/X11/Xlib.h:2648: error: previous declaration `int
+   XDrawArc(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+   unsigned int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:734: error: declaration
+   of C function `void XDrawLines(Display*, long unsigned int, _XGC*, XPoint*,
+   int, int)' conflicts with
+/usr/include/X11/Xlib.h:2705: error: previous declaration `int
+   XDrawLines(Display*, long unsigned int, _XGC*, XPoint*, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:738: error: declaration
+   of C function `void XDrawRectangle(Display*, long unsigned int, _XGC*, int,
+   int, unsigned int, unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:2738: error: previous declaration `int
+   XDrawRectangle(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+   unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:742: error: declaration
+   of C function `void XFillArc(Display*, long unsigned int, _XGC*, int, int,
+   unsigned int, unsigned int, int, int)' conflicts with
+/usr/include/X11/Xlib.h:2841: error: previous declaration `int
+   XFillArc(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+   unsigned int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:745: error: declaration
+   of C function `void XFillPolygon(Display*, long unsigned int, _XGC*,
+   XPoint*, int, int, int)' conflicts with
+/usr/include/X11/Xlib.h:2863: error: previous declaration `int
+   XFillPolygon(Display*, long unsigned int, _XGC*, XPoint*, int, int, int)'
+   here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:748: error: declaration
+   of C function `void XFillRectangles(Display*, long unsigned int, _XGC*,
+   XRectangle*, int)' conflicts with
+/usr/include/X11/Xlib.h:2885: error: previous declaration `int
+   XFillRectangles(Display*, long unsigned int, _XGC*, XRectangle*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:750: error: declaration
+   of C function `void XFreeColormap(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:2911: error: previous declaration `int
+   XFreeColormap(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:753: error: declaration
+   of C function `void XFreeColors(Display*, long unsigned int, long unsigned
+   int*, int, long unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:2921: error: previous declaration `int
+   XFreeColors(Display*, long unsigned int, long unsigned int*, int, long
+   unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:755: error: declaration
+   of C function `void XFreeModifiermap(XModifierKeymap*)' conflicts with
+/usr/include/X11/Xlib.h:2974: error: previous declaration `int
+   XFreeModifiermap(XModifierKeymap*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:776: error: declaration
+   of C function `void XMapWindow(Display*, long unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3283: error: previous declaration `int
+   XMapWindow(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:780: error: declaration
+   of C function `void XMoveResizeWindow(Display*, long unsigned int, int, int,
+   unsigned int, unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3314: error: previous declaration `int
+   XMoveResizeWindow(Display*, long unsigned int, int, int, unsigned int,
+   unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:783: error: declaration
+   of C function `void XMoveWindow(Display*, long unsigned int, int, int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3323: error: previous declaration `int
+   XMoveWindow(Display*, long unsigned int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:789: error: declaration
+   of C function `void XRaiseWindow(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:3568: error: previous declaration `int
+   XRaiseWindow(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:792: error: declaration
+   of C function `void XRefreshKeyboardMapping(XMappingEvent*)' conflicts with
+/usr/include/X11/Xlib.h:3618: error: previous declaration `int
+   XRefreshKeyboardMapping(XMappingEvent*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:795: error: declaration
+   of C function `void XResizeWindow(Display*, long unsigned int, unsigned int,
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3665: error: previous declaration `int
+   XResizeWindow(Display*, long unsigned int, unsigned int, unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:798: error: declaration
+   of C function `void XSelectInput(Display*, long unsigned int, long int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3704: error: previous declaration `int
+   XSelectInput(Display*, long unsigned int, long int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:804: error: declaration
+   of C function `void XSetIconName(Display*, long unsigned int, const char*)'
+   conflicts with
+/usr/include/X11/Xlib.h:3856: error: previous declaration `int
+   XSetIconName(Display*, long unsigned int, const char*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:807: error: declaration
+   of C function `void XSetInputFocus(Display*, long unsigned int, int, long
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3865: error: previous declaration `int
+   XSetInputFocus(Display*, long unsigned int, int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:810: error: declaration
+   of C function `void XSetSelectionOwner(Display*, long unsigned int, long
+   unsigned int, long unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3918: error: previous declaration `int
+   XSetSelectionOwner(Display*, long unsigned int, long unsigned int, long
+   unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:813: error: declaration
+   of C function `void XSetWindowBackground(Display*, long unsigned int, long
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3970: error: previous declaration `int
+   XSetWindowBackground(Display*, long unsigned int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:816: error: declaration
+   of C function `void XSetWindowBackgroundPixmap(Display*, long unsigned int,
+   long unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3978: error: previous declaration `int
+   XSetWindowBackgroundPixmap(Display*, long unsigned int, long unsigned int)'
+   here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:819: error: declaration
+   of C function `void XSetWindowBorder(Display*, long unsigned int, long
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3986: error: previous declaration `int
+   XSetWindowBorder(Display*, long unsigned int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:822: error: declaration
+   of C function `void XSetWindowBorderPixmap(Display*, long unsigned int, long
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:3994: error: previous declaration `int
+   XSetWindowBorderPixmap(Display*, long unsigned int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:825: error: declaration
+   of C function `void XSetWindowBorderWidth(Display*, long unsigned int,
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:4002: error: previous declaration `int
+   XSetWindowBorderWidth(Display*, long unsigned int, unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:828: error: declaration
+   of C function `void XSetWindowColormap(Display*, long unsigned int, long
+   unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:4010: error: previous declaration `int
+   XSetWindowColormap(Display*, long unsigned int, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:830: error: declaration
+   of C function `void XUngrabKeyboard(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:4154: error: previous declaration `int
+   XUngrabKeyboard(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:832: error: declaration
+   of C function `void XUngrabPointer(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:4161: error: previous declaration `int
+   XUngrabPointer(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:834: error: declaration
+   of C function `void XUnmapWindow(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:4195: error: previous declaration `int
+   XUnmapWindow(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:849: error: declaration
+   of C function `void XFreeGC(Display*, _XGC*)' conflicts with
+/usr/include/X11/Xlib.h:2968: error: previous declaration `int
+   XFreeGC(Display*, _XGC*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:855: error: declaration
+   of C function `void XSetBackground(Display*, _XGC*, long unsigned int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3737: error: previous declaration `int
+   XSetBackground(Display*, _XGC*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:858: error: declaration
+   of C function `void XSetForeground(Display*, _XGC*, long unsigned int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3832: error: previous declaration `int
+   XSetForeground(Display*, _XGC*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:861: error: declaration
+   of C function `void XSetClipMask(Display*, _XGC*, long unsigned int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3745: error: previous declaration `int
+   XSetClipMask(Display*, _XGC*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:864: error: declaration
+   of C function `void XSetClipOrigin(Display*, _XGC*, int, int)' conflicts
+   with
+/usr/include/X11/Xlib.h:3754: error: previous declaration `int
+   XSetClipOrigin(Display*, _XGC*, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:867: error: declaration
+   of C function `void XSetTSOrigin(Display*, _XGC*, int, int)' conflicts with
+/usr/include/X11/Xlib.h:3954: error: previous declaration `int
+   XSetTSOrigin(Display*, _XGC*, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:870: error: declaration
+   of C function `void XChangeGC(Display*, _XGC*, long unsigned int,
+   XGCValues*)' conflicts with
+/usr/include/X11/Xlib.h:2295: error: previous declaration `int
+   XChangeGC(Display*, _XGC*, long unsigned int, XGCValues*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:873: error: declaration
+   of C function `void XSetFont(Display*, _XGC*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:3816: error: previous declaration `int
+   XSetFont(Display*, _XGC*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:876: error: declaration
+   of C function `void XSetArcMode(Display*, _XGC*, int)' conflicts with
+/usr/include/X11/Xlib.h:3729: error: previous declaration `int
+   XSetArcMode(Display*, _XGC*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:879: error: declaration
+   of C function `void XSetStipple(Display*, _XGC*, long unsigned int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3937: error: previous declaration `int
+   XSetStipple(Display*, _XGC*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:882: error: declaration
+   of C function `void XSetFillRule(Display*, _XGC*, int)' conflicts with
+/usr/include/X11/Xlib.h:3800: error: previous declaration `int
+   XSetFillRule(Display*, _XGC*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:885: error: declaration
+   of C function `void XSetFillStyle(Display*, _XGC*, int)' conflicts with
+/usr/include/X11/Xlib.h:3808: error: previous declaration `int
+   XSetFillStyle(Display*, _XGC*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:888: error: declaration
+   of C function `void XSetFunction(Display*, _XGC*, int)' conflicts with
+/usr/include/X11/Xlib.h:3840: error: previous declaration `int
+   XSetFunction(Display*, _XGC*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:893: error: declaration
+   of C function `void XSetLineAttributes(Display*, _XGC*, unsigned int, int,
+   int, int)' conflicts with
+/usr/include/X11/Xlib.h:3876: error: previous declaration `int
+   XSetLineAttributes(Display*, _XGC*, unsigned int, int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:897: error: declaration
+   of C function `_XIC* XCreateIC()' conflicts with
+/usr/include/X11/Xlib.h:4644: error: previous declaration `_XIC*
+   XCreateIC(_XIM*, ...)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:911: error: declaration
+   of C function `void XDrawSegments(Display*, long unsigned int, _XGC*,
+   XSegment*, int)' conflicts with
+/usr/include/X11/Xlib.h:2758: error: previous declaration `int
+   XDrawSegments(Display*, long unsigned int, _XGC*, XSegment*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:914: error: declaration
+   of C function `void XForceScreenSaver(Display*, int)' conflicts with
+/usr/include/X11/Xlib.h:2898: error: previous declaration `int
+   XForceScreenSaver(Display*, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:917: error: declaration
+   of C function `void XDrawLine(Display*, long unsigned int, _XGC*, int, int,
+   int, int)' conflicts with
+/usr/include/X11/Xlib.h:2694: error: previous declaration `int
+   XDrawLine(Display*, long unsigned int, _XGC*, int, int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:921: error: declaration
+   of C function `void XFillRectangle(Display*, long unsigned int, _XGC*, int,
+   int, unsigned int, unsigned int)' conflicts with
+/usr/include/X11/Xlib.h:2875: error: previous declaration `int
+   XFillRectangle(Display*, long unsigned int, _XGC*, int, int, unsigned int,
+   unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:923: error: declaration
+   of C function `void XClearWindow(Display*, long unsigned int)' conflicts
+   with
+/usr/include/X11/Xlib.h:2444: error: previous declaration `int
+   XClearWindow(Display*, long unsigned int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:926: error: declaration
+   of C function `void XDrawPoint(Display*, long unsigned int, _XGC*, int, int)
+   ' conflicts with
+/usr/include/X11/Xlib.h:2715: error: previous declaration `int
+   XDrawPoint(Display*, long unsigned int, _XGC*, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:930: error: declaration
+   of C function `void XDrawPoints(Display*, long unsigned int, _XGC*, XPoint*,
+   int, int)' conflicts with
+/usr/include/X11/Xlib.h:2726: error: previous declaration `int
+   XDrawPoints(Display*, long unsigned int, _XGC*, XPoint*, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:936: error: declaration
+   of C function `void XWarpPointer(Display*, long unsigned int, long unsigned
+   int, int, int, unsigned int, unsigned int, int, int)' conflicts with
+/usr/include/X11/Xlib.h:4215: error: previous declaration `int
+   XWarpPointer(Display*, long unsigned int, long unsigned int, int, int,
+   unsigned int, unsigned int, int, int)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:939: error: declaration
+   of C function `void XQueryColor(Display*, long unsigned int, XColor*)'
+   conflicts with
+/usr/include/X11/Xlib.h:3484: error: previous declaration `int
+   XQueryColor(Display*, long unsigned int, XColor*)' here
+/Users/andrewblanshard/Desktop/paraview-1.6.3/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:943: error: declaration
+   of C function `void XQueryColors(Display*, long unsigned int, XColor*, int)'
+   conflicts with
+/usr/include/X11/Xlib.h:3493: error: previous declaration `int
+   XQueryColors(Display*, long unsigned int, XColor*, int)' here
+In file included from /Users/andrewblanshard/Desktop/paraview-1.6.3-osx/VTK/Rendering/vtkTkInternals.h:34,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:27:22: tkMacOSX.h: No such file or directory
+In file included from /System/Library/Frameworks/ApplicationServices.framework/Frameworks/QD.framework/Headers/QD.h:42,
+                 from /System/Library/Frameworks/ApplicationServices.framework/Headers/ApplicationServices.h:30,
+                 from /System/Library/Frameworks/Carbon.framework/Headers/Carbon.h:24,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:34,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3-osx/VTK/Rendering/vtkTkInternals.h:34,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/System/Library/Frameworks/ApplicationServices.framework/Frameworks/QD.framework/Headers/Quickdraw.h:262: error: conflicting
+   types for `struct Cursor'
+/usr/include/X11/X.h:108: error: previous declaration as `typedef XID Cursor'
+/System/Library/Frameworks/ApplicationServices.framework/Frameworks/QD.framework/Headers/Quickdraw.h:267: error: conflicting
+   types for `typedef struct Cursor Cursor'
+/usr/include/X11/X.h:108: error: previous declaration as `typedef XID Cursor'
+In file included from /Users/andrewblanshard/Desktop/paraview-1.6.3-osx/VTK/Rendering/vtkTkInternals.h:34,
+                 from /Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:89: error: syntax
+   error before `*' token
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:90: error: syntax
+   error before `*' token
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:91: error: syntax
+   error before `*' token
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:92: error: syntax
+   error before `*' token
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:93: error: syntax
+   error before `*' token
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx: In
+   function `int vtkTkRenderWidget_MakeRenderWindow(vtkTkRenderWidget*)':
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:1102: error: `
+   TkMacOSXGetDrawablePort' undeclared (first use this function)
+/Users/andrewblanshard/Desktop/paraview-1.6.3/VTK/Rendering/vtkTkRenderWidget.cxx:1102: error: (Each
+   undeclared identifier is reported only once for each function it appears
+   in.)
+make[3]: *** [vtkTkRenderWidget.o] Error 1
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_Utilities_VTKTclWrapping] Error 2
+make: *** [default_target] Error 2
+
+
+Thanks for your help
+
+Andrew
+From rlanka at hotmail.com  Sat Nov  6 16:52:36 2004
+From: rlanka at hotmail.com (RAVINDRANATH LANKA)
+Date: Sat Nov  6 16:53:05 2004
+Subject: [Paraview] XML UnstructuredGrid With Multiple Parts
+Message-ID: <BAY12-F316xpwW35BXe000322a8@hotmail.com>
+
+Hi,
+
+I want to write Unstructured Grid/Field data in XML format with multiple 
+parts.
+e.g.,
+
+test.xml
+<Collection>
+<part> .... Name = "PleaseRecognizeMe-firstpart" File = "firstpart.xml" 
+</part>
+<part> .... Name = "..." </part>
+</Collection>
+
+I would also like to use the base64 encoding with the Appended element tag 
+containing all the data. I have a few questions with regards to this.
+
+i. Does paraview read the part names from the part tags.
+ii. Is there any XML schema that I can refer to understand the usage of 
+appended data section. (file_format.pdf doesn't explain it all)
+iii. Further, Can we have an appended section that is a child of collection 
+object that each of the parts could refer to.
+
+Any information/help/comment is highly appreciated.
+
+Thanks
+Ravi
+
+_________________________________________________________________
+Hey there NRIs!  Desi news, films, ‘n more! http://www.msn.co.in/nri/ Stay 
+in the loop!
+
+From nickfzx at aol.com  Mon Nov  8 06:47:07 2004
+From: nickfzx at aol.com (nick)
+Date: Mon Nov  8 06:47:16 2004
+Subject: [Paraview] trouble with mpi 2, mpdboot
+Message-ID: <418F5CBB.3030602@aol.com>
+
+Hi
+
+I am trying to setup MPICH 2 correctly.
+
+I am having trouble getting mpdboot to work as it is supposed to.  I am
+able to ssh all 7 nodes in our small cluster.  And all nodes are setup
+in an identicle way. But when I run: mpdboot -n 7, the terminal returns
+these error messages:
+
+[root@192 root]# mpdboot -n 7
+mpdboot_rank_0 (mpdboot 269): starting local mpd on 192.168.1.206
+mpdboot_rank_0 (mpdboot 321): starting remote mpd on 192.168.001.207
+mpdboot_rank_0 (mpdboot 335): starting remote mpd on 192.168.001.208
+mpdboot_rank_2 (mpdboot 269): starting local mpd on 192.168.001.208
+mpdboot_rank_2 (mpdboot 321): starting remote mpd on 192.168.001.211
+mpdboot_rank_2 (mpdboot 335): starting remote mpd on 192.168.001.212
+Host key verification failed.
+mpdboot_rank_1 (mpdboot 269): starting local mpd on 192.168.001.207
+Host key verification failed.
+mpdboot_rank_1 (mpdboot 321): starting remote mpd on 192.168.001.209
+mpdboot_rank_1 (mpdboot 335): starting remote mpd on 192.168.001.210
+Host key verification failed.
+Host key verification failed.
+
+
+When I run mpdboot with 3 processes or less it works find:
+
+[root@192 root]# mpdboot -n 3
+mpdboot_rank_0 (mpdboot 269): starting local mpd on 192.168.1.206
+mpdboot_rank_0 (mpdboot 321): starting remote mpd on 192.168.001.207
+mpdboot_rank_0 (mpdboot 335): starting remote mpd on 192.168.001.208
+mpdboot_rank_2 (mpdboot 269): starting local mpd on 192.168.001.208
+mpdboot_rank_1 (mpdboot 269): starting local mpd on 192.168.001.207
+[root@192 root]#
+
+But when I go to over 4 or more it breaks, I can see that the ranks are
+being used multiple times and are therefore returning host key errors. 
+But I am not sure why the same rank is being used for different machines.
+
+I have tried doing mpdboot -n 3 with a different 3 nodes and it works 
+just fine.
+
+My host file looks like this:
+
+192.168.1.207
+192.168.1.208
+192.168.1.209
+192.168.1.210
+192.168.1.211
+192.168.1.212
+
+I have not included the localhost in this list.  Is this the right
+format for mpich 2 machine files?is there someway of specifying for each
+node?
+
+I have spent a long time problem solving this one but I am out of ideas.
+Thanks for the help
+
+----------------------------------------
+Nick Franklin
+Computer vision startup
+Tel: (650) 363 1540
+Email: nickfranklin@gmail.com
+----------------------------------------
+
+From brad.king at kitware.com  Tue Nov  9 07:10:43 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Nov  9 07:10:49 2004
+Subject: [Paraview] XML UnstructuredGrid With Multiple Parts
+In-Reply-To: <BAY12-F316xpwW35BXe000322a8@hotmail.com>
+References: <BAY12-F316xpwW35BXe000322a8@hotmail.com>
+Message-ID: <4190B3C3.4000905@kitware.com>
+
+RAVINDRANATH LANKA wrote:
+> I want to write Unstructured Grid/Field data in XML format with multiple 
+> parts.
+
+Use vtkXMLPUnstructuredGridWriter (note the "P" stands for partitioned) 
+to create a sample file.  It can be used to refer to the other parts. 
+The restriction is that all parts have to have the same arrays because 
+the format is meant for multiple piece processing of the same data set.
+
+Alternatively save a data set from ParaView using the "pvd" format. 
+This format is a collection that can be used to reference arbitrary 
+other files, but it cannot store any of its own data in the file.
+
+> I would also like to use the base64 encoding with the Appended element 
+> tag containing all the data. I have a few questions with regards to this.
+> 
+> i. Does paraview read the part names from the part tags.
+
+To what "Part" tag do you refer?  I'm not aware of any ParaView or VTK 
+format that uses "Part" as an element name.
+
+> ii. Is there any XML schema that I can refer to understand the usage of 
+> appended data section. (file_format.pdf doesn't explain it all)
+
+Unfortunately not.  The layout of the section is implemented in 
+ParaView/VTK/IO/vtkXMLWriter.cxx and the corresponding subclasses.  It 
+is somewhat complicated to allow random access despite base64 encoding 
+and optional compression with zlib.
+
+> iii. Further, Can we have an appended section that is a child of 
+> collection object that each of the parts could refer to.
+
+No.  That is why it is called the "Appended" data section.  Its whole 
+purpose is to be at the end so that the file can be read by parsing the 
+XML in the beginning and then using random access seeks to get to the 
+data.  You can however use the inline binary mode which requires base64 
+encoding.  In this mode the data for each <DataArray> element are inline 
+inside the element.
+
+-Brad
+From rlanka at hotmail.com  Tue Nov  9 11:53:41 2004
+From: rlanka at hotmail.com (RAVINDRANATH LANKA)
+Date: Tue Nov  9 11:54:18 2004
+Subject: [Paraview] XML UnstructuredGrid With Multiple Parts
+Message-ID: <BAY12-F5pWkfb81IfpT000489aa@hotmail.com>
+
+
+The sample *.pvd file that I created looks like this.
+
+-----------
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian" 
+compressor="vtkZLibDataCompressor">
+  <Collection>
+    <DataSet part="0" file="channel/channel_0.vtu"/>
+    <DataSet part="1" file="channel/channel_1.vtu"/>
+    <DataSet part="2" file="channel/channel_2.vtu"/>
+    <DataSet part="3" file="channel/channel_3.vtu"/>
+    <DataSet part="4" file="channel/channel_4.vtu"/>
+    <DataSet part="5" file="channel/channel_5.vtu"/>
+    <DataSet part="6" file="channel/channel_6.vtu"/>
+  </Collection>
+</VTKFile>
+-----------
+Each of the vtu files is a subset of a large mesh (say about 5 million 
+nodes/points).  Ideally, I would like each of the parts to refer to the same 
+"Points" set.  That way, I don't have to do any localized inversed mapping 
+for the connectivity information.
+The part name I was referring to is the part names list that come out in 
+paraview when you do "extract parts" (vtkEnsightReader does this 
+programatically, i think). I would rather have something like,
+   <DataSet part="0" Name ="part0" file = "channel/channel_0.vtu"/>
+
+Ravi
+
+
+
+&gt;From: Brad King &lt;brad.king@kitware.com&gt;
+&gt;To: RAVINDRANATH LANKA &lt;rlanka@hotmail.com&gt;
+&gt;CC: paraview@paraview.org
+&gt;Subject: Re: [Paraview] XML UnstructuredGrid With Multiple Parts
+&gt;Date: Tue, 09 Nov 2004 07:10:43 -0500
+&gt;
+&gt;RAVINDRANATH LANKA wrote:
+&gt;&gt;I want to write Unstructured Grid/Field data in XML format with
+&gt;&gt;multiple parts.
+&gt;
+&gt;Use vtkXMLPUnstructuredGridWriter (note the &quot;P&quot; stands for
+&gt;partitioned) to create a sample file.  It can be used to refer to
+&gt;the other parts. The restriction is that all parts have to have the
+&gt;same arrays because the format is meant for multiple piece
+&gt;processing of the same data set.
+&gt;
+&gt;Alternatively save a data set from ParaView using the &quot;pvd&quot; 
+format.
+&gt;This format is a collection that can be used to reference arbitrary
+&gt;other files, but it cannot store any of its own data in the file.
+&gt;
+&gt;&gt;I would also like to use the base64 encoding with the Appended
+&gt;&gt;element tag containing all the data. I have a few questions with
+&gt;&gt;regards to this.
+&gt;&gt;
+&gt;&gt;i. Does paraview read the part names from the part tags.
+&gt;
+&gt;To what &quot;Part&quot; tag do you refer?  I'm not aware of any 
+ParaView or
+&gt;VTK format that uses &quot;Part&quot; as an element name.
+&gt;
+&gt;&gt;ii. Is there any XML schema that I can refer to understand the
+&gt;&gt;usage of appended data section. (file_format.pdf doesn't explain it
+&gt;&gt;all)
+&gt;
+&gt;Unfortunately not.  The layout of the section is implemented in
+&gt;ParaView/VTK/IO/vtkXMLWriter.cxx and the corresponding subclasses.
+&gt;It is somewhat complicated to allow random access despite base64
+&gt;encoding and optional compression with zlib.
+&gt;
+&gt;&gt;iii. Further, Can we have an appended section that is a child of
+&gt;&gt;collection object that each of the parts could refer to.
+&gt;
+&gt;No.  That is why it is called the &quot;Appended&quot; data section.  
+Its
+&gt;whole purpose is to be at the end so that the file can be read by
+&gt;parsing the XML in the beginning and then using random access seeks
+&gt;to get to the data.  You can however use the inline binary mode
+&gt;which requires base64 encoding.  In this mode the data for each
+&gt;&lt;DataArray&gt; element are inline inside the element.
+&gt;
+&gt;-Brad
+<html><DIV></DIV>
+<P>&nbsp;</P>
+<P>&nbsp;</P></html>
+
+_________________________________________________________________
+Screensavers unlimited! Funny, serious, religious. 
+http://www.msn.co.in/Cinema/screensaver/ Take your pick!
+
+From brad.king at kitware.com  Wed Nov 10 06:48:46 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed Nov 10 06:48:56 2004
+Subject: [Paraview] XML UnstructuredGrid With Multiple Parts
+In-Reply-To: <BAY12-F5pWkfb81IfpT000489aa@hotmail.com>
+References: <BAY12-F5pWkfb81IfpT000489aa@hotmail.com>
+Message-ID: <4192001E.9060201@kitware.com>
+
+RAVINDRANATH LANKA wrote:
+> Each of the vtu files is a subset of a large mesh (say about 5 million 
+> nodes/points).  Ideally, I would like each of the parts to refer to the 
+> same "Points" set.  That way, I don't have to do any localized inversed 
+> mapping for the connectivity information.
+
+This is not possible with the XML formats.  You could look at HDF5 to do 
+that (which ParaView can read), but I do not know too much about it.
+
+> The part name I was referring to is the part names list that come out in 
+> paraview when you do "extract parts" (vtkEnsightReader does this 
+> programatically, i think). I would rather have something like,
+>   <DataSet part="0" Name ="part0" file = "channel/channel_0.vtu"/>
+
+This sounds like an interesting idea.  I do not know how hard it is to 
+implement, but please at least add it as a feature request to the Bug 
+tracker:
+
+http://www.paraview.org/Bug
+
+so it will be investigated at some point.
+
+-Brad
+From rlanka at hotmail.com  Wed Nov 10 09:31:13 2004
+From: rlanka at hotmail.com (RAVINDRANATH LANKA)
+Date: Wed Nov 10 09:32:28 2004
+Subject: [Paraview] EnSight Reader/Writer Question
+Message-ID: <BAY12-F31s3Mpw6yL2m00051885@hotmail.com>
+
+Hi,
+
+Brad, Thank you for responding to my earlier questions.  I will look into 
+the hdf5 format.   I don't know much about it either.
+
+This morning I was conducting a couple of tests with paraview. I Created an 
+ensight case file for a simple channel flow problem (462 Points/nodes).  It 
+had an interior, 3 OSFs and 3 SBCs (rather 7 parts/element sets/cell sets).  
+Then I loaded the case file into paraview.  I did "extract parts" and this 
+displays a list of parts in the list box, "interior", "OSF: inflow", "OSF: 
+outflow", "OSF: wall", "SBD:inflow", "SBC: wall" and "SBC: outflow".
+  When I go to the information tab, It shows that there are "3243" points 
+and not "462".  This is nothing but 7*462.  Is paraview storing these points 
+7 times?.
+
+Then I saved the data.  There is only one option, which is to save as *.pvd 
+file. I saved the pvd file.  Then I opened the pvd file.  When I clicked on 
+"Filter->extract parts", i didn't see the part names,  But a list like 
+"Unstructured Grid: 200 cells, Unstructured Grid: 10 cells" etc.  pvd is not 
+saving the part names "or" the pvd reader doesn't read the part names.
+
+When the pvd file is saved, It creates a directory containing a bunch of 
+"vtu" files corresponding to each part. Paraview can independently load 
+these vtu files.  When I loaded each one of these vtu file and tried to 
+display the number of cells and points in each of them, this is what I got.
+
+  200 cells and 462 points
+  10 cells and 462 points
+  10 cells and 462 points
+  40 cells and 462 points
+  10 cells and 462 points
+  10 cells and 462 points
+  40 cells and 462 points
+
+It saved all the points in each of the part files.
+Is it how it is supposed to work? or am i missing something.  From 
+efficiency standpoint, is there a better way to do it?
+
+
+Ravi
+
+_________________________________________________________________
+Apply to over 65,000 jobs now. 
+http://www.naukri.com/msn/index.php?source=hottag Post your CV on naukri.com 
+today.
+
+From brad.king at kitware.com  Wed Nov 10 10:55:55 2004
+From: brad.king at kitware.com (Brad King)
+Date: Wed Nov 10 10:55:57 2004
+Subject: [Paraview] EnSight Reader/Writer Question
+In-Reply-To: <BAY12-F31s3Mpw6yL2m00051885@hotmail.com>
+References: <BAY12-F31s3Mpw6yL2m00051885@hotmail.com>
+Message-ID: <41923A0B.9000800@kitware.com>
+
+RAVINDRANATH LANKA wrote:
+> This morning I was conducting a couple of tests with paraview. I Created 
+> an ensight case file for a simple channel flow problem (462 
+> Points/nodes).  It had an interior, 3 OSFs and 3 SBCs (rather 7 
+> parts/element sets/cell sets).  Then I loaded the case file into 
+> paraview.  I did "extract parts" and this displays a list of parts in 
+> the list box, "interior", "OSF: inflow", "OSF: outflow", "OSF: wall", 
+> "SBD:inflow", "SBC: wall" and "SBC: outflow".
+>  When I go to the information tab, It shows that there are "3243" points 
+> and not "462".  This is nothing but 7*462.  Is paraview storing these 
+> points 7 times?.
+
+No.  It is storing 7 data sets that are grouped together.  When read by 
+the EnSight reader, a single array of points is shared amongst all the 
+data sets.  As far as paraview is concerned, it sees 7 data sets each of 
+which could have its own points, so it adds up the total.
+
+> Then I saved the data.  There is only one option, which is to save as 
+> *.pvd file. I saved the pvd file.  Then I opened the pvd file.  When I 
+> clicked on "Filter->extract parts", i didn't see the part names,  But a 
+> list like "Unstructured Grid: 200 cells, Unstructured Grid: 10 cells" 
+> etc.  pvd is not saving the part names "or" the pvd reader doesn't read 
+> the part names.
+> 
+> When the pvd file is saved, It creates a directory containing a bunch of 
+> "vtu" files corresponding to each part. Paraview can independently load 
+> these vtu files.  When I loaded each one of these vtu file and tried to 
+> display the number of cells and points in each of them, this is what I got.
+> 
+>  200 cells and 462 points
+>  10 cells and 462 points
+>  10 cells and 462 points
+>  40 cells and 462 points
+>  10 cells and 462 points
+>  10 cells and 462 points
+>  40 cells and 462 points
+> 
+> It saved all the points in each of the part files.
+> Is it how it is supposed to work? or am i missing something.  From 
+> efficiency standpoint, is there a better way to do it?
+
+This is expected behavior.  The PVD format is meant to collect multiple 
+unrelated data sets into a single file.  Each part can have different 
+points.  For example, create a sphere and a cone and then use group 
+parts to put them together.  Then save the data.  You will see that each 
+.vtp file has different points.
+
+ParaView does not natively have the notion of shared geometry amongst 
+several data sets.  Instead a single data set stores a geometry and 
+several arrays of data on the points and cells of the geometry.  If you 
+can reorganize your data to look like this then ParaView can store it 
+efficiently.
+
+-Brad
+From markku.tanttu at mbnet.fi  Wed Nov 10 13:12:50 2004
+From: markku.tanttu at mbnet.fi (Markku Tanttu)
+Date: Wed Nov 10 13:14:11 2004
+Subject: [Paraview] ExodusII
+Message-ID: <007701c4c750$ff48f8e0$7ca464c2@o4f3p4>
+
+Hi:
+
+ I am a new user of the Paraview.
+
+How to load ExodusII files into the ParaView
+
+-Markku
+
+
+
+
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041110/dc240e08/attachment.htm
+From andy.cedilnik at kitware.com  Wed Nov 10 13:53:29 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Wed Nov 10 13:52:51 2004
+Subject: [Paraview] ExodusII
+In-Reply-To: <007701c4c750$ff48f8e0$7ca464c2@o4f3p4>
+References: <007701c4c750$ff48f8e0$7ca464c2@o4f3p4>
+Message-ID: <1100112809.9469.280.camel@andoria>
+
+Hi Markku,
+
+Exodus reader has export restrictions, so it is not included with
+ParaView.
+
+			Andy
+
+On Wed, 2004-11-10 at 13:12, Markku Tanttu wrote:
+> Hi:
+>  I am a new user of the Paraview.
+>  
+> How to load ExodusII files into the ParaView
+
+
+From scohen at tacc.utexas.edu  Mon Nov 15 10:28:21 2004
+From: scohen at tacc.utexas.edu (Shirley Cohen)
+Date: Mon Nov 15 10:28:25 2004
+Subject: [Paraview] Web-interface
+Message-ID: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E14@houston.austin.tacc.utexas.edu>
+
+Hi,
+
+ 
+
+I heard that the army has been developing a web-interface for paraview. 
+
+ 
+
+Does anyone know where I can get some information on this?
+
+ 
+
+Thanks,
+
+ 
+
+Shirley
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041115/42704723/attachment.html
+From scohen at tacc.utexas.edu  Mon Nov 15 10:30:59 2004
+From: scohen at tacc.utexas.edu (Shirley Cohen)
+Date: Mon Nov 15 10:31:01 2004
+Subject: [Paraview] Volume rendering
+Message-ID: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E15@houston.austin.tacc.utexas.edu>
+
+Hi,
+
+Can anyone tell me if paraview currently supports volume rendering? 
+
+Thanks,
+
+Shirley
+From bnwylie at sandia.gov  Mon Nov 15 10:36:32 2004
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Mon Nov 15 10:36:37 2004
+Subject: [Paraview] Volume rendering
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E3CCA77@ES20SNLNT.srn.sandia.gov>
+
+Yes!
+
+The latest version 1.8 (and cvs trunk) supports unstructured volume
+rendering. It is very slow and very beta at this point but for the next
+version of ParaView, Sandia is going to add a projective version that
+will be faster. 
+
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+	(505) 844-2238   FAX (505) 845-0833
+
+-----Original Message-----
+From: paraview-bounces@paraview.org
+[mailto:paraview-bounces@paraview.org] On Behalf Of Shirley Cohen
+Sent: Monday, November 15, 2004 8:31 AM
+To: paraview@paraview.org
+Subject: [Paraview] Volume rendering
+
+Hi,
+
+Can anyone tell me if paraview currently supports volume rendering? 
+
+Thanks,
+
+Shirley
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+From scohen at tacc.utexas.edu  Mon Nov 15 10:40:09 2004
+From: scohen at tacc.utexas.edu (Shirley Cohen)
+Date: Mon Nov 15 10:40:16 2004
+Subject: [Paraview] Volume rendering
+Message-ID: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E16@houston.austin.tacc.utexas.edu>
+
+Hi Brian,
+
+Thanks for the quick response. 
+
+When do you expect the newer and faster version to be released?
+
+Shirley
+
+> -----Original Message-----
+> From: Wylie, Brian [mailto:bnwylie@sandia.gov]
+> Sent: Monday, November 15, 2004 09:37
+> To: Shirley Cohen; paraview@paraview.org
+> Cc: visrd
+> Subject: RE: [Paraview] Volume rendering
+> 
+> Yes!
+> 
+> The latest version 1.8 (and cvs trunk) supports unstructured volume
+> rendering. It is very slow and very beta at this point but for the
+next
+> version of ParaView, Sandia is going to add a projective version that
+> will be faster.
+> 
+> 
+> 	Brian Wylie
+> 	Sandia National Laboratories
+> 	MS 0822 - Org 9227 - Building 880/A1-J
+> 	(505) 844-2238   FAX (505) 845-0833
+> 
+> -----Original Message-----
+> From: paraview-bounces@paraview.org
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Shirley Cohen
+> Sent: Monday, November 15, 2004 8:31 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] Volume rendering
+> 
+> Hi,
+> 
+> Can anyone tell me if paraview currently supports volume rendering?
+> 
+> Thanks,
+> 
+> Shirley
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From pknotz at sandia.gov  Mon Nov 15 11:02:01 2004
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Mon Nov 15 11:02:34 2004
+Subject: [Paraview] 1.8.0 Release Notes?
+Message-ID: <BDBE2109.55B8%pknotz@sandia.gov>
+
+Wow, I didn't know 1.8.x was out yet.  Is there a change log or release
+notes for the 1.8.0 branch?
+
+Thanks ~ Pat
+
+
+From ken.martin at kitware.com  Tue Nov 16 13:23:08 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Tue Nov 16 13:25:43 2004
+Subject: [Paraview] Web-interface
+In-Reply-To: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E14@houston.austin.tacc.utexas.edu>
+Message-ID: <20041116182523.OFHQ9098.fep02.biz.rr.com@Grayson>
+
+Yes we have been developing a web-based parallel visualization platform
+based on ParaView's visualization server. We are planning our first demo for
+the Army in the next month or so. Around that time we will start putting
+together some web pages etc describing the work, etc.
+
+Thanks
+Ken
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org]
+> On Behalf Of Shirley Cohen
+> Sent: Monday, November 15, 2004 10:28 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] Web-interface
+> 
+> Hi,
+> 
+> 
+> 
+> I heard that the army has been developing a web-interface for paraview.
+> 
+> 
+> 
+> Does anyone know where I can get some information on this?
+> 
+> 
+> 
+> Thanks,
+> 
+> 
+> 
+> Shirley
+> 
+> 
+
+
+
+From brad.king at kitware.com  Tue Nov 16 14:57:46 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Nov 16 14:57:50 2004
+Subject: [Paraview] 1.8.0 Release Notes?
+In-Reply-To: <BDBE2109.55B8%pknotz@sandia.gov>
+References: <BDBE2109.55B8%pknotz@sandia.gov>
+Message-ID: <419A5BBA.4080705@kitware.com>
+
+Patrick Notz wrote:
+> Wow, I didn't know 1.8.x was out yet.  Is there a change log or release
+> notes for the 1.8.0 branch?
+
+It is currently under construction and will be posted when it is ready.
+
+-Brad
+From scohen at tacc.utexas.edu  Tue Nov 16 16:47:41 2004
+From: scohen at tacc.utexas.edu (Shirley Cohen)
+Date: Tue Nov 16 16:48:11 2004
+Subject: [Paraview] Web-interface
+Message-ID: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E30@houston.austin.tacc.utexas.edu>
+
+Hi Ken,
+
+Thanks for the info. Do you know if volume rendering be supported as
+part of the first release?
+
+Shirley
+
+> -----Original Message-----
+> From: Ken Martin [mailto:ken.martin@kitware.com]
+> Sent: Tuesday, November 16, 2004 12:23
+> To: Shirley Cohen; paraview@paraview.org
+> Subject: RE: [Paraview] Web-interface
+> 
+> Yes we have been developing a web-based parallel visualization
+platform
+> based on ParaView's visualization server. We are planning our first
+demo
+> for
+> the Army in the next month or so. Around that time we will start
+putting
+> together some web pages etc describing the work, etc.
+> 
+> Thanks
+> Ken
+> 
+> > -----Original Message-----
+> > From: paraview-bounces@paraview.org [mailto:paraview-
+> bounces@paraview.org]
+> > On Behalf Of Shirley Cohen
+> > Sent: Monday, November 15, 2004 10:28 AM
+> > To: paraview@paraview.org
+> > Subject: [Paraview] Web-interface
+> >
+> > Hi,
+> >
+> >
+> >
+> > I heard that the army has been developing a web-interface for
+paraview.
+> >
+> >
+> >
+> > Does anyone know where I can get some information on this?
+> >
+> >
+> >
+> > Thanks,
+> >
+> >
+> >
+> > Shirley
+> >
+> >
+> 
+> 
+
+From jbiddiscombe at skippingmouse.co.uk  Wed Nov 17 09:50:12 2004
+From: jbiddiscombe at skippingmouse.co.uk (John Biddiscombe (CSCS))
+Date: Wed Nov 17 09:50:22 2004
+Subject: [Paraview] Building standalone vtk within Paraview
+Message-ID: <419B6524.8090106@skippingmouse.co.uk>
+
+When building paraview, only a subset of the vtk is wrapped in tcl, 
+which means that for testing regular vtk code with tcl, one must build 
+vtk on its own, and also build paraview separately.
+
+I'd like to build Paraview alone, and have it produce a complete vtk 
+build so that one set of libraries and one set of build can be done to 
+cover both.
+Having looked at the cmakelists files I see that VTK_WRAP_TCL is forced 
+to false, and then a separate Utilities/VTKTclWrapping set of stuff is 
+invoked.
+
+By disabling the forcing of VTK_WRAP_TCL and clearing one of the COPY 
+Tcl/tk lib flags, I was able to produce most of the tcl wrappers, but 
+the xdmf utility died on VTK_WRAP_TCL2 command.
+
+Can anyone briefly outline how I would do this cleanly within Paraview. 
+It'd be nice to have a
+BUILD_VTK_COMPLETE flag which could be enabled and would result in a 
+full set of vtk libs being produced.
+
+Any reason why this can't be accomplished (subject to those flags which 
+Paraview needs to force).
+
+thanks
+
+JB
+
+From ken.martin at kitware.com  Wed Nov 17 13:26:07 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Wed Nov 17 13:28:08 2004
+Subject: [Paraview] Building standalone vtk within Paraview
+In-Reply-To: <419B6524.8090106@skippingmouse.co.uk>
+Message-ID: <20041117182805.SFZV9098.fep02.biz.rr.com@Grayson>
+
+What we typically do here at Kitware is have one source tree and then two
+binary trees. One binary tree is for ParaView and the other ParaView tree is
+for VTK. We point the VTK binary tree to the VTK subdirectory in the
+ParaView source tree. That way we can make changes to the source tree and
+test both ParaView and VTK. Of course this requires building both VTK and PV
+which ends up duplicating a bunch of .o files but it's not too bad.
+
+Ken
+
+
+> When building paraview, only a subset of the vtk is wrapped in tcl,
+> which means that for testing regular vtk code with tcl, one must build
+> vtk on its own, and also build paraview separately.
+> 
+> I'd like to build Paraview alone, and have it produce a complete vtk
+> build so that one set of libraries and one set of build can be done to
+> cover both.
+> Having looked at the cmakelists files I see that VTK_WRAP_TCL is forced
+> to false, and then a separate Utilities/VTKTclWrapping set of stuff is
+> invoked.
+> 
+> By disabling the forcing of VTK_WRAP_TCL and clearing one of the COPY
+> Tcl/tk lib flags, I was able to produce most of the tcl wrappers, but
+> the xdmf utility died on VTK_WRAP_TCL2 command.
+> 
+> Can anyone briefly outline how I would do this cleanly within Paraview.
+> It'd be nice to have a
+> BUILD_VTK_COMPLETE flag which could be enabled and would result in a
+> full set of vtk libs being produced.
+> 
+> Any reason why this can't be accomplished (subject to those flags which
+> Paraview needs to force).
+> 
+> thanks
+> 
+> JB
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+From bhoward at iastate.edu  Wed Nov 17 14:42:31 2004
+From: bhoward at iastate.edu (Brad Howard)
+Date: Wed Nov 17 14:42:38 2004
+Subject: [Paraview] Saving Vertex Colors in .ply files using ParaView
+Message-ID: <1100720551.8556.33.camel@bhoward2.eng.iastate.edu>
+
+I am currently trying to use ParaView to decimate and save some .ply
+files.  However, I can't get the ParaView option of save data to retain
+vertex colors.  I even encounter this problem when I open a .ply file,
+do nothing to it, and then try to save it back as a .ply file.  It still
+looks fine in the view window but once I open the saved version the
+color is all gone.  Does ParaView not support vertex color for .ply
+models or am I doing something incorrectly?
+
+From suz at mito.ssd.ssg.fujitsu.com  Wed Nov 17 20:06:35 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Wed Nov 17 20:11:47 2004
+Subject: [Paraview] Web-interface
+In-Reply-To: <20041116182523.OFHQ9098.fep02.biz.rr.com@Grayson>
+References: <DB2B06AA28C6DD47A60E6B55CB45CC1B8E7E14@houston.austin.tacc.utexas.edu>
+	<20041116182523.OFHQ9098.fep02.biz.rr.com@Grayson>
+Message-ID: <20041118093810.ED76.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hi.
+
+I'm very interested in this news.
+I want to handle Paraview with Web interface, so I am trying
+to handle Paraview interactively by command interface (no GUI).
+[Paraview ML: Mon Jun 7 07:19:49 EDT 2004]
+
+Could you tell me that
+the web-based paraview system will be released as open-source system or
+not ?
+
+K.Suzuki
+
+From biddisco at cscs.ch  Thu Nov 18 03:28:05 2004
+From: biddisco at cscs.ch (John Biddiscombe (CSCS))
+Date: Thu Nov 18 03:28:16 2004
+Subject: [Paraview] Building standalone vtk within Paraview
+In-Reply-To: <20041117182805.SFZV9098.fep02.biz.rr.com@Grayson>
+References: <20041117182805.SFZV9098.fep02.biz.rr.com@Grayson>
+Message-ID: <419C5D15.5010403@cscs.ch>
+
+Thanks Ken,
+
+I think this will be fine for maintaining vtk/paraview type builds, but 
+for a situation like this...
+
+Projects
+  --vtkCSCSCommon
+  --vtkCSCSProjectX
+  --vtkCSCSProjectY
+
+Each project has got a cmakelists file and we need to FIND_VTK + USE_VTK 
+etc etc. This works ok and an easy build of all vtk modules ensues...The 
+trouble is, we also want to produce Paraview wrappers for the projects. 
+So for this to work we need to FIND_PARAVIEW + USE_PARAVIEW instead of 
+VTK. Having two build trees isn't so straightforward now because 
+building for vtk and building for paraview entail slightly different setups.
+
+Option 1 could be to put some logic in cmakelists at the top level 
+Projects cmakelists so that the user can build with VTK support and thus 
+include vtk stuff, or build with Paraview support.... Would this work? 
+we'd need a lot of If(CSCS_BUILD_PARAVIEW) logic around some of the lib 
+generation and the linking of libs against each other gets a little more 
+messy (libvtkCSCSProjectX uses libvtkCSCSCommon and libPVvtkCSCSProjectX 
+etc etc gets a little involved) 
+
+Option 2 - enable a single paraview compatible tree which spits out a 
+complete vtk build on the way. This would make life considerably easier 
+I think - this is what I was hoping for by tweaking the build.
+
+Option3. I'm still experimenting with building multiple vtkLocal style 
+libs for paraview and perhaps I'm making life harder than it needs to be 
+and in fact the libs issue is not so tricky and option 1 can be made 
+workable.
+
+So my question is really...why can't a paraview build use the standard 
+VTK_WRAP_TCL - why is a special case required. If I understand this 
+properly I think I'll see better how to manage our builds.
+
+thanks
+
+JB
+
+Ken Martin wrote:
+
+>What we typically do here at Kitware is have one source tree and then two
+>binary trees. One binary tree is for ParaView and the other ParaView tree is
+>for VTK. We point the VTK binary tree to the VTK subdirectory in the
+>ParaView source tree. That way we can make changes to the source tree and
+>test both ParaView and VTK. Of course this requires building both VTK and PV
+>which ends up duplicating a bunch of .o files but it's not too bad.
+>
+>Ken
+>
+>
+>  
+>
+>>When building paraview, only a subset of the vtk is wrapped in tcl,
+>>which means that for testing regular vtk code with tcl, one must build
+>>vtk on its own, and also build paraview separately.
+>>
+>>I'd like to build Paraview alone, and have it produce a complete vtk
+>>build so that one set of libraries and one set of build can be done to
+>>cover both.
+>>Having looked at the cmakelists files I see that VTK_WRAP_TCL is forced
+>>to false, and then a separate Utilities/VTKTclWrapping set of stuff is
+>>invoked.
+>>
+>>By disabling the forcing of VTK_WRAP_TCL and clearing one of the COPY
+>>Tcl/tk lib flags, I was able to produce most of the tcl wrappers, but
+>>the xdmf utility died on VTK_WRAP_TCL2 command.
+>>
+>>Can anyone briefly outline how I would do this cleanly within Paraview.
+>>It'd be nice to have a
+>>BUILD_VTK_COMPLETE flag which could be enabled and would result in a
+>>full set of vtk libs being produced.
+>>
+>>Any reason why this can't be accomplished (subject to those flags which
+>>Paraview needs to force).
+>>
+>>thanks
+>>
+>>JB
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>    
+>>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>
+>  
+>
+
+-- 
+John Biddiscombe,                            email:biddisco @ cscs.ch
+http://www.cscs.ch/about/BJohn.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.07
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From r.angeletti at auselda.it  Thu Nov 18 04:32:31 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Thu Nov 18 04:33:20 2004
+Subject: [Paraview] PLY big_endian
+Message-ID: <002501c4cd51$878ac480$2d1519ac@Rangeletti>
+
+I need to create a PLY big_endian binary file.
+
+It's possible to set ParaView for save a PLY big_endian ?
+
+And how ?
+
+
+
+Best Regards
+
+Roberto Angeletti
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041118/4323eec4/attachment.htm
+From valdo13 at hotmail.com  Fri Nov 19 06:44:20 2004
+From: valdo13 at hotmail.com (valdo meyer)
+Date: Fri Nov 19 06:45:21 2004
+Subject: [Paraview] Is scripting working?
+Message-ID: <BAY101-F169DAED7404D5C237F8E36BDC30@phx.gbl>
+
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041119/a36d98d2/attachment.html
+From brad.king at kitware.com  Fri Nov 19 13:44:25 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Nov 19 13:44:27 2004
+Subject: [Paraview] Is scripting working?
+In-Reply-To: <BAY101-F169DAED7404D5C237F8E36BDC30@phx.gbl>
+References: <BAY101-F169DAED7404D5C237F8E36BDC30@phx.gbl>
+Message-ID: <419E3F09.9070005@kitware.com>
+
+valdo meyer wrote:
+> Hello,
+> the script interface seems to be necessary beyond the point one try to 
+> make something out of the classical interface-based manipulations with 
+> Paraview. ut unfortunately there is nothing about is in the doc nor in 
+> the tutorials. So since I do know Tcl this is not really a problem, or 
+> at least I was expecting that! But actually I did not manage to have it 
+> running. Concretely:
+>   - when I write something like:
+>        if { globalPVTime > 0.5 } {
+> as soon as I type the CR at the end of the line that the brackets are 
+> removed! although this is a correct Tcl line. And then the ">" sign is 
+> not recognized (seems that a command name is expected here). So where am 
+> I wrong?
+
+The command prompt is meant as a minimal interface for debugging 
+purposes.  It is not a full Tcl prompt.  You can work around the curly 
+issue by using quotes instead:
+
+if " $globalPVTime > 0.5" " .... "
+
+-Brad
+From brad.king at kitware.com  Fri Nov 19 16:01:58 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Nov 19 16:02:02 2004
+Subject: [Paraview] Saving Vertex Colors in .ply files using ParaView
+In-Reply-To: <1100720551.8556.33.camel@bhoward2.eng.iastate.edu>
+References: <1100720551.8556.33.camel@bhoward2.eng.iastate.edu>
+Message-ID: <419E5F46.9010309@kitware.com>
+
+Brad Howard wrote:
+> I am currently trying to use ParaView to decimate and save some .ply
+> files.  However, I can't get the ParaView option of save data to retain
+> vertex colors.  I even encounter this problem when I open a .ply file,
+> do nothing to it, and then try to save it back as a .ply file.  It still
+> looks fine in the view window but once I open the saved version the
+> color is all gone.  Does ParaView not support vertex color for .ply
+> models or am I doing something incorrectly?
+
+ParaView has very minimal support for the .ply format.  You can add it 
+as a feature request here:
+
+http://www.paraview.org/Bug
+
+but we have no plans to implement it any time soon.
+
+-Brad
+From brad.king at kitware.com  Fri Nov 19 16:02:21 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Nov 19 16:02:23 2004
+Subject: [Paraview] PLY big_endian
+In-Reply-To: <002501c4cd51$878ac480$2d1519ac@Rangeletti>
+References: <002501c4cd51$878ac480$2d1519ac@Rangeletti>
+Message-ID: <419E5F5D.2060000@kitware.com>
+
+Roberto Angeletti wrote:
+> I need to create a PLY big_endian binary file.
+>  
+> It's possible to set ParaView for save a PLY big_endian ?
+
+ParaView has very minimal support for the .ply format.  You can add it 
+as a feature request here:
+
+http://www.paraview.org/Bug
+
+but we have no plans to implement it any time soon.
+
+-Brad
+
+From rlanka at hotmail.com  Fri Nov 19 17:09:56 2004
+From: rlanka at hotmail.com (RAVINDRANATH LANKA)
+Date: Fri Nov 19 17:10:06 2004
+Subject: [Paraview] problem connecting to external c library 
+Message-ID: <BAY12-F2247A8D57E96DD6EF21503D4C30@phx.gbl>
+
+Hi all,
+
+I am writing a custom reader, vtkMyReader.cxx, that is referring to 
+functions from an external C library.
+I copied the  .cxx and .h files to VTK/IO directory.
+
+I added the following to the CMakeLists.txt
+
+INCLUDE_DIRECTORIES(/usr/local/myIncludes/)
+ADD_DEFINITIONS(-DMY_DEFINITIONS)
+TARGET_LINK_LIBRARIES( vtk${KIT} ${KIT_LIBS} /usr/local/myLibs/libLocal.a)
+
+I also had to add the "INCLUDE_DIRECTORIES" and "ADD_DEFINITIONS" to 
+paraview*/CMakeLists.txt as paraview*/Utilities/VTKClientServer/IO/Makefile 
+required these values.
+
+When I try to build paraview, I am getting the following error.
+--------------------------------------------------------------------------------------------------
+Building executable /root/paraview-1.6.3-linux/bin/paraview...
+/root/paraview-1.6.3-linux/bin/libvtkIO.a(vtkMyReader.o)(.text+0x9cd): In 
+function `vtkMyReader::ReadGeometry()':
+: undefined reference to `mtxNewInvMap(int*, int)'
+collect2: ld returned 1 exit status
+make[5]: *** [/root/paraview-1.6.3-linux/bin/paraview] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Client] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_GUI] Error 2
+-------------------------------------------------------------------------------------------------
+
+I don't have much experience with CMake.
+
+Any help is appreciated.
+
+Ravi
+
+_________________________________________________________________
+NRIs - Free money transfer to India. Fly to India for free!  
+http://acm.bridgeovertw.com/hdfc/qr/landingpage/sep04/index.htm?sitecode=610|394 
+Apply Now.
+
+From brad.king at kitware.com  Fri Nov 19 19:42:15 2004
+From: brad.king at kitware.com (Brad King)
+Date: Fri Nov 19 19:42:18 2004
+Subject: [Paraview] problem connecting to external c library
+In-Reply-To: <BAY12-F2247A8D57E96DD6EF21503D4C30@phx.gbl>
+References: <BAY12-F2247A8D57E96DD6EF21503D4C30@phx.gbl>
+Message-ID: <419E92E7.7050800@kitware.com>
+
+RAVINDRANATH LANKA wrote:
+> I am writing a custom reader, vtkMyReader.cxx, that is referring to 
+> functions from an external C library.
+> I copied the  .cxx and .h files to VTK/IO directory.
+> 
+> I added the following to the CMakeLists.txt
+> 
+> INCLUDE_DIRECTORIES(/usr/local/myIncludes/)
+> ADD_DEFINITIONS(-DMY_DEFINITIONS)
+> TARGET_LINK_LIBRARIES( vtk${KIT} ${KIT_LIBS} /usr/local/myLibs/libLocal.a)
+> 
+> I also had to add the "INCLUDE_DIRECTORIES" and "ADD_DEFINITIONS" to 
+> paraview*/CMakeLists.txt as 
+> paraview*/Utilities/VTKClientServer/IO/Makefile required these values.
+> 
+> When I try to build paraview, I am getting the following error.
+> -------------------------------------------------------------------------------------------------- 
+> 
+> Building executable /root/paraview-1.6.3-linux/bin/paraview...
+> /root/paraview-1.6.3-linux/bin/libvtkIO.a(vtkMyReader.o)(.text+0x9cd): 
+> In function `vtkMyReader::ReadGeometry()':
+> : undefined reference to `mtxNewInvMap(int*, int)'
+
+If it is a C library then you need to make sure it has the standard 
+extern "C" specifications for C++ compilers.  Your library's header 
+should look like this:
+
+#ifndef myFoo_h
+#define myFoo_h
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
+int myFunction(int);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+
+Otherwise the C++ compiler will generate a mangled symbol reference to 
+the functions that cannot be resolved using the unmangled C symbols.
+
+-Brad
+From valdo13 at hotmail.com  Mon Nov 22 06:24:22 2004
+From: valdo13 at hotmail.com (valdo meyer)
+Date: Mon Nov 22 06:25:24 2004
+Subject: [Paraview] Is scripting working?
+In-Reply-To: <419E3F09.9070005@kitware.com>
+Message-ID: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20041122/8192af7f/attachment.htm
+From bmskkh at leeds.ac.uk  Mon Nov 22 06:41:52 2004
+From: bmskkh at leeds.ac.uk (Sanjay Kharche)
+Date: Mon Nov 22 06:42:35 2004
+Subject: [Paraview] Analyse to vtk
+In-Reply-To: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+References: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+Message-ID: <1101123712.1e90cf9ee6f8a@webmail1.leeds.ac.uk>
+
+
+Dear All
+
+I have a 3D MRI data set in Analyse format and I would like to convert it into
+vtk/Paraview format. How can this be done?
+
+The second question is how can I convert vtk into simple ascii data set?
+
+thanks for your help
+Sanjay
+
+
+
+
+
+
+
+Sanjay Kharche
+University of Leeds
+The United Kingdom
+
+From brad.king at kitware.com  Mon Nov 22 08:49:08 2004
+From: brad.king at kitware.com (Brad King)
+Date: Mon Nov 22 08:49:13 2004
+Subject: [Paraview] Is scripting working?
+In-Reply-To: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+References: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+Message-ID: <41A1EE54.2010206@kitware.com>
+
+valdo meyer wrote:
+> Ok, replacing the usual brackets with "" seems to work, assuming there 
+> is no newline in the text. BUT what I understood by reading the coment 
+> "# The source modified is: vtkTemp1358" is that vtkTmp1358 was the Tcl 
+> command for the selected "source". I selected a vtkThreshold objects 
+> and, as a test, I would like to change the selected components at the 
+> middle of the animation, so I wrote:
+>   if " $globalPVTime > 0.5"  " vtkTemp1358 ThresholdBetween 0 2 "
+> and I get the following error "Object named: vtkTemp1358, could not find 
+> requested method: ThresholdBetween"
+> What's wrong?
+
+ParaView is no longer driven directly through Tcl scripting.  It now 
+uses a platform independent binary scripting language internally to 
+communicate across processes and to drive the VTK pipeline.  Only the 
+GUI is driven by Tcl/Tk.  The GUI however drives the internal scripting 
+language, so many things can still be done through Tcl, but indirectly. 
+  This is all still under development so there is no documentation 
+available.
+
+-Brad
+From mathieu.malaterre at kitware.com  Mon Nov 22 09:11:05 2004
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Mon Nov 22 09:11:17 2004
+Subject: [Paraview] Analyse to vtk
+In-Reply-To: <1101123712.1e90cf9ee6f8a@webmail1.leeds.ac.uk>
+References: <BAY101-F146BA062A50AAEB83B8652BDC60@phx.gbl>
+	<1101123712.1e90cf9ee6f8a@webmail1.leeds.ac.uk>
+Message-ID: <41A1F379.4030401@kitware.com>
+
+Sanjay Kharche wrote:
+> Dear All
+> 
+> I have a 3D MRI data set in Analyse format and I would like to convert it into
+> vtk/Paraview format. How can this be done?
+
+Well, I know that ITK can read Analyse format. So what I would suggest 
+is use ITK to convert Analyse to UNC meta image data. Then you just need
+vtkMetaImageReader to read it back in VTK/ParaView.
+
+> The second question is how can I convert vtk into simple ascii data set?
+
+Well I guess VTK legacy format is pretty close to a simple ascii data 
+set. The only problem is that ParaView write the file in binary. So you 
+might need a simple VTK script to do the conversion.
+
+ParaView might not be the best tool for ImageData, did you try VolView 
+(http://www.kitware.com/products/volview.html).
+
+HTH
+Mathieu
+
+
+From slombey at cacr.caltech.edu  Mon Nov 22 18:11:24 2004
+From: slombey at cacr.caltech.edu (santiago v lombeyda)
+Date: Tue Nov 23 09:00:56 2004
+Subject: [Paraview] custom colormaps/lookup tables... using batch?
+Message-ID: <Pine.SOL.4.10.10411221457100.23568-100000@lugh.cacr.caltech.edu>
+
+
+	i need to be able to use specific colormaps that
+	do not have a linear HSB equivalents. though such
+	may currently not be possible _within_ paraview, is
+	it possible to modify a batch script dumped from
+	paraview to do this? something like:
+
+[...]
+set pvTemp218 [$proxyManager NewProxy lookup_tables LookupTable]
+  $proxyManager RegisterProxy lookup_tables pvTemp218 $pvTemp218
+  $pvTemp218 UnRegister {}
+  [$pvTemp218 GetProperty NumberOfTableValues] SetElements1 256
+  [$pvTemp218 GetProperty HueRange] SetElements2 0 0.333333
+  [$pvTemp218 GetProperty SaturationRange] SetElements2 1 1
+  [$pvTemp218 GetProperty ValueRange] SetElements2 1 1
+  [$pvTemp218 GetProperty ScalarRange] SetElements2 -1.79864 1.06823
+  [$pvTemp218 GetProperty VectorComponent] SetElements1 0
+  [$pvTemp218 GetProperty VectorMode] SetElements1 0
+    # CUSTOM CODE
+    for {set i 0} {$i < 256} {incr i 1} {
+       $pvTemp218 SetTableValue  $i [$i/255] [1-$i/255] 0 1
+       #[$pvTemp218 GetProperty SetTableValue] SetElements5 $i ...
+       #[$pvTemp218 GetObject] SetTableValue $i ...
+    }
+    # END CUSTOM CODE
+  $pvTemp218 UpdateVTKObjects
+  $pvTemp218 Build
+[...]
+
+	i guess i mostly do not understand the object proxies,
+	and what is exposed as far as vtkLookupTables that i
+	can get a handle on and modify manually...
+
+	(i am using version 1.7 under linux)
+
+	thanks!
+
+
+	- santiago
+
+From berk.geveci at gmail.com  Tue Nov 23 10:42:18 2004
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Nov 23 10:43:37 2004
+Subject: [Paraview] custom colormaps/lookup tables... using batch?
+In-Reply-To: <Pine.SOL.4.10.10411221457100.23568-100000@lugh.cacr.caltech.edu>
+References: <Pine.SOL.4.10.10411221457100.23568-100000@lugh.cacr.caltech.edu>
+Message-ID: <a2ab21560411230742536f13ab@mail.gmail.com>
+
+This is not too hard.
+
+1. Create a server manager xml file. Start with copying 
+Servers/ServerManager/Resources/utilities.xml and deleting all proxies
+but the LookupTableProxy
+
+2. Add a property called TableValues. It will probably be similar to
+this (from filters.xml)
+
+     <DoubleVectorProperty
+        name="ContourValues"
+        command="SetValue"
+        repeat_command="1"
+        set_number_command="SetNumberOfContours"
+        number_of_elements_per_command="1"
+        use_index="1">
+     </DoubleVectorProperty>
+
+3. In your script, load the configuration file with something like:
+
+#Initialization
+
+vtkSMObject foo
+set proxyManager [foo GetProxyManager]
+
+set smApplication [foo GetApplication]
+$smApplication AddConfigurationFile modules.pvsm /home/berk/etc/paraview
+$smApplication ParseConfigurationFiles
+foo Delete
+
+4. In your script, do something like:
+
+   [$pvTemp218 GetProperty TableValues]  SetNumberOfElements 256
+    for {set i 0} {$i < 256} {incr i 1} {
+      [$pvTemp218 GetProperty TableValues] SetElement $i value
+   }
+
+
+On Mon, 22 Nov 2004 15:11:24 -0800 (PST), santiago v lombeyda
+<slombey@cacr.caltech.edu> wrote:
+> 
+>         i need to be able to use specific colormaps that
+>         do not have a linear HSB equivalents. though such
+>         may currently not be possible _within_ paraview, is
+>         it possible to modify a batch script dumped from
+>         paraview to do this? something like:
+> 
+> [...]
+> set pvTemp218 [$proxyManager NewProxy lookup_tables LookupTable]
+>   $proxyManager RegisterProxy lookup_tables pvTemp218 $pvTemp218
+>   $pvTemp218 UnRegister {}
+>   [$pvTemp218 GetProperty NumberOfTableValues] SetElements1 256
+>   [$pvTemp218 GetProperty HueRange] SetElements2 0 0.333333
+>   [$pvTemp218 GetProperty SaturationRange] SetElements2 1 1
+>   [$pvTemp218 GetProperty ValueRange] SetElements2 1 1
+>   [$pvTemp218 GetProperty ScalarRange] SetElements2 -1.79864 1.06823
+>   [$pvTemp218 GetProperty VectorComponent] SetElements1 0
+>   [$pvTemp218 GetProperty VectorMode] SetElements1 0
+>     # CUSTOM CODE
+>     for {set i 0} {$i < 256} {incr i 1} {
+>        $pvTemp218 SetTableValue  $i [$i/255] [1-$i/255] 0 1
+>        #[$pvTemp218 GetProperty SetTableValue] SetElements5 $i ...
+>        #[$pvTemp218 GetObject] SetTableValue $i ...
+>     }
+>     # END CUSTOM CODE
+>   $pvTemp218 UpdateVTKObjects
+>   $pvTemp218 Build
+> [...]
+> 
+>         i guess i mostly do not understand the object proxies,
+>         and what is exposed as far as vtkLookupTables that i
+>         can get a handle on and modify manually...
+> 
+>         (i am using version 1.7 under linux)
+> 
+>         thanks!
+> 
+>         - santiago
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Tue Nov 23 10:42:18 2004
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Nov 23 10:43:39 2004
+Subject: [Paraview] custom colormaps/lookup tables... using batch?
+In-Reply-To: <Pine.SOL.4.10.10411221457100.23568-100000@lugh.cacr.caltech.edu>
+References: <Pine.SOL.4.10.10411221457100.23568-100000@lugh.cacr.caltech.edu>
+Message-ID: <a2ab21560411230742536f13ab@mail.gmail.com>
+
+This is not too hard.
+
+1. Create a server manager xml file. Start with copying 
+Servers/ServerManager/Resources/utilities.xml and deleting all proxies
+but the LookupTableProxy
+
+2. Add a property called TableValues. It will probably be similar to
+this (from filters.xml)
+
+     <DoubleVectorProperty
+        name="ContourValues"
+        command="SetValue"
+        repeat_command="1"
+        set_number_command="SetNumberOfContours"
+        number_of_elements_per_command="1"
+        use_index="1">
+     </DoubleVectorProperty>
+
+3. In your script, load the configuration file with something like:
+
+#Initialization
+
+vtkSMObject foo
+set proxyManager [foo GetProxyManager]
+
+set smApplication [foo GetApplication]
+$smApplication AddConfigurationFile modules.pvsm /home/berk/etc/paraview
+$smApplication ParseConfigurationFiles
+foo Delete
+
+4. In your script, do something like:
+
+   [$pvTemp218 GetProperty TableValues]  SetNumberOfElements 256
+    for {set i 0} {$i < 256} {incr i 1} {
+      [$pvTemp218 GetProperty TableValues] SetElement $i value
+   }
+
+
+On Mon, 22 Nov 2004 15:11:24 -0800 (PST), santiago v lombeyda
+<slombey@cacr.caltech.edu> wrote:
+> 
+>         i need to be able to use specific colormaps that
+>         do not have a linear HSB equivalents. though such
+>         may currently not be possible _within_ paraview, is
+>         it possible to modify a batch script dumped from
+>         paraview to do this? something like:
+> 
+> [...]
+> set pvTemp218 [$proxyManager NewProxy lookup_tables LookupTable]
+>   $proxyManager RegisterProxy lookup_tables pvTemp218 $pvTemp218
+>   $pvTemp218 UnRegister {}
+>   [$pvTemp218 GetProperty NumberOfTableValues] SetElements1 256
+>   [$pvTemp218 GetProperty HueRange] SetElements2 0 0.333333
+>   [$pvTemp218 GetProperty SaturationRange] SetElements2 1 1
+>   [$pvTemp218 GetProperty ValueRange] SetElements2 1 1
+>   [$pvTemp218 GetProperty ScalarRange] SetElements2 -1.79864 1.06823
+>   [$pvTemp218 GetProperty VectorComponent] SetElements1 0
+>   [$pvTemp218 GetProperty VectorMode] SetElements1 0
+>     # CUSTOM CODE
+>     for {set i 0} {$i < 256} {incr i 1} {
+>        $pvTemp218 SetTableValue  $i [$i/255] [1-$i/255] 0 1
+>        #[$pvTemp218 GetProperty SetTableValue] SetElements5 $i ...
+>        #[$pvTemp218 GetObject] SetTableValue $i ...
+>     }
+>     # END CUSTOM CODE
+>   $pvTemp218 UpdateVTKObjects
+>   $pvTemp218 Build
+> [...]
+> 
+>         i guess i mostly do not understand the object proxies,
+>         and what is exposed as far as vtkLookupTables that i
+>         can get a handle on and modify manually...
+> 
+>         (i am using version 1.7 under linux)
+> 
+>         thanks!
+> 
+>         - santiago
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From stephen.wornom at inria.fr  Wed Nov 24 09:01:09 2004
+From: stephen.wornom at inria.fr (Stephen Wornom)
+Date: Wed Nov 24 08:58:08 2004
+Subject: [Paraview] vector arrows
+Message-ID: <41A49425.8020209@inria.fr>
+
+I write the vectors on the .vtk file (unstructured grid). I can trace 
+streamlines. What is the procedure to see the velocity vectors?
+Stephen
+From m.janssens at nabla.co.uk  Wed Nov 24 09:09:26 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Wed Nov 24 09:04:53 2004
+Subject: [Paraview] vector arrows
+In-Reply-To: <41A49425.8020209@inria.fr>
+References: <41A49425.8020209@inria.fr>
+Message-ID: <41A49616.5000602@nabla.co.uk>
+
+Put Glypgs on the points.
+
+Stephen Wornom wrote:
+> I write the vectors on the .vtk file (unstructured grid). I can trace 
+> streamlines. What is the procedure to see the velocity vectors?
+> Stephen
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From peter.welsh at vips.co.uk  Wed Nov 24 12:18:23 2004
+From: peter.welsh at vips.co.uk (Peter Welsh)
+Date: Wed Nov 24 12:14:06 2004
+Subject: [Paraview] Using Line Probes XY plots
+Message-ID: <LIEKKABJFKEGAINOHCHNAEHJCBAA.peter.welsh@vips.co.uk>
+
+
+Hi everyone,
+
+  I have read in an unstructured vtk file.
+
+  Once I have created a line probe between two points, is there anyway of
+displaying specific xy-plots.
+
+  For example I results for nodal displacements, stresses and strains, but
+only wish to visualise displacements.
+
+
+Peter Welsh
+V.I.P.S. Ltd
+
+From amy.henderson at kitware.com  Wed Nov 24 13:59:27 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Wed Nov 24 13:54:56 2004
+Subject: [Paraview] Using Line Probes XY plots
+In-Reply-To: <LIEKKABJFKEGAINOHCHNAEHJCBAA.peter.welsh@vips.co.uk>
+References: <LIEKKABJFKEGAINOHCHNAEHJCBAA.peter.welsh@vips.co.uk>
+Message-ID: <6.2.0.14.2.20041124135749.03d8f880@pop.biz.rr.com>
+
+Hi Peter,
+
+In the current version of ParaView, this is not possible.  This item was 
+previously added to our bug-tracker, so we are aware of the problem.
+
+Amy Henderson
+Kitware, Inc.
+
+At 12:18 PM 11/24/2004, Peter Welsh wrote:
+
+>Hi everyone,
+>
+>   I have read in an unstructured vtk file.
+>
+>   Once I have created a line probe between two points, is there anyway of
+>displaying specific xy-plots.
+>
+>   For example I results for nodal displacements, stresses and strains, but
+>only wish to visualise displacements.
+>
+>
+>Peter Welsh
+>V.I.P.S. Ltd
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From peter.welsh at vips.co.uk  Thu Nov 25 08:21:12 2004
+From: peter.welsh at vips.co.uk (Peter Welsh)
+Date: Thu Nov 25 08:17:10 2004
+Subject: [Paraview] (no subject)
+Message-ID: <LIEKKABJFKEGAINOHCHNMEHJCBAA.peter.welsh@vips.co.uk>
+
+
+
+Peter Welsh
+Software Engineer
+V.I.P.S. Ltd
+10, The Courtyard,
+Eastern Road,
+Bracknell,
+Berkshire,
+RG12 2XB,
+UK
+
+Tel: +44 (0)1344 350067
+Fax: +44 (0)1344 428877
+From bourdin at math.lsu.edu  Fri Nov 26 02:06:14 2004
+From: bourdin at math.lsu.edu (Blaise Bourdin)
+Date: Fri Nov 26 02:06:20 2004
+Subject: [Paraview] Building paraview with exodus suport
+Message-ID: <A8D45B08-3F79-11D9-83FD-000D93386726@math.lsu.edu>
+
+Hi,
+
+I am trying to rebuild exodus with support for the exodus file format.
+
+I have the exodus libraries from SEAMS_2003-08_22 installed in 
+/opt/matsci/SEAMS.SRC, and apparently, the source files for the c 
+binding are in 
+/opt/matsci/SEAMS.SRC/ACCESS/libraries/exodusii/cbind/src
+I am running ccmake from cmake 2.05 and tried every path I could think 
+of for EXODUS_SOURCE_DIR
+When I hit configure in ccmake, all I get is the "Cannot find EXODUS 
+sources directory' error message.
+Is there a magic trick?
+Shall I try to build paraview against the MOAB exodus libraries?
+
+THanks,
+
+Blaise
+-- 
+Blaise Bourdin                        | www.math.lsu.edu/~bourdin
+Department of Mathematics             | Tel. +1 (225) 578 1612
+Louisiana State University            | Fax  +1 (225) 578 4276
+Baton Rouge, LA 70803, USA            | Home +1 (225) 344 1287
+
+From andy.cedilnik at kitware.com  Fri Nov 26 08:31:17 2004
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Fri Nov 26 08:30:21 2004
+Subject: [Paraview] Building paraview with exodus suport
+In-Reply-To: <A8D45B08-3F79-11D9-83FD-000D93386726@math.lsu.edu>
+References: <A8D45B08-3F79-11D9-83FD-000D93386726@math.lsu.edu>
+Message-ID: <41A73025.5040207@kitware.com>
+
+Hi Blaise,
+
+In order to build ParaView with Exodus support, you will need support
+sources from Sandia. The EXODUS_SOURCE_DIR actually refers to the
+location of VTK Exodus source directory and not of the actual Exodus
+directory.
+
+			Andy
+
+Blaise Bourdin wrote:
+> I am trying to rebuild exodus with support for the exodus file format.
+> 
+> I have the exodus libraries from SEAMS_2003-08_22 installed in
+> /opt/matsci/SEAMS.SRC, and apparently, the source files for the c
+> binding are in /opt/matsci/SEAMS.SRC/ACCESS/libraries/exodusii/cbind/src
+> I am running ccmake from cmake 2.05 and tried every path I could think
+> of for EXODUS_SOURCE_DIR
+> When I hit configure in ccmake, all I get is the "Cannot find EXODUS
+> sources directory' error message.
+> Is there a magic trick?
+> Shall I try to build paraview against the MOAB exodus libraries?
+
+From benp at Princeton.EDU  Sun Nov 28 14:42:38 2004
+From: benp at Princeton.EDU (Benjamin Phillips)
+Date: Sun Nov 28 08:40:23 2004
+Subject: [Paraview] Save View Image in Session Trace
+Message-ID: <41AA2A2E.9050700@princeton.edu>
+
+Hi,
+I would like to create a Paraview trace file that writes view images 
+periodically (for later creation of an animated gif). I have a trace 
+file that produces desired views, but I'm not sure how to script in the 
+step to "Save View Image" between views. I tried manually saving an 
+example view image and writing a session trace, but this doesn't produce 
+any lines in the trace file corresponding to "Save View Image" that I 
+can use as a model for my script. Also, if this is possible, can I 
+expect trouble with the save window appearing over the image?
+
+Thanks,
+Ben
+
+From rlanka at hotmail.com  Mon Nov 29 17:26:32 2004
+From: rlanka at hotmail.com (RAVINDRANATH LANKA)
+Date: Mon Nov 29 17:27:09 2004
+Subject: [Paraview] Object Factory help!!!
+Message-ID: <BAY12-F32DD1BE6F5A990285C8356D4BD0@phx.gbl>
+
+Hi all,
+
+I am trying to build a shared library containing a reader that uses 
+proprietary code.  I would like to have the basic interface to the reader in 
+the paraview*/VTK/IO directory and then put my shared library in 
+VTK_AUTOLOAD_PATH.
+Let us say my reader is divided into two files/classes.
+i. vtkPVMyReaderModule.cxx
+ii. vtkMyReader.cxx
+
+The first class has the basic interface of a reader like, 
+ExecuteInformation, ExecuteData etc.  The second class has the interface to 
+get the data from a database, like getNodalData, getNumberOfPoints, 
+getNumberOfCells etc.  I will have some dummy functions in the 
+paraview*/VTK/IO area and the one that uses the proprietary code in the 
+shared library.
+My understanding of how vtk Object Factories work is that in the dummy 
+implementation I should have a New() function that would be something like,
+
+vtkMyReader::New() {
+  vtkObject* retObject =  vtkObjectFactory::CreateInstance("vtkMyReader");
+
+  if (retObject) { return (vtkMyReader* (retObject)) }
+  return new vtkMyReader;
+}
+Then, the users who have access to the library with the proprietary code 
+will be able to use the reader functionality.
+
+I need some basic direction on writing/installing the factory itself.
+
+Ravi
+
+_________________________________________________________________
+The happening world of BPO! Know all that you need to know! 
+http://www.bpowatchindia.com/msn/ Keep in step with what’s hot!
+
+From brad.king at kitware.com  Tue Nov 30 08:39:10 2004
+From: brad.king at kitware.com (Brad King)
+Date: Tue Nov 30 08:39:15 2004
+Subject: [Paraview] Save View Image in Session Trace
+In-Reply-To: <41AA2A2E.9050700@princeton.edu>
+References: <41AA2A2E.9050700@princeton.edu>
+Message-ID: <41AC77FE.9040503@kitware.com>
+
+Benjamin Phillips wrote:
+> I would like to create a Paraview trace file that writes view images 
+> periodically (for later creation of an animated gif). I have a trace 
+> file that produces desired views, but I'm not sure how to script in the 
+> step to "Save View Image" between views. I tried manually saving an 
+> example view image and writing a session trace, but this doesn't produce 
+> any lines in the trace file corresponding to "Save View Image" that I 
+> can use as a model for my script. Also, if this is possible, can I 
+> expect trouble with the save window appearing over the image?
+
+Use this command in the script:
+
+[$Application GetMainView] SaveAsImage "/path/to/myimage.png"
+
+No dialog will be displayed so you will not have to worry about the save 
+window appearing over the image (I think this problem will be fixed soon 
+anyway).
+
+-Brad

@@ -1,0 +1,124 @@
+From heiland@ncsa.uiuc.edu  Wed Mar  6 18:40:12 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Wed, 6 Mar 2002 12:40:12 -0600
+Subject: [Paraview] .vtk -> .pvtk
+Message-ID: <1020306124012.ZM7657@kelgia.ncsa.uiuc.edu>
+
+ParaViewers,
+
+I have a single .vtk file (POLYDATA) that I'd like to partition/distribute
+across a cluster and display using ParaView.  Is this (easily) doable?  If so,
+where can I read about the format of .pvtk, etc.?
+
+thanks,
+Randy
+
+From charles.law@kitware.com  Wed Mar  6 20:53:13 2002
+From: charles.law@kitware.com (Charles Law)
+Date: Wed, 06 Mar 2002 15:53:13 -0500
+Subject: [Paraview] .vtk -> .pvtk
+In-Reply-To: <1020306124012.ZM7657@kelgia.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.0.20020306153718.00aa7660@pop.nycap.rr.com>
+
+Randy,
+
+If you are running ParaView in parallel, it will automatically read your 
+VTK file and break it up among processors.  It may not be efficient.  By 
+default, each process reads the whole data set and then extracts the piece 
+it needs.  If you set the environment variable PV_USE_TRANSMIT to 1, then 
+this process is more efficient.  Process 0 will read the data set and send 
+pieces to all the other processes.
+
+If you save any data set while running with multiple processes, it will use 
+the pvtk format.
+
+The pvtk format is pretty straight forward. Each process writes a stand 
+alone vtk file, and a top level (pvtk) file is written in xml format to 
+"glue" all the pieces together.  The pvtk reader is smart enough to collect 
+data from multiple files.  You can read with a different (smaller) number 
+of processes that were used to write the file.
+
+Let us know how it goes.
+
+Charles.
+
+
+
+
+At 12:40 PM 3/6/2002 -0600, Randy Heiland wrote:
+>ParaViewers,
+>
+>I have a single .vtk file (POLYDATA) that I'd like to partition/distribute
+>across a cluster and display using ParaView.  Is this (easily) doable?  If so,
+>where can I read about the format of .pvtk, etc.?
+>
+>thanks,
+>Randy
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From berk.geveci@kitware.com  Wed Mar  6 20:58:51 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 06 Mar 2002 15:58:51 -0500
+Subject: [Paraview] .vtk -> .pvtk
+In-Reply-To: <1020306124012.ZM7657@kelgia.ncsa.uiuc.edu>
+References: <1020306124012.ZM7657@kelgia.ncsa.uiuc.edu>
+Message-ID: <1015448333.6514.13.camel@caemlyn.kitwarein.com>
+
+Easy. Run ParaView in parallel, load the vtk file and
+save it :-)
+
+On Wed, 2002-03-06 at 13:40, Randy Heiland wrote:
+> ParaViewers,
+> 
+> I have a single .vtk file (POLYDATA) that I'd like to partition/distribute
+> across a cluster and display using ParaView.  Is this (easily) doable?  If so,
+> where can I read about the format of .pvtk, etc.?
+> 
+> thanks,
+> Randy
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From Andy.Cedilnik@kitware.com  Thu Mar 21 22:52:23 2002
+From: Andy.Cedilnik@kitware.com (Andy Cedilnik)
+Date: Thu, 21 Mar 2002 17:52:23 -0500
+Subject: [Paraview] Replacing Public with the new server
+Message-ID: <5.1.0.14.0.20020321174204.03565600@pop.nycap.rr.com>
+
+Hello!
+
+As several people noticed, public is becoming a severe bottle
+neck. It's disk are too small, the processor is overwhelmed,
+and there is little or to none protection against data lose.
+It is about time to fix this problem.
+
+We are working towards replacing Public.kitware.com with new
+much more powerful server. The new server has features such as
+dedicated ups, RAID-5 disk array, better CPU, more memory,
+and much more space than the old one. We are planning to
+replace Public soon, but before we do this, we would like
+to notify all developers that there will be downtime. The new
+server will look almost exactly the same as the old one but
+some things might be in different place and we all should do
+some spring cleaning on it.
+
+We have not decided on when the replacement will happen, but
+the new server is almost ready. We will let you know several
+days in advanced, so that you can commit/update/checkout all
+outstanding projects/files.
+
+If you have any question, comment, or suggestion, please let
+us know.
+
+				Andy Cedilnik
+				Kitware Inc.
+
+

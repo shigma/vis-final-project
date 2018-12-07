@@ -1,0 +1,648 @@
+From Tao.Huang@usa.dupont.com  Mon Feb  3 19:24:16 2003
+From: Tao.Huang@usa.dupont.com (Tao Huang)
+Date: Mon, 3 Feb 2003 14:24:16 -0500
+Subject: [Paraview] RE: How to do animation script in Paraview
+Message-ID: <OF9D481A89.C70865F0-ON85256CC2.006A5A53@lvs.dupont.com>
+
+Dear: Sir/Madam:
+
+
+I have just installed Paraview on PC Win2000, and start trying it.
+
+Could anyone tell me  How to do animation script in Paraview.
+
+
+thanks
+
+-tao
+
+
+
+
+This communication is for use by the intended recipient and contains 
+information that may be privileged, confidential or copyrighted under
+applicable law.  If you are not the intended recipient, you are hereby
+formally notified that any use, copying or distribution of this e-mail,
+in whole or in part, is strictly prohibited.  Please notify the sender
+by return e-mail and delete this e-mail from your system.  Unless
+explicitly and conspicuously designated as "E-Contract Intended",
+this e-mail does not constitute a contract offer, a contract amendment,
+or an acceptance of a contract offer.  This e-mail does not constitute
+a consent to the use of sender's contact information for direct marketing
+purposes or for transfers of data to third parties.
+
+ Francais Deutsch Italiano  Espanol  Portugues  Japanese  Chinese  Korean
+
+            http://www.DuPont.com/corp/email_disclaimer.html
+
+
+
+From malat@free.fr  Fri Feb  7 13:07:50 2003
+From: malat@free.fr (Mathieu Malaterre)
+Date: Fri, 07 Feb 2003 14:07:50 +0100
+Subject: [Paraview] fresh cvs update
+Message-ID: <3E43AFA6.7060501@free.fr>
+
+Hi all,
+   I have just updated Paraview and VTK. But there a bug while using 
+cmake for Paraview.
+For some bizarre reason there was a final closing parenthesis ')' that 
+cmake didn't like at all in:
+
+VTKBin/VTKLibraryDepends.cmake
+
+Here is the original message:
+Parse error.
+CMake Error: Error in cmake code at
+/home/malat/Kitware/VTKBin/VTKLibraryDepends.cmake:36:
+Parse error.
+
+Removing it seems to be the solution.
+
+HTH
+mathieu
+
+
+From malat@free.fr  Fri Feb  7 13:11:53 2003
+From: malat@free.fr (Mathieu Malaterre)
+Date: Fri, 07 Feb 2003 14:11:53 +0100
+Subject: [Paraview] Fresh built of PAraView
+Message-ID: <3E43B099.8010203@free.fr>
+
+Again,
+   I tried launching the demo but here is what I get:
+
+[malat@mathieu Bin]$ ./ParaView --play-demo
+# Error or warning: There was a VTK Error in file: 
+/home/malat/Kitware/ParaView/Widgets/vtkKWApplication.cxx (1063)
+
+     Script:
+/home/malat/Kitware/ParaView/Demos/Demo1.pvs
+     Returned Error on line 3637:
+       invalid command name ""
+Generic Warning: In 
+/home/malat/Kitware/VTK/Rendering/vtkTkRenderWidget.cxx, line 638
+A TkRenderWidget is being destroyed before it associated vtkRenderWindow 
+is destroyed. This is very bad and usually due to the order in which 
+objects are being destroyed. Always destroy the vtkRenderWindow before 
+destroying the user interface components.
+
+
+and through the menu bar:
+
+[malat@mathieu Bin]$ ./ParaView
+# Error or warning: There was a VTK Error in file: 
+/home/malat/Kitware/ParaView/Widgets/vtkKWApplication.cxx (1063)
+
+     Script:
+/home/malat/Kitware/ParaView/Demos/Demo1.pvs
+     Returned Error on line 3637:
+       invalid command name ""
+
+
+
+I have done a cvs update today (1 hour ago)
+
+mathieu
+
+
+From charles.law@kitware.com  Fri Feb  7 19:28:52 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 07 Feb 2003 14:28:52 -0500
+Subject: [Paraview] Fresh built of PAraView
+In-Reply-To: <3E43B099.8010203@free.fr>
+Message-ID: <5.1.0.14.0.20030207142757.07480730@pop.biz.rr.com>
+
+I fixed the demo.  The nightly release now plays the demo correctly.
+
+Charles.
+
+
+
+
+At 02:11 PM 2/7/2003 +0100, Mathieu Malaterre wrote:
+>Again,
+>   I tried launching the demo but here is what I get:
+>
+>[malat@mathieu Bin]$ ./ParaView --play-demo
+># Error or warning: There was a VTK Error in file: 
+>/home/malat/Kitware/ParaView/Widgets/vtkKWApplication.cxx (1063)
+>
+>     Script:
+>/home/malat/Kitware/ParaView/Demos/Demo1.pvs
+>     Returned Error on line 3637:
+>       invalid command name ""
+>Generic Warning: In 
+>/home/malat/Kitware/VTK/Rendering/vtkTkRenderWidget.cxx, line 638
+>A TkRenderWidget is being destroyed before it associated vtkRenderWindow 
+>is destroyed. This is very bad and usually due to the order in which 
+>objects are being destroyed. Always destroy the vtkRenderWindow before 
+>destroying the user interface components.
+>
+>
+>and through the menu bar:
+>
+>[malat@mathieu Bin]$ ./ParaView
+># Error or warning: There was a VTK Error in file: 
+>/home/malat/Kitware/ParaView/Widgets/vtkKWApplication.cxx (1063)
+>
+>     Script:
+>/home/malat/Kitware/ParaView/Demos/Demo1.pvs
+>     Returned Error on line 3637:
+>       invalid command name ""
+>
+>
+>
+>I have done a cvs update today (1 hour ago)
+>
+>mathieu
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From scoorp@lsuhsc.edu  Fri Feb  7 20:13:04 2003
+From: scoorp@lsuhsc.edu (Steven Coorpender)
+Date: Fri, 7 Feb 2003 14:13:04 -0600
+Subject: [Paraview] Running ParaView with MPI
+Message-ID: <004001c2cee5$5549ae80$33ea3a9b@scoorp>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_003B_01C2CEB3.07F72360
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+I am running ParaView with MPICH v1.2.5 on a 2-node cluster (each node =
+is a dual processor Xeon 2.2GHz running RedHat 8.0-smp--total of 4 =
+processors in cluster). When I run ParaView with "mpirun -np 4 =
+ParaView", my system monitor shows a maximum of 50% cpu usage on each =
+node, giving 25% to each ParaView process. If I run Paraview with =
+"mpirun -np 8 ParaView", I still get 25% for each process, but 4 =
+processes on each node, and a maximum of 100% total cpu usage. Why won't =
+ParaView use more than 25% of a cpu in one process, and why can I only =
+get 50% usage with mpirun -np 4?
+------=_NextPart_000_003B_01C2CEB3.07F72360
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1126" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>I am running ParaView with MPICH v1.2.5 =
+on a=20
+2-node&nbsp;cluster (each node is a dual processor Xeon 2.2GHz running =
+RedHat=20
+8.0-smp--total of 4 processors in cluster). When I run ParaView with =
+"mpirun -np=20
+4 ParaView", my system monitor shows a maximum of 50% cpu usage on each =
+node,=20
+giving 25% to each ParaView process. If I run Paraview with "mpirun -np =
+8=20
+ParaView", I still get 25% for each process, but 4 processes on each =
+node, and a=20
+maximum of 100% total cpu usage. Why won't ParaView use more than 25% of =
+a cpu=20
+in one process, and why can I only get 50% usage with mpirun -np=20
+4?</FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_003B_01C2CEB3.07F72360--
+
+
+From berk.geveci@kitware.com  Fri Feb  7 20:33:48 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 07 Feb 2003 15:33:48 -0500
+Subject: [Paraview] Running ParaView with MPI
+In-Reply-To: <004001c2cee5$5549ae80$33ea3a9b@scoorp>
+References: <004001c2cee5$5549ae80$33ea3a9b@scoorp>
+Message-ID: <1044650029.29058.21.camel@caemlyn.kitwarein.com>
+
+ParaView doesn't make any calls to require system resources nor
+does it ever ask to be run a certain processor (it can't anyway,
+there is no such standard MPI call). Therefore, it will use whatever
+the operating system and/or the MPI library gives it. Of course,
+unless you are doing some expansive computation, there is no reason
+why ParaView should use all the processor time available. It will
+idle until it is asked to compute something. This might be true
+even if you are interacting with an object since, when using hardware
+accelerated rendering, the graphics processor will take the
+actual load.
+
+
+On Fri, 2003-02-07 at 15:13, Steven Coorpender wrote:
+> I am running ParaView with MPICH v1.2.5 on a 2-node cluster (each node is a dual processor Xeon 2.2GHz running RedHat 8.0-smp--total of 4 processors in cluster). When I run ParaView with "mpirun -np 4 ParaView", my system monitor shows a maximum of 50% cpu usage on each node, giving 25% to each ParaView process. If I run Paraview with "mpirun -np 8 ParaView", I still get 25% for each process, but 4 processes on each node, and a maximum of 100% total cpu usage. Why won't ParaView use more than 25% of a cpu in one process, and why can I only get 50% usage with mpirun -np 4?
+
+
+
+
+
+From rayg@bu.edu  Mon Feb 10 19:59:12 2003
+From: rayg@bu.edu (Raymond F Gasser)
+Date: Mon, 10 Feb 2003 14:59:12 -0500
+Subject: [Paraview] Paraview documentation
+Message-ID: <3E480490.2695CB97@bu.edu>
+
+I have been unable to find any documentation on using Paraview.
+I downloaded and built ParaViewComplete06.tar.gz from the Source code
+archives.
+
+I have read
+
+ParaViewComplete06/ParaView/README.html
+
+which refers to online documentation.
+
+
+> Execution
+>
+> For information about how to start and use ParaView, see the online documentation.
+>
+
+I have gone to the Help->OnLine Help menu of the Paraview application
+and it refers to Documentation/HTML subdirectory of the application
+
+> HTML help is included in the Documentation/HTML subdirectory ofthis application. You can view this help
+> using a standard web browser.
+>
+
+I have been unable to find the Documentation/HTML subdirectory. All
+I find is
+
+/Source/ParaViewComplete06/ParaView/Documentation/Paraview.chm
+
+or in our build tree of
+
+/paraview06-linux/ParaView/Documentation which contains
+
+cmake.check_depends, cmake.depends, DartTestfile.txt, Makefile
+
+
+I have also been unable to find any documentation on the ParaView
+website www.paraview.org
+
+
+Any help will be much appreciated.
+
+
+Thanks
+Ray
+
+--
+Raymond F Gasser
+Graphics Programmer/Analyst
+Scientific Computing and Visualization Group
+Information Technology, Boston University
+rayg@bu.edu (617)358-0545
+http://scv.bu.edu/~rayg
+
+
+
+
+From berklist@nycap.rr.com  Tue Feb 11 16:14:19 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 11 Feb 2003 11:14:19 -0500
+Subject: [Paraview] Paraview documentation
+In-Reply-To: <3E480490.2695CB97@bu.edu>
+References: <3E480490.2695CB97@bu.edu>
+Message-ID: <1044980061.7624.4.camel@caemlyn.kitwarein.com>
+
+> I have been unable to find any documentation on using Paraview.
+> I downloaded and built ParaViewComplete06.tar.gz from the Source code
+> archives.
+
+You are right. We changed the process we use to create the documentation
+and it looks like I only put the Windows compiled help file in the CVS
+tree. Just download a binary distribution and get it from there. When
+you unpack the tar file, you'll get
+share/ParaView/Documentation/ParaViewDocumentation.pdf
+as part of the distribution.
+
+-Berk
+
+
+
+From scoorp@lsuhsc.edu  Tue Feb 11 22:25:54 2003
+From: scoorp@lsuhsc.edu (Steven Coorpender)
+Date: Tue, 11 Feb 2003 16:25:54 -0600
+Subject: [Paraview] Running ParaView with MPI
+Message-ID: <00c501c2d21c$8d869580$33ea3a9b@scoorp>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_00C2_01C2D1EA.403B0F40
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Thanks for the reply Berk. My issue turned out to not be a problem after
+all. Apparently, newer Xeons and Linux kernels support hyperthreading, =
+so
+each node in my cluster is actually reporting (/proc/cpuinfo) 4 logical
+processors (2 physical) to MPICH and ParaView, thus the 25% maximum cpu
+usage/process.
+
+I am curious if anyone has benchmarked ParaView with/without =
+hyperthreading.
+Does anyone have any recommendations as to whether it should be on or =
+off?
+
+----- Original Message -----
+From: "Berk Geveci" <berk.geveci@kitware.com>
+To: "Steven Coorpender" <scoorp@lsuhsc.edu>
+Cc: <paraview@public.kitware.com>
+Sent: Friday, February 07, 2003 2:33 PM
+Subject: Re: [Paraview] Running ParaView with MPI
+
+
+> ParaView doesn't make any calls to require system resources nor
+> does it ever ask to be run a certain processor (it can't anyway,
+> there is no such standard MPI call). Therefore, it will use whatever
+> the operating system and/or the MPI library gives it. Of course,
+> unless you are doing some expansive computation, there is no reason
+> why ParaView should use all the processor time available. It will
+> idle until it is asked to compute something. This might be true
+> even if you are interacting with an object since, when using hardware
+> accelerated rendering, the graphics processor will take the
+> actual load.
+>
+>
+> On Fri, 2003-02-07 at 15:13, Steven Coorpender wrote:
+> > I am running ParaView with MPICH v1.2.5 on a 2-node cluster (each =
+node
+is a dual processor Xeon 2.2GHz running RedHat 8.0-smp--total of 4
+processors in cluster). When I run ParaView with "mpirun -np 4 =
+ParaView", my
+system monitor shows a maximum of 50% cpu usage on each node, giving 25% =
+to
+each ParaView process. If I run Paraview with "mpirun -np 8 ParaView", I
+still get 25% for each process, but 4 processes on each node, and a =
+maximum
+of 100% total cpu usage. Why won't ParaView use more than 25% of a cpu =
+in
+one process, and why can I only get 50% usage with mpirun -np 4?
+>
+>
+>
+
+------=_NextPart_000_00C2_01C2D1EA.403B0F40
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1126" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2><FONT face=3D"Times New Roman" =
+size=3D3>Thanks for the=20
+reply Berk. My issue turned out to not be a problem after<BR>all. =
+Apparently,=20
+newer Xeons and Linux kernels support hyperthreading, so<BR>each node in =
+my=20
+cluster is actually reporting (/proc/cpuinfo) 4 logical<BR>processors (2 =
+
+physical) to MPICH and ParaView, thus the 25% maximum=20
+cpu<BR>usage/process.<BR><BR>I am curious if anyone has benchmarked =
+ParaView=20
+with/without hyperthreading.<BR>Does anyone have any recommendations as =
+to=20
+whether it should be on or off?<BR><BR>----- Original Message =
+-----<BR>From:=20
+"Berk Geveci" &lt;</FONT><A =
+href=3D"mailto:berk.geveci@kitware.com"><FONT=20
+face=3D"Times New Roman" =
+size=3D3>berk.geveci@kitware.com</FONT></A><FONT=20
+face=3D"Times New Roman" size=3D3>&gt;<BR>To: "Steven Coorpender" =
+&lt;</FONT><A=20
+href=3D"mailto:scoorp@lsuhsc.edu"><FONT face=3D"Times New Roman"=20
+size=3D3>scoorp@lsuhsc.edu</FONT></A><FONT face=3D"Times New Roman"=20
+size=3D3>&gt;<BR>Cc: &lt;</FONT><A =
+href=3D"mailto:paraview@public.kitware.com"><FONT=20
+face=3D"Times New Roman" =
+size=3D3>paraview@public.kitware.com</FONT></A><FONT=20
+face=3D"Times New Roman" size=3D3>&gt;<BR>Sent: Friday, February 07, =
+2003 2:33=20
+PM<BR>Subject: Re: [Paraview] Running ParaView with MPI<BR><BR><BR>&gt; =
+ParaView=20
+doesn't make any calls to require system resources nor<BR>&gt; does it =
+ever ask=20
+to be run a certain processor (it can't anyway,<BR>&gt; there is no such =
+
+standard MPI call). Therefore, it will use whatever<BR>&gt; the =
+operating system=20
+and/or the MPI library gives it. Of course,<BR>&gt; unless you are doing =
+some=20
+expansive computation, there is no reason<BR>&gt; why ParaView should =
+use all=20
+the processor time available. It will<BR>&gt; idle until it is asked to =
+compute=20
+something. This might be true<BR>&gt; even if you are interacting with =
+an object=20
+since, when using hardware<BR>&gt; accelerated rendering, the graphics =
+processor=20
+will take the<BR>&gt; actual load.<BR>&gt;<BR>&gt;<BR>&gt; On Fri, =
+2003-02-07 at=20
+15:13, Steven Coorpender wrote:<BR>&gt; &gt; I am running ParaView with =
+MPICH=20
+v1.2.5 on a 2-node cluster (each node<BR>is a dual processor Xeon 2.2GHz =
+running=20
+RedHat 8.0-smp--total of 4<BR>processors in cluster). When I run =
+ParaView with=20
+"mpirun -np 4 ParaView", my<BR>system monitor shows a maximum of 50% cpu =
+usage=20
+on each node, giving 25% to<BR>each ParaView process. If I run Paraview =
+with=20
+"mpirun -np 8 ParaView", I<BR>still get 25% for each process, but 4 =
+processes on=20
+each node, and a maximum<BR>of 100% total cpu usage. Why won't ParaView =
+use more=20
+than 25% of a cpu in<BR>one process, and why can I only get 50% usage =
+with=20
+mpirun -np =
+4?<BR>&gt;<BR>&gt;<BR>&gt;</FONT><BR></FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_00C2_01C2D1EA.403B0F40--
+
+
+From dussere@labri.fr  Mon Feb 17 09:45:14 2003
+From: dussere@labri.fr (Michael Dussere)
+Date: Mon, 17 Feb 2003 10:45:14 +0100
+Subject: [Paraview] adding VTK sources and filters
+Message-ID: <3E50AF2A.1070106@labri.fr>
+
+Hi,
+I'm trying to add a new VTK source for ParaView. I found the XML files 
+describing user sources and I see them appear in ParaView menus when 
+modifying the XML.
+
+The first problem is that I can't find any documentation on the XML and 
+it's DTD. And the second one is that I don't know where to put my 
+compiled VTK class and how to relate it with the XML description.
+
+If somebody could give me an example or point me to a documentation it 
+would be great.
+
+Thanks
+
+Michael.
+
+
+From amf2@princeton.edu  Fri Feb 28 14:22:06 2003
+From: amf2@princeton.edu (Alexandre FOURNIER)
+Date: Fri, 28 Feb 2003 15:22:06 +0100
+Subject: [Paraview] Merging VTK Files
+Message-ID: <3E5F708E.3040301@princeton.edu>
+
+Hello All,
+
+I am using Paraview in order to visualize
+scalar (vector) fields produced by a parallel program.
+
+Each processor currently outputs its own *.vtk
+file, which corresponds to the value of the fields
+in the subdomain it's been allocated.
+
+I would like to know if there is a way of merging
+these *vtk files into one large vtk file that I would
+then visualize using Paraview.
+
+Alternatively, I would like to know if Paraview
+can merge these datasets after having loaded each one of them
+separately.
+
+Thanks in advance,
+
+Alex.
+
+
+From kitware@kitware.com  Fri Feb 28 14:41:58 2003
+From: kitware@kitware.com (Kitware (Berk Geveci))
+Date: 28 Feb 2003 09:41:58 -0500
+Subject: [Paraview] Merging VTK Files
+In-Reply-To: <3E5F708E.3040301@princeton.edu>
+References: <3E5F708E.3040301@princeton.edu>
+Message-ID: <1046443319.25924.2.camel@caemlyn.kitwarein.com>
+
+Hi Alex,
+
+I am a bit confused about what each file contains. They
+each contain part of the data (in space), right ?
+
+-Berk 
+
+On Fri, 2003-02-28 at 09:22, Alexandre FOURNIER wrote:
+> Hello All,
+> 
+> I am using Paraview in order to visualize
+> scalar (vector) fields produced by a parallel program.
+> 
+> Each processor currently outputs its own *.vtk
+> file, which corresponds to the value of the fields
+> in the subdomain it's been allocated.
+> 
+> I would like to know if there is a way of merging
+> these *vtk files into one large vtk file that I would
+> then visualize using Paraview.
+> 
+> Alternatively, I would like to know if Paraview
+> can merge these datasets after having loaded each one of them
+> separately.
+> 
+> Thanks in advance,
+> 
+> Alex.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+From charles.law@kitware.com  Fri Feb 28 15:59:54 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 28 Feb 2003 10:59:54 -0500
+Subject: [Paraview] Merging VTK Files
+In-Reply-To: <3E5F708E.3040301@princeton.edu>
+Message-ID: <5.1.0.14.0.20030228105027.03cd7418@pop.biz.rr.com>
+
+Alex,
+
+I assume (Berk's question) that each sub domain is a separate spatial 
+partition and each file has the same arrays (different geometry).
+
+I do not know what type of data you are handling (unstructured grid, 
+structured grid ...)
+
+Here are your options:
+
+1:  Use VTK to append all the datasets into one big file.
+         vtkAppendFilter will create a single output (unstructured grid).
+         vtkAppendPolyData is the same but takes polydata input and 
+produces polydata output.
+
+2: Make a pvtk (extension .pvtk) XML file that looks like this:
+
+<File version="pvtk-1.0"
+       dataType="vtkUnstructuredGrid"
+       numberOfPieces="2" >
+   <Piece fileName="ghost.0.vtk" />
+   <Piece fileName="ghost.1.vtk" />
+</File>
+
+This file groups the subfiles so ParaView reads them as one.  This XML file 
+is a little more complicated for structured data sets, but not much.
+
+
+
+In the near future, ParaView (1.0) will be able to append datasets from the 
+user interface.
+
+Charles.
+
+
+
+At 03:22 PM 2/28/2003 +0100, Alexandre FOURNIER wrote:
+>Hello All,
+>
+>I am using Paraview in order to visualize
+>scalar (vector) fields produced by a parallel program.
+>
+>Each processor currently outputs its own *.vtk
+>file, which corresponds to the value of the fields
+>in the subdomain it's been allocated.
+>
+>I would like to know if there is a way of merging
+>these *vtk files into one large vtk file that I would
+>then visualize using Paraview.
+>
+>Alternatively, I would like to know if Paraview
+>can merge these datasets after having loaded each one of them
+>separately.
+>
+>Thanks in advance,
+>
+>Alex.
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+

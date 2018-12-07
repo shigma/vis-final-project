@@ -1,0 +1,508 @@
+From George.Sheri@geind.ge.com  Mon May  5 13:06:59 2003
+From: George.Sheri@geind.ge.com (Sheri, George (CORP, GEITC))
+Date: Mon, 5 May 2003 17:36:59 +0530
+Subject: [Paraview] Help on integration with vtkImageTwoInputFilter
+Message-ID: <5BE159250B76344B9E60D32AFA6C865B02FD6FC4@BANMLVEM01.e2k.ad.ge.com>
+
+Hi,
+
+I had some difficulty in integrating the vtkImageTwoInputFilter with =
+Paraview. Is there any modification required in the PVDefaultModules.h? =
+I had tried with entries in the PVDefaultModules.h similar to =
+vtkImageSingleInputFilter? I am getting an error 'Invalid Command'.
+Appreciate your help on solving this.
+
+Thanks
+
+Sheri
+
+From abachamariam_2003@rediffmail.com  Mon May  5 18:22:46 2003
+From: abachamariam_2003@rediffmail.com (MARIAM ABACHA)
+Date: Mon, 5 May 2003 10:22:46 -0700
+Subject: [Paraview] JOINT BUSINESS OFFER !!!
+Message-ID: <20030505172332.E15FE1AB3A@public.kitware.com>
+
+From=3A Mariam Abacha 
+c=2Fo Barrister Kenny Edwards=2E 
+ATTN=3A sir=2C 
+I am MRS=2E MARIAM ABACHA=2C the window of the late GEN=2E 
+SANI ABACHA former Nigerian military Head of state who 
+died mysteriously as a result of Cardiac Arrest=2E Since 
+after my husband death' my family has been under 
+restriction of movement=2C and that not withstanding=2Cwe 
+are being molested=2C Policed and our Bank Account both 
+here and abroad are being frozen by the Nigerian 
+Civilian Government=2E Furthermore=2C my elder son is in 
+detention by the Nigerian Civilian and under 
+interrogation about my husband's asset and some vital 
+documents=2E 
+The Government later discovered my husband's Bank 
+Account with Swiss bank in which the huge sum US$25 
+Million and D M 10 Million Dollars was deposited=2E 
+This is the reason I have decided to move the sum 
+of US$15=2E3 Million Dollars which was secretly defaced 
+and is sealed in two metal Boxes for security reason=2E 
+I therefore personally=2C appeal to you seriously and 
+religiously for urgent assistance to move this money 
+into your country where I believe it will be safe 
+since I cannot leave the country due to the 
+restriction of movement imposed on the members of my 
+family by the Nigerian Government=2E 
+You can contact me through my family Attorney 
+BARR=2EKENNY EDWARDS on his e-mail 
+barredward=40zapo=2Enet 
+=2ETel 234- 80-3333-5990=2E 
+My lawyer shall arrange with you for a face to face 
+meeting outside Nigeria in order to liaise with you 
+toward effective completion of this transactions=2E 
+However=2C arrangement have been put in place to move 
+this money out of the country either Europe=2C Asia or 
+Africa in a secret vault through a security company 
+here in Nigeria that has affiliate offices in Europe 
+and other parts of the world and as soon as you 
+indicate your interest my Lawyer shall send you the 
+Deposit Certificate of the Luggage and other related 
+documents so that you can help to claim the Luggage=2E 
+Conclusively=2C we have agreed to offer you 20% of the 
+total sum 70% is to be held on trust by you until we 
+can decide on a suitable business investment in your 
+country and 10% for all incidental expenses 
+Subsequent to our free movement by the Nigerian 
+Government=2E Please reply urgently and treat with 
+absolute confidentiality and sincerity through the 
+above E-mail address=2E You should note that even if you 
+are not interested you should not let out this 
+proposal to anybody whatever=2E You should urgently get 
+across to my Attorney so that he can give you the 
+necessary advice on the procedure and requirements for 
+this transaction=2E 
+Best Regards=2C 
+HAJIA MARIAM ABACHA =28MRS=2E=29 
+
+
+
+From jameskyari@rediffmail.com  Tue May  6 00:04:00 2003
+From: jameskyari@rediffmail.com (James Kyari)
+Date: Tue, 6 May 2003 01:04:00 +0200
+Subject: [Paraview] Plea For Assisstance
+Message-ID: <20030505230354.DF1981AA74@public.kitware.com>
+
+FROM=3A Mr James Kyari=2E
+TEL=3A +31-647-586-576=2E
+Email=3Ajames=5Fkyari=40yahoo=2Eca 
+
+Dear sir=2C 
+Compliment of the day=2C I am James Kyari=2C The son of late General Jonas Kyari of the Democratic Republic of Congo=2E
+My father was a General in the Congolese Army=2E In his position =28My father=29 with the office of the presidency during the regime of Laurent Kabila=2C he was assigned on a secret mission to source and acquire arms internationally in order to strengthen the Government forces against the rebels=2C which already had the support of Rwandan and Uganda Army=2E
+While he was still negotiating for the purchase of the arms=2C he received on the 16th January 2001 news of the assassination of Laurent Kabila which forced him to call off the assignment and deposit the sum of US$12=2E5M=2C Packed in a diplomatic case in a private security company in the Hague=2C the Netherlands=2C though he registered the content as precious stones while the real content is =28US12=2E5M=29 meant for the purchase of arms for the Congolese Army=2E
+My father went home for the funeral of the late president=2C but on his arrival he was arrested=2C detained and tortured=2C unfortunately my father suffer cardiac arrest and died on the 17th of March 2001=2E However=2C on one of our numerous visits=2C my mother and I paid him while in prison=2C my father was able to reveal this secret to me and advice that i should proceed to the Netherlands to claim the money=2C he handed me all the relevant documents that will enable me claim the box from the security company=2EAlready=2C I have made my first visit to the security company and the availability of this box have been confirmed=2E
+On our arrival in the Netherlands few months ago=2C we sought for political asylum=3B which was granted=2E My mother and I are making frantic efforts on the best way to handle this money=2E We sought advice from an attorney who advised that we must seek for a trustworthy foreign business partner whom this money could be transferred into his=2Fher =28company=22s=29 account This we view as the best option because our refugee status does not permit us to operate a bank account=2C hence we seek your assistance and hope you could be trusted=2E
+I sincerely crave your indulgence and assistance to get this money through your account=2C Your share for assisting us will be 25% of the total sum=2C 5% will be use for upsetting all the expenses incurred in the course of concluding this venture and the remaining 70% that will be for me and my family=2E Also you stand to gain from any investment you might introduce us into after the conclusion of the transfer=2E
+Please keep this confidential until we finalize and get this money into your account for security reasons=2E
+Please this e-mail address you can reach me =28=29 
+Thanks and GOD bless
+Mr James Kyari=2E 
+
+
+
+From ulrik@ullum.dk  Thu May  8 14:11:16 2003
+From: ulrik@ullum.dk (Ulrik Ullum)
+Date: Thu, 8 May 2003 15:11:16 +0200
+Subject: [Paraview] Velocity vectors and more......
+Message-ID: <000001c31563$4f6d13c0$0301a8c0@ullum2>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0001_01C31574.12F5E3C0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_001_0002_01C31574.12F82DB0"
+
+
+------=_NextPart_001_0002_01C31574.12F82DB0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hi,
+ 
+I am practically a newbie to ParaView and VTK and I am trying to
+visualize CFD-generated or measured velocity vector fields on top of a
+geometry file exported from our CAD system (VRML format). However, I
+find it difficult to get a satisfying result. Any response from somebody
+who has experience with the presentation of velocity vector fields in
+ParaView is very welcome. Some of the problems I struggle with are:
+ 
+I would like to show velocity vectors as thin arrows (lines) instead of
+the 'volume' representation I get when I choose Glyph and
+Arrow0/Cone0/Sphere0 - is there another way to display vectors than
+using the glyph-tool? - or can the glyph arrows be modified to be lines
+instead of cylinders and cones?
+ 
+I have been using a vtk data format where i have a POLYDATA dataset with
+a definition of VERTICES and subsequently a definition of VECTORS - this
+format has been working in conjunction with another VTK-viewer (MayaVi),
+however I can not make ParaView read my files. Am I doing something
+completely wrong? - I've attached a small example which can be read by
+MayaVI!
+I have been able to make a readable data file with the UNSTRUCTURED_GRID
+dataset but wonder why my POLYDATA format doesn't succed - ParaView
+simply crashes (WinXP).
+ 
+If I could get a working example (or maybe a few) of a vtkdata file with
+a velocity vector field I would be grateful!
+ 
+Regards,
+Ulrik Ullum
+
+------=_NextPart_001_0002_01C31574.12F82DB0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii">
+<TITLE>Message</TITLE>
+
+<META content=3D"MSHTML 6.00.2800.1141" name=3DGENERATOR></HEAD>
+<BODY>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003>Hi,</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003></SPAN></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>I am =
+practically a=20
+newbie to ParaView and VTK and I am&nbsp;trying to visualize =
+CFD-generated=20
+or&nbsp;measured velocity vector fields on top of&nbsp;a geometry file =
+exported=20
+from our CAD system (VRML format). However, I find it difficult to get a =
+
+satisfying result. Any response from somebody who has experience with =
+the=20
+presentation of velocity vector fields in ParaView is very welcome. Some =
+of the=20
+problems I struggle with are:</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003></SPAN></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>I =
+would like to show=20
+velocity vectors as thin arrows (lines) instead of the 'volume' =
+representation I=20
+get when I choose Glyph and Arrow0/Cone0/Sphere0 - is there another way =
+to=20
+display vectors than using the glyph-tool? - or can the glyph =
+arrows&nbsp;be=20
+modified to be lines instead of cylinders and cones?</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003></SPAN></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>I have =
+been using a=20
+vtk data format where i have a&nbsp;POLYDATA dataset with a definition =
+of=20
+VERTICES&nbsp;and subsequently a definition of VECTORS - this format has =
+been=20
+working in conjunction with another&nbsp;VTK-viewer (MayaVi), however I =
+can not=20
+make ParaView read my files.&nbsp;Am I doing something completely =
+wrong?&nbsp;-=20
+I've attached a small&nbsp;example which can be read by=20
+MayaVI!</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>I have =
+been able to=20
+make a readable data file with the UNSTRUCTURED_GRID dataset but wonder =
+why my=20
+POLYDATA format doesn't succed - ParaView simply crashes=20
+(WinXP).</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003></SPAN></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>If I =
+could get a=20
+working&nbsp;example (or maybe a few) of a vtkdata file with a velocity =
+vector=20
+field I would be grateful!</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003></SPAN></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN=20
+class=3D734272911-08052003>Regards,</SPAN></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2><SPAN class=3D734272911-08052003>Ulrik=20
+Ullum</SPAN></FONT></DIV></BODY></HTML>
+
+------=_NextPart_001_0002_01C31574.12F82DB0--
+
+------=_NextPart_000_0001_01C31574.12F5E3C0
+Content-Type: application/octet-stream;
+	name="VTK_example.vtk"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+	filename="VTK_example.vtk"
+
+# vtk DataFile Version 2.0
+VTK test on CR4x2 data
+ASCII
+DATASET POLYDATA
+POINTS 20 float
+0.04782 -0.00083 -0.01710  0.04780 -0.00167 -0.01710  0.04776 -0.00250 =
+-0.01710  0.04771 -0.00334 -0.01710  0.04765 -0.00417 -0.01710
+0.04757 -0.00500 -0.01710  0.04747 -0.00583 -0.01710  0.04736 -0.00666 =
+-0.01710  0.04724 -0.00748 -0.01710  0.04710 -0.00831 -0.01710
+0.04695 -0.00913 -0.01710  0.04678 -0.00994 -0.01710  0.04660 -0.01076 =
+-0.01710  0.04641 -0.01157 -0.01710  0.04620 -0.01238 -0.01710
+0.04598 -0.01318 -0.01710  0.04574 -0.01398 -0.01710  0.04549 -0.01478 =
+-0.01710  0.04522 -0.01557 -0.01710  0.04495 -0.01636 -0.01710
+
+VERTICES 20 40
+1    1  1    2  1    3  1    4  1    5 =20
+1    6  1    7  1    8  1    9  1   10 =20
+1   11  1   12  1   13  1   14  1   15 =20
+1   16  1   17  1   18  1   19  1   20 =20
+
+POINT_DATA 20
+VECTORS scalars float
+ 1.459 -2.718  0.000   1.424 -2.775  0.000   1.317 -2.781  0.000   1.186 =
+-2.805  0.000   1.065 -2.800  0.000 =20
+ 0.982 -2.781  0.000   0.901 -2.775  0.000   0.911 -2.776  0.000   0.793 =
+-2.755  0.000   0.602 -2.713  0.000
+ 0.609 -2.698  0.000   0.409 -2.645  0.000   0.484 -2.637  0.000   0.277 =
+-2.572  0.000   0.272 -2.536  0.000
+ 0.031 -2.442  0.000   0.101 -2.422  0.000   0.125 -2.387  0.000   0.041 =
+-2.313  0.000  -0.244 -2.180  0.000
+
+------=_NextPart_000_0001_01C31574.12F5E3C0--
+
+
+
+From jfavre@cscs.ch  Thu May  8 14:42:33 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 08 May 2003 15:42:33 +0200
+Subject: [Paraview] Velocity vectors and more......
+References: <000001c31563$4f6d13c0$0301a8c0@ullum2>
+Message-ID: <3EBA5EC9.6E4C316B@cscs.ch>
+
+> Ulrik Ullum wrote:
+> 
+> (MayaVi), however I can not make ParaView read my files. Am I doing
+> something completely wrong? - I've attached a small example which can
+> be read by MayaVI!
+
+Hello
+
+I can confirm that I can read your data in ParaView without any problem.
+I use the CVS nightly version.
+
+A first idea to simplify your glyph representation is to edit the
+definition of the arrow. 
+
+Go to the Select Menu, choose Glyph, choose Arrow0, and if you set Tip
+radius to 0, there will be no tip, just a single tube, whose resolution
+you can further reduce.
+
+
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From ycc@nchc.gov.tw  Fri May  9 04:48:19 2003
+From: ycc@nchc.gov.tw (Julian Yu-Chung Chen)
+Date: Fri, 09 May 2003 11:48:19 +0800
+Subject: [Paraview] Build ParaView
+Message-ID: <3EBB2503.7020708@nchc.gov.tw>
+
+Hi there,
+
+I tried to build ParaView 0.6 these few days, and found that it can only 
+be built with gcc-2.95 but gcc3.2.
+Is there anything I should take care if using gcc3.2?
+And after successfully build with gcc-2.95, in runtime, the following 
+error comes up,
+
+/opt/PV.06.standalone/bin/ParaView: relocation error: 
+/opt/PV.06.standalone/bin/ParaView: symbol __8ifstreamiPCcii, version 
+GLIBC_2.0 not defined in file libc.so.6 with link time reference
+
+Any ideas?
+
+regards,
+
+
+
+
+From andy.cedilnik@kitware.com  Fri May  9 12:43:17 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 09 May 2003 07:43:17 -0400
+Subject: [Paraview] Build ParaView
+In-Reply-To: <3EBB2503.7020708@nchc.gov.tw>
+References: <3EBB2503.7020708@nchc.gov.tw>
+Message-ID: <1052480597.661.387.camel@andoria>
+
+Hi Julian,
+
+We build ParaView every night with gcc 2.95 and gcc 3.2. Are you sure
+your gcc 3.2 is correctly installed?
+
+			Andy
+
+On Thu, 2003-05-08 at 23:48, Julian Yu-Chung Chen wrote:
+> Hi there,
+> 
+> I tried to build ParaView 0.6 these few days, and found that it can only 
+> be built with gcc-2.95 but gcc3.2.
+> Is there anything I should take care if using gcc3.2?
+> And after successfully build with gcc-2.95, in runtime, the following 
+> error comes up,
+> 
+> /opt/PV.06.standalone/bin/ParaView: relocation error: 
+> /opt/PV.06.standalone/bin/ParaView: symbol __8ifstreamiPCcii, version 
+> GLIBC_2.0 not defined in file libc.so.6 with link time reference
+
+
+
+From jsjones@sandia.gov  Fri May  9 15:44:04 2003
+From: jsjones@sandia.gov (Jones, Jake S)
+Date: Fri, 9 May 2003 08:44:04 -0600
+Subject: [Paraview] can not find channel named "stderr"
+Message-ID: <03781128C7B74B4DBC27C55859C9D738034A5A9A@es06snlnt.sandia.gov>
+
+Hello,
+
+I have written a paraview reader module that works fine on linux.
+
+On windows, using the latest pre-compiled binaries for paraview
+(release .6), and the vtk pre-compiled binaries (4.2), I get the 
+following error when I start up ParaView:
+
+::paraview::load_component ... can not find channel named "stderr"
+
+Ideas?
+
+Jake
+
+
+
+From berk.geveci@kitware.com  Fri May  9 16:10:49 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 09 May 2003 11:10:49 -0400
+Subject: [Paraview] can not find channel named "stderr"
+In-Reply-To: <03781128C7B74B4DBC27C55859C9D738034A5A9A@es06snlnt.sandia.gov>
+References: <03781128C7B74B4DBC27C55859C9D738034A5A9A@es06snlnt.sandia.gov>
+Message-ID: <1052493050.24953.20.camel@caemlyn.kitwarein.com>
+
+> I have written a paraview reader module that works fine on linux.
+> 
+> On windows, using the latest pre-compiled binaries for paraview
+> (release .6), and the vtk pre-compiled binaries (4.2), I get the 
+> following error when I start up ParaView:
+> 
+> ::paraview::load_component ... can not find channel named "stderr"
+> 
+> Ideas?
+
+It looks like ParaView could not find the component (the shared
+file for the module you are loading) and tried to print an error
+on stderr. Since there is no stderr on the Windows build, you
+got this error. We'll fix the bug. However, you have to figure
+out why ParaView could not load your library.
+
+-Berk
+
+
+
+
+
+From penalva@cines.fr  Thu May 22 09:15:54 2003
+From: penalva@cines.fr (Jean-Christophe Penalva)
+Date: Thu, 22 May 2003 09:15:54 +0100
+Subject: [Paraview] error during build on Irix SGI
+Message-ID: <20030522081554.M64392@cines.fr>
+
+Hello,
+
+ during the build of the cvs version of Paraview, there's a message :
+
+cmake.depends' is up to date.
+Building object file vtkImageReslice.o...
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx: In 
+function `void vtkGetResliceInterpFunc<float>(class vtkImageReslice *, int 
+(**)(void *&, const void *, const int *, const int *, int, const float *, int, 
+const void *))':
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1658:  
+instantiated from here
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1401: 
+conversion from `int (**)(void *&, const void *, const int *, const int *, 
+int, const float *, int, const void *)' to non-scalar type `{error}' requested
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1401: 
+confused by earlier errors, bailing out
+*** Error code 1 (bu21)
+
+ An idea ? My machine is an Onyx2, 
+
+
+###################################################################### 
+Jean-Christophe Penalva 
+Centre Informatique National de l'Enseignement Superieur (CINES) 
+Montpellier, FRANCE
+Tel : 33 4 67 141414    Fax : 33 4 67 523 763
+http://www.cines.fr/ 
+
+From penalva@cines.fr  Wed May 21 16:42:06 2003
+From: penalva@cines.fr (Jean-Christophe Penalva)
+Date: Wed, 21 May 2003 16:42:06 +0100
+Subject: [Paraview] pb during build
+Message-ID: <20030521154206.M7410@cines.fr>
+
+  Hello,
+
+  during the build of the cvs version of Paraview, there's a message :
+
+cmake.depends' is up to date.
+Building object file vtkImageReslice.o...
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx: In 
+function `void vtkGetResliceInterpFunc<float>(class vtkImageReslice *, int 
+(**)(void *&, const void *, const int *, const int *, int, const float *, int, 
+const void *))':
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1658:  
+ instantiated from here
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1401: 
+conversion from `int (**)(void *&, const void *, const int *, const int *, 
+int, const float *, int, const void *)' to non-scalar type `{error}' requested
+/tmpp/penalva/paraview/ParaViewComplete/VTK/Imaging/vtkImageReslice.cxx:1401: 
+confused by earlier errors, bailing out
+*** Error code 1 (bu21)
+
+  An idea ? My machine is an Onyx2, Irix 6.5.18f, VTK 4.2
+
+
+###################################################################### 
+Jean-Christophe Penalva 
+Centre Informatique National de l'Enseignement Superieur (CINES) 
+Montpellier, FRANCE
+Tel : 33 4 67 141414    Fax : 33 4 67 523 763
+http://www.cines.fr/ 
+
+From emmanuel.colin@cea.fr  Thu May 22 13:42:15 2003
+From: emmanuel.colin@cea.fr (Emmanuel Colin)
+Date: 22 May 2003 14:42:15 +0200
+Subject: [Paraview] Parallel rendering
+Message-ID: <200305221242.OAA12783@styx.bruyeres.cea.fr>
+
+Hi,
+
+Having written a new reader for ParaView, and testing it in parallel
+mode, we got the full rendering to be done in every created window (and
+overlapping windows didn't cause any display problem, so there seems not
+to be any compositing either).
+
+With another reader, for example .vtu reader, only part of the rendering
+is done in each window, and the different parts are composited in the
+main window as expected.
+
+Could someone point out at what we might have overlooked ?
+
+Regards,
+Emmanuel
+
+
+

@@ -1,0 +1,594 @@
+From rgron@buffalo.edu  Thu Dec  5 18:46:21 2002
+From: rgron@buffalo.edu (Rich Gronostajski)
+Date: Thu, 05 Dec 2002 13:46:21 -0500
+Subject: [Paraview] Compiling ParaView on MacOSX10.2
+Message-ID: <3DEF9EFD.3020709@mac.com>
+
+I managed to build a CMakeCache.txt file that shows ParaView where all 
+the OSX libraries are (copied most of it from the CMakeCache.txt file I 
+used successfully with VTK) but when making I get the error message:
+
+/Develop/ParaView/Widgets/vtkKWView.cxx: In member function `int
+    vtkKWView::ShouldIAbort()':
+/Develop/ParaView/Widgets/vtkKWView.cxx:366: `XSync' undeclared (first 
+use this
+    function)
+/Develop/ParaView/Widgets/vtkKWView.cxx:366: (Each undeclared identifier is
+    reported only once for each function it appears in.)
+/Develop/ParaView/Widgets/vtkKWView.cxx:367: `XCheckIfEvent' undeclared 
+(first
+    use this function)
+make[3]: *** [vtkKWView.o] Error 1
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_Widgets] Error 2
+make: *** [default_target] Error 2
+
+I know that XSync and XCheckIfEvent are X-windows calls, but I've put 
+the X windows library inclusions into the CMakeCache.txt file as:
+
+//X11 extra flags.
+CMAKE_X_CFLAGS:STRING= -I/usr/X11R6/include
+
+//Libraries and options used in X11 programs.
+CMAKE_X_LIBS:STRING=' -lSM -lICE  -L/usr/X11R6/lib -lX11 -lXext '
+
+so I don't know why vtkKWView.cxx can't find them.  I even tried pasting 
+them into the Makefile in the Widgets directory to no avail.  Does 
+anyone have any info that could help me with this?  Thanks in advance.
+
+-- 
+Richard M. Gronostajski
+Professor, Dept. of Biochemistry
+State University of New York at Buffalo
+140 Farber Hall, 3435 Main St.
+Buffalo, NY 14214
+
+Phone: 716-829-3471
+Fax: 716-829-2725
+Webpage: http://elegans.swmed.edu/Worm_labs/Gronostajski
+
+
+From Rupert.Shute@awe.co.uk  Tue Dec 10 10:33:31 2002
+From: Rupert.Shute@awe.co.uk (Rupert Shute)
+Date: Tue, 10 Dec 2002 10:33:31 -0000
+Subject: [Paraview] file formats and stereo viewing
+Message-ID: <KAJ14208@awe.co.uk>
+
+Hi,
+	Does anyone know where I can get hold of a definition of the
+parallel file formats used by paraview/VTK?
+	Also I was wanting to add the functionality of a stereoscopic
+display to paraview, can anyone comment on how straight forward this may, or
+may not, be?
+
+Many thanks
+Rupert 
+--
+_______________________________________________________________________________
+
+The information in this email and in any attachment(s) is commercial in confidence. If you are not the named addressee(s) or if you receive this email in error then any distribution, copying or use of this communication or the information in it is strictly prohibited.  Please notify us immediately by email at intadmin@awe.co.uk, and then delete this message from your computer.  While attachments are virus checked, AWE plc does not accept any liability in respect of any virus which is not detected.
+
+
+From berklist@nycap.rr.com  Tue Dec 10 13:46:29 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 10 Dec 2002 08:46:29 -0500
+Subject: [Paraview] file formats and stereo viewing
+In-Reply-To: <KAJ14208@awe.co.uk>
+References: <KAJ14208@awe.co.uk>
+Message-ID: <1039527990.27304.20.camel@caemlyn.kitwarein.com>
+
+> 	Does anyone know where I can get hold of a definition of the
+> parallel file formats used by paraview/VTK?
+
+We are working on it. It will be out with or before the next User's
+Guide, probably in a few weeks. It will be on the web.
+ 
+> 	Also I was wanting to add the functionality of a stereoscopic
+> display to paraview, can anyone comment on how straight forward this may, or
+> may not, be?
+
+Depends. On a single processor (and assuming that VTK support the
+stereo mode you are interested in), it would require a few lines of
+change. It is also easy when running in parallel and using collect
+(rendering locally on the first process). However, running in parallel
+and using sort-last compositing, it would be a lot tougher. I think the
+z-buffer is handled differently when in stereo mode and the compositing
+code has to be made aware of this.
+
+-Berk
+ 
+
+
+From berk.geveci@kitware.com  Tue Dec 10 13:50:32 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 10 Dec 2002 08:50:32 -0500
+Subject: [Paraview] Compiling ParaView on MacOSX10.2
+In-Reply-To: <3DEF9EFD.3020709@mac.com>
+References: <3DEF9EFD.3020709@mac.com>
+Message-ID: <1039528232.25777.26.camel@caemlyn.kitwarein.com>
+
+We have never built ParaView on Mac OS X so I have little experience.
+It sounds like ParaView is not getting the X related flags from VTK.
+Did you build VTK using X or Quartz ? Can you describe in detail
+how you configured/built VTK and ParaView and send your cache files ?
+
+-Berk
+
+On Thu, 2002-12-05 at 13:46, Rich Gronostajski wrote:
+> I managed to build a CMakeCache.txt file that shows ParaView where all 
+> the OSX libraries are (copied most of it from the CMakeCache.txt file I 
+> used successfully with VTK) but when making I get the error message:
+> 
+> /Develop/ParaView/Widgets/vtkKWView.cxx: In member function `int
+>     vtkKWView::ShouldIAbort()':
+> /Develop/ParaView/Widgets/vtkKWView.cxx:366: `XSync' undeclared (first 
+> use this
+>     function)
+> /Develop/ParaView/Widgets/vtkKWView.cxx:366: (Each undeclared identifier is
+>     reported only once for each function it appears in.)
+> /Develop/ParaView/Widgets/vtkKWView.cxx:367: `XCheckIfEvent' undeclared 
+> (first
+>     use this function)
+> make[3]: *** [vtkKWView.o] Error 1
+> make[2]: *** [default_target] Error 2
+> make[1]: *** [default_target_Widgets] Error 2
+> make: *** [default_target] Error 2
+> 
+> I know that XSync and XCheckIfEvent are X-windows calls, but I've put 
+> the X windows library inclusions into the CMakeCache.txt file as:
+> 
+> //X11 extra flags.
+> CMAKE_X_CFLAGS:STRING= -I/usr/X11R6/include
+> 
+> //Libraries and options used in X11 programs.
+> CMAKE_X_LIBS:STRING=' -lSM -lICE  -L/usr/X11R6/lib -lX11 -lXext '
+> 
+> so I don't know why vtkKWView.cxx can't find them.  I even tried pasting 
+> them into the Makefile in the Widgets directory to no avail.  Does 
+> anyone have any info that could help me with this?  Thanks in advance.
+> 
+> -- 
+> Richard M. Gronostajski
+> Professor, Dept. of Biochemistry
+> State University of New York at Buffalo
+> 140 Farber Hall, 3435 Main St.
+> Buffalo, NY 14214
+> 
+> Phone: 716-829-3471
+> Fax: 716-829-2725
+> Webpage: http://elegans.swmed.edu/Worm_labs/Gronostajski
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+
+From berk.geveci@kitware.com  Tue Dec 10 15:35:20 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 10 Dec 2002 10:35:20 -0500
+Subject: [Paraview] Compiling ParaView on MacOSX10.2
+In-Reply-To: <3DF5FE6A.8020600@mac.com>
+References: <3DEF9EFD.3020709@mac.com>
+ <1039528232.25777.26.camel@caemlyn.kitwarein.com>
+ <3DF5FE6A.8020600@mac.com>
+Message-ID: <1039534520.25777.44.camel@caemlyn.kitwarein.com>
+
+> I built ParaView using Quartz (at least I tried to).  The Tcl/Tk 
+> libraries were the ones for Quartz and worked for building VTK just 
+> fine. 
+
+This is the problem. ParaView does not compile or work well with Quartz
+(yet) because:
+
+1. Tcl/Tk for native OS X is not there yet. There are still things that
+behave differently than on X or Windows or things that don't work at
+all,
+2. We had no time/resources to make the necessary changes to the
+ParaView source
+
+If you have X installed and working on your Mac, you can build VTK
+and ParaView with X and then ParaView should work ok. I think there has
+been discussions on the VTK mailing list on how to do it.
+
+-Berk
+
+
+
+
+From Andrew.Porter@man.ac.uk  Thu Dec 12 18:49:52 2002
+From: Andrew.Porter@man.ac.uk (Andrew Porter)
+Date: Thu, 12 Dec 2002 18:49:52 +0000 (GMT)
+Subject: [Paraview] Execution problems
+Message-ID: <20021212184216.T88861-100000@nessie.mcc.ac.uk>
+
+Hi,
+
+I'm just starting out with ParaView but haven't got very far.
+
+My platform is an SGI Onyx running IRIX v.6.5 and I'm using the SGI
+compilers.
+
+I've downloaded and compiled the 'complete' distribution and have now got
+a (32-bit) binary called ParaView in my ParaViewComplete06/bin directory.
+
+I haven't managed to find any instructions on what I do with this so I
+tried just executing it and simply got a "Killed" message.  The syslog
+reveals:
+
+Dec 12 16:53:53 5E:bezier login[5827348]: Created Job Container -
+0x4edd0000000050 bf
+Dec 12 16:55:30 1A:bezier unix: |$(0x6dd)ALERT:
+Process [ParaView] 5867614 generated trap, but has signal 11 held or
+ignored
+Dec 12 16:55:30 6A:bezier unix:  epc 0xfa3ce24 ra 0xfa3c884
+badvaddr 0x1458 9948
+Dec 12 16:55:30 6A:bezier unix: Process has been
+killed to prevent infinite loop
+
+I'd be grateful for any suggestions as to where I might be going wrong.
+
+Many thanks,
+
+Andrew.
+
+--
+Andrew Porter
+
+Software engineer, RealityGrid
+Manchester Computing
+University of Manchester
+Oxford Road
+Manchester, M13 9PL
+
+
+
+From berk.geveci@kitware.com  Fri Dec 13 15:14:43 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 13 Dec 2002 10:14:43 -0500
+Subject: [Paraview] Execution problems
+In-Reply-To: <20021212184216.T88861-100000@nessie.mcc.ac.uk>
+References: <20021212184216.T88861-100000@nessie.mcc.ac.uk>
+Message-ID: <1039792490.30004.1.camel@caemlyn.kitwarein.com>
+
+A few questions:
+
+1. Have you tried the binary distribution ?
+2. Are you using a special environment to launch ParaView ? The errors
+you posted look very unfamiliar
+
+Any information you can give about your environment would help.
+
+-Berk
+
+
+On Thu, 2002-12-12 at 13:49, Andrew Porter wrote:
+> Hi,
+> 
+> I'm just starting out with ParaView but haven't got very far.
+> 
+> My platform is an SGI Onyx running IRIX v.6.5 and I'm using the SGI
+> compilers.
+> 
+> I've downloaded and compiled the 'complete' distribution and have now got
+> a (32-bit) binary called ParaView in my ParaViewComplete06/bin directory.
+> 
+> I haven't managed to find any instructions on what I do with this so I
+> tried just executing it and simply got a "Killed" message.  The syslog
+> reveals:
+> 
+> Dec 12 16:53:53 5E:bezier login[5827348]: Created Job Container -
+> 0x4edd0000000050 bf
+> Dec 12 16:55:30 1A:bezier unix: |$(0x6dd)ALERT:
+> Process [ParaView] 5867614 generated trap, but has signal 11 held or
+> ignored
+> Dec 12 16:55:30 6A:bezier unix:  epc 0xfa3ce24 ra 0xfa3c884
+> badvaddr 0x1458 9948
+> Dec 12 16:55:30 6A:bezier unix: Process has been
+> killed to prevent infinite loop
+> 
+> I'd be grateful for any suggestions as to where I might be going wrong.
+> 
+> Many thanks,
+> 
+> Andrew.
+> 
+> --
+> Andrew Porter
+> 
+> Software engineer, RealityGrid
+> Manchester Computing
+> University of Manchester
+> Oxford Road
+> Manchester, M13 9PL
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+
+From Andrew.Porter@man.ac.uk  Mon Dec 16 10:05:59 2002
+From: Andrew.Porter@man.ac.uk (Andrew Porter)
+Date: Mon, 16 Dec 2002 10:05:59 +0000 (GMT)
+Subject: [Paraview] Execution problems
+In-Reply-To: <1039792490.30004.1.camel@caemlyn.kitwarein.com>
+Message-ID: <20021216095044.L15554-100000@nessie.mcc.ac.uk>
+
+> A few questions:
+>
+> 1. Have you tried the binary distribution ?
+
+I have now. It launches OK but I've had it seg. fault on me a couple of
+times as I try and learn how to use it. (e.g. launch Paraview, click the
+'calculator icon' and then click the 'cut plane' icon).
+
+> 2. Are you using a special environment to launch ParaView ? The errors
+> you posted look very unfamiliar
+
+Nope, as far as I know my environment is quite standard.  I've tried
+launching Paraview without any of the personalisation that normally
+happens when I log in to the machine in question and I got the same error.
+
+> Any information you can give about your environment would help.
+>
+Right, I'm using the tcsh on IRIX 6.5.17f.  I'm using the SGI compilers:
+
+MIPSpro Compilers: Version 7.3.1.3m
+
+for both c++ and c compilation.
+
+Let me know it there's anything else that would be useful.
+
+Thanks,
+
+Andrew..
+
+--
+Andrew Porter
+
+Software engineer, RealityGrid      Tel. :  +44 (0)161 2757184
+Manchester Computing                Fax. :  +44 (0)161 2756040
+University of Manchester
+Oxford Road
+Manchester, M13 9PL
+
+
+
+From guenole.harel@supelec.fr  Wed Dec 18 12:20:08 2002
+From: guenole.harel@supelec.fr (=?iso-8859-1?Q?Gu=E9nol=E9_Harel?=)
+Date: Wed, 18 Dec 2002 13:20:08 +0100
+Subject: [Paraview] Adding a new file reader ...
+Message-ID: <073e01c2a68f$ce31cea0$6d5de4a0@gueno>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_073B_01C2A698.2FACF8A0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+We have completed the file =
+"usr/local/share/Paraview/Config/StandardSources.xml" with the =
+definition of a new file reader for Paraview. But when we launched =
+Paraview the source menu didn't change. Therefore, could you explain us =
+the process to add a new file reader in Paraview ?
+
+Gu=E9nol=E9 Harel
+
+------=_NextPart_000_073B_01C2A698.2FACF8A0
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2719.2200" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT color=3D#0000ff size=3D2>Hello,</FONT></DIV>
+<DIV><FONT color=3D#0000ff size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT color=3D#0000ff size=3D2>We have&nbsp;completed the file=20
+"usr/local/share/Paraview/Config/StandardSources.xml" with the =
+definition of a=20
+new file reader for Paraview. But when&nbsp;we launched Paraview the =
+source menu=20
+didn't change.&nbsp;Therefore,&nbsp;could you explain&nbsp;us =
+the&nbsp;process=20
+to&nbsp;add a new file reader in Paraview ?</FONT></DIV>
+<DIV><FONT color=3D#0000ff size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT color=3D#0000ff size=3D2>Gu=E9nol=E9 =
+Harel</FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_073B_01C2A698.2FACF8A0--
+
+
+
+From berk.geveci@kitware.com  Thu Dec 19 14:36:53 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 19 Dec 2002 09:36:53 -0500
+Subject: [Paraview] Adding a new file reader ...
+In-Reply-To: <073e01c2a68f$ce31cea0$6d5de4a0@gueno>
+References: <073e01c2a68f$ce31cea0$6d5de4a0@gueno>
+Message-ID: <1040308614.28031.6.camel@caemlyn.kitwarein.com>
+
+If you added a reader, the source menu will not change. The readers
+do not appear in the sources menu but in the open file dialog. Try
+adding some dummy source and see if it appears in the sources menu.
+If it does, then your reader configuration is being parsed too and
+the extension should be one of the options in the open dialog.
+
+-Berk
+
+On Wed, 2002-12-18 at 07:20, Gu=E9nol=E9 Harel wrote:
+> Hello,
+>=20
+> We have completed the file "usr/local/share/Paraview/Config/StandardSourc=
+es.xml" with the definition of a new file reader for Paraview. But when we =
+launched Paraview the source menu didn't change. Therefore, could you expla=
+in us the process to add a new file reader in Paraview ?
+>=20
+> Gu=E9nol=E9 Harel
+
+
+
+
+
+From berk.geveci@kitware.com  Thu Dec 19 14:41:05 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 19 Dec 2002 09:41:05 -0500
+Subject: [Paraview] Execution problems
+In-Reply-To: <20021216095044.L15554-100000@nessie.mcc.ac.uk>
+References: <20021216095044.L15554-100000@nessie.mcc.ac.uk>
+Message-ID: <1040308865.28031.12.camel@caemlyn.kitwarein.com>
+
+> > 1. Have you tried the binary distribution ?
+> 
+> I have now. It launches OK but I've had it seg. fault on me a couple of
+> times as I try and learn how to use it. (e.g. launch Paraview, click the
+> 'calculator icon' and then click the 'cut plane' icon).
+
+Yeah, this is a known problem. We didn't have time to fix before
+the release. Normally, those buttons should not be active when there
+is no dataset selected and stop you from clicking them unless you
+created a source or read a file. This is already fixed and will
+not happen in the next release.
+ 
+> > 2. Are you using a special environment to launch ParaView ? The errors
+> > you posted look very unfamiliar
+> 
+> Nope, as far as I know my environment is quite standard.  I've tried
+> launching Paraview without any of the personalisation that normally
+> happens when I log in to the machine in question and I got the same error.
+> 
+> > Any information you can give about your environment would help.
+> >
+> Right, I'm using the tcsh on IRIX 6.5.17f.  I'm using the SGI compilers:
+> 
+> MIPSpro Compilers: Version 7.3.1.3m
+> 
+> for both c++ and c compilation.
+
+I don't understand what is happening. ParaView 0.6 was built on various
+SGIs and as far as I know you are the first one to run into this 
+problem. I recommend sticking with the binary release for now.
+
+-Berk
+ 
+
+
+
+
+From chafmr@inel.gov  Tue Dec 24 20:45:15 2002
+From: chafmr@inel.gov (May Permann)
+Date: Tue, 24 Dec 2002 13:45:15 -0700
+Subject: [Paraview] hdf5 reader
+Message-ID: <3E08C75B.18BBC661@inel.gov>
+
+I am interested in using paraview because I was told that it reads hdf5
+files.  I installed it though, and it doesn't seem to.  Does anyone know
+if it does actually read hdf5, or if anyone has plans to create an hdf5
+reader?  If not, I may look into it.
+May Permann
+
+
+From andy.cedilnik@kitware.com  Fri Dec 27 13:18:58 2002
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 27 Dec 2002 08:18:58 -0500
+Subject: [Paraview] hdf5 reader
+In-Reply-To: <3E08C75B.18BBC661@inel.gov>
+References: <3E08C75B.18BBC661@inel.gov>
+Message-ID: <1040995138.6671.61.camel@xanth>
+
+Hi May, 
+
+ParaView natively does not support HDF5 formats. We are working on
+adding HDF5 file support though. Do you have an example HDF5 file that
+you would like to explore?
+
+			Andy
+
+On Tue, 2002-12-24 at 15:45, May Permann wrote:
+> I am interested in using paraview because I was told that it reads hdf5
+> files.  I installed it though, and it doesn't seem to.  Does anyone know
+> if it does actually read hdf5, or if anyone has plans to create an hdf5
+> reader?  If not, I may look into it.
+
+
+
+From ahrens@lanl.gov  Sat Dec 28 18:06:05 2002
+From: ahrens@lanl.gov (Jim Ahrens)
+Date: Sat, 28 Dec 2002 11:06:05 -0700
+Subject: [Paraview] Re: ParaView digest, Vol 1 #28 - 1 msg
+References: <20021225114024.6412.89850.Mailman@public.kitware.com>
+Message-ID: <3E0DE80D.8010109@lanl.gov>
+
+Currently you need to use a file translator (hdf5 to vtk). The open 
+source package I use is at http://ab-initio.mit.edu/h5utils/.
+
+--Jim
+
+paraview-request@public.kitware.com wrote:
+
+>Send ParaView mailing list submissions to
+>	paraview@public.kitware.com
+>
+>To subscribe or unsubscribe via the World Wide Web, visit
+>	http://public.kitware.com/mailman/listinfo/paraview
+>or, via email, send a message with subject or body 'help' to
+>	paraview-request@public.kitware.com
+>
+>You can reach the person managing the list at
+>	paraview-admin@public.kitware.com
+>
+>When replying, please edit your Subject line so it is more specific
+>than "Re: Contents of ParaView digest..."
+>
+>
+>Today's Topics:
+>
+>   1. hdf5 reader (May Permann)
+>
+>--__--__--
+>
+>Message: 1
+>Date: Tue, 24 Dec 2002 13:45:15 -0700
+>From: May Permann <chafmr@inel.gov>
+>Reply-To: chafmr@inel.gov
+>Organization: inel
+>To: paraview@public.kitware.com
+>Subject: [Paraview] hdf5 reader
+>
+>I am interested in using paraview because I was told that it reads hdf5
+>files.  I installed it though, and it doesn't seem to.  Does anyone know
+>if it does actually read hdf5, or if anyone has plans to create an hdf5
+>reader?  If not, I may look into it.
+>May Permann
+>
+>
+>
+>--__--__--
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+>
+>
+>End of ParaView Digest
+>
+
+
+

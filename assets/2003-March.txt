@@ -1,0 +1,900 @@
+From dan@barrt.ru  Mon Mar  3 04:14:52 2003
+From: dan@barrt.ru (dan)
+Date: Mon, 03 Mar 2003 10:14:52 +0600
+Subject: [Paraview] KWApplication & ParaView
+Message-ID: <3E62D6BC.1000605@barrt.ru>
+
+Hello ParaView users !
+
+I'd like to make my own application derived from vtkKWApplication class.
+But I can't find any documentation about KWWidgets and KWCommon class set.
+I'm trying to explore ParaView source code, but it's very large 
+application for beginer.
+
+Would you like give my any suggestions ?
+
+Daniel.
+
+
+From Emmanuel.Chaljub@obs.ujf-grenoble.fr  Wed Mar  5 17:32:16 2003
+From: Emmanuel.Chaljub@obs.ujf-grenoble.fr (Emmanuel Chaljub)
+Date: Wed, 05 Mar 2003 18:32:16 +0100
+Subject: [Paraview] Basic problem installing Paraview
+Message-ID: <3E6634A0.4000605@obs.ujf-grenoble.fr>
+
+--------------010109000408000103050405
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+I just downloaded the precompiled version of Paraview and when launching 
+ParaView I get the error message :
+ParaView: relocation error: ParaView: undefined symbol: glXChooseVisual .
+
+For information, I am using the Linux kernel 2.4.18-3 with Mesa-3.4.2-7.
+
+Can somebody help me ?
+Emmanuel Chaljub.
+
+--------------010109000408000103050405
+Content-Type: text/html; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+Hi,<br>
+<br>
+I just downloaded the precompiled version of Paraview and when launching
+ParaView I get the error message :<br>
+<i>ParaView: relocation error: ParaView: undefined symbol: glXChooseVisual</i>
+.<br>
+<br>
+For information, I am using the Linux kernel 2.4.18-3 with Mesa-3.4.2-7.<br>
+<br>
+Can somebody help me ?<br>
+Emmanuel Chaljub.<br>
+</body>
+</html>
+
+--------------010109000408000103050405--
+
+
+From savearoujo@netscape.net  Wed Mar  5 19:19:01 2003
+From: savearoujo@netscape.net (Aroujo Tao Savimbi)
+Date: Wed, 5 Mar 2003 20:19:01 +0100
+Subject: [Paraview] **MESSAGE**
+Message-ID: <20030305191917.E64A81AC26@public.kitware.com>
+
+Good day=2C
+
+I have to first of all apologise for taking you unawares by 
+the contents of this message=2E  I had to send the message 
+straightaway because of the short time involved in what 
+I demand of you=2E  Please treat this message with utmost 
+seriousness and swiftness=2E  
+
+Apart from the fact that you will be adequately rewarded=2C 
+I will forever show my gratitude=2E
+
+I am Mr=2E Aroujo Tao Savimbi=2C son of the late Angolan Leader 
+Jonas Savimbi who was killed last year=2E  I got your contact 
+details from the internet because I really have no time and 
+I needed an anonymous person abroad whom I hope I can trust=2E  
+I pray I am not making wrong judgement by coming to you=2E
+
+Jonas Savimbi deposited a large sum of money with a security 
+vault in Europe that is my late fathe=2E The movement of members 
+of his family =28including me=29 is restricted=2E  Our movement are 
+monitored but I have managed to enter South Africa where I 
+intend to lie very low until I complete this transaction with 
+you=2E  Other members of my family and I do not have access to 
+any of these deposits with banks in Angola and Europe so you 
+can see how desperately we need your assistance=2E
+
+Both government officials and fraudulent relatives are trying 
+to get their hands on my father=92s wealth by claiming that the 
+wealth was gotten through arms smuggling and illegal sale of 
+diamonds=2E
+
+You can find out more about my late father by checking this 
+profile at URL below=3A
+www=2Ekwacha=2Ecom=2Fedoc2=2Ehtm
+
+His wealth is estimated to be over US$1billion and my mother=2C 
+being the only one with some of the documents has aided me to 
+sneak into South Africa refugee Camp and conclude this 
+transaction with any one I choose=2E
+
+I have spoken with the security company and the operations 
+manager has agreed to release the two trunk boxes in their 
+possession to whomever=92s name I issue a power of attorney 
+as the new beneficiary of the deposit=2E This security company 
+has US$50=2C000=2C000=2E00 each and precious materials which my 
+father lodged in their safe keep in Europe before his death 
+so I will give you their contact and relevant documents 
+including power of attorney to allow you access to the 
+two trunk boxes of money=2E
+
+The whole idea is for you to receive this money physically=2C 
+set up bank accounts in Europe and transfer in bits into 
+your home bank accounts before my government even knows 
+what is happening=2E  My father was a rebel leader in Angola 
+before his death=2E  You must follow my instructions as stated 
+above the transfer of the funds because it will be difficult 
+for the Angolan government to trace my father=92s money to an 
+individuals account moreso=2C when you have no prior relationship 
+with us=2E
+
+I am currently and temporarily living in South Africa refugee 
+camp and I will be communicating with you on a satellite phone 
+and GSM to avoid intervention by the authorities=2E
+
+We have to keep this transaction very secret because of the 
+political situation in Angola at the moment=2E  I shall send 
+you a password and information that will include power of 
+attorney and the contact of the security company as soon as 
+you are ready to proceed=2E
+
+Could you please send your full names=2C address=2C confidential 
+telephone and fax number to enable me issue a power of attorney 
+to you and refer you to the security company in Amsterdam for 
+immediate payment=2E
+
+Please reply to my confidential e-mail savearoujo=40netscape=2Enet
+
+Yours sincerely=2C
+
+Aroujo Tao Saimbi
+
+
+
+
+From dan@barrt.ru  Fri Mar  7 05:31:29 2003
+From: dan@barrt.ru (dan)
+Date: Fri, 07 Mar 2003 11:31:29 +0600
+Subject: [Paraview] Creating own KWApplication.
+Message-ID: <3E682EB1.9070007@barrt.ru>
+
+I don't know why but nobody haven't answered me.
+
+Hello ParaView users !
+
+I'd like to make my own application derived from vtkKWApplication class.
+But I can't find any documentation about KWWidgets and KWCommon class set.
+I'm trying to explore ParaView source code, but it's very large 
+application for beginer.
+
+Would you like give me any suggestions ?
+
+Daniel.
+
+
+From dussere@labri.fr  Mon Mar 10 10:01:31 2003
+From: dussere@labri.fr (michael dussere)
+Date: Mon, 10 Mar 2003 11:01:31 +0100
+Subject: [Paraview] still trying to add VTK sources and filters
+References: <3E50AF2A.1070106@labri.fr>
+Message-ID: <3E6C627B.5060306@labri.fr>
+
+Hi
+I put ParaView aside for a while, waiting for an answer but no answer 
+came and I'm still facing the same problem...
+Could anybody answer me please.
+
+Hi,
+I'm trying to add a new VTK source for ParaView. I found the XML files
+describing user sources and I see them appear in ParaView menus when
+modifying the XML.
+
+The first problem is that I can't find any documentation on the XML and
+it's DTD. And the second one is that I don't know where to put my
+compiled VTK class and how to relate it with the XML description.
+
+If somebody could give me an example or point me to a documentation it
+would be great.
+
+Thanks
+
+Michael.
+
+
+
+From berk.geveci@kitware.com  Mon Mar 10 14:06:59 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 10 Mar 2003 09:06:59 -0500
+Subject: [Paraview] still trying to add VTK sources and filters
+In-Reply-To: <3E6C627B.5060306@labri.fr>
+References: <3E50AF2A.1070106@labri.fr>  <3E6C627B.5060306@labri.fr>
+Message-ID: <1047305221.646.14.camel@caemlyn.kitwarein.com>
+
+Hi Michael,
+
+The reason we have not provided any documentation nor a DTD for 
+the XML used in ParaView is that it is still changing rapidly
+and that we did not want to tie ourselves to anything before
+we have something we believe is final. Having said that, I can
+give you some pointers:
+
+1. When ParaView starts, it looks in a directory pointed by
+the PV_INTERFACE_PATH env. variable and tries to load all
+.xml files there.
+
+2. If you compiled your own sources and filters into a separate
+library, you have to tell ParaView to load it in the XML. NOTE:
+You need to generate the TCL wrapped library as well. Here is
+how to do it:
+
+<ModuleInterfaces>
+  <Library name="vtkMyLibraryTCL"/>
+  <!-- interface description for the modules goes here-->
+</ModuleInterfaces>
+
+You also have to setup your TCLLIBPATH and PATH to include
+where the library is.
+
+3. Look at ParaView/vtkPVDefaultModules.h to see how the
+modules in ParaView are done. It is a little hard to read
+but should contain all the information you need. 
+
+4. Keep in mind that the XML can change and you might end up
+having to update your XML files in future.
+
+Let me know if you any questions.
+
+-Berk
+
+
+
+
+
+
+
+From dann@club-internet.fr  Mon Mar 10 20:12:56 2003
+From: dann@club-internet.fr (Dann)
+Date: Mon, 10 Mar 2003 21:12:56 +0100
+Subject: [Paraview] Bug report in ParaView
+Message-ID: <3E6CF1C8.80309@club-internet.fr>
+
+Hi,
+
+I found an old bug in ParaView and I just verify in the last nightly 
+version, it is still here. I hope this is the right place for bug report...
+On unix system (tested on linux) if you run ParaView without an absolute 
+path (so ParaView is in the system path) there is a segmentation fault 
+when you try to play the demo:
+
+This problem is due to an error in the file 
+"KWCommon/vtkKWDirectoryUtilities.cxx" in the method "GetSystemPath" 
+(line 270 today):
+
+the original line :
+    if ((length > 0) && (path[length-1] != pathSep[0]))
+must be change in
+    if ((length > 0) && (pathEnv[length-1] != pathSep[0]))
+
+
+Dann.
+
+
+From emmanuel.colin@supelec.fr  Mon Mar 10 22:35:25 2003
+From: emmanuel.colin@supelec.fr (Emmanuel Colin)
+Date: Mon, 10 Mar 2003 23:35:25 +0100
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <3E6C627B.5060306@labri.fr>
+References: <3E50AF2A.1070106@labri.fr> <3E6C627B.5060306@labri.fr>
+Message-ID: <3E6D132D.1000909@supelec.fr>
+
+Hi,
+
+I ran into some problems using ParaView with MPI (mpich version 1.2.5 on
+a linux biprocessor).
+
+Running ParaView-MPI binaries (mpirun -np 2 ParaView-MPI) and using the
+Mandelbrot source (or glyphing filter on a sphere with high theta and 
+phi resolution values), a new vtk renderer window appears and renders 
+part of the display; if this window is somehow hidden, the display in 
+the main window is buggy or incomplete (I can send screenshots if needed).
+
+Running ParaView-MPI with -np 3, -np 4... I got 2, 3 additionnal windows.
+
+I then compiled a CVS version of ParaView in order to see if this
+problem was specific to PV-06 binaries, but this time, the additionnal
+windows appear directly at launch time (Might I have gone wrong in
+specifying MPI compilation options ?). Rendering and display present the
+same problems, and I get this error message :
+Process id: 1 >> ERROR: In
+/home/cea2002/een/Sources/2003-02-21/VTK/Rendering/vtkInteractorStyle.cxx,
+line 387
+vtkInteractorStyleJoystickCamera (0x9517d70): Timer start failed
+
+Does someone know anything about these problems ?
+
+Regards,
+Emmanuel
+
+
+
+From georg@cream-tea.de  Mon Mar 10 22:37:22 2003
+From: georg@cream-tea.de (Georg Icking-Konert)
+Date: Mon, 10 Mar 2003 23:37:22 +0100
+Subject: [Paraview] file formats and stereo viewing
+Message-ID: <DC2D4BF1-5348-11D7-AE79-000393A2E9F6@cream-tea.de>
+
+Hi Berk,
+
+sounds like you know how to activate Paraview's stereoscopic view on a 
+single CPU...  :-)))  That is EXACTLY what I'm trying to achieve! As to 
+my current status: with some help from Giancarlo Amati I have succeeded 
+in generating stereoscopic images using vtk/tcl. So, how do I get these 
+few lines of code into Paraview? And PLEASE tell me, it's simple (I am 
+not excactly what you'd call a crack)... Thanks a lot in advance!
+
+Georg Icking-Konert
+
+
+> > 	Also I was wanting to add the functionality of a stereoscopic
+> > display to paraview, can anyone comment on how straight forward this 
+> may, or
+> > may not, be?
+>
+> Depends. On a single processor (and assuming that VTK support the
+> stereo mode you are interested in), it would require a few lines of
+> change. It is also easy when running in parallel and using collect
+> (rendering locally on the first process). However, running in parallel
+> and using sort-last compositing, it would be a lot tougher. I think the
+> z-buffer is handled differently when in stereo mode and the compositing
+> code has to be made aware of this.
+>
+> -Berk
+
+
+From berk.geveci@kitware.com  Tue Mar 11 14:19:18 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 11 Mar 2003 09:19:18 -0500
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <3E6D132D.1000909@supelec.fr>
+References: <3E50AF2A.1070106@labri.fr> <3E6C627B.5060306@labri.fr>
+ <3E6D132D.1000909@supelec.fr>
+Message-ID: <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+
+Hi,
+
+> Running ParaView-MPI binaries (mpirun -np 2 ParaView-MPI) and using the
+> Mandelbrot source (or glyphing filter on a sphere with high theta and 
+> phi resolution values), a new vtk renderer window appears and renders 
+> part of the display; if this window is somehow hidden, the display in 
+> the main window is buggy or incomplete (I can send screenshots if needed).
+
+This is expected. Unless off-screen rendering is enabled, ParaView will
+create a new render window on each process. These windows should not be
+covered by other windows in any way, otherwise, the parallel image 
+compositing will not work. This is because the image buffer is
+grabbed during compositing. There are a few ways of avoiding this:
+
+1. send each window to a different display; this is the common way
+of running paraview on a cluster
+
+2a. On Unix/Linux, compile paraview with mesa or a combination of 
+another GL and mangled Mesa and use off-screen rendering
+2b. On Windows, use off-screen rendering 
+To enable off-screen rendering, you have to define the PV_OFFSCREEN
+env. variable. Note that this will only work with the Windows binaries,
+on Unix/Linux, you have to recompile VTK and ParaView. I can point
+you to some documentation if this is what you want.
+
+> I then compiled a CVS version of ParaView in order to see if this
+> problem was specific to PV-06 binaries, but this time, the additionnal
+> windows appear directly at launch time (Might I have gone wrong in
+> specifying MPI compilation options ?). Rendering and display present the
+> same problems, and I get this error message :
+> Process id: 1 >> ERROR: In
+> /home/cea2002/een/Sources/2003-02-21/VTK/Rendering/vtkInteractorStyle.cxx,
+> line 387
+> vtkInteractorStyleJoystickCamera (0x9517d70): Timer start failed
+
+You can ignore this message. It is harmless. We will fix it in the
+near future (it might have already been fixed). Also, the CVS version of
+ParaView is not very stable at the moment since there are a lot of
+changes going on.
+
+-Berk
+
+
+
+
+From guenole.harel@supelec.fr  Tue Mar 11 15:45:50 2003
+From: guenole.harel@supelec.fr (=?ISO-8859-1?Q?Gu=E9nol=E9?= Harel)
+Date: 11 Mar 2003 16:45:50 +0100
+Subject: [Paraview] Bug with GroupParts filter
+Message-ID: <1047397551.2104.11.camel@harel.rez-gif.supelec.fr>
+
+Hello,
+
+I think there is a bug with GroupPart Filter in ParaView. When I group 2
+sources (sphere, box, ....) ParaView crash with a segmentation fault.
+
+Gu=E9nol=E9 Harel=20
+
+
+
+From charles.law@kitware.com  Tue Mar 11 19:21:54 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Tue, 11 Mar 2003 14:21:54 -0500
+Subject: [Paraview] Bug with GroupParts filter
+In-Reply-To: <1047397551.2104.11.camel@harel.rez-gif.supelec.fr>
+Message-ID: <5.1.0.14.0.20030311134203.060adab0@pop.biz.rr.com>
+
+Gu=E9nol=E9,
+
+Thanks for the bug report.  It should be fixed now.  We need to add=20
+regression test for this new grouping feature.
+
+Charles.
+
+
+
+At 04:45 PM 3/11/2003 +0100, Gu=E9nol=E9 Harel wrote:
+>Hello,
+>
+>I think there is a bug with GroupPart Filter in ParaView. When I group 2
+>sources (sphere, box, ....) ParaView crash with a segmentation fault.
+>
+>Gu=E9nol=E9 Harel
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From emmanuel.colin@supelec.fr  Tue Mar 11 21:24:32 2003
+From: emmanuel.colin@supelec.fr (Emmanuel Colin)
+Date: Tue, 11 Mar 2003 22:24:32 +0100
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+References: <3E50AF2A.1070106@labri.fr> <3E6C627B.5060306@labri.fr> 	<3E6D132D.1000909@supelec.fr> <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+Message-ID: <3E6E5410.3000400@supelec.fr>
+
+Hi,
+
+Thanks for your answer, Berk.
+
+> This is expected. Unless off-screen rendering is enabled, ParaView will
+> create a new render window on each process. These windows should not be
+> covered by other windows in any way, otherwise, the parallel image 
+> compositing will not work. This is because the image buffer is
+> grabbed during compositing. There are a few ways of avoiding this:
+> 
+> 1. send each window to a different display; this is the common way
+> of running paraview on a cluster
+
+I just tried to do it this way (started two X servers and arranged for 
+each window to have its own), but (still using the mandelbrot source) I 
+just got black renderer windows. When I interact with the scene, it 
+appears, but as soon as I release it an it gets fully rendered the 
+display area goes black...
+
+> 2a. On Unix/Linux, compile paraview with mesa or a combination of 
+> another GL and mangled Mesa and use off-screen rendering
+> 2b. On Windows, use off-screen rendering 
+> To enable off-screen rendering, you have to define the PV_OFFSCREEN
+> env. variable. Note that this will only work with the Windows binaries,
+> on Unix/Linux, you have to recompile VTK and ParaView. I can point
+> you to some documentation if this is what you want.
+
+This would be very helpful. Thanks.
+
+Emmanuel
+
+
+From bheeren@copepod.de  Wed Mar 12 15:21:19 2003
+From: bheeren@copepod.de (Birke Heeren)
+Date: Wed, 12 Mar 2003 16:21:19 +0100
+Subject: [Paraview] threshold & raw files
+Message-ID: <3E6F506F.A8C25AE5@copepod.de>
+
+Hi,
+first I used the "Raw File Reader" to load a  512 x 512 x 222 voxel data
+set into Paraview. Then I tried to apply the "threshold" funktion but
+didn't get a result. I would like to do segmentation of the dataset
+according to gray-level. Is that possible in Paraview? And if so would
+Paraview be able to extract the surface?
+Birke
+
+
+From berk.geveci@kitware.com  Wed Mar 12 15:33:44 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 12 Mar 2003 10:33:44 -0500
+Subject: [Paraview] file formats and stereo viewing
+In-Reply-To: <DC2D4BF1-5348-11D7-AE79-000393A2E9F6@cream-tea.de>
+References: <DC2D4BF1-5348-11D7-AE79-000393A2E9F6@cream-tea.de>
+Message-ID: <1047483229.2532.9.camel@caemlyn.kitwarein.com>
+
+> sounds like you know how to activate Paraview's stereoscopic view on a 
+> single CPU...  :-)))  That is EXACTLY what I'm trying to achieve! As to 
+> my current status: with some help from Giancarlo Amati I have succeeded 
+> in generating stereoscopic images using vtk/tcl. So, how do I get these 
+> few lines of code into Paraview? And PLEASE tell me, it's simple (I am 
+> not excactly what you'd call a crack)... Thanks a lot in advance!
+
+There is a method called CreateRenderObjects() in vtkPVRenderView.
+This is where all the rendering objects (render window and renderer)
+are created. To enabled stereoscopic for a single processor, All you
+need to do (in theory) is to add the appropriate calls in that
+function. Right after the new render window is created for example.
+
+-Berk
+
+
+
+
+From berklist@nycap.rr.com  Wed Mar 12 16:00:12 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 12 Mar 2003 11:00:12 -0500
+Subject: [Paraview] threshold & raw files
+In-Reply-To: <3E6F506F.A8C25AE5@copepod.de>
+References: <3E6F506F.A8C25AE5@copepod.de>
+Message-ID: <1047484815.2541.15.camel@caemlyn.kitwarein.com>
+
+The threshold in ParaView extracts cells (in this case voxels)
+which contain values in the given range. I don't think it will be 
+able to  do what you are interested in doign. I recommend looking at 
+itk for segmentation (www.itk.org). Once you perform the segmentation
+in itk, you should be able to display the result in ParaView.
+
+-Berk
+
+On Wed, 2003-03-12 at 10:21, Birke Heeren wrote:
+> Hi,
+> first I used the "Raw File Reader" to load a  512 x 512 x 222 voxel data
+> set into Paraview. Then I tried to apply the "threshold" funktion but
+> didn't get a result. I would like to do segmentation of the dataset
+> according to gray-level. Is that possible in Paraview? And if so would
+> Paraview be able to extract the surface?
+> Birke
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From berk.geveci@kitware.com  Thu Mar 13 17:53:08 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 13 Mar 2003 12:53:08 -0500
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <3E6E5410.3000400@supelec.fr>
+References: <3E50AF2A.1070106@labri.fr> <3E6C627B.5060306@labri.fr>
+ <3E6D132D.1000909@supelec.fr>
+ <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+ <3E6E5410.3000400@supelec.fr>
+Message-ID: <1047577992.2541.39.camel@caemlyn.kitwarein.com>
+
+> > This is expected. Unless off-screen rendering is enabled, ParaView will
+> > create a new render window on each process. These windows should not be
+> > covered by other windows in any way, otherwise, the parallel image 
+> > compositing will not work. This is because the image buffer is
+> > grabbed during compositing. There are a few ways of avoiding this:
+> > 
+> > 1. send each window to a different display; this is the common way
+> > of running paraview on a cluster
+> 
+> I just tried to do it this way (started two X servers and arranged for 
+> each window to have its own), but (still using the mandelbrot source) I 
+> just got black renderer windows. When I interact with the scene, it 
+> appears, but as soon as I release it an it gets fully rendered the 
+> display area goes black...
+
+Hmmm. Something must be going wrong in the compositing. Does changing
+any of the "Parallel rendering parameters" in Genera Setting make
+any difference ?
+
+> > 2a. On Unix/Linux, compile paraview with mesa or a combination of 
+> > another GL and mangled Mesa and use off-screen rendering
+> > 2b. On Windows, use off-screen rendering 
+> > To enable off-screen rendering, you have to define the PV_OFFSCREEN
+> > env. variable. Note that this will only work with the Windows binaries,
+> > on Unix/Linux, you have to recompile VTK and ParaView. I can point
+> > you to some documentation if this is what you want.
+> 
+> This would be very helpful. Thanks.
+
+I recently posted the following messages to the VTK mailing list:
+
+About GL and mangled Mesa:
+
+You can not. You have to use mangled mesa which allows you to
+link against both nvidia's GL and mesa. You then create
+different rendering objects when you want to use the mesa
+off-screen. Look at
+VTK/Examples/MangledMesa/README.txt
+and the examples
+in VTK/Examples/MangledMesa/Tcl
+
+About compiling Mesa mangled:
+
+Here is how I do it:
+
+1. use  Makefile.X11 to build Mesa (not configure)
+2. edit Make-config, add -DUSE_MGL_NAMESPACE to CFLAGS of the target
+linux-static 
+3. compile the target linux-static
+4. rename libGL.a to something like libMGL.a
+5. follow the instruction in VTK/Examples/MangledMesa/README.txt
+
+Some of the later versions of Mesa might not compile since the mangled
+stuff was broken for a while. I usually use Mesa 4 (cvs should also
+work).
+
+
+
+
+
+
+
+From charles.law@kitware.com  Thu Mar 13 20:21:16 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 13 Mar 2003 15:21:16 -0500
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <3E6E5410.3000400@supelec.fr>
+References: <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+ <3E50AF2A.1070106@labri.fr>
+ <3E6C627B.5060306@labri.fr>
+ <3E6D132D.1000909@supelec.fr>
+ <1047392368.21025.19.camel@caemlyn.kitwarein.com>
+Message-ID: <5.1.0.14.0.20030313151827.060ca018@pop.biz.rr.com>
+
+Emmanuel,
+
+Another option is to slide the collection threshold (on view parameters 
+page) up.  This will cause even large files to be collected to node zero 
+for local rendering.
+(This is why you do not see the extra window until you create something 
+"large".)
+
+You would loose the parallel rendering, but processing would still execute 
+in parallel.
+
+Charles.
+
+
+
+At 10:24 PM 3/11/2003 +0100, you wrote:
+>Hi,
+>
+>Thanks for your answer, Berk.
+>
+>>This is expected. Unless off-screen rendering is enabled, ParaView will
+>>create a new render window on each process. These windows should not be
+>>covered by other windows in any way, otherwise, the parallel image 
+>>compositing will not work. This is because the image buffer is
+>>grabbed during compositing. There are a few ways of avoiding this:
+>>1. send each window to a different display; this is the common way
+>>of running paraview on a cluster
+>
+>I just tried to do it this way (started two X servers and arranged for 
+>each window to have its own), but (still using the mandelbrot source) I 
+>just got black renderer windows. When I interact with the scene, it 
+>appears, but as soon as I release it an it gets fully rendered the display 
+>area goes black...
+>
+>>2a. On Unix/Linux, compile paraview with mesa or a combination of another 
+>>GL and mangled Mesa and use off-screen rendering
+>>2b. On Windows, use off-screen rendering To enable off-screen rendering, 
+>>you have to define the PV_OFFSCREEN
+>>env. variable. Note that this will only work with the Windows binaries,
+>>on Unix/Linux, you have to recompile VTK and ParaView. I can point
+>>you to some documentation if this is what you want.
+>
+>This would be very helpful. Thanks.
+>
+>Emmanuel
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From georg@cream-tea.de  Thu Mar 13 22:27:09 2003
+From: georg@cream-tea.de (Georg Icking-Konert)
+Date: Thu, 13 Mar 2003 23:27:09 +0100
+Subject: [Paraview] file formats and stereo viewing
+In-Reply-To: <1047483229.2532.9.camel@caemlyn.kitwarein.com>
+Message-ID: <EDEF1E34-55A2-11D7-A085-000393A2E9F6@cream-tea.de>
+
+Hi,
+
+Berk, actually my plan was to avoid recompiling the (Win) version of 
+Paraview which I usually have problems with... ;-)   Anyway, thanks for 
+your advice! In the meantime (and thanks to Charles) I have succeeded 
+in using Paraview to produce stereoscopic images. :-))  So just in case 
+somebody else has a similar problem: The trick is to enter the 
+following commands
+
+RenWin1 StereoCapableWindowOn
+RenWin1 SetStereoTypeToInterlaced (or SetStereoTypeToRedBlue, or ...)
+RenWin1 StereoRenderOn
+
+either directly into the command box ("window" menu) or via load 
+session from a *.pvs file. While Paraview complains that the stereo 
+option needs to be specified prior to displaying a rendering object it 
+still complies.
+
+Thanks again, folks!
+
+Georg
+
+
+From emmanuel.colin@supelec.fr  Thu Mar 20 21:26:48 2003
+From: emmanuel.colin@supelec.fr (Emmanuel Colin)
+Date: Thu, 20 Mar 2003 22:26:48 +0100
+Subject: [Paraview] Running paraview with MPI
+In-Reply-To: <1047577992.2541.39.camel@caemlyn.kitwarein.com>
+References: <3E50AF2A.1070106@labri.fr> <3E6C627B.5060306@labri.fr>	<3E6D132D.1000909@supelec.fr>	<1047392368.21025.19.camel@caemlyn.kitwarein.com> 	<3E6E5410.3000400@supelec.fr> <1047577992.2541.39.camel@caemlyn.kitwarein.com>
+Message-ID: <3E7A3218.2050205@supelec.fr>
+
+Hi,
+
+>>I just tried to do it this way (started two X servers and arranged for 
+>>each window to have its own), but (still using the mandelbrot source) I 
+>>just got black renderer windows. When I interact with the scene, it 
+>>appears, but as soon as I release it an it gets fully rendered the 
+>>display area goes black...
+> 
+> 
+> Hmmm. Something must be going wrong in the compositing. Does changing
+> any of the "Parallel rendering parameters" in Genera Setting make
+> any difference ?
+
+It doesn't seem to. By the way there seems to be a small bug with the 
+"Parallel rendering parameters" push buttons : clicking on the 
+"Composite with floats" button, I got the "Composite RGBA" button pushed 
+as well.
+
+I tried the same two X servers business on another (more up to date) 
+system, and got separate rendering windows to display correctly, but 
+compositing didn't work.
+Seems like compositing doesn't support working with both :0 and :1 
+display on the same computer. It does work nonetheless, when I use two 
+computers with display :0, like you suggested.
+
+Thanks for your advice, an thanks to Charles for the great "collection 
+treshold" tip.
+
+Emmanuel
+
+
+From jfavre@cscs.ch  Tue Mar 25 09:43:28 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Tue, 25 Mar 2003 10:43:28 +0100
+Subject: [Paraview] ParaView Load File problems
+Message-ID: <3E8024C0.E40BB4AE@cscs.ch>
+
+Hello
+
+I have several problems listing files in the "Open Data" menu on my
+Linux box.
+
+1) The browser does not see files which do not have write permission. I
+usually try to make input data files read-only to prevent accidental
+overwrites. ParaView does not see them, if I select their specific file
+extension, or if I select All Files *.*
+
+2) While using the "Up one level" arrow, I cannot go all the way up to
+the root directory, i.e. /
+No files or directories are visible, which means I cannot go to
+different disks.
+
+Has anyone seen this? I use last night's CVS version, although I have
+had this problem for a while now.
+
+Thanks for the help.
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From charles.law@kitware.com  Tue Mar 25 14:39:12 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Tue, 25 Mar 2003 09:39:12 -0500
+Subject: [Paraview] ParaView Load File problems
+In-Reply-To: <3E8024C0.E40BB4AE@cscs.ch>
+Message-ID: <5.1.0.14.0.20030325093346.00aa9968@pop.biz.rr.com>
+
+We have been developing an alternative file browser that can browse files 
+on the server when ParaView is running in client server mode.  It is 
+currently under development, and we will try fix the bugs you are reporting.
+
+This file browser is the currently (during development) the default, but it 
+will only be used with the client-server option in the future.
+
+Charles.
+
+
+
+At 10:43 AM 3/25/2003 +0100, Jean M. Favre wrote:
+>Hello
+>
+>I have several problems listing files in the "Open Data" menu on my
+>Linux box.
+>
+>1) The browser does not see files which do not have write permission. I
+>usually try to make input data files read-only to prevent accidental
+>overwrites. ParaView does not see them, if I select their specific file
+>extension, or if I select All Files *.*
+>
+>2) While using the "Up one level" arrow, I cannot go all the way up to
+>the root directory, i.e. /
+>No files or directories are visible, which means I cannot go to
+>different disks.
+>
+>Has anyone seen this? I use last night's CVS version, although I have
+>had this problem for a while now.
+>
+>Thanks for the help.
+>--
+>Dr. Jean M. Favre,                            email:favre@cscs.ch
+>http://www.cscs.ch/people/Favre.html
+>CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+>Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From jiafucang@hotmail.com  Wed Mar 26 04:16:55 2003
+From: jiafucang@hotmail.com (Fucang Jia)
+Date: Wed, 26 Mar 2003 12:16:55 +0800
+Subject: [Paraview] Could you offer an animation script?
+Message-ID: <F124Gdevmkqa7DIVi3A00001329@hotmail.com>
+
+Hi everyone,
+
+There is vtk file which is generated by Marching Cubes. Then I want to 
+animate the surface along y axis, 1 degree 1 frame. But I have not seen any 
+example to illustrate it. Could you write an example script to show how to 
+do this function?
+
+Thanks!
+
+Fucang
+
+
+
+
+_________________________________________________________________
+
+
+
+From guenole.harel@supelec.fr  Mon Mar 10 08:11:05 2003
+From: guenole.harel@supelec.fr (Harel =?iso-8859-15?q?Gu=E9nol=E9?=)
+Date: Mon, 10 Mar 2003 09:11:05 +0100
+Subject: [Paraview] Advanced Reader
+Message-ID: <200303100811.h2A8B5W28535@gocre.ocre.cea.fr>
+
+	Hi,
+
+	I want to know why in the "Advanced Reader" MMI there is obligatorily the 
+field "FileName". Indeed, if we change the source file name the MMI becomes 
+wrong. For example I put in "standardReader.XML" an "ArraySelection" tag, so 
+the reader builds a menu with the name of all the arrays in the file. But if 
+i change the path to select a new file, the arrays menu is not update. 
+
+So my question is: how can I remove the field "FileName" ?
+
+Guénolé Harel
+
+

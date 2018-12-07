@@ -1,0 +1,75 @@
+From heiland@ncsa.uiuc.edu  Wed Jun 19 19:58:55 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Wed, 19 Jun 2002 13:58:55 -0500
+Subject: [Paraview] build errors
+Message-ID: <1020619135856.ZM21510@pecos.ncsa.uiuc.edu>
+
+I'm returning to ParaView after some absence and, after updating my CVS for
+both VTK and ParaView and rebuilding, I get the following errors:
+
+
+/usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `vtkObjectBase' was
+not declared in this scope
+/usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `o' was not declared
+in this scope
+/usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: variable or field
+`UnRegister' declared void
+/usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `UnRegister'
+declared as a `virtual' field
+
+
+Before I start digging, I thought some of the developers might have some ideas.
+
+Also, as I recall, when I last built ParaView (last fall), I believe I had to
+use a particular version (CVS branch) that corresponded to the current version
+of VTK.  Is this still the case?
+
+thanks,
+--Randy
+
+From andy.cedilnik@kitware.com  Wed Jun 19 20:15:47 2002
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 19 Jun 2002 15:15:47 -0400
+Subject: [Paraview] build errors
+In-Reply-To: <1020619135856.ZM21510@pecos.ncsa.uiuc.edu>
+References: <1020619135856.ZM21510@pecos.ncsa.uiuc.edu>
+Message-ID: <1024514147.19927.112.camel@xanth.kitwarein.com>
+
+Hello Randy,
+
+I modified VTK and since ParaView uses some of the most recent features
+of VTK you will have to update VTK. Sorry for the inconvenience. 
+
+			Andy
+
+On Wed, 2002-06-19 at 14:58, Randy Heiland wrote:
+> I'm returning to ParaView after some absence and, after updating my CVS for
+> both VTK and ParaView and rebuilding, I get the following errors:
+> 
+> 
+> /usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `vtkObjectBase' was
+> not declared in this scope
+> /usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `o' was not declared
+> in this scope
+> /usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: variable or field
+> `UnRegister' declared void
+> /usr/local/home/heiland/ParaView/Widgets/vtkKWWidget.h:87: `UnRegister'
+> declared as a `virtual' field
+> 
+> 
+> Before I start digging, I thought some of the developers might have some ideas.
+> 
+> Also, as I recall, when I last built ParaView (last fall), I believe I had to
+> use a particular version (CVS branch) that corresponded to the current version
+> of VTK.  Is this still the case?
+> 
+> thanks,
+> --Randy
+> _______________________________________________
+> ParaView mailing list
+> ParaView@208.136.18.25
+> http://public.kitware.com/mailman/listinfo/paraview
+> 
+
+
+

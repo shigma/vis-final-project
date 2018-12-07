@@ -1,0 +1,1339 @@
+From xiaoli@mail.iapcm.ac.cn  Wed Nov  5 02:36:38 2003
+From: xiaoli@mail.iapcm.ac.cn (xiaoli)
+Date: Wed, 05 Nov 2003 10:36:38 +0800
+Subject: [Paraview] How to Get SWIG !!!
+Message-ID: <001601c3a345$a6a10ff0$937152d2@xiaoli>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0017_01C3A388.B4C44FF0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hi,
+I can't go to the website :  http://www.SWIG.org <http://www.swig.org/>
+.
+So I can't get any information about this tool,  include executable file
+, help information.
+I need your help !  
+More sooner more better !
+
+------=_NextPart_000_0017_01C3A388.B4C44FF0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns=3D"http://www.w3.org/TR/REC-html40">
+
+<head>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii">
+
+
+<meta name=3DProgId content=3DWord.Document>
+<meta name=3DGenerator content=3D"Microsoft Word 10">
+<meta name=3DOriginator content=3D"Microsoft Word 10">
+<link rel=3DFile-List href=3D"cid:filelist.xml@01C3A388.B16C9970">
+<!--[if gte mso 9]><xml>
+ <o:OfficeDocumentSettings>
+  <o:DoNotRelyOnCSS/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:DocumentKind>DocumentEmail</w:DocumentKind>
+  <w:EnvelopeVis/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 =
+&#30917;</w:DrawingGridVerticalSpacing>
+  =
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEve=
+ry>
+  =
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:SimSun;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:SimSun;
+	mso-font-kerning:1.0pt;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	mso-style-noshow:yes;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:SimSun;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:windowtext;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */=20
+ table.MsoNormalTable
+	{mso-style-name:\666E\901A\8868\683C;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+</head>
+
+<body lang=3DZH-CN link=3Dblue vlink=3Dpurple =
+style=3D'tab-interval:21.0pt;text-justify-trim:
+punctuation'>
+
+<div class=3DSection1 style=3D'layout-grid:15.6pt'>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>Hi,<o:p></o:p></span><=
+/font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>I can&#8217;t go to =
+the <span
+class=3DGramE>website :</span><span style=3D'mso-spacerun:yes'>&nbsp; =
+</span><a
+href=3D"http://www.swig.org/">http://www.SWIG.org</a>.<o:p></o:p></span><=
+/font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>So I can&#8217;t get =
+any
+information about this tool<span class=3DGramE>,<span
+style=3D'mso-spacerun:yes'>&nbsp; </span>include</span> executable file =
+, help
+information.<o:p></o:p></span></font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>I need your <span
+class=3DGramE>help !</span> <span =
+style=3D'mso-spacerun:yes'>&nbsp;</span><o:p></o:p></span></font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>More sooner more =
+better !<o:p></o:p></span></font></p>
+
+</div>
+
+</body>
+
+</html>
+
+------=_NextPart_000_0017_01C3A388.B4C44FF0--
+
+
+
+From andy.cedilnik@kitware.com  Wed Nov  5 14:19:18 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 05 Nov 2003 09:19:18 -0500
+Subject: [Paraview] How to Get SWIG !!!
+In-Reply-To: <001601c3a345$a6a10ff0$937152d2@xiaoli>
+References: <001601c3a345$a6a10ff0$937152d2@xiaoli>
+Message-ID: <1068041958.31832.4.camel@andoria>
+
+Hi Xiaoli,
+
+Try switching ISP, or use proxy. China might block swig.org. Also, you
+may want to explain what does that have to do with ParaView.
+
+			Andy
+
+On Tue, 2003-11-04 at 21:36, xiaoli wrote:
+> Hi,
+> 
+> I can¢t go to the website :  http://www.SWIG.org.
+> 
+> So I can¢t get any information about this tool,  include executable
+> file , help information.
+> 
+> I need your help !  
+> 
+> More sooner more better !
+> 
+> 
+
+
+From dean.inglis@camris.ca  Tue Nov 11 19:13:34 2003
+From: dean.inglis@camris.ca (Dean Inglis)
+Date: Tue, 11 Nov 2003 14:13:34 -0500
+Subject: [Paraview] turn off display of 3D axes
+Message-ID: <FBEIKIAGJCCFIBIPBIGMIEIACBAA.dean.inglis@camris.ca>
+
+Hi,
+
+I'm using paraview 1.0 release 3,
+windows binary distribution, how does
+one turn off the display of the 
+3D axes that seem to be there by default?
+
+Dean
+
+
+From berklist@nycap.rr.com  Tue Nov 11 19:49:57 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 11 Nov 2003 14:49:57 -0500
+Subject: [Paraview] turn off display of 3D axes
+In-Reply-To: <FBEIKIAGJCCFIBIPBIGMIEIACBAA.dean.inglis@camris.ca>
+References: <FBEIKIAGJCCFIBIPBIGMIEIACBAA.dean.inglis@camris.ca>
+Message-ID: <1068580197.3395.60.camel@caemlyn.kitwarein.com>
+
+One of the button thingies on the right of the toolbar.
+
+On Tue, 2003-11-11 at 14:13, Dean Inglis wrote:
+> Hi,
+> 
+> I'm using paraview 1.0 release 3,
+> windows binary distribution, how does
+> one turn off the display of the 
+> 3D axes that seem to be there by default?
+> 
+> Dean
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From semeraro@ncsa.uiuc.edu  Tue Nov 11 20:40:31 2003
+From: semeraro@ncsa.uiuc.edu (Dave Semeraro)
+Date: Tue, 11 Nov 2003 14:40:31 -0600
+Subject: [Paraview] parallel file strangeness.
+Message-ID: <5.1.0.14.2.20031111143417.0243a748@mail.ncsa.uiuc.edu>
+
+Hello paraviewers,
+
+I am having some problems with paraview when I read in .pvti files. First 
+off, I have a structured
+points .vtk file that I read in with paraview. I then save the file data to 
+local disk on the cluster as
+a .vti file ( the other option is a .pvd file and I get the same behavior 
+with that). I use one ghost
+level when I save. The read of the .vti file goes fine. I have problems 
+when I try to do a
+celldatatopoint data filter followed by a coutour filter. I get an error 
+from process 0 that says
+The UpdateExtent cannot be filled. Then the client cant talk to the server 
+any more and the
+game is over. Now I can do all of this if I read in the .vtk file instead 
+of the .vti file. Everything
+works great in that situation. I do have to wait a bit longer for the read 
+though. So I am wondering
+if others have had similar experience. It is not a problem with file size 
+as the failure is repeatable
+across several file sizes. Anyone got any ideas? By the way the threshold 
+filter works just
+fine regardless of how I read the data.
+
+Dave
+
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+
+From dcthomp@sandia.gov  Tue Nov 11 21:03:47 2003
+From: dcthomp@sandia.gov (David Thompson)
+Date: Tue, 11 Nov 2003 13:03:47 -0800
+Subject: [Paraview] parallel file strangeness.
+In-Reply-To: <5.1.0.14.2.20031111143417.0243a748@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.2.20031111143417.0243a748@mail.ncsa.uiuc.edu>
+Message-ID: <1068584627.1146.21.camel@fozzy.ran.sandia.gov>
+
+> I am having some problems with paraview when I read in .pvti files.
+> First off, I have a structured points .vtk file that I read in with
+> paraview. I then save the file data to local disk on the cluster as a
+> .vti file ( the other option is a .pvd file and I get the same
+> behavior with that). I use one ghost level when I save. The read of
+> the .vti file goes fine. I have problems when I try to do a
+> celldatatopoint data filter followed by a coutour filter. I get an
+> error from process 0 that says The UpdateExtent cannot be filled. Then
+> the client cant talk to the server any more and the game is over. Now
+> I can do all of this if I read in the .vtk file instead of the .vti
+> file. Everything works great in that situation. I do have to wait a
+> bit longer for the read though. So I am wondering if others have had
+> similar experience. It is not a problem with file size as the failure
+> is repeatable across several file sizes. Anyone got any ideas? By the
+> way the threshold filter works just fine regardless of how I read the
+> data.
+It sounds to me like you don't have enough ghost levels...
+CellDataToPointData uses one ghost level and isocontouring requires
+another.
+
+
+From David.Pont@ForestResearch.co.nz  Tue Nov 11 22:53:34 2003
+From: David.Pont@ForestResearch.co.nz (David.Pont@ForestResearch.co.nz)
+Date: Wed, 12 Nov 2003 11:53:34 +1300
+Subject: [Paraview] Textures
+Message-ID: <OF2DEB41B5.0B00286C-ONCC256DDB.007C0A34@forestresearch.co.nz>
+
+Hi,
+  I have ParaView 0.6 release 1. Is there a way to load a texture and then
+to apply it to an actor (vtkActor::SetTexture) ?
+Do I have to use Source | Raw File Reader to load a texture?
+The closest to SetTexture seems to be View | Source, Color | Color by which
+allows Point scalars or Property.
+Am I asking for a new option somewhere around here that says 'Texture'? or
+have I missed something.
+
+  regards
+      Dave P.
+
+
+
+From berk.geveci@kitware.com  Wed Nov 12 13:41:51 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 12 Nov 2003 08:41:51 -0500
+Subject: [Paraview] Textures
+In-Reply-To: <OF2DEB41B5.0B00286C-ONCC256DDB.007C0A34@forestresearch.co.nz>
+References: <OF2DEB41B5.0B00286C-ONCC256DDB.007C0A34@forestresearch.co.nz>
+Message-ID: <1068644511.31106.4.camel@caemlyn.kitwarein.com>
+
+No support for textures at the moment. Feel free to add it to the
+bug tracker as a feature request. I don't when we can get to it
+though. Of course, it is possible to do this (in ParaView, 
+single processor) using Tcl but then you are back to VTK programming :-)
+I can give you tips on how you can get to the tcl objects if you
+want. Also, it is really straightforward to add readers to ParaView.
+You don't have to stick to Raw File Reader (which is vtkImageReader).
+Look through the archive for a few messages I posted on how to add
+new modules to ParaView using XML configuration files.
+
+-Berk
+
+On Tue, 2003-11-11 at 17:53, David.Pont@ForestResearch.co.nz wrote:
+> Hi,
+>   I have ParaView 0.6 release 1. Is there a way to load a texture and then
+> to apply it to an actor (vtkActor::SetTexture) ?
+> Do I have to use Source | Raw File Reader to load a texture?
+> The closest to SetTexture seems to be View | Source, Color | Color by which
+> allows Point scalars or Property.
+> Am I asking for a new option somewhere around here that says 'Texture'? or
+> have I missed something.
+> 
+>   regards
+>       Dave P.
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From semeraro@ncsa.uiuc.edu  Wed Nov 12 15:46:28 2003
+From: semeraro@ncsa.uiuc.edu (Dave Semeraro)
+Date: Wed, 12 Nov 2003 09:46:28 -0600
+Subject: [Paraview] log files
+Message-ID: <5.1.0.14.2.20031112094432.024328e0@mail.ncsa.uiuc.edu>
+
+I am getting an error from process 0 that says it can not shrink the logs. 
+It is coming from
+vtkPVTimerInformation.cxx line 96. I assume it is talking about a log file 
+somewhere.
+Where are they?
+
+Dave
+
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+
+From David.Pont@ForestResearch.co.nz  Wed Nov 12 20:43:51 2003
+From: David.Pont@ForestResearch.co.nz (David.Pont@ForestResearch.co.nz)
+Date: Thu, 13 Nov 2003 09:43:51 +1300
+Subject: [Paraview] Textures
+Message-ID: <OFE33338D2.360801FD-ONCC256DDC.00702B3E@forestresearch.co.nz>
+
+Thanks Berk,
+
+  You say it is possible to do this ...in ParaView... using Tcl.... Can you
+clarify the relationship between ParaView and Tcl?
+'File | Export VTK Script' outputs Tcl. Do I need Tcl/Tk (wish*.exe)
+installed seperately from ParaView to run this script?
+I also see tcl83.dll and tk83.dll in the ParaView install dir so it seems
+ParaView has bundled up Tcl/Tk into DLLs for its own internal use.
+Is there a way for me to get tcl scripts interpreted by these dlls?
+
+ I am very keen to learn about adding modules using XML. Is there a way to
+search the archives? or do I just grab the full archive and text search it?
+
+regards
+    Dave Pont
+
+
+
+|---------+---------------------------->
+|         |           Berk Geveci      |
+|         |           <berk.geveci@kitw|
+|         |           are.com>         |
+|         |           Sent by:         |
+|         |           paraview-admin@pa|
+|         |           raview.org       |
+|         |                            |
+|         |                            |
+|         |           13/11/2003 02:41 |
+|         |                            |
+|---------+---------------------------->
+  >--------------------------------------------------------------------------------------------------------------------------------|
+  |                                                                                                                                |
+  |       To:       David.Pont@forestresearch.co.nz                                                                                |
+  |       cc:       ParaView Mailing List <paraview@paraview.org>                                                                  |
+  |       Subject:  Re: [Paraview] Textures                                                                                        |
+  >--------------------------------------------------------------------------------------------------------------------------------|
+
+
+
+
+No support for textures at the moment. Feel free to add it to the
+bug tracker as a feature request. I don't when we can get to it
+though. Of course, it is possible to do this (in ParaView,
+single processor) using Tcl but then you are back to VTK programming :-)
+I can give you tips on how you can get to the tcl objects if you
+want. Also, it is really straightforward to add readers to ParaView.
+You don't have to stick to Raw File Reader (which is vtkImageReader).
+Look through the archive for a few messages I posted on how to add
+new modules to ParaView using XML configuration files.
+
+-Berk
+
+On Tue, 2003-11-11 at 17:53, David.Pont@ForestResearch.co.nz wrote:
+> Hi,
+>   I have ParaView 0.6 release 1. Is there a way to load a texture and
+then
+> to apply it to an actor (vtkActor::SetTexture) ?
+> Do I have to use Source | Raw File Reader to load a texture?
+> The closest to SetTexture seems to be View | Source, Color | Color by
+which
+> allows Point scalars or Property.
+> Am I asking for a new option somewhere around here that says 'Texture'?
+or
+> have I missed something.
+>
+>   regards
+>       Dave P.
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+
+
+From Mark.Olesen@arvinmeritor.com  Thu Nov 13 13:12:38 2003
+From: Mark.Olesen@arvinmeritor.com (Olesen, Mark)
+Date: Thu, 13 Nov 2003 14:12:38 +0100
+Subject: [Paraview] Camera Actor
+Message-ID: <0DDE7F776936B04AA670C77F1F59A4D909D335@deaex001.arvinmeritor.com>
+
+Is there a way to set a precise camera location/orientation.
+Using the camera actor, I can easily set +/- X/Y/Z.
+For the next step I would like to rotate a specific number of degrees about
+a global axis or about the viewpoint axis.
+
+As a further step, I could imagine setting a specific cutting plane and
+extracting its normal for use with the camera actuator.
+
+Thanks for help and hints.
+
+
+Dr. Mark Olesen
+Thermofluid Dynamics Analyst
+ArvinMeritor Light Vehicle Systems
+Zeuna Staerker GmbH & Co. KG
+Biberbachstr. 9
+D-86154 Augsburg, GERMANY
+tel: +49 (821) 4103 - 862
+fax: +49 (821) 4103 - 7862
+Mark.Olesen@ArvinMeritor.com
+
+
+From berk.geveci@kitware.com  Thu Nov 13 15:23:27 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 13 Nov 2003 10:23:27 -0500
+Subject: [Paraview] Textures
+In-Reply-To: <OFE33338D2.360801FD-ONCC256DDC.00702B3E@forestresearch.co.nz>
+References: <OFE33338D2.360801FD-ONCC256DDC.00702B3E@forestresearch.co.nz>
+Message-ID: <1068737005.16634.16.camel@caemlyn.kitwarein.com>
+
+NOTE: Everything in this message applies to ParaView 0.6 and 1.0,
+some might not apply to the next release.
+
+ParaView uses Tcl extensively. All ParaView objects and all VTK objects
+it creates are wrapped in Tcl. You can access these using Tcl scripts.
+ParaView trace and state files are Tcl scripts. It is possible to
+execute small Tcl commands using the command prompt (Window->Command
+Prompt). In the next release, some VTK objects will probably no longer
+be available through Tcl, specially when running in client/server mode.
+If anyone is interested in knowing more, I can continue explaining.
+
+As adding readers go, see
+http://public.kitware.com/pipermail/paraview/2003-September/000290.html
+
+There has been some other messages related to the same topic in 
+September and October. You can search all Kitware hosted mailing lists
+using the little Search tool on the upper right of all pages.
+
+-Berk
+
+
+On Wed, 2003-11-12 at 15:43, David.Pont@ForestResearch.co.nz wrote:
+> Thanks Berk,
+> 
+>   You say it is possible to do this ...in ParaView... using Tcl.... Can you
+> clarify the relationship between ParaView and Tcl?
+> 'File | Export VTK Script' outputs Tcl. Do I need Tcl/Tk (wish*.exe)
+> installed seperately from ParaView to run this script?
+> I also see tcl83.dll and tk83.dll in the ParaView install dir so it seems
+> ParaView has bundled up Tcl/Tk into DLLs for its own internal use.
+> Is there a way for me to get tcl scripts interpreted by these dlls?
+> 
+>  I am very keen to learn about adding modules using XML. Is there a way to
+> search the archives? or do I just grab the full archive and text search it?
+> 
+> regards
+>     Dave Pont
+> 
+
+
+
+
+From heiland@indiana.edu  Fri Nov 14 13:06:29 2003
+From: heiland@indiana.edu (Randy Heiland)
+Date: 14 Nov 2003 08:06:29 -0500
+Subject: [Paraview] Re: ParaView digest, Vol 1 #165 - 2 msgs
+In-Reply-To: <20031114112545.25230.51100.Mailman@public.kitware.com>
+References: <20031114112545.25230.51100.Mailman@public.kitware.com>
+Message-ID: <1068815189.15155.1.camel@poincare.uits.iupui.edu>
+
+> 
+> ParaView uses Tcl extensively. All ParaView objects and all VTK objects
+> it creates are wrapped in Tcl. You can access these using Tcl scripts.
+> ParaView trace and state files are Tcl scripts. It is possible to
+> execute small Tcl commands using the command prompt (Window->Command
+> Prompt). In the next release, some VTK objects will probably no longer
+> be available through Tcl, specially when running in client/server mode.
+> If anyone is interested in knowing more, I can continue explaining.
+> 
+
+Hi Berk,
+
+Yes, please explain a bit more about what's to come, if you don't mind.
+
+--Randy
+
+
+From jlee@ariel.met.tamu.edu  Fri Nov 14 21:12:20 2003
+From: jlee@ariel.met.tamu.edu (Joonsuk Lee)
+Date: Fri, 14 Nov 2003 15:12:20 -0600
+Subject: [Paraview] Vector component
+Message-ID: <200311141512.20603.jlee@ariel.met.tamu.edu>
+
+Dear all:
+
+I have several questions about plotting the figure.
+FYI, I am dealing with PLOT3D grid file and q file.
+
+First, is it possible to plot the evolution of material surface
+(the surface which has same value at initial time) with
+time?
+
+Is there any way to plot the isosurface of one of
+the vector component?
+For example, one of the component of momentum
+in PLOT3D q file.
+
+And is it possible to calculate the difference between
+grid point  and one of vector component, i.e., x-f(x)?
+I checked the calculator filter and found that it only
+calculate the values between variables.=20
+
+Thank you in advance.
+--------------------------------------------
+Joonsuk Lee
+Department of Atmospheric Sciences
+Texas A&M University
+3150 TAMU
+College Station, 77843-3150
+
+From David.Pont@ForestResearch.co.nz  Sun Nov 16 20:03:16 2003
+From: David.Pont@ForestResearch.co.nz (David.Pont@ForestResearch.co.nz)
+Date: Mon, 17 Nov 2003 09:03:16 +1300
+Subject: [Paraview] Textures
+Message-ID: <OFD5CDEB1D.4A881D4D-ONCC256DE0.006DD15E@forestresearch.co.nz>
+
+Yes I am interested in knowing more. I have worked for some years with vtk
+using C++ but I am getting more and more interested in ParaView as a
+user-friendly interface, with the option of dropping into scripting (Tcl)
+if something 'special' must be done. Lack of access to some vtk objects is
+one issue I'd like to hear more about.
+I found the info on adding readers/filters, thanks
+    Dave Pont
+
+
+
+|---------+---------------------------->
+|         |           Berk Geveci      |
+|         |           <berk.geveci@kitw|
+|         |           are.com>         |
+|         |           Sent by:         |
+|         |           paraview-admin@pa|
+|         |           raview.org       |
+|         |                            |
+|         |                            |
+|         |           14/11/2003 04:23 |
+|         |                            |
+|---------+---------------------------->
+  >--------------------------------------------------------------------------------------------------------------------------------|
+  |                                                                                                                                |
+  |       To:       David.Pont@forestresearch.co.nz                                                                                |
+  |       cc:       ParaView Mailing List <paraview@paraview.org>, paraview-admin@paraview.org                                     |
+  |       Subject:  Re: [Paraview] Textures                                                                                        |
+  >--------------------------------------------------------------------------------------------------------------------------------|
+
+
+
+
+NOTE: Everything in this message applies to ParaView 0.6 and 1.0,
+some might not apply to the next release.
+
+ParaView uses Tcl extensively. All ParaView objects and all VTK objects
+it creates are wrapped in Tcl. You can access these using Tcl scripts.
+ParaView trace and state files are Tcl scripts. It is possible to
+execute small Tcl commands using the command prompt (Window->Command
+Prompt). In the next release, some VTK objects will probably no longer
+be available through Tcl, specially when running in client/server mode.
+If anyone is interested in knowing more, I can continue explaining.
+
+As adding readers go, see
+http://public.kitware.com/pipermail/paraview/2003-September/000290.html
+
+There has been some other messages related to the same topic in
+September and October. You can search all Kitware hosted mailing lists
+using the little Search tool on the upper right of all pages.
+
+-Berk
+
+
+On Wed, 2003-11-12 at 15:43, David.Pont@ForestResearch.co.nz wrote:
+> Thanks Berk,
+>
+>   You say it is possible to do this ...in ParaView... using Tcl.... Can
+you
+> clarify the relationship between ParaView and Tcl?
+> 'File | Export VTK Script' outputs Tcl. Do I need Tcl/Tk (wish*.exe)
+> installed seperately from ParaView to run this script?
+> I also see tcl83.dll and tk83.dll in the ParaView install dir so it seems
+> ParaView has bundled up Tcl/Tk into DLLs for its own internal use.
+> Is there a way for me to get tcl scripts interpreted by these dlls?
+>
+>  I am very keen to learn about adding modules using XML. Is there a way
+to
+> search the archives? or do I just grab the full archive and text search
+it?
+>
+> regards
+>     Dave Pont
+>
+
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+
+
+From JF.Simon@ulg.ac.be  Wed Nov 19 11:03:15 2003
+From: JF.Simon@ulg.ac.be (=?ISO-8859-1?Q?Jean-Fran=E7ois_Simon?=)
+Date: Wed, 19 Nov 2003 12:03:15 +0100
+Subject: [Paraview] Run time error with xml file
+Message-ID: <3FBB4DF3.5000805@ulg.ac.be>
+
+Hi all,
+
+I compiled Paraview-1.0.4 on a Compaq alpha workstation.
+Until there everything is ok.
+
+When I load one of my vts file, paraview read it without any
+error message but when I press accept, the program quit with
+something like a floating point exception ( ¨ Exception de calcul
+en virgule flottante ¨ in french ).
+My vts file work fine with mayavi (another visualizator based
+on vtk) and with paraview binary (installed on an intel computer).
+
+On the alpha computer, the floating exeption doesn't occur
+with the bluntfin.vts file provdied with paraview tutorial but I
+can't see anything except the contour of the object and the colorbar.
+On the other hand, evrything seems all right with .vtk files.
+
+I'm a little confused. Isn't it a quite strange behaviour ?
+Does someone has an idea to what I can try ?
+Maybe someone could send me a .vts file to recheck this ?
+
+Thanks in advance,
+
+Jean-François
+
+
+
+
+
+ 
+
+
+From Mark.Olesen@arvinmeritor.com  Thu Nov 20 17:38:58 2003
+From: Mark.Olesen@arvinmeritor.com (Olesen, Mark)
+Date: Thu, 20 Nov 2003 18:38:58 +0100
+Subject: [Paraview] Re: Camera Actor
+Message-ID: <0DDE7F776936B04AA670C77F1F59A4D909D34A@deaex001.arvinmeritor.com>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_001_01C3AF8D.2DB768B0
+Content-Type: text/plain
+
+> Is there a way to set a precise camera location/orientation.
+
+> Using the camera actor, I can easily set +/- X/Y/Z.
+
+> For the next step I would like to rotate a specific number of degrees
+about
+
+> a global axis or about the viewpoint axis.
+
+ 
+
+Since there is apparently no easy way of doing this directly within the
+current paraview framework (otherwise I would have been flooded with
+answers), could someone advise me where to start if I wanted to implement
+this functionality myself.
+
+The vtkCamera class (C++) has all the useful functions: eg, ( Get | Set) (
+ViewPlaneNormal | Roll | Yaw ) etc.
+
+And they are actually exported to the tcl wrapper, but I cannot understand
+how/where they are actually bound into paraview.
+
+Where, and in which form, should I start trying to monkey with widget?
+
+ 
+
+Cheers,
+
+/mark
+
+ 
+
+Dr. Mark Olesen
+
+Thermofluid Dynamics Analyst
+
+ArvinMeritor Light Vehicle Systems
+
+Zeuna Staerker GmbH & Co. KG
+
+Biberbachstr. 9
+
+D-86154 Augsburg, GERMANY
+
+tel: +49 (821) 4103 - 862
+
+fax: +49 (821) 4103 - 7862
+
+Mark.Olesen@ArvinMeritor.com <mailto:Mark.Olesen@ArvinMeritor.com> 
+
+ 
+
+
+------_=_NextPart_001_01C3AF8D.2DB768B0
+Content-Type: text/html
+
+<html>
+
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=us-ascii">
+
+
+<meta name=Generator content="Microsoft Word 10 (filtered)">
+
+<style>
+<!--
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:navy;
+	text-decoration:underline;}
+span.EmailFormatvorlage17
+	{font-family:Arial;
+	color:windowtext;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:70.85pt 70.85pt 2.0cm 70.85pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+
+</head>
+
+<body lang=DE link=blue vlink=navy>
+
+<div class=Section1>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&gt; Is there a way to set a precise camera
+location/orientation.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&gt; Using the camera actor, I can easily set +/-
+X/Y/Z.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&gt; For the next step I would like to rotate a
+specific number of degrees about</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&gt; a global axis or about the viewpoint axis.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&nbsp;</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>Since there is apparently no easy way of doing this
+directly within the current paraview framework (otherwise I would have been
+flooded with answers), could someone advise me where to start if I wanted to
+implement this functionality myself.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>The vtkCamera class (C++) has all the useful
+functions: eg, ( Get | Set) ( ViewPlaneNormal | Roll | Yaw ) etc.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>And they are actually exported to the tcl wrapper, but
+I cannot understand how/where they are actually bound into paraview.</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>Where, and in which form, should I start trying to
+monkey with widget?</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&nbsp;</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>Cheers,</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>/mark</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span lang=EN-GB style='font-size:
+10.0pt;font-family:Arial'>&nbsp;</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>Dr. Mark Olesen</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>Thermofluid Dynamics Analyst</span></font></p>
+
+<p class=MsoNormal><strong><b><font size=2 color=red face=Arial><span
+style='font-size:10.0pt;font-family:Arial;color:red'>ArvinMeritor Light Vehicle
+Systems</span></font></b></strong></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>Zeuna Staerker GmbH &amp; Co. KG</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>Biberbachstr. 9</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>D-86154 Augsburg, GERMANY</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>tel: +49 (821) 4103 - 862</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'>fax: +49 (821) 4103 - 7862</span></font></p>
+
+<p class=MsoNormal><font size=2 face=Arial><span style='font-size:10.0pt;
+font-family:Arial'><a href="mailto:Mark.Olesen@ArvinMeritor.com">Mark.Olesen@ArvinMeritor.com</a></span></font></p>
+
+<p class=MsoNormal><font size=3 face="Times New Roman"><span style='font-size:
+12.0pt'>&nbsp;</span></font></p>
+
+</div>
+
+</body>
+
+</html>
+
+------_=_NextPart_001_01C3AF8D.2DB768B0--
+
+From jfavre@cscs.ch  Mon Nov 24 13:32:14 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 24 Nov 2003 14:32:14 +0100
+Subject: [Paraview] EnSight multi-part loading
+In-Reply-To: <1065197439.18785.152.camel@andoria>
+References: <5.1.0.14.2.20031003110307.00bdfea0@mail.ncsa.uiuc.edu> <1065197439.18785.152.camel@andoria>
+Message-ID: <3FC2085E.3020503@cscs.ch>
+
+While reading EnSight geom files composed of multiple parts, I was 
+surprised by the large number of points shown in the 
+Information.statistics field of my reader object.
+
+my data was made of just over 2 million points and ParaView showed I had 
+202 million points. For a moment, I thought I had beaten my own 
+visualization record. :-)
+
+The answer is that the statistics are calculated by adding the number of 
+points for each EnSight part, i.e. each VTK Output, event though the 
+vtkPoints is ref. counted, and only created once. Since I had 101 parts, 
+I had 101 times the number of real points.
+
+What is the justification for that? no need to boost performance like 
+that. Isn't ParaView already good enough?
+
+Somebody cares to comment?
+
+Jean
+
+
+-- 
+Dr. Jean M. Favre,                            email: favre @ cscs . ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From charles.law@kitware.com  Mon Nov 24 17:51:47 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Mon, 24 Nov 2003 12:51:47 -0500
+Subject: [Paraview] EnSight multi-part loading
+In-Reply-To: <3FC2085E.3020503@cscs.ch>
+References: <5.1.0.14.2.20031003110307.00bdfea0@mail.ncsa.uiuc.edu>
+ <1065197439.18785.152.camel@andoria>
+ <3FC2085E.3020503@cscs.ch>
+Message-ID: <6.0.0.22.0.20031124113105.092613f0@pop.biz.rr.com>
+
+Jean,
+
+When I created the code to compute the total number of points, I did not 
+consider sources that have outputs which share the same points.  I believe 
+that the EnSight reader is the only source which does this.  The easiest 
+fix is to "clean" the EnSight readers outputs to get rid of unused 
+points.  With a little extra work we could detect the shared points ...
+
+Charles.
+
+
+
+At 08:32 AM 11/24/2003, Jean M. Favre wrote:
+>While reading EnSight geom files composed of multiple parts, I was 
+>surprised by the large number of points shown in the 
+>Information.statistics field of my reader object.
+>
+>my data was made of just over 2 million points and ParaView showed I had 
+>202 million points. For a moment, I thought I had beaten my own 
+>visualization record. :-)
+>
+>The answer is that the statistics are calculated by adding the number of 
+>points for each EnSight part, i.e. each VTK Output, event though the 
+>vtkPoints is ref. counted, and only created once. Since I had 101 parts, I 
+>had 101 times the number of real points.
+>
+>What is the justification for that? no need to boost performance like 
+>that. Isn't ParaView already good enough?
+>
+>Somebody cares to comment?
+>
+>Jean
+>
+>
+>--
+>Dr. Jean M. Favre,                            email: favre @ cscs . ch
+>http://www.cscs.ch/people/Favre.html
+>CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+>Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From xiaoli@mail.iapcm.ac.cn  Wed Nov 26 06:10:44 2003
+From: xiaoli@mail.iapcm.ac.cn (xiaoli)
+Date: Wed, 26 Nov 2003 14:10:44 +0800
+Subject: [Paraview] (no subject)
+Message-ID: <000501c3b3e4$09e87310$937152d2@xiaoli>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0006_01C3B427.180BB310
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hi , everyone!
+How and where can I  get the Paraview GUI source code written in tcl/tk
+?
+I need you help!!!
+Thanks !!
+
+------=_NextPart_000_0006_01C3B427.180BB310
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns=3D"http://www.w3.org/TR/REC-html40">
+
+<head>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii">
+
+
+<meta name=3DProgId content=3DWord.Document>
+<meta name=3DGenerator content=3D"Microsoft Word 10">
+<meta name=3DOriginator content=3D"Microsoft Word 10">
+<link rel=3DFile-List href=3D"cid:filelist.xml@01C3B427.14BB9DB0">
+<!--[if gte mso 9]><xml>
+ <o:OfficeDocumentSettings>
+  <o:DoNotRelyOnCSS/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:SpellingState>Clean</w:SpellingState>
+  <w:GrammarState>Clean</w:GrammarState>
+  <w:DocumentKind>DocumentEmail</w:DocumentKind>
+  <w:EnvelopeVis/>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 =
+&#30917;</w:DrawingGridVerticalSpacing>
+  =
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEve=
+ry>
+  =
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:&#23435;&#20307;;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@&#23435;&#20307;";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:&#23435;&#20307;;
+	mso-font-kerning:1.0pt;}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	mso-style-noshow:yes;
+	mso-ansi-font-size:9.0pt;
+	mso-bidi-font-size:10.0pt;
+	font-family:Arial;
+	mso-ascii-font-family:Arial;
+	mso-fareast-font-family:&#23435;&#20307;;
+	mso-hansi-font-family:Arial;
+	mso-bidi-font-family:Arial;
+	color:windowtext;}
+span.SpellE
+	{mso-style-name:"";
+	mso-spl-e:yes;}
+span.GramE
+	{mso-style-name:"";
+	mso-gram-e:yes;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:42.55pt;
+	mso-footer-margin:49.6pt;
+	mso-paper-source:0;
+	layout-grid:15.6pt;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */=20
+ table.MsoNormalTable
+	{mso-style-name:&#26222;&#36890;&#34920;&#26684;;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";}
+</style>
+<![endif]-->
+</head>
+
+<body lang=3DZH-CN link=3Dblue vlink=3Dpurple =
+style=3D'tab-interval:21.0pt;text-justify-trim:
+punctuation'>
+
+<div class=3DSection1 style=3D'layout-grid:15.6pt'>
+
+<p class=3DMsoNormal><span class=3DGramE><font size=3D1 =
+face=3DArial><span lang=3DEN-US
+style=3D'font-size:9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>Hi =
+,</span></font></span><font
+size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:9.0pt;mso-bidi-font-size:
+10.0pt;font-family:Arial'> everyone!<o:p></o:p></span></font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>How and where can =
+<span
+class=3DGramE>I<span style=3D'mso-spacerun:yes'>&nbsp; </span>get</span> =
+the <span
+class=3DSpellE>Paraview</span> GUI source code written in <span =
+class=3DSpellE>tcl/tk</span><span
+style=3D'mso-spacerun:yes'>&nbsp; </span>?<o:p></o:p></span></font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>I need you =
+help!!!<o:p></o:p></span></font></p>
+
+<p class=3DMsoNormal><font size=3D1 face=3DArial><span lang=3DEN-US =
+style=3D'font-size:
+9.0pt;mso-bidi-font-size:10.0pt;font-family:Arial'>Thanks =
+!!<o:p></o:p></span></font></p>
+
+</div>
+
+</body>
+
+</html>
+
+------=_NextPart_000_0006_01C3B427.180BB310--
+
+
+
+From charles.law@kitware.com  Wed Nov 26 21:10:58 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Wed, 26 Nov 2003 16:10:58 -0500
+Subject: [Paraview] (no subject)
+In-Reply-To: <000501c3b3e4$09e87310$937152d2@xiaoli>
+References: <000501c3b3e4$09e87310$937152d2@xiaoli>
+Message-ID: <6.0.0.22.0.20031126160804.0936c968@pop.biz.rr.com>
+
+Hello,
+
+Although ParaView does use Tk widgets and Tcl scripting, the GUI is not 
+actually written in Tcl.  We have C++ objects that use Tk widgets. The C++ 
+objects are in the director:
+
+ParaView/Widgets
+
+ParaView's GUI is created by classes in the directory:
+
+ParaView/ParaView
+
+Charles.
+
+At 01:10 AM 11/26/2003, xiaoli wrote:
+>Hi , everyone!
+>How and where can I  get the Paraview GUI source code written in tcl/tk  ?
+>I need you help!!!
+>Thanks !!
+
+
+
+From apneto@mat.puc-rio.br  Thu Nov 27 16:30:33 2003
+From: apneto@mat.puc-rio.br (Afonso Paiva Neto)
+Date: 27 Nov 2003 14:30:33 -0200
+Subject: [Paraview] Users Guide
+Message-ID: <1069950633.18588.4.camel@persefone>
+
+Hi,
+
+is there any User's Guide for Paraview and when it'll release? 
+
+-- 
+Afonso Paiva Neto
+e-mail: apneto@mat.puc-rio.br
+MatMidia Lab. - PUC-RIO
+Rio de Janeiro - Brazil
+
+

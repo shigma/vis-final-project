@@ -1,0 +1,3241 @@
+From peter.welsh@vips.co.uk  Mon Feb  2 10:01:39 2004
+From: peter.welsh@vips.co.uk (Peter Welsh)
+Date: Mon, 2 Feb 2004 10:01:39 -0000
+Subject: [Paraview] vtk file format?
+Message-ID: <LIEKKABJFKEGAINOHCHNKEGHCAAA.peter.welsh@vips.co.uk>
+
+
+I read in a .vtk file which contains only the topology of my model.
+
+I then wish to read in the data for the model at different timesteps (again
+using .vtk format), is this possible, without having to include the topology
+of model again in these data files?
+
+regards
+
+Peter Welsh
+V.I.P.S. Ltd.
+
+
+From Stephen.Wornom@sophia.inria.fr  Mon Feb  2 10:46:22 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Mon, 02 Feb 2004 11:46:22 +0100
+Subject: [Paraview] vtk file format?
+References: <LIEKKABJFKEGAINOHCHNKEGHCAAA.peter.welsh@vips.co.uk>
+Message-ID: <401E2A7E.36857CC0@sophia.inria.fr>
+
+Hi Peter,
+Can't answer your question directly but it seems that we both would like
+to visualize time step data. I have data at 150 different time steps and
+would like to run ParaView in the batch mode saving images at the
+different time steps, do you run in the batch mode when you have data at
+different time steps? I have another excellent free source graphics tool
+that I use but would like to be able to use ParaView as well. With the
+other tool, using the other package I can create  geometry link to a
+single topology but I cannot not run in batch. I run it interactively
+repeating the same commands at each time step. It does not take too long
+but it is not as efficient as running in the batch mode and I have seen
+ParaView questions concerning the batch mode, does anyone have a link to
+find out more about the batch mode?
+Stephen
+
+Peter Welsh wrote:
+> 
+> I read in a .vtk file which contains only the topology of my model.
+> 
+> I then wish to read in the data for the model at different timesteps (again
+> using .vtk format), is this possible, without having to include the topology
+> of model again in these data files?
+> 
+> regards
+> 
+> Peter Welsh
+> V.I.P.S. Ltd.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From Stephen.Wornom@sophia.inria.fr  Tue Feb  3 09:51:04 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 03 Feb 2004 10:51:04 +0100
+Subject: [Paraview] does this book cover running ParaView in mpi and batch mode?
+Message-ID: <401F6F08.8A977B0D@sophia.inria.fr>
+
+Hi Berk,
+Does this book cover running ParaView in mpi and batch mode?
+Stephen
+
+The Visualization Toolkit User's Guide, Version 4.2 (with CDROM)
+by Inc. Kitware 
+List Price:                      
+$72.00 
+Edition: Paperback
+
+From berklist@nycap.rr.com  Wed Feb  4 14:43:27 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 04 Feb 2004 09:43:27 -0500
+Subject: [Paraview] does this book cover running ParaView in mpi and
+ batch mode?
+In-Reply-To: <401F6F08.8A977B0D@sophia.inria.fr>
+References: <401F6F08.8A977B0D@sophia.inria.fr>
+Message-ID: <1075905807.6663.10.camel@silverymoon>
+
+Nope. It doesn't. Currently, we have no documentation describing how.
+I can only point to the mailing list archives.
+
+-Berk
+
+On Tue, 2004-02-03 at 04:51, Stephen Wornom wrote:
+> Hi Berk,
+> Does this book cover running ParaView in mpi and batch mode?
+> Stephen
+> 
+> The Visualization Toolkit User's Guide, Version 4.2 (with CDROM)
+> by Inc. Kitware 
+> List Price:                      
+> $72.00 
+> Edition: Paperback
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From berklist@nycap.rr.com  Wed Feb  4 14:48:07 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 04 Feb 2004 09:48:07 -0500
+Subject: [Paraview] vtk file format?
+In-Reply-To: <LIEKKABJFKEGAINOHCHNKEGHCAAA.peter.welsh@vips.co.uk>
+References: <LIEKKABJFKEGAINOHCHNKEGHCAAA.peter.welsh@vips.co.uk>
+Message-ID: <1075906087.6657.16.camel@silverymoon>
+
+Unfortunately, it is not. I do not know of any VTK reader that lets you
+do that.
+
+On Mon, 2004-02-02 at 05:01, Peter Welsh wrote:
+> I read in a .vtk file which contains only the topology of my model.
+> 
+> I then wish to read in the data for the model at different timesteps (again
+> using .vtk format), is this possible, without having to include the topology
+> of model again in these data files?
+> 
+> regards
+> 
+> Peter Welsh
+> V.I.P.S. Ltd.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From julien.alizier-ausy@irsn.fr  Wed Feb  4 15:26:27 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Wed, 4 Feb 2004 16:26:27 +0100
+Subject: [Paraview] vtk file format?
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B10E@OREADE.ipsn.fr>
+
+Hi,
+
+I just discovered that naming your vtk files a_name.0.vtk, =
+a_name.1.vtk,
+a_name.2.vtk, a_name.3.vtk, a_name.4.vtk, etc...  and opening one in
+ParaView creates a little timebar in the left panel.
+Maybe you can use scripts to change the timestep, simulate clicking on
+Accept and save your images.
+
+Hope this helps
+
+-- Julien
+
+=20
+
+
+-----Message d'origine-----
+De : Stephen Wornom [mailto:Stephen.Wornom@sophia.inria.fr]
+Envoy=E9 : lundi 2 f=E9vrier 2004 11:46
+=C0 : peter.welsh@vips.co.uk; pview
+Objet : Re: [Paraview] vtk file format?
+
+
+Hi Peter,
+Can't answer your question directly but it seems that we both would =
+like
+to visualize time step data. I have data at 150 different time steps =
+and
+would like to run ParaView in the batch mode saving images at the
+different time steps, do you run in the batch mode when you have data =
+at
+different time steps? I have another excellent free source graphics =
+tool
+that I use but would like to be able to use ParaView as well. With the
+other tool, using the other package I can create  geometry link to a
+single topology but I cannot not run in batch. I run it interactively
+repeating the same commands at each time step. It does not take too =
+long
+but it is not as efficient as running in the batch mode and I have seen
+ParaView questions concerning the batch mode, does anyone have a link =
+to
+find out more about the batch mode?
+Stephen
+
+Peter Welsh wrote:
+>=20
+> I read in a .vtk file which contains only the topology of my model.
+>=20
+> I then wish to read in the data for the model at different timesteps
+(again
+> using .vtk format), is this possible, without having to include the
+topology
+> of model again in these data files?
+>=20
+> regards
+>=20
+> Peter Welsh
+> V.I.P.S. Ltd.
+>=20
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+--=20
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+From berklist@nycap.rr.com  Wed Feb  4 15:50:32 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 04 Feb 2004 10:50:32 -0500
+Subject: [Paraview] .pvs .tcl files
+In-Reply-To: <400BCF4A.919A99C0@sophia.inria.fr>
+References: <400BCF4A.919A99C0@sophia.inria.fr>
+Message-ID: <1075909832.6670.79.camel@silverymoon>
+
+> 1-I start ParaView and create an iso contour which I animate. I stop the
+> animation and save the session.pvs file and the session.tcl files. When
+> I restart ParaPview and load the session.pvs file, the contour animation
+> starts in the cycle mode with no button to stop it (the stop button is
+> not highlighted). Question: How does one stop the animation?
+
+This sounds like a bug. I'll take a look.
+
+> 2-I have the session.tcl script, how does one use it?
+
+What .tcl script? You mean .pvb script? Unless you are using an old old
+version of ParaView (0.6), there should be no .tcl scripts.
+> 
+> 3-I have 40+ sets of data (time-dependent output). Question: How can I
+> run ParaView in the batch mode to load the data, save an image at each
+> time step. ParaView in used in the sequential mode.
+
+You setup your animation, save a batch script and load it back with
+the --batch command line.
+
+-Berk
+
+
+
+From eliasamanatidis1@hotmail.com  Wed Feb 11 02:07:33 2004
+From: eliasamanatidis1@hotmail.com (Elias Amanatidis)
+Date: Wed, 11 Feb 2004 02:07:33 +0000
+Subject: [Paraview] paraview
+Message-ID: <LAW10-F7526CuLtSt3R00019fef@hotmail.com>
+
+Dear all
+
+I read some documents about loading PLOT3D
+file in ParaView. And I knew that unformatted
+PLOT3D file cannot be ready by ParaView.
+Then, how can I convert this unformatted
+PLOT3D file into VTK file or how can I
+make the formatted PLOT3D file from FORTRAN?
+How do I set the output format in FORTRAN
+to produce the formatted PLOT3D file?
+I will appreciate it if you attach the actual
+example which shows that method.
+
+Yours sincerely ,
+                Ilias
+
+_________________________________________________________________
+Find a cheaper internet access deal - choose one to suit you. 
+http://www.msn.co.uk/internetaccess
+
+
+From eliasamanatidis1@hotmail.com  Wed Feb 11 02:08:04 2004
+From: eliasamanatidis1@hotmail.com (Elias Amanatidis)
+Date: Wed, 11 Feb 2004 02:08:04 +0000
+Subject: [Paraview] (no subject)
+Message-ID: <LAW10-F111k0eUMk0F30001a887@hotmail.com>
+
+Dear all
+
+I read some documents about loading PLOT3D
+file in ParaView. And I knew that unformatted
+PLOT3D file cannot be ready by ParaView.
+Then, how can I convert this unformatted
+PLOT3D file into VTK file or how can I
+make the formatted PLOT3D file from FORTRAN?
+How do I set the output format in FORTRAN
+to produce the formatted PLOT3D file?
+I will appreciate it if you attach the actual
+example which shows that method.
+
+Yours sincerely ,
+                Ilias
+
+_________________________________________________________________
+Sign-up for a FREE BT Broadband connection today! 
+http://www.msn.co.uk/specials/btbroadband
+
+
+From julien.alizier-ausy@irsn.fr  Wed Feb 11 15:16:31 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Wed, 11 Feb 2004 16:16:31 +0100
+Subject: [Paraview] Cutting cells of different dimension
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B121@OREADE.ipsn.fr>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_001_01C3F0B2.0790A230
+Content-Type: text/plain;
+	charset="iso-8859-1"
+
+Hi all,
+ 
+I am trying to make a cut of 3D and 2D cells in one Unstructured grid in
+ParaView.
+The problem is that it is possible to cut only if there is no data on cells
+(which is not very useful obviously ;-).
+ 
+Here is a tiny vtk file that shows the bug : it is a triangle and a line and
+I'd like to cut them in order to get a line and a point. It works when I
+removed the CELL_DATA part.
+ 
+Thanks for your help
+ 
+-- Julien
+ 
+ 
+# vtk DataFile Version 2.0
+cut problem with cell of different dimension
+ASCII
+DATASET UNSTRUCTURED_GRID
+POINTS 5 float
+0 0 0
+2 0 2
+1 3 1
+4 0 4
+4 3 4
+ 
+CELLS 2 7
+3 0 1 2
+2 3 4
+ 
+CELL_TYPES 2
+5
+3
+ 
+CELL_DATA 2
+SCALARS cell_scalars float 1
+LOOKUP_TABLE default
+0
+1
+ 
+ 
+
+------_=_NextPart_001_01C3F0B2.0790A230
+Content-Type: text/html;
+	charset="iso-8859-1"
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+
+
+<META content="MSHTML 5.50.4134.600" name=GENERATOR></HEAD>
+<BODY>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>Hi 
+all,</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>I am trying to make 
+a cut of 3D and 2D cells in one Unstructured grid in 
+ParaView.</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>The problem is that 
+it is possible to cut only if there is no&nbsp;data on cells (which is not very 
+useful obviously ;-).</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>Here is a tiny vtk 
+file that shows the bug : it is a triangle and a line and I'd like to cut them 
+in order to get a line and a point. It works when I removed the CELL_DATA 
+part.</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>Thanks for your 
+help</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>-- 
+Julien</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2># vtk DataFile 
+Version 2.0<BR>cut problem with cell of different dimension<BR>ASCII<BR>DATASET 
+UNSTRUCTURED_GRID<BR>POINTS 5 float<BR>0 0 0<BR>2 0 2<BR>1 3 
+1</FONT></SPAN></DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>4 0 4<BR>4 3 
+4</FONT></SPAN></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>CELLS 2 7<BR>3 0 1 
+2<BR>2 3 4</FONT></SPAN></DIV>
+<DIV><FONT face=Arial size=2></FONT>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>CELL_TYPES 
+2<BR>5<BR>3</FONT></SPAN></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial size=2>CELL_DATA 
+2<BR>SCALARS cell_scalars float 1<BR>LOOKUP_TABLE 
+default<BR>0<BR>1</FONT></SPAN></DIV>
+<DIV>&nbsp;</DIV>
+<DIV><SPAN class=951240815-11022004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV></BODY></HTML>
+
+------_=_NextPart_001_01C3F0B2.0790A230--
+
+From julien.alizier-ausy@irsn.fr  Wed Feb 11 15:25:35 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Wed, 11 Feb 2004 16:25:35 +0100
+Subject: FW: [Paraview] Cutting cells of different dimension
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B122@OREADE.ipsn.fr>
+
+And it does work if I use POINT_DATA instead of CELL_DATA.
+Any ideas? I this a bug in vtkCutter or cell->Contour(...)?
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+Envoy=E9 : mercredi 11 f=E9vrier 2004 16:17
+=C0 : 'paraview@paraview.org'; 'vtkusers@vtk.org'
+Objet : [Paraview] Cutting cells of different dimension
+
+
+Hi all,
+
+I am trying to make a cut of 3D and 2D cells in one Unstructured grid =
+in
+ParaView.
+The problem is that it is possible to cut only if there is no data on =
+cells
+(which is not very useful obviously ;-).
+
+Here is a tiny vtk file that shows the bug : it is a triangle and a =
+line and
+I'd like to cut them in order to get a line and a point. It works when =
+I
+removed the CELL_DATA part.
+
+Thanks for your help
+
+-- Julien
+
+
+# vtk DataFile Version 2.0
+cut problem with cell of different dimension
+ASCII
+DATASET UNSTRUCTURED_GRID
+POINTS 5 float
+0 0 0
+2 0 2
+1 3 1
+4 0 4
+4 3 4
+
+CELLS 2 7
+3 0 1 2
+2 3 4
+
+CELL_TYPES 2
+5
+3
+
+CELL_DATA 2
+SCALARS cell_scalars float 1
+LOOKUP_TABLE default
+0
+1
+
+From amy.henderson@kitware.com  Wed Feb 11 18:17:10 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Wed, 11 Feb 2004 13:17:10 -0500
+Subject: FW: [Paraview] Cutting cells of different dimension
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B122@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B122@OREADE.ipsn.fr>
+Message-ID: <6.0.3.0.2.20040211115723.01b2ea08@pop.biz.rr.com>
+
+Hi Julien,
+
+The problem is in cell->Contour(...) (or maybe in the way vtkCutter is=20
+using cell->Contour(...)).  What's happening is that when the cell contours=
+=20
+itself, it adds a new cell as necessary to the appropriate cell array=20
+(verts, lines, or polys), which returns the id of the cell in that array.=20
+Contour then uses that id to copy cell data to.  The problem is that if=20
+your data set has different types of cells, then the first vertex, line,=20
+and polygon inserted will all have the same cell id.  I'll add this as a=20
+bug report for VTK.
+
+- Amy
+
+At 10:25 AM 2/11/2004, ALIZIER Julien AUSY wrote:
+>And it does work if I use POINT_DATA instead of CELL_DATA.
+>Any ideas? I this a bug in vtkCutter or cell->Contour(...)?
+>
+>-- Julien
+>
+>
+>
+>-----Message d'origine-----
+>De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+>Envoy=E9 : mercredi 11 f=E9vrier 2004 16:17
+>=C0 : 'paraview@paraview.org'; 'vtkusers@vtk.org'
+>Objet : [Paraview] Cutting cells of different dimension
+>
+>
+>Hi all,
+>
+>I am trying to make a cut of 3D and 2D cells in one Unstructured grid in
+>ParaView.
+>The problem is that it is possible to cut only if there is no data on cells
+>(which is not very useful obviously ;-).
+>
+>Here is a tiny vtk file that shows the bug : it is a triangle and a line=
+ and
+>I'd like to cut them in order to get a line and a point. It works when I
+>removed the CELL_DATA part.
+>
+>Thanks for your help
+>
+>-- Julien
+>
+>
+># vtk DataFile Version 2.0
+>cut problem with cell of different dimension
+>ASCII
+>DATASET UNSTRUCTURED_GRID
+>POINTS 5 float
+>0 0 0
+>2 0 2
+>1 3 1
+>4 0 4
+>4 3 4
+>
+>CELLS 2 7
+>3 0 1 2
+>2 3 4
+>
+>CELL_TYPES 2
+>5
+>3
+>
+>CELL_DATA 2
+>SCALARS cell_scalars float 1
+>LOOKUP_TABLE default
+>0
+>1
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From julien.alizier-ausy@irsn.fr  Thu Feb 12 08:04:28 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Thu, 12 Feb 2004 09:04:28 +0100
+Subject: FW: [Paraview] Cutting cells of different dimension
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B123@OREADE.ipsn.fr>
+
+Thanks for your reply.
+For your information, I tried vtkKitwareCutter instead of vtkCutter and =
+it
+had the same problem.=20
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : Amy Henderson [mailto:amy.henderson@kitware.com]
+Envoy=E9 : mercredi 11 f=E9vrier 2004 19:17
+=C0 : ALIZIER Julien AUSY; 'paraview@paraview.org'; 'vtkusers@vtk.org'
+Objet : Re: FW: [Paraview] Cutting cells of different dimension
+
+
+Hi Julien,
+
+The problem is in cell->Contour(...) (or maybe in the way vtkCutter is=20
+using cell->Contour(...)).  What's happening is that when the cell =
+contours=20
+itself, it adds a new cell as necessary to the appropriate cell array=20
+(verts, lines, or polys), which returns the id of the cell in that =
+array.=20
+Contour then uses that id to copy cell data to.  The problem is that if =
+
+your data set has different types of cells, then the first vertex, =
+line,=20
+and polygon inserted will all have the same cell id.  I'll add this as =
+a=20
+bug report for VTK.
+
+- Amy
+
+At 10:25 AM 2/11/2004, ALIZIER Julien AUSY wrote:
+>And it does work if I use POINT_DATA instead of CELL_DATA.
+>Any ideas? I this a bug in vtkCutter or cell->Contour(...)?
+>
+>-- Julien
+>
+>
+>
+>-----Message d'origine-----
+>De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+>Envoy=E9 : mercredi 11 f=E9vrier 2004 16:17
+>=C0 : 'paraview@paraview.org'; 'vtkusers@vtk.org'
+>Objet : [Paraview] Cutting cells of different dimension
+>
+>
+>Hi all,
+>
+>I am trying to make a cut of 3D and 2D cells in one Unstructured grid =
+in
+>ParaView.
+>The problem is that it is possible to cut only if there is no data on =
+cells
+>(which is not very useful obviously ;-).
+>
+>Here is a tiny vtk file that shows the bug : it is a triangle and a =
+line
+and
+>I'd like to cut them in order to get a line and a point. It works when =
+I
+>removed the CELL_DATA part.
+>
+>Thanks for your help
+>
+>-- Julien
+>
+>
+># vtk DataFile Version 2.0
+>cut problem with cell of different dimension
+>ASCII
+>DATASET UNSTRUCTURED_GRID
+>POINTS 5 float
+>0 0 0
+>2 0 2
+>1 3 1
+>4 0 4
+>4 3 4
+>
+>CELLS 2 7
+>3 0 1 2
+>2 3 4
+>
+>CELL_TYPES 2
+>5
+>3
+>
+>CELL_DATA 2
+>SCALARS cell_scalars float 1
+>LOOKUP_TABLE default
+>0
+>1
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From eliasamanatidis1@hotmail.com  Thu Feb 12 11:32:25 2004
+From: eliasamanatidis1@hotmail.com (Elias Amanatidis)
+Date: Thu, 12 Feb 2004 11:32:25 +0000
+Subject: [Paraview] plot3d-paraview
+Message-ID: <Law10-F54r0DPYxy9OE0006a3bb@hotmail.com>
+
+Dear all
+
+I read some documents about loading PLOT3D
+file in ParaView. And I knew that unformatted
+PLOT3D file cannot be ready by ParaView.
+Then, how can I convert this unformatted
+PLOT3D file into VTK file or how can I
+make the formatted PLOT3D file from FORTRAN?
+How do I set the output format in FORTRAN
+to produce the formatted PLOT3D file?
+I will appreciate it if you attach the actual
+example which shows that method.
+
+Yours sincerely ,
+                Ilias
+
+_________________________________________________________________
+Express yourself with cool emoticons - download MSN Messenger today! 
+http://www.msn.co.uk/messenger
+
+
+From amy.henderson@kitware.com  Thu Feb 12 13:33:50 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 12 Feb 2004 08:33:50 -0500
+Subject: [vtkusers] RE: FW: [Paraview] Cutting cells of different
+ dimension
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B123@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B123@OREADE.ipsn.fr>
+Message-ID: <6.0.3.0.2.20040212083124.031278f0@pop.biz.rr.com>
+
+At 03:04 AM 2/12/2004, ALIZIER Julien AUSY wrote:
+>Thanks for your reply.
+>For your information, I tried vtkKitwareCutter instead of vtkCutter and it
+>had the same problem.
+>
+>-- Julien
+>
+
+They have the same problem because vtkCutter (superclass of=20
+vtkKitwareCutter) handles the unstructured grid case for vtkKitwareCutter.
+
+- Amy
+
+
+>-----Message d'origine-----
+>De : Amy Henderson [mailto:amy.henderson@kitware.com]
+>Envoy=E9 : mercredi 11 f=E9vrier 2004 19:17
+>=C0 : ALIZIER Julien AUSY; 'paraview@paraview.org'; 'vtkusers@vtk.org'
+>Objet : Re: FW: [Paraview] Cutting cells of different dimension
+>
+>
+>Hi Julien,
+>
+>The problem is in cell->Contour(...) (or maybe in the way vtkCutter is
+>using cell->Contour(...)).  What's happening is that when the cell contours
+>itself, it adds a new cell as necessary to the appropriate cell array
+>(verts, lines, or polys), which returns the id of the cell in that array.
+>Contour then uses that id to copy cell data to.  The problem is that if
+>your data set has different types of cells, then the first vertex, line,
+>and polygon inserted will all have the same cell id.  I'll add this as a
+>bug report for VTK.
+>
+>- Amy
+>
+>At 10:25 AM 2/11/2004, ALIZIER Julien AUSY wrote:
+> >And it does work if I use POINT_DATA instead of CELL_DATA.
+> >Any ideas? I this a bug in vtkCutter or cell->Contour(...)?
+> >
+> >-- Julien
+> >
+> >
+> >
+> >-----Message d'origine-----
+> >De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+> >Envoy=E9 : mercredi 11 f=E9vrier 2004 16:17
+> >=C0 : 'paraview@paraview.org'; 'vtkusers@vtk.org'
+> >Objet : [Paraview] Cutting cells of different dimension
+> >
+> >
+> >Hi all,
+> >
+> >I am trying to make a cut of 3D and 2D cells in one Unstructured grid in
+> >ParaView.
+> >The problem is that it is possible to cut only if there is no data on=
+ cells
+> >(which is not very useful obviously ;-).
+> >
+> >Here is a tiny vtk file that shows the bug : it is a triangle and a line
+>and
+> >I'd like to cut them in order to get a line and a point. It works when I
+> >removed the CELL_DATA part.
+> >
+> >Thanks for your help
+> >
+> >-- Julien
+> >
+> >
+> ># vtk DataFile Version 2.0
+> >cut problem with cell of different dimension
+> >ASCII
+> >DATASET UNSTRUCTURED_GRID
+> >POINTS 5 float
+> >0 0 0
+> >2 0 2
+> >1 3 1
+> >4 0 4
+> >4 3 4
+> >
+> >CELLS 2 7
+> >3 0 1 2
+> >2 3 4
+> >
+> >CELL_TYPES 2
+> >5
+> >3
+> >
+> >CELL_DATA 2
+> >SCALARS cell_scalars float 1
+> >LOOKUP_TABLE default
+> >0
+> >1
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>_______________________________________________
+>This is the private VTK discussion list.
+>Please keep messages on-topic. Check the FAQ at:=20
+><http://public.kitware.com/cgi-bin/vtkfaq>
+>Follow this link to subscribe/unsubscribe:
+>http://www.vtk.org/mailman/listinfo/vtkusers
+
+
+
+
+From julien.alizier-ausy@irsn.fr  Thu Feb 12 16:05:27 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Thu, 12 Feb 2004 17:05:27 +0100
+Subject: [vtkusers] RE: FW: [Paraview] Cutting cells of different dime
+ nsion
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B12C@OREADE.ipsn.fr>
+
+Salut Mathieu,
+
+I didn't use any pipeline, I just made a .vtk file with no point data =
+at all
+(see the file at the end of my first email). But in paraview, it's =
+possible
+to do it using the PointDataToCellData filter with the option "Pass =
+Point
+data" unchecked.
+
+I am not using the quadratic cells (I tried but I had polygons going =
+away)
+and actually I didn't want to contour a cell, I just wanted to cut it! =
+I
+think too that it is a non-sense to contour a cell that has scalar =
+value
+defined on the whole cell.
+But I saw in the source code that the vtkCutter uses a trick to cut =
+cells:
+it assigns values to vertices and asks the cell to contour according to
+these values.
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : Mathieu Malaterre [mailto:mathieu.malaterre@kitware.com]
+Envoy=E9 : jeudi 12 f=E9vrier 2004 16:52
+=C0 : ALIZIER Julien AUSY
+Cc : 'vtkusers@vtk.org'
+Objet : Re: [vtkusers] RE: FW: [Paraview] Cutting cells of different
+dimension
+
+
+Salut Julien,
+
+	Just for curiosity. Waht is the pipeline you use to get cell scalars
+
+(but no points scalars). BTW the quadratic cells in VTK are by design=20
+not meant to use cell scalars but point scalars and actually do=20
+interpolation. Just think of this: how do you contour a cell that has=20
+the same scalar value for every cell ?
+
+Thanks
+Mathieu
+
+ALIZIER Julien AUSY wrote:
+> Thanks for your reply.
+> For your information, I tried vtkKitwareCutter instead of vtkCutter =
+and it
+> had the same problem.=20
+>=20
+> -- Julien
+>=20
+>=20
+>=20
+> -----Message d'origine-----
+> De : Amy Henderson [mailto:amy.henderson@kitware.com]
+> Envoy=E9 : mercredi 11 f=E9vrier 2004 19:17
+> =C0 : ALIZIER Julien AUSY; 'paraview@paraview.org'; =
+'vtkusers@vtk.org'
+> Objet : Re: FW: [Paraview] Cutting cells of different dimension
+>=20
+>=20
+> Hi Julien,
+>=20
+> The problem is in cell->Contour(...) (or maybe in the way vtkCutter =
+is=20
+> using cell->Contour(...)).  What's happening is that when the cell
+contours=20
+> itself, it adds a new cell as necessary to the appropriate cell array =
+
+> (verts, lines, or polys), which returns the id of the cell in that =
+array.=20
+> Contour then uses that id to copy cell data to.  The problem is that =
+if=20
+> your data set has different types of cells, then the first vertex, =
+line,=20
+> and polygon inserted will all have the same cell id.  I'll add this =
+as a=20
+> bug report for VTK.
+>=20
+> - Amy
+>=20
+> At 10:25 AM 2/11/2004, ALIZIER Julien AUSY wrote:
+>=20
+>>And it does work if I use POINT_DATA instead of CELL_DATA.
+>>Any ideas? I this a bug in vtkCutter or cell->Contour(...)?
+>>
+>>-- Julien
+>>
+>>
+>>
+>>-----Message d'origine-----
+>>De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+>>Envoy=E9 : mercredi 11 f=E9vrier 2004 16:17
+>>=C0 : 'paraview@paraview.org'; 'vtkusers@vtk.org'
+>>Objet : [Paraview] Cutting cells of different dimension
+>>
+>>
+>>Hi all,
+>>
+>>I am trying to make a cut of 3D and 2D cells in one Unstructured grid =
+in
+>>ParaView.
+>>The problem is that it is possible to cut only if there is no data on
+cells
+>>(which is not very useful obviously ;-).
+>>
+>>Here is a tiny vtk file that shows the bug : it is a triangle and a =
+line
+>=20
+> and
+>=20
+>>I'd like to cut them in order to get a line and a point. It works =
+when I
+>>removed the CELL_DATA part.
+>>
+>>Thanks for your help
+>>
+>>-- Julien
+>>
+>>
+>># vtk DataFile Version 2.0
+>>cut problem with cell of different dimension
+>>ASCII
+>>DATASET UNSTRUCTURED_GRID
+>>POINTS 5 float
+>>0 0 0
+>>2 0 2
+>>1 3 1
+>>4 0 4
+>>4 3 4
+>>
+>>CELLS 2 7
+>>3 0 1 2
+>>2 3 4
+>>
+>>CELL_TYPES 2
+>>5
+>>3
+>>
+>>CELL_DATA 2
+>>SCALARS cell_scalars float 1
+>>LOOKUP_TABLE default
+>>0
+>>1
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>=20
+>=20
+>=20
+> _______________________________________________
+> This is the private VTK discussion list.=20
+> Please keep messages on-topic. Check the FAQ at:
+<http://public.kitware.com/cgi-bin/vtkfaq>
+> Follow this link to subscribe/unsubscribe:
+> http://www.vtk.org/mailman/listinfo/vtkusers
+>=20
+
+
+
+From ken.martin@kitware.com  Mon Feb 16 15:06:59 2004
+From: ken.martin@kitware.com (Ken Martin)
+Date: Mon, 16 Feb 2004 10:06:59 -0500
+Subject: [Paraview] Announce: ParaView Version 1.2
+Message-ID: <05d501c3f49e$89e481d0$6901a8c0@kitwarein.com>
+
+Paraview version 1.2 is now available from www.paraview.org This release is
+based on VTK 4.4 and includes a number of internal architecture changes and
+fixes. Please let us know if you run into problems. The next release 1.4
+will be out around May 1st. 
+
+Thanks
+Ken
+
+Ken Martin, PhD
+Kitware Inc.
+518 371 3971 x101
+469 Clifton Corporate Pkwy
+Clifton Park NY 12065
+
+
+
+
+From julien.alizier-ausy@irsn.fr  Tue Feb 17 10:34:21 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Tue, 17 Feb 2004 11:34:21 +0100
+Subject: [Paraview] Picking in ParaView Version 1.2 ?
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B132@OREADE.ipsn.fr>
+
+Hi,
+
+Is picking available in PV 1.2 ?
+
+Thanks
+
+-- Julien
+
+
+
+
+
+From hsundar@caip.rutgers.edu  Thu Feb 19 01:29:55 2004
+From: hsundar@caip.rutgers.edu (Hari Sundar)
+Date: Wed, 18 Feb 2004 20:29:55 -0500 (EST)
+Subject: [Paraview] Visualizing Vector Fields ...
+Message-ID: <Pine.GSO.4.56.0402182015070.3892@caip.rutgers.edu>
+
+Hi,
+
+I have been using ITK to output some deformation fields and tried to use
+paraview to visualize the deformation vectors. I based this on this post
+by Luis Ibanez
+
+http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+
+However, I have been unable to get this to work properly. Firstly, I do
+not get an option to set the scale mode to scalar. I tried all the other
+options and still don't see anything. If I set the scale to "Dat Scaling
+Off", I can see the allows, but they are all aligned in the same direction
+(+ve X axis). My deformation fields are all right, because I wrote it out
+like and image (x,y,z = r,g,b) and it does display something ...
+
+What do I need for the glyph to display properly.
+
+thanks,
+-Hari
+
+PS: I used ExtractGrid in place of ExtractVOI.
+
+From luis.ibanez@kitware.com  Thu Feb 19 09:47:14 2004
+From: luis.ibanez@kitware.com (Luis Ibanez)
+Date: Thu, 19 Feb 2004 04:47:14 -0500
+Subject: [Paraview] Re: Visualizing Vector Fields ...
+In-Reply-To: <Pine.GSO.4.56.0402182015070.3892@caip.rutgers.edu>
+References: <Pine.GSO.4.56.0402182015070.3892@caip.rutgers.edu>
+Message-ID: <40348622.9060604@kitware.com>
+
+Hi Hari,
+
+
+You probably are using now ParaView 1.2.1
+(which is an updated release).
+
+       http://www.paraview.org
+
+
+A couple of things have changed in ParaView since
+the message below was posted in december 2003.
+
+
+For example:
+
+
+1) Now you can read MetaImage fileformat directly
+    (they can contain scalar or vector images)
+
+2) ExtractVOI is now called ExtractGrid
+    (as you already noticed)
+
+
+The simple way of visualizing deformation fields now is to
+load your MetaImage file containing the vector image and
+directly select the filter "Glyph", and in the options of
+the glyph filter set:
+
+   a) Orient Mode = Vector
+   b) Scale Mode  = Vector Magnitude
+   c) Scale Factor = play with this value to scale your vectors
+
+
+The reason for using ExtractGrid is to subsample the original
+vector image. This is only needed if your deformation field
+has a large number of pixels (~ high resolution). Otherwise
+you can simply use the Glyph filter connected directly at the
+output of the reader.
+
+
+
+Please let us know if you find any problems.
+
+
+
+Thanks
+
+
+    Luis
+
+
+
+-------------------------
+
+
+Hari Sundar wrote:
+
+ > Hi,
+ >
+ > I have been using ITK to output some deformation fields and tried to use
+ > paraview to visualize the deformation vectors. I based this on this post
+ > by Luis Ibanez
+ >
+ > http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+ >
+ > However, I have been unable to get this to work properly. Firstly, I do
+ > not get an option to set the scale mode to scalar. I tried all the other
+ > options and still don't see anything. If I set the scale to "Dat Scaling
+ > Off", I can see the allows, but they are all aligned in the same 
+direction
+ > (+ve X axis). My deformation fields are all right, because I wrote it out
+ > like and image (x,y,z = r,g,b) and it does display something ...
+ >
+ > What do I need for the glyph to display properly.
+ >
+ > thanks,
+ > -Hari
+ >
+ > PS: I used ExtractGrid in place of ExtractVOI.
+ >
+
+
+
+
+
+
+From t.boettger@dkfz-heidelberg.de  Thu Feb 19 12:44:58 2004
+From: t.boettger@dkfz-heidelberg.de (Thomas Boettger)
+Date: Thu, 19 Feb 2004 13:44:58 +0100
+Subject: [Paraview] Simple rotation animation
+Message-ID: <4034AFCA.3060705@dkfz-heidelberg.de>
+
+Hi all,
+
+I want to do a simple animation just rotating my data using paraview. 
+How can this be done? Do I have to write a tcl script in the animation 
+editor and how would this look like?.
+
+
+Regards,
+
+Thomas
+
+
+-- 
+Dipl.-Inform. Thomas Boettger
+Deutsches Krebsforschungszentrum         (German Cancer Research Center)
+Div. Medical and Biological Informatics B010    Tel: (+49) 6221-42 2328
+Im Neuenheimer Feld 280                          Fax: (+49) 6221-42 2345
+D-69120 Heidelberg                            e-mail: t.boettger@dkfz.de
+Germany                      http://www.dkfz.de/mbi/people/thomasb.shtml
+
+
+
+From berklist@nycap.rr.com  Thu Feb 19 14:38:29 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Thu, 19 Feb 2004 09:38:29 -0500
+Subject: [Paraview] Simple rotation animation
+In-Reply-To: <4034AFCA.3060705@dkfz-heidelberg.de>
+References: <4034AFCA.3060705@dkfz-heidelberg.de>
+Message-ID: <1077201509.26013.6.camel@silverymoon>
+
+Currently, this is a little tricky. We definitely want to remedy this by
+improving the animation editor in the future. For now, here is what you
+can do:
+> Add a script as an action (the Source does not matter)
+> Write a script (I recommend cutting and pasting since the script
+editor is not that good) that gets the render view and sets the right
+camera position:
+[[$Application GetMainWindow] GetMainView] SetCameraState p0 p1 p2 fp0
+fp1 fp2 fp3 up0 up1 up2
+
+where p -> position, fp -> focal position, up -> up vector
+
+-Berk
+
+On Thu, 2004-02-19 at 07:44, Thomas Boettger wrote:
+> Hi all,
+> 
+> I want to do a simple animation just rotating my data using paraview. 
+> How can this be done? Do I have to write a tcl script in the animation 
+> editor and how would this look like?.
+> 
+> 
+> Regards,
+> 
+> Thomas
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From hsundar@caip.rutgers.edu  Fri Feb 20 01:19:35 2004
+From: hsundar@caip.rutgers.edu (Hari Sundar)
+Date: Thu, 19 Feb 2004 20:19:35 -0500 (EST)
+Subject: [Paraview] Re: Visualizing Vector Fields ...
+In-Reply-To: <40348622.9060604@kitware.com>
+References: <Pine.GSO.4.56.0402182015070.3892@caip.rutgers.edu>
+ <40348622.9060604@kitware.com>
+Message-ID: <Pine.GSO.4.56.0402192017520.3943@caip.rutgers.edu>
+
+Hi Luis,
+
+thanks, it works. I was wondering if it was possible to visualize the
+deformation field as a deformed grid., i.e., zero deformation means a
+normal structured grid, and to this I apply my deformation field.
+
+Is this possible in Paraview ?
+
+thanks,
+-Hari
+
+On Thu, 19 Feb 2004, Luis Ibanez wrote:
+
+>
+> Hi Hari,
+>
+>
+> You probably are using now ParaView 1.2.1
+> (which is an updated release).
+>
+>        http://www.paraview.org
+>
+>
+> A couple of things have changed in ParaView since
+> the message below was posted in december 2003.
+>
+>
+> For example:
+>
+>
+> 1) Now you can read MetaImage fileformat directly
+>     (they can contain scalar or vector images)
+>
+> 2) ExtractVOI is now called ExtractGrid
+>     (as you already noticed)
+>
+>
+> The simple way of visualizing deformation fields now is to
+> load your MetaImage file containing the vector image and
+> directly select the filter "Glyph", and in the options of
+> the glyph filter set:
+>
+>    a) Orient Mode = Vector
+>    b) Scale Mode  = Vector Magnitude
+>    c) Scale Factor = play with this value to scale your vectors
+>
+>
+> The reason for using ExtractGrid is to subsample the original
+> vector image. This is only needed if your deformation field
+> has a large number of pixels (~ high resolution). Otherwise
+> you can simply use the Glyph filter connected directly at the
+> output of the reader.
+>
+>
+>
+> Please let us know if you find any problems.
+>
+>
+>
+> Thanks
+>
+>
+>     Luis
+>
+>
+>
+> -------------------------
+>
+>
+> Hari Sundar wrote:
+>
+>  > Hi,
+>  >
+>  > I have been using ITK to output some deformation fields and tried to use
+>  > paraview to visualize the deformation vectors. I based this on this post
+>  > by Luis Ibanez
+>  >
+>  > http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+>  >
+>  > However, I have been unable to get this to work properly. Firstly, I do
+>  > not get an option to set the scale mode to scalar. I tried all the other
+>  > options and still don't see anything. If I set the scale to "Dat Scaling
+>  > Off", I can see the allows, but they are all aligned in the same
+> direction
+>  > (+ve X axis). My deformation fields are all right, because I wrote it out
+>  > like and image (x,y,z = r,g,b) and it does display something ...
+>  >
+>  > What do I need for the glyph to display properly.
+>  >
+>  > thanks,
+>  > -Hari
+>  >
+>  > PS: I used ExtractGrid in place of ExtractVOI.
+>  >
+>
+>
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+-----------------------------------------------------------------------
+       Home				       Work
+-----------------------------------------------------------------------
+ 375-C Buell Apartments,		   Dept. of ECE
+ 23909 BPO Way,				   Rutgers University
+ Rutgers University,			   96 Frelinghuysen Road
+ Piscataway, NJ 08854			   Piscataway, NJ 08854
+ ph: (732)878 0424			   ph: (732)445 0564
+-----------------------------------------------------------------------
+
+
+From bnwylie@sandia.gov  Fri Feb 20 19:10:41 2004
+From: bnwylie@sandia.gov (Wylie, Brian)
+Date: Fri, 20 Feb 2004 12:10:41 -0700
+Subject: [Paraview] Carpet plots in paraview
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA0B@es10snlnt.sandia.gov>
+
+All,
+
+Anyone know how to do carpet plots in ParaView?  (By this I mean a 2
+dimensional grid, and then displacing in the z direction based on a scalar
+variable).
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+     (505) 844-2238   FAX (505) 845-0833
+
+
+-----Original Message-----
+From: Hari Sundar [mailto:hsundar@caip.rutgers.edu] 
+Sent: Thursday, February 19, 2004 6:20 PM
+To: Luis Ibanez
+Cc: ParaView@paraview.org
+Subject: Re: [Paraview] Re: Visualizing Vector Fields ...
+
+
+Hi Luis,
+
+thanks, it works. I was wondering if it was possible to visualize the
+deformation field as a deformed grid., i.e., zero deformation means a normal
+structured grid, and to this I apply my deformation field.
+
+Is this possible in Paraview ?
+
+thanks,
+-Hari
+
+On Thu, 19 Feb 2004, Luis Ibanez wrote:
+
+>
+> Hi Hari,
+>
+>
+> You probably are using now ParaView 1.2.1
+> (which is an updated release).
+>
+>        http://www.paraview.org
+>
+>
+> A couple of things have changed in ParaView since
+> the message below was posted in december 2003.
+>
+>
+> For example:
+>
+>
+> 1) Now you can read MetaImage fileformat directly
+>     (they can contain scalar or vector images)
+>
+> 2) ExtractVOI is now called ExtractGrid
+>     (as you already noticed)
+>
+>
+> The simple way of visualizing deformation fields now is to load your 
+> MetaImage file containing the vector image and directly select the 
+> filter "Glyph", and in the options of the glyph filter set:
+>
+>    a) Orient Mode = Vector
+>    b) Scale Mode  = Vector Magnitude
+>    c) Scale Factor = play with this value to scale your vectors
+>
+>
+> The reason for using ExtractGrid is to subsample the original vector 
+> image. This is only needed if your deformation field has a large 
+> number of pixels (~ high resolution). Otherwise you can simply use the 
+> Glyph filter connected directly at the output of the reader.
+>
+>
+>
+> Please let us know if you find any problems.
+>
+>
+>
+> Thanks
+>
+>
+>     Luis
+>
+>
+>
+> -------------------------
+>
+>
+> Hari Sundar wrote:
+>
+>  > Hi,
+>  >
+>  > I have been using ITK to output some deformation fields and tried 
+> to use  > paraview to visualize the deformation vectors. I based this 
+> on this post  > by Luis Ibanez  >
+>  > http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+>  >
+>  > However, I have been unable to get this to work properly. Firstly, I do
+>  > not get an option to set the scale mode to scalar. I tried all the
+other
+>  > options and still don't see anything. If I set the scale to "Dat
+Scaling
+>  > Off", I can see the allows, but they are all aligned in the same
+> direction
+>  > (+ve X axis). My deformation fields are all right, because I wrote it
+out
+>  > like and image (x,y,z = r,g,b) and it does display something ...
+>  >
+>  > What do I need for the glyph to display properly.
+>  >
+>  > thanks,
+>  > -Hari
+>  >
+>  > PS: I used ExtractGrid in place of ExtractVOI.
+>  >
+>
+>
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org 
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+-----------------------------------------------------------------------
+       Home				       Work
+-----------------------------------------------------------------------
+ 375-C Buell Apartments,		   Dept. of ECE
+ 23909 BPO Way,				   Rutgers University
+ Rutgers University,			   96 Frelinghuysen Road
+ Piscataway, NJ 08854			   Piscataway, NJ 08854
+ ph: (732)878 0424			   ph: (732)445 0564
+-----------------------------------------------------------------------
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+
+
+From berklist@nycap.rr.com  Fri Feb 20 19:29:27 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Fri, 20 Feb 2004 14:29:27 -0500
+Subject: [Paraview] Carpet plots in paraview
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA0B@es10snlnt.sandia.gov>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA0B@es10snlnt.sandia.gov>
+Message-ID: <1077305367.8858.9.camel@silverymoon>
+
+Load the 2D grid  as a structured grid and warp it (not WarpVector,
+WarpScalar). If the data is image data or rectilinear grid, you have to 
+convert it to a structured grid. Currently there is no filter that does
+this but it is easy to write one.
+
+On Fri, 2004-02-20 at 14:10, Wylie, Brian wrote:
+> All,
+> 
+> Anyone know how to do carpet plots in ParaView?  (By this I mean a 2
+> dimensional grid, and then displacing in the z direction based on a scalar
+> variable).
+> 
+> 	Brian Wylie
+> 	Sandia National Laboratories
+> 	MS 0822 - Org 9227 - Building 880/A1-J
+>      (505) 844-2238   FAX (505) 845-0833
+> 
+> 
+> -----Original Message-----
+> From: Hari Sundar [mailto:hsundar@caip.rutgers.edu] 
+> Sent: Thursday, February 19, 2004 6:20 PM
+> To: Luis Ibanez
+> Cc: ParaView@paraview.org
+> Subject: Re: [Paraview] Re: Visualizing Vector Fields ...
+> 
+> 
+> Hi Luis,
+> 
+> thanks, it works. I was wondering if it was possible to visualize the
+> deformation field as a deformed grid., i.e., zero deformation means a normal
+> structured grid, and to this I apply my deformation field.
+> 
+> Is this possible in Paraview ?
+> 
+> thanks,
+> -Hari
+> 
+> On Thu, 19 Feb 2004, Luis Ibanez wrote:
+> 
+> >
+> > Hi Hari,
+> >
+> >
+> > You probably are using now ParaView 1.2.1
+> > (which is an updated release).
+> >
+> >        http://www.paraview.org
+> >
+> >
+> > A couple of things have changed in ParaView since
+> > the message below was posted in december 2003.
+> >
+> >
+> > For example:
+> >
+> >
+> > 1) Now you can read MetaImage fileformat directly
+> >     (they can contain scalar or vector images)
+> >
+> > 2) ExtractVOI is now called ExtractGrid
+> >     (as you already noticed)
+> >
+> >
+> > The simple way of visualizing deformation fields now is to load your 
+> > MetaImage file containing the vector image and directly select the 
+> > filter "Glyph", and in the options of the glyph filter set:
+> >
+> >    a) Orient Mode = Vector
+> >    b) Scale Mode  = Vector Magnitude
+> >    c) Scale Factor = play with this value to scale your vectors
+> >
+> >
+> > The reason for using ExtractGrid is to subsample the original vector 
+> > image. This is only needed if your deformation field has a large 
+> > number of pixels (~ high resolution). Otherwise you can simply use the 
+> > Glyph filter connected directly at the output of the reader.
+> >
+> >
+> >
+> > Please let us know if you find any problems.
+> >
+> >
+> >
+> > Thanks
+> >
+> >
+> >     Luis
+> >
+> >
+> >
+> > -------------------------
+> >
+> >
+> > Hari Sundar wrote:
+> >
+> >  > Hi,
+> >  >
+> >  > I have been using ITK to output some deformation fields and tried 
+> > to use  > paraview to visualize the deformation vectors. I based this 
+> > on this post  > by Luis Ibanez  >
+> >  > http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+> >  >
+> >  > However, I have been unable to get this to work properly. Firstly, I do
+> >  > not get an option to set the scale mode to scalar. I tried all the
+> other
+> >  > options and still don't see anything. If I set the scale to "Dat
+> Scaling
+> >  > Off", I can see the allows, but they are all aligned in the same
+> > direction
+> >  > (+ve X axis). My deformation fields are all right, because I wrote it
+> out
+> >  > like and image (x,y,z = r,g,b) and it does display something ...
+> >  >
+> >  > What do I need for the glyph to display properly.
+> >  >
+> >  > thanks,
+> >  > -Hari
+> >  >
+> >  > PS: I used ExtractGrid in place of ExtractVOI.
+> >  >
+> >
+> >
+> >
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org 
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> 
+> -----------------------------------------------------------------------
+>        Home				       Work
+> -----------------------------------------------------------------------
+>  375-C Buell Apartments,		   Dept. of ECE
+>  23909 BPO Way,				   Rutgers University
+>  Rutgers University,			   96 Frelinghuysen Road
+>  Piscataway, NJ 08854			   Piscataway, NJ 08854
+>  ph: (732)878 0424			   ph: (732)445 0564
+> -----------------------------------------------------------------------
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From Stephen.Wornom@sophia.inria.fr  Sat Feb 21 11:01:15 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Sat, 21 Feb 2004 12:01:15 +0100
+Subject: [Paraview] ParaView Training Workshops
+Message-ID: <40373A7B.4E976CFB@sophia.inria.fr>
+
+Are there ParaView training workshops that one could attend?
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From arash@vije.ca  Sat Feb 21 15:47:41 2004
+From: arash@vije.ca (Arash Jahangir)
+Date: Sat, 21 Feb 2004 10:47:41 -0500
+Subject: [Paraview] Paraview 1.2 Build problems
+References: <20040217112608.24798.43129.Mailman@public.kitware.com>
+Message-ID: <001601c3f892$0ba9fff0$0aa2fea9@hal9000>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0013_01C3F868.2115CD30
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+I am trying to build Paraview 1.2 "Release" using VC++ 6 with all the =
+patches installed on a XP box.  But the build fails with
+
+  Generating Code...
+  Compiling...
+  vtkWarpTransformTcl.cxx
+  vtkWedgeTcl.cxx
+  vtkWindowTcl.cxx
+  vtkWindowLevelLookupTableTcl.cxx
+  vtkXMLFileOutputWindowTcl.cxx
+  vtkWin32OutputWindowTcl.cxx
+  vtkTclUtil.cxx
+  Generating Code...
+  Error executing cl.exe.
+
+  ALL_BUILD - 1 error(s), 0 warning(s)
+
+Any ideas what could be wrong?
+
+thanks,
+Arash
+
+> From: "Ken Martin" <ken.martin@kitware.com>
+> To: <paraview@paraview.org>
+> Date: Mon, 16 Feb 2004 10:06:59 -0500
+> Subject: [Paraview] Announce: ParaView Version 1.2
+>=20
+> Paraview version 1.2 is now available from www.paraview.org This =
+release is
+> based on VTK 4.4 and includes a number of internal architecture =
+changes and
+> fixes. Please let us know if you run into problems. The next release =
+1.4
+> will be out around May 1st.=20
+>=20
+> Thanks
+> Ken
+>=20
+> Ken Martin, PhD
+> Kitware Inc.
+> 518 371 3971 x101
+> 469 Clifton Corporate Pkwy
+> Clifton Park NY 12065
+
+------=_NextPart_000_0013_01C3F868.2115CD30
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY>
+<DIV><FONT face=3DArial size=3D2>Hi,</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>I am trying to build Paraview 1.2=20
+"Release"&nbsp;using VC++ 6 with all the patches installed on a XP =
+box.&nbsp;=20
+But the build fails with</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<BLOCKQUOTE dir=3Dltr style=3D"MARGIN-RIGHT: 0px">
+  <DIV><FONT face=3DArial size=3D2>Generating=20
+  =
+Code...<BR>Compiling...<BR>vtkWarpTransformTcl.cxx<BR>vtkWedgeTcl.cxx<BR>=
+vtkWindowTcl.cxx<BR>vtkWindowLevelLookupTableTcl.cxx<BR>vtkXMLFileOutputW=
+indowTcl.cxx<BR>vtkWin32OutputWindowTcl.cxx<BR>vtkTclUtil.cxx<BR>Generati=
+ng=20
+  Code...<BR>Error executing cl.exe.</FONT></DIV>
+  <DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+  <DIV><FONT face=3DArial size=3D2>ALL_BUILD - 1 error(s), 0=20
+warning(s)<BR></DIV></BLOCKQUOTE></FONT>
+<DIV><FONT face=3DArial size=3D2>Any ideas what could be =
+wrong?</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>thanks,</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>Arash</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&gt; From: "Ken Martin" &lt;</FONT><A=20
+href=3D"mailto:ken.martin@kitware.com"><FONT face=3DArial=20
+size=3D2>ken.martin@kitware.com</FONT></A><FONT face=3DArial =
+size=3D2>&gt;<BR>&gt; To:=20
+&lt;</FONT><A href=3D"mailto:paraview@paraview.org"><FONT face=3DArial=20
+size=3D2>paraview@paraview.org</FONT></A><FONT face=3DArial =
+size=3D2>&gt;<BR>&gt;=20
+Date: Mon, 16 Feb 2004 10:06:59 -0500<BR>&gt; Subject: [Paraview] =
+Announce:=20
+ParaView Version 1.2<BR>&gt; <BR>&gt; Paraview version 1.2 is now =
+available from=20
+</FONT><A href=3D"http://www.paraview.org"><FONT face=3DArial=20
+size=3D2>www.paraview.org</FONT></A><FONT face=3DArial size=3D2> This =
+release=20
+is<BR>&gt; based on VTK 4.4 and includes a number of internal =
+architecture=20
+changes and<BR>&gt; fixes. Please let us know if you run into problems. =
+The next=20
+release 1.4<BR>&gt; will be out around May 1st. <BR>&gt; <BR>&gt; =
+Thanks<BR>&gt;=20
+Ken<BR>&gt; <BR>&gt; Ken Martin, PhD<BR>&gt; Kitware Inc.<BR>&gt; 518 =
+371 3971=20
+x101<BR>&gt; 469 Clifton Corporate Pkwy<BR>&gt; Clifton Park NY=20
+12065<BR></FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_0013_01C3F868.2115CD30--
+
+
+From charles.law@kitware.com  Mon Feb 23 14:47:23 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Mon, 23 Feb 2004 09:47:23 -0500
+Subject: [Paraview] Carpet plots in paraview
+In-Reply-To: <1077305367.8858.9.camel@silverymoon>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA0B@es10snlnt.sandia.gov>
+ <1077305367.8858.9.camel@silverymoon>
+Message-ID: <6.0.0.22.0.20040223094501.03e88280@pop.biz.rr.com>
+
+There is no need to write you own structured grid conversion filter.
+The filter CleanToGrid will convert image data or rectilinear grid to 
+structured grid.
+Warp can then be used to create the carpet plot.
+
+Charles.
+
+
+At 02:29 PM 2/20/2004, Berk Geveci wrote:
+>Load the 2D grid  as a structured grid and warp it (not WarpVector,
+>WarpScalar). If the data is image data or rectilinear grid, you have to
+>convert it to a structured grid. Currently there is no filter that does
+>this but it is easy to write one.
+>
+>On Fri, 2004-02-20 at 14:10, Wylie, Brian wrote:
+> > All,
+> >
+> > Anyone know how to do carpet plots in ParaView?  (By this I mean a 2
+> > dimensional grid, and then displacing in the z direction based on a scalar
+> > variable).
+> >
+> >       Brian Wylie
+> >       Sandia National Laboratories
+> >       MS 0822 - Org 9227 - Building 880/A1-J
+> >      (505) 844-2238   FAX (505) 845-0833
+> >
+> >
+> > -----Original Message-----
+> > From: Hari Sundar [mailto:hsundar@caip.rutgers.edu]
+> > Sent: Thursday, February 19, 2004 6:20 PM
+> > To: Luis Ibanez
+> > Cc: ParaView@paraview.org
+> > Subject: Re: [Paraview] Re: Visualizing Vector Fields ...
+> >
+> >
+> > Hi Luis,
+> >
+> > thanks, it works. I was wondering if it was possible to visualize the
+> > deformation field as a deformed grid., i.e., zero deformation means a 
+> normal
+> > structured grid, and to this I apply my deformation field.
+> >
+> > Is this possible in Paraview ?
+> >
+> > thanks,
+> > -Hari
+> >
+> > On Thu, 19 Feb 2004, Luis Ibanez wrote:
+> >
+> > >
+> > > Hi Hari,
+> > >
+> > >
+> > > You probably are using now ParaView 1.2.1
+> > > (which is an updated release).
+> > >
+> > >        http://www.paraview.org
+> > >
+> > >
+> > > A couple of things have changed in ParaView since
+> > > the message below was posted in december 2003.
+> > >
+> > >
+> > > For example:
+> > >
+> > >
+> > > 1) Now you can read MetaImage fileformat directly
+> > >     (they can contain scalar or vector images)
+> > >
+> > > 2) ExtractVOI is now called ExtractGrid
+> > >     (as you already noticed)
+> > >
+> > >
+> > > The simple way of visualizing deformation fields now is to load your
+> > > MetaImage file containing the vector image and directly select the
+> > > filter "Glyph", and in the options of the glyph filter set:
+> > >
+> > >    a) Orient Mode = Vector
+> > >    b) Scale Mode  = Vector Magnitude
+> > >    c) Scale Factor = play with this value to scale your vectors
+> > >
+> > >
+> > > The reason for using ExtractGrid is to subsample the original vector
+> > > image. This is only needed if your deformation field has a large
+> > > number of pixels (~ high resolution). Otherwise you can simply use the
+> > > Glyph filter connected directly at the output of the reader.
+> > >
+> > >
+> > >
+> > > Please let us know if you find any problems.
+> > >
+> > >
+> > >
+> > > Thanks
+> > >
+> > >
+> > >     Luis
+> > >
+> > >
+> > >
+> > > -------------------------
+> > >
+> > >
+> > > Hari Sundar wrote:
+> > >
+> > >  > Hi,
+> > >  >
+> > >  > I have been using ITK to output some deformation fields and tried
+> > > to use  > paraview to visualize the deformation vectors. I based this
+> > > on this post  > by Luis Ibanez  >
+> > >  > http://www.itk.org/pipermail/insight-users/2003-December/005865.html
+> > >  >
+> > >  > However, I have been unable to get this to work properly. Firstly, 
+> I do
+> > >  > not get an option to set the scale mode to scalar. I tried all the
+> > other
+> > >  > options and still don't see anything. If I set the scale to "Dat
+> > Scaling
+> > >  > Off", I can see the allows, but they are all aligned in the same
+> > > direction
+> > >  > (+ve X axis). My deformation fields are all right, because I wrote it
+> > out
+> > >  > like and image (x,y,z = r,g,b) and it does display something ...
+> > >  >
+> > >  > What do I need for the glyph to display properly.
+> > >  >
+> > >  > thanks,
+> > >  > -Hari
+> > >  >
+> > >  > PS: I used ExtractGrid in place of ExtractVOI.
+> > >  >
+> > >
+> > >
+> > >
+> > >
+> > >
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > >
+> >
+> > -----------------------------------------------------------------------
+> >        Home                                  Work
+> > -----------------------------------------------------------------------
+> >  375-C Buell Apartments,                 Dept. of ECE
+> >  23909 BPO Way,                                  Rutgers University
+> >  Rutgers University,                     96 Frelinghuysen Road
+> >  Piscataway, NJ 08854                    Piscataway, NJ 08854
+> >  ph: (732)878 0424                       ph: (732)445 0564
+> > -----------------------------------------------------------------------
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>--
+>Berk Geveci <berklist@nycap.rr.com>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From berklist@nycap.rr.com  Mon Feb 23 16:38:38 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 23 Feb 2004 11:38:38 -0500
+Subject: [Paraview] Paraview 1.2 Build problems
+In-Reply-To: <001601c3f892$0ba9fff0$0aa2fea9@hal9000>
+References: <20040217112608.24798.43129.Mailman@public.kitware.com>
+ <001601c3f892$0ba9fff0$0aa2fea9@hal9000>
+Message-ID: <1077554318.14818.14.camel@silverymoon>
+
+I have never encountered this problem. This is all the error information
+you get?
+
+On Sat, 2004-02-21 at 10:47, Arash Jahangir wrote:
+> Hi,
+> I am trying to build Paraview 1.2 "Release" using VC++ 6 with all the
+> patches installed on a XP box.  But the build fails with
+>  
+>         Generating Code...
+>         Compiling...
+>         vtkWarpTransformTcl.cxx
+>         vtkWedgeTcl.cxx
+>         vtkWindowTcl.cxx
+>         vtkWindowLevelLookupTableTcl.cxx
+>         vtkXMLFileOutputWindowTcl.cxx
+>         vtkWin32OutputWindowTcl.cxx
+>         vtkTclUtil.cxx
+>         Generating Code...
+>         Error executing cl.exe.
+>          
+>         ALL_BUILD - 1 error(s), 0 warning(s)
+>         
+> Any ideas what could be wrong?
+>  
+> thanks,
+> Arash
+>  
+> > From: "Ken Martin" <ken.martin@kitware.com>
+> > To: <paraview@paraview.org>
+> > Date: Mon, 16 Feb 2004 10:06:59 -0500
+> > Subject: [Paraview] Announce: ParaView Version 1.2
+> > 
+> > Paraview version 1.2 is now available from www.paraview.org This
+> release is
+> > based on VTK 4.4 and includes a number of internal architecture
+> changes and
+> > fixes. Please let us know if you run into problems. The next release
+> 1.4
+> > will be out around May 1st. 
+> > 
+> > Thanks
+> > Ken
+> > 
+> > Ken Martin, PhD
+> > Kitware Inc.
+> > 518 371 3971 x101
+> > 469 Clifton Corporate Pkwy
+> > Clifton Park NY 12065
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From berk.geveci@kitware.com  Mon Feb 23 16:40:07 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Mon, 23 Feb 2004 11:40:07 -0500
+Subject: [Paraview] ParaView Training Workshops
+In-Reply-To: <40373A7B.4E976CFB@sophia.inria.fr>
+References: <40373A7B.4E976CFB@sophia.inria.fr>
+Message-ID: <1077554407.14818.17.camel@silverymoon>
+
+We are considering offering a ParaView workshop. I'll provide more
+information later.
+
+On Sat, 2004-02-21 at 06:01, Stephen Wornom wrote:
+> Are there ParaView training workshops that one could attend?
+> Stephen
+
+
+
+From laa@lanl.gov  Mon Feb 23 17:01:34 2004
+From: laa@lanl.gov (Lee Ankeny)
+Date: Mon, 23 Feb 2004 10:01:34 -0700
+Subject: [Paraview] paraview test failures
+Message-ID: <200402231001.34279.laa@lanl.gov>
+
+Hi,
+I'm having trouble replicating test results as displayed on the dartboard. 
+Below are the first few lines of the output from 'make test'. The first 
+couple dozen tests pass, and nearly everything afterwards fails. Two tests 
+('TestQuantizeto16Colors-image' and the first 'TestXML') seem to hang 
+indefinitely.
+
+This is on Linux with gcc 3.2.2, type=Debug, but I'm getting similar behavior 
+with type=Release and on Mac OS X 10.3 and OSF1, all with g++. I wonder if 
+I'm using the right compiler? It's not obvious to me which versions of the 
+compilers are exercised on the dartboard.
+
+Thanks,
+Lee
+
+
+
+[laa@alpha paraview-1.2.1-Linux-Debug]$ make test
+Building dependencies. cmake.depends...
+/usr/local/bin/cmake -S/home/laa/paraview-1.2.1 
+-O/laa/paraview-1.2.1-Linux-Debug -H/home/laa/paraview-1.2.1 
+-B/laa/paraview-1.2.1-Linux-Debug
+Building tests test...
+/usr/local/bin/ctest
+Test project
+Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing/Cxx
+Testing ObjectFactory                     Passed
+Testing otherArrays                       Passed
+Testing otherEmptyCell                    Passed
+Testing otherRectilinearGrid              Passed
+Testing otherCellBoundaries               Passed
+Testing otherCellDerivatives              Passed
+Testing otherCellPosition                 Passed
+Testing otherStructuredGrid               Passed
+Testing otherTimerLog                     Passed
+Testing otherLookupTable                  Passed
+Testing otherByteSwap                     Passed
+Testing otherCellArray                    Passed
+Testing otherCellTypes                    Passed
+Testing otherFieldData                    Passed
+Testing quadraticEvaluation               Passed
+Testing TestAmoebaMinimizer               Passed
+Testing TestImageIterator                 Passed
+Testing TestDirectory                     Passed
+Testing TestSmartPointer                  Passed
+Testing SystemInformation                 Passed
+Testing TestCxxFeatures                   Passed
+Testing TestInstantiator                  Passed
+Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing/Tcl
+Testing otherInterp                       Passed
+Testing otherPrint                        Passed
+Testing TestEmptyInput                    Passed
+Testing TestSetGet                        Passed
+Testing TestArrays                        Passed
+Testing otherDataSetAttributes            Passed
+Testing TestAmoebaMinimizer               Passed
+Testing PrintSelf-Common                  Passed
+Testing TestSetObjectMacro-Common         Passed
+Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing
+Testing HeaderTesting-Common              Passed
+Changing directory into 
+/laa/paraview-1.2.1-Linux-Debug/VTK/Filtering/Testing/Cxx
+Testing otherColorTransferFunction        Passed
+Changing directory into 
+/laa/paraview-1.2.1-Linux-Debug/VTK/Filtering/Testing/Tcl
+Testing closedSplines-image            ***Failed
+... and virtually every test after this fails...
+
+From berk.geveci@kitware.com  Mon Feb 23 17:07:30 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Mon, 23 Feb 2004 12:07:30 -0500
+Subject: [Paraview] paraview test failures
+In-Reply-To: <200402231001.34279.laa@lanl.gov>
+References: <200402231001.34279.laa@lanl.gov>
+Message-ID: <1077556050.14818.23.camel@silverymoon>
+
+Can you try 
+ctest -V
+instead of "make test"? This should give us more information on why the
+tests are failing.
+
+-Berk
+
+On Mon, 2004-02-23 at 12:01, Lee Ankeny wrote:
+> Hi,
+> I'm having trouble replicating test results as displayed on the dartboard. 
+> Below are the first few lines of the output from 'make test'. The first 
+> couple dozen tests pass, and nearly everything afterwards fails. Two tests 
+> ('TestQuantizeto16Colors-image' and the first 'TestXML') seem to hang 
+> indefinitely.
+> 
+> This is on Linux with gcc 3.2.2, type=Debug, but I'm getting similar behavior 
+> with type=Release and on Mac OS X 10.3 and OSF1, all with g++. I wonder if 
+> I'm using the right compiler? It's not obvious to me which versions of the 
+> compilers are exercised on the dartboard.
+> 
+> Thanks,
+> Lee
+> 
+> 
+> 
+> [laa@alpha paraview-1.2.1-Linux-Debug]$ make test
+> Building dependencies. cmake.depends...
+> /usr/local/bin/cmake -S/home/laa/paraview-1.2.1 
+> -O/laa/paraview-1.2.1-Linux-Debug -H/home/laa/paraview-1.2.1 
+> -B/laa/paraview-1.2.1-Linux-Debug
+> Building tests test...
+> /usr/local/bin/ctest
+> Test project
+> Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing/Cxx
+> Testing ObjectFactory                     Passed
+> Testing otherArrays                       Passed
+> Testing otherEmptyCell                    Passed
+> Testing otherRectilinearGrid              Passed
+> Testing otherCellBoundaries               Passed
+> Testing otherCellDerivatives              Passed
+> Testing otherCellPosition                 Passed
+> Testing otherStructuredGrid               Passed
+> Testing otherTimerLog                     Passed
+> Testing otherLookupTable                  Passed
+> Testing otherByteSwap                     Passed
+> Testing otherCellArray                    Passed
+> Testing otherCellTypes                    Passed
+> Testing otherFieldData                    Passed
+> Testing quadraticEvaluation               Passed
+> Testing TestAmoebaMinimizer               Passed
+> Testing TestImageIterator                 Passed
+> Testing TestDirectory                     Passed
+> Testing TestSmartPointer                  Passed
+> Testing SystemInformation                 Passed
+> Testing TestCxxFeatures                   Passed
+> Testing TestInstantiator                  Passed
+> Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing/Tcl
+> Testing otherInterp                       Passed
+> Testing otherPrint                        Passed
+> Testing TestEmptyInput                    Passed
+> Testing TestSetGet                        Passed
+> Testing TestArrays                        Passed
+> Testing otherDataSetAttributes            Passed
+> Testing TestAmoebaMinimizer               Passed
+> Testing PrintSelf-Common                  Passed
+> Testing TestSetObjectMacro-Common         Passed
+> Changing directory into /laa/paraview-1.2.1-Linux-Debug/VTK/Common/Testing
+> Testing HeaderTesting-Common              Passed
+> Changing directory into 
+> /laa/paraview-1.2.1-Linux-Debug/VTK/Filtering/Testing/Cxx
+> Testing otherColorTransferFunction        Passed
+> Changing directory into 
+> /laa/paraview-1.2.1-Linux-Debug/VTK/Filtering/Testing/Tcl
+> Testing closedSplines-image            ***Failed
+> ... and virtually every test after this fails...
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From baghdadi@sickkids.ca  Mon Feb 23 19:45:48 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Mon, 23 Feb 2004 14:45:48 -0500 (EST)
+Subject: [Paraview] building paraview
+Message-ID: <Pine.LNX.4.44.0402231441370.17759-100000@mouse1.ocgc.ca>
+
+Hi all
+
+I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+I get the following error
+../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+   function `virtual void 
+vtkClientCompositeManager::SatelliteStartRender()':
+../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+matching
+   function for call to `vtkRenderWindow::GetScreenSize()'
+Building object file vtkPVServerObject.o...
+
+***********************
+I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+me to believe that my vtk is not compiled properly for use with paraview.
+
+
+also is paraview using hdf5 internally, I see that it is trying to compile 
+hdf libraries!
+
+
+Thanks
+
+
+Leila
+
+
+From berklist@nycap.rr.com  Mon Feb 23 20:14:19 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 23 Feb 2004 15:14:19 -0500
+Subject: [Paraview] building paraview
+In-Reply-To: <Pine.LNX.4.44.0402231441370.17759-100000@mouse1.ocgc.ca>
+References: <Pine.LNX.4.44.0402231441370.17759-100000@mouse1.ocgc.ca>
+Message-ID: <1077567259.14818.95.camel@silverymoon>
+
+Your VTK must not be up-to-date. To compile CVS ParaView, you need
+CVS VTK of the same time.
+
+ParaView includes an hdf5 distribution because it has a simple hdf5
+reader.
+
+On Mon, 2004-02-23 at 14:45, Leila Baghdadi wrote:
+> Hi all
+> 
+> I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+> I get the following error
+> ../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+>    function `virtual void 
+> vtkClientCompositeManager::SatelliteStartRender()':
+> ../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+> matching
+>    function for call to `vtkRenderWindow::GetScreenSize()'
+> Building object file vtkPVServerObject.o...
+> 
+> ***********************
+> I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+> me to believe that my vtk is not compiled properly for use with paraview.
+> 
+> 
+> also is paraview using hdf5 internally, I see that it is trying to compile 
+> hdf libraries!
+> 
+> 
+> Thanks
+> 
+> 
+> Leila
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From baghdadi@sickkids.ca  Mon Feb 23 21:14:32 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Mon, 23 Feb 2004 16:14:32 -0500 (EST)
+Subject: [Paraview] building paraview
+In-Reply-To: <1077567259.14818.95.camel@silverymoon>
+Message-ID: <Pine.LNX.4.44.0402231613280.2390-100000@mouse1.ocgc.ca>
+
+alright did that and I think I have got farther into the build but now it 
+gives me
+
+Building shared library 
+/home/baghdadi/ParaView/bin/libvtkPVFiltersTCL.so...
+Building object file test.o...
+Building executable /home/baghdadi/ParaView/bin/vtkTestFilters...
+/home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+`__ctype_b'
+/home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+`__ctype_toupper'
+/home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+`__ctype_tolower'
+
+can you give me a hint please!
+
+thanks
+
+
+Leila
+
+On Mon, 23 Feb 2004, Berk Geveci wrote:
+
+> Your VTK must not be up-to-date. To compile CVS ParaView, you need
+> CVS VTK of the same time.
+> 
+> ParaView includes an hdf5 distribution because it has a simple hdf5
+> reader.
+> 
+> On Mon, 2004-02-23 at 14:45, Leila Baghdadi wrote:
+> > Hi all
+> > 
+> > I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+> > I get the following error
+> > ../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+> >    function `virtual void 
+> > vtkClientCompositeManager::SatelliteStartRender()':
+> > ../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+> > matching
+> >    function for call to `vtkRenderWindow::GetScreenSize()'
+> > Building object file vtkPVServerObject.o...
+> > 
+> > ***********************
+> > I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+> > me to believe that my vtk is not compiled properly for use with paraview.
+> > 
+> > 
+> > also is paraview using hdf5 internally, I see that it is trying to compile 
+> > hdf libraries!
+> > 
+> > 
+> > Thanks
+> > 
+> > 
+> > Leila
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From berklist@nycap.rr.com  Mon Feb 23 21:42:16 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 23 Feb 2004 16:42:16 -0500
+Subject: [Paraview] building paraview
+In-Reply-To: <Pine.LNX.4.44.0402231613280.2390-100000@mouse1.ocgc.ca>
+References: <Pine.LNX.4.44.0402231613280.2390-100000@mouse1.ocgc.ca>
+Message-ID: <1077572536.14822.111.camel@silverymoon>
+
+There seems to be some compiler problem. Searching in google, I found
+this:
+https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=91290
+
+On Mon, 2004-02-23 at 16:14, Leila Baghdadi wrote:
+> alright did that and I think I have got farther into the build but now it 
+> gives me
+> 
+> Building shared library 
+> /home/baghdadi/ParaView/bin/libvtkPVFiltersTCL.so...
+> Building object file test.o...
+> Building executable /home/baghdadi/ParaView/bin/vtkTestFilters...
+> /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> `__ctype_b'
+> /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> `__ctype_toupper'
+> /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> `__ctype_tolower'
+> 
+> can you give me a hint please!
+> 
+> thanks
+> 
+> 
+> Leila
+> 
+> On Mon, 23 Feb 2004, Berk Geveci wrote:
+> 
+> > Your VTK must not be up-to-date. To compile CVS ParaView, you need
+> > CVS VTK of the same time.
+> > 
+> > ParaView includes an hdf5 distribution because it has a simple hdf5
+> > reader.
+> > 
+> > On Mon, 2004-02-23 at 14:45, Leila Baghdadi wrote:
+> > > Hi all
+> > > 
+> > > I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+> > > I get the following error
+> > > ../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+> > >    function `virtual void 
+> > > vtkClientCompositeManager::SatelliteStartRender()':
+> > > ../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+> > > matching
+> > >    function for call to `vtkRenderWindow::GetScreenSize()'
+> > > Building object file vtkPVServerObject.o...
+> > > 
+> > > ***********************
+> > > I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+> > > me to believe that my vtk is not compiled properly for use with paraview.
+> > > 
+> > > 
+> > > also is paraview using hdf5 internally, I see that it is trying to compile 
+> > > hdf libraries!
+> > > 
+> > > 
+> > > Thanks
+> > > 
+> > > 
+> > > Leila
+> > > 
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From julien.alizier-ausy@irsn.fr  Tue Feb 24 07:59:42 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Tue, 24 Feb 2004 08:59:42 +0100
+Subject: [Paraview] Paraview on OSF1
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B135@OREADE.ipsn.fr>
+
+Hello,
+
+I have tried to compile Paraview (both 1.0.4 and 1.2.1) on a Compaq Tru64
+5.1 (OSF1).
+Compilation worked fine but when I launch paraview, I get a segmentation
+fault.
+vtk that has been compiled with paraview seems to be working.
+
+Does anyone have experienced ParaView on OSF ?
+
+Thanks,
+
+-- Julien
+
+
+From jfavre@cscs.ch  Tue Feb 24 08:24:42 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Tue, 24 Feb 2004 09:24:42 +0100
+Subject: [Paraview] building paraview
+In-Reply-To: <1077572536.14822.111.camel@silverymoon>
+References: <Pine.LNX.4.44.0402231613280.2390-100000@mouse1.ocgc.ca> <1077572536.14822.111.camel@silverymoon>
+Message-ID: <403B0A4A.4000903@cscs.ch>
+
+Berk Geveci wrote:
+> There seems to be some compiler problem. Searching in google, I found
+> this:
+> https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=91290
+
+I have had this and other problems with my Red Hat 9.0. My system admin 
+said that it is not supported by Red Hat and that we should move away 
+from Red Hat 9 because it causes too many problems.
+
+we finally purchased the Entreprise version of Red Hat (or whatever the 
+name is, I am not the sys admin here). That is not free anymore, but it 
+should solve all these problems.
+
+my 2 cents,
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From berklist@nycap.rr.com  Tue Feb 24 14:15:00 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Tue, 24 Feb 2004 09:15:00 -0500
+Subject: [Paraview] building paraview
+In-Reply-To: <Pine.LNX.4.44.0402231645130.5197-100000@mouse1.ocgc.ca>
+References: <Pine.LNX.4.44.0402231645130.5197-100000@mouse1.ocgc.ca>
+Message-ID: <1077632099.7408.7.camel@silverymoon>
+
+I suggest that you get ParaViewComplete source (release 1.2 from
+http://www.paraview.org/HTML/Download.html) and start from scratch
+(building out-of-source is the recommend way). If you don't have to
+build from source, you are even better off using the binary
+distribution. 
+
+On Mon, 2004-02-23 at 16:47, Leila Baghdadi wrote:
+> Thanks for the reply
+> I checked my machine I have redhat 9.0 with glibc-2.3.2-27.9.7
+> so I am not sure what can be done!
+> 
+> Thanks again
+> 
+> 
+> On Mon, 23 Feb 2004, Berk Geveci wrote:
+> 
+> > There seems to be some compiler problem. Searching in google, I found
+> > this:
+> > https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=91290
+> > 
+> > On Mon, 2004-02-23 at 16:14, Leila Baghdadi wrote:
+> > > alright did that and I think I have got farther into the build but now it 
+> > > gives me
+> > > 
+> > > Building shared library 
+> > > /home/baghdadi/ParaView/bin/libvtkPVFiltersTCL.so...
+> > > Building object file test.o...
+> > > Building executable /home/baghdadi/ParaView/bin/vtkTestFilters...
+> > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > `__ctype_b'
+> > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > `__ctype_toupper'
+> > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > `__ctype_tolower'
+> > > 
+> > > can you give me a hint please!
+> > > 
+> > > thanks
+> > > 
+> > > 
+> > > Leila
+> > > 
+> > > On Mon, 23 Feb 2004, Berk Geveci wrote:
+> > > 
+> > > > Your VTK must not be up-to-date. To compile CVS ParaView, you need
+> > > > CVS VTK of the same time.
+> > > > 
+> > > > ParaView includes an hdf5 distribution because it has a simple hdf5
+> > > > reader.
+> > > > 
+> > > > On Mon, 2004-02-23 at 14:45, Leila Baghdadi wrote:
+> > > > > Hi all
+> > > > > 
+> > > > > I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+> > > > > I get the following error
+> > > > > ../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+> > > > >    function `virtual void 
+> > > > > vtkClientCompositeManager::SatelliteStartRender()':
+> > > > > ../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+> > > > > matching
+> > > > >    function for call to `vtkRenderWindow::GetScreenSize()'
+> > > > > Building object file vtkPVServerObject.o...
+> > > > > 
+> > > > > ***********************
+> > > > > I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+> > > > > me to believe that my vtk is not compiled properly for use with paraview.
+> > > > > 
+> > > > > 
+> > > > > also is paraview using hdf5 internally, I see that it is trying to compile 
+> > > > > hdf libraries!
+> > > > > 
+> > > > > 
+> > > > > Thanks
+> > > > > 
+> > > > > 
+> > > > > Leila
+> > > > > 
+> > > > > _______________________________________________
+> > > > > ParaView mailing list
+> > > > > ParaView@paraview.org
+> > > > > http://www.paraview.org/mailman/listinfo/paraview
+> > > > 
+> > > 
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From baghdadi@sickkids.ca  Tue Feb 24 17:06:37 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Tue, 24 Feb 2004 12:06:37 -0500 (EST)
+Subject: [Paraview] building paraview
+In-Reply-To: <403B0A4A.4000903@cscs.ch>
+Message-ID: <Pine.LNX.4.44.0402241204320.5372-100000@mouse1.ocgc.ca>
+
+Hi Jean
+
+Thanks for the info. I have had redhat 9.0 for a while and I have a number 
+of other things vtk, itk some other applications all running fine and I do 
+all my programming on my linux machine. so I do not think getting rid of 
+redhat9.0 is my solution, perhaps I will try to get paraview working 
+through some other trick!
+
+
+Leila
+
+
+On Tue, 24 Feb 2004, Jean M. Favre wrote:
+
+> Berk Geveci wrote:
+> > There seems to be some compiler problem. Searching in google, I found
+> > this:
+> > https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=91290
+> 
+> I have had this and other problems with my Red Hat 9.0. My system admin 
+> said that it is not supported by Red Hat and that we should move away 
+> from Red Hat 9 because it causes too many problems.
+> 
+> we finally purchased the Entreprise version of Red Hat (or whatever the 
+> name is, I am not the sys admin here). That is not free anymore, but it 
+> should solve all these problems.
+> 
+> my 2 cents,
+> 
+> 
+
+
+From baghdadi@sickkids.ca  Tue Feb 24 17:18:42 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Tue, 24 Feb 2004 12:18:42 -0500 (EST)
+Subject: [Paraview] building paraview
+In-Reply-To: <1077632099.7408.7.camel@silverymoon>
+Message-ID: <Pine.LNX.4.44.0402241209180.5372-100000@mouse1.ocgc.ca>
+
+Hi Berk
+
+Thanks very much for trying to help me. I am just gonna tell you why I am 
+trying to use paraview see what you think.
+
+I ( and my collaborator) have designed and coded a new file format which 
+sits on top of hdf5, it is a new generation of minc(developed at Montreal)
+we have used the blocking and compression mechanism built in hdf5 and 
+came up with our own multi-resolution algorithm.
+I already have a viewer which sits over vtk and atamai classes and reads 
+the old minc files but caches everything. 
+I checked the web and saw that there is already a vtkhdfreader so I can 
+try rewriting that for reading and writing my minc2 files but my biggest 
+challenge is caching! 
+I heard about paraview on the itk list and read about it and 
+found out that it reads hdf files and it is also designed for large files 
+so I am hoping to get some of the smart caching ideas by using it and 
+looking through the code.
+
+sorry for writing a long e-mail
+
+
+Leila 
+
+ On Tue, 24 Feb 2004, Berk Geveci wrote:
+
+> I suggest that you get ParaViewComplete source (release 1.2 from
+> http://www.paraview.org/HTML/Download.html) and start from scratch
+> (building out-of-source is the recommend way). If you don't have to
+> build from source, you are even better off using the binary
+> distribution. 
+> 
+> On Mon, 2004-02-23 at 16:47, Leila Baghdadi wrote:
+> > Thanks for the reply
+> > I checked my machine I have redhat 9.0 with glibc-2.3.2-27.9.7
+> > so I am not sure what can be done!
+> > 
+> > Thanks again
+> > 
+> > 
+> > On Mon, 23 Feb 2004, Berk Geveci wrote:
+> > 
+> > > There seems to be some compiler problem. Searching in google, I found
+> > > this:
+> > > https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=91290
+> > > 
+> > > On Mon, 2004-02-23 at 16:14, Leila Baghdadi wrote:
+> > > > alright did that and I think I have got farther into the build but now it 
+> > > > gives me
+> > > > 
+> > > > Building shared library 
+> > > > /home/baghdadi/ParaView/bin/libvtkPVFiltersTCL.so...
+> > > > Building object file test.o...
+> > > > Building executable /home/baghdadi/ParaView/bin/vtkTestFilters...
+> > > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > > `__ctype_b'
+> > > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > > `__ctype_toupper'
+> > > > /home/baghdadi/ParaView/bin/libvtkPVFilters.so: undefined reference to 
+> > > > `__ctype_tolower'
+> > > > 
+> > > > can you give me a hint please!
+> > > > 
+> > > > thanks
+> > > > 
+> > > > 
+> > > > Leila
+> > > > 
+> > > > On Mon, 23 Feb 2004, Berk Geveci wrote:
+> > > > 
+> > > > > Your VTK must not be up-to-date. To compile CVS ParaView, you need
+> > > > > CVS VTK of the same time.
+> > > > > 
+> > > > > ParaView includes an hdf5 distribution because it has a simple hdf5
+> > > > > reader.
+> > > > > 
+> > > > > On Mon, 2004-02-23 at 14:45, Leila Baghdadi wrote:
+> > > > > > Hi all
+> > > > > > 
+> > > > > > I am trying to build paraview from cvs and have my own build of vtk4.5.0.
+> > > > > > I get the following error
+> > > > > > ../ParaView/ParaView/vtkClientCompositeManager.cxx: In member
+> > > > > >    function `virtual void 
+> > > > > > vtkClientCompositeManager::SatelliteStartRender()':
+> > > > > > ../ParaView/ParaView/vtkClientCompositeManager.cxx:626: no 
+> > > > > > matching
+> > > > > >    function for call to `vtkRenderWindow::GetScreenSize()'
+> > > > > > Building object file vtkPVServerObject.o...
+> > > > > > 
+> > > > > > ***********************
+> > > > > > I know that GetScreenSize() is a method of vtkRenderWindow so that leads 
+> > > > > > me to believe that my vtk is not compiled properly for use with paraview.
+> > > > > > 
+> > > > > > 
+> > > > > > also is paraview using hdf5 internally, I see that it is trying to compile 
+> > > > > > hdf libraries!
+> > > > > > 
+> > > > > > 
+> > > > > > Thanks
+> > > > > > 
+> > > > > > 
+> > > > > > Leila
+> > > > > > 
+> > > > > > _______________________________________________
+> > > > > > ParaView mailing list
+> > > > > > ParaView@paraview.org
+> > > > > > http://www.paraview.org/mailman/listinfo/paraview
+> > > > > 
+> > > > 
+> > > > _______________________________________________
+> > > > ParaView mailing list
+> > > > ParaView@paraview.org
+> > > > http://www.paraview.org/mailman/listinfo/paraview
+> > > 
+> 
+
+
+From jnkim@ncsa.uiuc.edu  Tue Feb 24 17:28:53 2004
+From: jnkim@ncsa.uiuc.edu (Jeongnim Kim)
+Date: Tue, 24 Feb 2004 11:28:53 -0600
+Subject: [Paraview] ParaView Training Workshops
+In-Reply-To: <1077554407.14818.17.camel@silverymoon>
+References: <40373A7B.4E976CFB@sophia.inria.fr>
+ <40373A7B.4E976CFB@sophia.inria.fr>
+Message-ID: <5.1.0.14.2.20040224111658.0233a600@pop.ncsa.uiuc.edu>
+
+I'm a research scientist at NCSA and was asked about possible topics
+for access grid sessions. You can find out access grid and see the list of 
+past seminars at 
+http://www.ncsa.uiuc.edu/Divisions/eot/Training/Events/PastEvents.html
+
+I suggested paraview and saw this thread. I'm wondering if the 
+developers/experts would be interested in participating such programs. The 
+session could be a day-long tutorial/training or couple-of-hour seminars 
+covering various aspects of paraview.
+
+The seminars are broadcasted over many participating sites at the 
+universities, labs and industry. Let me know if anyone is interested in or 
+have any question/suggestion.
+
+At 11:40 AM 2/23/2004 -0500, Berk Geveci wrote:
+>We are considering offering a ParaView workshop. I'll provide more
+>information later.
+>
+>On Sat, 2004-02-21 at 06:01, Stephen Wornom wrote:
+> > Are there ParaView training workshops that one could attend?
+> > Stephen
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+Best wishes,
+Jeongnim Kim
+
+---------------------------------------------------------------
+Jeongnim Kim                           e-mail: jnkim@uiuc.edu
+NCSA                                   Tel: 217-244-6319 (NCSA)
+Beckman Institute                           217-244-4971 (MCC)
+405 N Mathews Av.                      Fax: 217-244-2909
+Urbana, IL 61801
+---------------------------------------------------------------
+
+
+From arash@vije.ca  Tue Feb 24 21:40:33 2004
+From: arash@vije.ca (Arash Jahangir)
+Date: Tue, 24 Feb 2004 16:40:33 -0500
+Subject: [Paraview] Paraview 1.2 Build problems
+References: <20040217112608.24798.43129.Mailman@public.kitware.com> <001601c3f892$0ba9fff0$0aa2fea9@hal9000> <1077554318.14818.14.camel@silverymoon>
+Message-ID: <007701c3fb1e$d5f4d990$0aa2fea9@hal9000>
+
+Surprisingly that's all the error there was.  I have since modified the
+cmake config to include full path of the compiler as well as few other minor
+path changes.  The problem seems to have resolved itself by I personally
+think this machine is just too unstable and it was the multiple reboots that
+fixed the problem rather than my config changes.
+
+thanks for trying,
+Arash
+
+----- Original Message ----- 
+From: "Berk Geveci" <berklist@nycap.rr.com>
+To: "Arash Jahangir" <arash@vije.ca>
+Cc: "ParaView Mailing List" <paraview@paraview.org>
+Sent: Monday, February 23, 2004 11:38 AM
+Subject: Re: [Paraview] Paraview 1.2 Build problems
+
+
+> I have never encountered this problem. This is all the error information
+> you get?
+>
+> On Sat, 2004-02-21 at 10:47, Arash Jahangir wrote:
+> > Hi,
+> > I am trying to build Paraview 1.2 "Release" using VC++ 6 with all the
+> > patches installed on a XP box.  But the build fails with
+> >
+> >         Generating Code...
+> >         Compiling...
+> >         vtkWarpTransformTcl.cxx
+> >         vtkWedgeTcl.cxx
+> >         vtkWindowTcl.cxx
+> >         vtkWindowLevelLookupTableTcl.cxx
+> >         vtkXMLFileOutputWindowTcl.cxx
+> >         vtkWin32OutputWindowTcl.cxx
+> >         vtkTclUtil.cxx
+> >         Generating Code...
+> >         Error executing cl.exe.
+> >
+> >         ALL_BUILD - 1 error(s), 0 warning(s)
+> >
+> > Any ideas what could be wrong?
+> >
+> > thanks,
+> > Arash
+> >
+> > > From: "Ken Martin" <ken.martin@kitware.com>
+> > > To: <paraview@paraview.org>
+> > > Date: Mon, 16 Feb 2004 10:06:59 -0500
+> > > Subject: [Paraview] Announce: ParaView Version 1.2
+> > >
+> > > Paraview version 1.2 is now available from www.paraview.org This
+> > release is
+> > > based on VTK 4.4 and includes a number of internal architecture
+> > changes and
+> > > fixes. Please let us know if you run into problems. The next release
+> > 1.4
+> > > will be out around May 1st.
+> > >
+> > > Thanks
+> > > Ken
+> > >
+> > > Ken Martin, PhD
+> > > Kitware Inc.
+> > > 518 371 3971 x101
+> > > 469 Clifton Corporate Pkwy
+> > > Clifton Park NY 12065
+> -- 
+> Berk Geveci <berklist@nycap.rr.com>
+>
+>
+>
+
+
+From ken.martin@kitware.com  Wed Feb 25 15:45:48 2004
+From: ken.martin@kitware.com (Ken Martin)
+Date: Wed, 25 Feb 2004 10:45:48 -0500
+Subject: [Paraview] FW: Kitware Downtime
+Message-ID: <002101c3fbb6$74dd5db0$6901a8c0@kitwarein.com>
+
+
+-----Original Message-----
+From: Ken Martin [mailto:ken.martin@kitware.com]=20
+Sent: Tuesday, February 24, 2004 12:05 PM
+To: 'VTK users list'; 'VTK Developers'; 'cmake@public.kitware.com';
+'insight-users@itk.org'
+Subject: Kitware Downtime
+
+FYI, Kitware is moving to a new building this weekend and so as a result
+there may be unexpected outages in our phone/internet connectivity. We =
+plan
+on moving the servers on Thursday (the 26th of Feb) Afternoon and hope =
+to
+limit the downtime to an hour. Many of the dashboard machines will =
+likely be
+down for a longer period of time. Our IP addresses and phone numbers =
+will
+not be changing.
+
+Thanks
+Ken
+
+Ken Martin, PhD
+Kitware Inc.
+518 371 3971 x101
+469 Clifton Corporate Pkwy
+Clifton Park NY 12065
+
+
+
+
+From os_traduction@hotmail.com  Wed Feb 25 19:27:10 2004
+From: os_traduction@hotmail.com (Traducteur OS.org Traducteur OS.org)
+Date: Wed, 25 Feb 2004 20:27:10 +0100
+Subject: [Paraview] Reading Ensight Gold files in Paraview 1.2.1 vs 0.6
+Message-ID: <BAY7-F16CV4WR457yQU0000f152@hotmail.com>
+
+Hello,
+
+I would like to know if the following is a feature or a bug : when
+trying to open an Ensight Gold file (*.case),
+
+- all the corresponding Ensight subsidiary files contained in the
+same folder where also opened in ParaView 0.6
+
+- only the *.case file is opened in ParaView 1.2.1
+
+Thank you in advance for your answers.
+
+Best regards,
+
+Sylvain
+
+_________________________________________________________________
+Dialoguez en direct et gratuitement avec vos amis sur 
+http://g.msn.fr/FR1001/866 MSN Messenger !
+
+
+From berklist@nycap.rr.com  Wed Feb 25 20:40:59 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 25 Feb 2004 15:40:59 -0500
+Subject: [Paraview] Reading Ensight Gold files in Paraview 1.2.1 vs 0.6
+In-Reply-To: <BAY7-F16CV4WR457yQU0000f152@hotmail.com>
+References: <BAY7-F16CV4WR457yQU0000f152@hotmail.com>
+Message-ID: <1077741659.7668.18.camel@silverymoon>
+
+I am not sure I understand. What do you mean by "opened"? You mean that
+only the *.case files show up in the file dialog? 
+
+On Wed, 2004-02-25 at 14:27, Traducteur OS.org Traducteur OS.org wrote:
+> Hello,
+> 
+> I would like to know if the following is a feature or a bug : when
+> trying to open an Ensight Gold file (*.case),
+> 
+> - all the corresponding Ensight subsidiary files contained in the
+> same folder where also opened in ParaView 0.6
+> 
+> - only the *.case file is opened in ParaView 1.2.1
+> 
+> Thank you in advance for your answers.
+> 
+> Best regards,
+> 
+> Sylvain
+> 
+> _________________________________________________________________
+> Dialoguez en direct et gratuitement avec vos amis sur 
+> http://g.msn.fr/FR1001/866 MSN Messenger !
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From rferrell@virre.pair.com  Wed Feb 25 20:27:45 2004
+From: rferrell@virre.pair.com (rferrell@virre.pair.com)
+Date: Wed, 25 Feb 2004 15:27:45 -0500 (EST)
+Subject: [Paraview] Calculator trouble
+Message-ID: <4230.128.165.144.120.1077740865.squirrel@webmail4.pair.com>
+
+I'm trying to use the Calculator filter to take the log of a data field. 
+The data is cell data.  It seems that the resultant array is point data,
+however.  When I try to display the resultant array I get an error
+message.  I've got the "Attribute Mode:" button set to Cell Data.
+
+Is this a bug?  Or am I misunderstanding how to use the calculator?
+
+thanks,
+-robert
+
+From amy.henderson@kitware.com  Wed Feb 25 21:00:01 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Wed, 25 Feb 2004 16:00:01 -0500
+Subject: [Paraview] Calculator trouble
+In-Reply-To: <4230.128.165.144.120.1077740865.squirrel@webmail4.pair.com
+ >
+References: <4230.128.165.144.120.1077740865.squirrel@webmail4.pair.com>
+Message-ID: <6.0.3.0.2.20040225155429.031fa6d8@pop.biz.rr.com>
+
+Hi Robert,
+
+What version of ParaView are you using? (I just tried to reproduce this 
+behavior in ParaView 1.2 on a sample data set and was unable to do so.) Can 
+you tell me specifically what steps you took and what the error message was?
+
+- Amy
+
+At 03:27 PM 2/25/2004, rferrell@virre.pair.com wrote:
+>I'm trying to use the Calculator filter to take the log of a data field.
+>The data is cell data.  It seems that the resultant array is point data,
+>however.  When I try to display the resultant array I get an error
+>message.  I've got the "Attribute Mode:" button set to Cell Data.
+>
+>Is this a bug?  Or am I misunderstanding how to use the calculator?
+>
+>thanks,
+>-robert
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From os_traduction@hotmail.com  Thu Feb 26 08:08:39 2004
+From: os_traduction@hotmail.com (Traducteur OS.org Traducteur OS.org)
+Date: Thu, 26 Feb 2004 09:08:39 +0100
+Subject: [Paraview] Reading Ensight Gold files in Paraview 1.2.1 vs 0.6
+Message-ID: <BAY7-F224kJSFsxf4yp000130b6@hotmail.com>
+
+To be more accurate :
+
+- version 0.6 : "File -> Open -> foo.case" adds the content
+of foo.case to the Object List, but also adds the content
+of the surrounding foo.* files (the "*" is different from "case"
+for these surrounding files) to the object list.
+
+- version 1.2.1 : "File -> Open -> foo.case" does only add
+the content of "foo.case" to the object list, but not that of
+the other "foo.*" files.
+
+As the extension of the surrounding files is different from "case",
+I cannot open them individually.
+
+I hope I was clearer.
+
+Best regards,
+
+Sylvain
+
+
+
+>From: Berk Geveci <berklist@nycap.rr.com>
+>To: "Traducteur OS.org Traducteur OS.org" <os_traduction@hotmail.com>
+>CC: ParaView Mailing List <paraview@paraview.org>
+>Subject: Re: [Paraview] Reading Ensight Gold files in Paraview 1.2.1 vs 0.6
+>Date: Wed, 25 Feb 2004 15:40:59 -0500
+>
+>I am not sure I understand. What do you mean by "opened"? You mean that
+>only the *.case files show up in the file dialog?
+>
+>On Wed, 2004-02-25 at 14:27, Traducteur OS.org Traducteur OS.org wrote:
+> > Hello,
+> >
+> > I would like to know if the following is a feature or a bug : when
+> > trying to open an Ensight Gold file (*.case),
+> >
+> > - all the corresponding Ensight subsidiary files contained in the
+> > same folder where also opened in ParaView 0.6
+> >
+> > - only the *.case file is opened in ParaView 1.2.1
+> >
+> > Thank you in advance for your answers.
+> >
+> > Best regards,
+> >
+> > Sylvain
+> >
+> > _________________________________________________________________
+> > Dialoguez en direct et gratuitement avec vos amis sur
+> > http://g.msn.fr/FR1001/866 MSN Messenger !
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>--
+>Berk Geveci <berklist@nycap.rr.com>
+>
+
+_________________________________________________________________
+MSN Search, le moteur de recherche qui pense comme vous !  
+http://search.msn.fr
+
+
+From ferrell@lanl.gov  Thu Feb 26 18:16:31 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 26 Feb 2004 11:16:31 -0700 (MST)
+Subject: [Paraview] Time series problem
+Message-ID: <1349.128.165.144.120.1077819391.squirrel@webmail4.pair.com>
+
+I'm having trouble reading in a series of files.  This is with the latest
+Paraview, version 1.2, release 1.  I'm using legacy VTK format, not sure
+if that matters.
+
+I set up a sequence of files: File0.vtk, File1.vtk, File2.vtk... FileN.vtk
+
+If N <= 99, everything works fine.  When I open File0.vtk I get a slider
+which allows me to easily open any other file in the series.  I can also
+easily set up an animation to loop over all files in the series.
+
+If N>=100, Paraview does not detect the series when I open File0.vtk.  To
+open the other files I have to open them individually.  I do not get the
+slider to let me easily open any file in the series, and I cannot get the
+animator to loop over the whole series.
+
+I did not have any of these problems with my previous version (1.0 release
+4?).
+
+Thanks,
+-robert
+
+
+
+
+
+
+From baghdadi@sickkids.ca  Thu Feb 26 21:17:10 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Thu, 26 Feb 2004 16:17:10 -0500 (EST)
+Subject: [Paraview] building paraview and undefined reference to __ctype_b
+Message-ID: <Pine.LNX.4.44.0402261607290.11032-100000@mouse1.ocgc.ca>
+
+Hi everyone 
+
+Just wanted to let everyone know that I have had the above error when 
+building paraview for the past couple of days and lots of links on the web 
+mentioned that there is some kind of a bug with glibc and redhat9.0 which 
+creates this error.
+
+I was trying to add an extra class to vtk today and was linking against 
+the libraries sitting at my home/lib where I noticed the same error. 
+
+so it turned out that I had build my home copy of gcc 2 years ago and when 
+I updated to redhat9.0 and it came with gcc-3.2.2, I forgot to remove 
+those old libraries from home/lib.
+
+and paraview builds successfully!
+
+thought you guys might like to know
+
+
+Leila
+
+-- 
+Those who do not understand Unix are condemned to reinvent it, poorly.
+        -- Henry Spencer
+
+
+
+
+From diady@email.ro  Sun Feb 29 12:08:21 2004
+From: diady@email.ro (Diana Iliescu)
+Date: Sun, 29 Feb 2004 14:08:21 +0200
+Subject: [Paraview] AVS file
+Message-ID: <200402291208.i1TC8Lw09889@zerg.astral.ro>
+
+
+I can't see the output of an AVS file. It is accepted but i 
+can't see the grid. It says that the number of cells is 0. Why?
+
+Thank you,
+   Delia.
+
+
+______________________________________________________________________
+Do you want a free e-mail for life ? Get it at http://www.email.ro/
+
+
+From ferrell@lanl.gov  Sat Feb 28 14:31:31 2004
+From: ferrell@lanl.gov (ferrell@lanl.gov)
+Date: Sat, 28 Feb 2004 07:31:31 -0700
+Subject: [Paraview] Time series problem
+In-Reply-To: <BAY13-F981NISw9eCV30000c536@hotmail.com>
+References: <BAY13-F981NISw9eCV30000c536@hotmail.com>
+Message-ID: <16448.42563.216000.434668@gargle.gargle.HOWL>
+
+Stephen Wornom writes:
+ > Hi Robert,
+ > I have time series data as well but you are ahead of me in visualization.
+ > 1-What does your batch script look like? That is the logic to read the 
+ > separate files?
+
+What I've done in the past is simply name the files with a numeric
+series:
+ File0.vtk, File2.vtk ...
+
+When I open File0.vtk I get a slider so I can access any of the other
+files in the series.  In addition, I can choose the "Animation"
+control from the "View" menu.  There, I make an action with the source
+as the File0 object (it's available in the pull-down menu), and for
+the parameter I choose "Filename".  That's enough to create an
+animation through the time series.
+
+Under the latest release, this does not work for me if I have more
+than 100 files in the series.
+
+ > 2-Are you using the mpi mode?
+
+No, haven't done anything with mpi mode.
+
+-r
+
+
+

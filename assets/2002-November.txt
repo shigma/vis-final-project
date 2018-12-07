@@ -1,0 +1,427 @@
+From nilsb@cns.mpg.de  Thu Nov  7 10:04:01 2002
+From: nilsb@cns.mpg.de (Nils H. Busch)
+Date: Thu, 07 Nov 2002 11:04:01 +0100
+Subject: [Paraview] No rendering output
+Message-ID: <3DCA3A91.CFC6ED30@cns.mpg.de>
+
+Hi,
+
+I have been trying to get ParaView(v0.6) to run on an SGI O2, Irix 6.5.
+However, all I see are gray rectangles in the 3d View output regardless
+whether I load/create simple objects(spheres etc) or try to run the
+demo. (I can send a screenshot if necessary)
+I am using the precompiled binaries for Irix6.5.
+
+I have also been trying to compile the sources for ParaView Complete
+v0.6. CMake configuration runs fine.
+However, I get a compilation error early on in the build process:
+
+cmake.depends is up-to-date
+cd /opt/ParaViewComplete06/tcl8.3.2/unix gmake
+/bin/sh: cd: bad substitution
+gmake[1]: *** [maketcl] Error 1
+gmake: *** [default_target] Error 2
+
+Is it ok to use the SGI TCL interpreter when prompted by CMake ?
+
+Any hints as to what is going wrong are greatly appreciated.
+
+--
+    Nils H. Busch
+    Max-Planck-Institute of Cognitive Neuroscience
+    phone:  ++49 (341) 9940-035 fax:  ++49 (341) 9940-204
+    e-mail: nilsb@cns.mpg.de
+
+
+
+
+From berklist@nycap.rr.com  Thu Nov  7 20:30:09 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 07 Nov 2002 15:30:09 -0500
+Subject: [Paraview] No rendering output
+In-Reply-To: <3DCA3A91.CFC6ED30@cns.mpg.de>
+References: <3DCA3A91.CFC6ED30@cns.mpg.de>
+Message-ID: <1036701010.14354.18.camel@caemlyn.kitwarein.com>
+
+Hi,
+
+> I have been trying to get ParaView(v0.6) to run on an SGI O2, Irix 6.5.
+> However, all I see are gray rectangles in the 3d View output regardless
+> whether I load/create simple objects(spheres etc) or try to run the
+> demo. (I can send a screenshot if necessary)
+> I am using the precompiled binaries for Irix6.5.
+
+A screenshot would be nice. Also, can you try to run with the -r option?
+This option enables software rendering. I have never tested the IRIX 
+binary with SGI OpenGL since I only have remote access to SGIs. I have
+always used software rendering (Mesa) on Octanes and that worked.
+If there are ParaView users which have access to SGIs, I would 
+appreciate it if they try the SGI binary and let me know know if they
+have the same problem.
+ 
+> I have also been trying to compile the sources for ParaView Complete
+> v0.6. CMake configuration runs fine.
+> However, I get a compilation error early on in the build process:
+> 
+> cmake.depends is up-to-date
+> cd /opt/ParaViewComplete06/tcl8.3.2/unix gmake
+> /bin/sh: cd: bad substitution
+> gmake[1]: *** [maketcl] Error 1
+> gmake: *** [default_target] Error 2
+
+Which version of CMake are you using ? You will need CMake 1.4.5
+or later to build ParaView.
+ 
+> Is it ok to use the SGI TCL interpreter when prompted by CMake ?
+
+Which option is this ? Are you using cmake -i or ccmake ?
+
+-Berk
+
+
+
+From bheeren@copepod.de  Fri Nov  8 10:30:51 2002
+From: bheeren@copepod.de (Birke Heeren)
+Date: Fri, 08 Nov 2002 11:30:51 +0100
+Subject: [Paraview] Raw File Reader
+Message-ID: <3DCB925B.A2EDDA93@copepod.de>
+
+Hi,
+I would like to load a 2D-image-stack into ParaView. If I just use "open
+data" it does not work. Therefore I am trying to use the "Raw File
+Reader" now. In order to do that I figured I will have to convert the
+TIF images to RAW format. This seems to be difficult since no universal
+definition exsists for the RAW format. Still I was lucky to find out
+that the newest version of "Irfan View" does do batch file conversion
+from TIF to RAW file format. ParaView does seem to load the image-stack
+but still I couldn't make ParaView display it. Also the choices Irfan
+View offers for saving in RAW format (f.ex. RGB vs. BGR)  seem to be
+about different topics than the choices ParaView offers for reading RAW
+format (f. ex. data typ: char, short, etc.). Does anyone have any
+suggestions how this problem may be solved? I would very much appreciate
+any idea you could offer.
+With regards,
+Birke
+
+
+From berklist@nycap.rr.com  Fri Nov  8 13:33:15 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 08 Nov 2002 08:33:15 -0500
+Subject: [Paraview] Raw File Reader
+In-Reply-To: <3DCB925B.A2EDDA93@copepod.de>
+References: <3DCB925B.A2EDDA93@copepod.de>
+Message-ID: <1036762398.13568.17.camel@caemlyn.kitwarein.com>
+
+> I would like to load a 2D-image-stack into ParaView. If I just use "open
+> data" it does not work. Therefore I am trying to use the "Raw File
+> Reader" now. In order to do that I figured I will have to convert the
+> TIF images to RAW format. This seems to be difficult since no universal
+> definition exsists for the RAW format. Still I was lucky to find out
+> that the newest version of "Irfan View" does do batch file conversion
+> from TIF to RAW file format. ParaView does seem to load the image-stack
+> but still I couldn't make ParaView display it. Also the choices Irfan
+> View offers for saving in RAW format (f.ex. RGB vs. BGR)  seem to be
+> about different topics than the choices ParaView offers for reading RAW
+> format (f. ex. data typ: char, short, etc.). Does anyone have any
+> suggestions how this problem may be solved? I would very much appreciate
+> any idea you could offer.
+
+Can you describe a little bit what kind of visualization you are after 
+and what kind of data you are processing ?
+ParaView's support for loading 3D images written in 2D slices and
+displaying them is relatively primitive since it was not designed for
+visualizing medical data (or any data obtained from 3D scanners etc).
+
+
+
+
+From berk.geveci@kitware.com  Fri Nov  8 15:48:32 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 08 Nov 2002 10:48:32 -0500
+Subject: [Paraview] Raw File Reader
+In-Reply-To: <3DCB925B.A2EDDA93@copepod.de>
+References: <3DCB925B.A2EDDA93@copepod.de>
+Message-ID: <1036770515.13568.86.camel@caemlyn.kitwarein.com>
+
+Hi,
+
+> I would like to load a 2D-image-stack into ParaView. If I just use "open
+> data" it does not work. Therefore I am trying to use the "Raw File
+> Reader" now. In order to do that I figured I will have to convert the
+> TIF images to RAW format. This seems to be difficult since no universal
+> definition exsists for the RAW format. Still I was lucky to find out
+> that the newest version of "Irfan View" does do batch file conversion
+> from TIF to RAW file format. ParaView does seem to load the image-stack
+> but still I couldn't make ParaView display it. Also the choices Irfan
+> View offers for saving in RAW format (f.ex. RGB vs. BGR)  seem to be
+> about different topics than the choices ParaView offers for reading RAW
+> format (f. ex. data typ: char, short, etc.). Does anyone have any
+> suggestions how this problem may be solved? I would very much appreciate
+> any idea you could offer.
+
+After fiddling around a little bit with the raw files, I managed to
+load it properly into ParaView (heeren_example_rgb_planar.raw).
+Here are the settings for the reader:
+File Prefix: /home/berk/heeren_example_rgb_planar.raw
+File Pattern: %s
+Data Type: Unsigned char
+Byte Order: Little Endian
+Origin: 0 0 0
+Spacing: 1 1 1 (you might have to play with spacing, I didn't know the
+values)
+Extent: 0 511 0 511 0 0
+Num. Components: 1
+
+To load a stack of images, you will have to change the file prefix,
+file pattern and the last value of the extent.
+
+-Berk
+
+
+
+From bheeren@copepod.de  Mon Nov 11 18:41:39 2002
+From: bheeren@copepod.de (Birke Heeren)
+Date: Mon, 11 Nov 2002 19:41:39 +0100
+Subject: [Paraview] "Could not open file" and "error in error log"
+References: <3DCF9A48.4588CECE@copepod.de> <1037038976.17532.11.camel@caemlyn.kitwarein.com>
+Message-ID: <3DCFF9E3.C017E14C@copepod.de>
+
+I put the image into a different folder and then I was able to open it with
+the raw file reader. Before the image had been in a subdirectory of a
+subdirectory of ... - maybe the path had gotten too long for Paraview to
+handle it?
+Birke
+____________________________________________________________
+
+> > a) "Could not open file"
+> > I am running Paraview on a Windows2000Professional machine and tried to
+> > load a raw file with the raw file reader. For testing purposes I opened
+> > just one 2D-file (not a stack of 2D-pictures) but instead of the
+> > original picture I just got a green square. In addition a red
+> > exclamation mark appeared in the lower right corner and by double
+> > clicking an error message could be read: "There was a VTK error in file:
+> > (...) \vtkImageReader2.cxx (526) Initialize: Could not open file (...)
+>
+> Either the filename or the pattern must be wrong or the file
+> is not accessible on the machine you are running on. My guess
+> is that the file pattern is wrong.
+>
+> > b) "error in error log"
+> > It was not possible to highlight and copy the error message. Therefore I
+> > choose to use the "save" option instead to create a txt-error-file.
+> > Opening this file in a text reader revealed a completely different
+> > message:
+> > ...
+>
+> This is a bug. It was saving information about timing instead
+> of the error log. I fixed it in our development tree. The fix
+> will be in the next release.
+>
+> -Berk
+
+
+From berklist@nycap.rr.com  Mon Nov 11 18:44:09 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 11 Nov 2002 13:44:09 -0500
+Subject: [Paraview] "Could not open file" and "error in error log"
+In-Reply-To: <3DCFF9E3.C017E14C@copepod.de>
+References: <3DCF9A48.4588CECE@copepod.de>
+ <1037038976.17532.11.camel@caemlyn.kitwarein.com>
+ <3DCFF9E3.C017E14C@copepod.de>
+Message-ID: <1037040250.17541.25.camel@caemlyn.kitwarein.com>
+
+> I put the image into a different folder and then I was able to open it with
+> the raw file reader. Before the image had been in a subdirectory of a
+> subdirectory of ... - maybe the path had gotten too long for Paraview to
+> handle it?
+
+By any chance, did the previous path contain a space ?
+
+
+
+From bheeren@copepod.de  Mon Nov 11 18:58:31 2002
+From: bheeren@copepod.de (Birke Heeren)
+Date: Mon, 11 Nov 2002 19:58:31 +0100
+Subject: [Paraview] graylevel displayed in color & empty box
+Message-ID: <3DCFFDD7.78F19A73@copepod.de>
+
+Hi,
+why is it that my graylevel image (loaded with the raw file reader) is
+displayed in color? For example, the background should be black but is
+displayed in bright green.
+When I load a 2D-image-stack (instead of just on 2D-image) an empty box
+appears in the display window but nothing else.
+Birke Heeren
+
+
+From berklist@nycap.rr.com  Mon Nov 11 19:43:44 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 11 Nov 2002 14:43:44 -0500
+Subject: [Paraview] graylevel displayed in color & empty box
+In-Reply-To: <3DCFFDD7.78F19A73@copepod.de>
+References: <3DCFFDD7.78F19A73@copepod.de>
+Message-ID: <1037043825.28066.42.camel@caemlyn.kitwarein.com>
+
+> why is it that my graylevel image (loaded with the raw file reader) is
+> displayed in color? For example, the background should be black but is
+> displayed in bright green.
+
+ParaView was not designed as an image processing tool. Because of
+this, it does not know that you are loading a greyscale image. It
+treats this data as a uniform grid which has scalar values at each
+point. Because of this: 1. you will notice that interacting with
+large 2D images is slow, because ParaView will generate a polygon for
+each cell (pixel) and render them in full 3D, 2. the colors will not
+match that of the image. Essentially, ParaView uses a lookup table 
+to map scalar values (in this case, each pixel value) to colors.
+The default lookup table maps the lowest value to red and highest
+value to blue. You can change to a grayscale lookup table using
+Edit Color Map in the Display page. See the documentation for datails. 
+
+> When I load a 2D-image-stack (instead of just on 2D-image) an empty box
+> appears in the display window but nothing else.
+
+Indeed. Since ParaView does not support volume rendering, it has
+no default way of displaying volumes. You will have to either
+1. extract cut planes, 2. extract sub-grids, 3. extract iso-surfaces
+or 4. extract external surfaces to look at your data. The head
+screenshots on the ParaView web page were creating using the
+cut and iso-surface tools.
+
+-Berk
+
+
+
+
+From heiland@ncsa.uiuc.edu  Tue Nov 12 16:08:47 2002
+From: heiland@ncsa.uiuc.edu (Randy Heiland)
+Date: Tue, 12 Nov 2002 10:08:47 -0600
+Subject: [Paraview] Tcl version
+Message-ID: <1021112100847.ZM5617@pecos.ncsa.uiuc.edu>
+
+As I get ready to build Paraview 0.6, a question... I've recently built VTK
+myself (on Linux, using libtcl8.3.so) and I see that Paraview requires Tcl/Tk
+8.3.2.  Does that mean I would have had to build VTK with 8.3.2 also?
+
+What's the Tcl cmd to find out what version is running?  (In the superior
+Python lng, simply typing in 'python' will tell you exactly which version is
+running :)
+
+thanks,
+--Randy
+
+From berk.geveci@kitware.com  Tue Nov 12 16:42:04 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 12 Nov 2002 11:42:04 -0500
+Subject: [Paraview] Tcl version
+In-Reply-To: <1021112100847.ZM5617@pecos.ncsa.uiuc.edu>
+References: <1021112100847.ZM5617@pecos.ncsa.uiuc.edu>
+Message-ID: <1037119325.27494.16.camel@caemlyn.kitwarein.com>
+
+> What's the Tcl cmd to find out what version is running?  (In the superior
+> Python lng, simply typing in 'python' will tell you exactly which version is
+> running :)
+
+info tclversion
+
+which will probably say 8.3 not 8.3.2. To see whether it's
+8.3.2, you have to look at tcl.h.
+
+-Berk
+*mumbling something ugly about python users who criticize tcl*
+
+
+
+
+From sala73@altavista.it  Sat Nov 16 11:28:19 2002
+From: sala73@altavista.it (Pippo Sala)
+Date: Sat, 16 Nov 2002 03:28:19 -0800 (PST)
+Subject: [Paraview] Paraview Version 0.6 Revision 1 for Windows
+Message-ID: <20021116112820.27557.h027.c000.wm@mail.altavista.it.criticalpath.net>
+
+When I create a Cone or a Cilinder using Menu-Source
+and I edit the orientation using keypad, the angles are
+not saved in the session. So when I load the session
+the objects are not correctly rotated.
+Many thanks.
+
+AltaVista Free email service
+
+From berk.geveci@kitware.com  Mon Nov 18 13:51:54 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 18 Nov 2002 08:51:54 -0500
+Subject: [Paraview] Paraview Version 0.6 Revision 1 for Windows
+In-Reply-To: <20021116112820.27557.h027.c000.wm@mail.altavista.it.criticalpath.net>
+References: <20021116112820.27557.h027.c000.wm@mail.altavista.it.criticalpath.net>
+Message-ID: <1037627518.10100.0.camel@caemlyn.kitwarein.com>
+
+Thanks for the report. We will make sure that it is fixed
+before the next release.
+
+-Berk
+
+On Sat, 2002-11-16 at 06:28, Pippo Sala wrote:
+> When I create a Cone or a Cilinder using Menu-Source
+> and I edit the orientation using keypad, the angles are
+> not saved in the session. So when I load the session
+> the objects are not correctly rotated.
+> Many thanks.
+> 
+> AltaVista Free email service
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+
+From gva07@elai.upm.es  Sun Nov 17 17:16:07 2002
+From: gva07@elai.upm.es (ignacio)
+Date: Sun, 17 Nov 2002 18:16:07 +0100
+Subject: [Paraview] Problem about Paraview
+Message-ID: <000a01c28e5d$048a2420$8365648a@elai.upm.es>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0007_01C28E65.6636BE60
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+How can I make Paraview files in C or C++ ?
+
+
+Could somebody send me some file?
+
+Thanks, bye.
+
+------=_NextPart_000_0007_01C28E65.6636BE60
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META content=3D"text/html; charset=3Diso-8859-1" =
+http-equiv=3DContent-Type>
+<META content=3D"MSHTML 5.00.3315.2870" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>
+<DIV><FONT face=3DArial size=3D2>How can I make Paraview files in C or =
+C++=20
+?</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Could somebody send me some =
+file?</FONT></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Thanks, bye.</DIV></FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_0007_01C28E65.6636BE60--
+
+
+

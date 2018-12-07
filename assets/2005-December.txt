@@ -1,0 +1,5145 @@
+From crippa at kth.se  Thu Dec  1 06:01:48 2005
+From: crippa at kth.se (Simone Crippa)
+Date: Thu Dec  1 06:02:00 2005
+Subject: [Paraview] compute unstructured grid normals
+Message-ID: <1133434908.27647.42.camel@localhost>
+
+Hello,
+
+
+I would like to gain the normals of an unstructured surface grid for
+further use in the Calculator array. 
+The "Normals Generation" Filter is not active, as I suppose it is ment
+to deal only with poligonal meshes (builds on vtkPolyDataNormals).
+
+So, is there a way to "convert" an unstructured surface grid to a
+polygonal mesh, or is there an other way I am not aware of.
+
+
+
+Thanks, Simone
+
+-- 
+Simone Crippa
+Research assistant, Dipl.-Ing.
+Royal Institute of Technology (KTH)
+Aeronautical and Vehicle Engineering
+Division of Aerodynamics
+Teknikringen 8
+SE-10044 Stockholm, Sweden
++46 (0)8 790 6465
+
+From Jason.Beech-Brandt at ed.ac.uk  Thu Dec  1 08:23:33 2005
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Thu Dec  1 08:23:49 2005
+Subject: [Paraview] problem building paraview-2.2.1 with pathscale-2.3
+	compiler
+Message-ID: <Pine.GSO.4.58.0512011316270.20203@deedee>
+
+Hi,
+
+I'm trying to build paraview-2.2.1 with the PathScale-2.3 compiler on
+an Opteron SuSE-9.3 platform and
+have hit a snag.  When trying to compile vtkOpenGLExtensionManager.cxx I
+get the following error
+
+pathCC -o vtkOpenGLExtensionManager.o -DvtkRendering_EXPORTS
+-Wno-deprecated  -Wno-deprecated -O3
+-fPIC -Ilots_of_include_directories -c
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:37:
+error: syntax
+   error before `::' token
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:
+In
+   member function `virtual void (*
+   vtkOpenGLExtensionManager::GetProcAddress(const char*))()':
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:195:
+error: `
+   glXGetProcAddressARB' undeclared (first use this function)
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:195:
+error: (Each
+   undeclared identifier is reported only once for each function it
+appears
+   in.)
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:
+In
+   member function `virtual void
+   vtkOpenGLExtensionManager::ReadOpenGLExtensions()':
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:349:
+error: `
+   glXGetCurrentDisplay' undeclared (first use this function)
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:350:
+error: `
+   GLX_EXTENSIONS' undeclared (first use this function)
+/home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExtensionManager.cxx:350:
+error: `
+   glXGetClientString' undeclared (first use this function)
+make[5]: *** [vtkOpenGLExtensionManager.o] Error 1
+make[5]: Leaving directory
+`/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK/Rendering'
+make[4]: *** [default_target] Error 2
+make[4]: Leaving directory
+`/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK/Rendering'
+make[3]: *** [default_target_Rendering] Error 2
+make[3]: Leaving directory
+`/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+make[2]: *** [default_target] Error 2
+make[2]: Leaving directory
+`/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+make[1]: *** [default_target_VTK] Error 2
+make[1]: Leaving directory
+`/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC'
+make: *** [default_target] Error 2
+
+The first error appears to be syntax error which corresponds to an extern
+statement in the source file.  Is this a genuine syntax error, or is my
+compiler not parsing this correctly?  This compiled fine on the same
+platform with gcc-4.0.1.  Any help appreciated!
+
+Thanks,
+
+Jason
+From jfavre at cscs.ch  Thu Dec  1 08:28:14 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Dec  1 08:28:21 2005
+Subject: [Paraview] compute unstructured grid normals
+In-Reply-To: <1133434908.27647.42.camel@localhost>
+References: <1133434908.27647.42.camel@localhost>
+Message-ID: <438EFA6E.4010000@cscs.ch>
+
+Simone Crippa wrote:
+
+> So, is there a way to "convert" an unstructured surface grid to a
+> polygonal mesh, or is there an other way I am not aware of.
+> 
+
+have you tried "Extract Surface" from the Filter menu, i.e.
+vtkDataSetSurfaceFilter?
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+From kmorel at sandia.gov  Thu Dec  1 09:59:14 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Thu Dec  1 09:59:24 2005
+Subject: [Paraview] problem building paraview-2.2.1 with
+	pathscale-2.3 compiler
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D31795@ES21SNLNT.srn.sandia.gov>
+
+Jason,
+
+I'm guessing CMake did not find X11 correctly.  Under the advanced
+options in ccmake, make sure all the fields starting with X11_ are
+filled in correctly.
+
+-Ken
+
+> -----Original Message-----
+> From: paraview-bounces+kmorel=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On 
+> Behalf Of Jason.Beech-Brandt@ed.ac.uk
+> Sent: Thursday, December 01, 2005 6:24 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] problem building paraview-2.2.1 with 
+> pathscale-2.3 compiler
+> 
+> Hi,
+> 
+> I'm trying to build paraview-2.2.1 with the PathScale-2.3 
+> compiler on an Opteron SuSE-9.3 platform and have hit a snag. 
+>  When trying to compile vtkOpenGLExtensionManager.cxx I get 
+> the following error
+> 
+> pathCC -o vtkOpenGLExtensionManager.o -DvtkRendering_EXPORTS 
+> -Wno-deprecated  -Wno-deprecated -O3 -fPIC 
+> -Ilots_of_include_directories -c 
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:37:
+> error: syntax
+>    error before `::' token
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:
+> In
+>    member function `virtual void (*
+>    vtkOpenGLExtensionManager::GetProcAddress(const char*))()':
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:195:
+> error: `
+>    glXGetProcAddressARB' undeclared (first use this function)
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:195:
+> error: (Each
+>    undeclared identifier is reported only once for each 
+> function it appears
+>    in.)
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:
+> In
+>    member function `virtual void
+>    vtkOpenGLExtensionManager::ReadOpenGLExtensions()':
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:349:
+> error: `
+>    glXGetCurrentDisplay' undeclared (first use this function)
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:350:
+> error: `
+>    GLX_EXTENSIONS' undeclared (first use this function)
+> /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> sionManager.cxx:350:
+> error: `
+>    glXGetClientString' undeclared (first use this function)
+> make[5]: *** [vtkOpenGLExtensionManager.o] Error 1
+> make[5]: Leaving directory
+> `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/
+> VTK/Rendering'
+> make[4]: *** [default_target] Error 2
+> make[4]: Leaving directory
+> `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/
+> VTK/Rendering'
+> make[3]: *** [default_target_Rendering] Error 2
+> make[3]: Leaving directory
+> `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+> make[2]: *** [default_target] Error 2
+> make[2]: Leaving directory
+> `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+> make[1]: *** [default_target_VTK] Error 2
+> make[1]: Leaving directory
+> `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC'
+> make: *** [default_target] Error 2
+> 
+> The first error appears to be syntax error which corresponds 
+> to an extern statement in the source file.  Is this a genuine 
+> syntax error, or is my compiler not parsing this correctly?  
+> This compiled fine on the same platform with gcc-4.0.1.  Any 
+> help appreciated!
+> 
+> Thanks,
+> 
+> Jason
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From laa at lanl.gov  Thu Dec  1 10:12:41 2005
+From: laa at lanl.gov (Lee Ankeny)
+Date: Thu Dec  1 10:12:29 2005
+Subject: [Paraview] Log scale on XY plots?
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0180F4F1@ES20SNLNT.srn.sandia.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0180F4F1@ES20SNLNT.srn.sandia.gov>
+Message-ID: <902169E5-7649-4B43-AE02-EC24ACB3C688@lanl.gov>
+
+It's not quite the same. And even with that technique, there's no way  
+to plot a log x axis, is there?
+
+On Nov 30, 2005, at 5:26 PM, Wylie, Brian wrote:
+
+> You can use the calculator to compute a log of a variable and then  
+> plot
+> that... :)
+>
+>   Brian Wylie - Org 9227
+>   Sandia National Laboratories
+>   MS 0822 - Building 880/A1-J
+>   (505)844-2238 FAX(505)845-0833
+>        ____                  _    __
+>       / __ \____  _________ | |  / (_)__ _      __
+>      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+>
+>                                     Unleash the Beast
+>
+>
+>> -----Original Message-----
+>> From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+>> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On
+>> Behalf Of Lee Ankeny
+>> Sent: Wednesday, November 30, 2005 4:32 PM
+>> To: paraview@paraview.org
+>> Subject: [Paraview] Log scale on XY plots?
+>>
+>> Does anyone know how to turn on log axes on the xy plotter
+>> used by the line probe? Thanks, Lee
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>
+>
+
+From bnwylie at sandia.gov  Thu Dec  1 10:17:06 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Dec  1 10:17:21 2005
+Subject: [Paraview] Log scale on XY plots?
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0180F559@ES20SNLNT.srn.sandia.gov>
+
+Lee,
+
+I agree, the log axis would be nice, please enter a feature request,
+send me the number and SNL will put it on our list.
+
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: Lee Ankeny [mailto:laa@lanl.gov] 
+> Sent: Thursday, December 01, 2005 8:13 AM
+> To: Wylie, Brian
+> Cc: paraview@paraview.org
+> Subject: Re: [Paraview] Log scale on XY plots?
+> 
+> It's not quite the same. And even with that technique, 
+> there's no way to plot a log x axis, is there?
+> 
+> On Nov 30, 2005, at 5:26 PM, Wylie, Brian wrote:
+> 
+> > You can use the calculator to compute a log of a variable and then 
+> > plot that... :)
+> >
+> >   Brian Wylie - Org 9227
+> >   Sandia National Laboratories
+> >   MS 0822 - Building 880/A1-J
+> >   (505)844-2238 FAX(505)845-0833
+> >        ____                  _    __
+> >       / __ \____  _________ | |  / (_)__ _      __
+> >      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+> >     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+> >    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> >
+> >                                     Unleash the Beast
+> >
+> >
+> >> -----Original Message-----
+> >> From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> >> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] 
+> On Behalf 
+> >> Of Lee Ankeny
+> >> Sent: Wednesday, November 30, 2005 4:32 PM
+> >> To: paraview@paraview.org
+> >> Subject: [Paraview] Log scale on XY plots?
+> >>
+> >> Does anyone know how to turn on log axes on the xy plotter used by 
+> >> the line probe? Thanks, Lee 
+> >> _______________________________________________
+> >> ParaView mailing list
+> >> ParaView@paraview.org
+> >> http://www.paraview.org/mailman/listinfo/paraview
+> >>
+> >>
+> >
+> 
+> 
+> 
+
+From Jason.Beech-Brandt at ed.ac.uk  Thu Dec  1 11:11:03 2005
+From: Jason.Beech-Brandt at ed.ac.uk (Jason.Beech-Brandt@ed.ac.uk)
+Date: Thu Dec  1 11:11:22 2005
+Subject: [Paraview] problem building paraview-2.2.1 with pathscale-2.3
+	compiler
+In-Reply-To: <7137A9E1D1768C44BE7DF11D30FAB323D31795@ES21SNLNT.srn.sandia.gov>
+References: <7137A9E1D1768C44BE7DF11D30FAB323D31795@ES21SNLNT.srn.sandia.gov>
+Message-ID: <Pine.GSO.4.58.0512011610230.20203@deedee>
+
+Ken,
+
+You are right.  I thought I'd checked that, but obviously not.  Thanks
+
+Jason
+
+
+On Thu, 1 Dec 2005, Moreland, Kenneth wrote:
+
+> Jason,
+>
+> I'm guessing CMake did not find X11 correctly.  Under the advanced
+> options in ccmake, make sure all the fields starting with X11_ are
+> filled in correctly.
+>
+> -Ken
+>
+> > -----Original Message-----
+> > From: paraview-bounces+kmorel=sandia.gov@paraview.org
+> > [mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On
+> > Behalf Of Jason.Beech-Brandt@ed.ac.uk
+> > Sent: Thursday, December 01, 2005 6:24 AM
+> > To: paraview@paraview.org
+> > Subject: [Paraview] problem building paraview-2.2.1 with
+> > pathscale-2.3 compiler
+> >
+> > Hi,
+> >
+> > I'm trying to build paraview-2.2.1 with the PathScale-2.3
+> > compiler on an Opteron SuSE-9.3 platform and have hit a snag.
+> >  When trying to compile vtkOpenGLExtensionManager.cxx I get
+> > the following error
+> >
+> > pathCC -o vtkOpenGLExtensionManager.o -DvtkRendering_EXPORTS
+> > -Wno-deprecated  -Wno-deprecated -O3 -fPIC
+> > -Ilots_of_include_directories -c
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:37:
+> > error: syntax
+> >    error before `::' token
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:
+> > In
+> >    member function `virtual void (*
+> >    vtkOpenGLExtensionManager::GetProcAddress(const char*))()':
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:195:
+> > error: `
+> >    glXGetProcAddressARB' undeclared (first use this function)
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:195:
+> > error: (Each
+> >    undeclared identifier is reported only once for each
+> > function it appears
+> >    in.)
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:
+> > In
+> >    member function `virtual void
+> >    vtkOpenGLExtensionManager::ReadOpenGLExtensions()':
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:349:
+> > error: `
+> >    glXGetCurrentDisplay' undeclared (first use this function)
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:350:
+> > error: `
+> >    GLX_EXTENSIONS' undeclared (first use this function)
+> > /home/jbbrand1/src/paraview-2.2.1/VTK/Rendering/vtkOpenGLExten
+> > sionManager.cxx:350:
+> > error: `
+> >    glXGetClientString' undeclared (first use this function)
+> > make[5]: *** [vtkOpenGLExtensionManager.o] Error 1
+> > make[5]: Leaving directory
+> > `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/
+> > VTK/Rendering'
+> > make[4]: *** [default_target] Error 2
+> > make[4]: Leaving directory
+> > `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/
+> > VTK/Rendering'
+> > make[3]: *** [default_target_Rendering] Error 2
+> > make[3]: Leaving directory
+> > `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+> > make[2]: *** [default_target] Error 2
+> > make[2]: Leaving directory
+> > `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC/VTK'
+> > make[1]: *** [default_target_VTK] Error 2
+> > make[1]: Leaving directory
+> > `/home/jbbrand1/src/paraview-2.2.1/platforms/linuxAMD64pathCC'
+> > make: *** [default_target] Error 2
+> >
+> > The first error appears to be syntax error which corresponds
+> > to an extern statement in the source file.  Is this a genuine
+> > syntax error, or is my compiler not parsing this correctly?
+> > This compiled fine on the same platform with gcc-4.0.1.  Any
+> > help appreciated!
+> >
+> > Thanks,
+> >
+> > Jason
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> >
+>
+>
+>
+From eschenbe at psc.edu  Thu Dec  1 14:19:40 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Dec  1 14:19:42 2005
+Subject: [Paraview] Problems Including Custom Class At Compile In 2.4.1
+Message-ID: <59842B1F11BA93CE46A8AA57@harpo.psc.edu>
+
+I'm adding a reader to ParaView 2.4.1 on Fedora Core 4 using the approach 
+described in
+
+   <http://www.paraview.org/Wiki/ParaView:Extend>
+
+The program crashes after the splash window (logos) is shown but before the 
+main window appears with this message:
+
+===
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_S_construct NULL not valid
+Abort
+===
+
+The same thing happened under 2.4.0 where the debugger reported the 
+following location for the crash:
+
+
+=======================================
+#0  0x005d9402 in __kernel_vsyscall ()
+#1  0x00129118 in raise () from /lib/libc.so.6
+#2  0x0012a888 in abort () from /lib/libc.so.6
+#3  0x004e4dc4 in __gnu_cxx::__verbose_terminate_handler ()
+   from /usr/lib/libstdc++.so.6
+#4  0x004e2a31 in __gxx_personality_v0 () from /usr/lib/libstdc++.so.6
+#5  0x004e2a66 in std::terminate () from /usr/lib/libstdc++.so.6
+#6  0x004e2b9a in __cxa_throw () from /usr/lib/libstdc++.so.6
+#7  0x00475787 in std::__throw_logic_error () from /usr/lib/libstdc++.so.6
+#8  0x004be52e in std::operator+<char, std::char_traits<char>, 
+std::allocator<char> > () from /usr/lib/libstdc++.so.6
+#9  0x004bf03c in std::basic_string<char, std::char_traits<char>, 
+std::allocator<char> >::basic_string () from /usr/lib/libstdc++.so.6
+#10 0x089996a9 in vtkPVXMLPackageParser::LoadServerManagerFile (
+    this=0xc4f7590, le=0xc4ec900)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVXMLPackageParser.cxx:700
+#11 0x0899cf3e in vtkPVXMLPackageParser::ProcessConfiguration 
+(this=0xc4f7590)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVXMLPackageParser.cxx:183
+#12 0x0899d826 in vtkPVXMLPackageParser::StoreConfiguration (this=0xc4f7590,
+    window=0xbe74ee8)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVXMLPackageParser.cxx:153
+#13 0x08964663 in vtkPVWindow::ReadSourceInterfacesFromString 
+(this=0xbe74ee8,
+    str=0xc4db358 "<!-- MFIX Reader 11/7/2005 -->\n<!-- $Source: 
+/home/eschenbe/
+
+---Type <return> to continue, or q <return> to quit---
+
+CVSvault/PV/MFIX/Kit/GUIXML.xml,v $ -->\n<!-- $Author: eschenbe $ -->\n<!-- 
+$Revision: 1.3 $ -->\n<!-- $Date: 2005/11/07 20:47:51 $ -->\n<Module"...)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVWindow.cxx:4325
+#14 0x0885fb83 in vtkPVInitialize::Initialize (this=0xc4cf880, 
+win=0xbe74ee8)
+    at 
+/home/eschenbe/PV/PV/GUI/Client/vtkParaViewIncludeModulesToPVInitialize.h:29
+#15 0x08964264 in vtkPVWindow::ReadSourceInterfaces (this=0xbe74ee8)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVWindow.cxx:4280
+#16 0x08966567 in vtkPVWindow::Create (this=0xbe74ee8, app=0xbcf5f00)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVWindow.cxx:1408
+#17 0x0875ba72 in vtkPVApplication::Start (this=0xbcf5f00, argc=1,
+    argv=0xbbfbd60)
+    at /home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVApplication.cxx:1170
+#18 0x089a9948 in vtkPVProcessModuleGUIHelper::ActualRun (this=0xbbf9240,
+    argc=1, argv=0xbbfbd60)
+    at 
+/home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVProcessModuleGUIHelper.cxx:180
+#19 0x089a9a08 in vtkPVProcessModuleGUIHelper::RunGUIStart (this=0xbbf9240,
+    argc=1, argv=0xbbfbd60, numServerProcs=1, myId=0)
+    at 
+/home/eschenbe/PV/PVsrc2.4.0/GUI/Client/vtkPVProcessModuleGUIHelper.cxx:165
+#20 0x0956475c in vtkPVProcessModule::Start (this=0xbbfbd98, argc=1,
+    argv=0xbbfbd60)
+===================================
+
+
+Solutions? Thanks!
+Kent
+Pittsburgh Supercomputing Center
+From jvines at arl.army.mil  Fri Dec  2 11:35:35 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Fri Dec  2 11:35:39 2005
+Subject: [Paraview] Paraview XML problem
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078B6E@ARLABML01.DS.ARL.ARMY.MIL>
+
+All,
+	I am using Paraview 2.5, CVS'd version, and am having trouble
+with XML.  I have created a test filter which creates a disk source.
+Everything seems to import correctly, no complaints from Paraview.
+	The problem is Paraview doesn't change the radial resolution
+based on changes made in the user interface.  
+
+Below are the files I've created:
+
+file "DiskSource.pvsm" :
+
+<ServerManagerConfiguration>
+  <ProxyGroup name="sources">
+    <SourceProxy name="DiskSource" class="vtkDiskSource">
+      <DoubleVectorProperty
+        name="InnerRadius"
+        command="SetInnerRadius"
+        number_of_elements="1"
+        animateable="1"
+        default_values="0.25">
+        <DoubleRangeDomain name="range" min="0"/>
+      </DoubleVectorProperty>
+      <IntVectorProperty
+        name="RadialResolution"
+        command="SetRadialResolution"
+        number_of_elements="1"
+        default_values="6">
+        <IntRangeDomain name="range" min="2" max="512"/>
+      </IntVectorProperty>
+    </SourceProxy>
+  </ProxyGroup>
+</ServerManagerConfiguration>
+
+
+file "DiskSource.xml" :
+
+<ModuleInterface>
+  <ServerManagerFile name="DiskSource.pvsm"/>
+  <Module name="DiskSource" menu_name="MyDisk"
+    root_name="MyDisk" module_type="Source"
+    long_help="not here..." short_help="not here either..." >
+    <Source class="vtkDiskSource"/>
+    <ThumbWheel label="Inner Radius"
+      trace_name="InnerRadius" property="InnerRadius"
+      resolution="0.01" minimum_value="0" help="still nothing..." />
+    <Scale label="Radial Resolution"
+      trace_name="RadialResolution" property="RadialResolution"
+      resolution="1" display_entry="1" display_value="0"
+      entry_and_label_on_top="1" help="You just do not get it..." />
+  </Module>
+</ModuleInterface>
+
+
+Thanks in advance,
+
+
+John Vines
+Army Research Laboratory
+Computational Sciences and Engineering Branch
+Scientific Visualization Team
+410-278-9150/1643
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051202/ef24bc6f/attachment.html
+From daniel.einstein at pnl.gov  Fri Dec  2 23:00:14 2005
+From: daniel.einstein at pnl.gov (Einstein, Daniel R)
+Date: Fri Dec  2 23:00:22 2005
+Subject: [Paraview] CGNS reader
+Message-ID: <0DF798CBF125BF4AA1227F26431C29BD01FF12E4@pnlmse27.pnl.gov>
+
+Hello,
+
+Has anyone written a CGNS reader for paraview? I saw that this question
+was asked a couple of years ago, but there was no follow up in the
+archive. Any help?
+
+Thanks
+Dan
+
+Daniel R Einstein, PhD
+Biological Monitoring and Modeling
+Pacific Northwest National Laboratory
+P.O. Box 999; MSIN P7-58
+Richland, WA 99352
+Tel: 509/ 376-2924
+Fax: 509/376-9064
+daniel.einstein@pnl.gov
+
+
+From Daniel.E.Goldstein at colorado.edu  Sat Dec  3 18:01:35 2005
+From: Daniel.E.Goldstein at colorado.edu (Daniel Goldstein)
+Date: Sat Dec  3 18:01:44 2005
+Subject: [Paraview] xml/pvsm files to use vtkThresholdPoints within ParaView
+Message-ID: <439223CF.6050107@colorado.edu>
+
+Hi
+  Has anyone already made the required xml/pvsm files to use 
+vtkThresholdPoints within ParaView?
+If so would you be willing to post them?
+
+
+Thanks a bunch...
+
+Dan Goldstein
+From daniel.einstein at pnl.gov  Sat Dec  3 19:36:10 2005
+From: daniel.einstein at pnl.gov (Einstein, Daniel R)
+Date: Sat Dec  3 19:36:14 2005
+Subject: [Paraview] Vector postscript
+Message-ID: <0DF798CBF125BF4AA1227F26431C29BD01FF12F3@pnlmse27.pnl.gov>
+
+Hello,
+
+Is there any support for exporting images or the screen to postscript in
+Paraview?
+
+Dan
+
+Daniel R Einstein, PhD
+Biological Monitoring and Modeling
+Pacific Northwest National Laboratory
+P.O. Box 999; MSIN P7-58
+Richland, WA 99352
+Tel: 509/ 376-2924
+Fax: 509/376-9064
+daniel.einstein@pnl.gov
+
+
+From domi at vision.ee.ethz.ch  Tue Dec  6 07:28:55 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 07:29:04 2005
+Subject: [Paraview] clip filter not cutting through elements
+Message-ID: <43958407.2010409@vision.ee.ethz.ch>
+
+Hello,
+I would like to have a clip filter that optionally doesnt cut through
+the elements but rather remove/preserve (whole) elements. Is there a way
+to do it in the current version?
+regards,
+Dominik
+-- 
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From m.janssens at opencfd.co.uk  Tue Dec  6 07:41:21 2005
+From: m.janssens at opencfd.co.uk (Mattijs Janssens)
+Date: Tue Dec  6 07:41:24 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <43958407.2010409@vision.ee.ethz.ch>
+References: <43958407.2010409@vision.ee.ethz.ch>
+Message-ID: <439586F1.9000404@opencfd.co.uk>
+
+Would be nice to have!
+
+I 'hack' it by writing three fields with the x/y/z coordinates of the 
+elements and using the threshold filter to cut away sections.
+
+Dominik Szczerba wrote:
+> Hello,
+> I would like to have a clip filter that optionally doesnt cut through
+> the elements but rather remove/preserve (whole) elements. Is there a way
+> to do it in the current version?
+> regards,
+> Dominik
+
+
+-- 
+Best regards,
+
+Mattijs
+
+Mattijs Janssens
+
+OpenCFD Ltd.
+The Mews, Picketts Lodge,
+Picketts Lane, Salfords,
+Surrey RH1 5RG.
+Tel: +44 (0)1293 821272
+Email: M.Janssens@OpenCFD.co.uk
+URL: http://www.OpenCFD.co.uk
+From domi at vision.ee.ethz.ch  Tue Dec  6 08:17:07 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 08:17:10 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <439586F1.9000404@opencfd.co.uk>
+References: <43958407.2010409@vision.ee.ethz.ch>
+	<439586F1.9000404@opencfd.co.uk>
+Message-ID: <43958F53.9020209@vision.ee.ethz.ch>
+
+Thanks for a hint. Anyway, I plan to start adding my own filters to
+paraview, so this might be a good excuse to finally start doing so.
+Where do I start learning how to do it? The printed documentation is not
+too attractive because it is not even available at the moment and it
+also seems pretty old (version 1.8?). The mailing list archives miss  a
+search option. Any other resources?
+Thanks a lot
+Dominik
+
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+
+
+Mattijs Janssens wrote:
+> Would be nice to have!
+> 
+> I 'hack' it by writing three fields with the x/y/z coordinates of the
+> elements and using the threshold filter to cut away sections.
+> 
+> Dominik Szczerba wrote:
+> 
+>> Hello,
+>> I would like to have a clip filter that optionally doesnt cut through
+>> the elements but rather remove/preserve (whole) elements. Is there a way
+>> to do it in the current version?
+>> regards,
+>> Dominik
+> 
+> 
+> 
+
+From m.janssens at opencfd.co.uk  Tue Dec  6 09:28:00 2005
+From: m.janssens at opencfd.co.uk (Mattijs Janssens)
+Date: Tue Dec  6 09:28:04 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <43958F53.9020209@vision.ee.ethz.ch>
+References: <43958407.2010409@vision.ee.ethz.ch>	<439586F1.9000404@opencfd.co.uk>
+	<43958F53.9020209@vision.ee.ethz.ch>
+Message-ID: <43959FF0.8060401@opencfd.co.uk>
+
+Get the books and thus sponsor Paraview?
+
+Dominik Szczerba wrote:
+> Thanks for a hint. Anyway, I plan to start adding my own filters to
+> paraview, so this might be a good excuse to finally start doing so.
+> Where do I start learning how to do it? The printed documentation is not
+> too attractive because it is not even available at the moment and it
+> also seems pretty old (version 1.8?). The mailing list archives miss  a
+> search option. Any other resources?
+> Thanks a lot
+> Dominik
+> 
+> Dominik Szczerba, Dr.
+> ETZ C110 CO-ME/BIWI CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> 
+> 
+> Mattijs Janssens wrote:
+> 
+>>Would be nice to have!
+>>
+>>I 'hack' it by writing three fields with the x/y/z coordinates of the
+>>elements and using the threshold filter to cut away sections.
+>>
+>>Dominik Szczerba wrote:
+>>
+>>
+>>>Hello,
+>>>I would like to have a clip filter that optionally doesnt cut through
+>>>the elements but rather remove/preserve (whole) elements. Is there a way
+>>>to do it in the current version?
+>>>regards,
+>>>Dominik
+>>
+>>
+>>
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+-- 
+Best regards,
+
+Mattijs
+
+Mattijs Janssens
+
+OpenCFD Ltd.
+The Mews, Picketts Lodge,
+Picketts Lane, Salfords,
+Surrey RH1 5RG.
+Tel: +44 (0)1293 821272
+Email: M.Janssens@OpenCFD.co.uk
+URL: http://www.OpenCFD.co.uk
+From domi at vision.ee.ethz.ch  Tue Dec  6 09:31:23 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 09:31:25 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <43959FF0.8060401@opencfd.co.uk>
+References: <43958407.2010409@vision.ee.ethz.ch>	<439586F1.9000404@opencfd.co.uk>	<43958F53.9020209@vision.ee.ethz.ch>
+	<43959FF0.8060401@opencfd.co.uk>
+Message-ID: <4395A0BB.1010202@vision.ee.ethz.ch>
+
+The book is out of stock not to mention that it refers to an old
+version. I received some hints already (Paraview wiki pages). Thanks a lot!
+
+bye
+dsz
+
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+
+
+Mattijs Janssens wrote:
+> Get the books and thus sponsor Paraview?
+> 
+> Dominik Szczerba wrote:
+> 
+>> Thanks for a hint. Anyway, I plan to start adding my own filters to
+>> paraview, so this might be a good excuse to finally start doing so.
+>> Where do I start learning how to do it? The printed documentation is not
+>> too attractive because it is not even available at the moment and it
+>> also seems pretty old (version 1.8?). The mailing list archives miss  a
+>> search option. Any other resources?
+>> Thanks a lot
+>> Dominik
+>>
+>> Dominik Szczerba, Dr.
+>> ETZ C110 CO-ME/BIWI CH-8092 Zurich
+>> http://www.vision.ee.ethz.ch/~domi
+>>
+>>
+>> Mattijs Janssens wrote:
+>>
+>>> Would be nice to have!
+>>>
+>>> I 'hack' it by writing three fields with the x/y/z coordinates of the
+>>> elements and using the threshold filter to cut away sections.
+>>>
+>>> Dominik Szczerba wrote:
+>>>
+>>>
+>>>> Hello,
+>>>> I would like to have a clip filter that optionally doesnt cut through
+>>>> the elements but rather remove/preserve (whole) elements. Is there a
+>>>> way
+>>>> to do it in the current version?
+>>>> regards,
+>>>> Dominik
+>>>
+>>>
+>>>
+>>>
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+> 
+> 
+From f.braennstroem at gmx.de  Tue Dec  6 11:31:36 2005
+From: f.braennstroem at gmx.de (Fabian Braennstroem)
+Date: Tue Dec  6 10:27:59 2005
+Subject: [Paraview] Re: clip filter not cutting through elements
+In-Reply-To: <43958F53.9020209@vision.ee.ethz.ch>
+References: <43958407.2010409@vision.ee.ethz.ch>
+	<439586F1.9000404@opencfd.co.uk>
+	<43958F53.9020209@vision.ee.ethz.ch>
+Message-ID: <20051206163136.GA3360@ddorf.de>
+
+Hi Dominik,
+
+* On 06 Dec 2005 * Dominik Szczerba wrote:
+
+> Thanks for a hint. Anyway, I plan to start adding my own filters to
+> paraview, so this might be a good excuse to finally start doing so.
+> Where do I start learning how to do it? The printed documentation is not
+> too attractive because it is not even available at the moment and it
+> also seems pretty old (version 1.8?). The mailing list archives miss  a
+> search option. Any other resources?
+
+Maybe, searching with google helps a little bit:
+
+ test +"pipermail/paraview" site:public.kitware.com
+
+Greetings!
+Fabian
+From domi at vision.ee.ethz.ch  Tue Dec  6 11:26:04 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 11:26:09 2005
+Subject: [Paraview] polygon offset
+Message-ID: <4395BB9C.6050408@vision.ee.ethz.ch>
+
+Hello,
+Does Paraview support OpenGL polygon offset extension? If I try to
+visualize e.g. a tet mesh with edges (extract edges, shrink tets) the
+result looks very bad. Does VTK offer it at all? Is it at all possible
+using the VTK's filter philosophy?
+regards,
+Dominik
+-- 
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From bnwylie at sandia.gov  Tue Dec  6 11:28:18 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Tue Dec  6 11:28:33 2005
+Subject: [Paraview] polygon offset
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>
+
+Okay I know this is a not a 'solution' but for a quick fix set the line
+width to '2' instead of '1'. It will look much better. :)
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+> Behalf Of Dominik Szczerba
+> Sent: Tuesday, December 06, 2005 9:26 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] polygon offset
+> 
+> Hello,
+> Does Paraview support OpenGL polygon offset extension? If I 
+> try to visualize e.g. a tet mesh with edges (extract edges, 
+> shrink tets) the result looks very bad. Does VTK offer it at 
+> all? Is it at all possible using the VTK's filter philosophy?
+> regards,
+> Dominik
+> --
+> Dominik Szczerba, Dr.
+> ETZ C110 CO-ME/BIWI CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From domi at vision.ee.ethz.ch  Tue Dec  6 14:05:01 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 14:06:28 2005
+Subject: [Paraview] polygon offset
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>
+Message-ID: <4395E0DD.20803@vision.ee.ethz.ch>
+
+Thanks a lot, yes, still however it is far from what I used to get with 
+my own small codes, but that might be an issue for VTK mailing list 
+instead. Still, it looks a bit like a dead-end to me (where to put it?).
+bye
+Dominik
+
+Wylie, Brian wrote:
+> Okay I know this is a not a 'solution' but for a quick fix set the line
+> width to '2' instead of '1'. It will look much better. :)
+> 
+>   Brian Wylie - Org 9227
+>   Sandia National Laboratories
+>   MS 0822 - Building 880/A1-J
+>   (505)844-2238 FAX(505)845-0833                       
+>        ____                  _    __
+>       / __ \____  _________ | |  / (_)__ _      __ 
+>      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> 
+>                                     Unleash the Beast
+>  
+> 
+> 
+>>-----Original Message-----
+>>From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+>>[mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+>>Behalf Of Dominik Szczerba
+>>Sent: Tuesday, December 06, 2005 9:26 AM
+>>To: paraview@paraview.org
+>>Subject: [Paraview] polygon offset
+>>
+>>Hello,
+>>Does Paraview support OpenGL polygon offset extension? If I 
+>>try to visualize e.g. a tet mesh with edges (extract edges, 
+>>shrink tets) the result looks very bad. Does VTK offer it at 
+>>all? Is it at all possible using the VTK's filter philosophy?
+>>regards,
+>>Dominik
+>>--
+>>Dominik Szczerba, Dr.
+>>ETZ C110 CO-ME/BIWI CH-8092 Zurich
+>>http://www.vision.ee.ethz.ch/~domi
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+> 
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From berk.geveci at gmail.com  Tue Dec  6 14:18:38 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Dec  6 14:18:42 2005
+Subject: [Paraview] polygon offset
+In-Reply-To: <4395E0DD.20803@vision.ee.ethz.ch>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>
+	<4395E0DD.20803@vision.ee.ethz.ch>
+Message-ID: <a2ab21560512061118s2070353egdfa80d5c64bf008c@mail.gmail.com>
+
+Is this what you are asking?
+
+vtkMapper.h
+
+  // Description:
+  // Set/Get a global flag that controls whether coincident topology (e.g.,
+a
+  // line on top of a polygon) is shifted to avoid z-buffer resolution (and
+  // hence rendering problems). If not off, there are two methods to choose
+  // from. PolygonOffset uses graphics systems calls to shift polygons, but
+  // does not distinguish vertices and lines from one another. ShiftZBuffer
+  // remaps the z-buffer to distinguish vertices, lines, and polygons, but
+  // does not always produce acceptable results. If you use the ShiftZBuffer
+  // approach, you may also want to set the ResolveCoincidentTopologyZShift
+  // value. (Note: not all mappers/graphics systems implement this
+  // functionality.)
+  static void SetResolveCoincidentTopology(int val);
+  static int  GetResolveCoincidentTopology();
+  static void SetResolveCoincidentTopologyToDefault();
+  static void SetResolveCoincidentTopologyToOff()
+    {SetResolveCoincidentTopology(VTK_RESOLVE_OFF);}
+  static void SetResolveCoincidentTopologyToPolygonOffset()
+    {SetResolveCoincidentTopology(VTK_RESOLVE_POLYGON_OFFSET);}
+  static void SetResolveCoincidentTopologyToShiftZBuffer()
+    {SetResolveCoincidentTopology(VTK_RESOLVE_SHIFT_ZBUFFER);}
+
+
+On 12/6/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+>
+> Thanks a lot, yes, still however it is far from what I used to get with
+> my own small codes, but that might be an issue for VTK mailing list
+> instead. Still, it looks a bit like a dead-end to me (where to put it?).
+> bye
+> Dominik
+>
+> Wylie, Brian wrote:
+> > Okay I know this is a not a 'solution' but for a quick fix set the line
+> > width to '2' instead of '1'. It will look much better. :)
+> >
+> >   Brian Wylie - Org 9227
+> >   Sandia National Laboratories
+> >   MS 0822 - Building 880/A1-J
+> >   (505)844-2238 FAX(505)845-0833
+> >        ____                  _    __
+> >       / __ \____  _________ | |  / (_)__ _      __
+> >      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+> >     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+> >    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> >
+> >                                     Unleash the Beast
+> >
+> >
+> >
+> >>-----Original Message-----
+> >>From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> >>[mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On
+> >>Behalf Of Dominik Szczerba
+> >>Sent: Tuesday, December 06, 2005 9:26 AM
+> >>To: paraview@paraview.org
+> >>Subject: [Paraview] polygon offset
+> >>
+> >>Hello,
+> >>Does Paraview support OpenGL polygon offset extension? If I
+> >>try to visualize e.g. a tet mesh with edges (extract edges,
+> >>shrink tets) the result looks very bad. Does VTK offer it at
+> >>all? Is it at all possible using the VTK's filter philosophy?
+> >>regards,
+> >>Dominik
+> >>--
+> >>Dominik Szczerba, Dr.
+> >>ETZ C110 CO-ME/BIWI CH-8092 Zurich
+> >>http://www.vision.ee.ethz.ch/~domi
+> >>_______________________________________________
+> >>ParaView mailing list
+> >>ParaView@paraview.org
+> >>http://www.paraview.org/mailman/listinfo/paraview
+> >>
+> >
+> >
+>
+> --
+> Dominik Szczerba, Dr.
+> Computer Vision Lab CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051206/b3f421ef/attachment.htm
+From domi at vision.ee.ethz.ch  Tue Dec  6 14:35:48 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec  6 14:37:14 2005
+Subject: [Paraview] polygon offset
+In-Reply-To: <a2ab21560512061118s2070353egdfa80d5c64bf008c@mail.gmail.com>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>	
+	<4395E0DD.20803@vision.ee.ethz.ch>
+	<a2ab21560512061118s2070353egdfa80d5c64bf008c@mail.gmail.com>
+Message-ID: <4395E814.1080809@vision.ee.ethz.ch>
+
+Oh yes indeed, I am talking about the first solution. Now is there a 
+particular reason this swich is not available in paraview?
+Dominik
+
+Berk Geveci wrote:
+> Is this what you are asking?
+> 
+> vtkMapper.h
+> 
+>   // Description:
+>   // Set/Get a global flag that controls whether coincident topology (e.g.,
+> a
+>   // line on top of a polygon) is shifted to avoid z-buffer resolution (and
+>   // hence rendering problems). If not off, there are two methods to choose
+>   // from. PolygonOffset uses graphics systems calls to shift polygons, but
+>   // does not distinguish vertices and lines from one another. ShiftZBuffer
+>   // remaps the z-buffer to distinguish vertices, lines, and polygons, but
+>   // does not always produce acceptable results. If you use the ShiftZBuffer
+>   // approach, you may also want to set the ResolveCoincidentTopologyZShift
+>   // value. (Note: not all mappers/graphics systems implement this
+>   // functionality.)
+>   static void SetResolveCoincidentTopology(int val);
+>   static int  GetResolveCoincidentTopology();
+>   static void SetResolveCoincidentTopologyToDefault();
+>   static void SetResolveCoincidentTopologyToOff()
+>     {SetResolveCoincidentTopology(VTK_RESOLVE_OFF);}
+>   static void SetResolveCoincidentTopologyToPolygonOffset()
+>     {SetResolveCoincidentTopology(VTK_RESOLVE_POLYGON_OFFSET);}
+>   static void SetResolveCoincidentTopologyToShiftZBuffer()
+>     {SetResolveCoincidentTopology(VTK_RESOLVE_SHIFT_ZBUFFER);}
+> 
+> 
+> On 12/6/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+> 
+>>Thanks a lot, yes, still however it is far from what I used to get with
+>>my own small codes, but that might be an issue for VTK mailing list
+>>instead. Still, it looks a bit like a dead-end to me (where to put it?).
+>>bye
+>>Dominik
+>>
+>>Wylie, Brian wrote:
+>>
+>>>Okay I know this is a not a 'solution' but for a quick fix set the line
+>>>width to '2' instead of '1'. It will look much better. :)
+>>>
+>>>  Brian Wylie - Org 9227
+>>>  Sandia National Laboratories
+>>>  MS 0822 - Building 880/A1-J
+>>>  (505)844-2238 FAX(505)845-0833
+>>>       ____                  _    __
+>>>      / __ \____  _________ | |  / (_)__ _      __
+>>>     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>>>    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>>>   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+>>>
+>>>                                    Unleash the Beast
+>>>
+>>>
+>>>
+>>>
+>>>>-----Original Message-----
+>>>>From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+>>>>[mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On
+>>>>Behalf Of Dominik Szczerba
+>>>>Sent: Tuesday, December 06, 2005 9:26 AM
+>>>>To: paraview@paraview.org
+>>>>Subject: [Paraview] polygon offset
+>>>>
+>>>>Hello,
+>>>>Does Paraview support OpenGL polygon offset extension? If I
+>>>>try to visualize e.g. a tet mesh with edges (extract edges,
+>>>>shrink tets) the result looks very bad. Does VTK offer it at
+>>>>all? Is it at all possible using the VTK's filter philosophy?
+>>>>regards,
+>>>>Dominik
+>>>>--
+>>>>Dominik Szczerba, Dr.
+>>>>ETZ C110 CO-ME/BIWI CH-8092 Zurich
+>>>>http://www.vision.ee.ethz.ch/~domi
+>>>>_______________________________________________
+>>>>ParaView mailing list
+>>>>ParaView@paraview.org
+>>>>http://www.paraview.org/mailman/listinfo/paraview
+>>>>
+>>>
+>>>
+>>--
+>>Dominik Szczerba, Dr.
+>>Computer Vision Lab CH-8092 Zurich
+>>http://www.vision.ee.ethz.ch/~domi
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+> 
+>>
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From berk.geveci at gmail.com  Tue Dec  6 14:50:24 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Dec  6 14:50:26 2005
+Subject: [Paraview] polygon offset
+In-Reply-To: <4395E814.1080809@vision.ee.ethz.ch>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889276@ES20SNLNT.srn.sandia.gov>
+	<4395E0DD.20803@vision.ee.ethz.ch>
+	<a2ab21560512061118s2070353egdfa80d5c64bf008c@mail.gmail.com>
+	<4395E814.1080809@vision.ee.ethz.ch>
+Message-ID: <a2ab21560512061150u7dcd5933u9ca139cb86cffe91@mail.gmail.com>
+
+Not really. It's more a GUI issue.
+
+On 12/6/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+>
+> Oh yes indeed, I am talking about the first solution. Now is there a
+> particular reason this swich is not available in paraview?
+> Dominik
+>
+> Berk Geveci wrote:
+> > Is this what you are asking?
+> >
+> > vtkMapper.h
+> >
+> >   // Description:
+> >   // Set/Get a global flag that controls whether coincident topology (
+> e.g.,
+> > a
+> >   // line on top of a polygon) is shifted to avoid z-buffer resolution
+> (and
+> >   // hence rendering problems). If not off, there are two methods to
+> choose
+> >   // from. PolygonOffset uses graphics systems calls to shift polygons,
+> but
+> >   // does not distinguish vertices and lines from one another.
+> ShiftZBuffer
+> >   // remaps the z-buffer to distinguish vertices, lines, and polygons,
+> but
+> >   // does not always produce acceptable results. If you use the
+> ShiftZBuffer
+> >   // approach, you may also want to set the
+> ResolveCoincidentTopologyZShift
+> >   // value. (Note: not all mappers/graphics systems implement this
+> >   // functionality.)
+> >   static void SetResolveCoincidentTopology(int val);
+> >   static int  GetResolveCoincidentTopology();
+> >   static void SetResolveCoincidentTopologyToDefault();
+> >   static void SetResolveCoincidentTopologyToOff()
+> >     {SetResolveCoincidentTopology(VTK_RESOLVE_OFF);}
+> >   static void SetResolveCoincidentTopologyToPolygonOffset()
+> >     {SetResolveCoincidentTopology(VTK_RESOLVE_POLYGON_OFFSET);}
+> >   static void SetResolveCoincidentTopologyToShiftZBuffer()
+> >     {SetResolveCoincidentTopology(VTK_RESOLVE_SHIFT_ZBUFFER);}
+> >
+> >
+> > On 12/6/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+> >
+> >>Thanks a lot, yes, still however it is far from what I used to get with
+> >>my own small codes, but that might be an issue for VTK mailing list
+> >>instead. Still, it looks a bit like a dead-end to me (where to put it?).
+> >>bye
+> >>Dominik
+> >>
+> >>Wylie, Brian wrote:
+> >>
+> >>>Okay I know this is a not a 'solution' but for a quick fix set the line
+> >>>width to '2' instead of '1'. It will look much better. :)
+> >>>
+> >>>  Brian Wylie - Org 9227
+> >>>  Sandia National Laboratories
+> >>>  MS 0822 - Building 880/A1-J
+> >>>  (505)844-2238 FAX(505)845-0833
+> >>>       ____                  _    __
+> >>>      / __ \____  _________ | |  / (_)__ _      __
+> >>>     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+> >>>    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+> >>>   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> >>>
+> >>>                                    Unleash the Beast
+> >>>
+> >>>
+> >>>
+> >>>
+> >>>>-----Original Message-----
+> >>>>From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> >>>>[mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On
+> >>>>Behalf Of Dominik Szczerba
+> >>>>Sent: Tuesday, December 06, 2005 9:26 AM
+> >>>>To: paraview@paraview.org
+> >>>>Subject: [Paraview] polygon offset
+> >>>>
+> >>>>Hello,
+> >>>>Does Paraview support OpenGL polygon offset extension? If I
+> >>>>try to visualize e.g. a tet mesh with edges (extract edges,
+> >>>>shrink tets) the result looks very bad. Does VTK offer it at
+> >>>>all? Is it at all possible using the VTK's filter philosophy?
+> >>>>regards,
+> >>>>Dominik
+> >>>>--
+> >>>>Dominik Szczerba, Dr.
+> >>>>ETZ C110 CO-ME/BIWI CH-8092 Zurich
+> >>>>http://www.vision.ee.ethz.ch/~domi
+> >>>>_______________________________________________
+> >>>>ParaView mailing list
+> >>>>ParaView@paraview.org
+> >>>>http://www.paraview.org/mailman/listinfo/paraview
+> >>>>
+> >>>
+> >>>
+> >>--
+> >>Dominik Szczerba, Dr.
+> >>Computer Vision Lab CH-8092 Zurich
+> >>http://www.vision.ee.ethz.ch/~domi
+> >>_______________________________________________
+> >>ParaView mailing list
+> >>ParaView@paraview.org
+> >>http://www.paraview.org/mailman/listinfo/paraview
+> >
+> >>
+> >
+>
+> --
+> Dominik Szczerba, Dr.
+> Computer Vision Lab CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051206/79513067/attachment.html
+From Yeraze.11960501 at bloglines.com  Tue Dec  6 15:19:48 2005
+From: Yeraze.11960501 at bloglines.com (Yeraze.11960501@bloglines.com)
+Date: Tue Dec  6 15:19:52 2005
+Subject: [Paraview] UI Shortcut glitch
+Message-ID: <1133900388.3721215817.3303.sendItem@bloglines.com>
+
+Just a FYI, but is it a common problem across platforms that "Alt-F, E" is
+bound to both "Save Session Trace" & "Open Recent File" ?  It effectively
+masks any keyboard shortcut for Open Recent file.
+From jfavre at cscs.ch  Wed Dec  7 04:06:25 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Wed Dec  7 04:05:51 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <43958407.2010409@vision.ee.ethz.ch>
+References: <43958407.2010409@vision.ee.ethz.ch>
+Message-ID: <4396A611.4010909@cscs.ch>
+
+Dominik Szczerba wrote:
+> Hello,
+> I would like to have a clip filter that optionally doesnt cut through
+> the elements but rather remove/preserve (whole) elements. Is there a way
+> to do it in the current version?
+> regards,
+> Dominik
+
+I will paraphrase my friend Berk: "it is just a GUI issue"
+
+VTK already implements what you want in the vtkExtractGeometry. You only
+have to make ParaView aware of it with the following XML. Just use
+Import Package to load the XML file.
+
+Once imported, you have a new Filter called "Extract Geometry". Check
+the two buttons "Extract Boundary Cells" and "Extract Only Boundary
+Cells" and you will have the plane, sphere and box clipping showing
+whole cells.
+
+I include the (xml and pvsm files) to import. Tested under Windows and
+Linux for ParaView 2.4 and 2.5.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+-------------- next part --------------
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+   <SourceProxy name="ExtractGeometry" class="vtkExtractGeometry">
+    <InputProperty
+       name="Input"
+       command="SetInput">
+          <ProxyGroupDomain name="groups">
+            <Group name="sources"/>
+            <Group name="filters"/>
+          </ProxyGroupDomain>
+          <DataTypeDomain name="input_type">
+            <DataType value="vtkDataSet"/>
+          </DataTypeDomain>
+          <InputArrayDomain name="input_array" attribute_type="point"
+                            optional="1"/>
+     </InputProperty>
+
+     <ProxyProperty name="ImplicitFunction" command="SetImplicitFunction">
+           <ProxyGroupDomain name="groups">
+               <Group name="implicit_functions"/>
+           </ProxyGroupDomain>
+     </ProxyProperty>
+
+     <DoubleVectorProperty
+        name="InputBounds"  information_only="1">
+       <BoundsDomain name="bounds">
+         <RequiredProperties>
+            <Property name="Input" function="Input"/>
+         </RequiredProperties>
+       </BoundsDomain>
+     </DoubleVectorProperty>
+
+     <IntVectorProperty 
+        name="ExtractInside" 
+        command="SetExtractInside" 
+        number_of_elements="1"
+        default_values="0" > 
+       <BooleanDomain name="bool"/>
+     </IntVectorProperty>
+
+     <IntVectorProperty 
+        name="ExtractBoundaryCells" 
+        command="SetExtractBoundaryCells" 
+        number_of_elements="1"
+        default_values="0" > 
+       <BooleanDomain name="bool"/>
+     </IntVectorProperty>
+
+     <IntVectorProperty 
+        name="ExtractOnlyBoundaryCells" 
+        command="SetExtractOnlyBoundaryCells" 
+        number_of_elements="1"
+        default_values="0" > 
+       <BooleanDomain name="bool"/>
+     </IntVectorProperty>
+   <!-- End ExtractGeometry -->
+   </SourceProxy>
+ </ProxyGroup>
+
+</ServerManagerConfiguration>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PVCSCS.xml
+Type: text/xml
+Size: 2901 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051207/c75099b9/PVCSCS.bin
+From domi at vision.ee.ethz.ch  Wed Dec  7 06:07:37 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Wed Dec  7 06:07:42 2005
+Subject: [Paraview] clip filter not cutting through elements
+In-Reply-To: <4396A611.4010909@cscs.ch>
+References: <43958407.2010409@vision.ee.ethz.ch> <4396A611.4010909@cscs.ch>
+Message-ID: <4396C279.5020108@vision.ee.ethz.ch>
+
+Wow :)
+Thank you for this excelent example on how to extend paraview.
+regards,
+Dominik
+
+Jean M. Favre wrote:
+> Dominik Szczerba wrote:
+> 
+>>Hello,
+>>I would like to have a clip filter that optionally doesnt cut through
+>>the elements but rather remove/preserve (whole) elements. Is there a way
+>>to do it in the current version?
+>>regards,
+>>Dominik
+> 
+> 
+> I will paraphrase my friend Berk: "it is just a GUI issue"
+> 
+> VTK already implements what you want in the vtkExtractGeometry. You only
+> have to make ParaView aware of it with the following XML. Just use
+> Import Package to load the XML file.
+> 
+> Once imported, you have a new Filter called "Extract Geometry". Check
+> the two buttons "Extract Boundary Cells" and "Extract Only Boundary
+> Cells" and you will have the plane, sphere and box clipping showing
+> whole cells.
+> 
+> I include the (xml and pvsm files) to import. Tested under Windows and
+> Linux for ParaView 2.4 and 2.5.
+> 
+
+-- 
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From eschenbe at psc.edu  Wed Dec  7 16:40:12 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Dec  7 16:40:14 2005
+Subject: [Paraview] How to Debug ParaView
+Message-ID: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+
+ParaView is crashing after the logo window has been displayed but before 
+the main window is displayed. The logo window cannot be moved or hidden so 
+its difficult to see the terminal window. Is there anyway to move this 
+window?
+
+The gdb command "generate-core-file" was used to dump things to a file but 
+it cannot be used - upon loading, the following error is shown:
+
+warning: svr4_current_sos: Can't read pathname for load map: Input/output 
+error
+
+Is there a way to dump ParaView that works?
+
+Is there a way to turn on VTK debug messages? I set the type of generation 
+to "DEBUG" in CMake but this doesn't turn on VTK debuging.
+
+ParaView 2.4.1
+Redhat Fedora Core 4
+gcc Red Hat 4.0.1-5
+gdb 6.3.0.0-1.21rh
+
+Thanks!
+Kent
+Pittsburgh Supercomputing Center
+
+From berk.geveci at gmail.com  Wed Dec  7 16:53:37 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Dec  7 16:53:38 2005
+Subject: [Paraview] How to Debug ParaView
+In-Reply-To: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+Message-ID: <a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+
+Is this compiled with MPI? Which version?
+
+You can disable the splash screen by editing (or creating) .ParaViewrc in
+your directory and adding/changing this line:
+
+ParaView2.5\RunTime\ShowSplashScreen = 0
+
+-Berk
+
+On 12/7/05, Kent Eschenberg <eschenbe@psc.edu> wrote:
+>
+> ParaView is crashing after the logo window has been displayed but before
+> the main window is displayed. The logo window cannot be moved or hidden so
+> its difficult to see the terminal window. Is there anyway to move this
+> window?
+>
+> The gdb command "generate-core-file" was used to dump things to a file but
+> it cannot be used - upon loading, the following error is shown:
+>
+> warning: svr4_current_sos: Can't read pathname for load map: Input/output
+> error
+>
+> Is there a way to dump ParaView that works?
+>
+> Is there a way to turn on VTK debug messages? I set the type of generation
+> to "DEBUG" in CMake but this doesn't turn on VTK debuging.
+>
+> ParaView 2.4.1
+> Redhat Fedora Core 4
+> gcc Red Hat 4.0.1-5
+> gdb 6.3.0.0-1.21rh
+>
+> Thanks!
+> Kent
+> Pittsburgh Supercomputing Center
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051207/f453af9e/attachment.html
+From utkarsh.ayachit at kitware.com  Wed Dec  7 16:54:41 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Wed Dec  7 16:56:03 2005
+Subject: [Paraview] How to Debug ParaView
+In-Reply-To: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+Message-ID: <43975A21.9020307@kitware.com>
+
+This is answer to only a part of your problem.
+
+One way to disable the "splash" screen is edit your
+${HOME}/ParaViewrc file and changed the "ShowSplashScreen" option to 0.
+Since the option is saved separately for each version of paraview, you
+might want to just turn of all occurences of ShowSplashScreen.
+
+That way, atleast you'll be able to see the terminal window.
+
+Utkarsh.
+
+
+Kent Eschenberg wrote:
+> ParaView is crashing after the logo window has been displayed but before
+> the main window is displayed. The logo window cannot be moved or hidden
+> so its difficult to see the terminal window. Is there anyway to move
+> this window?
+> 
+> The gdb command "generate-core-file" was used to dump things to a file
+> but it cannot be used - upon loading, the following error is shown:
+> 
+> warning: svr4_current_sos: Can't read pathname for load map:
+> Input/output error
+> 
+> Is there a way to dump ParaView that works?
+> 
+> Is there a way to turn on VTK debug messages? I set the type of
+> generation to "DEBUG" in CMake but this doesn't turn on VTK debuging.
+> 
+> ParaView 2.4.1
+> Redhat Fedora Core 4
+> gcc Red Hat 4.0.1-5
+> gdb 6.3.0.0-1.21rh
+> 
+> Thanks!
+> Kent
+> Pittsburgh Supercomputing Center
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From eschenbe at psc.edu  Wed Dec  7 17:06:52 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Dec  7 17:06:57 2005
+Subject: [Paraview] How to Debug ParaView
+In-Reply-To: <a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+	<a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+Message-ID: <5F608A4CA5690FBD54587D1B@harpo.psc.edu>
+
+--On Wednesday, December 07, 2005 04:53:37 PM -0500 Berk Geveci 
+<berk.geveci@gmail.com> wrote:
+> Is this compiled with MPI? Which version?
+
+No MPI. Let me know if you were asking about the version of something else.
+
+> You can disable the splash screen by editing (or creating) .ParaViewrc in
+> your directory and adding/changing this line:
+>
+> ParaView2.5\RunTime\ShowSplashScreen = 0
+
+Perfect!
+
+This post was just about debugging. The real problem was described in 
+"Problems Including Custom Class At Compile In 2.4.1" of 11/8 and 12/1.
+
+Thanks, Bert and Utkarsh.
+Kent
+Pittsburgh Supercomputing Center
+From thorsten.steinmetz at hsu-hamburg.de  Thu Dec  8 04:17:57 2005
+From: thorsten.steinmetz at hsu-hamburg.de (Thorsten Steinmetz)
+Date: Thu Dec  8 04:18:32 2005
+Subject: [Paraview] vector field visualization
+Message-ID: <FLEDJMILPBJHJMINJMLBKEJLCDAA.thorsten.steinmetz@hsu-hamburg.de>
+
+Hello,
+I have a general question concerning the visualization of vector fields in
+paraview. Is it possible to generate 2D or 3D visualizations of fields of
+1-vectors (e.g. discrete differential one-forms, like a force or an electric
+or magnetic field) by defining the integral value of the 1-vector along an
+edge of the mesh (like the work which is done by a force acting along an
+edge or like edge voltages of electric or magnetic fields)? Accordingly, is
+this possible for 2-vector fields, too? Thanks a lot in advance for any
+answer!
+
+Yours,
+Thorsten Steinmetz
+
+-------------------------------------------------------------------
+Dipl.-Ing. Thorsten Steinmetz
+Helmut-Schmidt-University
+University of the Federal Armed Forces Hamburg
+School of Electrical Engineering
+Theory of Electrical Engineering and Computational Electromagnetics
+Holstenhofweg 85
+D-22043 Hamburg
+Tel.: +49 (0)40 / 6541-2149
+Fax : +49 (0)40 / 6541-3764
+eMail: thorsten.steinmetz@hsu-hamburg.de
+
+From jfavre at cscs.ch  Thu Dec  8 09:27:48 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Dec  8 09:27:04 2005
+Subject: [Paraview] KWRange slider SetGroupRangeCallback
+In-Reply-To: <5F608A4CA5690FBD54587D1B@harpo.psc.edu>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>	<a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+	<5F608A4CA5690FBD54587D1B@harpo.psc.edu>
+Message-ID: <439842E4.5060801@cscs.ch>
+
+Hello
+
+I have an application (similar to the KWWidgets example) running well
+with the ParaView 2.4.1.
+
+Ijust tried to compile it with ParaView CVS. The compilation goes well.
+On execution, grabbing the slider and moving it gives me the following
+error:
+
+ERROR: In /local/apps/ParaView/GUI/Widgets/vtkKWTkUtilities.cxx, line 217
+vtkKWApplication (0x8107258):
+    Script:
+vtkTemp42 SetGroupRangeCallback 2 3
+    Returned Error on line 1:
+Object named: vtkTemp42, could not find requested method:
+SetGroupRangeCallback
+or the method was called with incorrect arguments.
+
+Using the command prompt, demonstrates in fact that there should be no
+argument and that the application behaves as it does (as with ParaView
+2.4.1)
+
+"vtkTemp42 SetGroupRangeCallback" without argument is correct and
+invokes the callback.
+
+My code defines the following:
+
+this->range->SetEndCommand(this, "SetGroupRangeCallback");
+
+void Example::SetGroupRangeCallback()
+{
+  double range[2];
+  this->range->GetRange(range);
+}
+
+I am aware that a lot has changed in the last few days with the
+KWWidgets. Is this a new problem?
+
+Thanks for any help
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+From sebastien.barre at kitware.com  Thu Dec  8 09:44:16 2005
+From: sebastien.barre at kitware.com (Sebastien BARRE)
+Date: Thu Dec  8 09:44:27 2005
+Subject: [Paraview] KWRange slider SetGroupRangeCallback
+In-Reply-To: <439842E4.5060801@cscs.ch>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+	<a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+	<5F608A4CA5690FBD54587D1B@harpo.psc.edu> <439842E4.5060801@cscs.ch>
+Message-ID: <6.2.5.6.2.20051208094132.042b33e8@kitware.com>
+
+Hello Jean,
+
+At 12/8/2005 09:27 AM, Jean M. Favre wrote:
+
+
+>this->range->SetEndCommand(this, "SetGroupRangeCallback");
+>
+>void Example::SetGroupRangeCallback()
+>{
+>   double range[2];
+>   this->range->GetRange(range);
+>}
+>
+>I am aware that a lot has changed in the last few days with the
+>KWWidgets. Is this a new problem?
+
+Yes, definitely:
+
+   // The 'object' argument is the object that will have the method called on
+   // it. The 'method' argument is the name of the method to be called and any
+   // arguments in string form. If the object is NULL, the method is still
+   // evaluated as a simple command.
+   // The following parameters are also passed to the command:
+   // - the current (sub-)range: double, double
+   virtual void SetCommand(vtkObject *object, const char *method);
+   virtual void SetStartCommand(vtkObject *object, const char *method);
+   virtual void SetEndCommand(vtkObject *object, const char *method);
+   virtual void SetEntriesCommand(vtkObject *object, const char *method);
+
+The vtkKWRange widget, as well as a couple other core widgets like 
+vtkKWScale, vtkKWCheckButton, etc. now pass their current value to 
+the callbacks. This makes it much easier to connect/chain them to 
+other parts, reduce some dependencies (the receiving callback does 
+not have to know about the UI element itself, or access it), and is 
+more consistent with some other UI toolkits.
+
+Sorry for the inconvenience. We are setting up a mailing list for 
+KWWidgets where I will hopefully be able to announce that kind of changes.
+
+Thanks
+
+--
+Sebastien Barre
+
+From jfavre at cscs.ch  Thu Dec  8 09:59:55 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Dec  8 09:59:09 2005
+Subject: [Paraview] KWRange slider SetGroupRangeCallback
+In-Reply-To: <6.2.5.6.2.20051208094132.042b33e8@kitware.com>
+References: <1A4815BD12A4E46BAAA2C80C@harpo.psc.edu>
+	<a2ab21560512071353u2281e40fge198870d89ffb8af@mail.gmail.com>
+	<5F608A4CA5690FBD54587D1B@harpo.psc.edu> <439842E4.5060801@cscs.ch>
+	<6.2.5.6.2.20051208094132.042b33e8@kitware.com>
+Message-ID: <43984A6B.20101@cscs.ch>
+
+Sebastien BARRE wrote:
+
+> The vtkKWRange widget, as well as a couple other core widgets like
+> vtkKWScale, vtkKWCheckButton, etc. now pass their current value to the
+> callbacks. This makes it much easier to connect/chain them to other
+> parts, reduce some dependencies (the receiving callback does not have to
+> know about the UI element itself, or access it), and is more consistent
+> with some other UI toolkits.
+> 
+
+Thanks. Your advice was great. It now works properly and I agree
+entirely with the comments you made about chaining them, dependency, etc...
+
+KWWidgets, what a great piece of code.
+
+:-)
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+From stevec at sci.utah.edu  Thu Dec  8 13:20:11 2005
+From: stevec at sci.utah.edu (Steven Callahan)
+Date: Thu Dec  8 13:18:12 2005
+Subject: [Paraview] Integrating new volume renderer into VTK/Paraview
+Message-ID: <4398795B.8040400@sci.utah.edu>
+
+We are working on integrating the Hardware-Assisted Visibility Sorting 
+(HAVS) volume renderer into VTK and ParaView.  We have a prototype 
+version that performs at about twice the speed of  Projected Tetrahedra 
+with about the same image quality as ZSweep, incorporated into 
+ParaView.  (ZSweep has much better image quality than PT.)
+
+We would like to know what steps we need to take to get this added to 
+VTK and ParaView.
+
+Our implementation is a new volume mapper 
+vtkHAVSUnstructuredGridVolumeMapper that can be used in place of any of 
+the other unstructured grid volume mappers.  The actual code consists of 
+the mapper class along with several shader files which are written in 
+ARB assembly and work with ATI and NVidia video cards.  The code also 
+supports a new high quality, dynamic Level-of-Detail approach by passing 
+in a desired frame rate...
+
+For integration with VTK, we see the following issue: Our code requires 
+the most recent OpenGL extension header files.  VTK currently uses 
+headers that are slightly out of date.  The newest headers are always 
+available at the SGI website 
+(http://oss.sgi.com/projects/ogl-sample/registry/).
+
+We have integrated our code into ParaView.   For screenshots comparing 
+PT with HAVS, see http://www.sci.utah.edu/~stevec/images.
+
+For complete integration with ParaView, we see the following issues:
+1.  We do not understand ParaView's LOD selection.  Thus, we have not 
+incorporated our LOD technique inside ParaView.  We would appreciate 
+getting help from someone that knows the details of how this works.
+2.  Although our code works on both ATI and NVidia, ParaView does not 
+seem to use hardware-acceleration on machines with ATI cards.  Even with 
+the precompiled Windows binaries from the web, the PT algorithm is 
+extremely slow, indicating that hardware rendering is not being used.  
+Is this an intrinsic limitation of ParaView?
+
+Any help or advice on getting this code into VTK and ParaView would be 
+helpful.  Thanks
+
+Steve Callahan and Claudio Silva
+
+PS. We also have an efficient software volume renderer based on the same 
+algorithm that we would like to incorporate in the near future.
+
+
+From lisa.avila at kitware.com  Thu Dec  8 13:25:38 2005
+From: lisa.avila at kitware.com (Lisa Avila)
+Date: Thu Dec  8 13:25:47 2005
+Subject: [Paraview] Re: [vtk-developers] Integrating new volume renderer into
+ VTK/Paraview
+In-Reply-To: <4398795B.8040400@sci.utah.edu>
+References: <4398795B.8040400@sci.utah.edu>
+Message-ID: <6.2.0.14.2.20051208132205.061a8298@pop.biz.rr.com>
+
+
+Hi Steve,
+
+Can you send me the code? (either point me to an ftp location or I can give 
+you instructions for uploading files here) We'll look it over here, see 
+what we may need to do on the OpenGL header issues (are you using the 
+vtkOpenGLExtensionManager to manage the use of your extensions and get the 
+function pointers?) It shouldn't be too hard to get this into VTK.
+
+For ParaView, we are currently using a 2 level LOD method with Projected 
+Tetras being the "fast" one always, and either no second level, or ZSweep 
+or the ray caster for final rendering. This would probably be different in 
+that we would replace PT whenever possible with this new method (as long as 
+the required extensions were available). We can worry about this once the 
+class is integrated into VTK.
+
+Thanks,
+
+Lisa
+
+
+
+At 01:20 PM 12/8/2005, Steven Callahan wrote:
+>We are working on integrating the Hardware-Assisted Visibility Sorting 
+>(HAVS) volume renderer into VTK and ParaView.  We have a prototype version 
+>that performs at about twice the speed of  Projected Tetrahedra with about 
+>the same image quality as ZSweep, incorporated into ParaView.  (ZSweep has 
+>much better image quality than PT.)
+>
+>We would like to know what steps we need to take to get this added to VTK 
+>and ParaView.
+>
+>Our implementation is a new volume mapper 
+>vtkHAVSUnstructuredGridVolumeMapper that can be used in place of any of 
+>the other unstructured grid volume mappers.  The actual code consists of 
+>the mapper class along with several shader files which are written in ARB 
+>assembly and work with ATI and NVidia video cards.  The code also supports 
+>a new high quality, dynamic Level-of-Detail approach by passing in a 
+>desired frame rate...
+>
+>For integration with VTK, we see the following issue: Our code requires 
+>the most recent OpenGL extension header files.  VTK currently uses headers 
+>that are slightly out of date.  The newest headers are always available at 
+>the SGI website (http://oss.sgi.com/projects/ogl-sample/registry/).
+>
+>We have integrated our code into ParaView.   For screenshots comparing PT 
+>with HAVS, see http://www.sci.utah.edu/~stevec/images.
+>
+>For complete integration with ParaView, we see the following issues:
+>1.  We do not understand ParaView's LOD selection.  Thus, we have not 
+>incorporated our LOD technique inside ParaView.  We would appreciate 
+>getting help from someone that knows the details of how this works.
+>2.  Although our code works on both ATI and NVidia, ParaView does not seem 
+>to use hardware-acceleration on machines with ATI cards.  Even with the 
+>precompiled Windows binaries from the web, the PT algorithm is extremely 
+>slow, indicating that hardware rendering is not being used.
+>Is this an intrinsic limitation of ParaView?
+>
+>Any help or advice on getting this code into VTK and ParaView would be 
+>helpful.  Thanks
+>
+>Steve Callahan and Claudio Silva
+>
+>PS. We also have an efficient software volume renderer based on the same 
+>algorithm that we would like to incorporate in the near future.
+>
+>
+>_______________________________________________
+>vtk-developers mailing list
+>vtk-developers@vtk.org
+>http://www.vtk.org/mailman/listinfo/vtk-developers
+
+
+From francois.bertel at kitware.com  Thu Dec  8 13:36:25 2005
+From: francois.bertel at kitware.com (Francois Bertel)
+Date: Thu Dec  8 13:36:27 2005
+Subject: [Paraview] Integrating new volume renderer into VTK/Paraview
+In-Reply-To: <4398795B.8040400@sci.utah.edu>
+References: <4398795B.8040400@sci.utah.edu>
+Message-ID: <43987D29.7040506@kitware.com>
+
+Hi Steven,
+
+Steven Callahan wrote:
+> VTK currently uses headers that are slightly out of date.
+
+VTK uses the OpenGL extension header files installed on your machine and generate an header file with a vtkgl namespace
+thanks to vtkOpenGLExtensionManager. At the end, you can use the extensions through the vtkgl namespace. For instance,
+vtkgl::GetUniformLocation().
+
+more info here:
+http://www.vtk.org/Wiki/VTK_Shaders
+
+-- 
+Fran?ois Bertel, PhD  | Kitware Inc. Suite 204
+1 (518) 371 3971 x113 | 28 Corporate Drive
+                      | Clifton Park NY 12065, USA
+From kmorel at sandia.gov  Thu Dec  8 13:38:00 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Thu Dec  8 13:38:22 2005
+Subject: [Paraview] RE: [vtk-developers] Integrating new volume renderer into
+ VTK/Paraview
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB32301CDF901@ES21SNLNT.srn.sandia.gov>
+
+> For integration with VTK, we see the following issue: Our 
+> code requires the most recent OpenGL extension header files.  
+> VTK currently uses headers that are slightly out of date.  
+> The newest headers are always available at the SGI website 
+> (http://oss.sgi.com/projects/ogl-sample/registry/).
+
+I'll take the action item to do this.
+
+> For complete integration with ParaView, we see the following issues:
+> 1.  We do not understand ParaView's LOD selection.  Thus, we 
+> have not incorporated our LOD technique inside ParaView.  We 
+> would appreciate getting help from someone that knows the 
+> details of how this works.
+
+ParaView defines 2 levels of detail.  The low level of detail renders
+fast for mouse interaction.  The high level of detail renders a full
+resolution.
+
+In the current implementation, a surface rendering is performed for low
+levels of detail and a volume rendering (either PT or ZSweep depending
+on user selection) is performed for high levels of detail.  Since HAVS
+has built in LOD, we can change the behavior to use that mapper for both
+levels of detail while toggling a parameter in the mapper.
+
+> 2.  Although our code works on both ATI and NVidia, ParaView 
+> does not seem to use hardware-acceleration on machines with 
+> ATI cards.  Even with the precompiled Windows binaries from 
+> the web, the PT algorithm is extremely slow, indicating that 
+> hardware rendering is not being used.  
+> Is this an intrinsic limitation of ParaView?
+
+No.  The PT mapper uses nothing that is not part of the OpenGL 1.1
+standard.  The source for the PT mapper is in
+ParaView/VTK/VolumeRendering/vtkProjectedTetrahedraMapper.cxx.  If you
+have a chance, try commenting out pieces of code until the PT algorithm
+performs as you expect.  Maybe the code is somehow touching some feature
+not supported by the card and forcing it into software mode.
+
+-Ken
+
+From stevec at sci.utah.edu  Thu Dec  8 13:45:11 2005
+From: stevec at sci.utah.edu (Steven Callahan)
+Date: Thu Dec  8 13:43:10 2005
+Subject: [Paraview] Re: [vtk-developers] Integrating new volume renderer
+	into VTK/Paraview
+In-Reply-To: <6.2.0.14.2.20051208132205.061a8298@pop.biz.rr.com>
+References: <4398795B.8040400@sci.utah.edu>
+	<6.2.0.14.2.20051208132205.061a8298@pop.biz.rr.com>
+Message-ID: <43987F37.8030806@sci.utah.edu>
+
+Lisa Avila wrote:
+
+>
+> Hi Steve,
+>
+> Can you send me the code? (either point me to an ftp location or I can 
+> give you instructions for uploading files here) We'll look it over 
+> here, see what we may need to do on the OpenGL header issues (are you 
+> using the vtkOpenGLExtensionManager to manage the use of your 
+> extensions and get the function pointers?) It shouldn't be too hard to 
+> get this into VTK.
+>
+Yes, I am using the vtkOpenGLExtensionManager.  More specifically, my 
+code works if you update VTK/Utilities/ParseOGLExt/header/*.h with the 
+latest from the SGI website.  Thus, incorporating my code would also 
+require that the three OpenGL headers in this directory are up to date.
+
+> For ParaView, we are currently using a 2 level LOD method with 
+> Projected Tetras being the "fast" one always, and either no second 
+> level, or ZSweep or the ray caster for final rendering. This would 
+> probably be different in that we would replace PT whenever possible 
+> with this new method (as long as the required extensions were 
+> available). We can worry about this once the class is integrated into 
+> VTK.
+>
+I understand that PT is being used during interaction.  What I am really 
+interested in is rendering datasets larger than a million tetrahedra.  
+In this case, the LOD seems to go into a boundary only rendering.  
+Instead, I would like to use my volume rendering class with the LOD 
+turned on, which basically samples the geometry inside and provides a 
+better LOD than what is currently being used (see "Interactive Rendering 
+of Large Unstructured Grids Using Dynamic Level-of-Detail.", Vis 2005).
+
+Thanks.
+
+Steve
+
+
+
+> Thanks,
+>
+> Lisa
+>
+>
+>
+> At 01:20 PM 12/8/2005, Steven Callahan wrote:
+>
+>> We are working on integrating the Hardware-Assisted Visibility 
+>> Sorting (HAVS) volume renderer into VTK and ParaView.  We have a 
+>> prototype version that performs at about twice the speed of  
+>> Projected Tetrahedra with about the same image quality as ZSweep, 
+>> incorporated into ParaView.  (ZSweep has much better image quality 
+>> than PT.)
+>>
+>> We would like to know what steps we need to take to get this added to 
+>> VTK and ParaView.
+>>
+>> Our implementation is a new volume mapper 
+>> vtkHAVSUnstructuredGridVolumeMapper that can be used in place of any 
+>> of the other unstructured grid volume mappers.  The actual code 
+>> consists of the mapper class along with several shader files which 
+>> are written in ARB assembly and work with ATI and NVidia video 
+>> cards.  The code also supports a new high quality, dynamic 
+>> Level-of-Detail approach by passing in a desired frame rate...
+>>
+>> For integration with VTK, we see the following issue: Our code 
+>> requires the most recent OpenGL extension header files.  VTK 
+>> currently uses headers that are slightly out of date.  The newest 
+>> headers are always available at the SGI website 
+>> (http://oss.sgi.com/projects/ogl-sample/registry/).
+>>
+>> We have integrated our code into ParaView.   For screenshots 
+>> comparing PT with HAVS, see http://www.sci.utah.edu/~stevec/images.
+>>
+>> For complete integration with ParaView, we see the following issues:
+>> 1.  We do not understand ParaView's LOD selection.  Thus, we have not 
+>> incorporated our LOD technique inside ParaView.  We would appreciate 
+>> getting help from someone that knows the details of how this works.
+>> 2.  Although our code works on both ATI and NVidia, ParaView does not 
+>> seem to use hardware-acceleration on machines with ATI cards.  Even 
+>> with the precompiled Windows binaries from the web, the PT algorithm 
+>> is extremely slow, indicating that hardware rendering is not being used.
+>> Is this an intrinsic limitation of ParaView?
+>>
+>> Any help or advice on getting this code into VTK and ParaView would 
+>> be helpful.  Thanks
+>>
+>> Steve Callahan and Claudio Silva
+>>
+>> PS. We also have an efficient software volume renderer based on the 
+>> same algorithm that we would like to incorporate in the near future.
+>>
+>>
+>> _______________________________________________
+>> vtk-developers mailing list
+>> vtk-developers@vtk.org
+>> http://www.vtk.org/mailman/listinfo/vtk-developers
+>
+>
+>
+
+From jvines at arl.army.mil  Thu Dec  8 16:04:12 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Thu Dec  8 16:04:17 2005
+Subject: [Paraview] Client/server on SGI
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E20AD535@ARLABML01.DS.ARL.ARMY.MIL>
+
+All,
+	I have recently compiled the CVS version of Paraview and need to
+run in client server mode on an SGI.  I'm getting lost in the command
+line configuration, ".pvx" files etc.
+	The SGI has 16 processors so I want to start the server up using
+10 processors - "mpirun -np 10 pvserver".  I'm not sure how to start the
+client running on the same machine, what command line arguments do I
+need?
+
+Thanks in advance for any help,
+
+John Vines
+Army Research Laboratory
+Computational Sciences and Engineering Branch
+Scientific Visualization Team
+410-278-9150/1643
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051208/d6760af3/attachment.html
+From amy.squillacote at kitware.com  Thu Dec  8 16:15:03 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Dec  8 16:15:30 2005
+Subject: [Paraview] Client/server on SGI
+In-Reply-To: <D9A8D98DDC682044806D5B46AF5C11E20AD535@ARLABML01.DS.ARL.AR
+	MY.MIL>
+References: <D9A8D98DDC682044806D5B46AF5C11E20AD535@ARLABML01.DS.ARL.ARMY.MIL>
+Message-ID: <6.2.5.6.2.20051208160955.05340f10@kitware.com>
+
+Hi John,
+
+You are only required to use the .pvx file if you are running 
+ParaView in a CAVE or if you are running in client / data server / 
+render server mode.  To start the client on the same machine as your 
+pvserver, just open a new shell, and run the pvclient executable.  If 
+it's all on the same machine, you shouldn't even need to specify the 
+server host to the client.  So, you should do the following.
+
+mpirun -np 10 pvserver
+pvclient
+
+Are there specific command-line options you're trying to use?  Do you 
+have other specific questions about starting ParaView?
+
+- Amy
+
+At 04:04 PM 12/8/2005, Vines, John  (Civ, ARL/CISD) wrote:
+>content-class: urn:content-classes:message
+>Content-Type: multipart/alternative;
+>         boundary="----_=_NextPart_001_01C5FC3A.F07DACC3"
+>
+>All,
+>         I have recently compiled the CVS version of Paraview and 
+> need to run in client server mode on an SGI.  I'm getting lost in 
+> the command line configuration, ".pvx" files etc.
+>
+>         The SGI has 16 processors so I want to start the server up 
+> using 10 processors - "mpirun -np 10 pvserver".  I'm not sure how 
+> to start the client running on the same machine, what command line 
+> arguments do I need?
+>
+>Thanks in advance for any help,
+>
+>John Vines
+>Army Research Laboratory
+>Computational Sciences and Engineering Branch
+>Scientific Visualization Team
+>410-278-9150/1643
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051208/f009a37a/attachment.htm
+From utkarsh.ayachit at kitware.com  Thu Dec  8 16:17:34 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Thu Dec  8 16:19:08 2005
+Subject: [Paraview] Client/server on SGI
+In-Reply-To: <D9A8D98DDC682044806D5B46AF5C11E20AD535@ARLABML01.DS.ARL.ARMY.MIL>
+References: <D9A8D98DDC682044806D5B46AF5C11E20AD535@ARLABML01.DS.ARL.ARMY.MIL>
+Message-ID: <4398A2EE.9020905@kitware.com>
+
+As you said, you start the server with
+> mpirun -np 10 pvserver
+
+To start the client that connects to the server on the same machine
+simply use
+
+> pvclient
+
+It will connect to the server running on the defaulf port on the localhost.
+
+Utkarsh.
+
+Vines, John (Civ, ARL/CISD) wrote:
+> All,
+>         I have recently compiled the CVS version of Paraview and need to
+> run in client server mode on an SGI.  I'm getting lost in the command
+> line configuration, ".pvx" files etc.
+> 
+>         The SGI has 16 processors so I want to start the server up using
+> 10 processors - "mpirun -np 10 pvserver".  I'm not sure how to start the
+> client running on the same machine, what command line arguments do I need?
+> 
+> Thanks in advance for any help,
+> 
+> John Vines
+> Army Research Laboratory
+> Computational Sciences and Engineering Branch
+> Scientific Visualization Team
+> 410-278-9150/1643
+> 
+> 
+> 
+> ------------------------------------------------------------------------
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+From amy.squillacote at kitware.com  Thu Dec  8 16:29:32 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Dec  8 16:30:04 2005
+Subject: [Paraview] Client/server on SGI
+In-Reply-To: <s3984fd4.039@mail.colsa.com>
+References: <s3984fd4.039@mail.colsa.com>
+Message-ID: <6.2.5.6.2.20051208162632.0534a2c8@kitware.com>
+
+At 04:22 PM 12/8/2005, James Sanderson wrote:
+>I'm in a similar boat except I can't get the client running on my 
+>Windows box, what commands do I need? On my Linux server I am able to to get
+>
+>mpirun -np 4 pvserver    running, and waiting on client. But I'm 
+>missing some steps in the command line on the Windows side, what should I do?
+>
+>Thanks for any help,
+>Adam
+
+Hi Adam,
+
+The process is the same on Windows as it is on Linux.  What happens 
+when you do 'mpirun -np 4 pvserver' on Windows?
+
+- Amy 
+
+From amy.squillacote at kitware.com  Thu Dec  8 16:48:00 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Dec  8 16:48:18 2005
+Subject: [Paraview] Client/server on SGI
+In-Reply-To: <s398521b.041@mail.colsa.com>
+References: <s398521b.041@mail.colsa.com>
+Message-ID: <6.2.5.6.2.20051208164412.05354fe8@kitware.com>
+
+Please keep the discussion on the list.
+
+Is the mpirun executable in your path?  (For example, I'm using 
+MPICH, and "C:/Program Files/MPICH/mpd/bin" is in my PATH environment variable.
+
+- Amy
+
+At 04:32 PM 12/8/2005, James Sanderson wrote:
+>It doesn't recognize "mpirun" as a command.
+>
+>-Adam
+>
+> >>> Amy Squillacote <amy.squillacote@kitware.com> 12/8/2005 3:29 PM >>>
+>At 04:22 PM 12/8/2005, James Sanderson wrote:
+> >I'm in a similar boat except I can't get the client running on my
+> >Windows box, what commands do I need? On my Linux server I am able to to get
+> >
+> >mpirun -np 4 pvserver    running, and waiting on client. But I'm
+> >missing some steps in the command line on the Windows side, what 
+> should I do?
+> >
+> >Thanks for any help,
+> >Adam
+>
+>Hi Adam,
+>
+>The process is the same on Windows as it is on Linux.  What happens
+>when you do 'mpirun -np 4 pvserver' on Windows?
+>
+>- Amy
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From jvines at arl.army.mil  Fri Dec  9 06:25:47 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Fri Dec  9 06:25:53 2005
+Subject: [Paraview] Client/server on SGI
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078B71@ARLABML01.DS.ARL.ARMY.MIL>
+
+Amy/All,
+  When I start a Paraview client session, on the same machine running the server(mpirun -np 10 pvserver), and force compositing ( by moving the silder to 0 in the GUI ) multiple render windows appear on my desktop.  I'm not sure what I've missed?
+ 
+Thanks very much for the help,
+ 
+John
+
+	-----Original Message----- 
+	From: Amy Squillacote [mailto:amy.squillacote@kitware.com] 
+	Sent: Thu 12/8/2005 4:15 PM 
+	To: Vines, John (Civ, ARL/CISD); paraview@paraview.org 
+	Cc: 
+	Subject: Re: [Paraview] Client/server on SGI
+	
+	
+	Hi John,
+	
+	You are only required to use the .pvx file if you are running ParaView in a CAVE or if you are running in client / data server / render server mode.  To start the client on the same machine as your pvserver, just open a new shell, and run the pvclient executable.  If it's all on the same machine, you shouldn't even need to specify the server host to the client.  So, you should do the following.
+	
+	mpirun -np 10 pvserver
+	pvclient
+	
+	Are there specific command-line options you're trying to use?  Do you have other specific questions about starting ParaView?
+	
+	- Amy
+	
+	At 04:04 PM 12/8/2005, Vines, John  (Civ, ARL/CISD) wrote:
+	
+
+		content-class: urn:content-classes:message
+		Content-Type: multipart/alternative;
+		         boundary="----_=_NextPart_001_01C5FC3A.F07DACC3"
+		
+		All, 
+		        I have recently compiled the CVS version of Paraview and need to run in client server mode on an SGI.  I'm getting lost in the command line configuration, ".pvx" files etc.
+		
+		        The SGI has 16 processors so I want to start the server up using 10 processors - "mpirun -np 10 pvserver".  I'm not sure how to start the client running on the same machine, what command line arguments do I need?
+		
+		Thanks in advance for any help, 
+		
+		John Vines 
+		Army Research Laboratory 
+		Computational Sciences and Engineering Branch 
+		Scientific Visualization Team 
+		410-278-9150/1643 
+		
+		_______________________________________________
+		ParaView mailing list
+		ParaView@paraview.org
+		http://www.paraview.org/mailman/listinfo/paraview
+
+From jvines at arl.army.mil  Fri Dec  9 06:37:04 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Fri Dec  9 06:37:09 2005
+Subject: [Paraview] Paraview 2.5 / VTK 5+
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078B72@ARLABML01.DS.ARL.ARMY.MIL>
+
+All,
+   At present we have purchased all the documentation/manuals etc for Paraview and VTK.  It is my understanding that Paraview 2.5 and VTK have changed significantly since the Paraview and VTK Guides were published.
+   I need to have a better understanding of how the current version of Paraview/VTK differ from the published documentation.  Is there "updated" documentation for both?  I'll do my homework if someone can help point me in the correct direction :)
+ 
+Thanks very much for your time, it is greatly appreciated
+ 
+John    
+From rnelias at nacad.ufrj.br  Fri Dec  9 08:59:20 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Fri Dec  9 08:52:49 2005
+Subject: [Paraview] Append datasets is still disabled...
+Message-ID: <20051209135238.A1A9072783@mailhost.nacad.ufrj.br>
+
+
+Hi developers,
+
+I noted in the recent release (2.4.1) that the "append dataset" is still
+disabled after loading several pieces of model from Ensight case files. I
+think it's still a bug, isn't it?
+
+Regards
+
+Renato N. Elias
+===============================================
+PhD student - http://www.nacad.ufrj.br/~rnelias
+High Performance Computing Center
+Federal University of Rio de Janeiro
+Rio de Janeiro, Brazil
++55(21) 2562-8080 
+
+
+From amy.squillacote at kitware.com  Fri Dec  9 09:22:36 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Fri Dec  9 09:23:13 2005
+Subject: [Paraview] Append datasets is still disabled...
+In-Reply-To: <20051209135238.A1A9072783@mailhost.nacad.ufrj.br>
+References: <20051209135238.A1A9072783@mailhost.nacad.ufrj.br>
+Message-ID: <6.2.5.6.2.20051209092031.05368588@kitware.com>
+
+Hi Renato,
+
+As Berk said when you mentioned this bug earlier, it's a known issue 
+(a missing feature), but it probably won't make it into the 2.4 release.
+
+http://public.kitware.com/pipermail/paraview/2005-November/002213.html
+
+- Amy
+
+At 08:59 AM 12/9/2005, Renato N. Elias wrote:
+
+>Hi developers,
+>
+>I noted in the recent release (2.4.1) that the "append dataset" is still
+>disabled after loading several pieces of model from Ensight case files. I
+>think it's still a bug, isn't it?
+>
+>Regards
+>
+>Renato N. Elias
+>===============================================
+>PhD student - http://www.nacad.ufrj.br/~rnelias
+>High Performance Computing Center
+>Federal University of Rio de Janeiro
+>Rio de Janeiro, Brazil
+>+55(21) 2562-8080
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From milan.frank at gmail.com  Fri Dec  9 09:52:14 2005
+From: milan.frank at gmail.com (Milan Frank)
+Date: Fri Dec  9 09:52:17 2005
+Subject: [Paraview] Time dependent range of the color map
+Message-ID: <d3d4ab920512090652j268fa8aar481d7fa0d710fa65@mail.gmail.com>
+
+Hello,
+
+I would like to create an additional option at "Display" dialog, to be
+able to produce an animation with different range of ScalarBar at
+different frames. Just a "reset range" at each frame would be enough
+for now.
+
+Can anyone give me some guidance how to do that simply and correctly?
+
+I have already spend some time looking at the code, and I find out
+that function vtkPVColorMap::ResetScalarRangeInternal can do the job.
+But, the animation sequence is handled by some callback function at
+the server part. I can hardly see the whole picture of the ParaView
+architecture so, I do not want to do some "dirty" things at the code.
+
+Thank you in advance for any response,
+Milan
+
+--
+Ing. Milan Frank
+E-mail: mfrank@kiv.zcu.cz
+Alternative E-mail: milan.frank@gmail.com
+WWW: http://herakles.zcu.cz/~mfrank
+University of West Bohemia,
+Faculty of Applied Sciences
+Department of Computer Science and Engineering
+Pilsen, Czech Republic
+From berk.geveci at gmail.com  Fri Dec  9 10:28:53 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Dec  9 10:29:03 2005
+Subject: [Paraview] Re: install 2.4.1 source
+In-Reply-To: <4399795E.7070304@sophia.inria.fr>
+References: <4399795E.7070304@sophia.inria.fr>
+Message-ID: <a2ab21560512090728q268adbf6p5a7948c3b59343b1@mail.gmail.com>
+
+Hi Youssef,
+
+I noticed that all your e-mails to the mailing list were being discarded.
+You have to subscribe to the mailing list in order to post:
+http://public.kitware.com/mailman/listinfo/paraview
+
+Instruction to install or build paraview are here:
+http://www.paraview.org/Wiki/ParaView:Build_And_Install
+
+-Berk
+
+On 12/9/05, Youssef Mesri <Youssef.Mesri@sophia.inria.fr> wrote:
+>
+> Hi,
+> I have been installed a paraview-2.4.1 rpm version, and now, I want to
+> install source version, but I have this message error:
+> ParaView requires an out of source Build. Please create a separate
+> binary directory and run CMake there.
+> any suggestions!
+>
+>
+> -
+>
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051209/e4148208/attachment.htm
+From Mike.Stephens at erdc.usace.army.mil  Fri Dec  9 10:55:01 2005
+From: Mike.Stephens at erdc.usace.army.mil (Stephens,
+	Mike ERDC-ITL-MS Contractor)
+Date: Fri Dec  9 10:55:05 2005
+Subject: [Paraview] display weirdness
+Message-ID: <E1BD088683EF744ABFB0ED62370BEB8B52D1CD@ERD-ML4ERD.erd.ds.usace.army.mil>
+
+Skipped content of type multipart/alternative-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: image/jpeg
+Size: 11286 bytes
+Desc: image001.jpg
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/9e172588/attachment-0002.jpe
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: image/jpeg
+Size: 7793 bytes
+Desc: image002.jpg
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/9e172588/attachment-0003.jpe
+From bnwylie at sandia.gov  Fri Dec  9 11:14:14 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Fri Dec  9 11:14:33 2005
+Subject: [Paraview] display weirdness
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889AA6@ES20SNLNT.srn.sandia.gov>
+
+Skipped content of type multipart/alternative-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: image/jpeg
+Size: 11286 bytes
+Desc: image001.jpg
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/4135cf1a/attachment-0002.jpe
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: image/jpeg
+Size: 7793 bytes
+Desc: image002.jpg
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/4135cf1a/attachment-0003.jpe
+From berk.geveci at gmail.com  Fri Dec  9 11:21:53 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Dec  9 11:21:57 2005
+Subject: [Paraview] display weirdness
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889AA6@ES20SNLNT.srn.sandia.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01889AA6@ES20SNLNT.srn.sandia.gov>
+Message-ID: <a2ab21560512090821i71291361y750d3b7ca9226ed5@mail.gmail.com>
+
+Skipped content of type multipart/alternative-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image002.jpg
+Type: image/jpeg
+Size: 7793 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/06436ee7/image002-0001.jpg
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: image001.jpg
+Type: image/jpeg
+Size: 11286 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051209/06436ee7/image001-0001.jpg
+From amy.squillacote at kitware.com  Fri Dec  9 11:51:55 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Fri Dec  9 11:52:09 2005
+Subject: [Paraview] Client/server on SGI
+In-Reply-To: <s3995e9e.032@mail.colsa.com>
+References: <s3995e9e.032@mail.colsa.com>
+Message-ID: <6.2.5.6.2.20051209114120.020e4748@kitware.com>
+
+Are you wanting to run the ParaView server on linux and the ParaView 
+client on Windows?  If so, then start pvserver on your linux box: 
+'mpirun -np 4 pvserver'.  Then start the ParaView client on your 
+Windows machine, and pass the name of your linux machine using the 
+--server-host (-sh) command line argument: 'pvclient -sh=<server name>'.
+
+- Amy
+
+At 11:38 AM 12/9/2005, James Sanderson wrote:
+>Well I installed MPICH. Are you saying that I need to start pvserver 
+>on the Windows client?  What do I need to do to make the connection 
+>to my Linux server? Sorry for the routine setup directions, but I'm 
+>new to this.
+>
+>-Adam
+>
+> >>> Amy Squillacote <amy.squillacote@kitware.com> 12/8/2005 3:48 PM >>>
+>Please keep the discussion on the list.
+>
+>Is the mpirun executable in your path?  (For example, I'm using
+>MPICH, and "C:/Program Files/MPICH/mpd/bin" is in my PATH 
+>environment variable.
+>
+>- Amy
+>
+>At 04:32 PM 12/8/2005, James Sanderson wrote:
+> >It doesn't recognize "mpirun" as a command.
+> >
+> >-Adam
+> >
+> > >>> Amy Squillacote <amy.squillacote@kitware.com> 12/8/2005 3:29 PM >>>
+> >At 04:22 PM 12/8/2005, James Sanderson wrote:
+> > >I'm in a similar boat except I can't get the client running on my
+> > >Windows box, what commands do I need? On my Linux server I am 
+> able to to get
+> > >
+> > >mpirun -np 4 pvserver    running, and waiting on client. But I'm
+> > >missing some steps in the command line on the Windows side, what
+> > should I do?
+> > >
+> > >Thanks for any help,
+> > >Adam
+> >
+> >Hi Adam,
+> >
+> >The process is the same on Windows as it is on Linux.  What happens
+> >when you do 'mpirun -np 4 pvserver' on Windows?
+> >
+> >- Amy
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From kmorel at sandia.gov  Mon Dec 12 10:52:34 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Mon Dec 12 10:52:49 2005
+Subject: [Paraview] Client/server on SGI
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB32301CDF90F@ES21SNLNT.srn.sandia.gov>
+
+The server opens up windows wherever you have your DISPLAY environment
+variable set to.  Set it to localhost:0 if you want each process in your
+server to display locally.
+
+-Ken 
+
+> -----Original Message-----
+> From: paraview-bounces+kmorel=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On 
+> Behalf Of Vines, John (Civ, ARL/CISD)
+> Sent: Friday, December 09, 2005 4:26 AM
+> To: Amy Squillacote; paraview@paraview.org
+> Subject: RE: [Paraview] Client/server on SGI
+> 
+> Amy/All,
+>   When I start a Paraview client session, on the same machine 
+> running the server(mpirun -np 10 pvserver), and force 
+> compositing ( by moving the silder to 0 in the GUI ) multiple 
+> render windows appear on my desktop.  I'm not sure what I've missed?
+>  
+> Thanks very much for the help,
+>  
+> John
+> 
+> 	-----Original Message----- 
+> 	From: Amy Squillacote [mailto:amy.squillacote@kitware.com] 
+> 	Sent: Thu 12/8/2005 4:15 PM 
+> 	To: Vines, John (Civ, ARL/CISD); paraview@paraview.org 
+> 	Cc: 
+> 	Subject: Re: [Paraview] Client/server on SGI
+> 	
+> 	
+> 	Hi John,
+> 	
+> 	You are only required to use the .pvx file if you are 
+> running ParaView in a CAVE or if you are running in client / 
+> data server / render server mode.  To start the client on the 
+> same machine as your pvserver, just open a new shell, and run 
+> the pvclient executable.  If it's all on the same machine, 
+> you shouldn't even need to specify the server host to the 
+> client.  So, you should do the following.
+> 	
+> 	mpirun -np 10 pvserver
+> 	pvclient
+> 	
+> 	Are there specific command-line options you're trying 
+> to use?  Do you have other specific questions about starting ParaView?
+> 	
+> 	- Amy
+> 	
+> 	At 04:04 PM 12/8/2005, Vines, John  (Civ, ARL/CISD) wrote:
+> 	
+> 
+> 		content-class: urn:content-classes:message
+> 		Content-Type: multipart/alternative;
+> 		         
+> boundary="----_=_NextPart_001_01C5FC3A.F07DACC3"
+> 		
+> 		All, 
+> 		        I have recently compiled the CVS 
+> version of Paraview and need to run in client server mode on 
+> an SGI.  I'm getting lost in the command line configuration, 
+> ".pvx" files etc.
+> 		
+> 		        The SGI has 16 processors so I want to 
+> start the server up using 10 processors - "mpirun -np 10 
+> pvserver".  I'm not sure how to start the client running on 
+> the same machine, what command line arguments do I need?
+> 		
+> 		Thanks in advance for any help, 
+> 		
+> 		John Vines 
+> 		Army Research Laboratory 
+> 		Computational Sciences and Engineering Branch 
+> 		Scientific Visualization Team 
+> 		410-278-9150/1643 
+> 		
+> 		_______________________________________________
+> 		ParaView mailing list
+> 		ParaView@paraview.org
+> 		http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From welling at stat.cmu.edu  Mon Dec 12 18:44:42 2005
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Mon Dec 12 18:44:47 2005
+Subject: [Paraview] Chromium and 'Unable to open display' in client-server
+	mode
+Message-ID: <200512122344.jBCNigC6022318@tingenek.stat.cmu.edu>
+
+
+Hi folks;
+  We have modified VTK/Rendering/vtkXOpenGLRenderWindow.cxx so that, if the 
+server process cannot access the DISPLAY environment variable, it attempts 
+create an OpenGL context using the Chromium API.  This works very well, and 
+we've had wonderful success running the server rendering processes across 
+Chromium under ParaView up through (I believe) 2.0.1.
+  In version 2.4.1 there is apparently some trap code which prevents this, 
+however.  I know the code at line 448 of GUI/Client/vtkPVCompositeRenderModuleU
+I.cxx (rev. 1.30) is getting called, and giving its associated error message 
+'Unable to open display'.  The associated text says that this happens when one 
+of the servers cannot get a valid DISPLAY environment variable.  Of course 
+this message is getting displayed on the client side, and the source of the 
+message is somewhere on the server side.
+  The servers may not be able to open the DISPLAY, but they have a perfectly 
+good graphics context.  Can someone direct me to the code where the server 
+DISPLAY is tested so that I can disable it?  I believe I've covered all the 
+uses of DISPLAY in vtkXOpenGLRenderWindow and I'm not sure where else to look.
+
+Thanks,
+-Joel Welling
+ welling@psc.edu
+
+
+From domi at vision.ee.ethz.ch  Tue Dec 13 11:48:34 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 13 11:48:54 2005
+Subject: [Paraview] which VTK
+Message-ID: <439EFB62.1020100@vision.ee.ethz.ch>
+
+Hello,
+
+I once have asked this question, but didint get an answer. I didnt 
+conclude much from the Wiki pages either: what is the reason Paraview 
+uses its own VTK version?
+
+1) Which version is it (CVS?) and what/why modifications are made to it?
+
+2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see 
+little sense in compiling VTK twice. If the Paraview's versions is 
+newer, which one is it / what are the differences to the official 
+version? If the official VTK version is OK to use to compile Paraview, 
+how can I disable redundant compilation and reuse VTK available on my 
+system?
+
+thank you and regards,
+Dominik
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From berk.geveci at gmail.com  Tue Dec 13 11:56:58 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Dec 13 11:57:01 2005
+Subject: [Paraview] which VTK
+In-Reply-To: <439EFB62.1020100@vision.ee.ethz.ch>
+References: <439EFB62.1020100@vision.ee.ethz.ch>
+Message-ID: <a2ab21560512130856x6961c1bfj77bbb111648f14a2@mail.gmail.com>
+
+CVS ParaView uses CVS VTK. When ParaView is branched for a release, VTK is
+also branched. We used to support using an external VTK but we had too many
+complaints  that turned out to be mismatching versions of VTK and ParaView.
+Because of this, we stopped supporting using an external VTK. You have to
+change ParaView CMakeLists.txt files in order to allow for the use of an
+external VTK and I don't think it's straightforward to do. I keep separate
+builds of VTK and ParaView. If you are using VTK only from C++, you can use
+the VTK built by ParaView instead of keeping a separate VTK.
+
+-Berk
+
+
+On 12/13/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+>
+> Hello,
+>
+> I once have asked this question, but didint get an answer. I didnt
+> conclude much from the Wiki pages either: what is the reason Paraview
+> uses its own VTK version?
+>
+> 1) Which version is it (CVS?) and what/why modifications are made to it?
+>
+> 2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see
+> little sense in compiling VTK twice. If the Paraview's versions is
+> newer, which one is it / what are the differences to the official
+> version? If the official VTK version is OK to use to compile Paraview,
+> how can I disable redundant compilation and reuse VTK available on my
+> system?
+>
+> thank you and regards,
+> Dominik
+>
+> --
+> Dominik Szczerba, Dr.
+> Computer Vision Lab CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051213/b9d9aa84/attachment.html
+From domi at vision.ee.ethz.ch  Tue Dec 13 12:02:35 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 13 12:02:54 2005
+Subject: [Paraview] which VTK
+In-Reply-To: <a2ab21560512130856x6961c1bfj77bbb111648f14a2@mail.gmail.com>
+References: <439EFB62.1020100@vision.ee.ethz.ch>
+	<a2ab21560512130856x6961c1bfj77bbb111648f14a2@mail.gmail.com>
+Message-ID: <439EFEAB.4060307@vision.ee.ethz.ch>
+
+So the conclusions would be to use Paraview's VTK for more recent if 
+somewhat less stable version?
+
+I see the problem in maintaining two versions. And I dont think I am 
+going to change CMakeLists.txt to use an older external VTK version. But 
+is it at least easilly possible to link paraview dynamically against the 
+VTK? I get huge binary output files...
+
+regards,
+Dominik
+
+Berk Geveci wrote:
+> CVS ParaView uses CVS VTK. When ParaView is branched for a release, VTK is
+> also branched. We used to support using an external VTK but we had too many
+> complaints  that turned out to be mismatching versions of VTK and ParaView.
+> Because of this, we stopped supporting using an external VTK. You have to
+> change ParaView CMakeLists.txt files in order to allow for the use of an
+> external VTK and I don't think it's straightforward to do. I keep separate
+> builds of VTK and ParaView. If you are using VTK only from C++, you can use
+> the VTK built by ParaView instead of keeping a separate VTK.
+> 
+> -Berk
+> 
+> 
+> On 12/13/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+> 
+>>Hello,
+>>
+>>I once have asked this question, but didint get an answer. I didnt
+>>conclude much from the Wiki pages either: what is the reason Paraview
+>>uses its own VTK version?
+>>
+>>1) Which version is it (CVS?) and what/why modifications are made to it?
+>>
+>>2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see
+>>little sense in compiling VTK twice. If the Paraview's versions is
+>>newer, which one is it / what are the differences to the official
+>>version? If the official VTK version is OK to use to compile Paraview,
+>>how can I disable redundant compilation and reuse VTK available on my
+>>system?
+>>
+>>thank you and regards,
+>>Dominik
+>>
+>>--
+>>Dominik Szczerba, Dr.
+>>Computer Vision Lab CH-8092 Zurich
+>>http://www.vision.ee.ethz.ch/~domi
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+> 
+>>
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From amy.squillacote at kitware.com  Tue Dec 13 12:10:18 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Dec 13 12:10:27 2005
+Subject: [Paraview] which VTK
+In-Reply-To: <439EFEAB.4060307@vision.ee.ethz.ch>
+References: <439EFB62.1020100@vision.ee.ethz.ch>
+	<a2ab21560512130856x6961c1bfj77bbb111648f14a2@mail.gmail.com>
+	<439EFEAB.4060307@vision.ee.ethz.ch>
+Message-ID: <6.2.5.6.2.20051213120914.046df4a0@kitware.com>
+
+I assume you mean using shared instead of static libraries in 
+ParaView. Yes, this is possible. When you run CMake, set 
+BUILD_SHARED_LIBS to ON.
+
+- Amy
+
+At 12:02 PM 12/13/2005, Dominik Szczerba wrote:
+>So the conclusions would be to use Paraview's VTK for more recent if 
+>somewhat less stable version?
+>
+>I see the problem in maintaining two versions. And I dont think I am 
+>going to change CMakeLists.txt to use an older external VTK version. 
+>But is it at least easilly possible to link paraview dynamically 
+>against the VTK? I get huge binary output files...
+>
+>regards,
+>Dominik
+>
+>Berk Geveci wrote:
+>>CVS ParaView uses CVS VTK. When ParaView is branched for a release, VTK is
+>>also branched. We used to support using an external VTK but we had too many
+>>complaints  that turned out to be mismatching versions of VTK and ParaView.
+>>Because of this, we stopped supporting using an external VTK. You have to
+>>change ParaView CMakeLists.txt files in order to allow for the use of an
+>>external VTK and I don't think it's straightforward to do. I keep separate
+>>builds of VTK and ParaView. If you are using VTK only from C++, you can use
+>>the VTK built by ParaView instead of keeping a separate VTK.
+>>-Berk
+>>
+>>On 12/13/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+>>
+>>>Hello,
+>>>
+>>>I once have asked this question, but didint get an answer. I didnt
+>>>conclude much from the Wiki pages either: what is the reason Paraview
+>>>uses its own VTK version?
+>>>
+>>>1) Which version is it (CVS?) and what/why modifications are made to it?
+>>>
+>>>2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see
+>>>little sense in compiling VTK twice. If the Paraview's versions is
+>>>newer, which one is it / what are the differences to the official
+>>>version? If the official VTK version is OK to use to compile Paraview,
+>>>how can I disable redundant compilation and reuse VTK available on my
+>>>system?
+>>>
+>>>thank you and regards,
+>>>Dominik
+>>>
+>>>--
+>>>Dominik Szczerba, Dr.
+>>>Computer Vision Lab CH-8092 Zurich
+>>>http://www.vision.ee.ethz.ch/~domi
+>>>_______________________________________________
+>>>ParaView mailing list
+>>>ParaView@paraview.org
+>>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+>
+>--
+>Dominik Szczerba, Dr.
+>Computer Vision Lab CH-8092 Zurich
+>http://www.vision.ee.ethz.ch/~domi
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From domi at vision.ee.ethz.ch  Tue Dec 13 16:04:26 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 13 16:04:47 2005
+Subject: [Paraview] which VTK
+In-Reply-To: <6.2.5.6.2.20051213120914.046df4a0@kitware.com>
+References: <439EFB62.1020100@vision.ee.ethz.ch>
+	<a2ab21560512130856x6961c1bfj77bbb111648f14a2@mail.gmail.com>
+	<439EFEAB.4060307@vision.ee.ethz.ch>
+	<6.2.5.6.2.20051213120914.046df4a0@kitware.com>
+Message-ID: <439F375A.1090507@vision.ee.ethz.ch>
+
+Thanks a lot for all your hints.
+regards,
+Dominik
+
+Amy Squillacote wrote:
+> I assume you mean using shared instead of static libraries in ParaView. 
+> Yes, this is possible. When you run CMake, set BUILD_SHARED_LIBS to ON.
+> 
+> - Amy
+> 
+> At 12:02 PM 12/13/2005, Dominik Szczerba wrote:
+> 
+>> So the conclusions would be to use Paraview's VTK for more recent if 
+>> somewhat less stable version?
+>>
+>> I see the problem in maintaining two versions. And I dont think I am 
+>> going to change CMakeLists.txt to use an older external VTK version. 
+>> But is it at least easilly possible to link paraview dynamically 
+>> against the VTK? I get huge binary output files...
+>>
+>> regards,
+>> Dominik
+>>
+>> Berk Geveci wrote:
+>>
+>>> CVS ParaView uses CVS VTK. When ParaView is branched for a release, 
+>>> VTK is
+>>> also branched. We used to support using an external VTK but we had 
+>>> too many
+>>> complaints  that turned out to be mismatching versions of VTK and 
+>>> ParaView.
+>>> Because of this, we stopped supporting using an external VTK. You 
+>>> have to
+>>> change ParaView CMakeLists.txt files in order to allow for the use of an
+>>> external VTK and I don't think it's straightforward to do. I keep 
+>>> separate
+>>> builds of VTK and ParaView. If you are using VTK only from C++, you 
+>>> can use
+>>> the VTK built by ParaView instead of keeping a separate VTK.
+>>> -Berk
+>>>
+>>> On 12/13/05, Dominik Szczerba <domi@vision.ee.ethz.ch> wrote:
+>>>
+>>>> Hello,
+>>>>
+>>>> I once have asked this question, but didint get an answer. I didnt
+>>>> conclude much from the Wiki pages either: what is the reason Paraview
+>>>> uses its own VTK version?
+>>>>
+>>>> 1) Which version is it (CVS?) and what/why modifications are made to 
+>>>> it?
+>>>>
+>>>> 2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see
+>>>> little sense in compiling VTK twice. If the Paraview's versions is
+>>>> newer, which one is it / what are the differences to the official
+>>>> version? If the official VTK version is OK to use to compile Paraview,
+>>>> how can I disable redundant compilation and reuse VTK available on my
+>>>> system?
+>>>>
+>>>> thank you and regards,
+>>>> Dominik
+>>>>
+>>>> -- 
+>>>> Dominik Szczerba, Dr.
+>>>> Computer Vision Lab CH-8092 Zurich
+>>>> http://www.vision.ee.ethz.ch/~domi
+>>>> _______________________________________________
+>>>> ParaView mailing list
+>>>> ParaView@paraview.org
+>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>>>
+>>
+>> -- 
+>> Dominik Szczerba, Dr.
+>> Computer Vision Lab CH-8092 Zurich
+>> http://www.vision.ee.ethz.ch/~domi
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From pfb at exadios.com  Wed Dec 14 07:28:18 2005
+From: pfb at exadios.com (Peter F Bradshaw)
+Date: Wed Dec 14 07:28:34 2005
+Subject: [Paraview] which VTK
+In-Reply-To: <439EFB62.1020100@vision.ee.ethz.ch>
+References: <439EFB62.1020100@vision.ee.ethz.ch>
+Message-ID: <Pine.LNX.4.58.0512142020520.726@goldmund.pri>
+
+Hi Dominik;
+
+On Tue, 13 Dec 2005, Dominik Szczerba wrote:
+
+> Hello,
+>
+> I once have asked this question, but didint get an answer. I didnt
+> conclude much from the Wiki pages either: what is the reason Paraview
+> uses its own VTK version?
+>
+> 1) Which version is it (CVS?) and what/why modifications are made to it?
+
+The version of VTK distributed with Paraview 2.2.1 is VTK V4.5.0. The
+class docs for this version are avaliable from (if no other place):
+
+http://personal.exadios.com/Multibeam/doc/htdocs/Class/VTK/html/
+
+>
+> 2) I use both VTK (from C/C++) and Paraview (stand-alone) and I see
+> little sense in compiling VTK twice. If the Paraview's versions is
+> newer, which one is it / what are the differences to the official
+> version? If the official VTK version is OK to use to compile Paraview,
+> how can I disable redundant compilation and reuse VTK available on my
+> system?
+
+VTK V4.5.0 seems to be closer to V5.0 than it is to VTK V4.4.
+
+>
+> thank you and regards,
+> Dominik
+>
+>
+
+Cheers
+
+-- 
+Peter F Bradshaw, http://www.exadios.com, ICQ 75431157 (exadios).
+Public key at www.exadios.com/pfb.pgp.key and www.exadios.com/pfb.gpg.key
+"I love truth, and the way the government still uses it occasionally to
+ keep us guessing." - Sam Kekovich.
+From eschenbe at psc.edu  Wed Dec 14 14:10:38 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Dec 14 14:10:42 2005
+Subject: [Paraview] Kitware Bug Trackiing Broken
+Message-ID: <1B306D31B4468AC1B359D71F@harpo.psc.edu>
+
+It is impossible to add a bug. After logging in successfully and then 
+selecting "Add a new bug" it says I must login first. So I login again, 
+click "Add" again, with the same result.
+
+Kent
+Pittsburgh Supercomputing Center
+From andy.cedilnik at kitware.com  Thu Dec 15 11:52:18 2005
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Thu Dec 15 11:52:26 2005
+Subject: [Paraview] Kitware Bug Trackiing Broken
+In-Reply-To: <1B306D31B4468AC1B359D71F@harpo.psc.edu>
+References: <1B306D31B4468AC1B359D71F@harpo.psc.edu>
+Message-ID: <43A19F42.1080801@kitware.com>
+
+Hi Kent,
+
+I cannot reproduce this problem. Several people have successfully 
+submitted bug. Any way you could try again? Are cookies on? Do you see 
+any other errors?
+
+Thank you.
+
+       Andy
+
+Kent Eschenberg wrote:
+
+> It is impossible to add a bug. After logging in successfully and then 
+> selecting "Add a new bug" it says I must login first. So I login 
+> again, click "Add" again, with the same result.
+>
+> Kent
+> Pittsburgh Supercomputing Center
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+-- 
+Andy Cedilnik
+Kitware Inc.
+
+From domi at vision.ee.ethz.ch  Fri Dec 16 04:19:55 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Fri Dec 16 04:20:04 2005
+Subject: [Paraview] Is the ZLibCompressor working?
+Message-ID: <43A286BB.1090800@vision.ee.ethz.ch>
+
+Hi,
+I have a structured legacy file which I load into paraview and save as 
+structured pvs (xml) file. In the header of the output file there is a 
+tag ZLibCompressor, but the file is only twice smaller than the legacy 
+file. If I run gzip over the original input file, I get much more 
+compression. I wrote myself a simple C++ converting program and the 
+output is the same: ZLib mentioned in the header but very little (if 
+any) compression - much less than by explicit use of gzip. What is 
+happening?
+regards,
+Dominik
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From Yeraze.11960501 at bloglines.com  Fri Dec 16 10:16:07 2005
+From: Yeraze.11960501 at bloglines.com (Yeraze.11960501@bloglines.com)
+Date: Fri Dec 16 10:16:10 2005
+Subject: [Paraview] "arg list too long" with Irix6.5 & Paraview 2.4.1 Source
+Message-ID: <1134746167.1715561887.13933.sendItem@bloglines.com>
+
+I'm trying to compile Paraview 2.4.1 for use with our SGI's in-house, running
+Irix6.5, and getting the following error:
+
+$ gmake
+-- Found existing Tcl,
+not rebuilding
+-- Found existing Tk, not rebuilding
+Linking CXX static library
+../../bin/libvtkKWParaView.a
+gmake[2]: execvp: /bin/sh: Arg list too long
+
+gmake[2]: *** [bin/libvtkKWParaView.a] Error 127
+gmake[1]: *** [GUI/Client/CMakeFiles/vtkKWParaView.dir/all]
+Error 2
+gmake: *** [all] Error 2
+$ ^D
+
+Any suggestions on how to get around
+this?
+
+
+Randall Hand
+Visualization Scientist
+ERDC MSRC, ITL  Vicksburg,
+MS
+From christophe.peyret at onera.fr  Fri Dec 16 15:16:14 2005
+From: christophe.peyret at onera.fr (Christophe Peyret)
+Date: Fri Dec 16 15:16:18 2005
+Subject: [Paraview] Compiling paraview 2.5 on Mac OS X 10.4.3
+Message-ID: <49301.82.67.159.21.1134764174.squirrel@mis.onera.fr>
+
+Hi,
+
+I have compiled the cvs version of paraview. It seems to work till I
+launch paraview. The welcome window of paraview appears then a few second
+after, paraview crashes.
+
+Segmentation fault
+
+when I look the log file generated by OS X here are the first lines:
+
+Date/Time:      2005-12-16 21:14:11.533 +0100
+OS Version:     10.4.3 (Build 8F46)
+Report Version: 3
+
+Command: paraview
+Path:    ./bin/paraview
+Parent:  bash [190]
+
+Version: ??? (???)
+
+PID:    26347
+Thread: 0
+
+Exception:  EXC_BAD_ACCESS (0x0001)
+Codes:      KERN_INVALID_ADDRESS (0x0001) at 0x7372635c
+
+
+From jvines at arl.army.mil  Fri Dec 16 15:46:12 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Fri Dec 16 15:46:16 2005
+Subject: [Paraview] Communication error in Paraview 2.5
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078B8A@ARLABML01.DS.ARL.ARMY.MIL>
+
+I am curious if anyone has seen communication problems in Paraview 2.5.0 client/server mode on Linux64.  I am visualizing CTH data and everything is fine until I try to change timesteps in the data.
+
+Paraview error log:
+
+There was a VTK Error in file: /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx (62)
+ vtkServerConnection (0x3295600): Server Connection Closed! 
+There was a VTK Error in file: /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx (62)
+ vtkServerConnection (0x3295600): Server Connection Closed! 
+There was a VTK Error in file: /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx (290)
+ vtkServerConnection (0x3295600): Server could failed to gather information.
+There was a VTK Error in file: /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx (290)
+ vtkServerConnection (0x3295600): Server could failed to gather information.
+There was a VTK Error in file: /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx (290)
+ vtkServerConnection (0x3295600): Server could failed to gather information.
+
+thanks for your time,
+
+John
+From berk.geveci at gmail.com  Fri Dec 16 15:49:54 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Dec 16 15:49:57 2005
+Subject: [Paraview] Communication error in Paraview 2.5
+In-Reply-To: <D9A8D98DDC682044806D5B46AF5C11E2078B8A@ARLABML01.DS.ARL.ARMY.MIL>
+References: <D9A8D98DDC682044806D5B46AF5C11E2078B8A@ARLABML01.DS.ARL.ARMY.MIL>
+Message-ID: <a2ab21560512161249n1ca738e7w5d694d72132e305c@mail.gmail.com>
+
+This might mean that your server crashed. Can you verify this? How can we
+reproduce it here?
+
+On 12/16/05, Vines, John (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+>
+> I am curious if anyone has seen communication problems in Paraview 2.5.0client/server mode on Linux64.  I am visualizing CTH data and everything is
+> fine until I try to change timesteps in the data.
+>
+> Paraview error log:
+>
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (62)
+> vtkServerConnection (0x3295600): Server Connection Closed!
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (62)
+> vtkServerConnection (0x3295600): Server Connection Closed!
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+>
+> thanks for your time,
+>
+> John
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051216/60d1d150/attachment.html
+From domi at vision.ee.ethz.ch  Sat Dec 17 17:56:55 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Sat Dec 17 17:57:18 2005
+Subject: [Paraview] LOOKUP_TABLE
+Message-ID: <43A497B7.20001@vision.ee.ethz.ch>
+
+Hi,
+Paraview seems ignoring custom LOOKUP_TABLE's in my legacy input files. 
+Do I miss something obvious on that issue (other than explained in 
+vtk-formats pdf)?
+Regards,
+Dominik
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From rnelias at nacad.ufrj.br  Mon Dec 19 06:36:37 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Mon Dec 19 06:29:49 2005
+Subject: [Paraview] No background when exporting PNG files...
+Message-ID: <20051219112937.D576872783@mailhost.nacad.ufrj.br>
+
+
+Hi friends,
+
+I'd like to know if there's any way to export PNG files without background
+with Paraview. If yes, how can I do it?
+
+Thank's and merry christmas
+
+Renato N. Elias
+===============================================
+PhD student - http://www.nacad.ufrj.br/~rnelias
+High Performance Computing Center
+Federal University of Rio de Janeiro
+Rio de Janeiro, Brazil
++55(21) 2562-8080 
+
+
+From szaghi at infinito.it  Mon Dec 19 06:53:17 2005
+From: szaghi at infinito.it (szaghi@infinito.it)
+Date: Mon Dec 19 06:53:22 2005
+Subject: [Paraview] 1D Curve help!!!
+Message-ID: <web-130396019@infinito.it>
+
+Hi,
+We are a new Group of Paraview users; we have decided to 
+use this program to visualize the results of our 
+simulations (we work at "Dipartimento di Meccanica ed 
+Aeronautica, La Sapienza", Rome). We have a problem to 
+visualize a 1D curves. The question is: can Paraview 
+visualize curves without a fixed "a priori" number of 
+points? Is possible to visualize a curve without give in 
+the header of vtk's files the number of points? a simple 
+file ASCII in which there is two variabile listed as:
+0.288 0.232
+0.343 0.343
+0.434 0.566
+....   .....
+could be imported (without header's specifications)?
+Thanks for every suggests.
+
+INFINITO ADSLFLAT 4 MEGA: SOLO 27,90 EURO AL MESE IVA INCLUSA IP STATICO, BANDA GARANTITA 256Kbps ANTIVIRUS E FIREWALL INCLUSI NEL PREZZO
+
+http://adsl.infinito.it
+
+
+
+From domi at vision.ee.ethz.ch  Mon Dec 19 06:57:43 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Mon Dec 19 06:57:48 2005
+Subject: [Paraview] 1D Curve help!!!
+In-Reply-To: <web-130396019@infinito.it>
+References: <web-130396019@infinito.it>
+Message-ID: <43A6A037.9010504@vision.ee.ethz.ch>
+
+if it is a set of segments and not actually a real curve (spline) you
+can create a simple legacy ASCII vtk file - use unstructured grid (cells
+will be segments). see
+http://public.kitware.com/VTK/pdf/file-formats.pdf for more info
+
+dominik
+
+szaghi@infinito.it wrote:
+> Hi,
+> We are a new Group of Paraview users; we have decided to use this
+> program to visualize the results of our simulations (we work at
+> "Dipartimento di Meccanica ed Aeronautica, La Sapienza", Rome). We have
+> a problem to visualize a 1D curves. The question is: can Paraview
+> visualize curves without a fixed "a priori" number of points? Is
+> possible to visualize a curve without give in the header of vtk's files
+> the number of points? a simple file ASCII in which there is two
+> variabile listed as:
+> 0.288 0.232
+> 0.343 0.343
+> 0.434 0.566
+> ....   .....
+> could be imported (without header's specifications)?
+> Thanks for every suggests.
+> 
+> INFINITO ADSLFLAT 4 MEGA: SOLO 27,90 EURO AL MESE IVA INCLUSA IP
+> STATICO, BANDA GARANTITA 256Kbps ANTIVIRUS E FIREWALL INCLUSI NEL PREZZO
+> 
+> http://adsl.infinito.it
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Dominik Szczerba, Dr.
+ETZ C110 CO-ME/BIWI CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From utkarsh.ayachit at kitware.com  Mon Dec 19 09:46:22 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Mon Dec 19 09:50:04 2005
+Subject: [Paraview] No background when exporting PNG files...
+In-Reply-To: <20051219112937.D576872783@mailhost.nacad.ufrj.br>
+References: <20051219112937.D576872783@mailhost.nacad.ufrj.br>
+Message-ID: <43A6C7BE.4040404@kitware.com>
+
+Hi,
+
+To the best of my knowledge, it's not possible to save PNGs without
+background with ParaView. However, you can open the PNG with some
+application like gimp/irfanview and save pngs with transparent color set
+to the background (I know, it's painful).
+
+Utkarsh.
+
+Renato N. Elias wrote:
+> Hi friends,
+> 
+> I'd like to know if there's any way to export PNG files without background
+> with Paraview. If yes, how can I do it?
+> 
+> Thank's and merry christmas
+> 
+> Renato N. Elias
+> ===============================================
+> PhD student - http://www.nacad.ufrj.br/~rnelias
+> High Performance Computing Center
+> Federal University of Rio de Janeiro
+> Rio de Janeiro, Brazil
+> +55(21) 2562-8080 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From laa at lanl.gov  Mon Dec 19 11:15:57 2005
+From: laa at lanl.gov (Lee Ankeny)
+Date: Mon Dec 19 11:16:07 2005
+Subject: [Paraview] "arg list too long" with Irix6.5 & Paraview 2.4.1
+	Source
+In-Reply-To: <1134746167.1715561887.13933.sendItem@bloglines.com>
+References: <1134746167.1715561887.13933.sendItem@bloglines.com>
+Message-ID: <F2EA4171-63EA-4B92-9573-4EB7B56F1654@lanl.gov>
+
+It's been a while since I worked on IRIX, but at the time we  
+frequently encountered your error when working with long  
+commandlines, as are created by many build systems. The solution was  
+to rebuild the kernel to allow a longer maximum commandline length.  
+Sorry I can't remember the name of the kernel parameter.
+
+Lee
+
+On Dec 16, 2005, at 8:16 AM, Yeraze.11960501@bloglines.com wrote:
+
+> I'm trying to compile Paraview 2.4.1 for use with our SGI's in- 
+> house, running
+> Irix6.5, and getting the following error:
+>
+> $ gmake
+> -- Found existing Tcl,
+> not rebuilding
+> -- Found existing Tk, not rebuilding
+> Linking CXX static library
+> ../../bin/libvtkKWParaView.a
+> gmake[2]: execvp: /bin/sh: Arg list too long
+>
+> gmake[2]: *** [bin/libvtkKWParaView.a] Error 127
+> gmake[1]: *** [GUI/Client/CMakeFiles/vtkKWParaView.dir/all]
+> Error 2
+> gmake: *** [all] Error 2
+> $ ^D
+>
+> Any suggestions on how to get around
+> this?
+>
+>
+> Randall Hand
+> Visualization Scientist
+> ERDC MSRC, ITL  Vicksburg,
+> MS
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+From jvines at arl.army.mil  Mon Dec 19 15:27:26 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Mon Dec 19 15:28:29 2005
+Subject: [Paraview] Communication error in Paraview 2.5
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078B90@ARLABML01.DS.ARL.ARMY.MIL>
+
+Berk,
+
+I've cut and pasted the error I receive from Paraview, yes the server seems to have crashed.  FYI, we are using MPICH 1.2.6.  I am looking into how it was built.  
+
+PVSERVER ERROR:
+pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Parallel/vtkExtractCTHPa rt.cxx:365: virtual int vtkExtractCTHPart::RequestData(vtkInformation*, vtk InformationVector**, vtkInformationVector*): Assertion `"check: SetActiveSc alar succeeded" && checkIndex>=0' failed.
+Process id: 3 >> ERROR: In /share/jvines/Ice/build/src/ParaView/VTK/Filteri ng/vtkDemandDrivenPipeline.cxx, line 692
+vtkStreamingDemandDrivenPipeline (0x34094cb0): Input port 0 of algorithm vt kAppendPolyData(0x2377dd60) has 0 connections but is not optional.
+
+p0_3629:  p4_error: net_recv read:  probable EOF on socket: 1
+p1_11480:  p4_error: net_recv read:  probable EOF on socket: 1
+pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Common/vtkGarbageCollect or.cxx:981: vtkGarbageCollectorSingleton::~vtkGarbageCollectorSingleton(): Assertion `this->TotalNumberOfReferences == 0' failed.
+Abort
+Abort
+
+
+
+-----Original Message-----
+From:	Berk Geveci [mailto:berk.geveci@gmail.com]
+Sent:	Fri 12/16/2005 3:49 PM
+To:	Vines, John  (Civ, ARL/CISD)
+Cc:	paraview@paraview.org
+Subject:	Re: [Paraview] Communication error in Paraview 2.5
+This might mean that your server crashed. Can you verify this? How can we
+reproduce it here?
+
+On 12/16/05, Vines, John (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+>
+> I am curious if anyone has seen communication problems in Paraview 2.5.0client/server mode on Linux64.  I am visualizing CTH data and everything is
+> fine until I try to change timesteps in the data.
+>
+> Paraview error log:
+>
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (62)
+> vtkServerConnection (0x3295600): Server Connection Closed!
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (62)
+> vtkServerConnection (0x3295600): Server Connection Closed!
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+> There was a VTK Error in file:
+> /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> (290)
+> vtkServerConnection (0x3295600): Server could failed to gather
+> information.
+>
+> thanks for your time,
+>
+> John
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+
+From decastro at sdsc.edu  Mon Dec 19 22:25:43 2005
+From: decastro at sdsc.edu (Alex Decastro)
+Date: Mon Dec 19 22:25:49 2005
+Subject: [Paraview] mpirun pvserver: bad X server connection.
+Message-ID: <452F37AE49199D49B1702D7D45038C4D3EE474@et.ad.sdsc.edu>
+
+I installed Paraview 2.2.1 with OSMesa 5.0.2 and MPICH 1.2.5.2 on RedHat
+Linux.
+
+I am trying to run pvserver in parallel using MPI.
+
+ 
+
+Here is the shell script I use to run pvserver:
+
+#!/bin/sh
+
+export DISPLAY=0.0
+
+$(MPI_HOME)/bin/mpirun -v -machinefile machines.
+
+txt -np 2 $(PARAVIEW_HOME)/bin/pvserver --use-offscreen-rendering
+
+ 
+
+machines.txt - is a text file listing two machines.
+
+ 
+
+Here is the error log:
+
+Listen on port: 11111
+
+Waiting for client...
+
+connected to port 11111
+
+Client connected.
+
+Process id: 1 >> ERROR: In
+/projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/
+vtkXOpenGLRenderWindow.cxx, line 326
+
+vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+
+  
+
+Process id: 1 >> ERROR: In
+/projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/
+vtkXOpenGLRenderWindow.cxx, line 169
+
+vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+
+ 
+
+On both machines, I logged into the console and set the environment
+variable: setenv DISPLAY :0.0
+
+Everything works fine if I use -np 1 instead of -np 2.
+
+It is possible that security restrictions on our Linux system prevent
+the two pvserver processes from communicating using X server. I cannot
+run "xhost +" on our Linux system, due to our security restrictions.
+Could that be related to the problem?
+
+ 
+
+For example, if I use rsh to start xclock, I get the following error:
+
+% rsh machine xclock
+
+Error: Can't open display.
+
+ 
+
+Thanks for any help,
+
+Alex
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051219/b991ce3d/attachment.html
+From szaghi at infinito.it  Tue Dec 20 03:08:49 2005
+From: szaghi at infinito.it (szaghi@infinito.it)
+Date: Tue Dec 20 03:09:00 2005
+Subject: [Paraview] Re: Re: 1D Curve help!!!
+In-Reply-To: <20051219170013.7157C1BEE2@public.kitware.com>
+References: <20051219170013.7157C1BEE2@public.kitware.com>
+Message-ID: <web-130737045@infinito.it>
+
+Hi Dominik,
+thank you very much, but we have a different problem; we 
+just use Paraview to visualize our 2D simulations adopting 
+the vtk ASCII legacy format... we look for a completly 
+open source replacement for TecPlot: Tecplot recognize a 
+simple ascii file like this
+.1 .02 .65
+.2 .50 .65
+.6 .89 .44
+.. ... ...
+.. ... ...
+.. ... ...
+Tecplot read this file and recognize 3 variables giving 
+them the names "V1", "V2" and "V3".
+We have the necessity to read a file like this without 
+header because we don't know "a priori" the number of 
+points that constituite the curve. The vtk formats (all 
+that we know) need an header where is specificated the 
+numbers of points. Paraview can read a file like this 
+(without header's specifications) in somewhat format?
+Thank you  very much.
+
+P.S. I am sorry for my very bad english...
+
+> Date: Mon, 19 Dec 2005 12:57:43 +0100
+>From: Dominik Szczerba <domi@vision.ee.ethz.ch>
+> Subject: Re: [Paraview] 1D Curve help!!!
+> Cc: paraview@paraview.org
+> Message-ID: <43A6A037.9010504@vision.ee.ethz.ch>
+> Content-Type: text/plain; charset=us-ascii
+> 
+> if it is a set of segments and not actually a real curve 
+>(spline) you
+> can create a simple legacy ASCII vtk file - use 
+>unstructured grid (cells
+> will be segments). see
+> http://public.kitware.com/VTK/pdf/file-formats.pdf for 
+>more info
+> 
+> dominik
+
+INFINITO ADSLFLAT 4 MEGA: SOLO 27,90 EURO AL MESE IVA INCLUSA IP STATICO, BANDA GARANTITA 256Kbps ANTIVIRUS E FIREWALL INCLUSI NEL PREZZO
+
+http://adsl.infinito.it
+
+
+
+From domi at vision.ee.ethz.ch  Tue Dec 20 03:57:44 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 20 03:58:13 2005
+Subject: [Paraview] Re: Re: 1D Curve help!!!
+In-Reply-To: <web-130737045@infinito.it>
+References: <20051219170013.7157C1BEE2@public.kitware.com>
+	<web-130737045@infinito.it>
+Message-ID: <43A7C788.7010208@vision.ee.ethz.ch>
+
+Hi,
+if you have a concrete file on disk then you can write a simple 
+conversion tool counting the lines etc. inferring the required header 
+info - and dumping an ascii legacy file. I dont see your problem. the 
+easiest would be matlab script (study load command) in C/C++ study 
+iostream's.
+Dominik
+
+as long as you have a file with coordinates
+
+szaghi@infinito.it wrote:
+> Hi Dominik,
+> thank you very much, but we have a different problem; we just use 
+> Paraview to visualize our 2D simulations adopting the vtk ASCII legacy 
+> format... we look for a completly open source replacement for TecPlot: 
+> Tecplot recognize a simple ascii file like this
+> .1 .02 .65
+> .2 .50 .65
+> .6 .89 .44
+> .. ... ...
+> .. ... ...
+> .. ... ...
+> Tecplot read this file and recognize 3 variables giving them the names 
+> "V1", "V2" and "V3".
+> We have the necessity to read a file like this without header because we 
+> don't know "a priori" the number of points that constituite the curve. 
+> The vtk formats (all that we know) need an header where is specificated 
+> the numbers of points. Paraview can read a file like this (without 
+> header's specifications) in somewhat format?
+> Thank you  very much.
+> 
+> P.S. I am sorry for my very bad english...
+> 
+>> Date: Mon, 19 Dec 2005 12:57:43 +0100
+>> From: Dominik Szczerba <domi@vision.ee.ethz.ch>
+>> Subject: Re: [Paraview] 1D Curve help!!!
+>> Cc: paraview@paraview.org
+>> Message-ID: <43A6A037.9010504@vision.ee.ethz.ch>
+>> Content-Type: text/plain; charset=us-ascii
+>>
+>> if it is a set of segments and not actually a real curve (spline) you
+>> can create a simple legacy ASCII vtk file - use unstructured grid (cells
+>> will be segments). see
+>> http://public.kitware.com/VTK/pdf/file-formats.pdf for more info
+>>
+>> dominik
+> 
+> 
+> INFINITO ADSLFLAT 4 MEGA: SOLO 27,90 EURO AL MESE IVA INCLUSA IP 
+> STATICO, BANDA GARANTITA 256Kbps ANTIVIRUS E FIREWALL INCLUSI NEL PREZZO
+> 
+> http://adsl.infinito.it
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From berk.geveci at gmail.com  Tue Dec 20 09:42:35 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Dec 20 09:42:37 2005
+Subject: [Paraview] mpirun pvserver: bad X server connection.
+In-Reply-To: <452F37AE49199D49B1702D7D45038C4D3EE474@et.ad.sdsc.edu>
+References: <452F37AE49199D49B1702D7D45038C4D3EE474@et.ad.sdsc.edu>
+Message-ID: <a2ab21560512200642r466b6ebey85d21cc5809b8d19@mail.gmail.com>
+
+You probably have to set DISPLAY to :0 in your .XXXrc (.bashrc, .cshrc,
+.kshrc, .zshenv) so that it is set during a non-interactive remote session.
+In the next version of ParaView (2.6), it will be possible to set the
+display in a configuration file.
+
+
+On 12/19/05, Alex Decastro <decastro@sdsc.edu> wrote:
+>
+>  I installed Paraview 2.2.1 with OSMesa 5.0.2 and MPICH 1.2.5.2 on RedHat
+> Linux.
+>
+> I am trying to run pvserver in parallel using MPI.
+>
+>
+>
+> Here is the shell script I use to run pvserver:
+>
+> #!/bin/sh
+>
+> export DISPLAY=0.0
+>
+> $(MPI_HOME)/bin/mpirun -v -machinefile machines.
+>
+> txt -np 2 $(PARAVIEW_HOME)/bin/pvserver --use-offscreen-rendering
+>
+>
+>
+> machines.txt - is a text file listing two machines.
+>
+>
+>
+> Here is the error log:
+>
+> Listen on port: 11111
+>
+> Waiting for client...
+>
+> connected to port 11111
+>
+> Client connected.
+>
+> Process id: 1 >> ERROR: In
+> /projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/vtkXOpenGLRenderWindow.cxx,
+> line 326
+>
+> vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+>
+>
+>
+> Process id: 1 >> ERROR: In
+> /projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/vtkXOpenGLRenderWindow.cxx,
+> line 169
+>
+> vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+>
+>
+>
+> On both machines, I logged into the console and set the environment
+> variable: setenv DISPLAY :0.0
+>
+> Everything works fine if I use ?np 1 instead of ?np 2.
+>
+> It is possible that security restrictions on our Linux system prevent the
+> two pvserver processes from communicating using X server. I cannot run
+> "xhost +" on our Linux system, due to our security restrictions. Could that
+> be related to the problem?
+>
+>
+>
+> For example, if I use rsh to start xclock, I get the following error:
+>
+> % rsh machine xclock
+>
+> Error: Can't open display.
+>
+>
+>
+> Thanks for any help,
+>
+> Alex
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051220/6402a06a/attachment-0001.html
+From szaghi at infinito.it  Tue Dec 20 12:51:32 2005
+From: szaghi at infinito.it (szaghi@infinito.it)
+Date: Tue Dec 20 12:51:35 2005
+Subject: [Paraview] DATASET Field
+Message-ID: <web-130954112@infinito.it>
+
+Hi,
+we have a trivial question: paraview supports the "DATASET 
+FIELD"? it seems to support "all" vtk formats but with 
+this simple ASCII file we have obtained a program crash...
+
+Example 1
+
+# vtk DataFile Version 2.0
+Tec Conversion Prova
+ASCII
+FIELD ZoneType 5
+Zona1 1 3 float
+0.1 130000 350
+Zona2 1 3 float
+0.2 135000.0 370
+Zona3 1 3 float
+0.3 140000 380
+Zona4 1 3 float
+0.4 145000 470
+Zona5 1 3 float
+0.4 150000 570
+
+We also try this (with "DATASET" keyword explicitated...)
+Example 2
+
+# vtk DataFile Version 2.0
+Tec Conversion Prova
+ASCII
+DATASET FIELD ZoneType 5
+Zona1 1 3 float
+0.1 130000 350
+Zona2 1 3 float
+0.2 135000.0 370
+Zona3 1 3 float
+0.3 140000 380
+Zona4 1 3 float
+0.4 145000 470
+Zona5 1 3 float
+0.4 150000 570
+
+These examples are made following the "financial.vtk" 
+example from "vtk formats.pdf" file.
+Thanks
+
+INFINITO ADSLFLAT 4 MEGA: SOLO 27,90 EURO AL MESE IVA INCLUSA IP STATICO, BANDA GARANTITA 256Kbps ANTIVIRUS E FIREWALL INCLUSI NEL PREZZO
+
+http://adsl.infinito.it
+
+
+
+From domi at vision.ee.ethz.ch  Tue Dec 20 15:41:26 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 20 15:41:56 2005
+Subject: [Paraview] No background when exporting PNG files...
+In-Reply-To: <43A6C7BE.4040404@kitware.com>
+References: <20051219112937.D576872783@mailhost.nacad.ufrj.br>
+	<43A6C7BE.4040404@kitware.com>
+Message-ID: <43A86C76.5070803@vision.ee.ethz.ch>
+
+I do a script using imagemagick and pnmcrop:
+convert paraview.bmp tmp.pnm
+pnmcrop tmp.pnm > tmp2.pnm
+convert tmp2.pnm paraview.png
+to my knowledge, imagemagick cannot do it (strange)
+dominik
+PS. and yes, there could be a "show full extent" option to minimize the 
+borders in PV
+
+Utkarsh Ayachit wrote:
+> Hi,
+> 
+> To the best of my knowledge, it's not possible to save PNGs without
+> background with ParaView. However, you can open the PNG with some
+> application like gimp/irfanview and save pngs with transparent color set
+> to the background (I know, it's painful).
+> 
+> Utkarsh.
+> 
+> Renato N. Elias wrote:
+> 
+>>Hi friends,
+>>
+>>I'd like to know if there's any way to export PNG files without background
+>>with Paraview. If yes, how can I do it?
+>>
+>>Thank's and merry christmas
+>>
+>>Renato N. Elias
+>>===============================================
+>>PhD student - http://www.nacad.ufrj.br/~rnelias
+>>High Performance Computing Center
+>>Federal University of Rio de Janeiro
+>>Rio de Janeiro, Brazil
+>>+55(21) 2562-8080 
+>>
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From domi at vision.ee.ethz.ch  Tue Dec 20 16:21:52 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Tue Dec 20 16:22:23 2005
+Subject: [Paraview] No background when exporting PNG files...
+In-Reply-To: <43A86C76.5070803@vision.ee.ethz.ch>
+References: <20051219112937.D576872783@mailhost.nacad.ufrj.br>	<43A6C7BE.4040404@kitware.com>
+	<43A86C76.5070803@vision.ee.ethz.ch>
+Message-ID: <43A875F0.2080806@vision.ee.ethz.ch>
+
+"convert -crop 0x0 test.bmp test.png" will do it easier.
+bye
+---dsz
+
+Dominik Szczerba wrote:
+> I do a script using imagemagick and pnmcrop:
+> convert paraview.bmp tmp.pnm
+> pnmcrop tmp.pnm > tmp2.pnm
+> convert tmp2.pnm paraview.png
+> to my knowledge, imagemagick cannot do it (strange)
+> dominik
+> PS. and yes, there could be a "show full extent" option to minimize the 
+> borders in PV
+> 
+> Utkarsh Ayachit wrote:
+> 
+>> Hi,
+>>
+>> To the best of my knowledge, it's not possible to save PNGs without
+>> background with ParaView. However, you can open the PNG with some
+>> application like gimp/irfanview and save pngs with transparent color set
+>> to the background (I know, it's painful).
+>>
+>> Utkarsh.
+>>
+>> Renato N. Elias wrote:
+>>
+>>> Hi friends,
+>>>
+>>> I'd like to know if there's any way to export PNG files without 
+>>> background
+>>> with Paraview. If yes, how can I do it?
+>>>
+>>> Thank's and merry christmas
+>>>
+>>> Renato N. Elias
+>>> ===============================================
+>>> PhD student - http://www.nacad.ufrj.br/~rnelias
+>>> High Performance Computing Center
+>>> Federal University of Rio de Janeiro
+>>> Rio de Janeiro, Brazil
+>>> +55(21) 2562-8080
+>>>
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>>
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From xiangbingzeng at yahoo.co.uk  Wed Dec 21 12:35:28 2005
+From: xiangbingzeng at yahoo.co.uk (Xiangbing Zeng)
+Date: Wed Dec 21 12:35:31 2005
+Subject: [Paraview] exporting vtk files to POVRAY
+Message-ID: <20051221173528.84694.qmail@web25507.mail.ukl.yahoo.com>
+
+Hi,
+
+Anyone knows how to convert a vtk data file to POVRAY,
+or VRML?
+
+X.Zeng
+
+
+
+		
+___________________________________________________________
+
+NEW Yahoo! Cars - sell your car and browse thousands
+of new and used cars online! http://uk.cars.yahoo.com/
+
+
+		
+___________________________________________________________ 
+NEW Yahoo! Cars - sell your car and browse thousands of new and used cars online! http://uk.cars.yahoo.com/
+From eschenbe at psc.edu  Wed Dec 21 15:41:03 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Dec 21 15:41:06 2005
+Subject: [Paraview] Extending ParaView 
+Message-ID: <615EE420852DB51156AFDA44@harpo.psc.edu>
+
+The guide to adding a module to ParaView at
+
+   http://www.paraview.org/Wiki/ParaView:Extend
+
+is invaluable and I have used it to add a new reader as an "external 
+module". I'd be interested in comments on 2 problems I encountered.
+
+1) The Wiki's xml for the GUI includes the line
+
+   <ServerManagerFile name="vtkCellDerivatives.pvsm" />
+
+This didn't work for me until I added the attribute "directory". Changing
+"name" to be the full path didn't work. Should "directory" always be added?
+
+2) "The ParaView Guide" (2004), p.193, says "Proxy groups ... are only used
+for organizational purposes; it is perfectly valid to store all proxy
+descriptions in one group." I arbitrarily used group "filters" in the xml 
+for the server manager and ParaView could not find my reader - it had to be 
+changed to "sources". Is that line in the book wrong?
+
+Kent
+Pittsburgh Supercomputing Center
+
+From domi at vision.ee.ethz.ch  Wed Dec 21 15:50:20 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Wed Dec 21 15:50:48 2005
+Subject: [Paraview] refreshing timestep data
+Message-ID: <43A9C00C.6030901@vision.ee.ethz.ch>
+
+Hi,
+Is there a way to refresh the list of timesteps files other than 
+deleting and reloading? (the case when e.g. series of files come from a 
+lengthy simulation and I'm watching the progress)
+Thanks
+Dominik
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From berk.geveci at gmail.com  Wed Dec 21 16:20:45 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Dec 21 16:20:51 2005
+Subject: [Paraview] Extending ParaView
+In-Reply-To: <615EE420852DB51156AFDA44@harpo.psc.edu>
+References: <615EE420852DB51156AFDA44@harpo.psc.edu>
+Message-ID: <a2ab21560512211320k1ab9e06bv858392fed2313784@mail.gmail.com>
+
+>
+> 1) The Wiki's xml for the GUI includes the line
+>
+>    <ServerManagerFile name="vtkCellDerivatives.pvsm" />
+>
+> This didn't work for me until I added the attribute "directory". Changing
+> "name" to be the full path didn't work. Should "directory" always be
+> added?
+
+
+I think as long as the .xml and the .pvsm files are in the same directory,
+it should work fine with the directory attribute.
+
+2) "The ParaView Guide" (2004), p.193, says "Proxy groups ... are only used
+> for organizational purposes; it is perfectly valid to store all proxy
+> descriptions in one group." I arbitrarily used group "filters" in the xml
+> for the server manager and ParaView could not find my reader - it had to
+> be
+> changed to "sources". Is that line in the book wrong?
+
+
+It is not wrong. The part describes the server manager in general. As far as
+the server manager is concerned, proxies can be stored in any group.
+However, ParaView does assume that all sources will be in sources, filters
+in filters, readers in readers etc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051221/259dcbd7/attachment.htm
+From decastro at sdsc.edu  Wed Dec 21 19:44:10 2005
+From: decastro at sdsc.edu (Alex Decastro)
+Date: Wed Dec 21 19:53:18 2005
+Subject: [Paraview] mpirun pvserver: bad X server connection.
+Message-ID: <452F37AE49199D49B1702D7D45038C4D3EE4FE@et.ad.sdsc.edu>
+
+Thank you for the suggestion. I "setenv DISPLAY :0" in the .cshrc file.
+
+Now, pvserver works when I am logged onto the console on both machines.
+
+ 
+
+Is there a way to get pvserver to work without logging onto the console
+for each machine?
+
+ 
+
+Specifically, is there a way to:
+
+ 
+
+1. Compile Paraview so that pvserver does not have any X server
+dependency?
+
+     I compiled Paraview with off-screen Mesa.
+
+ 
+
+OR
+
+ 
+
+2. Configure X server to allow windows to be opened by folks not on the
+console?
+
+     Security restrictions on our systems prevent me from using "xhost
++".
+
+ 
+
+________________________________
+
+From: Berk Geveci [mailto:berk.geveci@gmail.com] 
+Sent: Tuesday, December 20, 2005 6:43 AM
+To: Alex Decastro
+Cc: paraview@paraview.org
+Subject: Re: [Paraview] mpirun pvserver: bad X server connection.
+
+ 
+
+You probably have to set DISPLAY to :0 in your .XXXrc (.bashrc, .cshrc,
+.kshrc, .zshenv) so that it is set during a non-interactive remote
+session. In the next version of ParaView (2.6), it will be possible to
+set the display in a configuration file. 
+
+
+
+On 12/19/05, Alex Decastro <decastro@sdsc.edu> wrote:
+
+I installed Paraview 2.2.1 with OSMesa 5.0.2 and MPICH 1.2.5.2 on RedHat
+Linux.
+
+I am trying to run pvserver in parallel using MPI.
+
+ 
+
+Here is the shell script I use to run pvserver:
+
+#!/bin/sh
+
+export DISPLAY=0.0
+
+$(MPI_HOME)/bin/mpirun -v -machinefile machines.
+
+txt -np 2 $(PARAVIEW_HOME)/bin/pvserver --use-offscreen-rendering
+
+ 
+
+machines.txt - is a text file listing two machines.
+
+ 
+
+Here is the error log:
+
+Listen on port: 11111
+
+Waiting for client...
+
+connected to port 11111
+
+Client connected.
+
+Process id: 1 >> ERROR: In
+/projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/
+vtkXOpenGLRenderWindow.cxx, line 326
+
+vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+
+  
+
+Process id: 1 >> ERROR: In
+/projects/vis/users/decastro/paraview-mpi2/paraview-2.2.1/VTK/Rendering/
+vtkXOpenGLRenderWindow.cxx, line 169
+
+vtkXOpenGLRenderWindow (0xb7825c0): bad X server connection.
+
+ 
+
+On both machines, I logged into the console and set the environment
+variable: setenv DISPLAY :0.0
+
+Everything works fine if I use -np 1 instead of -np 2.
+
+It is possible that security restrictions on our Linux system prevent
+the two pvserver processes from communicating using X server. I cannot
+run "xhost +" on our Linux system, due to our security restrictions.
+Could that be related to the problem?
+
+ 
+
+For example, if I use rsh to start xclock, I get the following error:
+
+% rsh machine xclock
+
+Error: Can't open display.
+
+ 
+
+Thanks for any help,
+
+Alex
+
+ 
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051221/39c9ebac/attachment.html
+From domi at vision.ee.ethz.ch  Thu Dec 22 11:35:21 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Thu Dec 22 11:35:51 2005
+Subject: [Paraview] 3D image import
+Message-ID: <43AAD5C9.4000200@vision.ee.ethz.ch>
+
+Hi,
+What is the procedure to import a stack of bitmap images as a 3D 
+volumetric image into Paraview?
+Dominik
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From eschenbe at psc.edu  Thu Dec 22 12:31:41 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Dec 22 12:31:43 2005
+Subject: [Paraview] Local Addons for ParaView
+Message-ID: <715ADCF98083ECFC08FD656F@harpo.psc.edu>
+
+We've accumulated a short list of readers and filters that we add to each 
+new release of PV. It would be helpful to have an automatic scheme for 
+compiling that picks up our local changes. I'd like to use such a scheme at 
+our center and make it available to our users running PV on their own 
+workstations.
+
+For each addon I've built a "kit" that is self contained - it includes the 
+source, the xml for the GUI and server manager, an init file for CMake, and 
+a one-line command that runs CM to include the pieces. This works fine.
+
+Combining several "kits" will require a small amount of extra work. For 
+example, the several init files for CMake must be merged.
+
+I'd appreciate any hints, comments or examples of how its done at other 
+sites. If it seems like this would be generally useful I could add a 
+summary and an example to the Wiki pages.
+
+Kent
+Pittsburgh Supercomputing Center
+
+From kevin.hobbs.1 at ohiou.edu  Thu Dec 22 13:18:38 2005
+From: kevin.hobbs.1 at ohiou.edu (Kevin H. Hobbs)
+Date: Thu Dec 22 13:19:07 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <43AAD5C9.4000200@vision.ee.ethz.ch>
+References: <43AAD5C9.4000200@vision.ee.ethz.ch>
+Message-ID: <1135275518.12354.6.camel@gargon.hooperlab>
+
+On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+> Hi,
+> What is the procedure to import a stack of bitmap images as a 3D 
+> volumetric image into Paraview?
+> Dominik
+
+The vtkImageReader2 has methods that do this.
+
+http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: This is a digitally signed message part
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051222/4d2431e5/attachment.pgp
+From domi at vision.ee.ethz.ch  Thu Dec 22 13:31:39 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Thu Dec 22 13:32:09 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <1135275518.12354.6.camel@gargon.hooperlab>
+References: <43AAD5C9.4000200@vision.ee.ethz.ch>
+	<1135275518.12354.6.camel@gargon.hooperlab>
+Message-ID: <43AAF10B.9080303@vision.ee.ethz.ch>
+
+thanks a lot!
+Dominik
+
+Kevin H. Hobbs wrote:
+> On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+> 
+>>Hi,
+>>What is the procedure to import a stack of bitmap images as a 3D 
+>>volumetric image into Paraview?
+>>Dominik
+> 
+> 
+> The vtkImageReader2 has methods that do this.
+> 
+> http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From domi at vision.ee.ethz.ch  Thu Dec 22 15:42:43 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Thu Dec 22 15:43:15 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <1135275518.12354.6.camel@gargon.hooperlab>
+References: <43AAD5C9.4000200@vision.ee.ethz.ch>
+	<1135275518.12354.6.camel@gargon.hooperlab>
+Message-ID: <43AB0FC3.107@vision.ee.ethz.ch>
+
+I converted my images to a vti file using vtkXMLImageDataWriter. I can 
+load it into PV but volume rendering is not available (only surface). 
+What did I miss?
+Thanks
+Dominik
+
+Kevin H. Hobbs wrote:
+> On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+> 
+>>Hi,
+>>What is the procedure to import a stack of bitmap images as a 3D 
+>>volumetric image into Paraview?
+>>Dominik
+> 
+> 
+> The vtkImageReader2 has methods that do this.
+> 
+> http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From amy.squillacote at kitware.com  Thu Dec 22 15:57:59 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Dec 22 15:58:11 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <43AB0FC3.107@vision.ee.ethz.ch>
+References: <43AAD5C9.4000200@vision.ee.ethz.ch>
+	<1135275518.12354.6.camel@gargon.hooperlab>
+	<43AB0FC3.107@vision.ee.ethz.ch>
+Message-ID: <6.2.5.6.2.20051222155716.04504cc0@kitware.com>
+
+Only volume rendering of unstructured data is supported in ParaView. 
+Run the Tetrahedralize filter on your volume (within ParaView), and 
+then you should be able to volume render it.
+
+- Amy
+
+At 03:42 PM 12/22/2005, Dominik Szczerba wrote:
+>I converted my images to a vti file using vtkXMLImageDataWriter. I 
+>can load it into PV but volume rendering is not available (only 
+>surface). What did I miss?
+>Thanks
+>Dominik
+>
+>Kevin H. Hobbs wrote:
+>>On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+>>
+>>>Hi,
+>>>What is the procedure to import a stack of bitmap images as a 3D 
+>>>volumetric image into Paraview?
+>>>Dominik
+>>
+>>The vtkImageReader2 has methods that do this.
+>>http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+>
+>--
+>Dominik Szczerba, Dr.
+>Computer Vision Lab CH-8092 Zurich
+>http://www.vision.ee.ethz.ch/~domi
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From domi at vision.ee.ethz.ch  Thu Dec 22 17:12:59 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Thu Dec 22 17:13:31 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <6.2.5.6.2.20051222155716.04504cc0@kitware.com>
+References: <43AAD5C9.4000200@vision.ee.ethz.ch>
+	<1135275518.12354.6.camel@gargon.hooperlab>
+	<43AB0FC3.107@vision.ee.ethz.ch>
+	<6.2.5.6.2.20051222155716.04504cc0@kitware.com>
+Message-ID: <43AB24EB.7040101@vision.ee.ethz.ch>
+
+Yes, thanks a lot.
+Dominik
+
+Amy Squillacote wrote:
+> Only volume rendering of unstructured data is supported in ParaView. Run 
+> the Tetrahedralize filter on your volume (within ParaView), and then you 
+> should be able to volume render it.
+> 
+> - Amy
+> 
+> At 03:42 PM 12/22/2005, Dominik Szczerba wrote:
+> 
+>> I converted my images to a vti file using vtkXMLImageDataWriter. I can 
+>> load it into PV but volume rendering is not available (only surface). 
+>> What did I miss?
+>> Thanks
+>> Dominik
+>>
+>> Kevin H. Hobbs wrote:
+>>
+>>> On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+>>>
+>>>> Hi,
+>>>> What is the procedure to import a stack of bitmap images as a 3D 
+>>>> volumetric image into Paraview?
+>>>> Dominik
+>>>
+>>>
+>>> The vtkImageReader2 has methods that do this.
+>>> http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+>>
+>>
+>> -- 
+>> Dominik Szczerba, Dr.
+>> Computer Vision Lab CH-8092 Zurich
+>> http://www.vision.ee.ethz.ch/~domi
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From bnwylie at sandia.gov  Fri Dec 23 12:22:05 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Fri Dec 23 12:22:18 2005
+Subject: [Paraview] 3D image import
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0190EDB2@ES20SNLNT.srn.sandia.gov>
+
+Just a follow up.
+
+ParaView has a raw binary reader that works great. So you may not need
+to do any conversions.
+
+Also ParaView will have structured data volume rendering support in
+ParaView 2.6. :)
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+> Behalf Of Dominik Szczerba
+> Sent: Thursday, December 22, 2005 3:13 PM
+> Cc: ParaView@paraview.org
+> Subject: Re: [Paraview] 3D image import
+> 
+> Yes, thanks a lot.
+> Dominik
+> 
+> Amy Squillacote wrote:
+> > Only volume rendering of unstructured data is supported in 
+> ParaView. 
+> > Run the Tetrahedralize filter on your volume (within ParaView), and 
+> > then you should be able to volume render it.
+> > 
+> > - Amy
+> > 
+> > At 03:42 PM 12/22/2005, Dominik Szczerba wrote:
+> > 
+> >> I converted my images to a vti file using vtkXMLImageDataWriter. I 
+> >> can load it into PV but volume rendering is not available 
+> (only surface).
+> >> What did I miss?
+> >> Thanks
+> >> Dominik
+> >>
+> >> Kevin H. Hobbs wrote:
+> >>
+> >>> On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+> >>>
+> >>>> Hi,
+> >>>> What is the procedure to import a stack of bitmap images as a 3D 
+> >>>> volumetric image into Paraview?
+> >>>> Dominik
+> >>>
+> >>>
+> >>> The vtkImageReader2 has methods that do this.
+> >>> http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+> >>
+> >>
+> >> --
+> >> Dominik Szczerba, Dr.
+> >> Computer Vision Lab CH-8092 Zurich
+> >> http://www.vision.ee.ethz.ch/~domi
+> >> _______________________________________________
+> >> ParaView mailing list
+> >> ParaView@paraview.org
+> >> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> --
+> Dominik Szczerba, Dr.
+> Computer Vision Lab CH-8092 Zurich
+> http://www.vision.ee.ethz.ch/~domi
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From berk.geveci at gmail.com  Fri Dec 23 14:44:16 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Dec 23 14:44:19 2005
+Subject: [Paraview] Communication error in Paraview 2.5
+In-Reply-To: <D9A8D98DDC682044806D5B46AF5C11E2078B90@ARLABML01.DS.ARL.ARMY.MIL>
+References: <D9A8D98DDC682044806D5B46AF5C11E2078B90@ARLABML01.DS.ARL.ARMY.MIL>
+Message-ID: <a2ab21560512231144i5c966716s6e3305689f732dd6@mail.gmail.com>
+
+I fixed this bug. The fix will be in the next patch of 2.6. You can
+also get 2.6 from cvs and build.
+
+-Berk
+
+On 12/19/05, Vines, John  (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+> Berk,
+>
+> I've cut and pasted the error I receive from Paraview, yes the server seems to have crashed.  FYI, we are using MPICH 1.2.6.  I am looking into how it was built.
+>
+> PVSERVER ERROR:
+> pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Parallel/vtkExtractCTHPa rt.cxx:365: virtual int vtkExtractCTHPart::RequestData(vtkInformation*, vtk InformationVector**, vtkInformationVector*): Assertion `"check: SetActiveSc alar succeeded" && checkIndex>=0' failed.
+> Process id: 3 >> ERROR: In /share/jvines/Ice/build/src/ParaView/VTK/Filteri ng/vtkDemandDrivenPipeline.cxx, line 692
+> vtkStreamingDemandDrivenPipeline (0x34094cb0): Input port 0 of algorithm vt kAppendPolyData(0x2377dd60) has 0 connections but is not optional.
+>
+> p0_3629:  p4_error: net_recv read:  probable EOF on socket: 1
+> p1_11480:  p4_error: net_recv read:  probable EOF on socket: 1
+> pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Common/vtkGarbageCollect or.cxx:981: vtkGarbageCollectorSingleton::~vtkGarbageCollectorSingleton(): Assertion `this->TotalNumberOfReferences == 0' failed.
+> Abort
+> Abort
+>
+>
+>
+> -----Original Message-----
+> From:   Berk Geveci [mailto:berk.geveci@gmail.com]
+> Sent:   Fri 12/16/2005 3:49 PM
+> To:     Vines, John  (Civ, ARL/CISD)
+> Cc:     paraview@paraview.org
+> Subject:        Re: [Paraview] Communication error in Paraview 2.5
+> This might mean that your server crashed. Can you verify this? How can we
+> reproduce it here?
+>
+> On 12/16/05, Vines, John (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+> >
+> > I am curious if anyone has seen communication problems in Paraview 2.5.0client/server mode on Linux64.  I am visualizing CTH data and everything is
+> > fine until I try to change timesteps in the data.
+> >
+> > Paraview error log:
+> >
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (62)
+> > vtkServerConnection (0x3295600): Server Connection Closed!
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (62)
+> > vtkServerConnection (0x3295600): Server Connection Closed!
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> >
+> > thanks for your time,
+> >
+> > John
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+>
+>
+>
+>
+From jvines at arl.army.mil  Fri Dec 23 15:27:49 2005
+From: jvines at arl.army.mil (Vines, John  (Civ, ARL/CISD))
+Date: Fri Dec 23 15:27:57 2005
+Subject: [Paraview] Communication error in Paraview 2.5
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E2078BA9@ARLABML01.DS.ARL.ARMY.MIL>
+
+Berk,
+Thanks for the help.  I'll get 2.6 from cvs.
+
+Have a good holiday.
+
+John
+
+-----Original Message-----
+From:	Berk Geveci [mailto:berk.geveci@gmail.com]
+Sent:	Fri 12/23/2005 2:44 PM
+To:	Vines, John  (Civ, ARL/CISD)
+Cc:	paraview@paraview.org
+Subject:	Re: [Paraview] Communication error in Paraview 2.5
+I fixed this bug. The fix will be in the next patch of 2.6. You can
+also get 2.6 from cvs and build.
+
+-Berk
+
+On 12/19/05, Vines, John  (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+> Berk,
+>
+> I've cut and pasted the error I receive from Paraview, yes the server seems to have crashed.  FYI, we are using MPICH 1.2.6.  I am looking into how it was built.
+>
+> PVSERVER ERROR:
+> pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Parallel/vtkExtractCTHPa rt.cxx:365: virtual int vtkExtractCTHPart::RequestData(vtkInformation*, vtk InformationVector**, vtkInformationVector*): Assertion `"check: SetActiveSc alar succeeded" && checkIndex>=0' failed.
+> Process id: 3 >> ERROR: In /share/jvines/Ice/build/src/ParaView/VTK/Filteri ng/vtkDemandDrivenPipeline.cxx, line 692
+> vtkStreamingDemandDrivenPipeline (0x34094cb0): Input port 0 of algorithm vt kAppendPolyData(0x2377dd60) has 0 connections but is not optional.
+>
+> p0_3629:  p4_error: net_recv read:  probable EOF on socket: 1
+> p1_11480:  p4_error: net_recv read:  probable EOF on socket: 1
+> pvserver: /share/jvines/Ice/build/src/ParaView/VTK/Common/vtkGarbageCollect or.cxx:981: vtkGarbageCollectorSingleton::~vtkGarbageCollectorSingleton(): Assertion `this->TotalNumberOfReferences == 0' failed.
+> Abort
+> Abort
+>
+>
+>
+> -----Original Message-----
+> From:   Berk Geveci [mailto:berk.geveci@gmail.com]
+> Sent:   Fri 12/16/2005 3:49 PM
+> To:     Vines, John  (Civ, ARL/CISD)
+> Cc:     paraview@paraview.org
+> Subject:        Re: [Paraview] Communication error in Paraview 2.5
+> This might mean that your server crashed. Can you verify this? How can we
+> reproduce it here?
+>
+> On 12/16/05, Vines, John (Civ, ARL/CISD) <jvines@arl.army.mil> wrote:
+> >
+> > I am curious if anyone has seen communication problems in Paraview 2.5.0client/server mode on Linux64.  I am visualizing CTH data and everything is
+> > fine until I try to change timesteps in the data.
+> >
+> > Paraview error log:
+> >
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (62)
+> > vtkServerConnection (0x3295600): Server Connection Closed!
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (62)
+> > vtkServerConnection (0x3295600): Server Connection Closed!
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> > There was a VTK Error in file:
+> > /share/jvines/Ice/build/src/ParaView/Servers/Common/vtkServerConnection.cxx
+> > (290)
+> > vtkServerConnection (0x3295600): Server could failed to gather
+> > information.
+> >
+> > thanks for your time,
+> >
+> > John
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+>
+>
+>
+>
+
+
+
+From domi at vision.ee.ethz.ch  Sat Dec 24 03:02:49 2005
+From: domi at vision.ee.ethz.ch (Dominik Szczerba)
+Date: Sat Dec 24 03:03:29 2005
+Subject: [Paraview] 3D image import
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0190EDB2@ES20SNLNT.srn.sandia.gov>
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0190EDB2@ES20SNLNT.srn.sandia.gov>
+Message-ID: <43AD00A9.1@vision.ee.ethz.ch>
+
+Is it already in CVS?
+BTW one of our students implemented volumetric visualization for 
+cartesian grids using gfx hardware. Looks nice... on his computer 
+(crashes mine). Let me know if you want to have it.
+Regards,
+Dominik
+
+Wylie, Brian wrote:
+ >
+> Also ParaView will have structured data volume rendering support in
+> ParaView 2.6. :)
+> 
+>   Brian Wylie - Org 9227
+>   Sandia National Laboratories
+>   MS 0822 - Building 880/A1-J
+>   (505)844-2238 FAX(505)845-0833                       
+>        ____                  _    __
+>       / __ \____  _________ | |  / (_)__ _      __ 
+>      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> 
+>                                     Unleash the Beast
+>  
+> 
+> 
+>>-----Original Message-----
+>>From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+>>[mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+>>Behalf Of Dominik Szczerba
+>>Sent: Thursday, December 22, 2005 3:13 PM
+>>Cc: ParaView@paraview.org
+>>Subject: Re: [Paraview] 3D image import
+>>
+>>Yes, thanks a lot.
+>>Dominik
+>>
+>>Amy Squillacote wrote:
+>>
+>>>Only volume rendering of unstructured data is supported in 
+>>
+>>ParaView. 
+>>
+>>>Run the Tetrahedralize filter on your volume (within ParaView), and 
+>>>then you should be able to volume render it.
+>>>
+>>>- Amy
+>>>
+>>>At 03:42 PM 12/22/2005, Dominik Szczerba wrote:
+>>>
+>>>
+>>>>I converted my images to a vti file using vtkXMLImageDataWriter. I 
+>>>>can load it into PV but volume rendering is not available 
+>>
+>>(only surface).
+>>
+>>>>What did I miss?
+>>>>Thanks
+>>>>Dominik
+>>>>
+>>>>Kevin H. Hobbs wrote:
+>>>>
+>>>>
+>>>>>On Thu, 2005-12-22 at 17:35 +0100, Dominik Szczerba wrote:
+>>>>>
+>>>>>
+>>>>>>Hi,
+>>>>>>What is the procedure to import a stack of bitmap images as a 3D 
+>>>>>>volumetric image into Paraview?
+>>>>>>Dominik
+>>>>>
+>>>>>
+>>>>>The vtkImageReader2 has methods that do this.
+>>>>>http://www.vtk.org/doc/nightly/html/classvtkImageReader2.html
+>>>>
+>>>>
+>>>>--
+>>>>Dominik Szczerba, Dr.
+>>>>Computer Vision Lab CH-8092 Zurich
+>>>>http://www.vision.ee.ethz.ch/~domi
+>>>>_______________________________________________
+>>>>ParaView mailing list
+>>>>ParaView@paraview.org
+>>>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>--
+>>Dominik Szczerba, Dr.
+>>Computer Vision Lab CH-8092 Zurich
+>>http://www.vision.ee.ethz.ch/~domi
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+> 
+> 
+
+-- 
+Dominik Szczerba, Dr.
+Computer Vision Lab CH-8092 Zurich
+http://www.vision.ee.ethz.ch/~domi
+From samuelkey at comcast.net  Wed Dec 28 18:57:51 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Wed Dec 28 18:57:50 2005
+Subject: [Paraview] Re: WinPV 2.4.1 on Sun W2100z, 4GB RAM,
+	dual Opteron WS under WinXP-64
+References: <4295E51B.2060604@ifp.fr>
+	<6.2.1.2.2.20050526111726.03f32408@pop.biz.rr.com>
+Message-ID: <002801c60c0a$83c722f0$6e01a8c0@last>
+
+Amy et al;
+
+I do not know if this is a PV limitation or a WinXP-64 (rc2) limitation.
+I am bring it to your attention in case you have some insight into what
+may be happening or on the off chance you think it may be a PV issue.
+
+I have a 400K tetrahedral mesh. I have 101 time steps. The data is
+stored in an EnSight Gold binary format. PV reads the data just fine
+and I can look at point and cell data at any time step. I can load in
+additional objects stored in ExodusII-formats.  The calculator, clipping
+and 3D contour filters work just fine.
+
+However, when I invoke an animation all goes well until the construction
+of the cached per-time-step images reaches the 2GB RAM mark at
+which time WinXP has a problem. WinXP seems to think this is an issue
+for which it wants to send an error-report to MS. I have let WinXP64 send
+its error messages home. (But, I don't expect a personal reply from MS.)
+
+I am asking PV to animate a cell variable.
+
+If it is of any value to you, I can run tests for you on this condition. I
+can
+also move the data to the Suse Linux 9.3 AMD64 side and see what
+happens when I make the same request of the Linux version of PV.
+w
+Regards,
+
+Sam Key
+
+
+
+
+

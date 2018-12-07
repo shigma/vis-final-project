@@ -1,0 +1,3112 @@
+From tdubuis at scconsultants.com  Mon Oct  3 04:16:02 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Mon Oct  3 04:14:18 2005
+Subject: [Paraview] Bug with tube filter
+Message-ID: <000c01c5c7f2$b2a2e480$41c809c0@jupiter>
+
+Hello all,
+
+I have a problem in Paraview 2.2.1 on PC with windows XP SP2. (I reproduce the problem on the previous versions)
+I load a vtk file.
+I select glyph filter, I choose glyph option : line0
+On the glyph I apply tube filter and I have an error :
+"There was a VTK Error in file : C:\devel\paraview_2.2.1\Paraview\VTK\Filtering\vtkPolyLine.cxx (102)"
+"Coincident points in polyline .. can't compute normals"
+"There was a VTK Warning in file : C:\devel\paraview_2.2.1\Paraview\VTK\Graphics\vtkTubeFilter.cxx (217)"
+"Could not generate normals for line. Skipping to next"
+These four lines are repeated with beep until I reboot my PC.
+
+This problem comes on all vtk files I try.
+
+Thank for your support
+
+Best regards, 
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051003/de43a84e/attachment.htm
+From hudson at mcs.anl.gov  Tue Oct  4 10:25:43 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Tue Oct  4 10:27:21 2005
+Subject: [Paraview] Ghost cells
+Message-ID: <6.2.1.2.2.20051004091513.02ca4d60@pop.mcs.anl.gov>
+
+
+It looks as though VTK creates ghost cells for its own use, under the hood, when it needs to.
+
+My PARAMESH AMR data often contains ghost cells.  It doesn't look like paraview & VTK support either
+1)  user loading of ghost cells, or
+2)  the use of ghost cells to, e.g., properly convert cell-centered to point-centered data (isosurfaces of my cell-centered AMR data, converted to point-centered for contouring, are discontinuous at block boundaries).
+
+Are those two points correct?
+
+
+Thanks.
+
+
+
+Randy.
+630 252 8690.
+
+From Ralf.Floca at med.uni-heidelberg.de  Wed Oct  5 09:57:21 2005
+From: Ralf.Floca at med.uni-heidelberg.de (Floca, Ralf)
+Date: Wed Oct  5 09:57:28 2005
+Subject: [Paraview] Viewing itk vector images with glyphs properly
+Message-ID: <123BA0F81288BA44BB8011E378F8182F0ACADAFA@mailhost.krz.uni-heidelberg.de>
+
+Hi
+
+I am not sure, if it is better posted here or in the itk mailinglist, because it mingels both. So please don't mind if it's ill posted.
+
+I have generated itk images with itk::vector as pixel type (as e.g. produced by itk::fem::FEMRegistrationFilter::GetDeformationField())
+
+Afterwards I have saved this deformation fields as a meta image (*.mhd). For saving the image I used the same code snippets like in chapter 7.8 of the itkSoftwareGuide 2.2.0.
+
+When I load this meta image (2D image with 2D vectors) into ParaView, it shows the norm of vectors. The components of the vector seems to be available and correct, because in the "Edit Color Map" menu it has been recognized as vector and I can choose to show single components of the vector instate of the norm.
+
+Now I want to visualize the vectors with a glyph filter. When I add the glyph filter directly to the reader, the only available orient mode is "Off", "Vector" is disabled and for "Scale Mode" there is only "Data Scaling Off" available. As a result of this, I only have unsigned glyphs instate of glyphs showing the deformation field.
+
+The information given in a post with a similar topic (http://public.kitware.com/pipermail/paraview/2004-February/000478.html) didn't helped me, because I think I did everything as explained, but wasn't able to properly setup the glyph filter.
+
+I would be very thankful, if anybody could give me a clue what I did wrong.
+
+The header of a sample meta image is:
+ObjectType = Image
+NDims = 2
+BinaryData = True
+BinaryDataByteOrderMSB = False
+TransformMatrix = 1 0 0 1
+Offset = 0 0
+CenterOfRotation = 0 0
+ElementSpacing = 1 1
+DimSize = 20 20
+AnatomicalOrientation = ??
+ElementNumberOfChannels = 2
+ElementType = MET_DOUBLE
+ElementDataFile = sample.raw
+
+Best regards,
+
+Ralf o Floca
+
+---------------------------------------------------------------------
+Ralf Floca
+University of Heidelberg                           
+Institute for Medical Biometry and Informatics
+Department of Medical Informatics
+Im Neuenheimer Feld 400            
+D-69120 Heidelberg, Germany             Tel. : +49 (0)6221 56-7484  
+http://www.med.uni-heidelberg.de/mi     Fax  :               -4997    
+ralf.floca@med.uni-heidelberg.de        Sekr.:               -7483
+---------------------------------------------------------------------
+
+ 
+
+-----Urspr?ngliche Nachricht-----
+Von: Floca, Ralf 
+Gesendet: Mittwoch, 5. Oktober 2005 15:48
+An: 'paraview@paraview.org'
+Betreff: Viewing itk vector images with glyphs properly
+
+
+Hi
+
+I am not sure, if it is better posted here or in the itk mailinglist, because it mingels both. So please don't mind if it's ill posted.
+
+I have generated itk images with itk::vector as pixel type (as e.g. produced by itk::fem::FEMRegistrationFilter::GetDeformationField())
+
+Afterwards I have saved this deformation fields as a meta image (*.mhd). For saving the image I used the same code snippets like in chapter 7.8 of the itkSoftwareGuide 2.2.0.
+
+When I load this meta image (2D image with 2D vectors) into ParaView, it shows the norm of vectors. The components of the vector seems to be available and correct, because in the "Edit Color Map" menu it has been recognized as vector and I can choose to show single components of the vector instate of the norm.
+
+Now I want to visualize the vectors with a glyph filter. When I add the glyph filter directly to the reader, the only available orient mode is "Off", "Vector" is disabled and for "Scale Mode" there is only "Data Scaling Off" available. As a result of this, I only have unsigned glyphs instate of glyphs showing the deformation field.
+
+The information given in a post with a similar topic (http://public.kitware.com/pipermail/paraview/2004-February/000478.html) didn't helped me, because I think I did everything as explained, but wasn't able to properly setup the glyph filter.
+
+I would be very thankful, if anybody could give me a clue what I did wrong.
+
+The header of a sample meta image is:
+ObjectType = Image
+NDims = 2
+BinaryData = True
+BinaryDataByteOrderMSB = False
+TransformMatrix = 1 0 0 1
+Offset = 0 0
+CenterOfRotation = 0 0
+ElementSpacing = 1 1
+DimSize = 20 20
+AnatomicalOrientation = ??
+ElementNumberOfChannels = 2
+ElementType = MET_DOUBLE
+ElementDataFile = sample.raw
+
+Best regards,
+
+Ralf o Floca
+
+---------------------------------------------------------------------
+Ralf Floca
+University of Heidelberg                           
+Institute for Medical Biometry and Informatics
+Department of Medical Informatics
+Im Neuenheimer Feld 400            
+D-69120 Heidelberg, Germany             Tel. : +49 (0)6221 56-7484  
+http://www.med.uni-heidelberg.de/mi     Fax  :               -4997    
+ralf_floca@med.uni-heidelberg.de        Sekr.:               -7483
+---------------------------------------------------------------------
+
+ 
+From cus2 at Lehigh.EDU  Wed Oct  5 13:04:31 2005
+From: cus2 at Lehigh.EDU (Cumali Semetay)
+Date: Wed Oct  5 13:03:26 2005
+Subject: [Paraview] tecplot to vtk converter
+Message-ID: <007d01c5c9ce$daa6fd30$3471b480@semetay>
+
+Hello everyone,
+
+I was wondering if anybody has a tecplot to vtk converter. I appreciate your help.
+
+Thank you,
+
+Cumali Semetay
+PhD Candidate
+Department of Mechanical Engineering & Mechanics
+367 Packard Lab. 19 Memorial Drive West
+Lehigh University
+Bethlehem, PA 18015
+Tel: 610-758-3808
+Fax: 610-758-4041
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051005/ae144ec6/attachment.html
+From eschenbe at psc.edu  Wed Oct  5 21:18:18 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Oct  5 21:18:48 2005
+Subject: [Paraview] Do Clip and Tetrahedralize Have A Bug in 2.2.1?
+Message-ID: <460BBEB6E0DD9D25E6E77326@localhost.localdomain>
+
+Does the tetrahedralize filter have problems with curvilinear grids?
+
+Contours were drawn using the ParaView tutorial data file "bluntfin.vts"; 
+then again after using the tetrahedralize filter; then again after running 
+the input data through the clip filter (using the box function and with 
+InsideOut on). The image is at
+
+   http://www.psc.edu/~eschenbe/contours3.jpg
+
+I am just guessing but it seems that clip converts ints output to 
+tetrahedrons in this case.
+
+I would have expected the plots from clip and tetrahedralize would be the 
+same. And I had thought that they would both look like the plot using the 
+original data.
+
+Comments?
+
+Kent
+Pittsburgh Supercomputing Center
+From i.barosan at TUE.nl  Tue Oct  4 06:05:05 2005
+From: i.barosan at TUE.nl (Barosan, I.)
+Date: Thu Oct  6 08:39:18 2005
+Subject: [Paraview] COLOR_SCALAR
+Message-ID: <9F38CF35D80CAE409B979F3EB5242B4A7652EB@winex2.campus.tue.nl>
+
+ 
+
+I would like to use unsigned char values which are directly mapped to
+colors. I've created this vtk file that contains 25 points and each
+point has his own color specified with COLOR_SCALARS. If I read this
+file in ParaView2.2  the colors assigned to the points are wrong. The
+results look good when I use another vtk package (MayaVi). Is that a bug
+in ParaView or I am doing something wrong ? Any help will be
+appreciated,
+
+ 
+
+ 
+
+Regards,
+
+ 
+
+  Ion Barosan
+
+ 
+
+// VTK file
+
+# vtk DataFile Version 2.0
+
+roostershading
+
+ASCII
+
+DATASET POLYDATA
+
+POINTS 25 float
+
+0.0 0.0 0.0
+
+0.0 1.0 0.0
+
+0.0 2.0 0.0
+
+0.0 3.0 0.0
+
+0.0 4.0 0.0
+
+1.0 0.0 0.0
+
+1.0 1.0 0.0
+
+1.0 2.0 0.0
+
+1.0 3.0 0.0
+
+1.0 4.0 0.0
+
+2.0 0.0 0.0
+
+2.0 1.0 0.0
+
+2.0 2.0 0.0
+
+2.0 3.0 0.0
+
+2.0 4.0 0.0
+
+3.0 0.0 0.0
+
+3.0 1.0 0.0
+
+3.0 2.0 0.0
+
+3.0 3.0 0.0
+
+3.0 4.0 0.0
+
+4.0 0.0 0.0
+
+4.0 1.0 0.0
+
+4.0 2.0 0.0
+
+4.0 3.0 0.0
+
+4.0 4.0 0.0
+
+POLYGONS 16 80
+
+4 0 5 6 1 
+
+4 1 6 7 2 
+
+4 2 7 8 3 
+
+4 3 8 9 4 
+
+4 5 10 11 6 
+
+4 6 11 12 7 
+
+4 7 12 13 8 
+
+4 8 13 14 9 
+
+4 10 15 16 11 
+
+4 11 16 17 12 
+
+4 12 17 18 13 
+
+4 13 18 19 14 
+
+4 15 20 21 16 
+
+4 16 21 22 17 
+
+4 17 22 23 18 
+
+4 18 23 24 19 
+
+POINT_DATA 25
+
+COLOR_SCALARS colors 4
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+1.0 0.0 1.0 1.0
+
+ 
+
+ 
+
+ 
+
+ 
+
+****************************************************************
+
+*> dr. ir. Ion Barosan,  i.barosan@tue.nl                     <*
+
+*>       Eindhoven University of Technology, HG-6.87          <*
+
+*>     P.O. Box 513, 5600 MB Eindhoven,The Netherlands        <*
+
+*>  Phone: +31 (0)40 247(2920/8388), Fax-1:+31 40 2468508     <*
+
+****************************************************************
+
+"Fluids are a lot easier to drink that they are to understand".
+
+                                                    Alan Newell
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051004/1f531466/attachment-0001.html
+From Ralf.Floca at med.uni-heidelberg.de  Wed Oct  5 09:47:54 2005
+From: Ralf.Floca at med.uni-heidelberg.de (Floca, Ralf)
+Date: Thu Oct  6 08:39:18 2005
+Subject: [Paraview] Viewing itk vector images with glyphs properly
+Message-ID: <123BA0F81288BA44BB8011E378F8182F0ACADAF5@mailhost.krz.uni-heidelberg.de>
+
+Hi
+
+I am not sure, if it is better posted here or in the itk mailinglist,
+because it mingels both. So please don't mind if it's ill posted.
+
+I have generated itk images with itk::vector as pixel type (as e.g.
+produced by itk::fem::FEMRegistrationFilter::GetDeformationField())
+
+Afterwards I have saved this deformation fields as a meta image (*.mhd).
+For saving the image I used the same code snippets like in chapter 7.8
+of the itkSoftwareGuide 2.2.0.
+
+When I load this meta image (2D image with 2D vectors) into ParaView, it
+shows the norm of vectors. The components of the vector seems to be
+available and correct, because in the "Edit Color Map" menu it has been
+recognized as vector and I can choose to show single components of the
+vector instate of the norm.
+
+Now I want to visualize the vectors with a glyph filter. When I add the
+glyph filter directly to the reader, the only available orient mode is
+"Off", "Vector" is disabled and for "Scale Mode" there is only "Data
+Scaling Off" available. As a result of this, I only have unsigned glyphs
+instate of glyphs showing the deformation field.
+
+The information given in a post with a similar topic
+(http://public.kitware.com/pipermail/paraview/2004-February/000478.html)
+didn't helped me, because I think I did everything as explained, but
+wasn't able to properly setup the glyph filter.
+
+I would be very thankful, if anybody could give me a clue what I did
+wrong.
+
+The header of a sample meta image is:
+ObjectType = Image
+NDims = 2
+BinaryData = True
+BinaryDataByteOrderMSB = False
+TransformMatrix = 1 0 0 1
+Offset = 0 0
+CenterOfRotation = 0 0
+ElementSpacing = 1 1
+DimSize = 20 20
+AnatomicalOrientation = ??
+ElementNumberOfChannels = 2
+ElementType = MET_DOUBLE
+ElementDataFile = sample.raw
+
+Best regards,
+
+Ralf o Floca
+
+---------------------------------------------------------------------
+Ralf Floca
+University of Heidelberg                           
+Institute for Medical Biometry and Informatics
+Department of Medical Informatics
+Im Neuenheimer Feld 400            
+D-69120 Heidelberg, Germany             Tel. : +49 (0)6221 56-7484  
+http://www.med.uni-heidelberg.de/mi     Fax  :               -4997    
+ralf_floca@med.uni-heidelberg.de        Sekr.:               -7483
+---------------------------------------------------------------------
+
+ 
+From nlramakr at orca.st.usm.edu  Thu Oct  6 11:38:47 2005
+From: nlramakr at orca.st.usm.edu (Narasimhan L. Ramakrishnan)
+Date: Thu Oct  6 11:39:02 2005
+Subject: [Paraview] plot3D to vtk converter
+In-Reply-To: <007d01c5c9ce$daa6fd30$3471b480@semetay>
+References: <007d01c5c9ce$daa6fd30$3471b480@semetay>
+Message-ID: <Pine.LNX.4.63.0510061034590.7151@orca_login1.st.usm.edu>
+
+Hi;
+     I want to convert a plot3d file to vtk format. Can someone help me 
+with the vtk file data format.
+
+Thank You
+Nara Ramakrishnan
+Graduate Student
+Dept. of Computer Science
+Univ. Of Southern Miss
+
+From eschenbe at psc.edu  Thu Oct  6 11:46:50 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct  6 11:46:56 2005
+Subject: [Paraview] plot3D to vtk converter
+In-Reply-To: <Pine.LNX.4.63.0510061034590.7151@orca_login1.st.usm.edu>
+References: <007d01c5c9ce$daa6fd30$3471b480@semetay>
+	<Pine.LNX.4.63.0510061034590.7151@orca_login1.st.usm.edu>
+Message-ID: <756B34B9AB5FFE4DA2321679@harpo.psc.edu>
+
+-- <nlramakr@orca.st.usm.edu> wrote:
+> I want to convert a plot3d file to vtk format. Can someone help me
+> with the vtk file data format.
+
+I don't think you need to know the VTK file format. Just read the file into 
+ParaView (it has a plot3d reader) and then immediately use File->Write Data 
+to write it to a new file in one of the VTK formats.
+
+Kent
+Pittsburgh Supercomputing Center
+
+From kmorel at sandia.gov  Thu Oct  6 11:49:14 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Thu Oct  6 11:49:40 2005
+Subject: [Paraview] plot3D to vtk converter
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D316AE@ES21SNLNT.srn.sandia.gov>
+
+ParaView comes with a plot3d reader and a VTK data format writer.  Load
+your plot3d into ParaView and then save the data in any format you
+choose.
+
+What exactly is your problem?
+
+-Ken
+
+> -----Original Message-----
+> From: paraview-bounces+kmorel=sandia.gov@paraview.org
+[mailto:paraview-
+> bounces+kmorel=sandia.gov@paraview.org] On Behalf Of Narasimhan L.
+> Ramakrishnan
+> Sent: Thursday, October 06, 2005 9:39 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] plot3D to vtk converter
+> 
+> Hi;
+>      I want to convert a plot3d file to vtk format. Can someone help
+me
+> with the vtk file data format.
+> 
+> Thank You
+> Nara Ramakrishnan
+> Graduate Student
+> Dept. of Computer Science
+> Univ. Of Southern Miss
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+From f.braennstroem at gmx.de  Thu Oct  6 11:54:39 2005
+From: f.braennstroem at gmx.de (Fabian Braennstroem)
+Date: Thu Oct  6 11:54:53 2005
+Subject: [Paraview] paraview vs mayavi
+Message-ID: <20051006155439.GA3720@ddorf.de>
+
+Hi,
+
+I would like to know, if anybody used mayavi before and
+where the disadvantages (maybe advantages) compared to
+paraview are?
+
+Greetings!
+Fabian
+-- 
+From g.gorman at imperial.ac.uk  Thu Oct  6 13:27:10 2005
+From: g.gorman at imperial.ac.uk (Gerard Gorman)
+Date: Thu Oct  6 13:27:22 2005
+Subject: [Paraview] paraview vs mayavi
+In-Reply-To: <20051006155439.GA3720@ddorf.de>
+References: <20051006155439.GA3720@ddorf.de>
+Message-ID: <43455E6E.6030402@imperial.ac.uk>
+
+This discussion could go on for quite a while...
+Largely it depends on your needs. I would say MayaVi is:
+- easy to use
+- easy to get nice visualizations that look good
+- easy to modify/extend
+- easy to script
+but - it is serial and is written in a python (though the modules that 
+do the real work are still c++) rather than a compiled language. This 
+does give problems for large datasets.
+Paraview of the other hand has a more sophisticated user interface and 
+requires greater investment if modifications are required. However the 
+most outstanding feature of paraview if that it has parallel support. 
+This is very often the difference between being able to visualize your 
+data and not.
+
+But - the learning curve for either one is not so great so the best 
+thing to do really is try both and see which suites your needs best. 
+Personally I use both.
+
+Cheers
+g
+
+
+Fabian Braennstroem wrote:
+> Hi,
+> 
+> I would like to know, if anybody used mayavi before and
+> where the disadvantages (maybe advantages) compared to
+> paraview are?
+> 
+> Greetings!
+> Fabian
+
+From hudson at mcs.anl.gov  Thu Oct  6 16:37:39 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Thu Oct  6 16:38:19 2005
+Subject: Fwd: Re: [Paraview] Defunct classes
+Message-ID: <6.2.1.2.2.20051006153226.02d8ee00@pop.mcs.anl.gov>
+
+
+
+In July (see below), I changed all references in my custom GUI from vtkKWLabeledFrame to vtkKWFrameWithLabel so I could work with the 07/11 development release of paraview.
+
+Now, in paraview 2.2.1, vtkKWFrameWithLabel seems to've gone away.
+
+The only class I can find there whose name contains "Frame" and "Label" is vtkKWFrameLabeled.
+
+Is that taking over for the until-all-too-recently-vibrant vtkKWFrameWithLabel?
+
+
+>Date: Mon, 18 Jul 2005 10:05:28 -0400
+>To: Randy Hudson <hudson@mcs.anl.gov>
+>From: Sebastien BARRE <sebastien.barre@kitware.com>
+>Subject: Re: [Paraview] Defunct classes
+>
+>Hello Randy,
+>
+>I'll answer most of your questions here, Berk will adress the rest. Yes, for the most part, classes have been renamed as an undergoing effort to clean the KW subdir...
+>
+>At 7/14/2005 12:12 PM, Randy Hudson wrote:
+>
+>>/home/hudson/Software/ParaView_CVS_07112005/src_flashgui/GUI/Client/vtkPVFlashCutWidget.cxx:34:31: vtkKWLabeledFrame.h: No such file or directory
+>
+>vtkKWLabeledFrame is now vtkKWFrameWithLabel, this was done recently to try to reach a uniform naming convention for the KW package (i.e. vtkKWFooWithBar, as in vtkKWCheckbuttonWithLabel, or vtkKWFrameWithScrollbars)
+
+
+Randy.
+630 252 8690.
+
+From sebastien.barre at kitware.com  Thu Oct  6 17:02:39 2005
+From: sebastien.barre at kitware.com (Sebastien BARRE)
+Date: Thu Oct  6 17:03:40 2005
+Subject: Fwd: Re: [Paraview] Defunct classes
+In-Reply-To: <6.2.1.2.2.20051006153226.02d8ee00@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20051006153226.02d8ee00@pop.mcs.anl.gov>
+Message-ID: <6.2.5.6.2.20051006165808.05dd09c0@kitware.com>
+
+At 04:37 PM 10/6/2005, Randy Hudson wrote:
+
+
+>In July (see below), I changed all references in my custom GUI from 
+>vtkKWLabeledFrame to vtkKWFrameWithLabel so I could work with the 
+>07/11 development release of paraview.
+>
+>Now, in paraview 2.2.1, vtkKWFrameWithLabel seems to've gone away.
+>
+>The only class I can find there whose name contains "Frame" and 
+>"Label" is vtkKWFrameLabeled.
+>
+>Is that taking over for the until-all-too-recently-vibrant 
+>vtkKWFrameWithLabel?
+
+ From what I understand, you wrote your code for a specific PV 
+branch, then adapted it to the CVS, then tried to adapt it to another 
+branch back in time... Ooops, bad luck here, I think the branch was 
+cut right in a very temporary renaming....
+
+ From what I remember, it went from vtkKWLabeledFrame, to (very 
+shortly) vtkKWFrameLabeled (at which point I was told it sounded too 
+french), to the final vtkKWFrameWithLabel (some time ago). I guess 
+2.2.1 was cut at the vtkKWFrameLabeled period :(. The CVS is and will 
+remain vtkKWFrameWithLabel.
+
+Sorry for the inconvenience.
+
+
+--
+Sebastien Barre
+
+
+From amy.squillacote at kitware.com  Thu Oct  6 17:10:41 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Oct  6 17:11:11 2005
+Subject: Fwd: Re: [Paraview] Defunct classes
+In-Reply-To: <6.2.1.2.2.20051006153226.02d8ee00@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20051006153226.02d8ee00@pop.mcs.anl.gov>
+Message-ID: <6.2.5.6.2.20051006170408.02d2b320@kitware.com>
+
+vtkKWLabeledFrame was changed to vtkKWFrameLabeled in March of this 
+year. The ParaView 2.2 CVS branch was cut near the end of June. 
+vtkKWFrameLabeled was changed to vtkKWFrameWithLabel in July (after 
+the CVS branch was cut for ParaView 2.2).  In the next major release 
+of ParaView, vtkKWFrameWithLabel will be used since that's the name 
+in use in the main CVS tree.
+
+- Amy
+
+At 04:37 PM 10/6/2005, Randy Hudson wrote:
+
+
+>In July (see below), I changed all references in my custom GUI from 
+>vtkKWLabeledFrame to vtkKWFrameWithLabel so I could work with the 
+>07/11 development release of paraview.
+>
+>Now, in paraview 2.2.1, vtkKWFrameWithLabel seems to've gone away.
+>
+>The only class I can find there whose name contains "Frame" and 
+>"Label" is vtkKWFrameLabeled.
+>
+>Is that taking over for the until-all-too-recently-vibrant 
+>vtkKWFrameWithLabel?
+>
+>
+> >Date: Mon, 18 Jul 2005 10:05:28 -0400
+> >To: Randy Hudson <hudson@mcs.anl.gov>
+> >From: Sebastien BARRE <sebastien.barre@kitware.com>
+> >Subject: Re: [Paraview] Defunct classes
+> >
+> >Hello Randy,
+> >
+> >I'll answer most of your questions here, Berk will adress the 
+> rest. Yes, for the most part, classes have been renamed as an 
+> undergoing effort to clean the KW subdir...
+> >
+> >At 7/14/2005 12:12 PM, Randy Hudson wrote:
+> >
+> >>/home/hudson/Software/ParaView_CVS_07112005/src_flashgui/GUI/Clien 
+> t/vtkPVFlashCutWidget.cxx:34:31: vtkKWLabeledFrame.h: No such file or directory
+> >
+> >vtkKWLabeledFrame is now vtkKWFrameWithLabel, this was done 
+> recently to try to reach a uniform naming convention for the KW 
+> package (i.e. vtkKWFooWithBar, as in vtkKWCheckbuttonWithLabel, or 
+> vtkKWFrameWithScrollbars)
+>
+>
+>Randy.
+>630 252 8690.
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From tejj at hotmail.com  Fri Oct  7 15:48:02 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Fri Oct  7 15:48:09 2005
+Subject: [Paraview] Non-coplanar tiles rendering
+Message-ID: <BAY103-F16C1DAE93C497FD99D8969DE840@phx.gbl>
+
+Is there anyway just using Paraview (not with Chromium) that I could run 
+Paraview on a CAVE like passive stereo system?
+
+We have a 3 walled system (30 degrees different).  Each wall has 2 projects 
+(one for each eye) and one pc drives 1 projector.  total of 6 pcs for the 3 
+walls and 1 as a controller.  I want to using paraview only render our 
+dataset on the 3 screens.
+
+Thanks in advance.
+
+
+From tdubuis at scconsultants.com  Mon Oct 10 12:29:39 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Mon Oct 10 12:29:54 2005
+Subject: [Paraview] Bug with tube filter
+Message-ID: <00d201c5cdb7$cfa82660$41c809c0@jupiter>
+
+Hello all,
+
+Have you take in account my last email about problem with tube filter?
+
+I have a problem in Paraview 2.2.1 on PC with windows XP SP2. (I reproduce the problem on the previous versions)
+I load a vtk file.
+I select glyph filter, I choose glyph option : line0
+On the glyph I apply tube filter and I have an error :
+"There was a VTK Error in file : C:\devel\paraview_2.2.1\Paraview\VTK\Filtering\vtkPolyLine.cxx (102)"
+"Coincident points in polyline .. can't compute normals"
+"There was a VTK Warning in file : C:\devel\paraview_2.2.1\Paraview\VTK\Graphics\vtkTubeFilter.cxx (217)"
+"Could not generate normals for line. Skipping to next"
+These four lines are repeated with beep until I reboot my PC.
+
+This problem comes on all vtk files I try.
+
+Thanks for your support
+
+Best regards, 
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051010/03107dcf/attachment.html
+From kevin.hobbs.1 at ohiou.edu  Mon Oct 10 12:52:42 2005
+From: kevin.hobbs.1 at ohiou.edu (Kevin H. Hobbs)
+Date: Mon Oct 10 12:53:07 2005
+Subject: [Paraview] Bug with tube filter
+In-Reply-To: <00d201c5cdb7$cfa82660$41c809c0@jupiter>
+References: <00d201c5cdb7$cfa82660$41c809c0@jupiter>
+Message-ID: <1128963163.23082.11.camel@gargon.hooperlab>
+
+On Mon, 2005-10-10 at 18:29 +0200, Thierry Dubuis wrote:
+> Hello all,
+>  
+
+<snip>
+
+> I load a vtk file.
+> I select glyph filter, I choose glyph option : line0
+> On the glyph I apply tube filter and I have an error :
+
+The VTK docs for vtkTubeFilter give an explicit warning that there
+should be no duplicate points.  The glyph filter may create them.  Does
+Paraview have easy access to vtkCleanPolyData ?
+
+> These four lines are repeated with beep until I reboot my PC.
+
+Wow, so like every point is duped?
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: not available
+Type: application/pgp-signature
+Size: 189 bytes
+Desc: This is a digitally signed message part
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051010/830cad42/attachment.pgp
+From amy.squillacote at kitware.com  Mon Oct 10 13:36:12 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Mon Oct 10 13:36:32 2005
+Subject: [Paraview] Bug with tube filter
+In-Reply-To: <1128963163.23082.11.camel@gargon.hooperlab>
+References: <00d201c5cdb7$cfa82660$41c809c0@jupiter>
+	<1128963163.23082.11.camel@gargon.hooperlab>
+Message-ID: <6.2.5.6.2.20051010133550.02d56898@kitware.com>
+
+At 12:52 PM 10/10/2005, Kevin H. Hobbs wrote:
+>On Mon, 2005-10-10 at 18:29 +0200, Thierry Dubuis wrote:
+> > Hello all,
+> >
+>
+><snip>
+>
+> > I load a vtk file.
+> > I select glyph filter, I choose glyph option : line0
+> > On the glyph I apply tube filter and I have an error :
+>
+>The VTK docs for vtkTubeFilter give an explicit warning that there
+>should be no duplicate points.  The glyph filter may create them.  Does
+>Paraview have easy access to vtkCleanPolyData ?
+
+Yes.  Select "Clean" from the Filter menu.
+
+> > These four lines are repeated with beep until I reboot my PC.
+>
+>Wow, so like every point is duped?
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From hudson at mcs.anl.gov  Mon Oct 10 21:03:56 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Mon Oct 10 21:04:20 2005
+Subject: [Paraview] Contours
+Message-ID: <6.2.1.2.2.20051010194651.02d4aa78@pop.mcs.anl.gov>
+
+
+In paraview 2.0.0, my custom paraview GUI produces isosurfaces by calling certain functions, such as "AcceptCallback", in the default interface of the contour filter.
+
+When I started using the paraview development release I had downloaded on July 11, the widget in my GUI quit working that sets the scalar variable by which to color the isosurface.  So, I started fiddling with the default contour widgets and learned that I have to slide the isovalue slider back and forth a couple times before I click "Accept" to force an isosurface to be created.  It doesn't work if I just instantiate the filter, add the default value with the "Add" button, and click "Accept".
+
+I'm thinking the cause of this failure might be the cause of the failure of my colormap widget.
+
+Does anyone know about this odd behavior of the contour widget and how I might get around it?
+
+Thanks.
+
+
+
+Randy.
+630 252 8690.
+
+From f.braennstroem at gmx.de  Tue Oct 11 02:21:29 2005
+From: f.braennstroem at gmx.de (Fabian Braennstroem)
+Date: Tue Oct 11 02:21:10 2005
+Subject: [Paraview] Re: paraview vs mayavi
+In-Reply-To: <43455E6E.6030402@imperial.ac.uk>
+References: <20051006155439.GA3720@ddorf.de> <43455E6E.6030402@imperial.ac.uk>
+Message-ID: <20051011062129.GA3449@ddorf.de>
+
+Hi Gerard,
+
+thanks for your informations!
+
+* Gerard wrote 06 Oct 2005:
+
+> This discussion could go on for quite a while...
+> Largely it depends on your needs. I would say MayaVi is:
+> - easy to use
+> - easy to get nice visualizations that look good
+> - easy to modify/extend
+> - easy to script
+
+sounds nice.
+
+> but - it is serial and is written in a python (though the modules that 
+> do the real work are still c++) rather than a compiled language. This 
+> does give problems for large datasets.
+> Paraview of the other hand has a more sophisticated user interface and 
+> requires greater investment if modifications are required. However the 
+> most outstanding feature of paraview if that it has parallel support. 
+> This is very often the difference between being able to visualize your 
+> data and not.
+> 
+> But - the learning curve for either one is not so great so the best 
+> thing to do really is try both and see which suites your needs best. 
+> Personally I use both.
+
+Yes, you are right. Maybe, I should use both too :-)
+
+Greetings!
+Fabian
+From tdubuis at scconsultants.com  Tue Oct 11 04:00:36 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Tue Oct 11 04:03:09 2005
+Subject: [Paraview] Bug with tube filter
+References: <00d201c5cdb7$cfa82660$41c809c0@jupiter>
+	<1128963163.23082.11.camel@gargon.hooperlab>
+	<6.2.5.6.2.20051010133550.02d56898@kitware.com>
+Message-ID: <010b01c5ce39$dd5bdd10$41c809c0@jupiter>
+
+Thanks for your help.
+
+All is Ok if I use Clean filter between glyph and tube.
+Have you an idea to avoid or (better) to correct this path ?
+Because to have to reboot a PC is very unconfortable !
+
+Best regards,
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+----- Original Message ----- 
+From: "Amy Squillacote" <amy.squillacote@kitware.com>
+To: <hobbsk@ohiou.edu>; "Thierry Dubuis" <tdubuis@scconsultants.com>
+Cc: <paraview@paraview.org>
+Sent: Monday, October 10, 2005 7:36 PM
+Subject: Re: [Paraview] Bug with tube filter
+
+
+> At 12:52 PM 10/10/2005, Kevin H. Hobbs wrote:
+> >On Mon, 2005-10-10 at 18:29 +0200, Thierry Dubuis wrote:
+> > > Hello all,
+> > >
+> >
+> ><snip>
+> >
+> > > I load a vtk file.
+> > > I select glyph filter, I choose glyph option : line0
+> > > On the glyph I apply tube filter and I have an error :
+> >
+> >The VTK docs for vtkTubeFilter give an explicit warning that there
+> >should be no duplicate points.  The glyph filter may create them.  Does
+> >Paraview have easy access to vtkCleanPolyData ?
+> 
+> Yes.  Select "Clean" from the Filter menu.
+> 
+> > > These four lines are repeated with beep until I reboot my PC.
+> >
+> >Wow, so like every point is duped?
+> >
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From rnelias at nacad.ufrj.br  Tue Oct 11 11:21:55 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Tue Oct 11 11:17:09 2005
+Subject: [Paraview] Ensight SOS format in Paraview 2.2.1
+Message-ID: <20051011151659.EE5F9727D0@mailhost.nacad.ufrj.br>
+
+
+Hi All,
+
+I've been getting some problems when reading the Ensight server-of-server
+file shown below in Paraview 2.2.1. I think Paraview has not recognized the
+identifier "master_server ensight6", so would like to know if Paraview is
+capable to read SOS files that point to Ensight standard cases (NOT GOLD).
+
+====================================================================
+FORMAT
+type:      master_server ensight6
+SERVERS
+number of servers:   2
+
+machine id: localhost
+executable: ensight7.server
+directory:
+login id:
+casefile: cyl_4_00.case
+
+machine id: localhost
+executable: ensight7.server
+directory:
+login id:
+casefile: cyl_4_01.case
+====================================================================
+
+I've already tested my case files individually and they're working fine.
+
+Thanks for any help
+
+
+Renato N. Elias
+
+
+
+
+
+From berk.geveci at gmail.com  Tue Oct 11 11:42:18 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 11 11:42:20 2005
+Subject: [Paraview] Ensight SOS format in Paraview 2.2.1
+In-Reply-To: <20051011151659.EE5F9727D0@mailhost.nacad.ufrj.br>
+References: <20051011151659.EE5F9727D0@mailhost.nacad.ufrj.br>
+Message-ID: <a2ab21560510110842x16a8c3e8id23d3e38a7b0c909@mail.gmail.com>
+
+I haven't tested it but it is possible that reading of .sos files is
+broken in 2.2. We have fixed it since then and it should work in 2.4
+once released. You can try the development version from CVS.
+
+On 10/11/05, Renato N. Elias <rnelias@nacad.ufrj.br> wrote:
+>
+> Hi All,
+>
+> I've been getting some problems when reading the Ensight server-of-server
+> file shown below in Paraview 2.2.1. I think Paraview has not recognized the
+> identifier "master_server ensight6", so would like to know if Paraview is
+> capable to read SOS files that point to Ensight standard cases (NOT GOLD).
+>
+> ====================================================================
+> FORMAT
+> type:      master_server ensight6
+> SERVERS
+> number of servers:   2
+>
+> machine id: localhost
+> executable: ensight7.server
+> directory:
+> login id:
+> casefile: cyl_4_00.case
+>
+> machine id: localhost
+> executable: ensight7.server
+> directory:
+> login id:
+> casefile: cyl_4_01.case
+> ====================================================================
+>
+> I've already tested my case files individually and they're working fine.
+>
+> Thanks for any help
+>
+>
+> Renato N. Elias
+>
+>
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Tue Oct 11 15:28:51 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 11 15:29:07 2005
+Subject: [Paraview] Stereo support for GeoWall available?
+In-Reply-To: <433296BF.2000805@christoph-moder.de>
+References: <433296BF.2000805@christoph-moder.de>
+Message-ID: <a2ab21560510111228v7a24faaesab54eb7cb5aed615@mail.gmail.com>
+
+My stereo display knowledge is limited. Would one of the following modes work:
+http://www.vtk.org/doc/nightly/html/classvtkRenderWindow.html#z4427_1
+
+-Berk
+
+On 9/22/05, Christoph Moder <mail@christoph-moder.de> wrote:
+> Hello!
+>
+> We have a GeoWall setup (http://www.geowall.org/) and would like to use
+> Paraview there. It is driven by a Linux computer with a dual head
+> graphics card, configured as a tiled display (each screen connector is
+> linked to a projector with polarizing filter, thus creating 3D images).
+>
+> So what I need is a stereo mode which displays the two pictures side by
+> side, so they can be shown on different screens (instead of combined in
+> a single red/blue picture). Is this possible? Can anyone explain how
+> this can be done? I have already experimented with the patches listed
+> below (and the current CVS version of Paraview), but without success.
+>
+> http://public.kitware.com/pipermail/vtk-developers/2005-June/003348.html
+> http://www.evl.uic.edu/cavern/rg/20040715_schwarz/
+>
+> Thank you for your help! Greetings,
+> Christoph
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Tue Oct 11 15:31:21 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 11 15:31:37 2005
+Subject: [Paraview] 3ds reader
+In-Reply-To: <BAY103-F3289371B1704D42E331E60DE960@phx.gbl>
+References: <BAY103-F3289371B1704D42E331E60DE960@phx.gbl>
+Message-ID: <a2ab21560510111231m7cca5a7ctaf8b5a890087de3e@mail.gmail.com>
+
+Nope. vtk3DSImporter could be used but adding it is not as
+straightforward as adding a reader. It is an importer and would have
+to be wrapped by another class that behaves like a reader.
+
+On 9/23/05, Terry Jordan <tejj@hotmail.com> wrote:
+> Is there a 3ds Reader for paraview?
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Tue Oct 11 15:42:40 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 11 15:42:43 2005
+Subject: [Paraview] Time Parallelism + vtkFileCachePipeline +
+	vtkNetCDFReader
+In-Reply-To: <433575CB.70107@cscs.ch>
+References: <433575CB.70107@cscs.ch>
+Message-ID: <a2ab21560510111242o5d7e739cq957652439156beea@mail.gmail.com>
+
+A few things:
+
+* ParaView caching geometry when generating animations. Some of your
+works sounds similar and it might be a good idea to merge the two
+efforts. Take a look at vtkPVUpdateSuppressor.
+
+* This sort of time support is being discussed, specially by Sandia
+developers. I believe there will be some discussion at Vis '05 VTK
+BOF.
+
+* The new pipeline is great to do things like this. The composite
+pipeline is a good example of how the execution model can be modified
+by sub-classing the existing pipeline objects.
+
+* The multi-block datasets are a good way of storing multiple
+timesteps. Specially for filters that might require multiple steps
+(streaklines, particle paths, any integration filter, histograms)
+
+On 9/24/05, John Biddiscombe <biddisco@cscs.ch> wrote:
+> I've been working on parallelising vtkNetCDFReader for use in ParaView
+> and have some questions regarding pieces/pipelines and time variables.
+>
+> I'm noticing that one individual dataset is generally not huge, but when
+> 1600 time steps are present, the size of data is on the increase. The
+> reader currently manages extents using vtkExtentTranslator which does a
+> very nice job of partitioning the dataset into blocks and the data is
+> being split across processors nicely. However the reader will only reads
+> the current timeFrame and this seems like a terrible waste of resources,
+> when in fact 8 nodes could in fact read 100 time steps each and still
+> have room to spare.
+>
+> Some time ago I put together a convenient filter called
+> vtkFileCachePipelineFilter which is a wrapper around a sub pipeline : to
+> save myself writing too much in this email, I've put a cuople of slides
+> (actually several almost duplicated ones) into here
+> ftp://ftp.cscs.ch/out/biddisco/vtk/vtkFileCachePipeline.ppt
+>
+> The idea is very simple. Every time you run your program (eg demo of
+> something nice), you spend ages waiting for the reader/contour/glyph etc
+> etc to execute, and then you render it. In my code, I tend to save the
+> results to disk, put some #ifdef statements in to allow myself to
+> reexecute the pipleline if I want to regenerate the data (eg with new
+> parameters). I got fed up with this eventually (maintenance), and so
+> created a pipeline wrapper which caches the data (Terminology I use is,
+> shallow cache = on disk, deep cache=in memory). when you rerun the
+> program, the cache filter intercepts the pipeline update, checks the
+> disk and if the cache file is there, loads it in (and optionally keeps
+> it in memory). The file name can be set in the cache filter in a
+> sprintf(%) type way so that cache with param X is stored in one file, if
+> param Y is requested, it gets cached in another file etc etc. I've added
+> an option to use time variables as the param, so when running an
+> animation, the whole series of time data gets cached (memory permitting)
+> and it looks lovely from the user's viewpoint.The first time they run
+> it, the data gets loaded, but once the animation goes back to step zero,
+> it's all in memory and all is well.
+>
+> Now in actual fact, the filter is extremely simple and does very little,
+> but now that I'm putting together the parallelism on the netCDF reader,
+> I see that there's an opportunity here to do something a bit nice and
+> combine the time variable caching and the parallel streaming into a
+> combined concept.
+>
+> My initial thought is that the Heirarchical Dataset (the netDCF reader
+> is now a subclass of vtkHeirarchicalDatasetAlgorithm) could be populated
+> with N datasets (each representing a time step) and the one that is
+> passed downstream to the rest of the pipeline is selected from this by
+> the time step variable/parameter. I'd want to then use the animation
+> within paraview to stop through the data more rapidly than previously.
+> (Combining this with the caching ability so that downstream filters
+> could do contours/glyphs etc and have those results cached - would
+> actually be more useful in many cases thasn the raw data).
+>
+> I'm told that others are working on similar ideas. If anyone has any
+> documents on this subject that I might be able to read, I'm going on
+> holiday in a couple of days and would welcome some extra material. In
+> particular, is there already a mechanism for splitting data across time
+> as well as spatial extents. etc etc.
+>
+> Many thanks
+>
+> JB
+>
+> --
+> John Biddiscombe,                            email:biddisco @ cscs.ch
+> http://www.cscs.ch/about/BJohn.php
+> CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.07
+> Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Tue Oct 11 15:55:04 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Oct 11 15:55:21 2005
+Subject: [Paraview] Very Small Coordinate Data
+In-Reply-To: <BAY24-F646BB08E4DD81C7B7CA1687880@phx.gbl>
+References: <BAY24-F646BB08E4DD81C7B7CA1687880@phx.gbl>
+Message-ID: <a2ab21560510111255y7cff29c1uc7e52ce11d452a3e@mail.gmail.com>
+
+I loaded the data and it looks weird. It is possible to get a visible
+representation by changing the display mode to "Wireframe of Surface".
+Are you sure the data is correct?
+
+On 9/25/05, Richard Haney <cosmoh2o@hotmail.com> wrote:
+> Please Help,
+>
+> I have been using Paraview as a visualization tool now for about 6 months
+> and think it is a great product but have ran into an issue I hope someone
+> can help me with. I received a file that is not very large (322 nodes, 789
+> Tetrahedral elements) but has very small coordinates (-0.440480985020E-13,
+> 0.3400809001E-01, etc). When I try and display the mesh I get nothing
+> (doesn't crash - but does not show anything either).
+>
+> I am using .xmf with a .h5 data file. Does Paraview work when the data
+> values are very small and located very near each other such as this is the
+> case? Should the values be re-scaled?
+>
+> Attached is a copy of both the .xmf and .h5 file.
+>
+> Thanks to anyone out there with some idea/hint.
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>
+From Francois.Beaubert at univ-valenciennes.fr  Wed Oct 12 06:16:46 2005
+From: Francois.Beaubert at univ-valenciennes.fr (=?iso-8859-1?q?Fran=E7ois_BEAUBERT?=)
+Date: Wed Oct 12 06:15:15 2005
+Subject: [Paraview] XY plot
+Message-ID: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+
+Hello,
+
+I'm wondering if there is any plan to enhance the XY plot module of paraview 
+to have someting more powerfull for this kind of plot. 
+
+Paraview is a wonderfull tool but I think it laks some features when you want 
+to do XY plot.
+
+
+-- 
+Fran?ois BEAUBERT
+ENSIAME/LME
+Bureau A9
+Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+T?l?phone: (0/33)3 27 51 19 72
+T?l?copie: (0/33)3 27 51 19 61
+Mel: Francois.Beaubert@univ-valenciennes.fr
+From michael.oevermann at tu-berlin.de  Wed Oct 12 06:50:22 2005
+From: michael.oevermann at tu-berlin.de (Michael Oevermann)
+Date: Wed Oct 12 06:50:33 2005
+Subject: [Paraview] Segmentation fault on binary VTK data in 2.2.1
+Message-ID: <434CEA6E.4020901@tu-berlin.de>
+
+Hello all,
+I am have problems reading binary VTK data (UNSTRUCTURED_GRID) with
+paraview 2.2.1 (build from source on an Apple G5 running Debian Linux).
+Loading the data-file, paraview responds with an unmotivated 
+"Segmentation fault".
+However, I can read the same binary data with version 1.8.5 and I can 
+read the
+same data as ASCII with 2.2.1 as well.
+Does anyone has an idea what's going wrong here?
+
+Cheers, Michael
+
+
+From Stephen.Wornom at inria.fr  Wed Oct 12 07:04:25 2005
+From: Stephen.Wornom at inria.fr (Stephen Wornom)
+Date: Wed Oct 12 07:04:32 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+Message-ID: <434CEDB9.1050807@inria.fr>
+
+Fran?ois BEAUBERT wrote:
+
+>Hello,
+>
+>I'm wondering if there is any plan to enhance the XY plot module of paraview 
+>to have someting more powerfull for this kind of plot. 
+>
+>Paraview is a wonderfull tool but I think it laks some features when you want 
+>to do XY plot.
+>
+>
+>  
+>
+It would be nice.
+Stephen
+From dave.demarle at kitware.com  Wed Oct 12 11:09:05 2005
+From: dave.demarle at kitware.com (David E DeMarle)
+Date: Wed Oct 12 11:09:34 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <434CEDB9.1050807@inria.fr>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+	<434CEDB9.1050807@inria.fr>
+Message-ID: <434D2711.4050601@kitware.com>
+
+Hi,
+
+Can you share some specific ideas about how to make the XY plot better? 
+Ideas about how to make ParaView better are always appreciated.
+
+I have two improvements that I want to put in. The first is to make the 
+time axis for temporal plotting correspond to the time step of the 
+reader when one is available. The second is to clean up the existing 
+probe and pick plotting code to make them easier to maintain and to make 
+batch, trace, and state playback fully functional for testing. Other 
+than these two I don't have any plans for it.
+
+cheers,
+Dave DeMarle
+
+Stephen Wornom wrote:
+
+> Fran?ois BEAUBERT wrote:
+>
+>> Hello,
+>>
+>> I'm wondering if there is any plan to enhance the XY plot module of 
+>> paraview to have someting more powerfull for this kind of plot.
+>> Paraview is a wonderfull tool but I think it laks some features when 
+>> you want to do XY plot.
+>>
+>>
+>>  
+>>
+> It would be nice.
+> Stephen
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+From berk.geveci at gmail.com  Wed Oct 12 11:21:18 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Oct 12 11:21:24 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+Message-ID: <a2ab21560510120821gfe52a79x9f4b87f2eeaf4a86@mail.gmail.com>
+
+Improved 2D data support (including plots) is a medium to long term
+goal for the paraview team.
+
+On 10/12/05, Fran?ois BEAUBERT <Francois.Beaubert@univ-valenciennes.fr> wrote:
+> Hello,
+>
+> I'm wondering if there is any plan to enhance the XY plot module of paraview
+> to have someting more powerfull for this kind of plot.
+>
+> Paraview is a wonderfull tool but I think it laks some features when you want
+> to do XY plot.
+>
+>
+> --
+> Fran?ois BEAUBERT
+> ENSIAME/LME
+> Bureau A9
+> Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+> T?l?phone: (0/33)3 27 51 19 72
+> T?l?copie: (0/33)3 27 51 19 61
+> Mel: Francois.Beaubert@univ-valenciennes.fr
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From berk.geveci at gmail.com  Wed Oct 12 11:22:19 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Oct 12 11:22:26 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+Message-ID: <a2ab21560510120822o7f00d5a3tf423df4aae6ce6fa@mail.gmail.com>
+
+Also, it is possible to export 2D data and process it in something
+like gnuplot, tecplot or excel.
+
+On 10/12/05, Fran?ois BEAUBERT <Francois.Beaubert@univ-valenciennes.fr> wrote:
+> Hello,
+>
+> I'm wondering if there is any plan to enhance the XY plot module of paraview
+> to have someting more powerfull for this kind of plot.
+>
+> Paraview is a wonderfull tool but I think it laks some features when you want
+> to do XY plot.
+>
+>
+> --
+> Fran?ois BEAUBERT
+> ENSIAME/LME
+> Bureau A9
+> Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+> T?l?phone: (0/33)3 27 51 19 72
+> T?l?copie: (0/33)3 27 51 19 61
+> Mel: Francois.Beaubert@univ-valenciennes.fr
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From hudson at mcs.anl.gov  Wed Oct 12 14:06:16 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Wed Oct 12 14:06:22 2005
+Subject: [Paraview] vtkKWScale - hinky?
+Message-ID: <6.2.1.2.2.20051012115641.03800f70@pop.mcs.anl.gov>
+
+
+I'm resending the included email and adding some info.
+
+In the included email, I describe aberrant behavior of the isovalue slider in the GUI of the contour filter.  I've just noticed the same behavior with the isovalue slider I use in my custom interface to select an isovalue.  Whenever I slide the slider back and forth a few times before proceeding with the button click that passes control to paraview to create the isosurface and color it, things work fine.  If I only move the slider a small amount, things usually fail.
+
+The class my slider and the default contour slider have in common is vtkKWScale.  (I use vtkPVScale.)  I can only conclude that somehow, the isovalue selected by the slider is not guaranteed to be set, or passed to where it needs to be passed to.
+
+Was vtkKWScale changed between paraview 2.0.0 and July 11, when I downloaded the development release I'm having trouble with?  Maybe the slider resolution is being processed differently, e.g.?
+
+
+Thanks.
+
+
+>Date: Mon, 10 Oct 2005 20:03:56 -0500
+>To: paraview@paraview.org
+>From: Randy Hudson <hudson@mcs.anl.gov>
+>Subject: Contours
+>
+>
+>In paraview 2.0.0, my custom paraview GUI produces isosurfaces by calling certain functions, such as "AcceptCallback", in the default interface of the contour filter.
+>
+>When I started using the paraview development release I had downloaded on July 11, the widget in my GUI quit working that sets the scalar variable by which to color the isosurface.  So, I started fiddling with the default contour widgets and learned that I have to slide the isovalue slider back and forth a couple times before I click "Accept" to force an isosurface to be created.  It doesn't work if I just instantiate the filter, add the default value with the "Add" button, and click "Accept".
+>
+>I'm thinking the cause of this failure might be the cause of the failure of my colormap widget.
+>
+>Does anyone know about this odd behavior of the contour widget and how I might get around it?
+>
+>Thanks.
+>
+>Randy.
+
+
+Randy.
+630 252 8690.
+
+From rnelias at nacad.ufrj.br  Wed Oct 12 21:59:02 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Wed Oct 12 21:58:14 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+Message-ID: <20051013015806.F1CA7727BE@mailhost.nacad.ufrj.br>
+
+
+I've been using the vtkCellDerivatives.xml package, as described in the Wiki
+pages, to produce vorticity data. After deriving cell based vorticity vector
+I apply the cell to point data filter followed by the magnitude function of
+the calculator in order to generate scalar data and vorticity iso contours
+accordingly. My problem begins to appear when I try to animate the iso
+contours. After some frames being rendered the animation stops with the
+followig error message:
+
+"There was a VTK Error in file: c: dev paraview22 vtk common
+vtkDataArrayTemplate.txx (241)
+Unable to allocate 2233310 elements of size 4: bad allocation"
+
+Any idea to avoid this error?
+
+Thanks
+
+Renato.
+
+
+From Francois.Beaubert at univ-valenciennes.fr  Thu Oct 13 04:27:50 2005
+From: Francois.Beaubert at univ-valenciennes.fr (=?iso-8859-1?q?Fran=E7ois_BEAUBERT?=)
+Date: Thu Oct 13 04:32:17 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <434D2711.4050601@kitware.com>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+	<434CEDB9.1050807@inria.fr> <434D2711.4050601@kitware.com>
+Message-ID: <200510131027.50569.Francois.Beaubert@univ-valenciennes.fr>
+
+Hi David,
+
+Thanks for your answer.
+
+Before using paraview I was using Xmgrace or Tecplot.
+* Xmgrace is a wonderfull tool to make XY plot but onlyx XY plot
+* Tecplot is great toolbox because you can make XY plot, 2D and 3D plot at the 
+same time. And I think you improve your productivity with this kind of all in 
+one tool. But it's expensive and sometimes slow with large dataset.
+
+To answer your question David, I'm dreaming of those kind of features in 
+Paraview: have the possibility to make 3D as well as 2D or XY plot with the 
+same software. Paraview is already a killer apps for 3D plot but it will be 
+be great if the XY plot module can support the following features and in 
+particular precise control of graph features such as:
+
+* major and minor thichmarks (in/out)
+* grid control of the plot
+* Unlimited number of graphs
+* Unlimited number of curves on a graph
+* customizable colors
+* different dashed line styles
+* different fill patterns
+* different marker symbols with different Color/fill markers
+* text annotations with subscripts, superscripts and symbols
+* LaTeX and richtext label support
+* legends of the graphs
+* curve Fitting
+* data set operations: evaluating expressions and direct editing of data
+* free or pan zooming, masking of data points and marker
+* every object can be dragged by mouse
+
+
+those are some wiches ... but I know i'm dreaming
+Paraview is already a very good plot software but I think that with this kind 
+of features it will rock !
+
+Regards
+Fran?ois
+
+ Octobre 2005 17:09, David E DeMarle a ?crit?:
+> Hi,
+>
+> Can you share some specific ideas about how to make the XY plot better?
+> Ideas about how to make ParaView better are always appreciated.
+>
+> I have two improvements that I want to put in. The first is to make the
+> time axis for temporal plotting correspond to the time step of the
+> reader when one is available. The second is to clean up the existing
+> probe and pick plotting code to make them easier to maintain and to make
+> batch, trace, and state playback fully functional for testing. Other
+> than these two I don't have any plans for it.
+>
+> cheers,
+> Dave DeMarle
+>
+> Stephen Wornom wrote:
+> > Fran?ois BEAUBERT wrote:
+> >> Hello,
+> >>
+> >> I'm wondering if there is any plan to enhance the XY plot module of
+> >> paraview to have someting more powerfull for this kind of plot.
+> >> Paraview is a wonderfull tool but I think it laks some features when
+> >> you want to do XY plot.
+> >
+> > It would be nice.
+> > Stephen
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Fran?ois BEAUBERT
+ENSIAME/LME
+Bureau A9
+Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+T?l?phone: (0/33)3 27 51 19 72
+T?l?copie: (0/33)3 27 51 19 61
+Mel: Francois.Beaubert@univ-valenciennes.fr
+From crippa at kth.se  Thu Oct 13 05:04:59 2005
+From: crippa at kth.se (Simone Crippa)
+Date: Thu Oct 13 05:05:18 2005
+Subject: [Paraview] XY plot
+In-Reply-To: <a2ab21560510120822o7f00d5a3tf423df4aae6ce6fa@mail.gmail.com>
+References: <200510121216.46623.Francois.Beaubert@univ-valenciennes.fr>
+	<a2ab21560510120822o7f00d5a3tf423df4aae6ce6fa@mail.gmail.com>
+Message-ID: <1129194299.4284.238.camel@localhost>
+
+Hej,
+
+I was not aware of the possibility to export raw 2D data! Can you please
+tell me how you (Berk) do it?
+
+Concerning the XY plot features I am missing (maybe just because I don't
+know of their existence):
+
+* sample/probe data on a custom curve (i.e., not only on a line or
+point); resulting from a cut between a plane and a grid boundary.
+* plot a custom variable as a function of an other custom variable,
+i.e., plot surface pressure as a function of y-value.
+
+
+Thanks,
+Simone 
+
+
+On Wed, 2005-10-12 at 11:22 -0400, Berk Geveci wrote:
+> Also, it is possible to export 2D data and process it in something
+> like gnuplot, tecplot or excel.
+> 
+> On 10/12/05, Fran?ois BEAUBERT <Francois.Beaubert@univ-valenciennes.fr> wrote:
+> > Hello,
+> >
+> > I'm wondering if there is any plan to enhance the XY plot module of paraview
+> > to have someting more powerfull for this kind of plot.
+> >
+> > Paraview is a wonderfull tool but I think it laks some features when you want
+> > to do XY plot.
+> >
+> >
+> > --
+> > Fran?ois BEAUBERT
+> > ENSIAME/LME
+> > Bureau A9
+> > Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+> > T?l?phone: (0/33)3 27 51 19 72
+> > T?l?copie: (0/33)3 27 51 19 61
+> > Mel: Francois.Beaubert@univ-valenciennes.fr
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Simone Crippa
+Research assistant, Dipl.-Ing.
+Royal Institute of Technology (KTH)
+Aeronautical and Vehicle Engineering
+Division of Aerodynamics
+Teknikringen 8
+SE-10044 Stockholm, Sweden
++46 (0)8 790 6465
+
+From bnwylie at sandia.gov  Thu Oct 13 11:21:24 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Oct 13 11:21:43 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01558DB1@ES20SNLNT.srn.sandia.gov>
+
+Get more memory. :)
+
+Sorry just being cheeky.
+
+Clearly the memory allocation is failing. If this was a big data set
+that's probably all it is. If the dataset is small than there might be a
+more serious problem.
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+> Behalf Of Renato N. Elias
+> Sent: Wednesday, October 12, 2005 7:59 PM
+> To: paraview@paraview.org
+> Subject: [Paraview] Animation brokes with vorticity data...
+> 
+> 
+> I've been using the vtkCellDerivatives.xml package, as 
+> described in the Wiki pages, to produce vorticity data. After 
+> deriving cell based vorticity vector I apply the cell to 
+> point data filter followed by the magnitude function of the 
+> calculator in order to generate scalar data and vorticity iso 
+> contours accordingly. My problem begins to appear when I try 
+> to animate the iso contours. After some frames being rendered 
+> the animation stops with the followig error message:
+> 
+> "There was a VTK Error in file: c: dev paraview22 vtk common 
+> vtkDataArrayTemplate.txx (241) Unable to allocate 2233310 
+> elements of size 4: bad allocation"
+> 
+> Any idea to avoid this error?
+> 
+> Thanks
+> 
+> Renato.
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From tejj at hotmail.com  Thu Oct 13 11:28:52 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Thu Oct 13 11:28:56 2005
+Subject: [Paraview] Cave configuration assistance
+Message-ID: <BAY103-F104563DB4A03A7DCEF0890DE7A0@phx.gbl>
+
+I have a 3 wall system very similar to  a cave.  I am using paraview 2.2.1 
+with the xml .pvx file.  Does anyone know how to use this correctly?  I have 
+3 machines rendering and one for control and my xml file is as follows:
+
+<?xml version="1.0" ?>
+<pvx>
+  <Process Type="client" />
+  <Process Type="server">
+  <Machine Name="ids1"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+  <Machine Name="ids2"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+  <Machine Name="ids3"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+
+  </Process>
+</pvx>
+
+ids4 is control and I run the following commands and only 2 of the 3 nodes 
+are launched and it freezes up immediately
+
+ids1: mpirun -np 3 -machinefile /root/mpi.nodefile 
+/usr/local/paraview-2.2.1/bin/pvrenderserver /root/passive.pvx
+ids4: pvclient -sh=ids1 /root/passive.pvx
+
+Any ideas?
+
+Thanks.
+
+
+From berk.geveci at gmail.com  Thu Oct 13 11:31:09 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Thu Oct 13 11:31:12 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+In-Reply-To: <20051013015806.F1CA7727BE@mailhost.nacad.ufrj.br>
+References: <20051013015806.F1CA7727BE@mailhost.nacad.ufrj.br>
+Message-ID: <a2ab21560510130831s1788fd1axeb5780e2ce0bfddc@mail.gmail.com>
+
+Try turning off "cache geometry" in the animation page.
+
+On 10/12/05, Renato N. Elias <rnelias@nacad.ufrj.br> wrote:
+>
+> I've been using the vtkCellDerivatives.xml package, as described in the Wiki
+> pages, to produce vorticity data. After deriving cell based vorticity vector
+> I apply the cell to point data filter followed by the magnitude function of
+> the calculator in order to generate scalar data and vorticity iso contours
+> accordingly. My problem begins to appear when I try to animate the iso
+> contours. After some frames being rendered the animation stops with the
+> followig error message:
+>
+> "There was a VTK Error in file: c: dev paraview22 vtk common
+> vtkDataArrayTemplate.txx (241)
+> Unable to allocate 2233310 elements of size 4: bad allocation"
+>
+> Any idea to avoid this error?
+>
+> Thanks
+>
+> Renato.
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From michael.hopkins at hopkins-research.com  Fri Oct 14 04:55:49 2005
+From: michael.hopkins at hopkins-research.com (Michael Hopkins)
+Date: Fri Oct 14 04:55:59 2005
+Subject: [Paraview] Can't save anything on OS X
+Message-ID: <BF753125.826F%michael.hopkins@hopkins-research.com>
+
+
+Hi all
+
+I'm a new Paraview user and very impressed by the capabilities though still
+getting to grips with some aspects (such as formats for input files, more on
+that later).
+
+I am running 2.0 remotely on FreeBSD amd64 with no problems and 2.2 locally
+on Mac OS X (10.4.2) - however whenever I try to save anything on OS X
+nothing happens and an error message appears on the terminal, examples
+below:
+
+===========================================================================
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/Servers/Filters/vtkXMLPVDW
+riter.cxx (302)
+ Sorry unable to create directory: /Users/mwh/testdata
+Last systen error was: Permission denied
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkXMLWriter.cxx
+(398)
+ Error opening output file "/Users/mwh/testdata/testdata_0.vti"
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkXMLWriter.cxx
+(401)
+ Error code "Unknown error: 0"
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkXMLWriter.cxx
+(398)
+ Error opening output file "/Users/mwh/testdata.pvd"
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkXMLWriter.cxx
+(401)
+ Error code "Unknown error: 0"
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/Filtering/vtkExecutive
+.cxx (680)
+ Algorithm vtkXMLPVDWriter(0x7d019c0) returned failure for request:
+vtkInformation (0x7bbbbd0)
+  Debug: Off
+  Modified Time: 506500
+  Reference Count: 1
+  Registered Events: (none)
+  REQUEST_DATA: 1
+  ALGORITHM_AFTER_FORWARD: 1
+  FORWARD_DIRECTION: 0
+  FROM_OUTPUT_PORT: -1
+  KEYS_TO_COPY: UPDATE_BLOCKS
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/GUI/Client/vtkPVWindow.cxx
+(3085)
+ Could not open file /Users/mwh/teststate.pvs
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkPNGWriter.cxx
+(220)
+ Unable to open file /Users/mwh/testimage.png
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkImageWriter.cxx
+(506)
+ Ran out of disk space; deleting file(s) already written
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+/Users/kitware/ParaViewReleaseRoot/paraview-2.2.1/VTK/IO/vtkJPEGWriter.cxx
+(248)
+ Unable to open file /Users/mwh/testjpg.jpg
+ErrorMessage end
+===========================================================================
+
+Would be very grateful if someone could suggest to me why this is and if
+there is a simple solution.  I am suspecting something to do with file
+permissions but not sure how to proceed.
+
+TIA and please CC to my email
+
+Michael
+
+
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+        _/    _/   _/_/_/             Hopkins Research Ltd
+       _/    _/   _/    _/
+      _/_/_/_/   _/_/_/          http://www.hopkins-research.com/
+     _/    _/   _/   _/
+    _/    _/   _/     _/               'touch the future'
+                   
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+
+
+From berk.geveci at gmail.com  Fri Oct 14 14:56:32 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Oct 14 14:56:35 2005
+Subject: [Paraview] Ghost cells
+In-Reply-To: <6.2.1.2.2.20051004091513.02ca4d60@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20051004091513.02ca4d60@pop.mcs.anl.gov>
+Message-ID: <a2ab21560510141156t47a37dbbq656a37798946b35f@mail.gmail.com>
+
+Ghost cell support for AMR datasets is still undecided. The reader
+will (most likely) get ghost level requests and can honour those but
+the filters down the pipeline will not know to remove ghost levels. I
+hope to look into this in the future.
+
+On 10/4/05, Randy Hudson <hudson@mcs.anl.gov> wrote:
+>
+> It looks as though VTK creates ghost cells for its own use, under the hood, when it needs to.
+>
+> My PARAMESH AMR data often contains ghost cells.  It doesn't look like paraview & VTK support either
+> 1)  user loading of ghost cells, or
+> 2)  the use of ghost cells to, e.g., properly convert cell-centered to point-centered data (isosurfaces of my cell-centered AMR data, converted to point-centered for contouring, are discontinuous at block boundaries).
+>
+> Are those two points correct?
+>
+>
+> Thanks.
+>
+>
+>
+> Randy.
+> 630 252 8690.
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From hudson at mcs.anl.gov  Fri Oct 14 16:27:13 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Fri Oct 14 16:28:41 2005
+Subject: [Paraview] Compositing
+Message-ID: <6.2.1.2.2.20051014151109.03686b38@pop.mcs.anl.gov>
+
+
+
+On one visualization cluster I use, I tested both pvserver 2.0.0 and the 07/11 development release in parallel, running the client on my laptop.  I used both processors of each of several 2-processor nodes on the cluster -- nodes that have 1 graphics card apiece.
+
+When I used the "Composite" slider and check box in paraview's "3D View Properties" panel to force compositing above 0.0 MB, the image in the graphics panel looked as though either the frame buffers were not being cleared, or as if both processes on a node were rendering over one another's images.
+
+Yet, when I tried the same thing with pvserver 2.0.0, with the same settings, with another cluster that has 1 graphics card per 2-processor node, the image looked fine.  (On this cluster, I could not test the 07/11 release.)
+
+Should I, in general, expect the munging of the image when running under these conditions?
+
+
+
+
+Randy.
+630 252 8690.
+
+From kmorel at sandia.gov  Fri Oct 14 16:33:22 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Fri Oct 14 16:33:41 2005
+Subject: [Paraview] Compositing
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D316EB@ES21SNLNT.srn.sandia.gov>
+
+Unless you compiled with Mesa and are doing offscreen rendering, then
+yes you can expect that.
+
+-Ken 
+
+> -----Original Message-----
+> From: paraview-bounces+kmorel=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On 
+> Behalf Of Randy Hudson
+> Sent: Friday, October 14, 2005 2:27 PM
+> To: paraview@paraview.org
+> Cc: ANL Paraview List
+> Subject: [Paraview] Compositing
+> 
+> 
+> 
+> On one visualization cluster I use, I tested both pvserver 
+> 2.0.0 and the 07/11 development release in parallel, running 
+> the client on my laptop.  I used both processors of each of 
+> several 2-processor nodes on the cluster -- nodes that have 1 
+> graphics card apiece.
+> 
+> When I used the "Composite" slider and check box in 
+> paraview's "3D View Properties" panel to force compositing 
+> above 0.0 MB, the image in the graphics panel looked as 
+> though either the frame buffers were not being cleared, or as 
+> if both processes on a node were rendering over one another's images.
+> 
+> Yet, when I tried the same thing with pvserver 2.0.0, with 
+> the same settings, with another cluster that has 1 graphics 
+> card per 2-processor node, the image looked fine.  (On this 
+> cluster, I could not test the 07/11 release.)
+> 
+> Should I, in general, expect the munging of the image when 
+> running under these conditions?
+> 
+> 
+> 
+> 
+> Randy.
+> 630 252 8690.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From rnelias at nacad.ufrj.br  Fri Oct 14 17:55:31 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Fri Oct 14 17:54:13 2005
+Subject: RES: [Paraview] Animation brokes with vorticity data...
+In-Reply-To: <E4C1C0FFED3E6B49AC2C1DA9723BE11E01558DB1@ES20SNLNT.srn.sandia.gov>
+Message-ID: <20051014215404.13F12727D0@mailhost.nacad.ufrj.br>
+
+
+Well Brian, I think this problem can not be related with lack of memory
+because I was trying to generate this animation in a machine with 4 Gb of
+memory and the model was fairly modest (446,662 tetrahedra and 81,991
+nodes). 
+
+Regards
+
+Renato.
+
+-----Mensagem original-----
+De: Wylie, Brian [mailto:bnwylie@sandia.gov] 
+Enviada em: quinta-feira, 13 de outubro de 2005 12:21
+Para: Renato N. Elias; paraview@paraview.org
+Assunto: RE: [Paraview] Animation brokes with vorticity data...
+
+Get more memory. :)
+
+Sorry just being cheeky.
+
+Clearly the memory allocation is failing. If this was a big data set that's
+probably all it is. If the dataset is small than there might be a more
+serious problem.
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On Behalf Of 
+> Renato N. Elias
+> Sent: Wednesday, October 12, 2005 7:59 PM
+> To: paraview@paraview.org
+> Subject: [Paraview] Animation brokes with vorticity data...
+> 
+> 
+> I've been using the vtkCellDerivatives.xml package, as described in 
+> the Wiki pages, to produce vorticity data. After deriving cell based 
+> vorticity vector I apply the cell to point data filter followed by the 
+> magnitude function of the calculator in order to generate scalar data 
+> and vorticity iso contours accordingly. My problem begins to appear 
+> when I try to animate the iso contours. After some frames being 
+> rendered the animation stops with the followig error message:
+> 
+> "There was a VTK Error in file: c: dev paraview22 vtk common 
+> vtkDataArrayTemplate.txx (241) Unable to allocate 2233310 elements of 
+> size 4: bad allocation"
+> 
+> Any idea to avoid this error?
+> 
+> Thanks
+> 
+> Renato.
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+
+From michael.hopkins at hopkins-research.com  Sat Oct 15 15:35:15 2005
+From: michael.hopkins at hopkins-research.com (Michael Hopkins)
+Date: Sat Oct 15 15:35:21 2005
+Subject: [Paraview] Can't save anything on OS X - update, G5 works fine
+Message-ID: <BF771883.8291%michael.hopkins@hopkins-research.com>
+
+
+
+OK now this is getting stranger...
+
+On my G4 laptop running 10.4.2 the problem is as stated in my previous post.
+An install from the same 2.2.1 tarball on a relatively new dual G5 2GHz
+running the same system works fine.  Can anyone think why that might be?
+
+Is it possible that I have conflicting (older) versions of tcl or tk on the
+laptop - and if so how do I diagnose this?
+
+I wonder if the builder of 2.2.1 could drop me a line.
+
+TIA for any thoughts and please CC to my email
+
+Michael
+
+
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+        _/    _/   _/_/_/             Hopkins Research Ltd
+       _/    _/   _/    _/
+      _/_/_/_/   _/_/_/          http://www.hopkins-research.com/
+     _/    _/   _/   _/
+    _/    _/   _/     _/               'touch the future'
+                   
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+
+
+
+From rnelias at nacad.ufrj.br  Sun Oct 16 09:33:00 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Sun Oct 16 09:31:36 2005
+Subject: [Paraview] Problem when loading many time steps...
+Message-ID: <20051016133131.7ADDC72859@mailhost.nacad.ufrj.br>
+
+
+Hi all,
+
+I've been struggling with Paraview to build an animation for a model with
+446,662 tetrahedra, 81,991 nodes, and 1000 time steps. My data is
+partitioned in 4 MPI partitions but I'm post-processing data in serial mode
+loading each partition and applying the "append dataset" and "clean to grid"
+filters in order to join my partitions (I've been doing that because the
+server-of-server file has not been working as I expected). Each partitioned
+file is stored in Ensight cases (Fortran binary and Ensight standard - not
+Gold). 
+
+My problem begins to occur when I try to load these case files. It seems
+that Paraview tries to load the result file for each time step before
+producing the initial image and this operation takes too much time when the
+computer does not freeze. I think that Paraview should load the geometry and
+the first (or the last) time step in order to produce an initial image and
+leave to load the corresponding file for each time step only when we are
+building animated images. Anyway, if anybody could help me with some tip
+I'll be very thankful.
+
+Regards
+
+ps.: The related problem has been occuring in a Dell Precision workstation
+(P4 3.6 GHz, 4 GB of memory and video card Nvidia Quadro FX 3400 and OS
+Windows XP/SP2).
+
+
+Renato N. Elias
+===========================================
+High Performance Computing Center
+NACAD/COPPE/UFRJ
+Rio de Janeiro, Brasil
+http://www.nacad.ufrj.br/~rnelias
+
+
+
+
+
+
+From Jouke.Hylkema at onecert.fr  Fri Oct 14 06:21:46 2005
+From: Jouke.Hylkema at onecert.fr (jouke hylkema)
+Date: Mon Oct 17 09:09:42 2005
+Subject: [Paraview] STL writer
+Message-ID: <20051014122146.1604284d@batave>
+
+Good day,
+
+Is there somebody who has already written a STL writer package for
+paraview. If not I would like to write one but I need some help since the
+package mechanism is not completely clear to me (understatement :-)).
+
+Jouke
+From tdubuis at scconsultants.com  Mon Oct 17 11:45:38 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Mon Oct 17 11:47:45 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+References: <20051014215404.13F12727D0@mailhost.nacad.ufrj.br>
+Message-ID: <041301c5d331$d2905620$41c809c0@jupiter>
+
+Hello all,
+
+I think there is a memory problem with animation.
+Last week, I try to make several simple animations : 100 vtk files
+(Animation only on filename)
+I make 2 avi files and my PC show an error "Windows must increase your
+virtual memory"
+I opened my task manager and I used 1.7 Go.
+I must exit to paraview to free the memory.
+
+Best regards,
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+----- Original Message -----
+From: "Renato N. Elias" <rnelias@nacad.ufrj.br>
+To: "'Wylie, Brian'" <bnwylie@sandia.gov>
+Cc: <paraview@paraview.org>
+Sent: Friday, October 14, 2005 11:55 PM
+Subject: RES: [Paraview] Animation brokes with vorticity data...
+
+
+>
+> Well Brian, I think this problem can not be related with lack of memory
+> because I was trying to generate this animation in a machine with 4 Gb of
+> memory and the model was fairly modest (446,662 tetrahedra and 81,991
+> nodes).
+>
+> Regards
+>
+> Renato.
+>
+> -----Mensagem original-----
+> De: Wylie, Brian [mailto:bnwylie@sandia.gov]
+> Enviada em: quinta-feira, 13 de outubro de 2005 12:21
+> Para: Renato N. Elias; paraview@paraview.org
+> Assunto: RE: [Paraview] Animation brokes with vorticity data...
+>
+> Get more memory. :)
+>
+> Sorry just being cheeky.
+>
+> Clearly the memory allocation is failing. If this was a big data set
+that's
+> probably all it is. If the dataset is small than there might be a more
+> serious problem.
+>
+>   Brian Wylie - Org 9227
+>   Sandia National Laboratories
+>   MS 0822 - Building 880/A1-J
+>   (505)844-2238 FAX(505)845-0833
+>        ____                  _    __
+>       / __ \____  _________ | |  / (_)__ _      __
+>      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+>
+>                                     Unleash the Beast
+>
+>
+> > -----Original Message-----
+> > From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> > [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On Behalf Of
+> > Renato N. Elias
+> > Sent: Wednesday, October 12, 2005 7:59 PM
+> > To: paraview@paraview.org
+> > Subject: [Paraview] Animation brokes with vorticity data...
+> >
+> >
+> > I've been using the vtkCellDerivatives.xml package, as described in
+> > the Wiki pages, to produce vorticity data. After deriving cell based
+> > vorticity vector I apply the cell to point data filter followed by the
+> > magnitude function of the calculator in order to generate scalar data
+> > and vorticity iso contours accordingly. My problem begins to appear
+> > when I try to animate the iso contours. After some frames being
+> > rendered the animation stops with the followig error message:
+> >
+> > "There was a VTK Error in file: c: dev paraview22 vtk common
+> > vtkDataArrayTemplate.txx (241) Unable to allocate 2233310 elements of
+> > size 4: bad allocation"
+> >
+> > Any idea to avoid this error?
+> >
+> > Thanks
+> >
+> > Renato.
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> >
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+
+
+From bnwylie at sandia.gov  Mon Oct 17 11:50:31 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Mon Oct 17 11:50:44 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E015E19BF@ES20SNLNT.srn.sandia.gov>
+
+Thierry,
+
+Berk sent out an email with the suggestion that 'Cache Geometry' might
+be the problem. Try unchecking 'Cache Geometry' on the animation page
+and see if the memory issue clears up.
+
+Best,
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: Thierry Dubuis [mailto:tdubuis@scconsultants.com] 
+> Sent: Monday, October 17, 2005 9:46 AM
+> To: Renato N. Elias; Wylie, Brian
+> Cc: paraview@paraview.org
+> Subject: Re: [Paraview] Animation brokes with vorticity data...
+> 
+> Hello all,
+> 
+> I think there is a memory problem with animation.
+> Last week, I try to make several simple animations : 100 vtk 
+> files (Animation only on filename) I make 2 avi files and my 
+> PC show an error "Windows must increase your virtual memory"
+> I opened my task manager and I used 1.7 Go.
+> I must exit to paraview to free the memory.
+> 
+> Best regards,
+> -----------------------------------------------------
+> Thierry Dubuis
+> Sciences & Computer Consultants
+> Tel Dir  : 04 77 49 75 84
+> Tel Std : 04 77 49 75 80
+> ----- Original Message -----
+> From: "Renato N. Elias" <rnelias@nacad.ufrj.br>
+> To: "'Wylie, Brian'" <bnwylie@sandia.gov>
+> Cc: <paraview@paraview.org>
+> Sent: Friday, October 14, 2005 11:55 PM
+> Subject: RES: [Paraview] Animation brokes with vorticity data...
+> 
+> 
+> >
+> > Well Brian, I think this problem can not be related with lack of 
+> > memory because I was trying to generate this animation in a machine 
+> > with 4 Gb of memory and the model was fairly modest (446,662 
+> > tetrahedra and 81,991 nodes).
+> >
+> > Regards
+> >
+> > Renato.
+> >
+> > -----Mensagem original-----
+> > De: Wylie, Brian [mailto:bnwylie@sandia.gov] Enviada em: 
+> quinta-feira, 
+> > 13 de outubro de 2005 12:21
+> > Para: Renato N. Elias; paraview@paraview.org
+> > Assunto: RE: [Paraview] Animation brokes with vorticity data...
+> >
+> > Get more memory. :)
+> >
+> > Sorry just being cheeky.
+> >
+> > Clearly the memory allocation is failing. If this was a big data set
+> that's
+> > probably all it is. If the dataset is small than there 
+> might be a more 
+> > serious problem.
+> >
+> >   Brian Wylie - Org 9227
+> >   Sandia National Laboratories
+> >   MS 0822 - Building 880/A1-J
+> >   (505)844-2238 FAX(505)845-0833
+> >        ____                  _    __
+> >       / __ \____  _________ | |  / (_)__ _      __
+> >      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+> >     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+> >    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> >
+> >                                     Unleash the Beast
+> >
+> >
+> > > -----Original Message-----
+> > > From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> > > [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] 
+> On Behalf 
+> > > Of Renato N. Elias
+> > > Sent: Wednesday, October 12, 2005 7:59 PM
+> > > To: paraview@paraview.org
+> > > Subject: [Paraview] Animation brokes with vorticity data...
+> > >
+> > >
+> > > I've been using the vtkCellDerivatives.xml package, as 
+> described in 
+> > > the Wiki pages, to produce vorticity data. After deriving 
+> cell based 
+> > > vorticity vector I apply the cell to point data filter 
+> followed by 
+> > > the magnitude function of the calculator in order to 
+> generate scalar 
+> > > data and vorticity iso contours accordingly. My problem begins to 
+> > > appear when I try to animate the iso contours. After some frames 
+> > > being rendered the animation stops with the followig 
+> error message:
+> > >
+> > > "There was a VTK Error in file: c: dev paraview22 vtk common 
+> > > vtkDataArrayTemplate.txx (241) Unable to allocate 2233310 
+> elements 
+> > > of size 4: bad allocation"
+> > >
+> > > Any idea to avoid this error?
+> > >
+> > > Thanks
+> > >
+> > > Renato.
+> > >
+> > >
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > >
+> > >
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> >
+> >
+> 
+> 
+> 
+> 
+
+From tdubuis at scconsultants.com  Tue Oct 18 03:54:26 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Tue Oct 18 03:56:19 2005
+Subject: [Paraview] Animation brokes with vorticity data...
+References: <E4C1C0FFED3E6B49AC2C1DA9723BE11E015E19BF@ES20SNLNT.srn.sandia.gov>
+Message-ID: <045801c5d3b9$29b0f2c0$41c809c0@jupiter>
+
+Yes, that work.
+Thanks,
+But could we imagine the avi save automatically uncheck 'Cache Geometry' ???
+
+Best,
+-----------------------------------------------------
+Thierry Dubuis
+Sciences & Computer Consultants
+Tel Dir  : 04 77 49 75 84
+Tel Std : 04 77 49 75 80
+----- Original Message -----
+From: "Wylie, Brian" <bnwylie@sandia.gov>
+To: "Thierry Dubuis" <tdubuis@scconsultants.com>; "Renato N. Elias"
+<rnelias@nacad.ufrj.br>
+Cc: <paraview@paraview.org>
+Sent: Monday, October 17, 2005 5:50 PM
+Subject: RE: [Paraview] Animation brokes with vorticity data...
+
+
+> Thierry,
+>
+> Berk sent out an email with the suggestion that 'Cache Geometry' might
+> be the problem. Try unchecking 'Cache Geometry' on the animation page
+> and see if the memory issue clears up.
+>
+> Best,
+>
+>   Brian Wylie - Org 9227
+>   Sandia National Laboratories
+>   MS 0822 - Building 880/A1-J
+>   (505)844-2238 FAX(505)845-0833
+>        ____                  _    __
+>       / __ \____  _________ | |  / (_)__ _      __
+>      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+>
+>                                     Unleash the Beast
+>
+>
+> > -----Original Message-----
+> > From: Thierry Dubuis [mailto:tdubuis@scconsultants.com]
+> > Sent: Monday, October 17, 2005 9:46 AM
+> > To: Renato N. Elias; Wylie, Brian
+> > Cc: paraview@paraview.org
+> > Subject: Re: [Paraview] Animation brokes with vorticity data...
+> >
+> > Hello all,
+> >
+> > I think there is a memory problem with animation.
+> > Last week, I try to make several simple animations : 100 vtk
+> > files (Animation only on filename) I make 2 avi files and my
+> > PC show an error "Windows must increase your virtual memory"
+> > I opened my task manager and I used 1.7 Go.
+> > I must exit to paraview to free the memory.
+> >
+> > Best regards,
+> > -----------------------------------------------------
+> > Thierry Dubuis
+> > Sciences & Computer Consultants
+> > Tel Dir  : 04 77 49 75 84
+> > Tel Std : 04 77 49 75 80
+> > ----- Original Message -----
+> > From: "Renato N. Elias" <rnelias@nacad.ufrj.br>
+> > To: "'Wylie, Brian'" <bnwylie@sandia.gov>
+> > Cc: <paraview@paraview.org>
+> > Sent: Friday, October 14, 2005 11:55 PM
+> > Subject: RES: [Paraview] Animation brokes with vorticity data...
+> >
+> >
+> > >
+> > > Well Brian, I think this problem can not be related with lack of
+> > > memory because I was trying to generate this animation in a machine
+> > > with 4 Gb of memory and the model was fairly modest (446,662
+> > > tetrahedra and 81,991 nodes).
+> > >
+> > > Regards
+> > >
+> > > Renato.
+> > >
+> > > -----Mensagem original-----
+> > > De: Wylie, Brian [mailto:bnwylie@sandia.gov] Enviada em:
+> > quinta-feira,
+> > > 13 de outubro de 2005 12:21
+> > > Para: Renato N. Elias; paraview@paraview.org
+> > > Assunto: RE: [Paraview] Animation brokes with vorticity data...
+> > >
+> > > Get more memory. :)
+> > >
+> > > Sorry just being cheeky.
+> > >
+> > > Clearly the memory allocation is failing. If this was a big data set
+> > that's
+> > > probably all it is. If the dataset is small than there
+> > might be a more
+> > > serious problem.
+> > >
+> > >   Brian Wylie - Org 9227
+> > >   Sandia National Laboratories
+> > >   MS 0822 - Building 880/A1-J
+> > >   (505)844-2238 FAX(505)845-0833
+> > >        ____                  _    __
+> > >       / __ \____  _________ | |  / (_)__ _      __
+> > >      / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+> > >     / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+> > >    /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+> > >
+> > >                                     Unleash the Beast
+> > >
+> > >
+> > > > -----Original Message-----
+> > > > From: paraview-bounces+bnwylie=sandia.gov@paraview.org
+> > > > [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org]
+> > On Behalf
+> > > > Of Renato N. Elias
+> > > > Sent: Wednesday, October 12, 2005 7:59 PM
+> > > > To: paraview@paraview.org
+> > > > Subject: [Paraview] Animation brokes with vorticity data...
+> > > >
+> > > >
+> > > > I've been using the vtkCellDerivatives.xml package, as
+> > described in
+> > > > the Wiki pages, to produce vorticity data. After deriving
+> > cell based
+> > > > vorticity vector I apply the cell to point data filter
+> > followed by
+> > > > the magnitude function of the calculator in order to
+> > generate scalar
+> > > > data and vorticity iso contours accordingly. My problem begins to
+> > > > appear when I try to animate the iso contours. After some frames
+> > > > being rendered the animation stops with the followig
+> > error message:
+> > > >
+> > > > "There was a VTK Error in file: c: dev paraview22 vtk common
+> > > > vtkDataArrayTemplate.txx (241) Unable to allocate 2233310
+> > elements
+> > > > of size 4: bad allocation"
+> > > >
+> > > > Any idea to avoid this error?
+> > > >
+> > > > Thanks
+> > > >
+> > > > Renato.
+> > > >
+> > > >
+> > > > _______________________________________________
+> > > > ParaView mailing list
+> > > > ParaView@paraview.org
+> > > > http://www.paraview.org/mailman/listinfo/paraview
+> > > >
+> > > >
+> > >
+> > >
+> > > _______________________________________________
+> > > ParaView mailing list
+> > > ParaView@paraview.org
+> > > http://www.paraview.org/mailman/listinfo/paraview
+> > >
+> > >
+> >
+> >
+> >
+> >
+>
+>
+
+
+From amy.squillacote at kitware.com  Tue Oct 18 10:56:32 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Oct 18 10:57:11 2005
+Subject: [Paraview] creating a ParaView 2.4 branch
+In-Reply-To: <6.2.5.6.2.20051004141949.02d64f80@kitware.com>
+References: <6.2.3.4.2.20050920144705.02e809a0@pop.biz.rr.com>
+	<6.2.5.6.2.20051004093730.02d975b8@kitware.com>
+	<6.2.5.6.2.20051004141949.02d64f80@kitware.com>
+Message-ID: <6.2.5.6.2.20051018105358.02d89b70@kitware.com>
+
+Hi Everyone,
+
+We are intending to create a branch of the ParaView CVS tree 
+(including VTK) for the 2.4 release of ParaView either Thursday or 
+Friday of this week.  Please limit your CVS commits to things that 
+are broken on the dashboard.  I will send out another e-mail when the 
+branch has been cut.
+
+Thanks for your cooperation.
+
+Amy Squillacote
+Kitware, Inc.
+
+From Anders.Hagberg at baesystems.se  Thu Oct 20 07:26:59 2005
+From: Anders.Hagberg at baesystems.se (Hagberg Anders (NONSSA))
+Date: Thu Oct 20 07:25:43 2005
+Subject: [Paraview] Oilflow
+Message-ID: <18D40E57EB23CE4FBEEB4895B16AB6E16F438B@nt057.ntdom1.se>
+
+I am a new user of paraview. Is it possible to create oilflow (pathlines
+on a surface) with Paraview. If yes does anybody know how to do it.
+
+ 
+
+Anders
+
+ 
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051020/1ace687d/attachment.htm
+From eschenbe at psc.edu  Thu Oct 20 08:36:21 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Oct 20 08:36:36 2005
+Subject: [Paraview] Oilflow
+In-Reply-To: <18D40E57EB23CE4FBEEB4895B16AB6E16F438B@nt057.ntdom1.se>
+References: <18D40E57EB23CE4FBEEB4895B16AB6E16F438B@nt057.ntdom1.se>
+Message-ID: <EA75198CD068D6DDB3875E45@harpo.psc.edu>
+
+-- <Anders.Hagberg@baesystems.se> wrote:
+> I am a new user of paraview. Is it possible to create oilflow (pathlines
+> on a surface) with Paraview. If yes does anybody know how to do it.
+
+"Pathlines" are usually the flow through transient fields; ParaView doesn't 
+do that (yet). The "Stream Tracer" filter can create streamlines through a 
+static field.
+
+Create a surface through your data with "Cut" or "Contour" (creates an 
+isosurface) and then feed the output to "Stream Tracer".
+
+Kent
+Pittsburgh Supercomputing Center
+From crippa at kth.se  Thu Oct 20 09:11:14 2005
+From: crippa at kth.se (Simone Crippa)
+Date: Thu Oct 20 09:11:42 2005
+Subject: [Paraview] Oilflow
+In-Reply-To: <18D40E57EB23CE4FBEEB4895B16AB6E16F438B@nt057.ntdom1.se>
+References: <18D40E57EB23CE4FBEEB4895B16AB6E16F438B@nt057.ntdom1.se>
+Message-ID: <1129813875.645.16.camel@localhost>
+
+On Thu, 2005-10-20 at 13:26 +0200, Hagberg Anders (NONSSA) wrote:
+> I am a new user of paraview. Is it possible to create oilflow
+> (pathlines on a surface) with Paraview. If yes does anybody know how
+> to do it.
+
+
+Hej,
+
+I tried to find a solution some weeks ago and the best way to visualize
+mean flow surface pathlines ("oilflow" or "skin friction lines" in
+classical aerodynamics) is to constrain the skin friction (coefficient)
+vector on the surface of interest ("surface vectors" filter). Then
+visualize either using glymphs ... or streamlines emanating from the
+surface (you might have to define more than one seed if you have several
+attachment and separation lines)
+
+
+Regards, Simone
+
+
+-- 
+Simone Crippa
+Research assistant, Dipl.-Ing.
+Royal Institute of Technology (KTH)
+Aeronautical and Vehicle Engineering
+Division of Aerodynamics
+Teknikringen 8
+SE-10044 Stockholm, Sweden
++46 (0)8 790 6465
+
+From amy.squillacote at kitware.com  Fri Oct 21 10:28:05 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Fri Oct 21 10:28:23 2005
+Subject: [Paraview] creating a ParaView 2.4 branch
+In-Reply-To: <6.2.5.6.2.20051018105358.02d89b70@kitware.com>
+References: <6.2.3.4.2.20050920144705.02e809a0@pop.biz.rr.com>
+	<6.2.5.6.2.20051004093730.02d975b8@kitware.com>
+	<6.2.5.6.2.20051004141949.02d64f80@kitware.com>
+	<6.2.5.6.2.20051018105358.02d89b70@kitware.com>
+Message-ID: <6.2.5.6.2.20051021102347.02ddc150@kitware.com>
+
+Hi All,
+
+The ParaView 2.4 branch has been created for the ParaView (including 
+VTK), vtkSNL, and VTKData repositories.  The tag for the branch is 
+ParaView-2-4.  I will be starting the release process for ParaView 
+2.4.0 (beta release).  If you find problems that need to be merged 
+into the 2.4 branch, please let me know (and preferably e-mail me a 
+patch to incorporate the changes).  You are now free to make checkins 
+to the main CVS trees for ParaView and VTK again.
+
+- Amy
+
+At 10:56 AM 10/18/2005, Amy Squillacote wrote:
+>Hi Everyone,
+>
+>We are intending to create a branch of the ParaView CVS tree 
+>(including VTK) for the 2.4 release of ParaView either Thursday or 
+>Friday of this week.  Please limit your CVS commits to things that 
+>are broken on the dashboard.  I will send out another e-mail when 
+>the branch has been cut.
+>
+>Thanks for your cooperation.
+>
+>Amy Squillacote
+>Kitware, Inc.
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From tejj at hotmail.com  Mon Oct 24 13:13:38 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Mon Oct 24 13:13:51 2005
+Subject: [Paraview] I need a bug to be submitted
+Message-ID: <BAY103-F2169B5296C1C285B85D0FDDE770@phx.gbl>
+
+I have encountered a bug when using pvserver with a pvx file in anything 
+higher than 2.0.3.  If more than 2 machines are specified paraview both 
+pvserver and client hang.  The same configuration works fine with 2.0.3.
+
+Could someone submit this bug for me?  Thanks.
+
+
+From berk.geveci at gmail.com  Mon Oct 24 13:18:24 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Mon Oct 24 13:18:25 2005
+Subject: [Paraview] I need a bug to be submitted
+In-Reply-To: <BAY103-F2169B5296C1C285B85D0FDDE770@phx.gbl>
+References: <BAY103-F2169B5296C1C285B85D0FDDE770@phx.gbl>
+Message-ID: <a2ab21560510241018q8fa2cb1p21b1f534fe28a1b8@mail.gmail.com>
+
+Can you past an example pvx file?
+
+On 10/24/05, Terry Jordan <tejj@hotmail.com> wrote:
+> I have encountered a bug when using pvserver with a pvx file in anything
+> higher than 2.0.3.  If more than 2 machines are specified paraview both
+> pvserver and client hang.  The same configuration works fine with 2.0.3.
+>
+> Could someone submit this bug for me?  Thanks.
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From tejj at hotmail.com  Mon Oct 24 14:06:16 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Mon Oct 24 14:06:30 2005
+Subject: [Paraview] I need a bug to be submitted
+In-Reply-To: <a2ab21560510241018q8fa2cb1p21b1f534fe28a1b8@mail.gmail.com>
+Message-ID: <BAY103-F20CB3E1D7E368A5B26AB6ADE770@phx.gbl>
+
+<?xml version="1.0" ?>
+<pvx>
+  <Process Type="client" />
+  <Process Type="server">
+  <Machine Name="ids1"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+  <Machine Name="ids2"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+  <Machine Name="ids3"
+            Environment="DISPLAY=m1:0"
+            LowerLeft="-1.0 -1.0 -1.0"
+            LowerRight="1.0 -1.0 -1.0"
+            UpperLeft="-1.0  1.0 -1.0" />
+
+  </Process>
+</pvx>
+
+----Original Message Follows----
+From: Berk Geveci <berk.geveci@gmail.com>
+To: Terry Jordan <tejj@hotmail.com>
+CC: paraview@paraview.org
+Subject: Re: [Paraview] I need a bug to be submitted
+Date: Mon, 24 Oct 2005 13:18:24 -0400
+
+Can you past an example pvx file?
+
+On 10/24/05, Terry Jordan <tejj@hotmail.com> wrote:
+ > I have encountered a bug when using pvserver with a pvx file in anything
+ > higher than 2.0.3.  If more than 2 machines are specified paraview both
+ > pvserver and client hang.  The same configuration works fine with 2.0.3.
+ >
+ > Could someone submit this bug for me?  Thanks.
+ >
+ >
+ > _______________________________________________
+ > ParaView mailing list
+ > ParaView@paraview.org
+ > http://www.paraview.org/mailman/listinfo/paraview
+ >
+
+
+From tejj at hotmail.com  Tue Oct 25 11:52:44 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Tue Oct 25 11:52:51 2005
+Subject: [Paraview] This is how to run paraview in a cave passive
+	stereo..possible active
+Message-ID: <BAY103-F75FC36E4936415079AAC7DE760@phx.gbl>
+
+I assume you could run it in active stereo also if you skip the 
+quad-buffered part.
+
+Here are the steps to running in a cave environment in passive stereo.
+
+For linux:
+
+1) Setup your rendering node(s) to run quad-buffered stereo (nvidia 
+cards:yes ATI:N/A)
+2) Download paraview 2.0.3 (anything above has a problem with hanging).
+3) Change VTK_STEREO_RED_BLUE to VTK_STEREO_CRYSTAL_EYES in 
+paraview-2.0.3/VTK/Rendering/VTKRenderWindow.cxx and make install.
+4) Copy the installed paraview dir to all nodes.
+3) Create a valid pvx file.
+4) Run pvserver either using mpi or for a single machine controlled by 
+another use pvserver alone: mpirun -np # -machinefile youfile  
+/location/pvserver /locationyourfile.pvx OR pvserver /location/your.pvx
+5) From the host run pvclient with the stereo option: pvclient -sh=yourhost 
+--stereo
+6) Scale your model accordingly. (important in allowing model/data to appear 
+in front of screen)
+
+Thats it.
+
+Terry
+
+
+From tejj at hotmail.com  Tue Oct 25 14:02:48 2005
+From: tejj at hotmail.com (Terry Jordan)
+Date: Tue Oct 25 14:02:58 2005
+Subject: [Paraview] This is how to run paraview in a cave
+	passivestereo..possible act
+In-Reply-To: <BAY103-F75FC36E4936415079AAC7DE760@phx.gbl>
+Message-ID: <BAY103-F58D38F7EEBECBE614738EDE760@phx.gbl>
+
+To clarify that is stereo option 4 in the nvidia driver not quad-buffered 
+stereo.
+
+----Original Message Follows----
+From: "Terry Jordan" <tejj@hotmail.com>
+To: paraview@paraview.org
+Subject: [Paraview] This is how to run paraview in a cave 
+passivestereo..possible active
+Date: Tue, 25 Oct 2005 15:52:44 +0000
+
+I assume you could run it in active stereo also if you skip the 
+quad-buffered part.
+
+Here are the steps to running in a cave environment in passive stereo.
+
+For linux:
+
+1) Setup your rendering node(s) to run quad-buffered stereo (nvidia 
+cards:yes ATI:N/A)
+2) Download paraview 2.0.3 (anything above has a problem with hanging).
+3) Change VTK_STEREO_RED_BLUE to VTK_STEREO_CRYSTAL_EYES in 
+paraview-2.0.3/VTK/Rendering/VTKRenderWindow.cxx and make install.
+4) Copy the installed paraview dir to all nodes.
+3) Create a valid pvx file.
+4) Run pvserver either using mpi or for a single machine controlled by 
+another use pvserver alone: mpirun -np # -machinefile youfile  
+/location/pvserver /locationyourfile.pvx OR pvserver /location/your.pvx
+5) From the host run pvclient with the stereo option: pvclient -sh=yourhost 
+--stereo
+6) Scale your model accordingly. (important in allowing model/data to appear 
+in front of screen)
+
+Thats it.
+
+Terry
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+From Daniel.E.Goldstein at colorado.edu  Wed Oct 26 12:06:43 2005
+From: Daniel.E.Goldstein at colorado.edu (Daniel Goldstein)
+Date: Wed Oct 26 12:06:55 2005
+Subject: [Paraview] volume rendering, Hardware support.
+Message-ID: <435FA993.1010101@colorado.edu>
+
+Hello all
+   I am trying to determine why my video card does not seem to be used 
+by the current paraview volume rendering code.
+I am confident it is not using the video hardware because the volume 
+rendering on the voxel8.vtk data set is many orders of magnitude
+slower than other computers I have tried.  This data set has 27 points 
+in 8 cells on an unstructured grid.
+(Interactive Render,  3.745 seconds
+Still Render,  3.665 seconds for this data set, with both set to the 
+projection method)
+I am running on a Dell M50 notebook with a Nvidia quadro4 500 GoGl 
+graphics card.
+I have updated Vbios and drivers to the most recent I can find.
+
+  Does anyone else happen to have the same hardware? Have you found how 
+to make it work with paraview?
+Does anyone know the exact feature set used in the hardware so I can 
+compare it against my card and possibly
+other cards I can upgrade to?
+
+  As a reference I use Amira on this same machine and I can volume 
+render and spin in real time
+much larger data sets. So at least I know the hardware is working.
+
+  Thanks for any help
+
+Dan Goldstein
+
+
+From kmorel at sandia.gov  Mon Oct 31 11:50:38 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Mon Oct 31 11:50:52 2005
+Subject: [Paraview] volume rendering, Hardware support.
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D3171D@ES21SNLNT.srn.sandia.gov>
+
+> Does anyone know the exact feature set used in the hardware 
+> so I can compare it against my card and possibly other cards 
+> I can upgrade to?
+
+The feature set needed by the projected tetrahedra mapper in ParaView is
+small.  It uses only OpenGL 1.1 compliant methods.  It renders triangle
+fans in a display list using a 2D texture that has an internal format of
+GL_INTENSITY.  The hardware you describe should have no problem
+implementing these features.
+
+If you have the ParaView code, you can look at the projection volume
+render implementation at
+ParaView/VTK/VolumeRendering/vtkProjectedTetrahedra.cxx.  If you can
+compile the code, you might want to try removing OpenGL commands until
+it renders fast.  You may also want to check that
+vtkProjectedTetrahedraMapper::Render() is being called at all (as
+opposed to the Render method of software volume mapper).  I suppose it's
+conceivable that ParaView is using the wrong mapper, but I don't know
+why it would be hardware specific.
+
+Sorry I can't be of more help, but I cannot replicate your problem.
+
+-Ken
+
+   ****      Kenneth Moreland
+    ***      Sandia National Laboratories
+***********  
+*** *** ***  email: kmorel@sandia.gov
+**  ***  **  phone: (505) 844-8919
+    ***      fax:   (505) 845-0833
+
+From d-farrell2 at northwestern.edu  Mon Oct 31 15:13:34 2005
+From: d-farrell2 at northwestern.edu (David Farrell)
+Date: Mon Oct 31 15:11:26 2005
+Subject: [Paraview] question about stereo rendering
+Message-ID: <ACA8F874-D08F-4E54-B8EA-6457326555F7@northwestern.edu>
+
+I have some basic questions about the stereo rendering in ParaView:
+
+1) what type of glasses are needed to view the image (red/cyan, red/ 
+blue, etc) ?
+
+2) are colors preserved?
+
+Thanks,
+
+Dave
+
+David E. Farrell
+Graduate Student
+Mechanical Engineering
+Northwestern University
+email: d-farrell2@northwestern.edu
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051031/374fea4a/attachment.htm

@@ -1,0 +1,3587 @@
+From atulsingh92 at outlook.com  Wed Aug  1 08:56:27 2018
+From: atulsingh92 at outlook.com (Atul Singh)
+Date: Wed, 1 Aug 2018 12:56:27 +0000
+Subject: [Paraview] GradientOfUnstructuredDataSet Filter for Catalyst
+Message-ID: <AM0PR02MB43566465846F1FDB7D3F8904A02D0@AM0PR02MB4356.eurprd02.prod.outlook.com>
+
+Dear Paraviewers,
+
+
+I am trying to visualize Vorticities and Q criterion , for the damBreak case (2D) with catalyst (Paraview 5.5.1). The GradientOfUnstructuredDataSet filter has both of them, unfortunately this filter is not to be found in manifest.json file inside Paraview/Catalyst/Editions/Extras of github.
+
+
+Separately, I've also tried doing the following filters for vorticities, but it wouldnt work.
+
+1) ComputeDerivative() , gives NameError: name 'ComputeDerivative' is not defined
+
+2) python calculator with vorticity(U) as Expression, gives Failed to create 'vtkPythonCalculator' error
+
+3) GradientofUnstructuredDataSet(), again gives NameError: name 'GradientofUnstructuredDataSet' is not defined.
+
+
+Focussing on the last error, could someone guide me on what else could I do I visualize vorticities and Q-criterion in Catalyst.
+
+Or perhaps a way to add to the manifest.json file so that my filters work with catalyst, if that would be a better option?
+
+Sincerly,
+Atul Singh.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180801/0857ec97/attachment.html>
+
+From gsharma4189 at gmail.com  Wed Aug  1 12:10:38 2018
+From: gsharma4189 at gmail.com (govind sharma)
+Date: Wed, 1 Aug 2018 21:40:38 +0530
+Subject: [Paraview] Fwd: OPACITY_NOT_WORKING
+In-Reply-To: <CAGRS4a7YtrDmzkmRgPTRtO2x=74_9rWpZx5_JizO--2wPJMCtg@mail.gmail.com>
+References: <CAGRS4a7YtrDmzkmRgPTRtO2x=74_9rWpZx5_JizO--2wPJMCtg@mail.gmail.com>
+Message-ID: <CAGRS4a7d1VMXvuA-QhgLVTFuxuD8y4d4y4Oe0nxbjqMwLjsJ0Q@mail.gmail.com>
+
+---------- Forwarded message ----------
+From: govind sharma <gsharma4189 at gmail.com>
+Date: Tue, Jul 31, 2018 at 12:40 PM
+Subject: OPACITY_NOT_WORKING
+To: paraview-request at paraview.org
+
+
+HI,
+
+I am trying to use Opacity under the Styling header but It doesn't work.
+Here I am attaching two screen shots of opacity 1 and 0.9. With opacity 0.9
+I do not view any fluid volume but it should be.
+
+
+
+
+Regards,
+Govind Sharma
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180801/1e696ecb/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: 1.png
+Type: image/png
+Size: 283898 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180801/1e696ecb/attachment-0002.png>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: 2.png
+Type: image/png
+Size: 264103 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180801/1e696ecb/attachment-0003.png>
+
+From cory.quammen at kitware.com  Thu Aug  2 14:26:21 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Thu, 2 Aug 2018 14:26:21 -0400
+Subject: [Paraview] Fwd: OPACITY_NOT_WORKING
+In-Reply-To: <CAGRS4a7d1VMXvuA-QhgLVTFuxuD8y4d4y4Oe0nxbjqMwLjsJ0Q@mail.gmail.com>
+References: <CAGRS4a7YtrDmzkmRgPTRtO2x=74_9rWpZx5_JizO--2wPJMCtg@mail.gmail.com>
+ <CAGRS4a7d1VMXvuA-QhgLVTFuxuD8y4d4y4Oe0nxbjqMwLjsJ0Q@mail.gmail.com>
+Message-ID: <CAB5Fpx4zCR0t4+ioHeWc14-+LTbSEZxcruG5SbVn_r5b0fS=Gw@mail.gmail.com>
+
+Hi Govind,
+
+Indeed, you should see a semi-transparent slice at opacity = 0.9. What
+happens if you change the representation of liggghts_run to "Surface"
+and change its opacity?
+
+By the way, please post any new questions over at
+https://discourse.paraview.org, the new forum for ParaView discussion.
+
+Thanks,
+Cory
+On Wed, Aug 1, 2018 at 12:10 PM govind sharma <gsharma4189 at gmail.com> wrote:
+>
+>
+> ---------- Forwarded message ----------
+> From: govind sharma <gsharma4189 at gmail.com>
+> Date: Tue, Jul 31, 2018 at 12:40 PM
+> Subject: OPACITY_NOT_WORKING
+> To: paraview-request at paraview.org
+>
+>
+> HI,
+>
+> I am trying to use Opacity under the Styling header but It doesn't work. Here I am attaching two screen shots of opacity 1 and 0.9. With opacity 0.9 I do not view any fluid volume but it should be.
+>
+>
+>
+>
+> Regards,
+> Govind Sharma
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+
+
+--
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+
+From leonardopessanha74 at gmail.com  Thu Aug  2 15:42:37 2018
+From: leonardopessanha74 at gmail.com (=?UTF-8?Q?L=C3=A9o_Pessanha?=)
+Date: Thu, 2 Aug 2018 16:42:37 -0300
+Subject: [Paraview] Rendering a VTK vtkRenderWindow() in ParaView's
+ PythonView
+Message-ID: <CAE=GJrZrNWNy8LeXeGqEKJ_3_ENrLBXhA0R9PKdkO0FOGtVrbQ@mail.gmail.com>
+
+Hi!
+
+In this post
+<https://blog.kitware.com/paraview-python-view-is-now-more-versatile/> there's
+a link to a list of potentially usable libraries in ParaView's PythonView
+and VTK is listed among them.
+
+I am trying to render a vtkRenderWindow() with a vtkCylinderSource() in it.
+
+import vtk
+> rw = vtk.vtkRenderWindow()
+> ren = vtk.vtkRenderer()
+> rw.AddRenderer(ren)
+> cylinder = vtk.vtkCylinderSource()
+> cylinder.SetResolution(8)
+> cylinderMapper = vtk.vtkPolyDataMapper()
+> cylinderMapper.SetInputConnection(cylinder.GetOutputPort())
+> cylinderActor = vtk.vtkActor()
+> cylinderActor.SetMapper(cylinderMapper)
+> cylinderActor.RotateX(30.0)
+> cylinderActor.RotateY(-45.0)
+> ren.AddActor(cylinderActor)
+> ren.SetBackground(0.1, 0.2, 0.4)
+> rw.Render()
+
+
+I've tried separating the graphics structure in the | render(view, width,
+heigh) | from the source actor and mapper part of the code but no sucess
+
+The result does not show up in the python view but instead it opens a  new
+opengl context
+
+Is it possible to do what I am trying to?
+
+Best regards,
+Leonardo Pessanha
+Laboratory of Computational Methods in Engineering
+Federal University of Rio de Janeiro - COPPE
+Rio de Janeiro, RJ, Brasil
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180802/d5bee7b1/attachment.html>
+
+From thomas.fastl at kcl.ac.uk  Fri Aug  3 11:41:25 2018
+From: thomas.fastl at kcl.ac.uk (Fastl, Thomas)
+Date: Fri, 3 Aug 2018 15:41:25 +0000
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+Message-ID: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+
+Dear Community,
+
+
+I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to extract the POINT_DATA at specific POINTS. However, the POINTS are defined in POLYDATA (vtk-file 2) and are slightly off by some rounding error. Thus, I presume the process should look similar to:
+
+
+1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in vtk-file 1
+
+2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+
+
+I've been searching the forum for hours, however, couldn't find a solution to that problem. I was wondering if there's a simple solution of doing this in Paraview? I'd really appreciate your help on this issue, thank you!
+
+
+Best, Thomas
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180803/339b7445/attachment.html>
+
+From sebastien.jourdain at kitware.com  Fri Aug  3 12:20:18 2018
+From: sebastien.jourdain at kitware.com (Sebastien Jourdain)
+Date: Fri, 3 Aug 2018 10:20:18 -0600
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+In-Reply-To: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+References: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+Message-ID: <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+
+If they are truly the "same" why don't you forget your file2 and generate a
+polydata from the file1 as a file3?
+
+On Fri, Aug 3, 2018 at 9:41 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk> wrote:
+
+> Dear Community,
+>
+>
+> I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to
+> extract the POINT_DATA at specific POINTS. However, the POINTS are
+> defined in POLYDATA (vtk-file 2) and are slightly off by some rounding
+> error. Thus, I presume the process should look similar to:
+>
+>
+> 1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in
+> vtk-file 1
+>
+> 2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+>
+>
+> I've been searching the forum for hours, however, couldn't find a solution
+> to that problem. I was wondering if there's a simple solution of doing this
+> in Paraview? I'd really appreciate your help on this issue, thank you!
+>
+>
+> Best, Thomas
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180803/10608a97/attachment.html>
+
+From thomas.fastl at kcl.ac.uk  Fri Aug  3 12:56:36 2018
+From: thomas.fastl at kcl.ac.uk (Fastl, Thomas)
+Date: Fri, 3 Aug 2018 16:56:36 +0000
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+In-Reply-To: <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+References: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>,
+ <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+Message-ID: <VI1PR03MB31040AEB59DEABB21B221FA3CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+
+Hey Sebastien,
+
+
+the UNSTRUCTURED_GRID (vtk-file 1) has around 10^8 POINTS, while the POYDATA (vtk-file 2) has around 10^6 POINTS, i.e., the POINTS in vtk-file 2 are a subset of the POINTS in vtk-file 1. Additionally, the POINTS in vtk-file 2 have some rounding error so that the location of "corresponding points" doesn't matches exactly and a nearest neighbor seems necessary.
+
+
+Best, Thomas
+
+________________________________
+From: Sebastien Jourdain <sebastien.jourdain at kitware.com>
+Sent: Friday, August 3, 2018 17:20
+To: Fastl, Thomas
+Cc: paraview
+Subject: Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+
+If they are truly the "same" why don't you forget your file2 and generate a polydata from the file1 as a file3?
+
+On Fri, Aug 3, 2018 at 9:41 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk<mailto:thomas.fastl at kcl.ac.uk>> wrote:
+
+Dear Community,
+
+
+I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to extract the POINT_DATA at specific POINTS. However, the POINTS are defined in POLYDATA (vtk-file 2) and are slightly off by some rounding error. Thus, I presume the process should look similar to:
+
+
+1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in vtk-file 1
+
+2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+
+
+I've been searching the forum for hours, however, couldn't find a solution to that problem. I was wondering if there's a simple solution of doing this in Paraview? I'd really appreciate your help on this issue, thank you!
+
+
+Best, Thomas
+
+_______________________________________________
+Powered by www.kitware.com<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=1tZnhbKqOJXcXbg0Tp2m8D2gjHP8MOb7HGdGUc0EgD8%3D&reserved=0>
+
+ParaView discussion is moving! Please visit https://discourse.paraview.org/<https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdiscourse.paraview.org%2F&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k6yXwz%2FsmevXQOR8FGQCAscP2996kdUPrdujqiV%2Fcg0%3D&reserved=0> for future posts.
+
+Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com%2Fopensource%2Fopensource.html&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k3qytN9NYE%2BVh6ZE99Kd1DUbtLIdGi3VuRqo1iQIht0%3D&reserved=0>
+
+Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fparaview.org%2FWiki%2FParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=diUlLjUJJAbNWnE%2FzjxJM7uaYq9brB8MBjq0160kVWA%3D&reserved=0>
+
+Search the list archives at: http://markmail.org/search/?q=ParaView<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmarkmail.org%2Fsearch%2F%3Fq%3DParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=E0og4nleW31GkHJ0tL8nSySbRyZAqnODikkJqYSZmS8%3D&reserved=0>
+
+Follow this link to subscribe/unsubscribe:
+https://public.kitware.com/mailman/listinfo/paraview<https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublic.kitware.com%2Fmailman%2Flistinfo%2Fparaview&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=R%2BrvA3fbK9R10O%2B4wYkwK8Qmgm64hcCa%2B7kd%2FukBI9I%3D&reserved=0>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180803/9f2c8eb9/attachment.html>
+
+From sebastien.jourdain at kitware.com  Fri Aug  3 16:11:54 2018
+From: sebastien.jourdain at kitware.com (Sebastien Jourdain)
+Date: Fri, 3 Aug 2018 14:11:54 -0600
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+In-Reply-To: <VI1PR03MB31040AEB59DEABB21B221FA3CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+References: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+ <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+ <VI1PR03MB31040AEB59DEABB21B221FA3CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+Message-ID: <CABObKxeey5Rv+zNJShYe+fXikRcjbxBE=uFdWDyzYSR7kGKKiA@mail.gmail.com>
+
+So you are saying that the ExtractSurface on the Unstructured grid won't
+produce the same polydata since it will be more refined than your file2? If
+that's the case, then maybe just looking for point closer could be the
+solution.
+
+On Fri, Aug 3, 2018 at 10:56 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk>
+wrote:
+
+> Hey Sebastien,
+>
+>
+> the UNSTRUCTURED_GRID (vtk-file 1) has around 10^8 POINTS, while the
+> POYDATA (vtk-file 2) has around 10^6 POINTS, i.e., the POINTS in vtk-file 2
+> are a subset of the POINTS in vtk-file 1. Additionally, the POINTS in
+> vtk-file 2 have some rounding error so that the location of "corresponding
+> points" doesn't matches exactly and a nearest neighbor seems necessary.
+>
+>
+> Best, Thomas
+>
+> ------------------------------
+> *From:* Sebastien Jourdain <sebastien.jourdain at kitware.com>
+> *Sent:* Friday, August 3, 2018 17:20
+> *To:* Fastl, Thomas
+> *Cc:* paraview
+> *Subject:* Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+>
+> If they are truly the "same" why don't you forget your file2 and generate
+> a polydata from the file1 as a file3?
+>
+> On Fri, Aug 3, 2018 at 9:41 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk>
+> wrote:
+>
+> Dear Community,
+>
+>
+> I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to
+> extract the POINT_DATA at specific POINTS. However, the POINTS are
+> defined in POLYDATA (vtk-file 2) and are slightly off by some rounding
+> error. Thus, I presume the process should look similar to:
+>
+>
+> 1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in
+> vtk-file 1
+>
+> 2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+>
+>
+> I've been searching the forum for hours, however, couldn't find a solution
+> to that problem. I was wondering if there's a simple solution of doing this
+> in Paraview? I'd really appreciate your help on this issue, thank you!
+>
+>
+> Best, Thomas
+>
+> _______________________________________________
+> Powered by www.kitware.com
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=1tZnhbKqOJXcXbg0Tp2m8D2gjHP8MOb7HGdGUc0EgD8%3D&reserved=0>
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/
+> <https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdiscourse.paraview.org%2F&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k6yXwz%2FsmevXQOR8FGQCAscP2996kdUPrdujqiV%2Fcg0%3D&reserved=0>
+> for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com%2Fopensource%2Fopensource.html&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k3qytN9NYE%2BVh6ZE99Kd1DUbtLIdGi3VuRqo1iQIht0%3D&reserved=0>
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fparaview.org%2FWiki%2FParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=diUlLjUJJAbNWnE%2FzjxJM7uaYq9brB8MBjq0160kVWA%3D&reserved=0>
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmarkmail.org%2Fsearch%2F%3Fq%3DParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=E0og4nleW31GkHJ0tL8nSySbRyZAqnODikkJqYSZmS8%3D&reserved=0>
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+> <https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublic.kitware.com%2Fmailman%2Flistinfo%2Fparaview&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=R%2BrvA3fbK9R10O%2B4wYkwK8Qmgm64hcCa%2B7kd%2FukBI9I%3D&reserved=0>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180803/e347b5e8/attachment.html>
+
+From thomas.fastl at kcl.ac.uk  Sat Aug  4 12:01:09 2018
+From: thomas.fastl at kcl.ac.uk (Fastl, Thomas)
+Date: Sat, 4 Aug 2018 16:01:09 +0000
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+In-Reply-To: <CABObKxeey5Rv+zNJShYe+fXikRcjbxBE=uFdWDyzYSR7kGKKiA@mail.gmail.com>
+References: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+ <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+ <VI1PR03MB31040AEB59DEABB21B221FA3CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>,
+ <CABObKxeey5Rv+zNJShYe+fXikRcjbxBE=uFdWDyzYSR7kGKKiA@mail.gmail.com>
+Message-ID: <VI1PR03MB3104149E169B4A3EC32BA926CC220@VI1PR03MB3104.eurprd03.prod.outlook.com>
+
+Hey Sebastien,
+
+That's correct, the 'Extract Surface' filter applied to the UNSTRUCTURED_GRID (vtk file 1) results in more POINTS compared to the POINTS in the POLYDATA (vtk file 2). In addition, the POINTS in POLYDATA (vtk file 2) have some rounding error so that the location of 'corresponding points' doesn't match exactly.
+
+Maybe you've already suggested the right approach: Is there a way in ParaView to extract the nearest neighbor of all the POINTS in POLYDATA (vtk file 2) from the UNSTRUCTURED_GRID (vtk file 1)? I could just write a csv file of the POINTS in the POLYDATA (vtk file 2) if that'd makes the nearest neighbor approach in ParaView more simple? Thanks.
+
+Best, Thomas
+
+________________________________
+From: Sebastien Jourdain <sebastien.jourdain at kitware.com>
+Sent: Friday, August 3, 2018 9:11:54 PM
+To: Fastl, Thomas
+Cc: paraview
+Subject: Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+
+So you are saying that the ExtractSurface on the Unstructured grid won't produce the same polydata since it will be more refined than your file2? If that's the case, then maybe just looking for point closer could be the solution.
+
+On Fri, Aug 3, 2018 at 10:56 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk<mailto:thomas.fastl at kcl.ac.uk>> wrote:
+
+Hey Sebastien,
+
+
+the UNSTRUCTURED_GRID (vtk-file 1) has around 10^8 POINTS, while the POYDATA (vtk-file 2) has around 10^6 POINTS, i.e., the POINTS in vtk-file 2 are a subset of the POINTS in vtk-file 1. Additionally, the POINTS in vtk-file 2 have some rounding error so that the location of "corresponding points" doesn't matches exactly and a nearest neighbor seems necessary.
+
+
+Best, Thomas
+
+________________________________
+From: Sebastien Jourdain <sebastien.jourdain at kitware.com<mailto:sebastien.jourdain at kitware.com>>
+Sent: Friday, August 3, 2018 17:20
+To: Fastl, Thomas
+Cc: paraview
+Subject: Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+
+If they are truly the "same" why don't you forget your file2 and generate a polydata from the file1 as a file3?
+
+On Fri, Aug 3, 2018 at 9:41 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk<mailto:thomas.fastl at kcl.ac.uk>> wrote:
+
+Dear Community,
+
+
+I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to extract the POINT_DATA at specific POINTS. However, the POINTS are defined in POLYDATA (vtk-file 2) and are slightly off by some rounding error. Thus, I presume the process should look similar to:
+
+
+1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in vtk-file 1
+
+2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+
+
+I've been searching the forum for hours, however, couldn't find a solution to that problem. I was wondering if there's a simple solution of doing this in Paraview? I'd really appreciate your help on this issue, thank you!
+
+
+Best, Thomas
+
+_______________________________________________
+Powered by www.kitware.com<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=1tZnhbKqOJXcXbg0Tp2m8D2gjHP8MOb7HGdGUc0EgD8%3D&reserved=0>
+
+ParaView discussion is moving! Please visit https://discourse.paraview.org/<https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdiscourse.paraview.org%2F&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k6yXwz%2FsmevXQOR8FGQCAscP2996kdUPrdujqiV%2Fcg0%3D&reserved=0> for future posts.
+
+Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com%2Fopensource%2Fopensource.html&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k3qytN9NYE%2BVh6ZE99Kd1DUbtLIdGi3VuRqo1iQIht0%3D&reserved=0>
+
+Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fparaview.org%2FWiki%2FParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=diUlLjUJJAbNWnE%2FzjxJM7uaYq9brB8MBjq0160kVWA%3D&reserved=0>
+
+Search the list archives at: http://markmail.org/search/?q=ParaView<https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmarkmail.org%2Fsearch%2F%3Fq%3DParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=E0og4nleW31GkHJ0tL8nSySbRyZAqnODikkJqYSZmS8%3D&reserved=0>
+
+Follow this link to subscribe/unsubscribe:
+https://public.kitware.com/mailman/listinfo/paraview<https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublic.kitware.com%2Fmailman%2Flistinfo%2Fparaview&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=R%2BrvA3fbK9R10O%2B4wYkwK8Qmgm64hcCa%2B7kd%2FukBI9I%3D&reserved=0>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180804/6730b2d9/attachment.html>
+
+From sebastien.jourdain at kitware.com  Sun Aug  5 12:31:44 2018
+From: sebastien.jourdain at kitware.com (Sebastien Jourdain)
+Date: Sun, 5 Aug 2018 10:31:44 -0600
+Subject: [Paraview] Extract Point Data | Nearest Neighbor Location
+In-Reply-To: <VI1PR03MB3104149E169B4A3EC32BA926CC220@VI1PR03MB3104.eurprd03.prod.outlook.com>
+References: <VI1PR03MB31049EA6D6F4F579FD13CF32CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+ <CABObKxdRBZenXjzQp-5NpgbdQK0=5c63VuKQS+JgZXwsnAt0BQ@mail.gmail.com>
+ <VI1PR03MB31040AEB59DEABB21B221FA3CC230@VI1PR03MB3104.eurprd03.prod.outlook.com>
+ <CABObKxeey5Rv+zNJShYe+fXikRcjbxBE=uFdWDyzYSR7kGKKiA@mail.gmail.com>
+ <VI1PR03MB3104149E169B4A3EC32BA926CC220@VI1PR03MB3104.eurprd03.prod.outlook.com>
+Message-ID: <CABObKxd_fpGVCyytwiev2Q2Tn5dn1_zGQNGRQb5rUbASFMJaaw@mail.gmail.com>
+
+You could try sampling the unstructured grid with the polydata. But you
+might run into issue if the polydata points end up outside if the
+unstructured grid.
+You could blow a little bit the unstructured grid by scaling it a bit...
+
+On Sat, Aug 4, 2018 at 10:01 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk>
+wrote:
+
+> Hey Sebastien,
+>
+> That's correct, the 'Extract Surface' filter applied to the
+> UNSTRUCTURED_GRID (vtk file 1) results in more POINTS compared to the
+> POINTS in the POLYDATA (vtk file 2). In addition, the POINTS in POLYDATA
+> (vtk file 2) have some rounding error so that the location of
+> 'corresponding points' doesn't match exactly.
+>
+> Maybe you've already suggested the right approach: Is there a way in
+> ParaView to extract the nearest neighbor of all the POINTS in POLYDATA (vtk
+> file 2) from the UNSTRUCTURED_GRID (vtk file 1)? I could just write a csv
+> file of the POINTS in the POLYDATA (vtk file 2) if that'd makes the nearest
+> neighbor approach in ParaView more simple? Thanks.
+>
+> Best, Thomas
+>
+> ------------------------------
+> *From:* Sebastien Jourdain <sebastien.jourdain at kitware.com>
+> *Sent:* Friday, August 3, 2018 9:11:54 PM
+> *To:* Fastl, Thomas
+> *Cc:* paraview
+> *Subject:* Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+>
+> So you are saying that the ExtractSurface on the Unstructured grid won't
+> produce the same polydata since it will be more refined than your file2? If
+> that's the case, then maybe just looking for point closer could be the
+> solution.
+>
+> On Fri, Aug 3, 2018 at 10:56 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk>
+> wrote:
+>
+> Hey Sebastien,
+>
+>
+> the UNSTRUCTURED_GRID (vtk-file 1) has around 10^8 POINTS, while the
+> POYDATA (vtk-file 2) has around 10^6 POINTS, i.e., the POINTS in vtk-file 2
+> are a subset of the POINTS in vtk-file 1. Additionally, the POINTS in
+> vtk-file 2 have some rounding error so that the location of "corresponding
+> points" doesn't matches exactly and a nearest neighbor seems necessary.
+>
+>
+> Best, Thomas
+>
+> ------------------------------
+> *From:* Sebastien Jourdain <sebastien.jourdain at kitware.com>
+> *Sent:* Friday, August 3, 2018 17:20
+> *To:* Fastl, Thomas
+> *Cc:* paraview
+> *Subject:* Re: [Paraview] Extract Point Data | Nearest Neighbor Location
+>
+> If they are truly the "same" why don't you forget your file2 and generate
+> a polydata from the file1 as a file3?
+>
+> On Fri, Aug 3, 2018 at 9:41 AM Fastl, Thomas <thomas.fastl at kcl.ac.uk>
+> wrote:
+>
+> Dear Community,
+>
+>
+> I've got an UNSTRUCTURED_GRID (vtk-file 1) with POINT_DATA and want to
+> extract the POINT_DATA at specific POINTS. However, the POINTS are
+> defined in POLYDATA (vtk-file 2) and are slightly off by some rounding
+> error. Thus, I presume the process should look similar to:
+>
+>
+> 1) Find the nearest neighbors of all POINTS defined in vtk-file 2 in
+> vtk-file 1
+>
+> 2) Transfer/Store the POINT_DATA of the nearest neighbors in vtk-file 1
+>
+>
+> I've been searching the forum for hours, however, couldn't find a solution
+> to that problem. I was wondering if there's a simple solution of doing this
+> in Paraview? I'd really appreciate your help on this issue, thank you!
+>
+>
+> Best, Thomas
+>
+> _______________________________________________
+> Powered by www.kitware.com
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=1tZnhbKqOJXcXbg0Tp2m8D2gjHP8MOb7HGdGUc0EgD8%3D&reserved=0>
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/
+> <https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fdiscourse.paraview.org%2F&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k6yXwz%2FsmevXQOR8FGQCAscP2996kdUPrdujqiV%2Fcg0%3D&reserved=0>
+> for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fwww.kitware.com%2Fopensource%2Fopensource.html&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=k3qytN9NYE%2BVh6ZE99Kd1DUbtLIdGi3VuRqo1iQIht0%3D&reserved=0>
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fparaview.org%2FWiki%2FParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=diUlLjUJJAbNWnE%2FzjxJM7uaYq9brB8MBjq0160kVWA%3D&reserved=0>
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+> <https://emea01.safelinks.protection.outlook.com/?url=http%3A%2F%2Fmarkmail.org%2Fsearch%2F%3Fq%3DParaView&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=E0og4nleW31GkHJ0tL8nSySbRyZAqnODikkJqYSZmS8%3D&reserved=0>
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+> <https://emea01.safelinks.protection.outlook.com/?url=https%3A%2F%2Fpublic.kitware.com%2Fmailman%2Flistinfo%2Fparaview&data=01%7C01%7Cthomas.fastl%40kcl.ac.uk%7Ce5763891c0f6453319f108d5f95d16fd%7C8370cf1416f34c16b83c724071654356%7C0&sdata=R%2BrvA3fbK9R10O%2B4wYkwK8Qmgm64hcCa%2B7kd%2FukBI9I%3D&reserved=0>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180805/dfd4ce05/attachment.html>
+
+From arno.mayrhofer at dcs-computing.com  Mon Aug  6 03:32:06 2018
+From: arno.mayrhofer at dcs-computing.com (Arno Mayrhofer)
+Date: Mon, 6 Aug 2018 09:32:06 +0200
+Subject: [Paraview] VTK grid writing over time using offsets
+Message-ID: <dfb9ef5d-1787-b46a-c1fa-bc254deb8a0a@dcs-computing.com>
+
+Hi all,
+
+I am currently investigating the possibility to reduce the output 
+written by our DEM software. One case we often have is that a PolyData 
+object is written every n time steps and we are not interested in any 
+fields on this rigid mesh object only the current location of this 
+object. The naive approach is to write the full information of this 
+object using the vtkXMLPolyDataWriter during each output step. However, 
+since the mesh is rigid and we have no active fields on this mesh it 
+would be sufficient to save this full information at time 0. Then at 
+each successive output all information we need would be the offset and 
+rotation with respect to this initial object.
+
+Is something like this possible with VTK?
+
+Kind regards,
+Arno
+
+
+From samuelkey at bresnan.net  Mon Aug  6 09:32:10 2018
+From: samuelkey at bresnan.net (Samuel Key)
+Date: Mon, 6 Aug 2018 07:32:10 -0600
+Subject: [Paraview] VTK grid writing over time using offsets
+In-Reply-To: <dfb9ef5d-1787-b46a-c1fa-bc254deb8a0a@dcs-computing.com>
+References: <dfb9ef5d-1787-b46a-c1fa-bc254deb8a0a@dcs-computing.com>
+Message-ID: <a5c7023b-59e2-a993-3637-acd132874224@bresnan.net>
+
+Arno,
+
+If your mesh is truly rigid, that is, the mesh is fixed in space and 
+time, the following would likely work. ParaView will accept more than 
+one? datum set (even in different formats). Write your rigid mesh out as 
+a separate datum set in any format you like.
+
+Load both your time varying results and non-time varying mesh. (You may 
+have to use one the ParaView temporal filters to assign all time steps 
+to the fixed mesh datum set?)
+
+Hope this helps.
+
+Sam
+
+
+On 8/6/2018 1:32 AM, Arno Mayrhofer wrote:
+> Hi all,
+>
+> I am currently investigating the possibility to reduce the output 
+> written by our DEM software. One case we often have is that a PolyData 
+> object is written every n time steps and we are not interested in any 
+> fields on this rigid mesh object only the current location of this 
+> object. The naive approach is to write the full information of this 
+> object using the vtkXMLPolyDataWriter during each output step. 
+> However, since the mesh is rigid and we have no active fields on this 
+> mesh it would be sufficient to save this full information at time 0. 
+> Then at each successive output all information we need would be the 
+> offset and rotation with respect to this initial object.
+>
+> Is something like this possible with VTK?
+>
+> Kind regards,
+> Arno
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit 
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at 
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: 
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+
+
+From epd at ilight.com  Mon Aug  6 09:47:02 2018
+From: epd at ilight.com (Earl Duque)
+Date: Mon, 6 Aug 2018 06:47:02 -0700
+Subject: [Paraview] Reminder: Call for Papers/Participation: ISAV 2018: In
+ Situ Infrastructures for Enabling Extreme-scale Analysis and Visualization
+Message-ID: <076601d42d8b$f48d1de0$dda759a0$@ilight.com>
+
+ISAV 2018: In Situ Infrastructures for Enabling Extreme-Scale Analysis and
+Visualization
+
+Held in conjunction with SC18: The International Conference on High
+Performance Computing, Networking, Storage and Analysis, Dallas, Texas,
+U.S.A.
+
+
+ISAV 2018 --  <http://dav.lbl.gov/events/ISAV2018/>
+http://dav.lbl.gov/events/ISAV2018/      
+
+
+ 
+
+Full-day 9:00 AM - 5:30 PM Monday 12 Nov 2018
+
+
+Workshop Theme
+
+
+The considerable interest in the HPC community regarding in situ analysis
+and visualization is  due to several factors. First is an I/O cost savings,
+where data is analyzed/visualized while  being generated, without first
+storing to a file system. Second is the potential for increased  accuracy,
+where fine temporal sampling of transient analysis might expose some complex
+behavior missed in coarse temporal sampling. Third is the ability to use all
+available resources, CPUs and accelerators, in the computation of analysis
+products. 
+
+ 
+
+The workshop brings together researchers, developers and practitioners from
+industry, academia, and government laboratories developing, applying, and
+deploying in situ methods in extreme-scale, high performance computing. The
+goal is to present research findings, lessons learned, and insights related
+to developing and applying in situ methods and infrastructure across a range
+of science and engineering applications in HPC environments; to discuss
+topics like opportunities presented by new architectures, existing
+infrastructure needs, requirements, and gaps, and experiences to foster and
+enable in situ analysis and visualization; to serve as a "center of gravity"
+for researchers, practitioners, and users/consumers of in situ methods and
+infrastructure in the HPC space.
+
+
+Participation/Call for Papers and Oral Presentations
+
+
+We invite two types of submissions to ISAV 2018: (1) short, 4-page papers
+that present research results, that identify opportunities or challenges,
+and that present case studies/best practices for in situ
+methods/infrastructure in the areas of data management, analysis and
+visualization; (2) lightning presentation submission, consisting of a 1- or
+2-page submission, for a brief oral presentation at the workshop. Short
+papers will appear in the workshop proceedings and will be invited to give
+an oral presentation of 15 to 20 minutes; lightning round submissions that
+are invited to present at the workshop will have author names and titles
+included as part of the proceedings. Submissions of both types are welcome
+that fall within one or more areas of interest, as follows: 
+
+ 
+
+Areas of interest for ISAV, include, but are not limited to:
+
+
+In situ infrastructures
+
+*	Current Systems: production quality, research prototypes
+*	Opportunities
+*	Gaps
+
+
+System resources, hardware, and emerging architectures
+
+*	Enabling Hardware
+*	Hardware and architectures that provide opportunities for In situ
+processing, such as burst buffers, staging computations on I/O nodes,
+sharing cores within a node for both simulation and in situ processing
+
+
+Methods/algorithms/applications/Case studies
+
+*	Best practices
+*	Analysis: feature detection, statistical methods, temporal methods,
+geometric methods
+*	Visualization: information visualization, scientific visualization,
+time-varying methods
+*	Data reduction/compression
+*	Examples/case studies of solving a specific science challenge with
+in situ methods/infrastructure.
+
+
+Simulation
+
+*	Integration:data modeling, software-engineering
+*	Resilience: error detection, fault recovery
+*	Workflows for supporting complex in situ processing pipelines
+
+
+Requirements
+
+*	Preserve important elements
+*	Significantly reduce the data size
+*	Flexibility for post-processing exploration
+
+
+Review Process
+
+
+All submissions will undergo a peer-review process consisting of three
+reviews by experts in the field, and evaluated according to relevance to the
+workshop theme, technical soundness, creativity, originality, and
+impactfulness of method/results. Lightning round submissions will be
+evaluated primarily for relevance to the workshop.
+
+
+Submission Process
+
+
+Authors are invited to submit papers of at most 4 pages in PDF format,
+excluding references, and lightning presentations of at most 2 pages in PDF
+format, excluding references. Papers must be submitted in PDF format
+(readable by Adobe Acrobat Reader 5.0 and higher) and formatted for 8.5" x
+11" (U.S. Letter). 
+
+A Latex template will be provided via the submission website,
+<https://submissions.supercomputing.org/>
+https://submissions.supercomputing.org, and via workshop website,
+<http://dav.lbl.gov/events/ISAV2018/> http://dav.lbl.gov/events/ISAV2018/.
+
+We believe that reproducible science is essential, and that SC should be a
+leader in this effort. As a consequence ISAV 2018 participates in the SC
+reproducibility initiative and encourages submitters to include an appendix
+with reproducibility information. While we will not disqualify a paper based
+on information provided or not provided in this appendix, nor if the
+appendix is not available, the availability and quality of an appendix will
+be used in ranking a paper. For more information, see the
+<http://dav.lbl.gov/events/ISAV2018/reproducibility-faq.html> ISAV 2018
+reproducibility FAQ.
+
+Papers must be self-contained and provide the technical substance required
+for the program committee to evaluate their contributions. Submitted papers
+must be original work that has not appeared in and is not under
+consideration for another conference or a journal. See the
+<http://www.acm.org/publications/policies/> ACM Prior Publication Policy for
+more details. Papers can be submitted at
+<https://submissions.supercomputing.org/>
+https://submissions.supercomputing.org.
+
+
+Publication in proceedings, presentation at the workshop
+
+
+All paper submissions that receive favorable reviews will be included as
+part of the workshop proceedings. Lightning round submission will not be
+included as part of the proceedings.
+
+ 
+
+Subject to the constraints of workshop length, some subset of the accepted
+publications will be invited to give a brief oral presentation at the
+workshop. The exact number of such presentations and their length will be
+determined after the review process has been completed.
+
+
+Timeline/Important Dates
+
+
+10 August 2018
+
+Abstract submission deadline
+
+
+17 August 2018
+
+Paper submission deadline
+
+
+28 September 2018
+
+Author notification
+
+
+12 October 2018
+
+Camera ready copy due
+
+
+24 October 2018
+
+Final program posted to ISAV web page
+
+
+12 November 2018
+
+ISAV 2018 workshop at SC18
+
+
+Committees and Chairs
+
+
+*	General chair: Matthew Wolf, Oak Ridge National Laboratory, USA
+*	Program chair and co-chair: Kenneth Moreland, Sandia National
+Laboratory, USA; E. Wes Bethel, Lawrence Berkeley National Laboratory, USA
+*	Publicity chair: Earl P.N. Duque, Intelligent Light, USA
+*	Publications chair and co-chair: Nicola Ferrier, Argonne National
+Laboratory, USA; Silvio Rizzi, Argonne National Laboratory, USA
+*	Early Career Program Committee Chair: E. Wes Bethel, Lawrence
+Berkeley National Laboratory, USA
+*	At-large chair: Patrick O'Leary, Kitware, Inc., USA
+
+
+Organizing Committee
+
+
+*       E. Wes Bethel, Lawrence Berkeley National Laboratory, USA
+
+
+*       Earl P.N. Duque, Intelligent Light, USA
+
+
+*       Nicola Ferrier, Argonne National Laboratory, USA
+
+
+*       Patrick O'Leary, Kitware, Inc., USA
+
+
+*       Gunther H. Weber, Lawrence Berkeley National Laboratory, USA
+
+
+*       Matthew Wolf, Oak Ridge National Laboratory, USA
+
+
+Program Committee
+
+
+To be announced
+
+Early Career Program Committee
+
+
+To be announced
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+///////////////////////////////////////////////////////////////////////////
+
+Earl P.N. Duque, PhD    
+Manager of Applied Research
+
+Intelligent Light
+301 Route 17N - 7th Floor
+Rutherford, NJ 07070
+
+PHN:  <tel:(201)%20460-4700> (201) 460-4700
+FAX:  <tel:(201)%20460-0221> (201) 460-0221
+EML:  <mailto:epd at ilight.com> epd at ilight.com
+
+Advancing CFD, Advancing You
+Intelligent Light leads CFD with the most advanced products and services
+delivered by globally respected CFD and visualization practitioners.
+FieldView products and services give you better results sooner. We exist for
+the advancement of CFD - and you.
+Visit our website at  <http://www.ilight.com/> http://www.ilight.com
+
+///////////////////////////////////////////////////////////////////////////
+
+This e-mail message from Intelligent Light is privileged and confidential
+and thus protected from disclosure. If you are not the intended recipient,
+please do not read, copy or use it or disclose it to others. If you have
+received this message in error, please notify the sender immediately by
+replying to this message and then delete all copies of it from your system.
+
+ 
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180806/5fbf9b73/attachment.html>
+
+From jbakosi at lanl.gov  Mon Aug  6 13:25:52 2018
+From: jbakosi at lanl.gov (Jozsef Bakosi)
+Date: Mon, 6 Aug 2018 11:25:52 -0600
+Subject: [Paraview] Parallel read of ExodusII side sets not a union of the
+ parts
+Message-ID: <20180806172552.GS17712@lagrange.lanl.gov>
+
+Hi folks,
+
+When I use the ExodusII reader to read a data set (mesh + side sets +
+field data) from partitioned files, I don't get a correct union of the
+side sets. Perhaps I'm not using this correctly and someone can help me
+out.
+
+Example: An ExodusII mesh file has 6 side sets each with its own 16
+triangle faces (relevant output obtained using ncdump):
+
+ num_side_ss1 = 16 ;
+ num_side_ss2 = 16 ;
+ num_side_ss3 = 16 ;
+ num_side_ss4 = 16 ;
+ num_side_ss5 = 16 ;
+ num_side_ss6 = 16 ;
+ ss_prop1 = 1, 2, 3, 4, 5, 6 ;
+
+If this is saved in two ExodusII files (after running on 2 PEs and
+having the mesh partitioned into two parts), out.0 and out.1 may contain
+partial side set information:
+
+out.0:
+ num_side_ss1 = 16 ;
+ num_side_ss2 = 7 ;
+ num_side_ss3 = 7 ;
+ num_side_ss4 = 7 ;
+ num_side_ss5 = 8 ;
+ ss_prop1 = 2, 3, 4, 5, 6 ;
+
+out.1:
+ num_side_ss1 = 16 ;
+ num_side_ss2 = 9 ;
+ num_side_ss3 = 9 ;
+ num_side_ss4 = 9 ;
+ num_side_ss5 = 8 ;
+ ss_prop1 = 1, 3, 4, 5, 6 ;
+
+I.e., side set 1 is only in out.1, side set 2 is only in out.0, while
+the rest of the side sets have a partial list of faces in each file.
+Note that the number of faces in each correctly sum to 16 on each side
+set, thus the union is what I'd like to see in Paraview. However,
+Paraview's Exodus reader fails to correctly load the union of all side
+sets when stitching the two files together, and only lists side sets
+1,3,4,5,6. (In which all faces show up but some are assigned to
+incorrect side set ids, e.g., faces that were in 1 and 2 in the original
+mesh now are all in set 1.)
+
+For reproduction, I attach the input mesh (unitcube_135ss.exo) and the
+mesh partitioned into to two files (out.0 and out.1).
+
+I tried this with Paraview 5.4.1 and 5.5.2 and both behaves the same.
+
+Thanks for the help in advance,
+Jozsef
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: unitcube_135ss.exo
+Type: application/octet-stream
+Size: 43382 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180806/915656c3/attachment.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: out.0
+Type: application/octet-stream
+Size: 23172 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180806/915656c3/attachment-0001.obj>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: out.1
+Type: application/octet-stream
+Size: 22684 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180806/915656c3/attachment-0002.obj>
+
+From paolini at engineering.sdsu.edu  Tue Aug  7 13:42:08 2018
+From: paolini at engineering.sdsu.edu (Christopher Paolini)
+Date: Tue, 07 Aug 2018 10:42:08 -0700
+Subject: [Paraview] pvserver core dump with server and client v5.5.2
+Message-ID: <20623.1533663728@engineering.sdsu.edu>
+
+Greetings,
+
+Built server v5.5.2 from source and am getting this core dump when a
+client connects:
+
+Server: Ubuntu 16.04.3 LTS, Nvidia 396.37, x86_64
+Client: Windows 10
+
+$ ~/ParaView-v5.5.2/paraview_build$ bin/pvserver --server-port=8080 --cslog=paraview.log
+Waiting for client...
+Connection URL: cs://host:8080
+Accepting connection(s): host:8080
+Client connected.
+Segmentation fault (core dumped)
+
+Any ideas?
+
+Thanks so much,
+
+Chris
+
+
+From mathieu.westphal at kitware.com  Wed Aug  8 02:11:54 2018
+From: mathieu.westphal at kitware.com (Mathieu Westphal)
+Date: Wed, 8 Aug 2018 08:11:54 +0200
+Subject: [Paraview] pvserver core dump with server and client v5.5.2
+In-Reply-To: <20623.1533663728@engineering.sdsu.edu>
+References: <20623.1533663728@engineering.sdsu.edu>
+Message-ID: <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+
+Hello,
+
+You may want to build it Debug and to run with gdb.
+
+Best regards,
+
+Mathieu Westphal
+
+On Tue, Aug 7, 2018 at 7:42 PM, Christopher Paolini <
+paolini at engineering.sdsu.edu> wrote:
+
+> Greetings,
+>
+> Built server v5.5.2 from source and am getting this core dump when a
+> client connects:
+>
+> Server: Ubuntu 16.04.3 LTS, Nvidia 396.37, x86_64
+> Client: Windows 10
+>
+> $ ~/ParaView-v5.5.2/paraview_build$ bin/pvserver --server-port=8080
+> --cslog=paraview.log
+> Waiting for client...
+> Connection URL: cs://host:8080
+> Accepting connection(s): host:8080
+> Client connected.
+> Segmentation fault (core dumped)
+>
+> Any ideas?
+>
+> Thanks so much,
+>
+> Chris
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.
+> org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180808/edb52b28/attachment.html>
+
+From andrey.andreyev at corvidtec.com  Wed Aug  8 12:05:13 2018
+From: andrey.andreyev at corvidtec.com (Andreyev, Andrey)
+Date: Wed, 8 Aug 2018 12:05:13 -0400
+Subject: [Paraview] Making a programmable apply by default
+Message-ID: <CAD0qPxRSeCeJHtjiruOt0UkmGT=K2UXxKT58Nho8R9R6YYRk2w@mail.gmail.com>
+
+Hello all,
+
+I have a structural code that writes XDMF files and in order to speed up
+visualization we're writing some python scripts. In order to make things
+easier, we have also written a programmable filter to apply to the
+pipeline. As of right now, we have to copy the python code into the
+programmable filter box all the time. Is there a way (via xml or other but
+without compiling) to make the python code load directly after the XDMF
+reader?
+
+Thank you in advance!
+Andrey
+
+-- 
+
+Andrey V. Andreyev
+CORVID Technologies
+145 Overhill Dr
+Mooresville, NC 28117
+704-799-6944 x172
+andrey.andreyev at corvidtec.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180808/6335e79f/attachment.html>
+
+From patchett2002 at gmail.com  Wed Aug  8 15:18:25 2018
+From: patchett2002 at gmail.com (John Patchett)
+Date: Wed, 8 Aug 2018 13:18:25 -0600
+Subject: [Paraview] pvserver core dump with server and client v5.5.2
+In-Reply-To: <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+References: <20623.1533663728@engineering.sdsu.edu>
+ <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+Message-ID: <CACDyxRGDMhR1-t979kGiu0y37r4biYQWzHXp+_+2+0zERVWeVw@mail.gmail.com>
+
+I think there were some issues with the server segfaulting if it didn't
+have OSPRay built into it and the Windows client connected to it.  Can you
+check if this also happens with a non-windows client and if so perhaps
+ensure OSPRay gets built on the linux server side.
+Good Luck,
+--John.
+
+On Wed, Aug 8, 2018 at 12:12 AM Mathieu Westphal <
+mathieu.westphal at kitware.com> wrote:
+
+> Hello,
+>
+> You may want to build it Debug and to run with gdb.
+>
+> Best regards,
+>
+> Mathieu Westphal
+>
+> On Tue, Aug 7, 2018 at 7:42 PM, Christopher Paolini <
+> paolini at engineering.sdsu.edu> wrote:
+>
+>> Greetings,
+>>
+>> Built server v5.5.2 from source and am getting this core dump when a
+>> client connects:
+>>
+>> Server: Ubuntu 16.04.3 LTS, Nvidia 396.37, x86_64
+>> Client: Windows 10
+>>
+>> $ ~/ParaView-v5.5.2/paraview_build$ bin/pvserver --server-port=8080
+>> --cslog=paraview.log
+>> Waiting for client...
+>> Connection URL: cs://host:8080
+>> Accepting connection(s): host:8080
+>> Client connected.
+>> Segmentation fault (core dumped)
+>>
+>> Any ideas?
+>>
+>> Thanks so much,
+>>
+>> Chris
+>>
+>> _______________________________________________
+>> Powered by www.kitware.com
+>>
+>> ParaView discussion is moving! Please visit
+>> https://discourse.paraview.org/ for future posts.
+>>
+>> Visit other Kitware open-source projects at
+>> http://www.kitware.com/opensource/opensource.html
+>>
+>> Please keep messages on-topic and check the ParaView Wiki at:
+>> http://paraview.org/Wiki/ParaView
+>>
+>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>>
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview
+>>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180808/601279b5/attachment.html>
+
+From dave.demarle at kitware.com  Wed Aug  8 16:34:48 2018
+From: dave.demarle at kitware.com (David E DeMarle)
+Date: Wed, 8 Aug 2018 16:34:48 -0400
+Subject: [Paraview] pvserver core dump with server and client v5.5.2
+In-Reply-To: <CACDyxRGDMhR1-t979kGiu0y37r4biYQWzHXp+_+2+0zERVWeVw@mail.gmail.com>
+References: <20623.1533663728@engineering.sdsu.edu>
+ <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+ <CACDyxRGDMhR1-t979kGiu0y37r4biYQWzHXp+_+2+0zERVWeVw@mail.gmail.com>
+Message-ID: <CANjZAi-BS7Fz5+ApTcTChk7qvMyvAryucHh1T4K-m4VL6syx3A@mail.gmail.com>
+
+In 5.5.2 only Mac clients still have that specific failure so I was
+reluctant to suggest this as the cause.
+
+For mac a decent workaround is to use the 5.5.1 noospray client we've
+published.
+
+David E DeMarle
+Kitware, Inc.
+Principal Engineer
+21 Corporate Drive
+Clifton Park, NY 12065-8662
+Phone: 518-881-4909
+
+
+On Wed, Aug 8, 2018 at 3:18 PM John Patchett <patchett2002 at gmail.com> wrote:
+
+> I think there were some issues with the server segfaulting if it didn't
+> have OSPRay built into it and the Windows client connected to it.  Can you
+> check if this also happens with a non-windows client and if so perhaps
+> ensure OSPRay gets built on the linux server side.
+> Good Luck,
+> --John.
+>
+> On Wed, Aug 8, 2018 at 12:12 AM Mathieu Westphal <
+> mathieu.westphal at kitware.com> wrote:
+>
+>> Hello,
+>>
+>> You may want to build it Debug and to run with gdb.
+>>
+>> Best regards,
+>>
+>> Mathieu Westphal
+>>
+>> On Tue, Aug 7, 2018 at 7:42 PM, Christopher Paolini <
+>> paolini at engineering.sdsu.edu> wrote:
+>>
+>>> Greetings,
+>>>
+>>> Built server v5.5.2 from source and am getting this core dump when a
+>>> client connects:
+>>>
+>>> Server: Ubuntu 16.04.3 LTS, Nvidia 396.37, x86_64
+>>> Client: Windows 10
+>>>
+>>> $ ~/ParaView-v5.5.2/paraview_build$ bin/pvserver --server-port=8080
+>>> --cslog=paraview.log
+>>> Waiting for client...
+>>> Connection URL: cs://host:8080
+>>> Accepting connection(s): host:8080
+>>> Client connected.
+>>> Segmentation fault (core dumped)
+>>>
+>>> Any ideas?
+>>>
+>>> Thanks so much,
+>>>
+>>> Chris
+>>>
+>>> _______________________________________________
+>>> Powered by www.kitware.com
+>>>
+>>> ParaView discussion is moving! Please visit
+>>> https://discourse.paraview.org/ for future posts.
+>>>
+>>> Visit other Kitware open-source projects at
+>>> http://www.kitware.com/opensource/opensource.html
+>>>
+>>> Please keep messages on-topic and check the ParaView Wiki at:
+>>> http://paraview.org/Wiki/ParaView
+>>>
+>>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>>>
+>>> Follow this link to subscribe/unsubscribe:
+>>> https://public.kitware.com/mailman/listinfo/paraview
+>>>
+>>
+>> _______________________________________________
+>> Powered by www.kitware.com
+>>
+>> ParaView discussion is moving! Please visit
+>> https://discourse.paraview.org/ for future posts.
+>>
+>> Visit other Kitware open-source projects at
+>> http://www.kitware.com/opensource/opensource.html
+>>
+>> Please keep messages on-topic and check the ParaView Wiki at:
+>> http://paraview.org/Wiki/ParaView
+>>
+>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>>
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview
+>>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180808/e7ddffc3/attachment.html>
+
+From salachoris1 at gmail.com  Wed Aug  8 16:46:02 2018
+From: salachoris1 at gmail.com (GeorgeP S)
+Date: Wed, 8 Aug 2018 23:46:02 +0300
+Subject: [Paraview] Dynamic scenes
+Message-ID: <CABe2z9cJdeHGzxJPpzUCvmFe4YYdCa20jbAMYPzHh3NHFsHSfw@mail.gmail.com>
+
+Hello,
+
+A question if i may, is there a way to export dynamic scenes from a model
+without it being an animation?
+
+Thank you,
+Salachoris Georgios Panagiotis
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180808/b3e967e2/attachment.html>
+
+From leonardopessanha74 at gmail.com  Thu Aug  9 15:26:37 2018
+From: leonardopessanha74 at gmail.com (=?UTF-8?Q?L=C3=A9o_Pessanha?=)
+Date: Thu, 9 Aug 2018 16:26:37 -0300
+Subject: [Paraview] ParaView Python Wrappings capabilities
+Message-ID: <CAE=GJrbFLdSF-8Mb3jdDw_-najx6tH2DczHzBNEdwihOQK1m4w@mail.gmail.com>
+
+Hi!
+
+Am I able to achieve what's in the example below trough the Python Shell?
+
+https://www.vtk.org/Wiki/VTK/Examples/Cxx/Visualization/SideBySideViewports
+
+In ParaView it would be 1x Layout with 1x RenderWindow for 2x Viewports
+with 1x Renderer each one.
+
+I have tried some code but with no sucess. I can share it if it's helpful.
+
+Best regards,
+Leonardo Pessanha
+Laboratory of Computational Methods in Engineering
+Federal University of Rio de Janeiro - COPPE
+Rio de Janeiro, RJ, Brasil
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180809/3d92b600/attachment.html>
+
+From paolini at engineering.sdsu.edu  Thu Aug  9 18:07:31 2018
+From: paolini at engineering.sdsu.edu (Christopher Paolini)
+Date: Thu, 09 Aug 2018 15:07:31 -0700
+Subject: [Paraview] pvserver core dump with server and client v5.5.2
+In-Reply-To: <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+References: <20623.1533663728@engineering.sdsu.edu>
+ <CAC2t4UTE2MOXDWnzkCQk=AC9wYFCk0rGWUgTrb8TwUBDdLvcjw@mail.gmail.com>
+Message-ID: <17908.1533852451@engineering.sdsu.edu>
+
+Thanks Mathieu!  
+
+Looks like the fault is in vtkOpenGLRenderWindow::CreateHardwareOffScreenBuffers: 
+
+#1  0x00007fffe0e84ec2 in vtkOpenGLRenderWindow::CreateHardwareOffScreenBuffers (this=0xcd5060, width=300, height=300,
+    bind=false) at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx:2074
+
+Here is a backtrace:
+
+paolini at notos:~/paraview/paraview_build$ gdb bin/pvserver
+GNU gdb (Ubuntu 7.11.1-0ubuntu1~16.5) 7.11.1
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from bin/pvserver...done.
+(gdb) run --multi-clients --server-port=8080 --connect-id=Sksk68r4 --cslog=paraview.log
+Starting program: /home/paolini/paraview/paraview_build/bin/pvserver --multi-clients --server-port=8080 --connect-id=Sksk68r4 --cslog=paraview.log
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[New Thread 0x7fffcfcb7700 (LWP 15441)]
+[New Thread 0x7fffc7fff700 (LWP 15442)]
+--------------------------------------------------------------------------
+No OpenFabrics connection schemes reported that they were able to be
+used on a specific port.  As such, the openib BTL (OpenFabrics
+support) will be disabled for this port.
+
+  Local host:           notos
+  Local device:         mlx4_0
+  Local port:           1
+  CPCs attempted:       udcm
+--------------------------------------------------------------------------
+[Thread 0x7fffc7fff700 (LWP 15442) exited]
+Waiting for client...
+Connection URL: cs://notos:8080
+Accepting connection(s): notos:8080
+Client connected.
+
+Thread 1 "pvserver" received signal SIGSEGV, Segmentation fault.
+0x0000000000000000 in ?? ()
+(gdb) bt
+#0  0x0000000000000000 in ?? ()
+#1  0x00007fffe0e84ec2 in vtkOpenGLRenderWindow::CreateHardwareOffScreenBuffers (this=0xcd5060, width=300, height=300,
+    bind=false) at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx:2074
+#2  0x00007fffe0e84adf in vtkOpenGLRenderWindow::CreateHardwareOffScreenWindow (this=0xcd5060, width=300, height=300)
+    at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx:1987
+#3  0x00007fffe0f443f1 in vtkXOpenGLRenderWindow::CreateOffScreenWindow (this=0xcd5060, width=300, height=300)
+    at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkXOpenGLRenderWindow.cxx:794
+#4  0x00007fffe0f44854 in vtkXOpenGLRenderWindow::Initialize (this=0xcd5060)
+    at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkXOpenGLRenderWindow.cxx:871
+#5  0x00007fffe0e860fc in vtkOpenGLRenderWindow::SupportsOpenGL (this=0xcd3950)
+    at /home/paolini/paraview/VTK/Rendering/OpenGL2/vtkOpenGLRenderWindow.cxx:2420
+#6  0x00007ffff2b54856 in vtkPVRenderingCapabilitiesInformation::GetLocalCapabilities ()
+    at /home/paolini/paraview/ParaViewCore/ClientServerCore/Rendering/vtkPVRenderingCapabilitiesInformation.cxx:126
+#7  0x00007ffff2b549c1 in vtkPVRenderingCapabilitiesInformation::CopyFromObject (this=0xccf240)
+    at /home/paolini/paraview/ParaViewCore/ClientServerCore/Rendering/vtkPVRenderingCapabilitiesInformation.cxx:178
+#8  0x00007ffff636ff1c in vtkPVSessionCore::GatherInformationInternal (this=0x9654f0, information=0xccf240, globalid=0)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionCore.cxx:783
+#9  0x00007ffff6370238 in vtkPVSessionCore::GatherInformation (this=0x9654f0, location=1, information=0xccf240, globalid=0)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionCore.cxx:821
+#10 0x00007ffff636b5ce in vtkPVSessionBase::GatherInformation (this=0x9673c0, location=1, information=0xccf240, globalid=0)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionBase.cxx:243
+#11 0x00007ffff637d73b in vtkPVSessionServer::GatherInformationInternal (this=0x9673c0, location=1,
+    classname=0xcd1d10 "vtkPVRenderingCapabilitiesInformation", globalid=0, stream=...)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionServer.cxx:658
+#12 0x00007ffff637d43a in vtkPVSessionServer::OnClientServerMessageRMI (this=0x9673c0, message=0x14b3340, message_length=58)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionServer.cxx:622
+#13 0x00007ffff637be78 in (anonymous namespace)::RMICallback (localArg=0x9673c0, remoteArg=0x14b3340, remoteArgLength=58)
+    at /home/paolini/paraview/ParaViewCore/ServerImplementation/Core/vtkPVSessionServer.cxx:56
+#14 0x00007ffff5ce368c in vtkMultiProcessController::ProcessRMI (this=0x13ca750, remoteProcessId=1, arg=0x14b3340,
+    argLength=58, rmiTag=55625) at /home/paolini/paraview/VTK/Parallel/Core/vtkMultiProcessController.cxx:768
+#15 0x00007ffff5ce321d in vtkMultiProcessController::ProcessRMIs (this=0x13ca750, reportErrors=0, dont_loop=1)
+    at /home/paolini/paraview/VTK/Parallel/Core/vtkMultiProcessController.cxx:717
+#16 0x00007ffff606f71d in vtkTCPNetworkAccessManager::ProcessEventsInternal (this=0x6e25f0, timeout_msecs=0,
+    do_processing=true) at /home/paolini/paraview/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx:288
+#17 0x00007ffff606f222 in vtkTCPNetworkAccessManager::ProcessEvents (this=0x6e25f0, timeout_msecs=0)
+    at /home/paolini/paraview/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx:188
+---Type <return> to continue, or q <return> to quit---
+#18 0x00000000004018b2 in RealMain (argc=5, argv=0x7fffffffe318, type=vtkProcessModule::PROCESS_SERVER)
+    at /home/paolini/paraview/CommandLineExecutables/pvserver_common.h:89
+#19 0x000000000040197a in main (argc=5, argv=0x7fffffffe318)
+    at /home/paolini/paraview/CommandLineExecutables/pvserver.cxx:27
+(gdb)
+
+Chris
+
+Mathieu Westphal <mathieu.westphal at kitware.com> wrote:
+
+> Hello,
+> 
+> You may want to build it Debug and to run with gdb.
+> 
+> Best regards,
+> 
+> Mathieu Westphal
+> 
+> On Tue, Aug 7, 2018 at 7:42 PM, Christopher Paolini <
+> paolini at engineering.sdsu.edu> wrote:
+> 
+> > Greetings,
+> >
+> > Built server v5.5.2 from source and am getting this core dump when a
+> > client connects:
+> >
+> > Server: Ubuntu 16.04.3 LTS, Nvidia 396.37, x86_64
+> > Client: Windows 10
+> >
+> > $ ~/ParaView-v5.5.2/paraview_build$ bin/pvserver --server-port=8080
+> > --cslog=paraview.log
+> > Waiting for client...
+> > Connection URL: cs://host:8080
+> > Accepting connection(s): host:8080
+> > Client connected.
+> > Segmentation fault (core dumped)
+> >
+> > Any ideas?
+> >
+> > Thanks so much,
+> >
+> > Chris
+> >
+> > _______________________________________________
+> > Powered by www.kitware.com
+> >
+> > ParaView discussion is moving! Please visit https://discourse.paraview.
+> > org/ for future posts.
+> >
+> > Visit other Kitware open-source projects at http://www.kitware.com/
+> > opensource/opensource.html
+> >
+> > Please keep messages on-topic and check the ParaView Wiki at:
+> > http://paraview.org/Wiki/ParaView
+> >
+> > Search the list archives at: http://markmail.org/search/?q=ParaView
+> >
+> > Follow this link to subscribe/unsubscribe:
+> > https://public.kitware.com/mailman/listinfo/paraview
+> >
+
+From hyun_lim at outlook.com  Sat Aug 11 15:41:03 2018
+From: hyun_lim at outlook.com (Hyun Lim)
+Date: Sat, 11 Aug 2018 19:41:03 +0000
+Subject: [Paraview] Mismatching Client/Server version
+In-Reply-To: <652CEEC8-DBD6-4519-B6EB-D24EAD41057D@contoso.com>
+References: <652CEEC8-DBD6-4519-B6EB-D24EAD41057D@contoso.com>
+Message-ID: <320375F4-6624-4BD2-9080-34500FAB83B4@outlook.com>
+
+Hello all,
+
+I just tried to make reverse connetion between my laptop and supercomputer that I can access.
+
+I am using below commands
+
+pvserver -rc --client-host=<localhost> --server-port=11111
+
+I set up all server configuration locally and follow the instruction in the manual. And I got below error message form my local machine:
+
+ERROR: In /Users/kitware/dashboards/buildbot-slave/8275bd07/build/superbuild/paraview/src/VTK/Parallel/Core/vtkSocketCommunicator.cxx, line 503
+vtkSocketCommunicator (0x61000011c710): Client/server version hash mismatch.
+
+ERROR: In /Users/kitware/dashboards/buildbot-slave/8275bd07/build/superbuild/paraview/src/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx, line 413
+vtkTCPNetworkAccessManager (0x610000267e00):
+**********************************************************************
+Connection failed during handshake. This can happen for the following reasons:
+1. Connection dropped during the handshake.
+2. vtkSocketCommunicator::GetVersion() returns different values on the
+    two connecting processes (Current value: 100).
+3. ParaView handshake strings are different on the two connecting
+    processes (Current value: paraview.5.4.renderingbackend.opengl2).
+**********************************************************************
+
+And also from supercomputer
+
+pvserver -rc --client-host=10.37.10.30 --server-port=11111
+Connecting to client (reverse connection requested)...
+Connection URL: csrc://10.37.10.30:11111
+ERROR: In /apps/src/paraview/src/ParaView-v5.4.1/VTK/Parallel/Core/vtkSocketCommunicator.cxx, line 611
+vtkSocketCommunicator (0x2411d60): Client/server version hash mismatch.
+
+ERROR: In /apps/src/paraview/src/ParaView-v5.4.1/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx, line 337
+vtkTCPNetworkAccessManager (0x1835550):
+**********************************************************************
+Connection failed during handshake. vtkSocketCommunicator::GetVersion()
+returns different values on the two connecting processes
+(Current value: 100).
+**********************************************************************
+
+It seems that major problem is version mismatching between client and server. However, I installed Paraview 5.4.1 and supercomputer has a same version, 5.4.1.
+
+Does anyone have some suggestions how to resolve this issue?
+
+Thanks a lot,
+
+Hyun
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180811/4bda974c/attachment.html>
+
+From atulsingh92 at outlook.com  Sun Aug 12 06:56:16 2018
+From: atulsingh92 at outlook.com (Atul Singh)
+Date: Sun, 12 Aug 2018 10:56:16 +0000
+Subject: [Paraview] Streamtracer filter for Catalyst
+Message-ID: <AM0PR02MB4356A6B3614A699E7C504ACBA03A0@AM0PR02MB4356.eurprd02.prod.outlook.com>
+
+Hello all,
+
+I am trying to build a catalyst pipeline (for PV 5.5.1) that has Streamtracer filter. So far I've been able to iteratively add the necessary classes and paths to the manifest.json file , as the build kept failing during compile time. So my question is,
+
+1)Is there any better way to find what class or paths would I need to add , if I need any other filter.
+
+2) For streamtracer filter, my json file (/Paraview/Catalyst/Editions/Essential , and the error after 100% compilation are attached. Would anyone know a workaround, or a direction?
+
+
+Thanks,
+Atul Singh,
+Student trying to learn awesome things!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180812/52511e7d/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: manifest.json
+Type: application/json
+Size: 4604 bytes
+Desc: manifest.json
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180812/52511e7d/attachment-0001.json>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: vtkServerManagerKitPythonD.png
+Type: image/png
+Size: 288437 bytes
+Desc: vtkServerManagerKitPythonD.png
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180812/52511e7d/attachment-0001.png>
+
+From utkarsh.ayachit at kitware.com  Sun Aug 12 07:41:47 2018
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Sun, 12 Aug 2018 07:41:47 -0400
+Subject: [Paraview] Mismatching Client/Server version
+In-Reply-To: <320375F4-6624-4BD2-9080-34500FAB83B4@outlook.com>
+References: <652CEEC8-DBD6-4519-B6EB-D24EAD41057D@contoso.com>
+ <320375F4-6624-4BD2-9080-34500FAB83B4@outlook.com>
+Message-ID: <CADHSJjBHAw8VQjCCwUbPb=eH5=S0+Bcs_AxiRS1UTqMNz_1eOQ@mail.gmail.com>
+
+Hyun,
+
+Looks like it's failing when comparing the file hash for
+vtkSocketCommunicator. That  generally implies that the VTK submodule
+was not properly in either of the builds. Do you have access to the
+build directories for both? If so, check the contents of
+./VTK/Parallel/Core/vtkSocketCommunicatorHash.h in the build directory
+for the two. The hashes should match.
+
+Utkarsh
+On Sat, Aug 11, 2018 at 3:41 PM Hyun Lim <hyun_lim at outlook.com> wrote:
+>
+> Hello all,
+>
+>
+>
+> I just tried to make reverse connetion between my laptop and supercomputer that I can access.
+>
+>
+>
+> I am using below commands
+>
+>
+>
+> pvserver -rc --client-host=<localhost> --server-port=11111
+>
+>
+>
+> I set up all server configuration locally and follow the instruction in the manual. And I got below error message form my local machine:
+>
+>
+>
+> ERROR: In /Users/kitware/dashboards/buildbot-slave/8275bd07/build/superbuild/paraview/src/VTK/Parallel/Core/vtkSocketCommunicator.cxx, line 503
+>
+> vtkSocketCommunicator (0x61000011c710): Client/server version hash mismatch.
+>
+>
+>
+> ERROR: In /Users/kitware/dashboards/buildbot-slave/8275bd07/build/superbuild/paraview/src/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx, line 413
+>
+> vtkTCPNetworkAccessManager (0x610000267e00):
+>
+> **********************************************************************
+>
+> Connection failed during handshake. This can happen for the following reasons:
+>
+> 1. Connection dropped during the handshake.
+>
+> 2. vtkSocketCommunicator::GetVersion() returns different values on the
+>
+>     two connecting processes (Current value: 100).
+>
+> 3. ParaView handshake strings are different on the two connecting
+>
+>     processes (Current value: paraview.5.4.renderingbackend.opengl2).
+>
+> **********************************************************************
+>
+>
+>
+> And also from supercomputer
+>
+>
+>
+> pvserver -rc --client-host=10.37.10.30 --server-port=11111
+>
+> Connecting to client (reverse connection requested)...
+>
+> Connection URL: csrc://10.37.10.30:11111
+>
+> ERROR: In /apps/src/paraview/src/ParaView-v5.4.1/VTK/Parallel/Core/vtkSocketCommunicator.cxx, line 611
+>
+> vtkSocketCommunicator (0x2411d60): Client/server version hash mismatch.
+>
+>
+>
+> ERROR: In /apps/src/paraview/src/ParaView-v5.4.1/ParaViewCore/ClientServerCore/Core/vtkTCPNetworkAccessManager.cxx, line 337
+>
+> vtkTCPNetworkAccessManager (0x1835550):
+>
+> **********************************************************************
+>
+> Connection failed during handshake. vtkSocketCommunicator::GetVersion()
+>
+> returns different values on the two connecting processes
+>
+> (Current value: 100).
+>
+> **********************************************************************
+>
+>
+>
+> It seems that major problem is version mismatching between client and server. However, I installed Paraview 5.4.1 and supercomputer has a same version, 5.4.1.
+>
+>
+>
+> Does anyone have some suggestions how to resolve this issue?
+>
+>
+>
+> Thanks a lot,
+>
+>
+>
+> Hyun
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+
+From dan.lipsa at kitware.com  Mon Aug 13 08:56:15 2018
+From: dan.lipsa at kitware.com (Dan Lipsa)
+Date: Mon, 13 Aug 2018 08:56:15 -0400
+Subject: [Paraview] Making a programmable apply by default
+In-Reply-To: <CAD0qPxRSeCeJHtjiruOt0UkmGT=K2UXxKT58Nho8R9R6YYRk2w@mail.gmail.com>
+References: <CAD0qPxRSeCeJHtjiruOt0UkmGT=K2UXxKT58Nho8R9R6YYRk2w@mail.gmail.com>
+Message-ID: <CADwGrVrbLGEsuEsuEY4Vtbhw0mT4Fg-981droWcShDCp9VHawA@mail.gmail.com>
+
+Andrey,
+After building your pipeline, including the programmable filter, you could
+save a ParaView State file: File / Save State. Then you can load the entire
+pipeline, including the programmable filter using File / Load State.
+Does this help?
+
+
+On Wed, Aug 8, 2018 at 12:05 PM Andreyev, Andrey <
+andrey.andreyev at corvidtec.com> wrote:
+
+> Hello all,
+>
+> I have a structural code that writes XDMF files and in order to speed up
+> visualization we're writing some python scripts. In order to make things
+> easier, we have also written a programmable filter to apply to the
+> pipeline. As of right now, we have to copy the python code into the
+> programmable filter box all the time. Is there a way (via xml or other but
+> without compiling) to make the python code load directly after the XDMF
+> reader?
+>
+> Thank you in advance!
+> Andrey
+>
+> --
+>
+> Andrey V. Andreyev
+> CORVID Technologies
+> 145 Overhill Dr
+> Mooresville, NC 28117
+> 704-799-6944 x172
+> andrey.andreyev at corvidtec.com
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180813/8211b7e2/attachment.html>
+
+From kmorel at sandia.gov  Mon Aug 13 13:28:13 2018
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Mon, 13 Aug 2018 17:28:13 +0000
+Subject: [Paraview] Making a programmable apply by default
+Message-ID: <4f27dbbb1ed148d584aa40f8cca8e61f@ES08AMSNLNT.srn.sandia.gov>
+
+Andrey,
+
+There are numerous ways to capture and reapply state of this nature. Dan just presented one, but let me give a few more.
+
+My personal favorite is adding a macro. Macros are basically just python scripts stored in a special directory. You can use Python?s tracing capabilities to quickly draft a macro. This is described in The ParaView Tutorial<https://www.paraview.org/Wiki/The_ParaView_Tutorial>, but the basic process is as follows:
+
+
+  1.  Load your XDMF as normal.
+  2.  Before you create the Programmable Filter, on the menu select Tools ? Start Trace. In the Trace Options dialog box you can leave all the defaults although you might change the properties to trace to ?only *user-modified* properties?.
+  3.  Create the Programmable Filter, add in the script and apply as you normally would.
+  4.  On the menu select Tools ? Stop Trace.
+  5.  After you stop the trace you will get a window with the traced Python script. You might need to make edits to this script. In particular, you probably want to change the line with the ?FindSource()? function call to call ?GetActiveSource()? instead. You may also want to delete the lines at the end of the script that change the camera.
+  6.  When you are done making changes to the script, in the window with the script select the menu option File ? Save as Macro? After you save the script in the directory provided, an item with that file name will show up in the Macros toolbar and menu.
+
+If you want to export this macro, simply go to Macros ? Edit ? your macro and then select File ? Save As? to save the script somewhere else. Another user can then import your script as a macro by selecting Macros ? Add new macro?
+
+As I mentioned, there are other options as well. One such option is to create a ?Custom Filter? (Tools ? Create Custom Filter). That should work but is not used often (or documented well), so it is usually not my first choice.
+
+I believe there is a feature to be introduced in ParaView 5.6 that might help as well. It is an alternate version of the Programmable Filter that you can use as a plugin. In addition to encapsulating the script itself, it will also provide a mechanism to customize the GUI in the properties panel. Keep your eye out for that.
+
+-Ken
+
+From: ParaView [mailto:paraview-bounces at public.kitware.com] On Behalf Of Dan Lipsa
+Sent: Monday, August 13, 2018 6:56 AM
+To: andrey.andreyev at corvidtec.com
+Cc: paraview at public.kitware.com
+Subject: [EXTERNAL] Re: [Paraview] Making a programmable apply by default
+
+Andrey,
+After building your pipeline, including the programmable filter, you could save a ParaView State file: File / Save State. Then you can load the entire pipeline, including the programmable filter using File / Load State.
+Does this help?
+
+
+On Wed, Aug 8, 2018 at 12:05 PM Andreyev, Andrey <andrey.andreyev at corvidtec.com<mailto:andrey.andreyev at corvidtec.com>> wrote:
+Hello all,
+
+I have a structural code that writes XDMF files and in order to speed up visualization we're writing some python scripts. In order to make things easier, we have also written a programmable filter to apply to the pipeline. As of right now, we have to copy the python code into the programmable filter box all the time. Is there a way (via xml or other but without compiling) to make the python code load directly after the XDMF reader?
+
+Thank you in advance!
+Andrey
+
+--
+
+Andrey V. Andreyev
+CORVID Technologies
+145 Overhill Dr
+Mooresville, NC 28117
+704-799-6944 x172
+andrey.andreyev at corvidtec.com<mailto:andrey.andreyev at corvidtec.com>
+
+_______________________________________________
+Powered by www.kitware.com<http://www.kitware.com>
+
+ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+
+Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+
+Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+
+Search the list archives at: http://markmail.org/search/?q=ParaView
+
+Follow this link to subscribe/unsubscribe:
+https://public.kitware.com/mailman/listinfo/paraview
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180813/c65ab53f/attachment.html>
+
+From theodore.baltis at corvidtec.com  Mon Aug 13 16:06:38 2018
+From: theodore.baltis at corvidtec.com (Baltis, Theodore)
+Date: Mon, 13 Aug 2018 16:06:38 -0400
+Subject: [Paraview] Accessing Reader FileNames
+Message-ID: <CAMctnzd4thPi6jMV58Pe_f9pQDm7U6b7wajGkVMScgw=8fOmXQ@mail.gmail.com>
+
+Hello,
+
+I am reading in a time series dataset with an xdmf reader then manipulating
+this data in a programmable filter.
+The way I manipulate the data is dependent upon the files that make up this
+time series.
+
+Currently I manually set the directory containing these files within the
+programmable filter script.
+Is there a way to programmatically access this information?
+
+This would be simple through the paraview.simple module but I know this
+doesn't work within a programmable filter, and as far as I know only VTK
+information is passed down the ParaView pipeline.
+
+Thank you,
+Theodore
+
+-- 
+*Theodore B Baltis*
+Corvid Technologies
+145 Overhill Drive, Mooresville, NC, 28117
+704-799-6944 x194 (office)
+theodore.baltis at corvidtec.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180813/8a041513/attachment.html>
+
+From hahnse at ornl.gov  Wed Aug 15 17:22:27 2018
+From: hahnse at ornl.gov (Hahn, Steven E.)
+Date: Wed, 15 Aug 2018 21:22:27 +0000
+Subject: [Paraview] OpenGL ES profile on Ubuntu 18.04?
+Message-ID: <081E4F89-F8AC-47C9-9CE0-ED375C1DCB25@ornl.gov>
+
+I noticed that on an Ubuntu 18.04 machine, ParaView 5.5?s about page shows ?OpenGL Version 3.2.0 NVIDIA 390.48?, which I believe corresponds to the OpenGL ES profile. Should this instead report the OpenGL core profile (version 4.6.0)?
+
+Are there any advantages/disadvantages to using the OpenGL ES profile on desktop computer?
+
+Thanks,
+Steven
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180815/2bab9249/attachment.html>
+
+From banesulli at gmail.com  Thu Aug 16 17:13:26 2018
+From: banesulli at gmail.com (Bane Sullivan)
+Date: Thu, 16 Aug 2018 14:13:26 -0700
+Subject: [Paraview] =?utf-8?b?VXBncmFkZSBOdW1QeSAxLjgueCDihpIgMS4xMC54?=
+ =?utf-8?q?_or_greater?=
+Message-ID: <CAD=kO4tKcw57czqsgJfzOK-nm7SuL1+u+GTwDrz0e8nWUJ78QQ@mail.gmail.com>
+
+Would it be possible to upgrade the NumPy that gets shipped with ParaView
+binaries?
+
+NumPy has tons of really great features that come around release 1.10 and
+later which I heavily use and I think users would greatly benefit from
+having a newer version of NumPy in ParaView's site-packages.
+
+I simply propose NumPy-v1.10.x as a new minimum.
+
+I usually delete ParaView?s version of NumPy and create a symbolic link to
+a python 2.7 numpy I have installed in a lightweight virtual environment. I
+haven?t had any trouble using newer versions of NumPy so I am curious why
+ParaView still ships with numpy-v1.8.1?
+
+I have also created an issue on GitLab:
+https://gitlab.kitware.com/paraview/paraview/issues/18369
+
+Thanks,
+
+Bane
+http://pvgeo.org
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180816/856f988e/attachment.html>
+
+From ken.martin at kitware.com  Mon Aug 20 09:38:09 2018
+From: ken.martin at kitware.com (Ken Martin)
+Date: Mon, 20 Aug 2018 09:38:09 -0400
+Subject: [Paraview] OpenGL ES profile on Ubuntu 18.04?
+In-Reply-To: <081E4F89-F8AC-47C9-9CE0-ED375C1DCB25@ornl.gov>
+References: <081E4F89-F8AC-47C9-9CE0-ED375C1DCB25@ornl.gov>
+Message-ID: <CANXz0SYSj8T=nbq2FRW7vspGQSUGAjUGoZ3GNnVphP=UuftbWQ@mail.gmail.com>
+
+I'm not entirely sure what is going on there... but the ES rendering
+support in VTK is pretty similar to the regular desktop rendering. I think
+a couple features do not work in ES that work on desktop OpenGL but 99% of
+it should be the same.
+
+On Wed, Aug 15, 2018 at 5:22 PM, Hahn, Steven E. <hahnse at ornl.gov> wrote:
+
+> I noticed that on an Ubuntu 18.04 machine, ParaView 5.5?s about page shows
+> ?OpenGL Version 3.2.0 NVIDIA 390.48?, which I believe corresponds to the
+> OpenGL ES profile. Should this instead report the OpenGL core profile
+> (version 4.6.0)?
+>
+>
+>
+> Are there any advantages/disadvantages to using the OpenGL ES profile on
+> desktop computer?
+>
+>
+>
+> Thanks,
+>
+> Steven
+>
+>
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.
+> org/ for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/
+> opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+>
+
+
+-- 
+Ken Martin PhD
+Distinguished Engineer
+Kitware Inc.
+101 East Weaver Street
+Carrboro, North Carolina
+27510 USA
+
+This communication, including all attachments, contains confidential and
+legally privileged information, and it is intended only for the use of the
+addressee.  Access to this email by anyone else is unauthorized. If you are
+not the intended recipient, any disclosure, copying, distribution or any
+action taken in reliance on it is prohibited and may be unlawful. If you
+received this communication in error please notify us immediately and
+destroy the original message.  Thank you.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180820/7eb490d6/attachment.html>
+
+From salachoris1 at gmail.com  Mon Aug 20 12:03:34 2018
+From: salachoris1 at gmail.com (GeorgeP S)
+Date: Mon, 20 Aug 2018 18:03:34 +0200
+Subject: [Paraview] OSPray rendering
+Message-ID: <CABe2z9ewumGWjD1fOnL7Y+92HNJ1qsfooiWVZMO+D_B1O=kBXQ@mail.gmail.com>
+
+Hello,
+
+i am encountering a small problem mostly due to my little experience with
+OSPray rendering. I want to give a "material" to my model but i don't want
+to do it with the pathtracer renderer i want to do it with scivis, is it
+possible ? Also is it possible to select some components of my model and
+have them rendered in a material and the rest with other materials , how
+can i do that?
+
+Thank you,
+Salachoris Georgios Panagiotis
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180820/a80eb4dc/attachment.html>
+
+From dave.demarle at kitware.com  Mon Aug 20 13:27:09 2018
+From: dave.demarle at kitware.com (David E DeMarle)
+Date: Mon, 20 Aug 2018 13:27:09 -0400
+Subject: [Paraview] OSPray rendering
+In-Reply-To: <CABe2z9ewumGWjD1fOnL7Y+92HNJ1qsfooiWVZMO+D_B1O=kBXQ@mail.gmail.com>
+References: <CABe2z9ewumGWjD1fOnL7Y+92HNJ1qsfooiWVZMO+D_B1O=kBXQ@mail.gmail.com>
+Message-ID: <CANjZAi_jDTP7zeC_xC+TLW8Dgv0omd-+7isNZzkY0bymMinF6Q@mail.gmail.com>
+
+On Mon, Aug 20, 2018 at 12:03 PM GeorgeP S <salachoris1 at gmail.com> wrote:
+
+> Hello,
+>
+> i am encountering a small problem mostly due to my little experience with
+> OSPray rendering. I want to give a "material" to my model but i don't want
+> to do it with the pathtracer renderer i want to do it with scivis, is it
+> possible ?
+>
+
+At the moment, materials are only available in pathtracer.
+
+
+> Also is it possible to select some components of my model and have them
+> rendered in a material and the rest with other materials , how can i do
+> that?
+>
+
+Besides thresholding into different sourceproxies each of which could have
+its own material, a cell aligned array can select a material for each cell
+within a single sourceproxy.
+
+To do so:
+Use an indexed color table (Color Map Editor -> Interpret Values As
+Categories).
+Set material names via Annotations in the color map editor.
+Switch the material type to "Value Indexed".
+
+Attached is a state file to demonstrate.
+
+
+> Thank you,
+> Salachoris Georgios Panagiotis
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180820/10036b8b/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: percellmats.pvsm
+Type: application/octet-stream
+Size: 345351 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180820/10036b8b/attachment-0001.obj>
+
+From skemobob at gmail.com  Tue Aug 21 13:11:40 2018
+From: skemobob at gmail.com (=?UTF-8?B?0KHQu9Cw0LLQsCDQoNC10YjQtdGC0L3QuNC60L7Qsg==?=)
+Date: Tue, 21 Aug 2018 20:11:40 +0300
+Subject: [Paraview] ODBC connection
+Message-ID: <CAD=uYdn-NuV2xp7fdkOybik_t1qeR=gSjn-V0LAZ+sGpnj3eQQ@mail.gmail.com>
+
+Does anyone know how to read data from odbc connection to paraview?
+Please contact me if you know.
+
+
+Best Regards,
+Vyacheslav
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180821/780deae9/attachment.html>
+
+From leonardopessanha74 at gmail.com  Wed Aug 22 15:30:23 2018
+From: leonardopessanha74 at gmail.com (=?UTF-8?Q?L=C3=A9o_Pessanha?=)
+Date: Wed, 22 Aug 2018 16:30:23 -0300
+Subject: [Paraview] Registering new renderer in RenderView
+Message-ID: <CAE=GJrZMjwi_QoraskfzxAPr1OHAdQW5p5BvmzHiEaHpCqku0Q@mail.gmail.com>
+
+Hi!
+
+Is it possible to register a new renderer in the RenderWindow of a
+RenderView?
+
+By register I mean to add a new Renderer and make it receive the changes in
+the pipeline
+
+So far I've done some research and found out that the RenderView has a
+RenderWindow and the RenderWindow has a RendererCollection with 3 Renderer's
+
+1 Renderer is the "main" that shows the data
+1 Renderer serves the Orientation Axes
+1 Renderer I could not find the reason for it
+
+I'd like to add more Renderer's to the collection and those added working
+as and along the main one. *Is it possible?*
+
+I can't find help understanding some differences between the Renderer's:
+
+"Layer"  - 0,1, 2 and so on
+"Pass" -  Exists x NULL
+
+Any help explaining how this structure works would be helpful too!
+
+Leonardo Pessanha
+Laboratory of Computational Methods in Engineering
+Federal University of Rio de Janeiro - COPPE
+Rio de Janeiro, RJ, Brasil
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180822/89af22ee/attachment.html>
+
+From archaerolog at mail.ru  Fri Aug 24 07:52:28 2018
+From: archaerolog at mail.ru (Gena Bug)
+Date: Fri, 24 Aug 2018 14:52:28 +0300
+Subject: [Paraview] hangs after choosing a view
+Message-ID: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+
+Hi!
+
+I've noticed that PV 5.5.2 (downloaded from the site) stopped working on 
+my debian testing amd64. It starts correctly (except a tons of warnings 
+and errors from fontconfig) but hangs after choosing a view (any of 
+them). Here are the console output:
+
+Fontconfig warning: line 5: unknown element "its:rules"
+Fontconfig warning: line 6: unknown element "its:translateRule"
+Fontconfig error: line 6: invalid attribute 'translate'
+Fontconfig error: line 6: invalid attribute 'selector'
+Fontconfig error: line 7: invalid attribute 'xmlns:its'
+Fontconfig error: line 7: invalid attribute 'version'
+Fontconfig warning: line 9: unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+4: unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+5: unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+5: invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+5: invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+6: invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+6: invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 
+8: unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 
+4: unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 
+5: unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 
+8: unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 
+4: unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 
+5: unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 
+8: unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 8: unknown 
+element "description"
+Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 34: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 4: unknown 
+element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 5: unknown 
+element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: 
+invalid attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: 
+invalid attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: 
+invalid attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: 
+invalid attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 8: 
+unknown element "description"
+Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid 
+attribute 'version'
+Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 4: 
+unknown element "its:rules"
+Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 5: 
+unknown element "its:translateRule"
+Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid 
+attribute 'translate'
+Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid 
+attribute 'selector'
+Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid 
+attribute 'xmlns:its'
+Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid 
+attribute 'version'
+Fontconfig error: Cannot load default config file
+
+From mathieu.westphal at kitware.com  Fri Aug 24 08:50:18 2018
+From: mathieu.westphal at kitware.com (Mathieu Westphal)
+Date: Fri, 24 Aug 2018 14:50:18 +0200
+Subject: [Paraview] hangs after choosing a view
+In-Reply-To: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+References: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+Message-ID: <CAC2t4URFbHehMN0ut7N1Ef0LeEPnKaRPDTCcWsAb7i9ztSae7w@mail.gmail.com>
+
+Hi Gena,
+
+The fontconfig errors are probably unrelated to the hang you see
+https://gitlab.kitware.com/paraview/paraview/issues/18107#note_421653
+
+The error must be somewhere else.
+
+Mathieu Westphal
+
+On Fri, Aug 24, 2018 at 1:52 PM, Gena Bug via ParaView <
+paraview at public.kitware.com> wrote:
+
+> Hi!
+>
+> I've noticed that PV 5.5.2 (downloaded from the site) stopped working on
+> my debian testing amd64. It starts correctly (except a tons of warnings and
+> errors from fontconfig) but hangs after choosing a view (any of them). Here
+> are the console output:
+>
+> Fontconfig warning: line 5: unknown element "its:rules"
+> Fontconfig warning: line 6: unknown element "its:translateRule"
+> Fontconfig error: line 6: invalid attribute 'translate'
+> Fontconfig error: line 6: invalid attribute 'selector'
+> Fontconfig error: line 7: invalid attribute 'xmlns:its'
+> Fontconfig error: line 7: invalid attribute 'version'
+> Fontconfig warning: line 9: unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 8:
+> unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+> 4: unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+> 5: unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+> 8: unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+> 4: unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+> 5: unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+> 8: unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+> 4: unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+> 5: unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+> 8: unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 8:
+> unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 8:
+> unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 34:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+> invalid attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+> invalid attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+> invalid attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+> invalid attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 8: unknown
+> element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 4: unknown
+> element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 5: unknown
+> element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 8:
+> unknown element "description"
+> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 4:
+> unknown element "its:rules"
+> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 5:
+> unknown element "its:translateRule"
+> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+> attribute 'translate'
+> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+> attribute 'selector'
+> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+> attribute 'xmlns:its'
+> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+> attribute 'version'
+> Fontconfig error: Cannot load default config file
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit https://discourse.paraview.org
+> / for future posts.
+>
+> Visit other Kitware open-source projects at http://www.kitware.com/opensou
+> rce/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180824/fda4bb02/attachment.html>
+
+From archaerolog at mail.ru  Fri Aug 24 10:03:12 2018
+From: archaerolog at mail.ru (Gena Bug)
+Date: Fri, 24 Aug 2018 17:03:12 +0300
+Subject: [Paraview] hangs after choosing a view
+In-Reply-To: <CAC2t4URFbHehMN0ut7N1Ef0LeEPnKaRPDTCcWsAb7i9ztSae7w@mail.gmail.com>
+References: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+ <CAC2t4URFbHehMN0ut7N1Ef0LeEPnKaRPDTCcWsAb7i9ztSae7w@mail.gmail.com>
+Message-ID: <fe4ccc7c-6cc3-0e52-1d05-768e36b5b7e6@mail.ru>
+
+On 24.08.2018 15:50, Mathieu Westphal wrote:
+> Hi Gena,
+Hi Mathieu,
+
+> The fontconfig errors are probably unrelated to the hang you see
+> https://gitlab.kitware.com/paraview/paraview/issues/18107#note_421653
+> The error must be somewhere else.
+Indeed, seems it is unrelated. I tried latest nightly (810-g3c83280) and 
+it seems to start normally. It has some regressions (for example, plots 
+on LineChartView aren't smooth) but it works. Thanks, Mathieu!
+
+> Mathieu Westphal
+> 
+> On Fri, Aug 24, 2018 at 1:52 PM, Gena Bug via ParaView <
+> paraview at public.kitware.com> wrote:
+> 
+>> Hi!
+>>
+>> I've noticed that PV 5.5.2 (downloaded from the site) stopped working on
+>> my debian testing amd64. It starts correctly (except a tons of warnings and
+>> errors from fontconfig) but hangs after choosing a view (any of them). Here
+>> are the console output:
+>>
+>> Fontconfig warning: line 5: unknown element "its:rules"
+>> Fontconfig warning: line 6: unknown element "its:translateRule"
+>> Fontconfig error: line 6: invalid attribute 'translate'
+>> Fontconfig error: line 6: invalid attribute 'selector'
+>> Fontconfig error: line 7: invalid attribute 'xmlns:its'
+>> Fontconfig error: line 7: invalid attribute 'version'
+>> Fontconfig warning: line 9: unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 8:
+>> unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>> 4: unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>> 5: unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+>> 8: unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>> 4: unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>> 5: unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+>> 8: unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>> 4: unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>> 5: unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+>> 8: unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 8:
+>> unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 8:
+>> unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 34:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>> invalid attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+>> invalid attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+>> invalid attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+>> invalid attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 8: unknown
+>> element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 4: unknown
+>> element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 5: unknown
+>> element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 8:
+>> unknown element "description"
+>> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 4:
+>> unknown element "its:rules"
+>> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 5:
+>> unknown element "its:translateRule"
+>> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+>> attribute 'translate'
+>> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+>> attribute 'selector'
+>> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+>> attribute 'xmlns:its'
+>> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+>> attribute 'version'
+>> Fontconfig error: Cannot load default config file
+>> _______________________________________________
+>> Powered by www.kitware.com
+>>
+>> ParaView discussion is moving! Please visit https://discourse.paraview.org
+>> / for future posts.
+>>
+>> Visit other Kitware open-source projects at http://www.kitware.com/opensou
+>> rce/opensource.html
+>>
+>> Please keep messages on-topic and check the ParaView Wiki at:
+>> http://paraview.org/Wiki/ParaView
+>>
+>> Search the list archives at: http://markmail.org/search/?q=ParaView
+>>
+>> Follow this link to subscribe/unsubscribe:
+>> https://public.kitware.com/mailman/listinfo/paraview
+>>
+> 
+
+From salachoris1 at gmail.com  Wed Aug 29 12:31:59 2018
+From: salachoris1 at gmail.com (GeorgeP S)
+Date: Wed, 29 Aug 2018 18:31:59 +0200
+Subject: [Paraview] Displacement at a given time
+Message-ID: <CABe2z9eFEB0cVgpiss8kKD5i4Bd69M3QiWw1qz6ut4z+7XrhNw@mail.gmail.com>
+
+Hello,
+
+i would like to know how is it possible to export at a given limit of
+displacement the timestep of that displacement. Must be done with a
+programmable filter or there is already a filter in paraview that i can
+utilize to do this?
+
+Thank you,
+Salachoris Georgios Panagiotis
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180829/61cd0c95/attachment.html>
+
+From Eric.Masshardt at Abbvie.com  Wed Aug 29 17:31:39 2018
+From: Eric.Masshardt at Abbvie.com (Masshardt, Eric)
+Date: Wed, 29 Aug 2018 21:31:39 +0000
+Subject: [Paraview] Issues running paraview on RHEL7.4 system
+Message-ID: <f61d1c66b40a41668f2ed4c4a37d6079@USAASECSM052.R0018.COLLABORATION.ECS.HP.COM>
+
+I downloaded and expanded ParaView-5.5.2-Qt5-MPI-Linux-64bit on a rhel7.4 system. I prepended the PATH with the ParaView bin directory and LD_LIBRARY_PATH with the ParaView lib directory.
+
+When I try to start "paraview" I, it's aborted and core dumps.
+
+I found the following thread which seemed relevant:     https://public.kitware.com/pipermail/paraview/2017-June/040379.html
+
+I tried "paraview --mesa-llvm" and it runs, but as in the prior thread, the screen is blank (along with the Xlib messages about extension "MIT-SHM" missing). I then tried setting "QT_X11_NO_MITSHM=1", but this seemed not to have an effect. I still receive the Xlib error regarding MIT-SHM and still a blank window.
+
+Thanks in advance for any help,
+
+Eric
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20180829/67294f75/attachment.html>
+
+From wascott at sandia.gov  Fri Aug 31 21:11:25 2018
+From: wascott at sandia.gov (Scott, W Alan)
+Date: Sat, 1 Sep 2018 01:11:25 +0000
+Subject: [Paraview] [EXTERNAL] Re:  hangs after choosing a view
+In-Reply-To: <fe4ccc7c-6cc3-0e52-1d05-768e36b5b7e6@mail.ru>
+References: <030ab3db-d58a-aac3-b99e-33d9b6e896f3@mail.ru>
+ <CAC2t4URFbHehMN0ut7N1Ef0LeEPnKaRPDTCcWsAb7i9ztSae7w@mail.gmail.com>
+ <fe4ccc7c-6cc3-0e52-1d05-768e36b5b7e6@mail.ru>
+Message-ID: <D8B24196-D559-4B1B-95CA-3AAB9B56E01C@sandia.gov>
+
+Sorry for getting behind.
+
+Gena, I have these warnings all the time on Linux.  I get rid of them by placing the following into a script called "paraview".
+
+/..../paraview  |& grep -v Fontconfig
+
+Alan
+
+?On 8/24/18, 10:26 AM, "ParaView on behalf of Gena Bug via ParaView" <paraview-bounces at public.kitware.com on behalf of paraview at public.kitware.com> wrote:
+
+    On 24.08.2018 15:50, Mathieu Westphal wrote:
+    > Hi Gena,
+    Hi Mathieu,
+    
+    > The fontconfig errors are probably unrelated to the hang you see
+    > https://gitlab.kitware.com/paraview/paraview/issues/18107#note_421653
+    > The error must be somewhere else.
+    Indeed, seems it is unrelated. I tried latest nightly (810-g3c83280) and 
+    it seems to start normally. It has some regressions (for example, plots 
+    on LineChartView aren't smooth) but it works. Thanks, Mathieu!
+    
+    > Mathieu Westphal
+    > 
+    > On Fri, Aug 24, 2018 at 1:52 PM, Gena Bug via ParaView <
+    > paraview at public.kitware.com> wrote:
+    > 
+    >> Hi!
+    >>
+    >> I've noticed that PV 5.5.2 (downloaded from the site) stopped working on
+    >> my debian testing amd64. It starts correctly (except a tons of warnings and
+    >> errors from fontconfig) but hangs after choosing a view (any of them). Here
+    >> are the console output:
+    >>
+    >> Fontconfig warning: line 5: unknown element "its:rules"
+    >> Fontconfig warning: line 6: unknown element "its:translateRule"
+    >> Fontconfig error: line 6: invalid attribute 'translate'
+    >> Fontconfig error: line 6: invalid attribute 'selector'
+    >> Fontconfig error: line 7: invalid attribute 'xmlns:its'
+    >> Fontconfig error: line 7: invalid attribute 'version'
+    >> Fontconfig warning: line 9: unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 5:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-hinting-full.conf", line 6:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-hinting-full.conf", line 8:
+    >> unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+    >> 4: unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+    >> 5: unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 5:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line 6:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/10-scale-bitmap-fonts.conf", line
+    >> 8: unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+    >> 4: unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+    >> 5: unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 5:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line 6:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/11-lcdfilter-default.conf", line
+    >> 8: unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+    >> 4: unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+    >> 5: unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 5:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line 6:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/20-unhint-small-vera.conf", line
+    >> 8: unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 5:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/30-metric-aliases.conf", line 6:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/30-metric-aliases.conf", line 8:
+    >> unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/40-nonlatin.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/40-nonlatin.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-generic.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-generic.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/45-latin.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/45-latin.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/49-sansserif.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/49-sansserif.conf", line 8:
+    >> unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/50-user.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/50-user.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/51-local.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/51-local.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-generic.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-generic.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/60-latin.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/60-latin.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 34:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+    >> invalid attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 35:
+    >> invalid attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+    >> invalid attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-fonts-persian.conf", line 36:
+    >> invalid attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/65-nonlatin.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/65-nonlatin.conf", line 8: unknown
+    >> element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 4: unknown
+    >> element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/69-unifont.conf", line 5: unknown
+    >> element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/69-unifont.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/70-no-bitmaps.conf", line 8:
+    >> unknown element "description"
+    >> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/80-delicious.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/80-delicious.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 4:
+    >> unknown element "its:rules"
+    >> Fontconfig warning: "/etc/fonts/conf.d/90-synthetic.conf", line 5:
+    >> unknown element "its:translateRule"
+    >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+    >> attribute 'translate'
+    >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 5: invalid
+    >> attribute 'selector'
+    >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+    >> attribute 'xmlns:its'
+    >> Fontconfig error: "/etc/fonts/conf.d/90-synthetic.conf", line 6: invalid
+    >> attribute 'version'
+    >> Fontconfig error: Cannot load default config file
+    >> _______________________________________________
+    >> Powered by www.kitware.com
+    >>
+    >> ParaView discussion is moving! Please visit https://discourse.paraview.org
+    >> / for future posts.
+    >>
+    >> Visit other Kitware open-source projects at http://www.kitware.com/opensou
+    >> rce/opensource.html
+    >>
+    >> Please keep messages on-topic and check the ParaView Wiki at:
+    >> http://paraview.org/Wiki/ParaView
+    >>
+    >> Search the list archives at: http://markmail.org/search/?q=ParaView
+    >>
+    >> Follow this link to subscribe/unsubscribe:
+    >> https://public.kitware.com/mailman/listinfo/paraview
+    >>
+    > 
+    _______________________________________________
+    Powered by www.kitware.com
+    
+    ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+    
+    Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+    
+    Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+    
+    Search the list archives at: http://markmail.org/search/?q=ParaView
+    
+    Follow this link to subscribe/unsubscribe:
+    https://public.kitware.com/mailman/listinfo/paraview
+    
+
+

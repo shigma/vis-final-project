@@ -1,0 +1,3784 @@
+From eschenbe at psc.edu  Tue Nov  1 10:42:36 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Tue Nov  1 10:42:38 2005
+Subject: [Paraview] Transient Data Support
+Message-ID: <759737CF3CE01239B2333620@harpo.psc.edu>
+
+I'd like to get involved with the development of transient-data tools for 
+ParaView. We have a number of users who need ways to create pathlines and 
+calculate transient-data parameters. Please contact me directly if you 
+don't feel the entire list would be interested.
+
+Kent Eschenberg
+eschenbe@psc.edu
+Pittsburgh Supercomputing Center
+
+From eschenbe at psc.edu  Wed Nov  2 11:27:01 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov  2 11:27:03 2005
+Subject: [Paraview] 2.2.1 Compile Failure Under FC4
+Message-ID: <560ACDF6D8E2C7CC6865A705@harpo.psc.edu>
+
+ParaView 2.2.1 fails to compile under Fedora Core 4 with the message
+
+.../Servers/ServerManager/...
+...vtkSMXYPlotDisplayProxy.h:50: error:
+vtkSMSourceProxy\u2019 has not been declared
+
+Does anybody know what is wrong? It looks like a bug.There was no problem 
+under Fedora Core 3.
+
+Kent
+Pittsburgh Supercomputing Center
+
+From andy.cedilnik at kitware.com  Wed Nov  2 11:53:10 2005
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Wed Nov  2 11:54:07 2005
+Subject: [Paraview] 2.2.1 Compile Failure Under FC4
+In-Reply-To: <560ACDF6D8E2C7CC6865A705@harpo.psc.edu>
+References: <560ACDF6D8E2C7CC6865A705@harpo.psc.edu>
+Message-ID: <4368EEF6.2090701@kitware.com>
+
+Hi Kent,
+
+Please try to put the line:
+
+class vtkSMSourceProxy;
+
+after the rest of the class lines.
+
+Let me know if this fixes your problem.
+
+Thank you.
+
+       Andy
+
+Kent Eschenberg wrote:
+
+> ParaView 2.2.1 fails to compile under Fedora Core 4 with the message
+>
+> .../Servers/ServerManager/...
+> ...vtkSMXYPlotDisplayProxy.h:50: error:
+> vtkSMSourceProxy\u2019 has not been declared
+>
+> Does anybody know what is wrong? It looks like a bug.There was no
+> problem under Fedora Core 3.
+>
+> Kent
+> Pittsburgh Supercomputing Center
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+-- 
+Andy Cedilnik
+Kitware Inc.
+
+From amy.squillacote at kitware.com  Wed Nov  2 13:41:16 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Nov  2 13:42:23 2005
+Subject: [Paraview] ParaView 2.4 beta release
+Message-ID: <6.2.5.6.2.20051102133327.02e23868@kitware.com>
+
+Hi All,
+
+The ParaView 2.4 beta release (version 2.4.0) is now available for 
+download from the ParaView web site: 
+http://www.paraview.org/HTML/Download.html.  It is also available 
+through CVS; the tag is ParaView-2-4-0.  If you find bugs in the 
+release, please e-mail me; preferably also send me a patch file to 
+fix the problem.  There have been several changes since the 2.2 
+release of ParaView; they include the following.
+
+* Improved multi-block and AMR support. Since ParaView 2.2, there has 
+been various improvements to the multi-group code. These include bug 
+fixes, filter and reader improvements. The EnSight and PLOT3D readers 
+have been converted to read multi-block datasets. XML based writers 
+and readers for all supported multi-group datasets have been added.
+
+* Movies and screen captures are now rendered offscreen. This works 
+on all platforms with the new offscreen support.
+
+* Better handling of empty data. This situation commonly occurs when 
+dealing with distributed data. Some of the nodes may have empty data. 
+Some filters misbehaved when encountering empty datasets.
+
+* Better handling of failure to open display on server side (on X). 
+If the render server cannot open one or more of it's displays, 
+compositing is disabled and the user is warned.
+
+* Fixed bug that prevented certain writers from working in server/client mode.
+
+* New and improved Spy Plot CTH reader:
+   - Lower memory footprint
+   - Ability to down-convert volume fraction to unsigned char
+   - Store data arrays as float (instead of double)
+
+* Support for ParaView internals scripts
+   - Sites can customize paraview to perform certain tasks when run 
+with special arguments
+   - For example, "paraview script:ExodusMeta <exodus file> <meta 
+file>" will load an exodus file with a meta file.
+
+* Support for selecting functions from Plot3D files
+
+* Data page shows list of arrays with their type, number of 
+components, and value range
+
+* Initial support for Python wrapping
+
+
+The web site lists precompiled binaries for Windows, Linux, and Mac 
+OSX.  Hope you enjoy the new release.
+
+Amy Squillacote
+Kitware, Inc.
+
+From eschenbe at psc.edu  Wed Nov  2 15:00:10 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov  2 15:00:29 2005
+Subject: [Paraview] 2.2.1 Compile Failure Under FC4
+In-Reply-To: <4368EEF6.2090701@kitware.com>
+References: <560ACDF6D8E2C7CC6865A705@harpo.psc.edu>
+	<4368EEF6.2090701@kitware.com>
+Message-ID: <7FD4D93ABEAEC4BDFEED8E9C@harpo.psc.edu>
+
+--On November 02, 2005 11:53:10 AM <andy.cedilnik@kitware.com> wrote:
+> Please try to put the line:
+>       class vtkSMSourceProxy;
+> after the rest of the class lines.
+> Let me know if this fixes your problem.
+
+
+Fixed it! Maybe the gnu compiler became less tolerant in FC4?
+
+Thanks!
+Kent
+
+
+> Kent Eschenberg wrote:
+>> ParaView 2.2.1 fails to compile under Fedora Core 4 with the message
+>>
+>> .../Servers/ServerManager/...
+>> ...vtkSMXYPlotDisplayProxy.h:50: error:
+>> vtkSMSourceProxy\u2019 has not been declared
+>>
+>> Does anybody know what is wrong? It looks like a bug.There was no
+>> problem under Fedora Core 3.
+>>
+>> Kent
+>> Pittsburgh Supercomputing Center
+
+From semeraro at ncsa.uiuc.edu  Wed Nov  2 16:48:58 2005
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Wed Nov  2 16:48:51 2005
+Subject: [Paraview] Adding a Reader
+Message-ID: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+
+
+Hello,
+
+I am trying to add a new reader to paraview. I am using paraview version 
+2.2.1 on a
+Fedora Core 2.0 linux distro. Paraview builds fine. I am following the 
+instructions in
+the paraview guide version 1.8 and the instructions in the PVLocal 
+directory. I was
+able to compile the "local cone source" example. When I import the package into
+paraview it works fine.
+
+As a first step, I wrote a new reader and tested it in VTK. The new reader 
+builds a structured points dataset. I then copied the new reader .h and 
+.cxx file into the
+PVLocal directory and made the recommended changes in the Cmake and xml
+files. I also included the required config files in my .cxx file. I am able 
+to compile the
+new reader and create a shared library but the shared library has an undefined
+symbol corresponding to my reader. Paraview does not like that. When I
+try to import the package I get an error. I have included the header file 
+for my
+reader and the two xml files with this message. If anyone sees what I am doing
+wrong a hint would be greatly appreciated.
+
+Regards,
+Dave
+-------------- next part --------------
+/*
+	vtkVOLBReader class 
+	Dave Semeraro
+	October 2005
+	NCSA
+
+*/
+// .NAME vtkVOLBReader - binary image file reader for VOLB datasets
+// .SECTION Description
+//  vtkVOLBReader is a vtkImageReader that reads SDSC MeshViewer
+//  input datasets. VOLB data are basically stacks of images in a
+//  single 3d file. The header consists of 17 Bytes. The first
+//  five bytes are: "VOLB\n" This is followed by the data dimensions
+//  in three 4 byte integers. This is followed by the voxel data
+//  that consists of 4 byte RGBA values per voxel. 
+//
+//  .SECTION See Also
+//  vtkJPEGReader vtkPNGReader vtkImageReader2 vtkGESignaReader
+#ifndef __vtkVOLBReader_h
+#define __vtkVOLBReader_h
+
+#include "vtkPVLocalConfigure.h"
+#include "vtkStructuredPointsSource.h"
+#include <cstring>
+#include <fstream>
+using std::ifstream;
+
+class VTK_PVLocal_EXPORT vtkVOLBReader : public vtkStructuredPointsSource 
+{
+public:
+  vtkTypeRevisionMacro(vtkVOLBReader,vtkStructuredPointsSource);
+  static vtkVOLBReader *New();
+  virtual void PrintSelf(ostream& os, vtkIndent indent);
+  // Description:
+  // Specify file name of file
+  vtkSetStringMacro(FileName);
+  vtkGetStringMacro(FileName);
+
+
+  // Description:
+  // Test whether the file with the given name can be read
+  // by this reader.
+  virtual int CanReadFile(const char* name);
+
+  // Description:
+  // Set the byte order of the file. This function sets the
+  // expected byte order of the input file. Files written on
+  // PC platforms write little endian where most Unix workstations
+  // write big endian. 
+  void SetByteOrderToBigEndian();
+  void SetByteOrderToLittleEndian();
+  vtkSetMacro(ByteOrder, int);
+  vtkGetMacro(ByteOrder, int);
+  const char *GetByteOrderAsString();
+
+//BTX
+  enum
+  {
+    FILE_BIG_ENDIAN=0,
+    FILE_LITTLE_ENDIAN=1
+  };
+//ETX
+
+protected:
+  vtkVOLBReader();
+  ~vtkVOLBReader();
+
+  void ExecuteInformation();
+  void Execute();
+
+  char* FileName;
+  unsigned char *data; // a pointer to an array managed by constructor
+  int ByteOrder;
+
+private:
+  vtkVOLBReader(const vtkVOLBReader&); // not implemented.
+  void operator=(const vtkVOLBReader&); // not implemented.
+};
+#endif
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PVLocal.xml
+Type: application/xml
+Size: 614 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051102/a62094d4/PVLocal.xml
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: PVLocal.pvsm
+Type: application/octet-stream
+Size: 352 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051102/a62094d4/PVLocal.obj
+From andy.cedilnik at kitware.com  Wed Nov  2 22:39:06 2005
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Wed Nov  2 22:42:15 2005
+Subject: [Paraview] Adding a Reader
+In-Reply-To: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+References: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+Message-ID: <4369865A.1000507@kitware.com>
+
+Hi Dave,
+
+I wrote a explanation on how to import module into ParaView:
+
+http://www.paraview.org/Wiki/ParaView:Extend
+
+       Andy
+
+Dave Semeraro wrote:
+>
+> Hello,
+>
+> I am trying to add a new reader to paraview. I am using paraview 
+> version 2.2.1 on a
+> Fedora Core 2.0 linux distro. Paraview builds fine. I am following the 
+> instructions in
+> the paraview guide version 1.8 and the instructions in the PVLocal 
+> directory. I was
+> able to compile the "local cone source" example. When I import the 
+> package into
+> paraview it works fine.
+>
+> As a first step, I wrote a new reader and tested it in VTK. The new 
+> reader builds a structured points dataset. I then copied the new 
+> reader .h and .cxx file into the
+> PVLocal directory and made the recommended changes in the Cmake and xml
+> files. I also included the required config files in my .cxx file. I am 
+> able to compile the
+> new reader and create a shared library but the shared library has an 
+> undefined
+> symbol corresponding to my reader. Paraview does not like that. When I
+> try to import the package I get an error. I have included the header 
+> file for my
+> reader and the two xml files with this message. If anyone sees what I 
+> am doing
+> wrong a hint would be greatly appreciated.
+>
+> Regards,
+> Dave
+> ------------------------------------------------------------------------
+>
+> /*
+> 	vtkVOLBReader class 
+> 	Dave Semeraro
+> 	October 2005
+> 	NCSA
+>
+> */
+> // .NAME vtkVOLBReader - binary image file reader for VOLB datasets
+> // .SECTION Description
+> //  vtkVOLBReader is a vtkImageReader that reads SDSC MeshViewer
+> //  input datasets. VOLB data are basically stacks of images in a
+> //  single 3d file. The header consists of 17 Bytes. The first
+> //  five bytes are: "VOLB\n" This is followed by the data dimensions
+> //  in three 4 byte integers. This is followed by the voxel data
+> //  that consists of 4 byte RGBA values per voxel. 
+> //
+> //  .SECTION See Also
+> //  vtkJPEGReader vtkPNGReader vtkImageReader2 vtkGESignaReader
+> #ifndef __vtkVOLBReader_h
+> #define __vtkVOLBReader_h
+>
+> #include "vtkPVLocalConfigure.h"
+> #include "vtkStructuredPointsSource.h"
+> #include <cstring>
+> #include <fstream>
+> using std::ifstream;
+>
+> class VTK_PVLocal_EXPORT vtkVOLBReader : public vtkStructuredPointsSource 
+> {
+> public:
+>   vtkTypeRevisionMacro(vtkVOLBReader,vtkStructuredPointsSource);
+>   static vtkVOLBReader *New();
+>   virtual void PrintSelf(ostream& os, vtkIndent indent);
+>   // Description:
+>   // Specify file name of file
+>   vtkSetStringMacro(FileName);
+>   vtkGetStringMacro(FileName);
+>
+>
+>   // Description:
+>   // Test whether the file with the given name can be read
+>   // by this reader.
+>   virtual int CanReadFile(const char* name);
+>
+>   // Description:
+>   // Set the byte order of the file. This function sets the
+>   // expected byte order of the input file. Files written on
+>   // PC platforms write little endian where most Unix workstations
+>   // write big endian. 
+>   void SetByteOrderToBigEndian();
+>   void SetByteOrderToLittleEndian();
+>   vtkSetMacro(ByteOrder, int);
+>   vtkGetMacro(ByteOrder, int);
+>   const char *GetByteOrderAsString();
+>
+> //BTX
+>   enum
+>   {
+>     FILE_BIG_ENDIAN=0,
+>     FILE_LITTLE_ENDIAN=1
+>   };
+> //ETX
+>
+> protected:
+>   vtkVOLBReader();
+>   ~vtkVOLBReader();
+>
+>   void ExecuteInformation();
+>   void Execute();
+>
+>   char* FileName;
+>   unsigned char *data; // a pointer to an array managed by constructor
+>   int ByteOrder;
+>
+> private:
+>   vtkVOLBReader(const vtkVOLBReader&); // not implemented.
+>   void operator=(const vtkVOLBReader&); // not implemented.
+> };
+> #endif
+>   
+> ------------------------------------------------------------------------
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>   
+
+
+From rnelias at nacad.ufrj.br  Thu Nov  3 11:53:27 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Thu Nov  3 11:48:07 2005
+Subject: [Paraview] Serial posprocessing of parallel data...
+Message-ID: <20051103164750.1ACDE72783@mailhost.nacad.ufrj.br>
+
+
+Is there any way os reading Ensight server-of-server files in serial mode?
+
+I know that it does not make sense since server-of-server is a file format
+for parallel purposes but I would like to know how to load multiple datasets
+(case files corresponding to several MPI partitions) in serial mode or any
+other way of doing it...
+
+The release note of the ParaView 2.4 tells about Ensight (and PLOT3D)
+readers for multi-block datasets and I was thinking if it could solve my
+problem. Is there an example of the XML file used to specify how Paraview
+should read the Ensight files?
+
+Thanks for any help.
+
+Renato N. Elias
+===============================================
+PhD student - http://www.nacad.ufrj.br/~rnelias
+High Performance Computing Center
+Federal University of Rio de Janeiro
+Rio de Janeiro, Brazil
++55(21) 2562-8080 
+
+
+From amy.squillacote at kitware.com  Thu Nov  3 12:08:25 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Nov  3 12:10:13 2005
+Subject: [Paraview] Serial posprocessing of parallel data...
+In-Reply-To: <20051103164750.1ACDE72783@mailhost.nacad.ufrj.br>
+References: <20051103164750.1ACDE72783@mailhost.nacad.ufrj.br>
+Message-ID: <6.2.5.6.2.20051103120401.02e579f0@kitware.com>
+
+At 11:53 AM 11/3/2005, Renato N. Elias wrote:
+
+>Is there any way os reading Ensight server-of-server files in serial mode?
+
+No.  In order to read a server-of-servers (SOS) file, you must have 
+at least as many processes (i.e., pvserver or pvdataserver nodes) as 
+files listed in the SOS file.
+
+>I know that it does not make sense since server-of-server is a file format
+>for parallel purposes but I would like to know how to load multiple datasets
+>(case files corresponding to several MPI partitions) in serial mode or any
+>other way of doing it...
+>
+>The release note of the ParaView 2.4 tells about Ensight (and PLOT3D)
+>readers for multi-block datasets and I was thinking if it could solve my
+>problem. Is there an example of the XML file used to specify how Paraview
+>should read the Ensight files?
+
+The release note about EnSight and PLOT3D refers to the data output 
+from the EnSight and PLOT3D readers.  Previously, these two readers 
+produced multiple data sets on output.  Now, their output is a single 
+multi-block data set containing the multiple data sets as 
+sub-datasets.  ParaView does not use an XML file in reading EnSight 
+files; it reads the EnSight case and SOS files directly.
+
+- Amy
+
+From eschenbe at psc.edu  Thu Nov  3 15:08:53 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Thu Nov  3 15:09:02 2005
+Subject: [Paraview] The Next Book(s)
+Message-ID: <07B8DB5B2660A6166654458B@harpo.psc.edu>
+
+This might be a good time for us users to make suggestions for the next 
+edition of "The ParaView Guide". Kitware must of course make any final 
+decisions based on business considerations.
+
+---
+
+1) Binding
+
+Go to wire so it lays flat and pages don't fall out. I almost have to take 
+my copy around in a bag.
+
+2) Split into Two Books
+
+One for users, one for developers. This would reduce the cost for users not 
+interested in development.
+
+3) Online Examples
+
+Some publishers have a web site for each of their books containing example 
+code and corrections. There are already many examples of ParaView code (in 
+C++, XML and so on) at various locations. Adding more, as appropriate, 
+putting it all in one place, and referencing it from the book might be 
+helpful.
+
+4) Online Comments
+
+"Shadow" the book at the ParaView site with an area for each numbered 
+section of the book. Each area would contain user-supplied comments and 
+suggestions. The Wiki might be a way to implement this.
+
+5) Cost Tradeoff Questions
+
+In some cases Kitware may ask (or setup a vote process) to get user 
+opinions on some questions. Ex: Would you pay $4 more for wire binding?
+
+---
+
+If anybody else cares about these issues, and there are a ton of other 
+ideas, it would help if someone began to collect the ideas into a list 
+(maybe with a way for a viewer to "vote").
+
+
+Kent
+Pittsburgh Supercomputing Center
+From rnelias at nacad.ufrj.br  Fri Nov  4 07:24:11 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Fri Nov  4 07:18:45 2005
+Subject: [Paraview] Serial posprocessing of parallel data...
+Message-ID: <20051104121832.DFAC4727D0@mailhost.nacad.ufrj.br>
+
+
+Hi Amy,
+
+I see what you mean but there isn't any other way of reading parallel data
+with Paraview running in serial mode besides having to read each piece of
+data separately?
+
+I'm insisting on it because not always we have a parallel rendering (or data
+server) system in hand to post-process parallel data. Suppose you have ran a
+parallel problem in a 64 CPUs machine and this machine is dedicated only to
+solve simulation problems (without any rendering support or with data access
+restrict), thus, you have to copy all pieces of data to a serial graphic
+workstation and read each piece of data one-by-one manually. 
+
+I think that visualization softwares should work with parallel file formats,
+like SOS, even when running in serial mode. It would be another feature of
+the parallel format and I guess it's not hard to implement.
+
+Thanks for your explanation
+
+Renato N. Elias
+===============================================
+PhD student - http://www.nacad.ufrj.br/~rnelias
+High Performance Computing Center
+Federal University of Rio de Janeiro
+Rio de Janeiro, Brazil
++55(21) 2562-8080 
+
+
+At 11:53 AM 11/3/2005, Renato N. Elias wrote:
+
+>Is there any way os reading Ensight server-of-server files in serial mode?
+
+No.  In order to read a server-of-servers (SOS) file, you must have 
+at least as many processes (i.e., pvserver or pvdataserver nodes) as 
+files listed in the SOS file.
+
+>I know that it does not make sense since server-of-server is a file format
+>for parallel purposes but I would like to know how to load multiple
+datasets
+>(case files corresponding to several MPI partitions) in serial mode or any
+>other way of doing it...
+>
+>The release note of the ParaView 2.4 tells about Ensight (and PLOT3D)
+>readers for multi-block datasets and I was thinking if it could solve my
+>problem. Is there an example of the XML file used to specify how Paraview
+>should read the Ensight files?
+
+The release note about EnSight and PLOT3D refers to the data output 
+from the EnSight and PLOT3D readers.  Previously, these two readers 
+produced multiple data sets on output.  Now, their output is a single 
+multi-block data set containing the multiple data sets as 
+sub-datasets.  ParaView does not use an XML file in reading EnSight 
+files; it reads the EnSight case and SOS files directly.
+
+- Amy
+
+
+From rmark at infomagic.net  Fri Nov  4 08:10:57 2005
+From: rmark at infomagic.net (Robert Mark)
+Date: Fri Nov  4 08:11:17 2005
+Subject: [Paraview] Re: ParaView 2.4 beta release 3 demo data
+In-Reply-To: <20051103170007.CCF1586C7@public.kitware.com>
+References: <20051103170007.CCF1586C7@public.kitware.com>
+Message-ID: <a06210203bf91092b399c@[192.168.0.22]>
+
+Problem with installation on Mac OS 10.4.3
+
+  ParaView (ParaView 2.4.0 binary for darwin) is not finding the demo 
+data.  Where should it be installed?
+
+
+--Bob Mark
+-- 
+--------------------------------------------------------------------
+Robert Mark, Ph.D.                  rmark@infomagic.net
+Rupestrian CyberServices         Phone/FAX 928-526-3625
+3644 N. Stone Crest St.            http://www.infomagic.net/~rockart
+Flagstaff, AZ 86004-6811
+USA
+
+RCS:  Computer science in the service of rock art research, 
+protection, and education.
+From amy.squillacote at kitware.com  Fri Nov  4 08:36:59 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Fri Nov  4 08:38:40 2005
+Subject: [Paraview] Re: ParaView 2.4 beta release 3 demo data
+In-Reply-To: <a06210203bf91092b399c@[192.168.0.22]>
+References: <20051103170007.CCF1586C7@public.kitware.com>
+	<a06210203bf91092b399c@[192.168.0.22]>
+Message-ID: <6.2.5.6.2.20051104083637.02334208@kitware.com>
+
+What is the error message being produced when you try to run the demo?
+
+- Amy
+
+At 08:10 AM 11/4/2005, Robert Mark wrote:
+>Problem with installation on Mac OS 10.4.3
+>
+>  ParaView (ParaView 2.4.0 binary for darwin) is not finding the 
+> demo data.  Where should it be installed?
+>
+>
+>--Bob Mark
+>--
+>--------------------------------------------------------------------
+>Robert Mark, Ph.D.                  rmark@infomagic.net
+>Rupestrian CyberServices         Phone/FAX 928-526-3625
+>3644 N. Stone Crest St.            http://www.infomagic.net/~rockart
+>Flagstaff, AZ 86004-6811
+>USA
+>
+>RCS:  Computer science in the service of rock art research, 
+>protection, and education.
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From kmorel at sandia.gov  Fri Nov  4 10:27:59 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Fri Nov  4 10:28:25 2005
+Subject: [Paraview] Nightly documentation
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D31739@ES21SNLNT.srn.sandia.gov>
+
+The ParaView nightly documentation has not been refreshed all week.  Is
+there a reason for this?
+
+-Ken
+
+   ****      Kenneth Moreland
+    ***      Sandia National Laboratories
+***********  
+*** *** ***  email: kmorel@sandia.gov
+**  ***  **  phone: (505) 844-8919
+    ***      fax:   (505) 845-0833
+
+From bnwylie at sandia.gov  Fri Nov  4 14:11:42 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Fri Nov  4 14:16:47 2005
+Subject: [Paraview] Serial posprocessing of parallel data...
+References: <20051104121832.DFAC4727D0@mailhost.nacad.ufrj.br>
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0F7DE8@ES20SNLNT.srn.sandia.gov>
+
+Renato,
+ 
+Many of the readers will read in parallel files with just a serial paraview (Exodus, SAF, pvd, etc).
+ 
+If the paraview SOS reader does not support that than please enter a feature request in the bug tracker and Sandia will pay to have the that functionality added to the SOS reader. :)
+ 
+Best,
+ 
+ 
+Brian Wylie - Org 9227 
+Sandia National Laboratories 
+MS 0822 - Building 880/A1-J 
+(505)844-2238 FAX(505)845-0833                       
+     ____                  _    __ 
+    / __ \____  _________ | |  / (_)__ _      __ 
+   / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / / 
+  / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ / 
+ /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+                                                   
+                                    Unleash the Beast
+
+________________________________
+
+From: paraview-bounces+bnwylie=sandia.gov@paraview.org on behalf of Renato N. Elias
+Sent: Fri 11/4/2005 5:24 AM
+To: paraview@paraview.org
+Subject: [Paraview] Serial posprocessing of parallel data...
+
+
+
+
+Hi Amy,
+
+I see what you mean but there isn't any other way of reading parallel data
+with Paraview running in serial mode besides having to read each piece of
+data separately?
+
+I'm insisting on it because not always we have a parallel rendering (or data
+server) system in hand to post-process parallel data. Suppose you have ran a
+parallel problem in a 64 CPUs machine and this machine is dedicated only to
+solve simulation problems (without any rendering support or with data access
+restrict), thus, you have to copy all pieces of data to a serial graphic
+workstation and read each piece of data one-by-one manually.
+
+I think that visualization softwares should work with parallel file formats,
+like SOS, even when running in serial mode. It would be another feature of
+the parallel format and I guess it's not hard to implement.
+
+Thanks for your explanation
+
+Renato N. Elias
+===============================================
+PhD student - http://www.nacad.ufrj.br/~rnelias
+High Performance Computing Center
+Federal University of Rio de Janeiro
+Rio de Janeiro, Brazil
++55(21) 2562-8080
+
+
+At 11:53 AM 11/3/2005, Renato N. Elias wrote:
+
+>Is there any way os reading Ensight server-of-server files in serial mode?
+
+No.  In order to read a server-of-servers (SOS) file, you must have
+at least as many processes (i.e., pvserver or pvdataserver nodes) as
+files listed in the SOS file.
+
+>I know that it does not make sense since server-of-server is a file format
+>for parallel purposes but I would like to know how to load multiple
+datasets
+>(case files corresponding to several MPI partitions) in serial mode or any
+>other way of doing it...
+>
+>The release note of the ParaView 2.4 tells about Ensight (and PLOT3D)
+>readers for multi-block datasets and I was thinking if it could solve my
+>problem. Is there an example of the XML file used to specify how Paraview
+>should read the Ensight files?
+
+The release note about EnSight and PLOT3D refers to the data output
+from the EnSight and PLOT3D readers.  Previously, these two readers
+produced multiple data sets on output.  Now, their output is a single
+multi-block data set containing the multiple data sets as
+sub-datasets.  ParaView does not use an XML file in reading EnSight
+files; it reads the EnSight case and SOS files directly.
+
+- Amy
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051104/a3c76dcf/attachment.htm
+From semeraro at ncsa.uiuc.edu  Fri Nov  4 17:46:26 2005
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Fri Nov  4 17:46:33 2005
+Subject: [Paraview] Adding a Reader
+In-Reply-To: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+References: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+Message-ID: <6.2.1.2.2.20051104164123.03c688c8@mail.ncsa.uiuc.edu>
+
+
+Hello again,
+
+I was able to figure out how to create a new reader for paraview. The problem I
+described in my previous message went away when I used the correct
+vtkTypeMacro. I am able to use the new reader to get data into paraview and
+do a few things with it.
+
+One thing that does not seem to work is the ExtractGrid filter. When I try to
+use this filter with my data the VOI min and max values are all large 
+negative numbers. My reader creates a structured points data set. How does 
+the ExtractGrid filter get
+the data extents from the upstream data source in paraview? I have looked 
+at other
+reader code in paraview like the plot3d reader and there does not seem to 
+be any
+special magic that I can find.
+
+Thanks,
+Dave
+At 03:48 PM 11/2/2005, Dave Semeraro wrote:
+
+>Hello,
+>
+>I am trying to add a new reader to paraview. I am using paraview version 
+>2.2.1 on a
+>Fedora Core 2.0 linux distro. Paraview builds fine. I am following the 
+>instructions in
+>the paraview guide version 1.8 and the instructions in the PVLocal 
+>directory. I was
+>able to compile the "local cone source" example. When I import the package 
+>into
+>paraview it works fine.
+>
+>As a first step, I wrote a new reader and tested it in VTK. The new reader 
+>builds a structured points dataset. I then copied the new reader .h and 
+>.cxx file into the
+>PVLocal directory and made the recommended changes in the Cmake and xml
+>files. I also included the required config files in my .cxx file. I am 
+>able to compile the
+>new reader and create a shared library but the shared library has an undefined
+>symbol corresponding to my reader. Paraview does not like that. When I
+>try to import the package I get an error. I have included the header file 
+>for my
+>reader and the two xml files with this message. If anyone sees what I am doing
+>wrong a hint would be greatly appreciated.
+>
+>Regards,
+>Dave
+>
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From andy.cedilnik at kitware.com  Fri Nov  4 19:16:13 2005
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Fri Nov  4 19:17:30 2005
+Subject: [Paraview] Nightly documentation
+In-Reply-To: <7137A9E1D1768C44BE7DF11D30FAB323D31739@ES21SNLNT.srn.sandia.gov>
+References: <7137A9E1D1768C44BE7DF11D30FAB323D31739@ES21SNLNT.srn.sandia.gov>
+Message-ID: <436BF9CD.5040805@kitware.com>
+
+Hi Ken,
+
+Should be ok tomorrow. If it is not, I will dig deeper.
+
+       Andy
+
+Moreland, Kenneth wrote:
+
+>The ParaView nightly documentation has not been refreshed all week.  Is
+>there a reason for this?
+>
+>-Ken
+>
+>   ****      Kenneth Moreland
+>    ***      Sandia National Laboratories
+>***********  
+>*** *** ***  email: kmorel@sandia.gov
+>**  ***  **  phone: (505) 844-8919
+>    ***      fax:   (505) 845-0833
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>  
+>
+
+
+-- 
+Andy Cedilnik
+Kitware Inc.
+
+From dean.inglis at camris.ca  Sun Nov  6 11:14:55 2005
+From: dean.inglis at camris.ca (dean.inglis@camris.ca)
+Date: Sun Nov  6 11:15:01 2005
+Subject: [Paraview] KWWidgets build - .res file problems
+Message-ID: <20051106161455.WPNZ15059.tomts46-srv.bellnexxia.net@[209.226.175.82]>
+
+Hi,
+
+I am trying to build KWWidgets cvs on Win XP with Borland C++,
+VTK cvs, CMake 2.0.6.  The problems are with .res files while
+compiling the Examples:
+
+
+:/Builder/Releases/KWWidgets/Examples/Cxx/SimpleWindow: building default_target
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+MAKE Version 5.2  Copyright (c) 1987, 2000 Borland
+Borland Resource Compiler  Version 5.40
+Copyright (c) 1990, 1999 Inprise Corporation.  All rights reserved.
+
+Error KWSimpleWindowExample.RC 1 11: Cannot open file: Resources/KWWidgets.rc.h
+
+** error 20018 ** deleting KWSimpleWindowExample.res
+
+** error 1 ** deleting default_target
+
+** error 1 ** deleting default_target_SimpleWindow
+
+** error 1 ** deleting default_target
+
+** error 1 ** deleting default_target_Cxx
+
+** error 1 ** deleting default_target
+
+
+I made a few modifications to KWWidgets/Resources/KWWidgets.rc.in so
+that some of the paths could be found, as it seems at least for
+Borland, the generated .rc file has internal relative paths that it
+cannot find, so I added  @KWWidgets_SOURCE_DIR@, hard coded the path to windows.h,
+and added @VTK_DIR@ to find vtkConfigure.h:
+
+
+#include "@KWWidgets_SOURCE_DIR@/Resources/KWWidgets.rc.h"
+
+// The icon whose name or resource ID is lexigraphically first, is used
+// as the application's icon.
+// Tk was defining app.
+
+IDI_APPLICATION       ICON    DISCARDABLE     "@KWWidgets_SOURCE_DIR@/Resources/KWWidgetsIcon32.ico"
+IDI_KWWIDGETSICO      ICON    DISCARDABLE     "@KWWidgets_SOURCE_DIR@/Resources/KWWidgetsIcon32.ico"
+IDI_KWWIDGETSICOSMALL ICON    DISCARDABLE     "@KWWidgets_SOURCE_DIR@/Resources/KWWidgetsIcon16.ico"
+
+#include "c:/Program Files/Borland/CBuilder5/Include/windows.h"
+
+#include "@VTK_DIR@/vtkConfigure.h"
+#ifdef VTK_TCL_TK_STATIC
+#include "tk_base.rc"
+#endif
+
+<snip>
+
+
+Now I have the following errors due to the .res file:
+
+Building executable c:\Builder\Releases\KWWidgets\bin\KWSimpleWindowExample.exe...
+Borland C++ 5.5.1 for Win32 Copyright (c) 1993, 2000 Borland
+KWSimpleWindowExample.RES:
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '?' (0xff)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '?' (0xff)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '?' (0xff)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '?' (0xff)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '' (0x0)
+Error E2206 KWSimpleWindowExample.RES 1: Illegal character '?' (0xa8)
+Error E2228 KWSimpleWindowExample.RES 1: Too many error or warning messages
+*** 26 errors in Compile ***
+
+** error 1 ** deleting c:\Builder\Releases\KWWidgets\bin\KWSimpleWindowExample.exe
+
+** error 1 ** deleting default_target
+
+** error 1 ** deleting default_target_SimpleWindow
+
+** error 1 ** deleting default_target
+
+** error 1 ** deleting default_target_Cxx
+
+** error 1 ** deleting default_target
+
+** error 1 ** deleting default_target_Examples
+
+
+And this is where I am now stumped... :(
+I think most of this can be configured properly
+by CMake, but I don't know a lot about resource files
+in Borland but have this info from Builder/help 
+
+There are several Borland command-line resource tools:
+
+Resource compiler
+
+BRCC32.EXE is the Borland resource compiler. It compiles resource script files 
+(.RC files) and produces the binary .RES file.
+
+Resource linkers
+
+RLINK32.DLL is the Borland resource linker that binds resources, in .RES file form, 
+to an .EXE file, and marks the resulting .EXE file as a Windows executable. 
+RLINK32.DLL is accessed through ILINK32.EXE.
+
+Resource shells
+
+BRC32.EXE is a shell through which BRCC32 and RLINK32 (through ILINK32) 
+can be started in a single step.
+
+
+BRCC32 is the command-line version of the resource compiler. It accepts 
+a resource script file (.RC) as input and produces a resource object file
+ (.RES) as output.
+
+Syntax
+
+BRCC32 [options] <filename>.RC
+
+Command-line options
+
+BRCC32 accepts these options:
+
+Option	Description
+
+@responsefile	Takes instructions from the specified command file.
+-c <code page>	Uses the specified code page for resource translation. 
+                If -c is not used, the default ANSI code page is used.
+-d<name>[=<string>]	Defines a preprocessor symbol.
+-fo<filename>	Renames the output .RES file. (By default, BRCC32 creates 
+                the output .RES file with the same name as the input .RC file.)
+-i<path>	Adds one or more directories (separated by semicolons) to 
+                the include search path.
+
+
+-l<language>	Specifies default language.
+-m	Indicates that the code page specified with the -c switch contains 
+        double-byte character set (DBCS) characters.
+-r	This switch is ignored. It is included for compatibility with 
+        other resource compilers.
+-v	Prints progress messages (verbose).
+-x	Deletes the current include path.
+-? or -h	Displays help.
+-16	Builds a 16-bit resource.
+-32	Builds a 32-bit resource.
+
+RLINK32 combines a .RES file with an .EXE file to produce a new Windows 
+executable. RLINK32 accepts as input 
+one or more object (.RES) files and a single Windows executable file. 
+RLINK32 links the resources by fixing 
+up string tables and message tables and then binding these linked 
+resources into the executable. RLINK32 is 
+called by ILINK32 and is used for 32-bit resources.
+
+The Borland resource compiler (BRC32) is a resource compiler shell. 
+It invokes BRCC32 and RLINK32, depending on the command-line syntax.
+
+Syntax
+
+brc32 [options] <filename>.RC [<filename>.EXE]
+
+Command-line options
+
+BRC32 accepts these options:
+
+Switch	Description
+
+-d<name>[=string]	Defines a symbol you can test with the #IFDEF preprocessor 
+                        directive.
+-fo<filename>	Renames the .RES file.
+-fe<filename>	Renames the .EXE file.
+-i<path>	Adds one or more directories (separated by semicolons) to the 
+                include search path.
+-r	Creates a .RES file only. The compiled .RES file is not added to the .EXE.
+-v	Prints progress messages (verbose listing).
+-x	Directs the compiler to ignore the INCLUDE environment variable when it 
+         searches for include or resource files.
+
+-16	Builds 16-bit .RES files.
+-32	Builds 32-bit .RES files.
+-Vd.d	Makes the .EXE file with Windows version provided (v3.1 is the default for
+         16-bit resources; -v4.0 is the default for 32-bit resources). Version
+        options are listed in the following table.
+
+Option	Bit	Resulting look
+
+3.1	16	Gives white background with a non 3-D look for Windows 3.1x, Windows 32s, or WinNT 3.1
+4.0	16	Gives gray 3-D look for Windows 95 and WinNT 3.51
+3.1	32	Gives white background with a non 3-D look for Windows 32s or WinNT 3.1
+4.0	32	Gives gray 3-D look for Windows 95 and WinNT 3.51
+
+The following switches are invalid when the -r switch is specified:
+
+-k	Disables the contiguous preload of segments and resources in the .EXE file. 
+        Segments are kept in the order in which they appear in the .DEF file. (This 
+        option only applies to 16-bit resources.) 
+-t	Creates an application that runs only in protected mode (Windows Standard or 
+       386 Enhanced mode). 
+
+From berk.geveci at gmail.com  Mon Nov  7 09:06:50 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Mon Nov  7 09:06:58 2005
+Subject: [Paraview] Adding a Reader
+In-Reply-To: <6.2.1.2.2.20051104164123.03c688c8@mail.ncsa.uiuc.edu>
+References: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+	<6.2.1.2.2.20051104164123.03c688c8@mail.ncsa.uiuc.edu>
+Message-ID: <a2ab21560511070606g238b20acvabca026f0775876c@mail.gmail.com>
+
+Huh, weird. The extent is obtained by the reader's output's whole extent.
+The reader or the module do not have to provide anything for this to work.
+Is your reader setting the whole extent properly?
+
+On 11/4/05, Dave Semeraro <semeraro@ncsa.uiuc.edu> wrote:
+>
+>
+> Hello again,
+>
+> I was able to figure out how to create a new reader for paraview. The
+> problem I
+> described in my previous message went away when I used the correct
+> vtkTypeMacro. I am able to use the new reader to get data into paraview
+> and
+> do a few things with it.
+>
+> One thing that does not seem to work is the ExtractGrid filter. When I try
+> to
+> use this filter with my data the VOI min and max values are all large
+> negative numbers. My reader creates a structured points data set. How does
+> the ExtractGrid filter get
+> the data extents from the upstream data source in paraview? I have looked
+> at other
+> reader code in paraview like the plot3d reader and there does not seem to
+> be any
+> special magic that I can find.
+>
+> Thanks,
+> Dave
+> At 03:48 PM 11/2/2005, Dave Semeraro wrote:
+>
+> >Hello,
+> >
+> >I am trying to add a new reader to paraview. I am using paraview version
+> >2.2.1 on a
+> >Fedora Core 2.0 linux distro. Paraview builds fine. I am following the
+> >instructions in
+> >the paraview guide version 1.8 and the instructions in the PVLocal
+> >directory. I was
+> >able to compile the "local cone source" example. When I import the
+> package
+> >into
+> >paraview it works fine.
+> >
+> >As a first step, I wrote a new reader and tested it in VTK. The new
+> reader
+> >builds a structured points dataset. I then copied the new reader .h and
+> >.cxx file into the
+> >PVLocal directory and made the recommended changes in the Cmake and xml
+> >files. I also included the required config files in my .cxx file. I am
+> >able to compile the
+> >new reader and create a shared library but the shared library has an
+> undefined
+> >symbol corresponding to my reader. Paraview does not like that. When I
+> >try to import the package I get an error. I have included the header file
+> >for my
+> >reader and the two xml files with this message. If anyone sees what I am
+> doing
+> >wrong a hint would be greatly appreciated.
+> >
+> >Regards,
+> >Dave
+> >
+> >
+> >
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051107/591ede92/attachment.htm
+From semeraro at ncsa.uiuc.edu  Mon Nov  7 12:22:21 2005
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Mon Nov  7 12:22:20 2005
+Subject: [Paraview] Adding a Reader
+In-Reply-To: <a2ab21560511070606g238b20acvabca026f0775876c@mail.gmail.co
+ m>
+References: <6.2.1.2.2.20051102153224.042777f8@mail.ncsa.uiuc.edu>
+	<6.2.1.2.2.20051104164123.03c688c8@mail.ncsa.uiuc.edu>
+	<a2ab21560511070606g238b20acvabca026f0775876c@mail.gmail.com>
+Message-ID: <6.2.1.2.2.20051107112127.02a5c7b0@mail.ncsa.uiuc.edu>
+
+
+Ya weird. I set the whole extend in the ExecuteInformation routine as per the
+documentation. Should it be set somewhere else?
+
+Dave
+At 08:06 AM 11/7/2005, Berk Geveci wrote:
+>Huh, weird. The extent is obtained by the reader's output's whole extent. 
+>The reader or the module do not have to provide anything for this to work. 
+>Is your reader setting the whole extent properly?
+>
+>On 11/4/05, Dave Semeraro 
+><<mailto:semeraro@ncsa.uiuc.edu>semeraro@ncsa.uiuc.edu> wrote:
+>
+>Hello again,
+>
+>I was able to figure out how to create a new reader for paraview. The 
+>problem I
+>described in my previous message went away when I used the correct
+>vtkTypeMacro. I am able to use the new reader to get data into paraview and
+>do a few things with it.
+>
+>One thing that does not seem to work is the ExtractGrid filter. When I try to
+>use this filter with my data the VOI min and max values are all large
+>negative numbers. My reader creates a structured points data set. How does
+>the ExtractGrid filter get
+>the data extents from the upstream data source in paraview? I have looked
+>at other
+>reader code in paraview like the plot3d reader and there does not seem to
+>be any
+>special magic that I can find.
+>
+>Thanks,
+>Dave
+>At 03:48 PM 11/2/2005, Dave Semeraro wrote:
+>
+> >Hello,
+> >
+> >I am trying to add a new reader to paraview. I am using paraview version
+> >2.2.1 on a
+> >Fedora Core 2.0 linux distro. Paraview builds fine. I am following the
+> >instructions in
+> >the paraview guide version 1.8 and the instructions in the PVLocal
+> >directory. I was
+> >able to compile the "local cone source" example. When I import the package
+> >into
+> >paraview it works fine.
+> >
+> >As a first step, I wrote a new reader and tested it in VTK. The new reader
+> >builds a structured points dataset. I then copied the new reader .h and
+> >.cxx file into the
+> >PVLocal directory and made the recommended changes in the Cmake and xml
+> >files. I also included the required config files in my .cxx file. I am
+> >able to compile the
+> >new reader and create a shared library but the shared library has an 
+> undefined
+> >symbol corresponding to my reader. Paraview does not like that. When I
+> >try to import the package I get an error. I have included the header file
+> >for my
+> >reader and the two xml files with this message. If anyone sees what I am 
+> doing
+> >wrong a hint would be greatly appreciated.
+> >
+> >Regards,
+> >Dave
+> >
+> >
+> >
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> ><mailto:ParaView@paraview.org> ParaView@paraview.org
+> ><http://www.paraview.org/mailman/listinfo/paraview>http://www.paraview.or 
+> g/mailman/listinfo/paraview
+>
+>
+>_______________________________________________
+>ParaView mailing list
+><mailto:ParaView@paraview.org>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051107/c5be817f/attachment.htm
+From mmuir at sjgeophysics.com  Mon Nov  7 19:31:28 2005
+From: mmuir at sjgeophysics.com (Mary Muir)
+Date: Mon Nov  7 19:31:45 2005
+Subject: [Paraview] Animation crashes
+Message-ID: <000d01c5e3fb$c319edc0$c17ba8c0@MM140>
+
+I have been trying to use paraview to animate 3d Resistivity models.
+
+Loading a rectilinear grid (vtk datafile version 2.0), then using threshold
+to view at various threshold levels. The setting of keyframes after either
+rotating the data or changing the threshold values work. The problem comes,
+when I try to do the following:
+1) change the number of frames from 10 to anywhere between 40 and 100.
+2) trying to save the animation in the jpeg, avi or mpeg2 format.
+
+Sometimes the first will work but not always. I have rarely managed to
+produce an animation file.  It will use lots of memory and then crash. The
+machine is 2.61 Ghz Athlon 64 Fx-55 with 3.25 GB of Ram.
+
+Thanks in advance
+Mary Muir
+
+
+From utkarsh.ayachit at kitware.com  Tue Nov  8 08:44:52 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Tue Nov  8 08:45:16 2005
+Subject: [Paraview] Animation crashes
+In-Reply-To: <000d01c5e3fb$c319edc0$c17ba8c0@MM140>
+References: <000d01c5e3fb$c319edc0$c17ba8c0@MM140>
+Message-ID: <4370ABD4.7080100@kitware.com>
+
+ParaView animation can be very memory hungry when used with Caching.
+When caching is enabled, it caches (in memeory) the geometry for every
+frame rendered.
+
+*  Try turning caching off.
+
+Utkarsh
+
+Mary Muir wrote:
+> I have been trying to use paraview to animate 3d Resistivity models.
+> 
+> Loading a rectilinear grid (vtk datafile version 2.0), then using threshold
+> to view at various threshold levels. The setting of keyframes after either
+> rotating the data or changing the threshold values work. The problem comes,
+> when I try to do the following:
+> 1) change the number of frames from 10 to anywhere between 40 and 100.
+> 2) trying to save the animation in the jpeg, avi or mpeg2 format.
+> 
+> Sometimes the first will work but not always. I have rarely managed to
+> produce an animation file.  It will use lots of memory and then crash. The
+> machine is 2.61 Ghz Athlon 64 Fx-55 with 3.25 GB of Ram.
+> 
+> Thanks in advance
+> Mary Muir
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From amy.squillacote at kitware.com  Tue Nov  8 08:47:53 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Nov  8 08:48:11 2005
+Subject: [Paraview] Animation crashes
+In-Reply-To: <000d01c5e3fb$c319edc0$c17ba8c0@MM140>
+References: <000d01c5e3fb$c319edc0$c17ba8c0@MM140>
+Message-ID: <6.2.5.6.2.20051108084443.02e25c58@kitware.com>
+
+Hi Mary,
+
+Is the "Cache Geometry" check box marked (assuming the "Play Mode" is 
+set to "Sequence")?  If it is, then try unchecking it and saving out 
+your animation again.  When that checkbox is on, then ParaView tries 
+to keep a copy of your geometry at each time step in memory.  If you 
+have several time steps and non-trivial data, this can be more than 
+will fit in memory, which would cause ParaView to crash.
+
+At 07:31 PM 11/7/2005, Mary Muir wrote:
+>I have been trying to use paraview to animate 3d Resistivity models.
+>
+>Loading a rectilinear grid (vtk datafile version 2.0), then using threshold
+>to view at various threshold levels. The setting of keyframes after either
+>rotating the data or changing the threshold values work. The problem comes,
+>when I try to do the following:
+>1) change the number of frames from 10 to anywhere between 40 and 100.
+>2) trying to save the animation in the jpeg, avi or mpeg2 format.
+>
+>Sometimes the first will work but not always. I have rarely managed to
+>produce an animation file.  It will use lots of memory and then crash. The
+>machine is 2.61 Ghz Athlon 64 Fx-55 with 3.25 GB of Ram.
+>
+>Thanks in advance
+>Mary Muir
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From dean.inglis at camris.ca  Tue Nov  8 09:57:11 2005
+From: dean.inglis at camris.ca (Dean Inglis)
+Date: Tue Nov  8 09:57:03 2005
+Subject: [Paraview] KWWidgets build - .res file problems
+In-Reply-To: <6.2.5.6.2.20051106112104.04bbd1c8@kitware.com>
+Message-ID: <FBEIKIAGJCCFIBIPBIGMEEEKCFAA.dean.inglis@camris.ca>
+
+Hi Sebastien,
+
+it seems the Borland compiler prefers to create .lib
+and .obj files first for the .cxx examples in KWWidgets/Examples 
+with .res files and then on the second round of compiling create the
+.exe and link in the resource file to it.  So the compiler wants 
+bcc32 -c (compile to object)
+and then again without -c 
+I'm not sure how to do this with CMake though...
+I also had to add the following Borland directive to get
+the resource to link (for example, after the #includes in
+KWSimpleWindowExample.cxx) :
+
+#pragma resource "KWSimpleWindowExample.res"
+
+
+Also, in the root CMakeLists.txt file, why do you link
+htmlhelp.lib to KWWidgets.lib ?  I ran into a (name mangling?)
+problem:
+Error: unresolved external 'HtmlHelpA' referenced from
+KWWIDGETS.LIB|vtkKWApplication
+
+so I commented out 
+   # INCLUDE_DIRECTORIES(${HTML_HELP_INCLUDE_PATH})
+   # TARGET_LINK_LIBRARIES(KWWidgets ${HTML_HELP_LIBRARY} )
+   # SET (KWWIDGETS_HAS_HTML_HELP 1)
+ # ELSE(HTML_HELP_INCLUDE_PATH AND HTML_HELP_LIBRARY)
+
+in the root CMakeLists.txt to try to compile the examples.
+I thought the HtmlHelp compiler was only needed for the 
+doxygen scripts.
+
+Dean
+
+-----Original Message-----
+From: Sebastien BARRE [mailto:sebastien.barre@kitware.com]
+Sent: Sunday, November 06, 2005 11:22 AM
+To: dean.inglis@camris.ca
+Subject: Re: [Paraview] KWWidgets build - .res file problems
+
+
+At 11/6/2005 11:14 AM, you wrote:
+>Hi,
+>
+>I am trying to build KWWidgets cvs on Win XP with Borland C++,
+>VTK cvs, CMake 2.0.6.  The problems are with .res files while
+>compiling the Examples:
+
+I think the resource files for Borland are handled differently. Or at 
+least there is an extra step...
+Can you do a google on that one ?
+
+
+--
+Sebastien Barre
+From alafa-0 at 163.com  Tue Nov  8 11:26:58 2005
+From: alafa-0 at 163.com (koala)
+Date: Tue Nov  8 11:26:33 2005
+Subject: [Paraview] volume rendering in ParaView
+Message-ID: <001e01c5e481$3dd65d20$1600000a@linuxassis>
+
+hi,all
+I want to know the volume rendering algorithm in ParaView, but I didn't found any key information of volume rendering in the ?ParaView user's guide?.Who can tell me the algorithm used by ParaView ? And where can I get the detail information about how ParaView render a volume?
+
+Thank you.
+                                 wls
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051109/c4981a85/attachment.html
+From strelitz at lanl.gov  Tue Nov  8 12:12:40 2005
+From: strelitz at lanl.gov (Richard Strelitz)
+Date: Tue Nov  8 12:12:54 2005
+Subject: [Paraview] Linking error in building CVS ParaView on Windows XP,
+ Vis Studio, WITH SHARED LIBs ON (off is ok)
+Message-ID: <4370DC88.2060903@lanl.gov>
+
+vtkSMDataObjectDisplayProxy::UseCache
+
+is not found during link step, causing build to fail.  I checked the 
+cmake files and they looked ok.  Because this error only occurs when I 
+tried to build it with SHARED LIBs ON, I am content to be patient. 
+
+Richard Strelitz
+
+
+From eschenbe at psc.edu  Tue Nov  8 12:21:47 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Tue Nov  8 12:22:00 2005
+Subject: [Paraview] Problems Including Custom Class At Compile In 2.4
+Message-ID: <DE76F3273A2A90BF57FD64BD@harpo.psc.edu>
+
+I'm adding a reader to ParaView 2.4 on Fedora Core 4 using the approach 
+described in
+
+   <http://www.paraview.org/Wiki/ParaView:Extend>
+
+cmake and make seem to work except for the following near the end of the 
+messages from make:
+
+===
+./GUI/Scripts: building default_target
+Building dependencies. cmake.depends...
+RegularExpression::compile(): ?+* follows nothing.
+RegularExpression::compile(): Error in compile.
+cmake.depends is up-to-date
+
+./Data: building default_target
+Building dependencies. cmake.depends...
+cmake.depends is up-to-date
+===
+
+There is no "?+*" in anything I've added. Running the version of "paraview" 
+created by this results in the following error:
+
+===
+terminate called after throwing an instance of 'std::logic_error'
+  what():  basic_string::_S_construct NULL not valid
+Abort
+===
+
+The splash window with the logos appears but the main application window 
+does not.
+
+Can anyone tell what is wrong?
+
+Thanks!
+Kent
+Pittsburgh Supercomputing Center
+
+From berk.geveci at gmail.com  Tue Nov  8 12:31:53 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Nov  8 12:32:09 2005
+Subject: [Paraview] Linking error in building CVS ParaView on Windows XP,
+	Vis Studio, WITH SHARED LIBs ON (off is ok)
+In-Reply-To: <4370DC88.2060903@lanl.gov>
+References: <4370DC88.2060903@lanl.gov>
+Message-ID: <a2ab21560511080931o5061d9c9of50737868db302ab@mail.gmail.com>
+
+Did you try updating? I remember fixing that problem.
+
+On 11/8/05, Richard Strelitz <strelitz@lanl.gov> wrote:
+>
+> vtkSMDataObjectDisplayProxy::UseCache
+>
+> is not found during link step, causing build to fail. I checked the
+> cmake files and they looked ok. Because this error only occurs when I
+> tried to build it with SHARED LIBs ON, I am content to be patient.
+>
+> Richard Strelitz
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051108/0109b1f7/attachment.htm
+From andy.cedilnik at kitware.com  Tue Nov  8 12:34:09 2005
+From: andy.cedilnik at kitware.com (Andy Cedilnik)
+Date: Tue Nov  8 12:34:44 2005
+Subject: [Paraview] Problems Including Custom Class At Compile In 2.4
+In-Reply-To: <DE76F3273A2A90BF57FD64BD@harpo.psc.edu>
+References: <DE76F3273A2A90BF57FD64BD@harpo.psc.edu>
+Message-ID: <4370E191.4030104@kitware.com>
+
+Hi Kent,
+
+The regular expression thing was fixed and it will be in the next patch
+release.
+
+Could you please run ParaView in debugger and send us the stack trace?
+
+       Andy
+
+Kent Eschenberg wrote:
+
+> I'm adding a reader to ParaView 2.4 on Fedora Core 4 using the
+> approach described in
+>
+>   <http://www.paraview.org/Wiki/ParaView:Extend>
+>
+> cmake and make seem to work except for the following near the end of
+> the messages from make:
+>
+> ===
+> ./GUI/Scripts: building default_target
+> Building dependencies. cmake.depends...
+> RegularExpression::compile(): ?+* follows nothing.
+> RegularExpression::compile(): Error in compile.
+> cmake.depends is up-to-date
+>
+> ./Data: building default_target
+> Building dependencies. cmake.depends...
+> cmake.depends is up-to-date
+> ===
+>
+> There is no "?+*" in anything I've added. Running the version of
+> "paraview" created by this results in the following error:
+>
+> ===
+> terminate called after throwing an instance of 'std::logic_error'
+>  what():  basic_string::_S_construct NULL not valid
+> Abort
+> ===
+>
+> The splash window with the logos appears but the main application
+> window does not.
+>
+> Can anyone tell what is wrong?
+>
+> Thanks!
+> Kent
+> Pittsburgh Supercomputing Center
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+-- 
+Andy Cedilnik
+Kitware Inc.
+
+From semeraro at ncsa.uiuc.edu  Tue Nov  8 13:39:44 2005
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Tue Nov  8 13:39:40 2005
+Subject: [Paraview] Extent Entry
+Message-ID: <6.2.1.2.2.20051108123455.04106ca8@mail.ncsa.uiuc.edu>
+
+
+There is an extent entry widget on the properties tab of the extract grid 
+filter. Where
+does the extract grid filter get the min/max values to use in that widget? 
+I have a
+reader that works in paraview, ie I get data read in, but the min/max 
+values are wrong
+when I use the extract grid filter on it. I am setting all the extents I 
+can find on the
+output of the reader which is a structured points data set. I am using paraview
+version 2.2.1. I have tried to trace through other reader code to see what 
+I am
+not setting but cant find any differences. Is it perhaps the case that the 
+extract grid
+filter gets the VOI min max values from the reader itself rather than the 
+output of the
+reader? Any pointers to where to look in the paraview code would be 
+appreciated.
+
+Thanks
+Dave
+
+
+From kmorel at sandia.gov  Tue Nov  8 15:56:23 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Tue Nov  8 15:56:39 2005
+Subject: [Paraview] volume rendering in ParaView
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D3174E@ES21SNLNT.srn.sandia.gov>
+
+There are three volume rendering algorithms available in ParaView: projected tetrahedra, zsweep, and Bunyk ray casting.  All three algorithms work with unstructured grids.
+ 
+What kind of information were you looking for?
+ 
+-Ken
+
+
+________________________________
+
+	From: paraview-bounces+kmorel=sandia.gov@paraview.org [mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On Behalf Of koala
+	Sent: Tuesday, November 08, 2005 9:27 AM
+	To: paraview@paraview.org
+	Subject: [Paraview] volume rendering in ParaView
+	
+	
+	hi,all
+	I want to know the volume rendering algorithm in ParaView, but I didn't found any key information of volume rendering in the ?ParaView user's guide?.Who can tell me the algorithm used by ParaView ? And where can I get the detail information about how ParaView render a volume?
+	 
+	Thank you.
+	                                 wls
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051108/c7d5f08b/attachment.html
+From liaoli at iapcm.ac.cn  Tue Nov  8 19:49:40 2005
+From: liaoli at iapcm.ac.cn (liaoli@iapcm.ac.cn)
+Date: Tue Nov  8 19:57:05 2005
+Subject: [Paraview] How could I get the output polydata from the
+	vtkClientServerStream?
+Message-ID: <1d75751d3894.1d38941d7575@iapcm.ac.cn>
+
+I try to use vtkClientServerStream and vtkClientServerInterpreter to describe pipeline setting.How could I get the output polydata from the vtkClientServerStream for instance i draw a contour after reading in a vti data?
+
+From nnc at newmexico.com  Wed Nov  9 22:40:02 2005
+From: nnc at newmexico.com (Neil Carlson)
+Date: Wed Nov  9 22:40:13 2005
+Subject: [Paraview] Tcl installation path in 2.4.0
+Message-ID: <1131594002.6156.32.camel@omega>
+
+I am trying to build a FC3 rpm for 2.4.0 using the same procedure
+I successfully used for 2.2.1, but I am having problems with the
+compiled-in Tcl path that I am unable to resolve.
+
+I want to install each version of paraview into its own tree and
+not scattered about like the default setup.  Building an rpm, I
+also need to install it into a temporary root (rpm_build_root)
+and not /.  To this end I tweaked the CMakeLists.txt file to set
+the PV_INSTALL_{LIB,INCLUDE,DATA}_DIR variables to simply
+${PV_INSTALL_ROOT}/{lib,include,share}.  I also set
+TclTk_INSTALL_LIB_DIR to ${PV_INSTALL_LIB_DIR}.  (I note that the
+2.4.0 CMakeLists.txt file included this latter change too.)  When
+I ran cmake, I set PV_INSTALL_ROOT to /opt/paraview/2.4.0, and
+CMAKE_INSTALL_PREFIX to /var/tmp/paraview.
+
+The 2.4.0 rpm installs everything where I intended, and paraview
+runs fine if I invoke it with the full path.  But if I add the
+bin directory to my path, and invoke it with just 'paraview' I
+get the following error message:
+
+ParaView error: InitializeTcl failed
+Tcl_Init error: Can't find a usable init.tcl in the following
+directories:
+    /usr/local/lib/tcl8.4 /opt/src/rpm/lib/tcl8.4 /opt/src/lib/tcl8.4 ...
+
+I don't know where it's picking up those directories, but none of
+them are correct (obviously); it's in /opt/paraview/2.4.0/lib/tcl8.4
+
+As I said before, this same build procedure with 2.2.1 works absolutely
+correctly.  Anyone have any suggestions?  I really don't understand
+cmake.
+
+Thanks!
+-- 
+Neil Carlson <nnc@newmexico.com>
+
+From amy.squillacote at kitware.com  Thu Nov 10 08:55:37 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Nov 10 08:55:56 2005
+Subject: [Paraview] Tcl installation path in 2.4.0
+In-Reply-To: <1131594002.6156.32.camel@omega>
+References: <1131594002.6156.32.camel@omega>
+Message-ID: <6.2.5.6.2.20051110085219.0610ca30@kitware.com>
+
+This is a known problem, and it has been corrected on the CVS branch 
+for ParaView 2.4 (CVS tag ParaView-2-4).  (It was a problem in the 
+code, not in how you tried to install ParaView.)  If you check this 
+version out from CVS, you should be able to compile and install 
+ParaView as you did for ParaView 2.2.
+
+- Amy
+
+At 10:40 PM 11/9/2005, Neil Carlson wrote:
+>I am trying to build a FC3 rpm for 2.4.0 using the same procedure
+>I successfully used for 2.2.1, but I am having problems with the
+>compiled-in Tcl path that I am unable to resolve.
+>
+>I want to install each version of paraview into its own tree and
+>not scattered about like the default setup.  Building an rpm, I
+>also need to install it into a temporary root (rpm_build_root)
+>and not /.  To this end I tweaked the CMakeLists.txt file to set
+>the PV_INSTALL_{LIB,INCLUDE,DATA}_DIR variables to simply
+>${PV_INSTALL_ROOT}/{lib,include,share}.  I also set
+>TclTk_INSTALL_LIB_DIR to ${PV_INSTALL_LIB_DIR}.  (I note that the
+>2.4.0 CMakeLists.txt file included this latter change too.)  When
+>I ran cmake, I set PV_INSTALL_ROOT to /opt/paraview/2.4.0, and
+>CMAKE_INSTALL_PREFIX to /var/tmp/paraview.
+>
+>The 2.4.0 rpm installs everything where I intended, and paraview
+>runs fine if I invoke it with the full path.  But if I add the
+>bin directory to my path, and invoke it with just 'paraview' I
+>get the following error message:
+>
+>ParaView error: InitializeTcl failed
+>Tcl_Init error: Can't find a usable init.tcl in the following
+>directories:
+>     /usr/local/lib/tcl8.4 /opt/src/rpm/lib/tcl8.4 /opt/src/lib/tcl8.4 ...
+>
+>I don't know where it's picking up those directories, but none of
+>them are correct (obviously); it's in /opt/paraview/2.4.0/lib/tcl8.4
+>
+>As I said before, this same build procedure with 2.2.1 works absolutely
+>correctly.  Anyone have any suggestions?  I really don't understand
+>cmake.
+>
+>Thanks!
+>--
+>Neil Carlson <nnc@newmexico.com>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From brad.king at kitware.com  Thu Nov 10 12:40:31 2005
+From: brad.king at kitware.com (Brad King)
+Date: Thu Nov 10 12:39:29 2005
+Subject: [Paraview] Tcl installation path in 2.4.0
+In-Reply-To: <6.2.5.6.2.20051110085219.0610ca30@kitware.com>
+References: <1131594002.6156.32.camel@omega>
+	<6.2.5.6.2.20051110085219.0610ca30@kitware.com>
+Message-ID: <4373860F.3010004@kitware.com>
+
+Amy Squillacote wrote:
+> At 10:40 PM 11/9/2005, Neil Carlson wrote:
+>> I want to install each version of paraview into its own tree and
+>> not scattered about like the default setup.
+
+FYI, the default setup follows the conventions of debian packages. 
+Multiple paraview versions can share the same installation prefix if one 
+just renames the executables in the bin directory to have version numbers.
+
+ >> Building an rpm, I
+>> also need to install it into a temporary root (rpm_build_root)
+>> and not /.  To this end I tweaked the CMakeLists.txt file to set
+>> the PV_INSTALL_{LIB,INCLUDE,DATA}_DIR variables to simply
+>> ${PV_INSTALL_ROOT}/{lib,include,share}.  I also set
+>> TclTk_INSTALL_LIB_DIR to ${PV_INSTALL_LIB_DIR}.  (I note that the
+>> 2.4.0 CMakeLists.txt file included this latter change too.)  When
+>> I ran cmake, I set PV_INSTALL_ROOT to /opt/paraview/2.4.0, and
+>> CMAKE_INSTALL_PREFIX to /var/tmp/paraview.
+
+You don't need to change the CMakeLists.txt file to configure the 
+install locations.  The default settings will not be used if you set the 
+variables in the CMake cache.  This should do what you want:
+
+cmake -DPV_INSTALL_BIN_DIR:PATH=/bin \
+       -DPV_INSTALL_LIB_DIR:PATH=/lib \
+       -DPV_INSTALL_DATA_DIR:PATH=/share \
+       -DCMAKE_INSTALL_PREFIX:PATH=/opt/paraview/2.4.0 \
+       ../paraview-2.4.0 &&
+make &&
+make install DESTDIR=/var/tmp/paraview
+
+>> ParaView error: InitializeTcl failed
+>> Tcl_Init error: Can't find a usable init.tcl in the following
+>> directories:
+>>     /usr/local/lib/tcl8.4 /opt/src/rpm/lib/tcl8.4 /opt/src/lib/tcl8.4 ...
+>>
+>> I don't know where it's picking up those directories, but none of
+>> them are correct (obviously); it's in /opt/paraview/2.4.0/lib/tcl8.4
+
+The tcl library itself tries to compute a bunch of paths in which to 
+look for init.tcl.  I don't know why it selects these paths.
+
+-Brad
+From Brian.Dotson at netl.doe.gov  Thu Nov 10 15:23:16 2005
+From: Brian.Dotson at netl.doe.gov (Brian Dotson)
+Date: Thu Nov 10 15:24:16 2005
+Subject: [Paraview] Reader Problem
+Message-ID: <s37365fe.058@co.mgn.netl.doe.gov>
+
+Hi all,
+ 
+I wrote a custom reader that brings our simulation results into
+ParaView.  
+ 
+The data is an unstructured grid with multiple timesteps.  The cells
+are either hexahedron or wedges.  The data I attach to the mesh is
+mostly scalar with a few vectors.
+ 
+With most of the simulation results we look at the reader looks fine,
+but some of the data sets cause the following error.
+ 
+free(): invalid pointer 0xc2f7f70!
+ 
+This error happens after my code executes and I have returned the
+unstructured grid over to ParaView.
+ 
+I have done the following to debug the problem:
+ 
+1. I checked the number of arrays that I am attaching to the mesh and
+the NumberOfCellFields variable, these match.
+ 
+2. I checked the MaxId of all the arrays.  These match the cell count.
+ 
+3. When I turn all the cell arrays off, I don't get the errors, and the
+mesh loads.
+ 
+Does anyone have any ideas on what the problem could be?
+ 
+Thanks,
+ 
+Brian Dotson
+National Energy Technology Laboratory
+Department of Energy
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051110/a89ea640/attachment.htm
+From berk.geveci at gmail.com  Thu Nov 10 15:28:00 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Thu Nov 10 15:28:02 2005
+Subject: [Paraview] Reader Problem
+In-Reply-To: <s37365fe.058@co.mgn.netl.doe.gov>
+References: <s37365fe.058@co.mgn.netl.doe.gov>
+Message-ID: <a2ab21560511101227wa905e1cs224e138d117e7b4e@mail.gmail.com>
+
+How are you associating the data with the vtk dataset? Do you read an array
+and hand it to a vtk array? Also, can you run in a debugger and get a track
+trace? If you are running on Linux, valgrind would be even better.
+
+-Berk
+
+On 11/10/05, Brian Dotson <Brian.Dotson@netl.doe.gov> wrote:
+>
+> Hi all,
+>  I wrote a custom reader that brings our simulation results into ParaView.
+>
+>  The data is an unstructured grid with multiple timesteps. The cells are
+> either hexahedron or wedges. The data I attach to the mesh is mostly scalar
+> with a few vectors.
+>  With most of the simulation results we look at the reader looks fine, but
+> some of the data sets cause the following error.
+>  free(): invalid pointer 0xc2f7f70!
+>  This error happens after my code executes and I have returned the
+> unstructured grid over to ParaView.
+>  I have done the following to debug the problem:
+>  1. I checked the number of arrays that I am attaching to the mesh and the
+> NumberOfCellFields variable, these match.
+>  2. I checked the MaxId of all the arrays. These match the cell count.
+>  3. When I turn all the cell arrays off, I don't get the errors, and the
+> mesh loads.
+>  Does anyone have any ideas on what the problem could be?
+>  Thanks,
+>  Brian Dotson
+> National Energy Technology Laboratory
+> Department of Energy
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051110/2007195a/attachment.html
+From s_hudson13 at hotmail.com  Fri Nov 11 10:58:42 2005
+From: s_hudson13 at hotmail.com (Steve Hudson)
+Date: Fri Nov 11 10:58:45 2005
+Subject: [Paraview] Multiple Pieces in one file
+Message-ID: <BAY101-F1912F00A263D29BF5E0239EA590@phx.gbl>
+
+I am using Paraview version 2.2 to read a StructuredGrid. If I create more 
+than one "piece" in the same file, it displays only the last piece entered 
+and ignores the others. Is this what you would expect? I would like to 
+display multiple pieces using in the same file. If this cannot be done I 
+guess I will have to use an unstructured grid.
+
+Thanks
+
+Steve
+
+
+From samuelkey at comcast.net  Fri Nov 11 11:55:44 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Fri Nov 11 11:52:54 2005
+Subject: [Paraview] Multiple Pieces in one file
+References: <BAY101-F1912F00A263D29BF5E0239EA590@phx.gbl>
+Message-ID: <002601c5e6e0$c27fdef0$6e01a8c0@last>
+
+Steve,
+
+I believe the following will work:
+
+1) Place each of your parts in a 'part<n>.vts' file.
+2) Create a "mother" file -- myparts.pvd
+  (see "paraView Guide," page 177)
+
+For example,
+
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian"
+compressor="vtkZLibDataCompressor">
+  <Collection>
+    <DataSet part="0000" file="msh0000.vts" name="The Mesh"/>
+    <DataSet part="0001" file="mns0001.vts" name="NSet:0033
+Label:OUTPUT_NODES"/>
+    <DataSet part="0002" file="mns0002.vts" name="NSet:3002
+Label:LEFT_END"/>
+    <DataSet part="0003" file="mns0003.vts" name="NSet:3003
+Label:RIGHT_END"/>
+    <DataSet part="0004" file="mss0004.vts" name="SSet:0200
+Label:BAR_1_SURFACE"/>
+    <DataSet part="0005" file="mss0005.vts" name="SSet:0300
+Label:BAR_2_SURFACE"/>
+    <DataSet part="0006" file="mws0006.vts" name="WSet:0100 Label: MPCON4"/>
+  </Collection>
+</VTKFile>
+
+name="abc" is a very handy, yet-to-be-documented token in
+<DataSet ... /> thanks to Brad King.
+
+The Extract Parts filter will let you select the the parts to be
+displayed (name="abc" info shows up on the Extract Parts
+face sheet).
+
+Sam Key
+
+
+----- Original Message ----- 
+From: "Steve Hudson" <s_hudson13@hotmail.com>
+To: <paraview@paraview.org>
+Sent: Friday, November 11, 2005 8:58 AM
+Subject: [Paraview] Multiple Pieces in one file
+
+
+> I am using Paraview version 2.2 to read a StructuredGrid. If I create more
+> than one "piece" in the same file, it displays only the last piece entered
+> and ignores the others. Is this what you would expect? I would like to
+> display multiple pieces using in the same file. If this cannot be done I
+> guess I will have to use an unstructured grid.
+>
+> Thanks
+>
+> Steve
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From berk.geveci at gmail.com  Fri Nov 11 12:14:15 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Nov 11 12:14:16 2005
+Subject: [Paraview] Multiple Pieces in one file
+In-Reply-To: <BAY101-F1912F00A263D29BF5E0239EA590@phx.gbl>
+References: <BAY101-F1912F00A263D29BF5E0239EA590@phx.gbl>
+Message-ID: <a2ab21560511110914w312a286t4f5aab24d97173d6@mail.gmail.com>
+
+Is this a multiblock dataset? ParaView 2.4 and VTK 5 support multiblock
+datasets. You have to create a .vtm file. The vtm file supports multi-block
+as well as hierarchical structured AMR datasets. For more information, look
+at the header files of these:
+
+vtkMultiGroupDataSet
+vtkMultiBlockDataSet
+vtkHierarchicalDataSet
+vtkHierarchicalBoxDataSet
+vtkXMLMultiGroupDataSetReader
+vtkXMLMultiBlockDataSetReader
+
+The format is simple. The vtm file is a meta-file that points to other XML
+files. Here is a small example:
+
+<?xml version="1.0"?>
+<VTKFile type="vtkMultiBlockDataSet" version="0.1" byte_order="LittleEndian"
+compressor="vtkZLibDataCompressor">
+<vtkMultiBlockDataSet>
+<DataSet group="0" dataset="0" file="test/test_0.vts"/>
+<DataSet group="1" dataset="0" file="test/test_1.vts"/>
+<DataSet group="2" dataset="0" file="test/test_2.vts"/>
+</vtkMultiBlockDataSet>
+</VTKFile>
+
+You can also have distributed multi-block datasets. Each group corresponds
+to one block and can contain one or more datasets. These "sub blocks" are
+the distributed data.
+
+-Berk
+
+
+On 11/11/05, Steve Hudson <s_hudson13@hotmail.com> wrote:
+>
+> I am using Paraview version 2.2 to read a StructuredGrid. If I create more
+> than one "piece" in the same file, it displays only the last piece entered
+> and ignores the others. Is this what you would expect? I would like to
+> display multiple pieces using in the same file. If this cannot be done I
+> guess I will have to use an unstructured grid.
+>
+> Thanks
+>
+> Steve
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051111/a9f954ad/attachment.htm
+From alafa-0 at 163.com  Sat Nov 12 10:43:52 2005
+From: alafa-0 at 163.com (koala)
+Date: Sat Nov 12 10:43:00 2005
+Subject: [Paraview] error with volume rendering
+Message-ID: <001001c5e79f$e2087ab0$1600000a@linuxassis>
+
+hi,all
+I got an error when I made the volume rendering.The error message is 
+
+" # Error or warning: There was a VTK Warning in file: /home/myfile/paraview-2.0.1
+/GUI/Client/vtkPVDisplayGUI.cxx (1888)
+ Sorry.  Unstructured grids with more than 500,000 cells cannot currently be ren
+dered with ParaView.  Consider thresholding cells you are not interested in.  "
+
+Why I got this error ? Who can tell me ?
+Thank you .
+                                  wls
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051112/4d2c9662/attachment.htm
+From cus2 at Lehigh.EDU  Sat Nov 12 11:45:02 2005
+From: cus2 at Lehigh.EDU (Cumali Semetay)
+Date: Sat Nov 12 11:43:15 2005
+Subject: [Paraview] vectors and contours
+Message-ID: <005701c5e7a8$6d1630e0$3471b480@semetay>
+
+Skipped content of type multipart/alternative-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Tec2.zip
+Type: application/x-zip-compressed
+Size: 9454 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051112/25e20ad7/Tec2.bin
+From liaoli at iapcm.ac.cn  Mon Nov 14 00:35:26 2005
+From: liaoli at iapcm.ac.cn (liaoli@iapcm.ac.cn)
+Date: Mon Nov 14 00:43:00 2005
+Subject: [Paraview] About vtkClientServerStream
+Message-ID: <1e4cde1e3363.1e33631e4cde@iapcm.ac.cn>
+
+How could I get the pipeline output data from the clientserverstream after the str is interpreted?
+
+From Brian.Dotson at netl.doe.gov  Mon Nov 14 08:08:13 2005
+From: Brian.Dotson at netl.doe.gov (Brian Dotson)
+Date: Mon Nov 14 08:09:19 2005
+Subject: [Paraview] Reader Problem
+Message-ID: <s378460c.007@co.mgn.netl.doe.gov>
+
+Berk,
+ 
+I use the following code to attach the arrays to the mesh.
+ 
+if(first == 0) {
+   output->GetCellData()->SetScalars(cell_data_array[j]);
+} else {
+   output->GetCellData()->AddArray(cell_data_array[j]);
+}
+
+where output is a vtkUnstructuredGrid, and cell_data_array is an array
+of pointers to vtkFloatArrays.
+ 
+I am not using a debugger, but I will run in valgrind and see what I
+come up with.
+ 
+Thanks for the help.
+ 
+Brian Dotson
+
+>>> "Berk Geveci" <berk.geveci@gmail.com> 11/10/2005 3:28 PM >>>
+
+How are you associating the data with the vtk dataset? Do you read an
+array and hand it to a vtk array? Also, can you run in a debugger and
+get a track trace? If you are running on Linux, valgrind would be even
+better.
+
+-Berk
+
+On 11/10/05, Brian Dotson <Brian.Dotson@netl.doe.gov> wrote:Hi all,
+ 
+I wrote a custom reader that brings our simulation results into
+ParaView.  
+ 
+The data is an unstructured grid with multiple timesteps.  The cells
+are either hexahedron or wedges.  The data I attach to the mesh is
+mostly scalar with a few vectors.
+ 
+With most of the simulation results we look at the reader looks fine,
+but some of the data sets cause the following error.
+ 
+free(): invalid pointer 0xc2f7f70!
+ 
+This error happens after my code executes and I have returned the
+unstructured grid over to ParaView.
+ 
+I have done the following to debug the problem:
+ 
+1. I checked the number of arrays that I am attaching to the mesh and
+the NumberOfCellFields variable, these match.
+ 
+2. I checked the MaxId of all the arrays.  These match the cell count.
+ 
+3. When I turn all the cell arrays off, I don't get the errors, and the
+mesh loads.
+ 
+Does anyone have any ideas on what the problem could be?
+ 
+Thanks,
+ 
+Brian Dotson
+National Energy Technology Laboratory
+Department of Energy
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051114/d918e3c7/attachment.html
+From zdxlj at zju.edu.cn  Tue Nov 15 09:20:10 2005
+From: zdxlj at zju.edu.cn (=?gb2312?B?veLA+778?=)
+Date: Tue Nov 15 09:20:34 2005
+Subject: [Paraview] tile display
+Message-ID: <332064547.26813@eyou.net>
+
+Hi, all
+
+When I try to use tile display config, it always tells me that one or more of the server nodes cannot access a display. So how can I assign a valid display to pvrenderserver?  I have log in every render server and xhosts + is executed.
+
+
+	
+Daniel
+2005-11-15
+
+
+From yvan.fournier at free.fr  Tue Nov 15 17:46:27 2005
+From: yvan.fournier at free.fr (Yvan Fournier)
+Date: Tue Nov 15 17:46:46 2005
+Subject: [Paraview] (no subject)
+Message-ID: <1132094787.437a65439878b@imp3-g19.free.fr>
+
+Hello,
+
+I get a segmentation fault under Linux when trying to set display style to
+"volume rendering" on EnSight Data.
+
+Data is hexahedral (unstructured) mesh, with cell values; using "Tetrahedralize"
+and "Cell Data to Point Data" do not help (the stack backtrace is
+similar).
+
+The test case is attached to this message, along with a gdb backtrace (for
+ParaView as of last Nov 11'ths CVS compiled with default options on SUSE Linux
+10.0).
+
+The same bug occurs on the same machine with ParaView CVS (compiled from source)
+and 2.4 (paraview.org binary), not on 2.2.1 (paraview.org binary). It also
+occurs on another Linux machine running Debian (Sarge), so it does not seem to
+be system dependent.
+
+Thanks.
+
+Yvan Fournier
+
+
+--
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: simple.ensight.tar.gz
+Type: application/x-gzip
+Size: 9579 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051115/fc5b7843/simple.ensight.tar.bin
+-------------- next part --------------
+Current directory is /usr/local/bin/
+GNU gdb 6.3
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i586-suse-linux"...Using host libthread_db library "/lib/tls/libthread_db.so.1".
+
+(gdb) run
+Starting program: /usr/local/bin/paraview 
+[Thread debugging using libthread_db enabled]
+[New Thread 1078539360 (LWP 10383)]
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1078539360 (LWP 10383)]
+0x0a85e63a in vtkInformation::GetAsObjectBase ()
+(gdb) backtrace
+#0  0x0a85e63a in vtkInformation::GetAsObjectBase ()
+#1  0x0a867d2c in vtkInformationKeyToInformationFriendship::GetAsObjectBase ()
+#2  0x0a867b2c in vtkInformationKey::GetAsObjectBase ()
+#3  0x0a85ff97 in vtkInformationDataObjectKey::Get ()
+#4  0x0a85ed2c in vtkInformation::Get ()
+#5  0x0a7d7a3d in vtkCompositeDataPipeline::ExecuteSimpleAlgorithm ()
+#6  0x0a7d919c in vtkCompositeDataPipeline::ExecuteData ()
+#7  0x0a7f4550 in vtkDemandDrivenPipeline::ProcessRequest ()
+#8  0x0a8dcb7b in vtkStreamingDemandDrivenPipeline::ProcessRequest ()
+#9  0x0a7d56a5 in vtkCompositeDataPipeline::ProcessRequest ()
+#10 0x0a7f279d in vtkDemandDrivenPipeline::UpdateData ()
+#11 0x0a8dd126 in vtkStreamingDemandDrivenPipeline::Update ()
+#12 0x0a7f60d7 in vtkExecutive::Update ()
+#13 0x0a7f2166 in vtkDemandDrivenPipeline::Update ()
+#14 0x0a8dcc70 in vtkStreamingDemandDrivenPipeline::Update ()
+#15 0x0a7b8b3f in vtkAlgorithm::Update ()
+#16 0x099c028c in vtkAbstractVolumeMapper::GetBounds ()
+#17 0x09007216 in vtkPVLODVolume::GetBounds ()
+#18 0x09a69a73 in vtkRenderer::ComputeVisiblePropBounds ()
+#19 0x09a6ab12 in vtkRenderer::ResetCameraClippingRange ()
+#20 0x08db3135 in vtkSMRenderModuleProxy::StillRender ()
+#21 0x088faf85 in vtkPVRenderView::EventuallyRenderCallBack ()
+#22 0x088fafa1 in PVRenderView_IdleRender ()
+#23 0x08eaca05 in TimerHandlerEventProc ()
+#24 0x08e9df95 in Tcl_ServiceEvent ()
+#25 0x08e9e2a6 in Tcl_DoOneEvent ()
+#26 0x08aa74b2 in vtkKWApplication::DoOneTclEvent ()
+#27 0x08aa6ffa in vtkKWApplication::Start ()
+#28 0x08787ca0 in vtkPVApplication::Start ()
+#29 0x089d282a in vtkPVProcessModuleGUIHelper::ActualRun ()
+#30 0x089d28ea in vtkPVProcessModuleGUIHelper::RunGUIStart ()
+#31 0x0957ec82 in vtkProcessModule::Start ()
+#32 0x0958f718 in vtkProcessModuleGUIHelper::Run ()
+#33 0x0875d482 in MyMain ()
+#34 0x0875d4fe in main ()
+(gdb) 
+From yvan.fournier at free.fr  Tue Nov 15 18:08:10 2005
+From: yvan.fournier at free.fr (Yvan Fournier)
+Date: Tue Nov 15 18:08:19 2005
+Subject: [Paraview] ParaView crash on volume rendering on EnSight data
+Message-ID: <1132096090.437a6a5ae6c5a@imp3-g19.free.fr>
+
+Hello,
+
+I get a segmentation fault under Linux when trying to set display style to
+"volume rendering" on EnSight Data.
+
+Data is hexahedral (unstructured) mesh, with cell values; using "Tetrahedralize"
+and "Cell Data to Point Data" do not help (the stack backtrace is
+similar).
+
+The test case is attached to this message, along with a gdb backtrace (for
+ParaView as of last Nov 11'ths CVS compiled with default options on SUSE Linux
+10.0).
+
+The same bug occurs on the same machine with ParaView CVS (compiled from source)
+and 2.4 (paraview.org binary), not on 2.2.1 (paraview.org binary). It also
+occurs on another Linux machine running Debian (Sarge), so it does not seem to
+be system dependent.
+
+Thanks.
+
+Yvan Fournier
+
+
+
+
+--
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: simple.ensight.tar.gz
+Type: application/x-gzip
+Size: 9579 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20051116/ddd48ca1/simple.ensight.tar-0001.bin
+-------------- next part --------------
+Current directory is /usr/local/bin/
+GNU gdb 6.3
+Copyright 2004 Free Software Foundation, Inc.
+GDB is free software, covered by the GNU General Public License, and you are
+welcome to change it and/or distribute copies of it under certain conditions.
+Type "show copying" to see the conditions.
+There is absolutely no warranty for GDB.  Type "show warranty" for details.
+This GDB was configured as "i586-suse-linux"...Using host libthread_db library "/lib/tls/libthread_db.so.1".
+
+(gdb) run
+Starting program: /usr/local/bin/paraview 
+[Thread debugging using libthread_db enabled]
+[New Thread 1078539360 (LWP 10383)]
+
+Program received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 1078539360 (LWP 10383)]
+0x0a85e63a in vtkInformation::GetAsObjectBase ()
+(gdb) backtrace
+#0  0x0a85e63a in vtkInformation::GetAsObjectBase ()
+#1  0x0a867d2c in vtkInformationKeyToInformationFriendship::GetAsObjectBase ()
+#2  0x0a867b2c in vtkInformationKey::GetAsObjectBase ()
+#3  0x0a85ff97 in vtkInformationDataObjectKey::Get ()
+#4  0x0a85ed2c in vtkInformation::Get ()
+#5  0x0a7d7a3d in vtkCompositeDataPipeline::ExecuteSimpleAlgorithm ()
+#6  0x0a7d919c in vtkCompositeDataPipeline::ExecuteData ()
+#7  0x0a7f4550 in vtkDemandDrivenPipeline::ProcessRequest ()
+#8  0x0a8dcb7b in vtkStreamingDemandDrivenPipeline::ProcessRequest ()
+#9  0x0a7d56a5 in vtkCompositeDataPipeline::ProcessRequest ()
+#10 0x0a7f279d in vtkDemandDrivenPipeline::UpdateData ()
+#11 0x0a8dd126 in vtkStreamingDemandDrivenPipeline::Update ()
+#12 0x0a7f60d7 in vtkExecutive::Update ()
+#13 0x0a7f2166 in vtkDemandDrivenPipeline::Update ()
+#14 0x0a8dcc70 in vtkStreamingDemandDrivenPipeline::Update ()
+#15 0x0a7b8b3f in vtkAlgorithm::Update ()
+#16 0x099c028c in vtkAbstractVolumeMapper::GetBounds ()
+#17 0x09007216 in vtkPVLODVolume::GetBounds ()
+#18 0x09a69a73 in vtkRenderer::ComputeVisiblePropBounds ()
+#19 0x09a6ab12 in vtkRenderer::ResetCameraClippingRange ()
+#20 0x08db3135 in vtkSMRenderModuleProxy::StillRender ()
+#21 0x088faf85 in vtkPVRenderView::EventuallyRenderCallBack ()
+#22 0x088fafa1 in PVRenderView_IdleRender ()
+#23 0x08eaca05 in TimerHandlerEventProc ()
+#24 0x08e9df95 in Tcl_ServiceEvent ()
+#25 0x08e9e2a6 in Tcl_DoOneEvent ()
+#26 0x08aa74b2 in vtkKWApplication::DoOneTclEvent ()
+#27 0x08aa6ffa in vtkKWApplication::Start ()
+#28 0x08787ca0 in vtkPVApplication::Start ()
+#29 0x089d282a in vtkPVProcessModuleGUIHelper::ActualRun ()
+#30 0x089d28ea in vtkPVProcessModuleGUIHelper::RunGUIStart ()
+#31 0x0957ec82 in vtkProcessModule::Start ()
+#32 0x0958f718 in vtkProcessModuleGUIHelper::Run ()
+#33 0x0875d482 in MyMain ()
+#34 0x0875d4fe in main ()
+(gdb) 
+From amy.squillacote at kitware.com  Wed Nov 16 09:34:58 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Nov 16 09:35:46 2005
+Subject: [Paraview] ParaView crash on volume rendering on EnSight
+  data
+In-Reply-To: <1132096090.437a6a5ae6c5a@imp3-g19.free.fr>
+References: <1132096090.437a6a5ae6c5a@imp3-g19.free.fr>
+Message-ID: <6.2.5.6.2.20051116093151.02e73e98@kitware.com>
+
+Hi Yvan,
+
+Please enter this in the ParaView bug tracker: 
+http://www.paraview.org/Bug/.  If you have not entered a bug before, 
+you will need to create a new account first.  (There is a link to do 
+this at the top of the bug tracker page.)
+
+- Amy
+
+At 06:08 PM 11/15/2005, Yvan Fournier wrote:
+>Hello,
+>
+>I get a segmentation fault under Linux when trying to set display style to
+>"volume rendering" on EnSight Data.
+>
+>Data is hexahedral (unstructured) mesh, with cell values; using 
+>"Tetrahedralize"
+>and "Cell Data to Point Data" do not help (the stack backtrace is
+>similar).
+>
+>The test case is attached to this message, along with a gdb backtrace (for
+>ParaView as of last Nov 11'ths CVS compiled with default options on SUSE Linux
+>10.0).
+>
+>The same bug occurs on the same machine with ParaView CVS (compiled 
+>from source)
+>and 2.4 (paraview.org binary), not on 2.2.1 (paraview.org binary). It also
+>occurs on another Linux machine running Debian (Sarge), so it does not seem to
+>be system dependent.
+>
+>Thanks.
+>
+>Yvan Fournier
+>
+>
+>
+>
+>--
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From rnelias at nacad.ufrj.br  Wed Nov 16 11:43:57 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Wed Nov 16 11:38:08 2005
+Subject: [Paraview] Append datasets changed in release 2.4
+Message-ID: <20051116163752.EF43272859@mailhost.nacad.ufrj.br>
+
+
+Hello Paraview developers,
+
+I've been facing a problem in Paraview 2.4 that was absent in release 2.2. 
+
+In the release 2.4 the "append datasets" filter is disabled for multiple
+datasets read separately.
+
+In Paraview 2.2 I was able to read several pieces of my model from different
+Ensight's case files and after applying the "append datasets" and "clean to
+grid" filters Paraview produced the image corresponding to the entire model
+(without those MPI communication interface nodes). It was a wonderful
+feature for me because I was able to visualize parallel data even running
+Paraview in serial mode. Therefore, I need to ask the Paraview developers if
+it's a bug of the Ensight's readers, after the recent changes, or this
+feature will not be present in the future releases anymore.
+
+Regards
+
+Renato N. Elias
+===============================================
+PhD student
+http://www.nacad.ufrj.br/~rnelias 
+High Performance Computing Center 
+Federal University of Rio de Janeiro 
+Rio de Janeiro, Brazil
++55(21) 2562-8080
+
+
+From semeraro at ncsa.uiuc.edu  Wed Nov 16 17:48:18 2005
+From: semeraro at ncsa.uiuc.edu (Dave Semeraro)
+Date: Wed Nov 16 17:48:08 2005
+Subject: [Paraview] parallel reader problem
+Message-ID: <6.2.1.2.2.20051116163525.02a374d8@mail.ncsa.uiuc.edu>
+
+
+Hello,
+
+I have written a reader for paraview. The reader works ok in single process 
+stand
+alone mode ( ie running paraview ). It also works fine if I run in client 
+server mode
+with a single process as the server. It fails though when I try to run it 
+in client server
+mode with more than one server process. The failure mode is the client 
+loses contact
+with the server and  produces a stream of "Could not send tag" errors. I 
+import my
+reader into paraview by using the import package function in the file menu. 
+The failure
+occurs immediately after I import the package and before I try to read 
+anything. I have
+the required library and xml on both the client and server machines. The 
+file menu
+import package presents a file dialog that appears to point to the client 
+machine.
+How is the reader library loaded into the server side application? Is the 
+method of
+loading packages I am using even applicable to the parallel client/server 
+mode?
+This failure mode does not present itself when I run paraview in parallel 
+on the console
+of a cluster.
+
+I have read the paraview wiki info on this topic. My next attempt will be 
+to try to build
+the module into paraview itself rather than importing it. I would like to 
+know what is
+going wrong though. Any help or advice would be greatly appreciated.
+
+Regards,
+Dave
+
+
+From jfavre at cscs.ch  Thu Nov 17 04:38:00 2005
+From: jfavre at cscs.ch (Jean Favre)
+Date: Thu Nov 17 04:38:12 2005
+Subject: [Paraview] parallel reader problem
+In-Reply-To: <6.2.1.2.2.20051116163525.02a374d8@mail.ncsa.uiuc.edu>
+References: <6.2.1.2.2.20051116163525.02a374d8@mail.ncsa.uiuc.edu>
+Message-ID: <18945918.1132220280413.OPEN-XCHANGE.WebMail.tomcat@sala.cscs.ch>
+
+On Nov 16, 2005 11:48 PM, Dave Semeraro <semeraro@ncsa.uiuc.edu> wrote:
+
+
+>The failure mode is the client
+>loses contact
+>with the server and produces a stream of "Could not send tag" errors. I
+>import my
+>reader into paraview by using the import package function in the file
+>menu.
+>The failure
+
+I have had troubles with this issue in the past with several parallel
+custom readers and if memory serves me right, someone at Kitware even
+told me it would not work.
+
+Your next attempt (see below) should work much better. I have myself
+done the switch (use PARAVIEW_LOAD_EXTERNAL_MODULE) for all my readers
+and they work fine
+
+My next attempt will be
+>to try to build
+>the module into paraview itself rather than importing it.
+
+
+From Qinghuai.Gao at sun.com  Thu Nov 17 20:38:51 2005
+From: Qinghuai.Gao at sun.com (Qinghuai Gao)
+Date: Thu Nov 17 21:44:51 2005
+Subject: [Fwd: [Paraview] Run Paraview sort-last on several graphics
+	devices in the same machine]
+In-Reply-To: <7137A9E1D1768C44BE7DF11D30FAB323D3166A@ES21SNLNT.srn.sandia.gov>
+References: <7137A9E1D1768C44BE7DF11D30FAB323D3166A@ES21SNLNT.srn.sandia.gov>
+Message-ID: <437D30AB.9080703@Sun.COM>
+
+Ken:
+
+I come back to this problem again.  I am trying to set the DISPLAY in
+the code at MPI_Init.  However, I am not sure this really does the work
+as expected because Paraview has a very complicated architecture.
+Precisely, I add a paragraph after the MPI_Init in
+VTK/Parallel/vtkMPIController.cxx.  Please confirm me this is the right
+place to add, or point me where is the right place if this is not.
+
+I can verify that the data is processed by two process by adding a
+"Process Id Scalar" filter.
+
+However, how can I verify the render task is assigned to two graphic
+cards.  Any thoughts?
+
+Thanks,
+
+Qinghuai
+
+> I have never used a machine with many graphics devices, but I can tell
+> you that to get parallel rendering to work you will need to run ParaView
+> in some kind of MPI mode.  The actual mode you use (local,
+> client/server, client/render-server/data-server) depends on your setup,
+> but they are all capable of parallel rendering.
+> 
+> Getting each process in your MPI job to use a different graphics device
+> may be more tricky.  Offhand, I can't think of an easy way to do it.
+> Perhaps you could have mpirun (or whatever launches your MPI jobs) call
+> a script that somehow determines the process' rank, sets the DISPLAY
+> accordingly, and then calls the real ParaView implementation.
+> 
+> -Ken 
+> 
+> 
+>>-----Original Message-----
+>>From: paraview-bounces+kmorel=sandia.gov@paraview.org 
+>>[mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On 
+>>Behalf Of Qinghuai Gao
+>>Sent: Tuesday, September 20, 2005 11:59 AM
+>>To: paraview@paraview.org
+>>Subject: [Fwd: [Paraview] Run Paraview sort-last on several 
+>>graphics devices in the same machine]
+>>
+>>I asked this question last week but got no reply yet.  Wonder 
+>>anyone try this kind configuration to run Paraview with many 
+>>graphics devices in a single machine.  If so, please shine 
+>>some light.  Thanks in advance,
+>>
+>>Qinghuai
+>>
+> 
+> 
+
+From maillist at bluequartz.net  Fri Nov 18 10:20:37 2005
+From: maillist at bluequartz.net (Mike Jackson)
+Date: Fri Nov 18 10:20:44 2005
+Subject: [Paraview] Compiling on OS X
+Message-ID: <FE9054CD-46B7-4DE7-AC2C-6BCB441A83B3@bluequartz.net>
+
+I am running OS X version 10.4.3 and have followed the instructions  
+on the wiki to try an compile paraview version 2.2.1 and the latest  
+beta 2.4. Neither will compile and fail very quickly during the  
+compile. Doing some digging it would seem that the Tcl/Tk build  
+script is being copied with DOS line endings instead of Unix line  
+endings which is going to mess things up. Has anyone seen anything  
+like this before? I can not figure out if it is something with my  
+install, my user directory, my .bash_profile or my OS X install in  
+general?
+
+Here is the build output.
+
+238:[mjackson@Aeryn:~/Desktop/pbuild]$ make
+cmake.depends is up-to-date
+/Users/mjackson/Desktop/pbuild/Utilities/TclTk: building default_target
+cmake.depends is up-to-date
+Building Utility maketcltk...
+: command not foundktop/pbuild/Utilities/TclTk/build_tcltk.sh: line 2:
+/Users/mjackson/Desktop/pbuild/Utilities/TclTk/build_tcltk.sh: line  
+31: syntax error: unexpected end of file
+make[3]: *** [maketcltk] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_Utilities_TclTk] Error 2
+make: *** [default_target] Error 2
+239:[mjackson@Aeryn:~/Desktop/pbuild]$
+
+If I look at the file build_tcltk.sh in bbedit it is indicating that  
+the line breaks are in DOS and not UNIX. If I change the line endings  
+to UNIX I then get the following:
+
+246:[mjackson@Aeryn:~/Desktop/pbuild]$ make
+make  cmake.depends
+make[1]: `cmake.depends' is up to date.
+make  cmake.check_depends
+make[1]: `cmake.check_depends' is up to date.
+make  -f cmake.check_depends
+cmake.depends is up-to-date
+make  all
+/Users/mjackson/Desktop/pbuild/Utilities/TclTk: building default_target
+make  cmake.depends
+make[3]: `cmake.depends' is up to date.
+make  cmake.check_depends
+make[3]: `cmake.check_depends' is up to date.
+make  -f cmake.check_depends
+cmake.depends is up-to-date
+make  all
+Building Utility maketcltk...
+/bin/sh /Users/mjackson/Desktop/pbuild/Utilities/TclTk/build_tcltk.sh
+make: *** No targets specified and no makefile found.  Stop.
+make[3]: *** [maketcltk] Error 1
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_Utilities_TclTk] Error 2
+make: *** [default_target] Error 2
+
+
+Thanks for any help/input/Pointers
+---
+Mike Jackson
+mike _at_ bluequartz dot net
+
+
+From maillist at bluequartz.net  Mon Nov 21 00:28:17 2005
+From: maillist at bluequartz.net (Mike Jackson)
+Date: Mon Nov 21 00:28:24 2005
+Subject: [Paraview] vtkWriter Subclass
+Message-ID: <52E96152-ED1B-450D-9D6B-220CCE18B648@bluequartz.net>
+
+I would like to look at some data that has been given to me. The  
+format is in ASCII and is a special format (gotta love researchers).  
+We have written a parser to get it out of the file and into a  
+vtkImageData object. The data represents voxels in a 256x256x256  
+grid. The values are either 1 or 0.
+
+Once I get the data exported into some vtk specific file I would like  
+to load it up into paraview. I have tried several of the vtk*writer  
+classes all with no luck trying to load the file into paraview. The  
+most I get is an outline of the model ( a wireframe cube). Could  
+anyone offer some ideas on what I might use to accomplish this?
+
+Don't even suggest to write a paraview plugin. I am running OS X  
+10.4.3 and I am lucky to just have paraview running, let alone build  
+a module for it.
+---
+Mike Jackson
+mike _at_ bluequartz dot net
+
+
+From mail at christoph-moder.de  Mon Nov 21 08:23:34 2005
+From: mail at christoph-moder.de (Christoph Moder)
+Date: Mon Nov 21 08:23:19 2005
+Subject: [Paraview] compilation error (typecast int* socklen_t* in
+	vtkSocketCommunicator.cxx)
+Message-ID: <4381CA56.4030902@christoph-moder.de>
+
+Hello!
+
+I am trying to compile Paraview 2.2.1 on a Debian Linux system, but it 
+stops with an error:
+==============
+/home/moder/paraview-2.2.1/VTK/Parallel/vtkSocketCommunicator.cxx: In 
+member function `virtual int vtkSocketCommunicator::GetPort(int)':
+ 
+/home/moder/paraview-2.2.1/VTK/Parallel/vtkSocketCommunicator.cxx:302: 
+error: invalid conversion from `int*' to `socklen_t*'
+       make[2]: *** 
+VTK/Parallel/vtkParallel.dir/vtkSocketCommunicator.o] Error 1
+       make[1]: *** [VTK/Parallel/vtkParallel.dir/all] Error 2
+       make: *** [all] Error 2
+==============
+
+Can anyone tell me what's wrong?
+
+I have found a similar problem on the mailing list:
+http://public.kitware.com/pipermail/paraview/2004-December/001005.html
+In one of the answers it is said that in CMakeCache.txt 
+VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=0 should be changed to =1, 
+but this is already the case on my system. And changing it back to =0 
+does not help either.
+
+Btw, that's what I did it (I hope there's no stupid mistake :-)
+==============
+~$ tar xfvz paraview-2.2.1.tar.gz
+~$ mkdir paraview-2.2.1-build/
+~$ cd paraview-2.2.1-build/
+~/paraview-2.2.1-build$ cmake ../paraview-2.2.1/
+~/paraview-2.2.1-build$ make
+==============
+
+Thanks for your suggestions, sincerely,
+Christoph
+From amy.squillacote at kitware.com  Mon Nov 21 09:25:05 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Mon Nov 21 09:25:22 2005
+Subject: [Paraview] Re: [vtkusers] vtkWriter Subclass
+In-Reply-To: <52E96152-ED1B-450D-9D6B-220CCE18B648@bluequartz.net>
+References: <52E96152-ED1B-450D-9D6B-220CCE18B648@bluequartz.net>
+Message-ID: <6.2.5.6.2.20051121092124.06218d88@kitware.com>
+
+Hi Mike,
+
+In ParaView, the default representation of a vtkImageData object is 
+an outline cube.  If you've gotten this far, you have likely loaded 
+your data correctly into ParaView.  To change to something other than 
+the wireframe view, go to the Display tab, and change the value in 
+the representation menu.  After you loaded your data (and got a 
+wireframe cube), did you look at the Information tab to see if the 
+meta-data for this vtkImageData object was correct (i.e., bounds, 
+extents, spacing, range of values in data array)? Did you try running 
+a filter on your data?
+
+- Amy
+
+At 12:28 AM 11/21/2005, Mike Jackson wrote:
+>I would like to look at some data that has been given to me. The
+>format is in ASCII and is a special format (gotta love researchers).
+>We have written a parser to get it out of the file and into a
+>vtkImageData object. The data represents voxels in a 256x256x256
+>grid. The values are either 1 or 0.
+>
+>Once I get the data exported into some vtk specific file I would like
+>to load it up into paraview. I have tried several of the vtk*writer
+>classes all with no luck trying to load the file into paraview. The
+>most I get is an outline of the model ( a wireframe cube). Could
+>anyone offer some ideas on what I might use to accomplish this?
+>
+>Don't even suggest to write a paraview plugin. I am running OS X
+>10.4.3 and I am lucky to just have paraview running, let alone build
+>a module for it.
+>---
+>Mike Jackson
+>mike _at_ bluequartz dot net
+>
+>
+>_______________________________________________
+>This is the private VTK discussion list. Please keep messages 
+>on-topic. Check the FAQ at: http://www.vtk.org/Wiki/VTK_FAQ
+>Follow this link to subscribe/unsubscribe:
+>http://www.vtk.org/mailman/listinfo/vtkusers
+
+From mathieu.malaterre at kitware.com  Mon Nov 21 09:21:38 2005
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Mon Nov 21 09:25:34 2005
+Subject: [Paraview] compilation error (typecast int* socklen_t*
+	in	vtkSocketCommunicator.cxx)
+In-Reply-To: <4381CA56.4030902@christoph-moder.de>
+References: <4381CA56.4030902@christoph-moder.de>
+Message-ID: <4381D7F2.6030900@kitware.com>
+
+Christoph,
+
+	Can you check you have the proper include file:
+	
+	/usr/include/sys/socket.h
+
+	In case you don't have it, do `sudo apt-get install libc6-dev`.
+
+	The only case in which this error could happen would be that you 
+installed this package after a first configuration of ParaView. Please 
+delete the CMakeCache.txt and redo a cmake configure step.
+
+Thanks
+Mathieu
+
+
+Christoph Moder wrote:
+> Hello!
+> 
+> I am trying to compile Paraview 2.2.1 on a Debian Linux system, but it 
+> stops with an error:
+> ==============
+> /home/moder/paraview-2.2.1/VTK/Parallel/vtkSocketCommunicator.cxx: In 
+> member function `virtual int vtkSocketCommunicator::GetPort(int)':
+> 
+> /home/moder/paraview-2.2.1/VTK/Parallel/vtkSocketCommunicator.cxx:302: 
+> error: invalid conversion from `int*' to `socklen_t*'
+>       make[2]: *** VTK/Parallel/vtkParallel.dir/vtkSocketCommunicator.o] 
+> Error 1
+>       make[1]: *** [VTK/Parallel/vtkParallel.dir/all] Error 2
+>       make: *** [all] Error 2
+> ==============
+> 
+> Can anyone tell me what's wrong?
+> 
+> I have found a similar problem on the mailing list:
+> http://public.kitware.com/pipermail/paraview/2004-December/001005.html
+> In one of the answers it is said that in CMakeCache.txt 
+> VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=0 should be changed to =1, 
+> but this is already the case on my system. And changing it back to =0 
+> does not help either.
+> 
+> Btw, that's what I did it (I hope there's no stupid mistake :-)
+> ==============
+> ~$ tar xfvz paraview-2.2.1.tar.gz
+> ~$ mkdir paraview-2.2.1-build/
+> ~$ cd paraview-2.2.1-build/
+> ~/paraview-2.2.1-build$ cmake ../paraview-2.2.1/
+> ~/paraview-2.2.1-build$ make
+> ==============
+> 
+> Thanks for your suggestions, sincerely,
+> Christoph
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From maillist at bluequartz.net  Mon Nov 21 09:44:20 2005
+From: maillist at bluequartz.net (Mike Jackson)
+Date: Mon Nov 21 09:44:33 2005
+Subject: [Paraview] Re: [vtkusers] vtkWriter Subclass
+In-Reply-To: <6.2.5.6.2.20051121092124.06218d88@kitware.com>
+References: <52E96152-ED1B-450D-9D6B-220CCE18B648@bluequartz.net>
+	<6.2.5.6.2.20051121092124.06218d88@kitware.com>
+Message-ID: <8BFFA0FB-D1D2-413D-9ECB-1AD72ED1D2AE@bluequartz.net>
+
+Once the data was loaded, meta data did not indicate the correct  
+values. The filter menu was NOT available so I could not do anything  
+with the data. I tried all the different representations and nothing  
+seemed to show anything except the outline of which the extents did  
+not seem correct. My guess is that I am not writing out some header  
+or something?
+
+Additionally, when I try to open the file in paraview ("/tmp/ 
+phasefield.vti") I get an error dialog stating "Could not find an  
+appropriate reader for file "/tmp/phasefield.vti. Would you like to  
+manually select the reader for this file?". I select OK and proceed  
+to select the "VTKImageFiles Reader" from the list.
+    Now in Paraview, I go to the "Information" tab and get:
+Type: Volume (Uniform Rectilinear)
+Number of Datasets: 1
+Number of Cells: 0
+Number of Points: 0
+Memory: 0 MBytes
+Empty Bounds
+Empty Extent.
+
+I believe I can forward the data (I'll have to check with my  
+supervisior) if you want to try this yourself.
+
+Following is the method that I am using to read the original data,  
+then write the "vtk" data:
+///Assume _size = 256
+///Assume _voi.empty() returns TRUE
+vtkImageData* PhaseFieldReader::_read( std::istream& in )
+{
+   if ( _voi.empty() )
+     this->setVOI( 0, _size - 1, 0, _size - 1, 0, _size -1 );
+
+   unsigned char byte;
+
+   // First read the file into a temp image
+   vtkSmartPointer < vtkImageData > temp ( vtkImageData::New() );
+   temp->SetSpacing ( 1.0, 1.0, 1.0 );
+   temp->SetOrigin ( 0.0, 0.0, 0.0 );
+   temp->SetDimensions ( _size, _size, _size );
+   temp->SetNumberOfScalarComponents(1);
+   temp->SetScalarTypeToUnsignedChar();
+   temp->AllocateScalars();
+
+   {
+     unsigned char *data = static_cast < unsigned char* > ( temp- 
+ >GetScalarPointer( ) );
+     ::memset ( data, 0,  _size * _size * _size );
+   }
+
+   for ( unsigned int x = 0; x < _size; ++x )
+   {
+     for ( unsigned int y = 0; y < _size; ++y )
+     {
+       for ( unsigned int z = 0; z < _size; ++z )
+       {
+         in >> byte;
+
+         unsigned char *data = static_cast < unsigned char* > ( temp- 
+ >GetScalarPointer( x, y , z ) );
+         unsigned char value ( ( byte - 48 ) * 255 ) ;
+         *data = value;
+       }
+     }
+   }
+
+   // Size of each dimension of the final image.
+   unsigned int xSize ( _voi[ X_MAX ] - _voi[ X_MIN ] + 1 );
+   unsigned int ySize ( _voi[ Y_MAX ] - _voi[ Y_MIN ] + 1 );
+   unsigned int zSize ( _voi[ Z_MAX ] - _voi[ Z_MIN ] + 1 );
+
+   // Start and finish values for the for loops.
+   unsigned int xStart  ( 0 );
+   unsigned int xFinish ( xSize );
+   unsigned int yStart  ( 0 );
+   unsigned int yFinish ( ySize );
+   unsigned int zStart  ( 0 );
+   unsigned int zFinish ( zSize );
+
+   // If we need to add padding for capping, adjust the values.
+   if( _addPadding )
+   {
+     xSize += 2;
+     ySize += 2;
+     zSize += 2;
+     xStart++;
+     xFinish++;
+     yStart++;
+     yFinish++;
+     zStart++;
+     zFinish++;
+   }
+
+   // Copy the volume of interest into the image.
+   vtkImageData *image ( vtkImageData::New() );
+   image->SetSpacing ( 1.0, 1.0, 1.0 );
+   image->SetOrigin ( 0.0, 0.0, 0.0 );
+   image->SetDimensions ( xSize, ySize, zSize );
+   image->SetNumberOfScalarComponents(1);
+   image->SetScalarTypeToUnsignedChar();
+   image->AllocateScalars();
+
+   // Set the data to all zeros.
+   unsigned char *data = static_cast < unsigned char* > ( image- 
+ >GetScalarPointer( ) );
+   ::memset ( data, 0,  xSize * ySize * zSize );
+
+   // Offsets into the temp image that we read previously
+   const unsigned int xOffset ( _voi[ X_MIN ] );
+   const unsigned int yOffset ( _voi[ Y_MIN ] );
+   const unsigned int zOffset ( _voi[ Z_MIN ] );
+
+   // Create the final image.
+   for ( unsigned int x = xStart; x < xFinish; ++x )
+   {
+     for ( unsigned int y = yStart; y < yFinish; ++y )
+     {
+       for ( unsigned int z = zStart; z < zFinish; ++z )
+       {
+         unsigned char *tempData = static_cast < unsigned char* >  
+( temp->GetScalarPointer( x + xOffset, y + yOffset, z + zOffset ) );
+         unsigned char *data = static_cast < unsigned char* > ( image- 
+ >GetScalarPointer( x, y , z ) );
+
+         *data = *tempData;
+       }
+     }
+   }
+
+#if __APPLE__
+   vtkSmartPointer < vtkImageWriter > writer;
+   writer       = vtkImageWriter::New();
+   writer->SetFileDimensionality(3);
+   writer->SetFileName("/tmp/phasefield.vts");
+   writer->SetInput(image);
+   writer->Write();
+   std::cout << "writing done..." << std::endl;
+#endif
+
+   return image;
+}
+
+---
+Mike Jackson
+mike _at_ bluequartz dot net
+
+
+On Nov 21, 2005, at 9:25 AM, Amy Squillacote wrote:
+
+> Hi Mike,
+>
+> In ParaView, the default representation of a vtkImageData object is  
+> an outline cube.  If you've gotten this far, you have likely loaded  
+> your data correctly into ParaView.  To change to something other  
+> than the wireframe view, go to the Display tab, and change the  
+> value in the representation menu.  After you loaded your data (and  
+> got a wireframe cube), did you look at the Information tab to see  
+> if the meta-data for this vtkImageData object was correct (i.e.,  
+> bounds, extents, spacing, range of values in data array)? Did you  
+> try running a filter on your data?
+>
+> - Amy
+>
+> At 12:28 AM 11/21/2005, Mike Jackson wrote:
+>> I would like to look at some data that has been given to me. The
+>> format is in ASCII and is a special format (gotta love researchers).
+>> We have written a parser to get it out of the file and into a
+>> vtkImageData object. The data represents voxels in a 256x256x256
+>> grid. The values are either 1 or 0.
+>>
+>> Once I get the data exported into some vtk specific file I would like
+>> to load it up into paraview. I have tried several of the vtk*writer
+>> classes all with no luck trying to load the file into paraview. The
+>> most I get is an outline of the model ( a wireframe cube). Could
+>> anyone offer some ideas on what I might use to accomplish this?
+>>
+>> Don't even suggest to write a paraview plugin. I am running OS X
+>> 10.4.3 and I am lucky to just have paraview running, let alone build
+>> a module for it.
+>> ---
+>> Mike Jackson
+>> mike _at_ bluequartz dot net
+>>
+>>
+>> _______________________________________________
+>> This is the private VTK discussion list. Please keep messages on- 
+>> topic. Check the FAQ at: http://www.vtk.org/Wiki/VTK_FAQ
+>> Follow this link to subscribe/unsubscribe:
+>> http://www.vtk.org/mailman/listinfo/vtkusers
+>
+>
+
+
+
+
+From mail at christoph-moder.de  Mon Nov 21 11:42:25 2005
+From: mail at christoph-moder.de (Christoph Moder)
+Date: Mon Nov 21 11:42:07 2005
+Subject: [Paraview] compilation error (typecast int* socklen_t*
+	in	vtkSocketCommunicator.cxx)
+In-Reply-To: <4381D7F2.6030900@kitware.com>
+References: <4381CA56.4030902@christoph-moder.de>
+	<4381D7F2.6030900@kitware.com>
+Message-ID: <4381F8F1.3050509@christoph-moder.de>
+
+Hi Mathieu,
+
+>     Can you check you have the proper include file:
+>     
+>     /usr/include/sys/socket.h
+> 
+>     In case you don't have it, do `sudo apt-get install libc6-dev`.
+> 
+>     The only case in which this error could happen would be that you 
+> installed this package after a first configuration of ParaView. Please 
+> delete the CMakeCache.txt and redo a cmake configure step.
+
+This include file is available; I have deleted the build directory and 
+run cmake and make -- but nothing has changed, the error has not 
+disappeared.
+
+I've put several files that seem to be created by cmake online; maybe 
+this gives you more information:
+http://www.geophysik.lmu.de/~moder/paraview/
+
+Thanks for your help,
+Christoph
+From dan at chalkie.org.uk  Mon Nov 21 13:05:10 2005
+From: dan at chalkie.org.uk (Dan White)
+Date: Mon Nov 21 13:05:21 2005
+Subject: [Paraview] parallel MPI volume rendering
+Message-ID: <D81A760A-7E97-41E8-A15D-A29E3EEE4CB2@chalkie.org.uk>
+
+Hi all,
+I am testing the speed advantage of volume rendering in parallel -  
+MPI with paraview
+on the Sun microsystems server at corona.csc.fi
+
+with the settings i have tried so far on a small dataset 56x56x56
+with the render server running as pvserver-mpi
+and the client running on my local OSX machine
+pvclient
+versions both 2.2
+
+i am using 8 processors,
+but not seeing any speed enhancement in volume rendering
+compared to running it on my local machine with a single processor.
+
+in fact it is much slower on the server using 8 processors
+
+there is plenty of bandwidth between the server and my local machine
+
+can anyone give me any pointers about the critical things to get  
+right to get this to work.
+
+In the end i want to do this with very large datasets that take too  
+long to volume render on my local single processor machine.
+
+cheers
+
+Dan
+
+
+Dr. Daniel James White BSc. (Hons.) PhD
+Bioimaging Coordinator
+Nanoscience Centre and Department of Biological and Environmental  
+Sciences
+Division of Molecular Recognition
+Ambiotica C242
+PO Box 35
+University of Jyv?skyl?
+Jyv?skyl?
+FIN 40014
+Finland
+
++358 14 260 4183 (work)
++358 468102840 (mobile)
+http://www.bioimagexd.org
+http://www.chalkie.org.uk
+dan@chalkie.org.uk
+white@cc.jyu.fi
+
+
+From kmorel at sandia.gov  Mon Nov 21 16:07:10 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Mon Nov 21 16:07:27 2005
+Subject: [Paraview] error with volume rendering
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D31772@ES21SNLNT.srn.sandia.gov>
+
+You got this error because the volume renderer in ParaView 2.0 was a bit
+of a memory hog and had the potential of exhausting system memory with
+unstructured grids of the size you are dealing with.
+ 
+Since then other volume rendering algorithms that are less memory
+intensive have been added to ParaView.  I believe they are in ParaView
+2.2.  Try upgrading.
+ 
+-Ken
+
+
+________________________________
+
+	From: paraview-bounces+kmorel=sandia.gov@paraview.org
+[mailto:paraview-bounces+kmorel=sandia.gov@paraview.org] On Behalf Of
+koala
+	Sent: Saturday, November 12, 2005 8:44 AM
+	To: paraview@paraview.org
+	Subject: [Paraview] error with volume rendering
+	
+	
+	hi,all
+	I got an error when I made the volume rendering.The error
+message is 
+	 
+	" # Error or warning: There was a VTK Warning in file:
+/home/myfile/paraview-2.0.1
+	/GUI/Client/vtkPVDisplayGUI.cxx (1888)
+	 Sorry.  Unstructured grids with more than 500,000 cells cannot
+currently be ren
+	dered with ParaView.  Consider thresholding cells you are not
+interested in.  "
+	 
+	Why I got this error ? Who can tell me ?
+	Thank you .
+	                                  wls
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051121/3d28dbca/attachment.htm
+From kmorel at sandia.gov  Mon Nov 21 16:16:04 2005
+From: kmorel at sandia.gov (Moreland, Kenneth)
+Date: Mon Nov 21 16:16:22 2005
+Subject: [Fwd: [Paraview] Run Paraview sort-last on several graphics
+	devices in the same machine]
+Message-ID: <7137A9E1D1768C44BE7DF11D30FAB323D31773@ES21SNLNT.srn.sandia.gov>
+
+> I come back to this problem again.  I am trying to set the 
+> DISPLAY in the code at MPI_Init.  However, I am not sure this 
+> really does the work as expected because Paraview has a very 
+> complicated architecture.
+> Precisely, I add a paragraph after the MPI_Init in 
+> VTK/Parallel/vtkMPIController.cxx.  Please confirm me this is 
+> the right place to add, or point me where is the right place 
+> if this is not.
+
+If it was me, I would probably put it in vtkPVMain::Initialize(int, int)
+right under the call to MPI_Comm_rank, but whatever works.
+
+> I can verify that the data is processed by two process by 
+> adding a "Process Id Scalar" filter.
+> 
+> However, how can I verify the render task is assigned to two 
+> graphic cards.  Any thoughts?
+
+ParaView should open a window on all graphics cards.  Is there a way you
+can see the output of all pipes?  Also make sure that under "3D View
+Options" the Composite option is on and the slider is all the way to the
+left.
+
+-Ken
+
+From rnelias at nacad.ufrj.br  Mon Nov 21 16:58:40 2005
+From: rnelias at nacad.ufrj.br (Renato N. Elias)
+Date: Mon Nov 21 16:58:34 2005
+Subject: [Paraview] Append datasets changed in release 2.4...
+Message-ID: <20051121215817.38AE072869@mailhost.nacad.ufrj.br>
+
+Hello all,
+
+I've been facing a problem in Paraview 2.4 that was absent in release 2.2. 
+
+In the release 2.4 the "append datasets" filter is disabled for multiple
+datasets read separately.
+
+In Paraview 2.2 I was able to read several pieces of my model from different
+Ensight's case files and after applying the "append datasets" and "clean to
+grid" filters Paraview produced the image corresponding to the entire model
+(without those MPI communication interface nodes). It was a wonderful
+feature for me because I was able to visualize parallel data even running
+Paraview in serial mode. Therefore, I need to ask the Paraview developers if
+it's a bug of the Ensight's readers, after the recent changes, or this
+feature will not be present in the future releases anymore.
+
+Regards
+
+Renato N. Elias
+
+From tdubuis at scconsultants.com  Tue Nov 22 10:19:31 2005
+From: tdubuis at scconsultants.com (Thierry Dubuis)
+Date: Tue Nov 22 10:19:32 2005
+Subject: [Paraview] Graphic API documentation
+Message-ID: <43833703.8010205@scconsultants.com>
+
+Hello,
+
+Is there a documentation about Graphic API ?
+For example, I want use Paraview in my Windows interface to see a mesh 
+and build a cut.
+For that I need a list for call I can use in my interface to open a 
+graphic windows, load a mesh and build a cut.
+Does this list exist ?
+Is yes where I can find it ?
+
+Best regards,
+
+Thierry Dubuis,
+From berk.geveci at gmail.com  Tue Nov 22 14:36:45 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Tue Nov 22 14:37:08 2005
+Subject: [Paraview] Append datasets changed in release 2.4
+In-Reply-To: <20051116163752.EF43272859@mailhost.nacad.ufrj.br>
+References: <20051116163752.EF43272859@mailhost.nacad.ufrj.br>
+Message-ID: <a2ab21560511221136y1630a891va3f6134346224fad@mail.gmail.com>
+
+This is a missing feature. I will fix it as soon as I have time. It probably
+won't make into 2.4 release. Make sure to bug me if it's not there in a
+month or so :-)
+
+-Berk
+
+
+On 11/16/05, Renato N. Elias <rnelias@nacad.ufrj.br> wrote:
+>
+>
+> Hello Paraview developers,
+>
+> I've been facing a problem in Paraview 2.4 that was absent in release 2.2.
+>
+> In the release 2.4 the "append datasets" filter is disabled for multiple
+> datasets read separately.
+>
+> In Paraview 2.2 I was able to read several pieces of my model from
+> different
+> Ensight's case files and after applying the "append datasets" and "clean
+> to
+> grid" filters Paraview produced the image corresponding to the entire
+> model
+> (without those MPI communication interface nodes). It was a wonderful
+> feature for me because I was able to visualize parallel data even running
+> Paraview in serial mode. Therefore, I need to ask the Paraview developers
+> if
+> it's a bug of the Ensight's readers, after the recent changes, or this
+> feature will not be present in the future releases anymore.
+>
+> Regards
+>
+> Renato N. Elias
+> ===============================================
+> PhD student
+> http://www.nacad.ufrj.br/~rnelias
+> High Performance Computing Center
+> Federal University of Rio de Janeiro
+> Rio de Janeiro, Brazil
+> +55(21) 2562-8080
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051122/9619b59e/attachment.html
+From mbolstad at arl.army.mil  Tue Nov 22 15:14:08 2005
+From: mbolstad at arl.army.mil (Mark A. Bolstad)
+Date: Tue Nov 22 15:14:19 2005
+Subject: [Paraview] client/server with AIX
+Message-ID: <1132690448.317.7.camel@nagifar.arl.army.mil>
+
+
+In both the 2.4 branch and the latest CVS, client/server is not
+functioning properly between AIX and pretty much anybody else.
+
+Start pvserver on AIX with MPI:
+
+
+/usr/lpp/ppe.poe/bin/mpiexec -n 1 pvserver -hfile hfile
+Listen on port: 11,111
+Waiting for client...
+Client connected.
+
+
+Start a client on x86_64 and then "open data"
+share/paraview-2.5/Data/ironProt.vtk
+Apply a Tetrahedralize filter:
+
+
+Connected to server
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+ParaView/VTK/IO/vtkDataReader.cxx (1065)
+ vtkPolyDataReader (0x5afe5a0): Unsupported data type: ,936
+ErrorMessage end
+ErrorMessage
+# Error or warning: There was a VTK Error in file:
+ParaView/VTK/IO/vtkPolyDataReader.cxx (310)
+ vtkPolyDataReader (0x5afe5a0): Unrecognized keyword: float
+ErrorMessage end
+
+
+I have no such problems between two Linux machines, and it worked
+properly under version 2.2 with AIX/Linux.
+
+Any ideas?
+
+Mark
+
+From alafa-0 at 163.com  Tue Nov 22 23:38:33 2005
+From: alafa-0 at 163.com (=?gb2312?B?dA==?=)
+Date: Tue Nov 22 23:38:45 2005
+Subject: [Paraview] Re: parallel MPI volume rendering 
+Message-ID: <4383F249.00001D.12918@bj163app5.163.com>
+
+Perhaps it is the dataset structure , maybe your data set can not be read in parallelism. So each processor read the same data and render it, then processors compare with each other when they composite the graphics rendered. 
+
+There will be more time spent than running on your local machine with a single processor, because each processor does the same job and needs to compare with each other.
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051123/59f045bb/attachment.htm
+From forest80 at 163.com  Thu Nov 24 09:19:15 2005
+From: forest80 at 163.com (forest)
+Date: Thu Nov 24 09:35:08 2005
+Subject: [Paraview] about render server mode!
+Message-ID: <20051124143452.7C0FC12CCC@public.kitware.com>
+
+Dear paraviewers:
+
+	Our cluster has five nodes, and one of them is client whose operating system is windows, the others are servers whose operating systems are all linux.
+	Now I want to run paraview in render server mode! 
+	Client: pvclient.exe -crs -dsh=192.168.0.10 -rsh=192.168.0.20;
+	server1(ip address is 192.168.0.10): ./pvdataserver;
+	server2(ip address is 192.168.0.20): ./pvrevderserver.
+	But server2 has wrong and pvclient can not run.
+	Any advice is appreciate!
+ 				
+
+????????forest
+????????forest80@163.com
+??????????2005-11-24
+From Francois.Beaubert at univ-valenciennes.fr  Tue Nov 29 09:51:28 2005
+From: Francois.Beaubert at univ-valenciennes.fr (=?iso-8859-1?q?Fran=E7ois_BEAUBERT?=)
+Date: Tue Nov 29 09:56:19 2005
+Subject: [Paraview] Paraview versus Visit
+Message-ID: <200511291551.29014.Francois.Beaubert@univ-valenciennes.fr>
+
+Hi all,
+
+I've just discover Visit today:
+www.llnl.gov/visit/
+
+But I'm new to Paraview too. Has someone already tried those two softwares? 
+What are the strength of each one ? Visit seems to have a more powerfule XY 
+graph module but I haven't try it in depth ...
+
+Any experience will be welcome.
+Thank's
+Francois
+-- 
+Fran?ois BEAUBERT
+ENSIAME/LME
+Bureau A9
+Universit? de Valenciennes - Le Mont Houy - 59313 Valenciennes Cedex 9
+T?l?phone: (0/33)3 27 51 19 72
+T?l?copie: (0/33)3 27 51 19 61
+Mel: Francois.Beaubert@univ-valenciennes.fr
+From amy.squillacote at kitware.com  Tue Nov 29 14:58:15 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Nov 29 14:58:28 2005
+Subject: [Paraview] ParaView 2.4.1
+Message-ID: <6.2.5.6.2.20051129145025.05658b10@kitware.com>
+
+Skipped content of type multipart/alternative-------------- next part --------------
+<?xml version="1.0" ?>
+<pvx>
+  <Option Name="disable-composite" />
+  <Option Name="reverse-connection" />
+
+  <Option Name="data-server-port" Value="3278"/>
+  <Option Name="client-port" Value="3278"/>
+  <Option Name="data-server-host" Value="DS1"/>
+  <Option Name="render-server-host" Value="RS1"/>
+  <Option Name="client-host" Value="CH1"/>
+  <Option Name="render-server-port" Value="2359"/>
+  <Option Name="connect-data-to-render" />
+  <Option Name="client-render-server" />
+
+ 
+  <Process Type="client">
+  </Process>
+
+  <Process Type="render-server">
+    <Machine Name="rs_m1" 
+             Environment="DISPLAY=rs_m1:0"
+             LowerLeft="-1.0 -1.0 -1.0"
+             LowerRight="1.0 -1.0 -1.0"
+             UpperLeft="-1.0  1.0 -1.0" /> 
+    <Machine Name="rs_m2"
+         Environment="DISPLAY=rs_m2:0"/>
+    <Machine Name="rs_m3" />
+    <Machine Name="rs_m4" />
+    <Machine Name="rs_m5" />
+    <Machine Name="rs_m6" />
+    <Machine Name="rs_m7" />
+    <Machine Name="rs_m8" />
+    <Machine Name="rs_m9" />
+    <Machine Name="rs_m10" />
+  </Process>
+
+  <Process Host="data-server">
+    <Machine Name="ds_m1" />
+    <Machine Name="ds_m2" />
+    <Machine Name="ds_m3" />
+    <Machine Name="ds_m4" />
+    <Machine Name="ds_m5" />
+    <Machine Name="ds_m6" />
+    <Machine Name="ds_m7" />
+    <Machine Name="ds_m8" />
+    <Machine Name="ds_m9" />
+    <Machine Name="ds_m10" />
+  </Process>
+</pvx>
+
+From eschenbe at psc.edu  Wed Nov 30 13:39:34 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov 30 13:39:38 2005
+Subject: [Paraview] Mailing List Archive Needs A Little Help
+Message-ID: <AFDAA8AA4D2E47F9E5FFCFE1@harpo.psc.edu>
+
+The archive for this list would be a valuable resource if the search engine 
+at <http://www.kitware.com/search.html> worked better. For example, a 
+search of the archives for "paraview 2.4.1" yields 8 pages of hits. None 
+were the desired page and most did not even include "2.4.1".
+
+The list of messages grouped by month at 
+<http://public.kitware.com/pipermail/paraview> can be used to find the 
+announcement of 2.4.1 but the message itself is some XML file rather than 
+the original post.
+
+Kent
+Pittsburgh Supercomputing Center
+
+From eschenbe at psc.edu  Wed Nov 30 13:56:33 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov 30 13:56:36 2005
+Subject: [Paraview] V2.4.1 Compile Error in vtkSocketCommunicator
+Message-ID: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+
+Compiling 2.4.1 under Fedora Core 4 with gcc 4.0.1 yields an error:
+
+Member function 'virtual int vtkSocketCommunicator::GetPort(int)'
+Line 303
+Invalid conversion from 'int*' to 'socklen_t*'
+Initializing argument 3 of 'int getsockname(int, sockaddr*, socklen_t*)'
+
+Suggestions?
+
+Kent
+Pittsburgh Supercomputing Center
+
+From berk.geveci at gmail.com  Wed Nov 30 14:08:41 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Wed Nov 30 14:08:43 2005
+Subject: [Paraview] V2.4.1 Compile Error in vtkSocketCommunicator
+In-Reply-To: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+References: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+Message-ID: <a2ab21560511301108g70b58f67hfd4446d9bf632ef8@mail.gmail.com>
+
+In your CMakeCache.txt, what is VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T set to?
+
+On 11/30/05, Kent Eschenberg <eschenbe@psc.edu> wrote:
+>
+> Compiling 2.4.1 under Fedora Core 4 with gcc 4.0.1 yields an error:
+>
+> Member function 'virtual int vtkSocketCommunicator::GetPort(int)'
+> Line 303
+> Invalid conversion from 'int*' to 'socklen_t*'
+> Initializing argument 3 of 'int getsockname(int, sockaddr*, socklen_t*)'
+>
+> Suggestions?
+>
+> Kent
+> Pittsburgh Supercomputing Center
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20051130/36600875/attachment.htm
+From eschenbe at psc.edu  Wed Nov 30 14:20:22 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov 30 14:20:27 2005
+Subject: [Paraview] V2.4.1 Compile Error in vtkSocketCommunicator
+In-Reply-To: <a2ab21560511301108g70b58f67hfd4446d9bf632ef8@mail.gmail.com>
+References: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+	<a2ab21560511301108g70b58f67hfd4446d9bf632ef8@mail.gmail.com>
+Message-ID: <6C00FE26232100FF0D493BF4@harpo.psc.edu>
+
+VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=1
+
+
+--On Wednesday, November 30, 2005 02:08:41 PM -0500 Berk Geveci 
+<berk.geveci@gmail.com> wrote:
+> In your CMakeCache.txt, what is VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T set
+> to?
+
+
+> On 11/30/05, Kent Eschenberg <eschenbe@psc.edu> wrote:
+>> Compiling 2.4.1 under Fedora Core 4 with gcc 4.0.1 yields an error:
+>>
+>> Member function 'virtual int vtkSocketCommunicator::GetPort(int)'
+>> Line 303
+>> Invalid conversion from 'int*' to 'socklen_t*'
+>> Initializing argument 3 of 'int getsockname(int, sockaddr*, socklen_t*)'
+
+From amy.squillacote at kitware.com  Wed Nov 30 14:26:51 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Nov 30 14:27:04 2005
+Subject: [Paraview] V2.4.1 Compile Error in vtkSocketCommunicator
+In-Reply-To: <6C00FE26232100FF0D493BF4@harpo.psc.edu>
+References: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+	<a2ab21560511301108g70b58f67hfd4446d9bf632ef8@mail.gmail.com>
+	<6C00FE26232100FF0D493BF4@harpo.psc.edu>
+Message-ID: <6.2.5.6.2.20051130142213.05665848@kitware.com>
+
+In your ParaView build tree, look in VTK/vtkConfigure.h.  Is 
+VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T defined?  (It should be since the 
+CMake variable is set to 1.)  If it is not, then in your ParaView 
+build tree type do a 'make rebuild_cache' followed by 'make'.
+
+- Amy
+
+At 02:20 PM 11/30/2005, Kent Eschenberg wrote:
+>VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=1
+>
+>
+>--On Wednesday, November 30, 2005 02:08:41 PM -0500 Berk Geveci 
+><berk.geveci@gmail.com> wrote:
+>>In your CMakeCache.txt, what is VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T set
+>>to?
+>
+>
+>>On 11/30/05, Kent Eschenberg <eschenbe@psc.edu> wrote:
+>>>Compiling 2.4.1 under Fedora Core 4 with gcc 4.0.1 yields an error:
+>>>
+>>>Member function 'virtual int vtkSocketCommunicator::GetPort(int)'
+>>>Line 303
+>>>Invalid conversion from 'int*' to 'socklen_t*'
+>>>Initializing argument 3 of 'int getsockname(int, sockaddr*, socklen_t*)'
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From eschenbe at psc.edu  Wed Nov 30 17:25:58 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Wed Nov 30 17:26:04 2005
+Subject: [Paraview] V2.4.1 Compile Error in vtkSocketCommunicator
+In-Reply-To: <6.2.5.6.2.20051130142213.05665848@kitware.com>
+References: <53E7F9AB9FB974B78E7D4913@harpo.psc.edu>
+	<a2ab21560511301108g70b58f67hfd4446d9bf632ef8@mail.gmail.com>
+	<6C00FE26232100FF0D493BF4@harpo.psc.edu>
+	<6.2.5.6.2.20051130142213.05665848@kitware.com>
+Message-ID: <ACE0294DB569F5BF4633064F@harpo.psc.edu>
+
+Thanks, that fixed it. Any idea what required this
+
+--On Wednesday, November 30, 2005 02:26:51 PM -0500 Amy Squillacote 
+<amy.squillacote@kitware.com> wrote:
+> In your ParaView build tree, look in VTK/vtkConfigure.h.  Is
+> VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T defined?  (It should be since the
+> CMake variable is set to 1.)  If it is not, then in your ParaView build
+> tree type do a 'make rebuild_cache' followed by 'make'.
+>
+> At 02:20 PM 11/30/2005, Kent Eschenberg wrote:
+>> VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T:INTERNAL=1
+>>
+>> --On Wednesday, November 30, 2005 02:08:41 PM -0500 Berk Geveci
+>> <berk.geveci@gmail.com> wrote:
+>>> In your CMakeCache.txt, what is VTK_HAVE_GETSOCKNAME_WITH_SOCKLEN_T set
+>>> to?
+>>
+>>> On 11/30/05, Kent Eschenberg <eschenbe@psc.edu> wrote:
+>>>> Compiling 2.4.1 under Fedora Core 4 with gcc 4.0.1 yields an error:
+>>>>
+>>>> Member function 'virtual int vtkSocketCommunicator::GetPort(int)'
+>>>> Line 303
+>>>> Invalid conversion from 'int*' to 'socklen_t*'
+>>>> Initializing argument 3 of 'int getsockname(int, sockaddr*,
+>>>> socklen_t*)'
+
+From laa at lanl.gov  Wed Nov 30 18:32:14 2005
+From: laa at lanl.gov (Lee Ankeny)
+Date: Wed Nov 30 18:32:07 2005
+Subject: [Paraview] Log scale on XY plots?
+Message-ID: <15144348-6321-48CF-B899-09A5F32BBE18@lanl.gov>
+
+Does anyone know how to turn on log axes on the xy plotter used by  
+the line probe? Thanks,
+Lee
+From bnwylie at sandia.gov  Wed Nov 30 19:26:13 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Wed Nov 30 19:26:28 2005
+Subject: [Paraview] Log scale on XY plots?
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11E0180F4F1@ES20SNLNT.srn.sandia.gov>
+
+You can use the calculator to compute a log of a variable and then plot
+that... :)
+
+  Brian Wylie - Org 9227
+  Sandia National Laboratories
+  MS 0822 - Building 880/A1-J
+  (505)844-2238 FAX(505)845-0833                       
+       ____                  _    __
+      / __ \____  _________ | |  / (_)__ _      __ 
+     / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+    / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+   /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces+bnwylie=sandia.gov@paraview.org 
+> [mailto:paraview-bounces+bnwylie=sandia.gov@paraview.org] On 
+> Behalf Of Lee Ankeny
+> Sent: Wednesday, November 30, 2005 4:32 PM
+> To: paraview@paraview.org
+> Subject: [Paraview] Log scale on XY plots?
+> 
+> Does anyone know how to turn on log axes on the xy plotter 
+> used by the line probe? Thanks, Lee 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+

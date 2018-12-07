@@ -1,0 +1,1591 @@
+From SCoorp@LSUHSC.EDU  Fri Jan  3 22:53:41 2003
+From: SCoorp@LSUHSC.EDU (Coorpender, Steven)
+Date: Fri, 3 Jan 2003 16:53:41 -0600
+Subject: [Paraview] using paraview with CAVElib
+Message-ID: <FFBCB2526662D411A17600B0D03D55F0071FA633@lsumc-med-exch2.med.lsuhsc.edu>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_001_01C2B379.C6DACAFC
+Content-Type: text/plain
+
+Does anyone have any experience modifying the Paraview source to use the
+CAVElib for rendering? Theoretically, it should be possible with the
+vtkActorToPerformer class. What I need to do is find out where in the
+Paraview source code the rendering or mapping calls to VTK are made and make
+appropriate calls to the vtkActorToPerformer object instead. A separate loop
+will handle the rendering using OpenGL Performer and the CAVElib. Any help
+and/or ideas would be greatly appreciated.
+
+Steven Coorpender
+Systems Analyst
+LSUHSC-Ophthalmology
+504-412-1200x1446
+scoorp@lsuhsc.edu
+
+------_=_NextPart_001_01C2B379.C6DACAFC
+Content-Type: text/html
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii">
+<META NAME=3D"Generator" CONTENT=3D"MS Exchange Server version =
+5.5.2655.35">
+<TITLE>using paraview with CAVElib</TITLE>
+</HEAD>
+<BODY>
+
+<P><FONT SIZE=3D2>Does anyone have any experience modifying the =
+Paraview source to use the CAVElib for rendering? Theoretically, it =
+should be possible with the vtkActorToPerformer class. What I need to =
+do is find out where in the Paraview source code the rendering or =
+mapping calls to VTK are made and make appropriate calls to the =
+vtkActorToPerformer object instead. A separate loop will handle the =
+rendering using OpenGL Performer and the CAVElib. Any help and/or ideas =
+would be greatly appreciated.</FONT></P>
+
+<P><FONT SIZE=3D2>Steven Coorpender</FONT>
+<BR><FONT SIZE=3D2>Systems Analyst</FONT>
+<BR><FONT SIZE=3D2>LSUHSC-Ophthalmology</FONT>
+<BR><FONT SIZE=3D2>504-412-1200x1446</FONT>
+<BR><FONT SIZE=3D2>scoorp@lsuhsc.edu</FONT>
+</P>
+
+</BODY>
+</HTML>
+------_=_NextPart_001_01C2B379.C6DACAFC--
+
+From charles.law@kitware.com  Tue Jan  7 16:22:04 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Tue, 07 Jan 2003 11:22:04 -0500
+Subject: [Paraview] using paraview with CAVElib
+In-Reply-To: <FFBCB2526662D411A17600B0D03D55F0071FA633@lsumc-med-exch2.m
+ ed.lsuhsc.edu>
+Message-ID: <5.1.0.14.0.20030107111227.07472bb8@pop.biz.rr.com>
+
+Hello Steven,
+
+I do not have much experience using VTK and CAVELib, but I assume that 
+there are special vtkMapper, vtkActor or vtkRenderers which do this.  You 
+should be able to add these special subclasses in ParaView and make it 
+work.  All of these objects are created through Tcl calls, so It should be 
+easy to make the substitution.  If you are not using MPI, then ParaView 
+skips creating the composite manager, so you do not need to worry about that.
+
+The renderer/render window is created in vtkPVRenderView in the 
+"CreateRenderObjects" method.
+
+The actor and mapper are created in vtkPVData in release 0.6, but are 
+created in vtkPVPart in the nightly CVS repository.
+
+There is an environment variable (PV_SEPARATE_RENDER_WINDOW) that when set 
+causes the render window and the UI  to be in separate windows.  You may 
+need this option.
+
+Charles.
+
+
+
+
+At 04:53 PM 1/3/2003 -0600, Coorpender, Steven wrote:
+
+>Does anyone have any experience modifying the Paraview source to use the 
+>CAVElib for rendering? Theoretically, it should be possible with the 
+>vtkActorToPerformer class. What I need to do is find out where in the 
+>Paraview source code the rendering or mapping calls to VTK are made and 
+>make appropriate calls to the vtkActorToPerformer object instead. A 
+>separate loop will handle the rendering using OpenGL Performer and the 
+>CAVElib. Any help and/or ideas would be greatly appreciated.
+>
+>Steven Coorpender
+>Systems Analyst
+>LSUHSC-Ophthalmology
+>504-412-1200x1446
+>scoorp@lsuhsc.edu
+
+
+
+From charles.law@kitware.com  Tue Jan  7 16:51:40 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Tue, 07 Jan 2003 11:51:40 -0500
+Subject: [Paraview] Re: [Fwd: paraview with 200 parts]
+In-Reply-To: <1041951300.10847.0.camel@caemlyn.kitwarein.com>
+Message-ID: <5.1.0.14.0.20030107112416.07483008@pop.biz.rr.com>
+
+Jean,
+
+Thanks for the feedback.  I am currently extending ParaView so that 
+multiple vtkDataSets can be processed as one.  I just need to get all of 
+the regression tests working before I check it in.  All parts in an ensight 
+file will be loaded as one "PVSource/PVData".  This even handles 
+heterogeneous data types.  There will be no support for ghost cells between 
+parts in a group (connectivity between parts).
+
+I have not decided on an interface for creating new groups, or for 
+splitting groups.  For extracting parts of a group, I envision a long list 
+of check boxes with additional options to select/de select all parts at 
+once or parts of a certain type (i.e. vtkPolyData).
+
+It would also be nice to control visibility of sub parts without having to 
+extract them.  This option will have to wait for a while.
+
+For your fish model, (in the near future) you will be able the load the 
+whole data set as one object.  Turns its visibility off.  Extract the 201st 
+part. Turns its visibility on.
+
+Charles Law.
+Kitware Inc.
+
+
+
+> > Hello Berk (and Happy New Year)
+> >
+> > I continue to test Paraview with large data and I have come up to two
+> > suggestions for enhancements:
+> >
+> > When loading an Ensight Case File containing multiple parts, the part
+> > selection window shows the first object (the reader object) with the
+> > name of the case file and all other individual parts have the same name.
+> > So if my case file contains N parts, I have N+1 objects called with the
+> > same name in the part selection window. That is very inconvenient.
+> >
+> > I believe that only the label should be changed because when selecting 1
+> > of the N parts (example part 17), and then instantiating a filter (for
+> > example isocontour) , the contour object shows (for the example ) that
+> > input = name0_17, so it correctly picks up part number 17.
+> >
+> > Secondly, I see that the input selection widgets (just below the Accept
+> > button) should be changed to a scrollable widget. In my case the list
+> > only shows the top 56 parts, and do not allow to change selection to a
+> > part number greater than 56.
+> >
+> > (I have 201 parts in my model)
+> >
+
+...
+
+> > I forgot to tell you another suggestion.
+> >
+> > When loading many parts, the display of the parts should be optional.
+> > This is a very common option of visualization softwares to allow a
+> > volume of data to be loaded but without visual. Ensight calls this
+> > option "Load data in mode NonVisual"
+> >
+> > In my case, all 200 parts should be invisible (I click all of their
+> > visibility off) and only the 201th parts shows the airplane surface.
+> >
+> > I forgot to tell you, but I use the nightly version.
+> >
+> > Jean
+> > --
+> > Dr. Jean M. Favre,                            email:favre@cscs.ch
+> > http://www.cscs.ch/people/Favre.html
+> > CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+> > Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+
+From jfavre@cscs.ch  Tue Jan  7 20:24:41 2003
+From: jfavre@cscs.ch (jfavre@cscs.ch)
+Date: Tue, 07 Jan 2003 21:24:41 +0100
+Subject: [Paraview] Re: [Fwd: paraview with 200 parts]
+In-Reply-To: <5.1.0.14.0.20030107112416.07483008@pop.biz.rr.com>
+References: <5.1.0.14.0.20030107112416.07483008@pop.biz.rr.com>
+Message-ID: <1041971081.3e1b3789e5a85@www.cscs.ch>
+
+Quoting Charles Law <charles.law@kitware.com>:
+
+> I have not decided on an interface for creating new groups, or for 
+> splitting groups.  For extracting parts of a group, I envision a long
+> list 
+> of check boxes with additional options to select/de select all parts at 
+> once or parts of a certain type (i.e. vtkPolyData).
+
+Charles, thanks for your input.
+
+In EnSight, selection of a subset of many parts can be done with the usual 
+combinations of mouse clicks (select with Left Mouse Button (LMB), followed by 
+Ctrl-LMB, or Shift-LMB). My first reaction to check boxes is that it would be 
+very cumbersome for long lists of parts. In CFD, the models I use daily are 
+between 200 and 1000 parts. I know others use up to 5000 parts...
+
+Additionally, selection can be done by names, using the standard wildcard ? and 
+*. This is particularly useful when the names of the parts encode some property 
+of the part, as for example a Flow Boundary Condition. One can then select at 
+once all the parts representing a special flow or geometric property.
+
+Just a few ideas. I am ready to test some preliminary implementations and give 
+you more feedback.
+
+Thanks.
+Jean
+
+From jfavre@cscs.ch  Thu Jan  9 14:51:30 2003
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 09 Jan 2003 15:51:30 +0100
+Subject: [Paraview] configuration file for tiled display?
+Message-ID: <3E1D8C72.ADCE4608@cscs.ch>
+
+Hello
+
+I'd like to run ParaView (CVS version) on an SGI 3-pipe with 3 curved
+displays attached together in an hemispheric screen. 
+
+Problem is I cannot find out how the configuration should be defined. I
+have used 2 other viz softwares and I was used to defining a small ASCII
+file with each display's config.
+
+Would someone have an example or some hands-on tips on how to do it?
+
+TIA.
+Jean
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From gku@ornl.gov  Thu Jan  9 14:55:25 2003
+From: gku@ornl.gov (gku)
+Date: Thu, 09 Jan 2003 09:55:25 -0500
+Subject: [Paraview] Compilation error
+Message-ID: <3DFE158C@webmail1>
+
+Hi,
+
+Can any one help me in compiling paraview. I got the following error when I 
+tried to compile the complete paraview package.
+
+g++ -O2 -Wno-deprecated -DvtkKWCommonTCL_EXPORTS  -fPIC 
+-I/home/kora/temp/ParaViewComplete/ParaView/KWCommon 
+-I/home/kora/temp/ParaViewComplete/VTK/Rendering 
+-I/home/kora/temp/ParaViewComplete/VTK/Hybrid 
+-I/home/kora/temp/ParaViewComplete/VTK/Patented 
+-I/home/kora/temp/ParaViewComplete/VTK/Parallel 
+-I/home/kora/temp/ParaViewComplete/VTK 
+-I/home/kora/temp/ParaViewComplete/VTK/Common 
+-I/home/kora/temp/ParaViewComplete/VTK/Filtering 
+-I/home/kora/temp/ParaViewComplete/VTK/Imaging 
+-I/home/kora/temp/ParaViewComplete/VTK/Graphics 
+-I/home/kora/temp/ParaViewComplete/VTK/IO 
+-I/home/kora/temp/ParaViewComplete/VTK/Utilities/zlib 
+-I/home/kora/temp/ParaViewComplete/VTK/Utilities/png 
+-I/home/kora/temp/ParaViewComplete/VTK/Utilities/jpeg 
+-I/home/kora/temp/ParaViewComplete/VTK/Utilities/tiff 
+-I/home/kora/temp/ParaViewComplete/VTK/Utilities/expat 
+-I/home/kora/temp/ParaViewComplete/VTK/Common/Testing/Cxx 
+-I/home/kora/temp/ParaViewComplete/tcl8.3.2/generic 
+-I/home/kora/temp/ParaViewComplete/tk8.3.2/generic 
+-I/home/kora/temp/ParaViewComplete/ParaView 
+-I/home/kora/temp/ParaViewComplete/ParaView/KWCommon 
+-I/home/kora/temp/ParaViewComplete/ParaView/Widgets 
+-I/home/kora/temp/ParaViewComplete/ParaView/ParaView    -I/usr/X11R6/include 
+-D_HPUX_SOURCE  -I/usr/X11R6/include -c 
+/home/kora/temp/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities
+.cxx -o vtkKWUNIXRegisteryUtilities.o
+/home/kora/temp/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities
+.cxx: In
+   member function `virtual int 
+vtkKWUNIXRegisteryUtilities::OpenInternal(const
+   char*, const char*, int)':
+/home/kora/temp/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities
+.cxx:100: `
+   nocreate' is not a member of type `std::basic_ios<char,
+   std::char_traits<char> >'
+make[5]: *** [vtkKWUNIXRegisteryUtilities.o] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_KWCommon] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_ParaView] Error 2
+make: *** [default_target] Error 2
+
+
+I tried both the release version and one from the cvs, both give the same 
+error message.
+
+Appreciate your help.
+
+Thanks,
+Guru.
+
+
+
+From gku@ornl.gov  Thu Jan  9 16:24:26 2003
+From: gku@ornl.gov (gku)
+Date: Thu, 09 Jan 2003 11:24:26 -0500
+Subject: [Paraview] CMakeList.txt missing
+Message-ID: <3DFE2F95@webmail1>
+
+Hi,
+ 
+The following file is missing in the paraview complete distribution. Can 
+anybody tell me where can I get this file.
+ 
+<path>/ParaViewComplete06/ParaView/Documentation/CMakeList.txt
+ 
+Thanks, 
+Guru.
+
+
+
+
+From charles.law@kitware.com  Fri Jan 10 15:42:12 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 10 Jan 2003 10:42:12 -0500
+Subject: [Paraview] configuration file for tiled display?
+In-Reply-To: <3E1D8C72.ADCE4608@cscs.ch>
+Message-ID: <5.1.0.14.0.20030110102849.073bcea0@pop.biz.rr.com>
+
+Jean,
+
+ParaView does have a simple option to use tiled displays, but I have not 
+added the ability to define the displays in a configuration file 
+yet.  ParaView assumes that the displays are coplanar so I do not know how 
+the hemispheric display would look.  Display arrangement could be much more 
+flexible if we added a configuration file.
+
+For now, you control the display configuration with command line options:
+
+--use-tiled-display --tile-dimension-x=3 --tile-dimension-y=1
+
+You would have to start ParaView with 4 processes.  The user interface is 
+shown in processes 1 and the other three processes render to the tiled 
+displays.
+
+
+There is also no support (currently) for specifying which Xdisplay to 
+use.  This could also be added to a configuration file.
+
+
+Charles.
+
+
+
+
+At 03:51 PM 1/9/2003 +0100, Jean M. Favre wrote:
+>Hello
+>
+>I'd like to run ParaView (CVS version) on an SGI 3-pipe with 3 curved
+>displays attached together in an hemispheric screen.
+>
+>Problem is I cannot find out how the configuration should be defined. I
+>have used 2 other viz softwares and I was used to defining a small ASCII
+>file with each display's config.
+>
+>Would someone have an example or some hands-on tips on how to do it?
+>
+>TIA.
+>Jean
+>--
+>Dr. Jean M. Favre,                            email:favre@cscs.ch
+>http://www.cscs.ch/people/Favre.html
+>CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+>Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From Georg.Schulze-Icking@infineon.com  Thu Jan 16 13:03:12 2003
+From: Georg.Schulze-Icking@infineon.com (Georg.Schulze-Icking@infineon.com)
+Date: Thu, 16 Jan 2003 14:03:12 +0100
+Subject: [Paraview] Paraview on MacOS X?
+Message-ID: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F4C50@mucse005.eu.infineon.com>
+
+Hi,
+
+I guess this is bread and butter for you but I've been struggling for days
+now to get Paraview to compile under Jaguar... :-(
+Is there any (foolproof) description or even an installer available??? Make
+my day and telle me there is... ;-)
+
+Georg
+
+
+From charles.law@kitware.com  Thu Jan 16 18:51:32 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 16 Jan 2003 13:51:32 -0500
+Subject: [Paraview] Paraview on MacOS X?
+In-Reply-To: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F4C50@mucse005.eu.infin
+ eon.com>
+Message-ID: <5.1.0.14.0.20030116134217.032b3388@pop.biz.rr.com>
+
+Georg,
+
+We have not been able to get ParaView (or VolView) running flawlessly on 
+the Mac, but we are slowly making progress on this task.  We are hoping 
+that the latest release of Tcl/Tk will solve some of the issues we 
+encountered during our last attempt.  Needless to say, there is no 
+(foolproof) description or installer to get ParaView running on this platform.
+
+Chalres.
+
+
+
+At 02:03 PM 1/16/2003 +0100, Georg.Schulze-Icking@infineon.com wrote:
+>Hi,
+>
+>I guess this is bread and butter for you but I've been struggling for days
+>now to get Paraview to compile under Jaguar... :-(
+>Is there any (foolproof) description or even an installer available??? Make
+>my day and telle me there is... ;-)
+>
+>Georg
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+From Georg.Schulze-Icking@infineon.com  Mon Jan 20 09:40:45 2003
+From: Georg.Schulze-Icking@infineon.com (Georg.Schulze-Icking@infineon.com)
+Date: Mon, 20 Jan 2003 10:40:45 +0100
+Subject: AW: [Paraview] Paraview on MacOS X?
+Message-ID: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F4F14@mucse005.eu.infineon.com>
+
+Charles,
+
+thanks a lot for your answer, even though it confirmed my expectation. =
+Do
+you know if there's any other dummy-friendly frontend for vtk under =
+OSX? And
+could you keep me up-to-date with your efforts to compile Paraview? =
+Thanks a
+lot in advance!
+
+Georg
+
+
+-----Urspr=FCngliche Nachricht-----
+Von: Charles Law [mailto:charles.law@kitware.com]
+Gesendet am: Donnerstag, 16. Januar 2003 19:52
+An: Schulze-Icking Georg (MP TI CS SIM); paraview@public.kitware.com
+Betreff: Re: [Paraview] Paraview on MacOS X?
+
+Georg,
+
+We have not been able to get ParaView (or VolView) running flawlessly =
+on=20
+the Mac, but we are slowly making progress on this task.  We are hoping =
+
+that the latest release of Tcl/Tk will solve some of the issues we=20
+encountered during our last attempt.  Needless to say, there is no=20
+(foolproof) description or installer to get ParaView running on this
+platform.
+
+Chalres.
+
+
+
+At 02:03 PM 1/16/2003 +0100, Georg.Schulze-Icking@infineon.com wrote:
+>Hi,
+>
+>I guess this is bread and butter for you but I've been struggling for =
+days
+>now to get Paraview to compile under Jaguar... :-(
+>Is there any (foolproof) description or even an installer available??? =
+Make
+>my day and telle me there is... ;-)
+>
+>Georg
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@public.kitware.com
+>http://public.kitware.com/mailman/listinfo/paraview
+
+
+From prabhu@aero.iitm.ernet.in  Mon Jan 20 13:44:18 2003
+From: prabhu@aero.iitm.ernet.in (Prabhu Ramachandran)
+Date: Mon, 20 Jan 2003 19:14:18 +0530
+Subject: AW: [Paraview] Paraview on MacOS X?
+In-Reply-To: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F4F14@mucse005.eu.infineon.com>
+References: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F4F14@mucse005.eu.infineon.com>
+Message-ID: <15915.64818.998212.522118@monster.linux.in>
+
+Hi,
+
+>>>>> "GS" == Georg Schulze-Icking <Georg.Schulze-Icking@infineon.com> writes:
+
+    GS> Charles, thanks a lot for your answer, even though it
+    GS> confirmed my expectation. Do you know if there's any other
+    GS> dummy-friendly frontend for vtk under OSX? And could you keep
+
+At the risk of getting dirty looks on this list ;-) I suggest that if
+you can get VTK-Python working on OSX you can give MayaVi
+(http://mayavi.sf.net) a shot.  It should also serve as a reasonable
+front end to VTK.
+
+cheers,
+prabhu
+
+From jlpina@inicia.es  Wed Jan 22 11:01:12 2003
+From: jlpina@inicia.es (JOSE LUIS PINA MARTINEZ)
+Date: Wed, 22 Jan 2003 12:01:12 +0100
+Subject: [Paraview] paraview06,ray tracing
+Message-ID: <3DECA12E0000F2DC@pop1.tiscalinet.es>
+
+Hello:
+I have just downloaded paraview06, I think is a powerful tool but i canno=
+t
+find some filters of volume rendering, like ray casting etc.
+Where can i get them?.
+
+Thanks.
+
+
+jlpina@inicia.es
+
+-------------------------------------------------
+ADSL Tiscali -  http://adsl.tiscali.es 
+el m=E1s completo y competitivo =A1por s=F3lo 38.95 =80!
+Y adem=E1s, llama GRATIS desde tu PC.
+-------------------------------------------------
+
+
+
+
+From andy.cedilnik@kitware.com  Wed Jan 22 13:24:43 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 22 Jan 2003 08:24:43 -0500
+Subject: [Paraview] paraview06,ray tracing
+In-Reply-To: <3DECA12E0000F2DC@pop1.tiscalinet.es>
+References: <3DECA12E0000F2DC@pop1.tiscalinet.es>
+Message-ID: <1043241883.1814.84.camel@xanth>
+
+Hello,
+
+ParaView does not support volume rendering.
+
+				Andy
+
+On Wed, 2003-01-22 at 06:01, JOSE LUIS PINA MARTINEZ wrote:
+> Hello:
+> I have just downloaded paraview06, I think is a powerful tool but i cannot
+> find some filters of volume rendering, like ray casting etc.
+> Where can i get them?.
+
+
+
+From Georg.Schulze-Icking@infineon.com  Thu Jan 23 07:35:54 2003
+From: Georg.Schulze-Icking@infineon.com (Georg.Schulze-Icking@infineon.com)
+Date: Thu, 23 Jan 2003 08:35:54 +0100
+Subject: AW: AW: [Paraview] Paraview on MacOS X?
+Message-ID: <5DE52899FC63CC4F82AE0CD7B7D8FA93057F53BF@mucse005.eu.infineon.com>
+
+Hi,
+
+thanks for the hint. I had a look at MayaVi and have to say that it's =
+far
+less intuitive than Paraview. Besides, I heard that Kitware is about to
+release a OSX version of Paraview so I'd rather not go through the =
+hassle of
+installing vtk & Python... ;-)
+
+Georg
+
+
+-----Urspr=FCngliche Nachricht-----
+Von: Prabhu Ramachandran [mailto:prabhu@aero.iitm.ernet.in]
+Gesendet am: Montag, 20. Januar 2003 14:44
+An: Schulze-Icking Georg (MP TI CS SIM)
+Cc: paraview@public.kitware.com
+Betreff: Re: AW: [Paraview] Paraview on MacOS X?
+
+Hi,
+
+>>>>> "GS" =3D=3D Georg Schulze-Icking =
+<Georg.Schulze-Icking@infineon.com>
+writes:
+
+    GS> Charles, thanks a lot for your answer, even though it
+    GS> confirmed my expectation. Do you know if there's any other
+    GS> dummy-friendly frontend for vtk under OSX? And could you keep
+
+At the risk of getting dirty looks on this list ;-) I suggest that if
+you can get VTK-Python working on OSX you can give MayaVi
+(http://mayavi.sf.net) a shot.  It should also serve as a reasonable
+front end to VTK.
+
+cheers,
+prabhu
+
+From Said.El_Kasmi@sophia.inria.fr  Fri Jan 24 11:24:37 2003
+From: Said.El_Kasmi@sophia.inria.fr (s.el kasmi)
+Date: Fri, 24 Jan 2003 12:24:37 +0100
+Subject: [Paraview] Runnnig ParaView in parallel mode.
+Message-ID: <3E312275.F29BBD3@sophia.inria.fr>
+
+Hi all,
+
+I'm trying to run ParaView in parallel mode and I have some difficults.
+
+Using de command line: mpirun -np 2 -machinefile hosts ParaView
+
+ I got the message:
+
+bash-2.05b$ mpirun -np 2 -machinefile hosts ParaView    
+
+WARNING: Your system is running with a buggy dynamic loader.
+This may cause crashes in certain applications.  If you
+experience crashes you can try setting the environment
+variable __GL_SINGLE_THREADED.  For more information please
+consult the FREQUENTLY ASKED QUESTIONS section in the file
+/usr/share/doc/NVIDIA_GLX-1.0/README.
+
+WARNING: Your system is running with a buggy dynamic loader.
+This may cause crashes in certain applications.  If you
+experience crashes you can try setting the environment
+variable __GL_SINGLE_THREADED.  For more information please
+consult the FREQUENTLY ASKED QUESTIONS section in the file
+/usr/share/doc/NVIDIA_GLX-1.0/README.
+no display name and no $DISPLAY environment variable
+p0_4572: (14.663885) net_send: could not write to fd=6, errno = 104
+bash-2.05b$ 
+
+Does any body have an idea about what does this mean.
+
+Thanks.
+
+-- 
+Said.
+--------------------------------------------------------------------
+Said EL KASMI.
+INRIA - Projet CAIMAN. 2004, Route des Lucioles - BP 93     
+06902 Sophia Antipolis Cedex (France)- Tel: 04 92 38 79 07     
+Email:   Said.El_kasmi@sophia.inria.fr
+
+From mod@modulus321.com  Fri Jan 24 21:56:18 2003
+From: mod@modulus321.com (modulus321)
+Date: Fri, 24 Jan 2003 15:56:18 -0600
+Subject: [Paraview] General compile questions
+Message-ID: <033001c2c3f3$6fdf4e50$1445a8c0@iron2000>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_032B_01C2C3C1.21E27970
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Hello, I am a first time poster and new to ParaView.
+
+    I am trying to comile ParaView to run on a Linux 7.3 cluster.  The =
+reason I am comiling is I need to take advantage of the Mesa offscreen =
+rendering.  My questions are:
+
+    1.     Is all I need to do is turn on the use Mesa option (and =
+location of the library and header file) or do I also need to enable the =
+mangling option?  If I turn just the mesa option and compile the binary =
+still does not seem to like the -r option from the command line (it says =
+its not recognized).  I can't really test the offscreen with just the =
+PV_OFFSCREEN environment variable set because of question 2.
+
+    2.     After comiling and running the new binary there are not any =
+of the XML file types in the file | open dialog box.  How can I get =
+these to appear?  I am trying to load a pvti file with its associated =
+vti files and ParaView says it is an unrecognized file type (they do =
+work in the binaries downloaded from the web site).
+
+    Thank you in advance for any help on these options....
+
+
+Tim
+
+------=_NextPart_000_032B_01C2C3C1.21E27970
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2722.900" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>Hello, I am a first time poster and new =
+to=20
+ParaView.</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; I am trying to =
+comile ParaView=20
+to run on a Linux 7.3 cluster.&nbsp; The reason I am comiling is I need =
+to take=20
+advantage of the Mesa offscreen rendering.&nbsp; My questions =
+are:</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; =
+1.&nbsp;&nbsp;&nbsp;&nbsp; Is=20
+all I need to do is turn on the use Mesa option (and location of the =
+library and=20
+header file) or do I also need to enable the mangling option?&nbsp; If I =
+
+turn&nbsp;just the mesa option&nbsp;and compile the binary still does =
+not seem=20
+to like the -r option from the command line (it says its not =
+recognized).&nbsp;=20
+I can't really test the offscreen with just the PV_OFFSCREEN environment =
+
+variable set because of question 2.</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; 2. =
+&nbsp;&nbsp;&nbsp; After=20
+comiling and running the new binary there are not any of the XML file =
+types in=20
+the file | open dialog box.&nbsp; How can I get these to appear?&nbsp; I =
+am=20
+trying to load a pvti file with its associated vti files and ParaView =
+says it is=20
+an unrecognized file type (they do work in the binaries downloaded from =
+the web=20
+site).</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>&nbsp;&nbsp;&nbsp; Thank you in advance =
+for any=20
+help on these options....</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Tim</FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_032B_01C2C3C1.21E27970--
+
+
+
+From robbel@science.uva.nl  Mon Jan 27 16:34:53 2003
+From: robbel@science.uva.nl (Robert Belleman)
+Date: Mon, 27 Jan 2003 17:34:53 +0100
+Subject: [Paraview] using paraview with CAVElib
+In-Reply-To: <5.1.0.14.0.20030107111227.07472bb8@pop.biz.rr.com>; from charles.law@kitware.com on Tue, Jan 07, 2003 at 11:22:04AM -0500
+References: <FFBCB2526662D411A17600B0D03D55F0071FA633@lsumc-med-exch2.m ed.lsuhsc.edu> <5.1.0.14.0.20030107111227.07472bb8@pop.biz.rr.com>
+Message-ID: <20030127173453.A13057@lanier.science.uva.nl>
+
+Hi Steven, Charles,
+
+Unfortunately, there's a little bit more you need to be able to use
+Vtk/ParaView with CAVElib, especially in multi-piped/walled
+configurations.
+
+The problem is that display processes in CAVElib versions prior to 3.x
+need shared memory to access the geometry that is to be rendered by
+the different pipes. This would either require that vtkMapper and
+Actor are changed so they allocate from shared mem (instead of heap),
+or copying geometry into shared mem. The latter is what
+vtkActorToPerformer does (and vtk2CAVE as well, by Matthew Hall).
+
+You can probably imagine that the overhead in copying can kill
+performance, especially if visualization pipelines re-execute
+frequently. Also; on some systems shared memory is a limited resource;
+on Linux systems for example, this is 32MB by default (cat
+/proc/sys/kernel/shmmax), which isn't a lot if you're rendering
+complex scenes...
+
+Version 3.x of CAVElib gives you the option of using display *threads*
+instead of (forked) processes. This allows display processes to access
+memory from heap, thereby solving (most) of these problems.
+
+We have implemented CAVElib 3.x versions of vtkActor, vtkRenderer,
+RenderWindow, RenderWindowInteractor, and more, but haven't really had
+a time to fully test this on systems other than our single-walled
+Linux-based VR system.
+
+If there is a need, we would be willing to share our code. But again;
+note that this software requires CAVElib version 3.x.
+
+Best,
+-- Rob
+
+-- 
+[] Robert Belleman         X  Section Computational Science            []
+[] robbel@science.uva.nl  |X| University of Amsterdam, the Netherlands []
+[] tel: (+31) 20 525 7510  X  http://www.science.uva.nl/~robbel/       []
+
+On Tue, Jan 07, 2003 at 11:22:04AM -0500, Charles Law wrote:
+> Hello Steven,
+> 
+> I do not have much experience using VTK and CAVELib, but I assume that 
+> there are special vtkMapper, vtkActor or vtkRenderers which do this.  You 
+> should be able to add these special subclasses in ParaView and make it 
+> work.  All of these objects are created through Tcl calls, so It should be 
+> easy to make the substitution.  If you are not using MPI, then ParaView 
+> skips creating the composite manager, so you do not need to worry about that.
+> 
+> The renderer/render window is created in vtkPVRenderView in the 
+> "CreateRenderObjects" method.
+> 
+> The actor and mapper are created in vtkPVData in release 0.6, but are 
+> created in vtkPVPart in the nightly CVS repository.
+> 
+> There is an environment variable (PV_SEPARATE_RENDER_WINDOW) that when set 
+> causes the render window and the UI  to be in separate windows.  You may 
+> need this option.
+> 
+> Charles.
+> 
+> 
+> 
+> 
+> At 04:53 PM 1/3/2003 -0600, Coorpender, Steven wrote:
+> 
+> >Does anyone have any experience modifying the Paraview source to use the 
+> >CAVElib for rendering? Theoretically, it should be possible with the 
+> >vtkActorToPerformer class. What I need to do is find out where in the 
+> >Paraview source code the rendering or mapping calls to VTK are made and 
+> >make appropriate calls to the vtkActorToPerformer object instead. A 
+> >separate loop will handle the rendering using OpenGL Performer and the 
+> >CAVElib. Any help and/or ideas would be greatly appreciated.
+> >
+> >Steven Coorpender
+> >Systems Analyst
+> >LSUHSC-Ophthalmology
+> >504-412-1200x1446
+> >scoorp@lsuhsc.edu
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+From berklist@nycap.rr.com  Mon Jan 27 21:53:15 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 27 Jan 2003 16:53:15 -0500
+Subject: [Paraview] Runnnig ParaView in parallel mode.
+In-Reply-To: <3E312275.F29BBD3@sophia.inria.fr>
+References: <3E312275.F29BBD3@sophia.inria.fr>
+Message-ID: <1043704395.19686.8.camel@caemlyn.kitwarein.com>
+
+> WARNING: Your system is running with a buggy dynamic loader.
+> This may cause crashes in certain applications.  If you
+> experience crashes you can try setting the environment
+> variable __GL_SINGLE_THREADED.  For more information please
+> consult the FREQUENTLY ASKED QUESTIONS section in the file
+> /usr/share/doc/NVIDIA_GLX-1.0/README.
+> 
+> WARNING: Your system is running with a buggy dynamic loader.
+> This may cause crashes in certain applications.  If you
+> experience crashes you can try setting the environment
+> variable __GL_SINGLE_THREADED.  For more information please
+> consult the FREQUENTLY ASKED QUESTIONS section in the file
+> /usr/share/doc/NVIDIA_GLX-1.0/README.
+> no display name and no $DISPLAY environment variable
+> p0_4572: (14.663885) net_send: could not write to fd=6, errno = 104
+> bash-2.05b$ 
+> 
+> Does any body have an idea about what does this mean.
+
+I don't know what the first error is. I guess it is the NVIDIA drivers
+telling that they don't like the dynamic loader you are using, this
+has nothing to do with ParaView. However, this is not why ParaView
+is not running. It is not running because your 2nd process does not
+get a DISPLAY variable and it can't figure out where to display it's
+window. Depending on your MPI implementation and the shell you are
+using, there are different ways of setting this. Some MPI 
+implementations allow specifying env. variables on the command line
+while with others you have to specify it in a startup file such as
+.bashrc.
+
+
+From berklist@nycap.rr.com  Mon Jan 27 22:13:59 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 27 Jan 2003 17:13:59 -0500
+Subject: [Paraview] General compile questions
+In-Reply-To: <033001c2c3f3$6fdf4e50$1445a8c0@iron2000>
+References: <033001c2c3f3$6fdf4e50$1445a8c0@iron2000>
+Message-ID: <1043705656.19674.29.camel@caemlyn.kitwarein.com>
+
+Hi Tim,
+
+1. Are you trying to mix Mesa (for off-screen rendering) and hardware
+accelerated OpenGL (for on-screen rendering) or to simply switch to
+using Mesa for both ? 
+
+2. When creating the binaries, I hacked the build a little to include
+the xml readers (normally, they are optional). If you want, I can
+send the distribution I used (the modifications are a little
+complicated to describe here).
+
+-Berk
+
+
+
+From mod@modulus321.com  Tue Jan 28 00:12:39 2003
+From: mod@modulus321.com (modulus321)
+Date: Mon, 27 Jan 2003 18:12:39 -0600
+Subject: [Paraview] General compile questions
+References: <033001c2c3f3$6fdf4e50$1445a8c0@iron2000> <1043705656.19674.29.camel@caemlyn.kitwarein.com>
+Message-ID: <042c01c2c661$fd4107a0$1445a8c0@iron2000>
+
+Berk,
+
+1.  Right now I am trying for the simplest way for reliably getting the
+system to work so probably straight Mesa.  I only want  the master window to
+get displayed (using a Linux environment cluster).
+
+2.  The distribution would be very helpfull, thank you!  You can send it
+directly to me or I can pull from somewhere.  What does Kitware do for their
+build procedures to make the binaries that they distribute?  Is there a
+reference in vtk that would explain the procedures you took or is it
+ParaView specific?
+
+Thank you for your help!
+
+Tim
+----- Original Message -----
+From: "Berk Geveci" <berklist@nycap.rr.com>
+To: "modulus321" <mod@modulus321.com>
+Cc: <paraview@public.kitware.com>
+Sent: Monday, January 27, 2003 4:13 PM
+Subject: Re: [Paraview] General compile questions
+
+
+> Hi Tim,
+>
+> 1. Are you trying to mix Mesa (for off-screen rendering) and hardware
+> accelerated OpenGL (for on-screen rendering) or to simply switch to
+> using Mesa for both ?
+>
+> 2. When creating the binaries, I hacked the build a little to include
+> the xml readers (normally, they are optional). If you want, I can
+> send the distribution I used (the modifications are a little
+> complicated to describe here).
+>
+> -Berk
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+>
+
+
+
+From th032@rogers.com  Wed Jan 29 04:02:17 2003
+From: th032@rogers.com (Tom Hosiawa)
+Date: 28 Jan 2003 23:02:17 -0500
+Subject: [Paraview] CVS Build error
+Message-ID: <1043812936.3016.35.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.rogers.com>
+
+I'm trying to build Paraview from cvs with cmake 1.6. I'm running Red
+Hat 8,  2.4.20 kernel on an AMD Tbird 1GHz.
+
+I had to set the backwards_compatibility to 1.4 because I was getting
+this error numerous times:
+----------
+CMake Error: Error in cmake code at
+
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/CMakeLists.txt:3:
+SOURCE_FILES The SOURCE_FILES command was deprecated in CMake version
+1.4 and will be removed in later versions of CMake. You should modify
+your CMakeLists.txt files to use the SET command instead, or set the
+cache value of CMAKE_BACKWARDS_COMPATIBILITY to 1.2 or less
+----------
+
+and this one aswell:
+----------
+CMake Error: can not find file
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/Widgets/vtktcl
+
+ Tried .cxx .cpp .c .M .m .mm .h .txx .in
+----------
+
+
+I still get another error when backward_compatibility to 1.4 numerous
+times, should these really be happening???
+----------
+he SOURCE_FILES command was deprecated in CMake version 1.4 and will be
+removed in later versions. You should modify your CMakeLists.txt files
+to use the SET command instead, or set the cache value of
+CMAKE_BACKWARDS_COMPATIBILITY to 1.2 or less.
+----------
+
+
+Anyways, I configured it and did make; it goes fine until this point:
+----------
+Building object file vtkKWUNIXRegisteryUtilities.o...
+In file included from /usr/include/c++/3.2/backward/iostream.h:31,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/VTK/Common/vtkSystemIncludes.h:68,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/VTK/Common/vtkIndent.h:27,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/VTK/Common/vtkObjectBase.h:46,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/VTK/Common/vtkObject.h:44,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/vtkKWRegisteryUtilities.h:52,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities.h:51,
+                 from
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities.cxx:42:
+/usr/include/c++/3.2/backward/backward_warning.h:32:2: warning: #warning
+This file includes at least one deprecated or antiquated header. Please
+consider using one of the 32 headers found in section 17.4.1.2 of the
+C++ standard. Examples include substituting the <X> header for the <X.h>
+header for C++ includes, or <sstream> instead of the deprecated header
+<strstream.h>. To disable this warning use -Wno-deprecated.
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities.cxx: In
+   member function `virtual int
+vtkKWUNIXRegisteryUtilities::OpenInternal(const
+   char*, const char*, int)':
+/home/th032/local/src/paraview/ParaViewComplete/ParaView/KWCommon/vtkKWUNIXRegisteryUtilities.cxx:100: `
+   nocreate' is not a member of type `std::basic_ios<char,
+   std::char_traits<char> >'
+make[5]: *** [vtkKWUNIXRegisteryUtilities.o] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_KWCommon] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_ParaView] Error 2
+make: *** [default_target] Error 2
+----------
+
+I took a look into that file and found this, its taking the else part
+since I see in my CMakeList file its set to OFF. How do I know if I
+should be using VKT_USE_ANSI_STDLIB??? 
+---------
+#ifdef VTK_USE_ANSI_STDLIB
+#define VTK_IOS_NOCREATE
+#else
+#define VTK_IOS_NOCREATE | ios::nocreate
+#endif
+--------
+
+Hopefully this all made sense, thanks
+	Tom
+
+
+From emmanuel.colin@supelec.fr  Wed Jan 29 08:52:48 2003
+From: emmanuel.colin@supelec.fr (Emmanuel Colin)
+Date: Wed, 29 Jan 2003 09:52:48 +0100
+Subject: [Paraview] Running in parallel mode
+Message-ID: <3E379660.4030508@supelec.fr>
+
+Hi,
+
+After some unsuccessfull tries with the CVS version of Paraview and
+MPICH, I got ParaView06 to compile with LAM-MPI libraries on a Linux
+cluster.
+
+Trying to run it in parallel mode, it started to run (I got the ParaView
+graphical loading widget), then decided it had better not... Here is the
+output :
+
+$mpirun -v -lamd -np 2 ./bin/paraview06/bin/ParaView
+32268 ./bin/paraview06/bin/ParaView running on n0 (o)
+1488 ./bin/paraview06/bin/ParaView running on n1
+no display name and no $DISPLAY environment variable
+MPI_Send: invalid tag argument: out of range (rank 0, comm 2)
+Rank (0, MPI_COMM_WORLD): Call stack within LAM:
+Rank (0, MPI_COMM_WORLD):  - MPI_Send()
+Rank (0, MPI_COMM_WORLD):  - main()
+
+  From the previous mails about parallel mode, I thought it might be a
+DISPLAY environment variable problem. So I ran the same process on a
+biprocessor system, and got a similar problem :
+
+$mpirun -v -lamd -np 2 ./bin/PV06/bin/ParaView
+22845 ./bin/PV06/bin/ParaView running on n0 (o)
+22846 ./bin/PV06/bin/ParaView running on n0 (o)
+MPI_Recv: invalid tag argument (rank 1, comm 2)
+Rank (1, MPI_COMM_WORLD): Call stack within LAM:
+Rank (1, MPI_COMM_WORLD):  - MPI_Recv()
+Rank (1, MPI_COMM_WORLD):  - main()
+-----------------------------------------------------------------------------
+
+One of the processes started by mpirun has exited with a nonzero exit
+code.  This typically indicates that the process finished in error.
+If your process did not finish in error, be sure to include a "return
+0" or "exit(0)" in your C code before exiting the application.
+
+PID 22845 failed on node n0 with exit status 1.
+-----------------------------------------------------------------------------
+
+Thanks in advance for any hints at what the problem might be.
+
+--
+Emmanuel
+
+
+
+
+From berk.geveci@kitware.com  Wed Jan 29 18:45:53 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 29 Jan 2003 13:45:53 -0500
+Subject: [Paraview] CVS Build error
+In-Reply-To: <1043812936.3016.35.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.roger
+ s.com>
+References: <1043812936.3016.35.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.roger
+ s.com>
+Message-ID: <1043865955.30299.34.camel@caemlyn.kitwarein.com>
+
+> I'm trying to build Paraview from cvs with cmake 1.6. I'm running Red
+> Hat 8,  2.4.20 kernel on an AMD Tbird 1GHz.
+
+When you say "ParaView from cvs", do you mean the release branch 
+(ParaView-0-6) or the development ? Also, do you use ParaViewComplete
+or separate VTK and ParaView trees ?
+
+> I took a look into that file and found this, its taking the else part
+> since I see in my CMakeList file its set to OFF. How do I know if I
+> should be using VKT_USE_ANSI_STDLIB??? 
+> ---------
+> #ifdef VTK_USE_ANSI_STDLIB
+> #define VTK_IOS_NOCREATE
+> #else
+> #define VTK_IOS_NOCREATE | ios::nocreate
+> #endif
+> --------
+> 
+
+This is a work-around for older gnu compilers. If you are using gcc 3.0
+or older, you should set VTK_USE_ANSI_STDLIB CMake (advanced) setting  
+to ON. In the future, this setting will be on by default.
+
+-Berk
+
+
+
+
+
+From th032@rogers.com  Thu Jan 30 03:26:49 2003
+From: th032@rogers.com (Tom Hosiawa)
+Date: 29 Jan 2003 22:26:49 -0500
+Subject: [Paraview] CVS Build error
+In-Reply-To: <1043865955.30299.34.camel@caemlyn.kitwarein.com>
+References: <1043812936.3016.35.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.roger s.com>
+ <1043865955.30299.34.camel@caemlyn.kitwarein.com>
+Message-ID: <1043897209.1145.20.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.rogers.com>
+
+> When you say "ParaView from cvs", do you mean the release branch 
+> (ParaView-0-6) or the development ? Also, do you use ParaViewComplete
+> or separate VTK and ParaView trees ?
+I think its the development branch, ParaViewComplete; I did the one of
+the webpage:
+"cvs -d :pserver:anonymous@public.kitware.com:/cvsroot/ParaView co -r
+ParaView-0-6 ParaViewComplete"
+
+> > I took a look into that file and found this, its taking the else part
+> > since I see in my CMakeList file its set to OFF. How do I know if I
+> > should be using VKT_USE_ANSI_STDLIB??? 
+> > ---------
+> > #ifdef VTK_USE_ANSI_STDLIB
+> > #define VTK_IOS_NOCREATE
+> > #else
+> > #define VTK_IOS_NOCREATE | ios::nocreate
+> > #endif
+> > --------
+> > 
+> 
+> This is a work-around for older gnu compilers. If you are using gcc 3.0
+> or older, you should set VTK_USE_ANSI_STDLIB CMake (advanced) setting  
+> to ON. In the future, this setting will be on by default.
+> 
+
+I just checked my version of gcc, its 3.2; doesn't this mean it should 
+built without error???
+
+Anyways, I did ccmake with VTK_US_ANSI_STDLIB=ON this time and
+everything built fine. But when it came to doing make install, I got an
+error saying vtkRender.h not found, so I took a look into
+"ParaViewComplete/VTK/Rendering" and saw everything was named Rendering
+and not Render, so I changed vtkRender.h to vtkRendering.h the rest
+installed fine. Could this be a bug???
+
+There was some other error about CMakeCache.txt not found and I forgot 
+now how I fixed it but I think I copied the one over from the
+ParaViewComplete to the VTK directory.
+
+Tom
+
+
+From th032@rogers.com  Thu Jan 30 04:45:46 2003
+From: th032@rogers.com (Tom Hosiawa)
+Date: 29 Jan 2003 23:45:46 -0500
+Subject: [Paraview] CVS Build error
+In-Reply-To: <1043897209.1145.20.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.rogers.com>
+References: <1043812936.3016.35.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.roger s.com>
+ <1043865955.30299.34.camel@caemlyn.kitwarein.com>
+ <1043897209.1145.20.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.rogers.com>
+Message-ID: <1043901946.2060.3.camel@cpe00045a92bcc6-cm024020106662.cpe.net.cable.rogers.com>
+
+> Anyways, I did ccmake with VTK_US_ANSI_STDLIB=ON this time and
+> everything built fine. But when it came to doing make install, I got an
+> error saying vtkRender.h not found, so I took a look into
+> "ParaViewComplete/VTK/Rendering" and saw everything was named Rendering
+> and not Render, so I changed vtkRender.h to vtkRendering.h the rest
+> installed fine. Could this be a bug???
+
+I mean I changed it to vtkRenderer.h
+
+Tom
+
+
+From watkinsig@ornl.gov  Fri Jan 31 15:56:56 2003
+From: watkinsig@ornl.gov (Ian Watkins)
+Date: Fri, 31 Jan 2003 10:56:56 -0500
+Subject: [Paraview] mpi + pvtk = tcl/tk errors ?
+Message-ID: <000001c2c941$6162fe50$81a8a8c0@ostrouchov2>
+
+Hello,
+
+I'm trying to run paraview/pvtk on a 4 node cluster (Redhat 7.2), using
+mpich 1.2.4.  
+I'm not the sysadmin, so ParaView/pvtk is not installed on each node,
+but in my home area (which is cross mounted on all nodes). 
+
+If I run the following script through vtk on the head node, there are no
+errors.
+
+# ParaView Version 0.6
+
+package require vtkio
+package require vtkrendering
+package require vtkparallel
+puts "Success"
+exit
+
+As you can see, the script isn't very complicated.
+
+On any other node, running the script produces:
+
+no display name and no $DISPLAY environment variable
+::vtk::load_component: tk could not be found.
+can't find package Tk
+Tk was not found: the VTK rendering package can not be used... Please
+check that your Tcl/Tk installation is correct. Windows users should
+also check that the program used to open/execute Tcl files is the Tk
+shell (wish), not the Tcl shell (tclsh).
+can't find package vtkrendering
+    while executing
+"package require vtkrendering"
+    (file "check.tcl" line 4)
+
+I've attempted to solve the problem by moving all executables and
+libraries to all nodes, but the same error occurs (all nodes are
+identical).  I've also added:
+"wm withdraw ." as the first execution line, but then vtk fails with:
+
+Application initialization failed: no display name and no $DISPLAY
+environment variable
+Error in startup script: invalid command name "wm"
+    while executing
+"wm withdraw ."
+    (file "check.tcl" line 2)
+
+The child nodes are on a private network, and not world accessible.
+(The head node has 2 nics, one for world, one for the private network.)
+
+I've verified that wish and tclsh exist on all machines.  (In fact, both
+wish and tclsh run the above script fine on the head node.)
+
+I've attempted to do X11 forwarding from the child nodes.  I've tried
+setting the DISPLAY environment var, but nothing seems to work.
+
+I imagine at least one person is asking where the mpi problem is.  When
+I began trying to run pvtk, I was using:
+mpirun -np 4 -machinefile ~/machines pvtk [script]
+The system would puke, giving an error similar to the above three times.
+That is when I began attempting to run a smaller script on each node.
+
+Any help would be greatly appreciated.
+Ian Watkins
+
+
+From berk.geveci@kitware.com  Fri Jan 31 16:13:57 2003
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 31 Jan 2003 11:13:57 -0500
+Subject: [Paraview] mpi + pvtk = tcl/tk errors ?
+In-Reply-To: <000001c2c941$6162fe50$81a8a8c0@ostrouchov2>
+References: <000001c2c941$6162fe50$81a8a8c0@ostrouchov2>
+Message-ID: <1044029639.11366.24.camel@caemlyn.kitwarein.com>
+
+This is a common problem. Your slave nodes are not getting the DISPLAY
+variable. Depending on your configuration and your mpi launcher, you
+need to find the right way of letting the know where to display. I
+usually do this by setting the DISPLAY var. in a login file, i.e my
+.bashrc has the following line
+
+export DISPLAY=:0
+
+Of course, this is not an ideal solution since it disables X11 
+forwarding through ssh etc. but since I don't use the cluster for
+anything other than running ParaView, I don't care. If you want
+all the display to go somewhere else, replace :0 with whatever
+is appropriate. Of course, you also have to set the display access
+properly using xhost or xauth or something. If the mpich you
+are using is configured to use mpd, the following might work:
+
+mpirun -np 4 -machinefile ~/machines pvtk [script] -MPDENV- DISPLAY=:0
+
+-Berk
+
+On Fri, 2003-01-31 at 10:56, Ian Watkins wrote:
+> Hello,
+> 
+> I'm trying to run paraview/pvtk on a 4 node cluster (Redhat 7.2), using
+> mpich 1.2.4.  
+> I'm not the sysadmin, so ParaView/pvtk is not installed on each node,
+> but in my home area (which is cross mounted on all nodes). 
+> 
+> If I run the following script through vtk on the head node, there are no
+> errors.
+> 
+> # ParaView Version 0.6
+> 
+> package require vtkio
+> package require vtkrendering
+> package require vtkparallel
+> puts "Success"
+> exit
+> 
+> As you can see, the script isn't very complicated.
+> 
+> On any other node, running the script produces:
+> 
+> no display name and no $DISPLAY environment variable
+> ::vtk::load_component: tk could not be found.
+> can't find package Tk
+> Tk was not found: the VTK rendering package can not be used... Please
+> check that your Tcl/Tk installation is correct. Windows users should
+> also check that the program used to open/execute Tcl files is the Tk
+> shell (wish), not the Tcl shell (tclsh).
+> can't find package vtkrendering
+>     while executing
+> "package require vtkrendering"
+>     (file "check.tcl" line 4)
+> 
+> I've attempted to solve the problem by moving all executables and
+> libraries to all nodes, but the same error occurs (all nodes are
+> identical).  I've also added:
+> "wm withdraw ." as the first execution line, but then vtk fails with:
+> 
+> Application initialization failed: no display name and no $DISPLAY
+> environment variable
+> Error in startup script: invalid command name "wm"
+>     while executing
+> "wm withdraw ."
+>     (file "check.tcl" line 2)
+> 
+> The child nodes are on a private network, and not world accessible.
+> (The head node has 2 nics, one for world, one for the private network.)
+> 
+> I've verified that wish and tclsh exist on all machines.  (In fact, both
+> wish and tclsh run the above script fine on the head node.)
+> 
+> I've attempted to do X11 forwarding from the child nodes.  I've tried
+> setting the DISPLAY environment var, but nothing seems to work.
+> 
+> I imagine at least one person is asking where the mpi problem is.  When
+> I began trying to run pvtk, I was using:
+> mpirun -np 4 -machinefile ~/machines pvtk [script]
+> The system would puke, giving an error similar to the above three times.
+> That is when I began attempting to run a smaller script on each node.
+> 
+> Any help would be greatly appreciated.
+> Ian Watkins
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+
+From watkinsig@ornl.gov  Fri Jan 31 18:05:55 2003
+From: watkinsig@ornl.gov (Ian Watkins)
+Date: Fri, 31 Jan 2003 13:05:55 -0500
+Subject: [Paraview] mpi + pvtk = tcl/tk errors ?
+In-Reply-To: <1044029639.11366.24.camel@caemlyn.kitwarein.com>
+Message-ID: <000001c2c953$6634f390$81a8a8c0@ostrouchov2>
+
+Unfortunately, setting the display to :0 did not work.  The error is
+below.
+
+Application initialization failed: couldn't connect to display ":0"
+::vtk::load_component: tk could not be found.
+can't find package Tk
+Tk was not found: the VTK rendering package can not be used... Please
+check that your Tcl/Tk installation is correct. Windows users should
+also check that the program used to open/execute Tcl files is the Tk
+shell (wish), not the Tcl shell (tclsh).
+Error in startup script: can't find package vtkrendering
+    while executing
+"package require vtkrendering"
+    (file "check.tcl" line 3)
+
+If I ssh -X into the machine, everything runs fine (some X libs were
+moved onto all nodes).  It still does not work with mpi, though.  I've
+even changed my mpirun script to have ssh -X instead of ssh.
+
+Any other ideas?
+Thanks in advance.
+Ian Watkins
+
+> -----Original Message-----
+> From: paraview-admin@public.kitware.com 
+> [mailto:paraview-admin@public.kitware.com] On Behalf Of Berk Geveci
+> Sent: Friday, January 31, 2003 11:14 AM
+> To: Ian Watkins
+> Cc: paraview@public.kitware.com
+> Subject: Re: [Paraview] mpi + pvtk = tcl/tk errors ?
+> 
+> 
+> This is a common problem. Your slave nodes are not getting 
+> the DISPLAY variable. Depending on your configuration and 
+> your mpi launcher, you need to find the right way of letting 
+> the know where to display. I usually do this by setting the 
+> DISPLAY var. in a login file, i.e my .bashrc has the following line
+> 
+> export DISPLAY=:0
+> 
+> Of course, this is not an ideal solution since it disables X11 
+> forwarding through ssh etc. but since I don't use the cluster 
+> for anything other than running ParaView, I don't care. If 
+> you want all the display to go somewhere else, replace :0 
+> with whatever is appropriate. Of course, you also have to set 
+> the display access properly using xhost or xauth or 
+> something. If the mpich you are using is configured to use 
+> mpd, the following might work:
+> 
+> mpirun -np 4 -machinefile ~/machines pvtk [script] -MPDENV- DISPLAY=:0
+> 
+> -Berk
+> 
+> On Fri, 2003-01-31 at 10:56, Ian Watkins wrote:
+> > Hello,
+> > 
+> > I'm trying to run paraview/pvtk on a 4 node cluster (Redhat 7.2), 
+> > using mpich 1.2.4.
+> > I'm not the sysadmin, so ParaView/pvtk is not installed on 
+> each node,
+> > but in my home area (which is cross mounted on all nodes). 
+> > 
+> > If I run the following script through vtk on the head node, 
+> there are 
+> > no errors.
+> > 
+> > # ParaView Version 0.6
+> > 
+> > package require vtkio
+> > package require vtkrendering
+> > package require vtkparallel
+> > puts "Success"
+> > exit
+> > 
+> > As you can see, the script isn't very complicated.
+> > 
+> > On any other node, running the script produces:
+> > 
+> > no display name and no $DISPLAY environment variable
+> > ::vtk::load_component: tk could not be found.
+> > can't find package Tk
+> > Tk was not found: the VTK rendering package can not be 
+> used... Please 
+> > check that your Tcl/Tk installation is correct. Windows 
+> users should 
+> > also check that the program used to open/execute Tcl files 
+> is the Tk 
+> > shell (wish), not the Tcl shell (tclsh). can't find package 
+> > vtkrendering
+> >     while executing
+> > "package require vtkrendering"
+> >     (file "check.tcl" line 4)
+> > 
+> > I've attempted to solve the problem by moving all executables and 
+> > libraries to all nodes, but the same error occurs (all nodes are 
+> > identical).  I've also added: "wm withdraw ." as the first 
+> execution 
+> > line, but then vtk fails with:
+> > 
+> > Application initialization failed: no display name and no $DISPLAY 
+> > environment variable Error in startup script: invalid command name 
+> > "wm"
+> >     while executing
+> > "wm withdraw ."
+> >     (file "check.tcl" line 2)
+> > 
+> > The child nodes are on a private network, and not world accessible. 
+> > (The head node has 2 nics, one for world, one for the private 
+> > network.)
+> > 
+> > I've verified that wish and tclsh exist on all machines.  (In fact, 
+> > both wish and tclsh run the above script fine on the head node.)
+> > 
+> > I've attempted to do X11 forwarding from the child nodes.  
+> I've tried 
+> > setting the DISPLAY environment var, but nothing seems to work.
+> > 
+> > I imagine at least one person is asking where the mpi problem is.  
+> > When I began trying to run pvtk, I was using: mpirun -np 4 
+> > -machinefile ~/machines pvtk [script] The system would 
+> puke, giving an 
+> > error similar to the above three times. That is when I began 
+> > attempting to run a smaller script on each node.
+> > 
+> > Any help would be greatly appreciated.
+> > Ian Watkins
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@public.kitware.com 
+> > http://public.kitware.com/mailman/listinfo/paraview
+> 
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com 
+> http://public.kitware.com/mailman/listinfo/par> aview
+> 
+
+
+From watkinsig@ornl.gov  Fri Jan 31 19:52:06 2003
+From: watkinsig@ornl.gov (Ian Watkins)
+Date: Fri, 31 Jan 2003 14:52:06 -0500
+Subject: [Paraview] mpi + pvtk = tcl/tk errors ?
+In-Reply-To: <000001c2c953$6634f390$81a8a8c0@ostrouchov2>
+Message-ID: <000101c2c962$3b87aac0$81a8a8c0@ostrouchov2>
+
+I've solved the problem.  I needed to enable ssh x11 forwarding in a ssh
+config file.  Works fine now.
+
+Thanks for your help.
+
+
+From berklist@nycap.rr.com  Fri Jan 31 21:03:33 2003
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 31 Jan 2003 16:03:33 -0500
+Subject: [Paraview] mpi + pvtk = tcl/tk errors ?
+In-Reply-To: <000101c2c962$3b87aac0$81a8a8c0@ostrouchov2>
+References: <000101c2c962$3b87aac0$81a8a8c0@ostrouchov2>
+Message-ID: <1044047014.11366.36.camel@caemlyn.kitwarein.com>
+
+Cool. I still think it would be better if you could enable
+local display on each node (i.e. using DISPLAY=:0). After all,
+unless you are doing off-screen rendering, x11 forwarding will
+comsume bandwidth.
+
+-Berk
+
+On Fri, 2003-01-31 at 14:52, Ian Watkins wrote:
+> I've solved the problem.  I needed to enable ssh x11 forwarding in a ssh
+> config file.  Works fine now.
+> 
+> Thanks for your help.
+
+
+

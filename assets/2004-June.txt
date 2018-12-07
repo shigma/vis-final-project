@@ -1,0 +1,2430 @@
+From julien.alizier-ausy at irsn.fr  Tue Jun  1 03:35:30 2004
+From: julien.alizier-ausy at irsn.fr (ALIZIER Julien AUSY)
+Date: Tue Jun  1 03:36:09 2004
+Subject: [Paraview] make paraview-1.4.2 on Solaris8
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1F3@OREADE.ipsn.fr>
+
+Hi Koichiro,
+
+I've had the same problem with paraview 1.2.1.
+It is due to old X11 header provided with Solaris 8.
+
+The easiest way to bypass the error is to set the environement variables :
+CXXFLAGS=-fpermissive
+CCFLAGS=-fpermissive
+
+Then this error becomes a warning and everything goes fine.
+
+Another solution is to download a patch from sun (http://www.sunsolve.com)
+that fixes the 'old' X11 headers.
+
+Best regards,
+
+-- Julien
+
+
+
+
+-----Message d'origine-----
+De : Koichiro Suzuki [mailto:suz@mito.ssd.ssg.fujitsu.com]
+Envoy? : lundi 31 mai 2004 12:04
+? : paraview@paraview.org
+Objet : [Paraview] make paraview-1.4.2 on Solaris8
+
+
+Hello
+
+ I compiled  paraview-1.4.2 on Solaris 8 (with gcc 2.95), but the
+following error occurrs.
+
+					:
+Building object file vtkGraphicsFactory.o...
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:56,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:3
+8,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xlib.h:2099: ANSI C++ forbids declaration
+`XSetTransientForHint' with no type
+/usr/openwin/share/include/X11/Xlib.h:2107: ANSI C++ forbids declaration
+`XActivateScreenSaver' with no type
+/usr/openwin/share/include/X11/Xlib.h:2114: ANSI C++ forbids declaration
+`XAddHost' with no type
+/usr/openwin/share/include/X11/Xlib.h:2122: ANSI C++ forbids declaration
+`XAddHosts' with no type
+/usr/openwin/share/include/X11/Xlib.h:2129: ANSI C++ forbids declaration
+`XAddToExtensionList' with no type
+/usr/openwin/share/include/X11/Xlib.h:2136: ANSI C++ forbids declaration
+`XAddToSaveSet' with no type
+					:
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:58,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:3
+8,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xresource.h:249: ANSI C++ forbids declaration
+`XrmQGetResource' with no type
+make[5]: *** [vtkGraphicsFactory.o] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Rendering] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_VTK] Error 2
+make: *** [default_target] Error 2
+
+
+ Can we make paraview with /usr/openwin ?
+ Or do we have to use the latest X11 ?
+
+I really appreciate your reply.
+
+Best regards.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+From julien.alizier-ausy at irsn.fr  Tue Jun  1 03:40:32 2004
+From: julien.alizier-ausy at irsn.fr (ALIZIER Julien AUSY)
+Date: Tue Jun  1 03:41:17 2004
+Subject: [Paraview] make paraview-1.4.2 on Solaris8
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1F4@OREADE.ipsn.fr>
+
+oops sorry, made 2 mistakes :
+
+- CFLAGS (not CCFLAGS)
+- http://sunsolve.sun.com
+
+Regards
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : ALIZIER Julien AUSY [mailto:julien.alizier-ausy@irsn.fr]
+Envoy? : mardi 1 juin 2004 09:36
+? : 'Koichiro Suzuki'
+Cc : ParaView Mailing List (E-mail)
+Objet : RE: [Paraview] make paraview-1.4.2 on Solaris8
+
+
+Hi Koichiro,
+
+I've had the same problem with paraview 1.2.1.
+It is due to old X11 header provided with Solaris 8.
+
+The easiest way to bypass the error is to set the environement variables :
+CXXFLAGS=-fpermissive
+CCFLAGS=-fpermissive
+
+Then this error becomes a warning and everything goes fine.
+
+Another solution is to download a patch from sun (http://www.sunsolve.com)
+that fixes the 'old' X11 headers.
+
+Best regards,
+
+-- Julien
+
+
+
+
+-----Message d'origine-----
+De : Koichiro Suzuki [mailto:suz@mito.ssd.ssg.fujitsu.com]
+Envoy? : lundi 31 mai 2004 12:04
+? : paraview@paraview.org
+Objet : [Paraview] make paraview-1.4.2 on Solaris8
+
+
+Hello
+
+ I compiled  paraview-1.4.2 on Solaris 8 (with gcc 2.95), but the
+following error occurrs.
+
+					:
+Building object file vtkGraphicsFactory.o...
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:56,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:3
+8,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xlib.h:2099: ANSI C++ forbids declaration
+`XSetTransientForHint' with no type
+/usr/openwin/share/include/X11/Xlib.h:2107: ANSI C++ forbids declaration
+`XActivateScreenSaver' with no type
+/usr/openwin/share/include/X11/Xlib.h:2114: ANSI C++ forbids declaration
+`XAddHost' with no type
+/usr/openwin/share/include/X11/Xlib.h:2122: ANSI C++ forbids declaration
+`XAddHosts' with no type
+/usr/openwin/share/include/X11/Xlib.h:2129: ANSI C++ forbids declaration
+`XAddToExtensionList' with no type
+/usr/openwin/share/include/X11/Xlib.h:2136: ANSI C++ forbids declaration
+`XAddToSaveSet' with no type
+					:
+In file included from /usr/openwin/share/include/X11/Intrinsic.h:58,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXRenderWindowInteractor.h:3
+8,
+                 from
+/wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkGraphicsFactory.cxx:60:
+/usr/openwin/share/include/X11/Xresource.h:249: ANSI C++ forbids declaration
+`XrmQGetResource' with no type
+make[5]: *** [vtkGraphicsFactory.o] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Rendering] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_VTK] Error 2
+make: *** [default_target] Error 2
+
+
+ Can we make paraview with /usr/openwin ?
+ Or do we have to use the latest X11 ?
+
+I really appreciate your reply.
+
+Best regards.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+From suz at mito.ssd.ssg.fujitsu.com  Tue Jun  1 06:49:38 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Tue Jun  1 06:53:19 2004
+Subject: [Paraview] make paraview-1.4.2 on Solaris8
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1F3@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1F3@OREADE.ipsn.fr>
+Message-ID: <20040601191934.970A.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hello Julien
+
+> The easiest way to bypass the error is to set the environement variables :
+> CXXFLAGS=-fpermissive
+> CCFLAGS=-fpermissive
+> 
+> Then this error becomes a warning and everything goes fine.
+
+ The "-fpermissive" option is effective.
+ I can compile and execute paraview-1.4.2 on Solaris8 today!
+ Wonderfull!
+ 
+ Thank you, Julien.
+ Merci beaucoup.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From hjkarpf at sandia.gov  Tue Jun  1 13:45:29 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Tue Jun  1 13:55:50 2004
+Subject: [Paraview] Image animation is slow
+Message-ID: <40BCC0B9.6000905@sandia.gov>
+
+I have a VTK file that si an unstructured grid of cells that are cell 
+type 5, i believe, which is the triangles.  When i lode this file up it 
+animates really slow, it is about 14000 cells times 300 times steps and 
+when i open it from my file it is slow like maybe 1 frame every second 
+or so. But then if i save the data to the paraview format and re open 
+the paraview format it is much faster? Why is my format not fast it is 
+just the information to build the model no more? Thanks for any help.
+
+
+From md8hemra at tfd.chalmers.se  Wed Jun  2 02:53:44 2004
+From: md8hemra at tfd.chalmers.se (Rasmus Hemph)
+Date: Wed Jun  2 02:54:28 2004
+Subject: [Paraview] Image animation is slow
+In-Reply-To: <40BCC0B9.6000905@sandia.gov>
+References: <40BCC0B9.6000905@sandia.gov>
+Message-ID: <1086159223.7763.11.camel@tfdpc236.tfd.chalmers.se>
+
+I have no solution, just wanted to say that I am facing the same problem
+with animations and VTK-files (have not tried with Paraview format). The
+slowness seem to be related to the number of time steps, as 150 time
+steps gives much faster time increments than say 350. 
+I am however thankful that it works at all in 1.4.2. Previously you
+could not, at least to my knowledge, create animations with over 100
+time steps. 
+
+//Rasmus Hemph
+
+
+On Tue, 2004-06-01 at 19:45, Henry J. Karpf wrote:
+> I have a VTK file that si an unstructured grid of cells that are cell 
+> type 5, i believe, which is the triangles.  When i lode this file up it 
+> animates really slow, it is about 14000 cells times 300 times steps and 
+> when i open it from my file it is slow like maybe 1 frame every second 
+> or so. But then if i save the data to the paraview format and re open 
+> the paraview format it is much faster? Why is my format not fast it is 
+> just the information to build the model no more? Thanks for any help.
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+From hjkarpf at sandia.gov  Wed Jun  2 12:16:31 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Wed Jun  2 12:27:04 2004
+Subject: [Paraview] Image animation is slow
+In-Reply-To: <1086159223.7763.11.camel@tfdpc236.tfd.chalmers.se>
+References: <40BCC0B9.6000905@sandia.gov>
+	<1086159223.7763.11.camel@tfdpc236.tfd.chalmers.se>
+Message-ID: <40BDFD5F.9010907@sandia.gov>
+
+So does anyone have anythoughts on this?  I just tried setting my 
+program to only output 130 timesteps but it didn't help?
+
+Rasmus Hemph wrote:
+
+>I have no solution, just wanted to say that I am facing the same problem
+>with animations and VTK-files (have not tried with Paraview format). The
+>slowness seem to be related to the number of time steps, as 150 time
+>steps gives much faster time increments than say 350. 
+>I am however thankful that it works at all in 1.4.2. Previously you
+>could not, at least to my knowledge, create animations with over 100
+>time steps. 
+>
+>//Rasmus Hemph
+>
+>
+>On Tue, 2004-06-01 at 19:45, Henry J. Karpf wrote:
+>  
+>
+>>I have a VTK file that si an unstructured grid of cells that are cell 
+>>type 5, i believe, which is the triangles.  When i lode this file up it 
+>>animates really slow, it is about 14000 cells times 300 times steps and 
+>>when i open it from my file it is slow like maybe 1 frame every second 
+>>or so. But then if i save the data to the paraview format and re open 
+>>the paraview format it is much faster? Why is my format not fast it is 
+>>just the information to build the model no more? Thanks for any help.
+>>
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>>    
+>>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>  
+>
+
+
+
+From baoseidon at yahoo.com.cn  Wed Jun  2 21:16:12 2004
+From: baoseidon at yahoo.com.cn (=?gb2312?q?seidon=20Po?=)
+Date: Wed Jun  2 21:16:55 2004
+Subject: [Paraview] Help about client-server connection
+Message-ID: <20040603011612.457.qmail@web15205.mail.bjs.yahoo.com>
+
+hi everybody,
+&nbsp;
+&nbsp;&nbsp; I have complied paraview 1.4 in PC and
+SGI onyx.But I meet some errors&nbsp;as C/S mode.
+&nbsp;
+I run Paraview in SGI using "paraview --server",
+and&nbsp;run it in PC using "paraview
+--client"&nbsp;&nbsp; 
+&nbsp;
+There are some messages:
+-------------------------------------------------------------------------------------
+&nbsp;&nbsp; ./VTK/Parallel/vtkSocketCommunicator.cxx,
+line 595
+vtkSocketCommunicator (0x1270c408): Requested size (1)
+is different than the size that was sent (16777216)
+&nbsp;
+&nbsp; Please give some advance.
+&nbsp;
+thx,
+&nbsp;
+Baoseidon
+baoseidon@yahoo.com.cn
+
+
+_________________________________________________________
+Do You Yahoo!? 
+???????????????
+http://cn.rd.yahoo.com/mail_cn/tag/10m/*http://cn.mail.yahoo.com/event/10m.html
+From julien.alizier-ausy at irsn.fr  Thu Jun  3 03:19:29 2004
+From: julien.alizier-ausy at irsn.fr (ALIZIER Julien AUSY)
+Date: Thu Jun  3 03:20:17 2004
+Subject: [Paraview] Problems with external modules
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1FB@OREADE.ipsn.fr>
+
+Hi Berk, hi all,
+
+I am just facing the same problem... 
+I was wondering wether this has been modified in 1.4.2 ?
+
+Thanks
+
+-- Julien
+
+-----Message d'origine-----
+De : Berk Geveci [mailto:berklist@nycap.rr.com]
+Envoy? : mercredi 3 mars 2004 20:11
+? : David Thompson
+Cc : ParaView Mailing List
+Objet : Re: [Paraview] Problems with external modules
+
+
+I am afraid you can't do that with current ParaView. However, I think
+that it is a good idea and we should add something similar to
+<Library name=""> or modify it to load Tcl shared libraries on the
+client side (note that the ClientServer wrapped libraries have to be
+loaded only on the server side).
+
+On Wed, 2004-03-03 at 13:57, David Thompson wrote:
+> Hi,
+> 
+> 	I've checked in some changes to ParaViewConfig.cmake that let me
+build
+> a paraview module external to paraview, but there is still a problem. Is
+> there any way to force a TCL wrapper library to be loaded from within an
+> XML Module description? Here's why I ask:
+> 
+> 	I've created a widget which inherits from vtkPVWidget and has some
+> callbacks. Unfortunately, the callbacks don't work; they generate an
+> error message:
+> 
+> 	Object named: vtkTemp1130, could not find requested
+> 	method: BlahCallback or the method was called with
+> 	incorrect arguments.
+> 
+> This is because the Tcl wrapper for the widget class hasn't been loaded.
+> It's in a different library from the client server wrappers. If I open
+> the ParaView command window and run
+> 
+> 	package require vtkblah
+> 
+> (which loads libvtkBlahTCL.so), then everything works. So, is there any
+> way to force a load of libvtkBlahTCL from within an XML module
+> description?
+> 
+> 		Thanks,
+> 		David
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+From berklist at nycap.rr.com  Thu Jun  3 09:38:18 2004
+From: berklist at nycap.rr.com (Berk Geveci)
+Date: Thu Jun  3 09:39:23 2004
+Subject: [Paraview] Problems with external modules
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1FB@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1FB@OREADE.ipsn.fr>
+Message-ID: <1086269898.17050.2.camel@silverymoon>
+
+What do you mean by "the same problem"? Are you trying to load your
+own VTK filter or a ParaView GUI object?
+
+On Thu, 2004-06-03 at 03:19, ALIZIER Julien AUSY wrote:
+> Hi Berk, hi all,
+> 
+> I am just facing the same problem... 
+> I was wondering wether this has been modified in 1.4.2 ?
+> 
+> Thanks
+> 
+> -- Julien
+> 
+> -----Message d'origine-----
+> De : Berk Geveci [mailto:berklist@nycap.rr.com]
+> Envoy? : mercredi 3 mars 2004 20:11
+> ? : David Thompson
+> Cc : ParaView Mailing List
+> Objet : Re: [Paraview] Problems with external modules
+> 
+> 
+> I am afraid you can't do that with current ParaView. However, I think
+> that it is a good idea and we should add something similar to
+> <Library name=""> or modify it to load Tcl shared libraries on the
+> client side (note that the ClientServer wrapped libraries have to be
+> loaded only on the server side).
+> 
+> On Wed, 2004-03-03 at 13:57, David Thompson wrote:
+> > Hi,
+> > 
+> > 	I've checked in some changes to ParaViewConfig.cmake that let me
+> build
+> > a paraview module external to paraview, but there is still a problem. Is
+> > there any way to force a TCL wrapper library to be loaded from within an
+> > XML Module description? Here's why I ask:
+> > 
+> > 	I've created a widget which inherits from vtkPVWidget and has some
+> > callbacks. Unfortunately, the callbacks don't work; they generate an
+> > error message:
+> > 
+> > 	Object named: vtkTemp1130, could not find requested
+> > 	method: BlahCallback or the method was called with
+> > 	incorrect arguments.
+> > 
+> > This is because the Tcl wrapper for the widget class hasn't been loaded.
+> > It's in a different library from the client server wrappers. If I open
+> > the ParaView command window and run
+> > 
+> > 	package require vtkblah
+> > 
+> > (which loads libvtkBlahTCL.so), then everything works. So, is there any
+> > way to force a load of libvtkBlahTCL from within an XML module
+> > description?
+> > 
+> > 		Thanks,
+> > 		David
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+From julien.alizier-ausy at irsn.fr  Thu Jun  3 10:00:02 2004
+From: julien.alizier-ausy at irsn.fr (ALIZIER Julien AUSY)
+Date: Thu Jun  3 10:00:47 2004
+Subject: [Paraview] Problems with external modules
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B207@OREADE.ipsn.fr>
+
+Hi Berk, hi everyone,
+
+Actually, I am writing vtk filters and a ParaView widgets.
+
+My widget vtkPVMy3DWidget inherits from vtkPV3DWidget.
+When it creates all the Tk widgets in the Property panel of the notebook, I
+need to call first this->Script("package require vtkmy3dwidgets") before
+creating a button with a callback command that is a member of
+vtkPVMy3DWidget. Otherwise the callback generates an error when I press the
+button.
+
+My class is wrapped in Tcl but this wrapping is not loaded automatically.
+ 
+A better question would be "Is there a way in PV 1.4.2 to load the Tcl
+wrapping of an external library when loading the Client/Server wrapped
+library?".
+
+
+Anyway, I am not at all stuck with it, I just wanted to know if there was a
+more elegant way to load my TCL wrapped library.
+
+
+-- Julien
+
+
+
+
+-----Message d'origine-----
+De : Berk Geveci [mailto:berklist@nycap.rr.com]
+Envoy? : jeudi 3 juin 2004 15:38
+? : ALIZIER Julien AUSY
+Cc : ParaView Mailing List (E-mail)
+Objet : RE: [Paraview] Problems with external modules
+
+
+What do you mean by "the same problem"? Are you trying to load your
+own VTK filter or a ParaView GUI object?
+
+On Thu, 2004-06-03 at 03:19, ALIZIER Julien AUSY wrote:
+> Hi Berk, hi all,
+> 
+> I am just facing the same problem... 
+> I was wondering wether this has been modified in 1.4.2 ?
+> 
+> Thanks
+> 
+> -- Julien
+> 
+> -----Message d'origine-----
+> De : Berk Geveci [mailto:berklist@nycap.rr.com]
+> Envoy? : mercredi 3 mars 2004 20:11
+> ? : David Thompson
+> Cc : ParaView Mailing List
+> Objet : Re: [Paraview] Problems with external modules
+> 
+> 
+> I am afraid you can't do that with current ParaView. However, I think
+> that it is a good idea and we should add something similar to
+> <Library name=""> or modify it to load Tcl shared libraries on the
+> client side (note that the ClientServer wrapped libraries have to be
+> loaded only on the server side).
+> 
+> On Wed, 2004-03-03 at 13:57, David Thompson wrote:
+> > Hi,
+> > 
+> > 	I've checked in some changes to ParaViewConfig.cmake that let me
+> build
+> > a paraview module external to paraview, but there is still a problem. Is
+> > there any way to force a TCL wrapper library to be loaded from within an
+> > XML Module description? Here's why I ask:
+> > 
+> > 	I've created a widget which inherits from vtkPVWidget and has some
+> > callbacks. Unfortunately, the callbacks don't work; they generate an
+> > error message:
+> > 
+> > 	Object named: vtkTemp1130, could not find requested
+> > 	method: BlahCallback or the method was called with
+> > 	incorrect arguments.
+> > 
+> > This is because the Tcl wrapper for the widget class hasn't been loaded.
+> > It's in a different library from the client server wrappers. If I open
+> > the ParaView command window and run
+> > 
+> > 	package require vtkblah
+> > 
+> > (which loads libvtkBlahTCL.so), then everything works. So, is there any
+> > way to force a load of libvtkBlahTCL from within an XML module
+> > description?
+> > 
+> > 		Thanks,
+> > 		David
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+From ddinge at mailaps.org  Fri Jun  4 10:42:30 2004
+From: ddinge at mailaps.org (Dennis Dinge)
+Date: Fri Jun  4 10:40:00 2004
+Subject: [Paraview] Paraview Display Problem
+Message-ID: <40C08A56.9050806@mailaps.org>
+
+All I get when I try to use Paraview 1.4 is a white screen where my data 
+should be displayed. I do a cut through a 3D data set. It generates a 
+colorbar with endpoints matching the data but the display doesn't match 
+the colorbar. When I turn contours on they look right. But the display 
+itself  just gives is  a white plane when I do the cut. Before the cut 
+the is just a box.
+
+It looks like the property value is covering other things. I can change 
+the color from white by changing the action color when I switch to property.
+
+  I'm using hdf5 data. I tried transforming it to vtk but it didn't make 
+a difference.
+
+
+-- 
+Dennis C. Dinge
+ddinge@mailaps.org
+(843) 254-7598
+
+
+If I knew all the answers I'd run for God.
+
+From suz at mito.ssd.ssg.fujitsu.com  Sat Jun  5 07:26:27 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Sat Jun  5 07:30:18 2004
+Subject: [Paraview] interactive operation by script
+Message-ID: <20040605201546.1D07.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hello All..
+
+ I am looking for the way to operate Paraview by script interactively.
+
+ Paraview has a batch option, but it's not interactive.
+ If the "interactive operation by script" is realized , for example,
+we can operate Paraview from CGI(web).
+
+ If there were good ideas, please tell me..
+ Best regards.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From suz at mito.ssd.ssg.fujitsu.com  Mon Jun  7 07:19:49 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Mon Jun  7 07:23:53 2004
+Subject: [Paraview] interactive operation by script
+In-Reply-To: <20040605201546.1D07.SUZ@mito.ssd.ssg.fujitsu.com>
+References: <20040605201546.1D07.SUZ@mito.ssd.ssg.fujitsu.com>
+Message-ID: <20040607192430.70E2.SUZ@mito.ssd.ssg.fujitsu.com>
+
+>  I am looking for the way to operate Paraview by script interactively.
+> 
+>  Paraview has a batch option, but it's not interactive.
+>  If the "interactive operation by script" is realized , for example,
+> we can operate Paraview from CGI(web).
+> 
+>  If there were good ideas, please tell me..
+
+ I found an idea.
+
+ Paraview (--batch) reads a .pvb file and evaluate it's all lines by
+Tcl_EvalFile().
+ (GUI/Client/vtkPVApplication.cxx line 1436, GUI/Widgets/vtkKWApplication.cxx line 1321)
+
+ Apply following process instead of this and interactive operation is
+realized.
+  1) reads a script from stdin.
+  2) evaluate the script by Tcl_Eval().
+     (call Tcl_Eval() every reading a special line for example "###".)
+
+ Thanks all.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From ddinge at mailaps.org  Fri Jun  4 10:35:04 2004
+From: ddinge at mailaps.org (Dennis Dinge)
+Date: Mon Jun  7 08:34:52 2004
+Subject: [Paraview] White screen with paraview
+Message-ID: <40C08898.1070506@mailaps.org>
+
+
+All I get when I try to use Paraview 1.4 is a white screen where my data 
+should be displayed. I do a cut through a 3D data set. It generates a 
+colorbar with endpoints matching the data but the display doesn't match 
+the colorbar. When I turn contours on they look right. But the display 
+itself  just gives is  a white plane when I do the cut. Before the cut 
+the is just a box.
+
+It looks like the property value is covering other things. I can change 
+the color from white by changing the action color when I switch to property.
+
+  I'm using hdf5 data. I tried transforming it to vtk but it didn't make 
+a difference.
+
+-- 
+Dennis C. Dinge
+dcdphysics@earthlink.net
+(843) 254-7598
+
+
+If I knew all the answers I'd run for God.
+
+From dbkarel at sandia.gov  Mon Jun  7 17:17:23 2004
+From: dbkarel at sandia.gov (Karelitz, David B)
+Date: Mon Jun  7 17:18:41 2004
+Subject: [Paraview] Tcl/Tk compile problem with IRIX64
+Message-ID: <16F54D8E44BBEE4BBBDB5EFB3AEEB86D01B6F850@es06snlnt.sandia.gov>
+
+Hi,
+
+I'm trying to compile ParaView on a 64-bit SGI, and I'm running into
+problems with the Tcl/Tk libraries. When I try to build ParaView, I get the
+following error:
+
+ld64: FATAL   12 : Expecting 64-bit objects:
+/Build/Utilities/TclTk/tcl8.4.5/unix/libtcl8.4.a is 32-bit.
+
+I have BUILD_SHARED_LIBS turned on, am using cc and CC as compilers, and am
+passing the -64 option for 64 bit compiling to the compiler and linker. It
+seems like I need to pass a 64 bit flag to the Tcl configure scripts, but I
+couldn't find anything in the cmake configuration about that.
+
+Any help would be appreciated,
+
+Thanks,
+Dave Karelitz
+
+From hjkarpf at sandia.gov  Wed Jun  9 09:05:38 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Wed Jun  9 09:05:27 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+Message-ID: <40C70B22.1080909@sandia.gov>
+
+Will paraview calculate iso surfaces given a "cell" and then the level 
+set value through that "cell".  Example, I have a whole bunch of 
+Hexahedron cells, and then the points of the vertices of these cells, 
+and a level set value at each of these points, I want to have paraview 
+calculate and then render these level set planes. Is this possible?
+
+
+From hjkarpf at sandia.gov  Wed Jun  9 09:26:01 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Wed Jun  9 09:25:54 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+In-Reply-To: <40C70E68.2080108@nabla.co.uk>
+References: <40C70B22.1080909@sandia.gov> <40C70E68.2080108@nabla.co.uk>
+Message-ID: <40C70FE9.70802@sandia.gov>
+
+
+So given just the points and values it will do what i am thinking? 
+ Right now i have just paraview installed, do i need to install VTK as 
+well and then use it to generate the vtk file from my input?
+
+Mattijs Janssens wrote:
+
+> I assume the plane you are trying to create is given by a constant 
+> value of your 'level set' field?
+>
+> The isosurface routine in vtk will do just that. It takes as input 
+> values on vertices and interpolates linearly along the edges of the 
+> cells to find the point where the iso value is. It then tries to 
+> recreate a surface going through these point.
+>
+> Mattijs
+>
+> Henry J. Karpf wrote:
+>
+>> Will paraview calculate iso surfaces given a "cell" and then the 
+>> level set value through that "cell".  Example, I have a whole bunch 
+>> of Hexahedron cells, and then the points of the vertices of these 
+>> cells, and a level set value at each of these points, I want to have 
+>> paraview calculate and then render these level set planes. Is this 
+>> possible?
+>>
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>
+
+
+
+From m.janssens at nabla.co.uk  Wed Jun  9 09:44:57 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Wed Jun  9 09:45:16 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+In-Reply-To: <40C70FE9.70802@sandia.gov>
+References: <40C70B22.1080909@sandia.gov> <40C70E68.2080108@nabla.co.uk>
+	<40C70FE9.70802@sandia.gov>
+Message-ID: <40C71459.3080604@nabla.co.uk>
+
+There is no need to install VTK. This is all built-in (in the paraview 
+executable).
+
+You will need to create a vtk compatible input file from your data. Go 
+file->open data and see what formats it supports. You will need to use a 
+cell based format.
+
+Mattijs
+
+Henry J. Karpf wrote:
+> 
+> So given just the points and values it will do what i am thinking? Right 
+> now i have just paraview installed, do i need to install VTK as well and 
+> then use it to generate the vtk file from my input?
+> 
+> Mattijs Janssens wrote:
+> 
+>> I assume the plane you are trying to create is given by a constant 
+>> value of your 'level set' field?
+>>
+>> The isosurface routine in vtk will do just that. It takes as input 
+>> values on vertices and interpolates linearly along the edges of the 
+>> cells to find the point where the iso value is. It then tries to 
+>> recreate a surface going through these point.
+>>
+>> Mattijs
+>>
+>> Henry J. Karpf wrote:
+>>
+>>> Will paraview calculate iso surfaces given a "cell" and then the 
+>>> level set value through that "cell".  Example, I have a whole bunch 
+>>> of Hexahedron cells, and then the points of the vertices of these 
+>>> cells, and a level set value at each of these points, I want to have 
+>>> paraview calculate and then render these level set planes. Is this 
+>>> possible?
+>>>
+>>>
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>>
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From langan at kapl.gov  Wed Jun  9 10:31:28 2004
+From: langan at kapl.gov (Joyce Langan)
+Date: Wed Jun  9 10:42:55 2004
+Subject: [Paraview] Ice-T tiles do not appear with XP client and Linux
+	cluster server
+Message-ID: <001601c44e2e$73c307c0$7041010a@internet.kapl.gov>
+
+Skipped content of type multipart/alternative
+From Rupert.Shute at awe.co.uk  Wed Jun  9 11:22:39 2004
+From: Rupert.Shute at awe.co.uk (Rupert Shute)
+Date: Wed Jun  9 12:18:46 2004
+Subject: [Paraview] 1.4.2 compilation errors.
+Message-ID: <QAG06771@awe.co.uk>
+
+Hi,
+
+When compiling v1.4.2 using gcc v2.96 I get errors because there are return
+statements a function that has no return type. The function concerned is:
+
+void pvTestDriver::CollectConfiguredOptions()
+{
+...
+  return -1;
+...
+}
+
+If I alter the return type to int instead of void (in files
+/GUI/Client/pvTestDriver.h and /GUI/Client/pvTestDriver.cxx) Paraview
+compiles.
+
+Is anyone aware of this problem and is my solution a 'safe' thing to do?
+
+Regards
+Rupert.
+--
+_______________________________________________________________________________
+
+The information in this email and in any attachment(s) is commercial in confidence. If you are not the named addressee(s) or if you receive this email in error then any distribution, copying or use of this communication or the information in it is strictly prohibited.  Please notify us immediately by email at intadmin@awe.co.uk, and then delete this message from your computer.  While attachments are virus checked, AWE plc does not accept any liability in respect of any virus which is not detected.
+
+From m.janssens at nabla.co.uk  Wed Jun  9 12:44:48 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Wed Jun  9 12:45:01 2004
+Subject: [Paraview] 1.4.2 compilation errors.
+In-Reply-To: <QAG06771@awe.co.uk>
+References: <QAG06771@awe.co.uk>
+Message-ID: <40C73E80.6050007@nabla.co.uk>
+
+
+
+Rupert Shute wrote:
+> Hi,
+> 
+> When compiling v1.4.2 using gcc v2.96 I get errors because there are return
+> statements a function that has no return type. The function concerned is:
+> 
+> void pvTestDriver::CollectConfiguredOptions()
+> {
+> ...
+>   return -1;
+> ...
+> }
+> 
+> If I alter the return type to int instead of void (in files
+> /GUI/Client/pvTestDriver.h and /GUI/Client/pvTestDriver.cxx) Paraview
+> compiles.
+> 
+> Is anyone aware of this problem and is my solution a 'safe' thing to do?
+
+The program seems to be a test driver to be used in combination with 
+Dart (automated testing) so paraview should operate fine without it.
+
+Still seems to be a bug though ...
+
+Mattijs
+
+> 
+> Regards
+> Rupert.
+> --
+> _______________________________________________________________________________
+> 
+> The information in this email and in any attachment(s) is commercial in confidence. If you are not the named addressee(s) or if you receive this email in error then any distribution, copying or use of this communication or the information in it is strictly prohibited.  Please notify us immediately by email at intadmin@awe.co.uk, and then delete this message from your computer.  While attachments are virus checked, AWE plc does not accept any liability in respect of any virus which is not detected.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From hjkarpf at sandia.gov  Wed Jun  9 13:19:13 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Wed Jun  9 13:19:18 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+In-Reply-To: <40C71459.3080604@nabla.co.uk>
+References: <40C70B22.1080909@sandia.gov> <40C70E68.2080108@nabla.co.uk>
+	<40C70FE9.70802@sandia.gov> <40C71459.3080604@nabla.co.uk>
+Message-ID: <40C74691.9090908@sandia.gov>
+
+YOu seem to know alot about what you are talking about so let me show 
+you what i am working with and you can give me some ideas maybe:
+I have this program that outputs data and the followoing format:
+ITEM: NUMBER OF CELLS
+1380
+ITEM: CELLS
+111 0 0 0 -1 0.75 0.75 0
+112 0 0 0.75 -1 0.75 1.5 0
+113 0 0.75 0.75 -1 1.5 1.5 0
+114 0 0.75 0 -1 1.5 0.75 0
+115 0 0 0 0 0.75 0.75 1
+116 0 0 0.75 0 0.75 1.5 1
+
+.....TO the number of cells, one line per cell
+
+ITEM: NUMBER OF POINTS
+1914
+ITEM: POINTS
+0 0 0 -1 -3
+1 0 0.75 -1 -3
+2 0.75 0.75 -1 -2.66927
+3 0.75 0 -1 -3
+4 0 0 0 -2
+5 0 0.75 0 -2
+6 0.75 0.75 0 -2
+7 0.75 0 0 -2
+8 0 1.5 -1 -2.87228
+....
+
+THe cells are formated like the following:
+<id> < procid > < xmin> < xmax > <ymin> <ymax> <zmin><zmax>
+and the points like:
+<id><x><y><z><level set value>
+
+
+Any idea on how when give this data, produce a vtk file that paraview 
+will read and generate the iso-surfaces and make the 3d model?  Thank 
+you for your help or input.
+
+
+From m.janssens at nabla.co.uk  Wed Jun  9 14:35:00 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Wed Jun  9 14:35:15 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+In-Reply-To: <40C74691.9090908@sandia.gov>
+References: <40C70B22.1080909@sandia.gov>
+	<40C70E68.2080108@nabla.co.uk>	<40C70FE9.70802@sandia.gov>
+	<40C71459.3080604@nabla.co.uk> <40C74691.9090908@sandia.gov>
+Message-ID: <40C75854.6000503@nabla.co.uk>
+
+Aha. I assumed the level set values were on the cell vertices.
+
+They are not? Or are they and is just the ordering different? Can you 
+output/calculate the level set values at the cell vertices?
+
+This goes a bit beyond my knowledge but
+- maybe vtk can do interpolation from points (level set) to another set 
+of points (cell vertices)
+
+- in which case you would need to write your points + level set data to 
+one file, and your geometry to another and find the vtk filter that does 
+that for you.
+
+- do you know which cell your level set point is in. In which case you 
+might output your level set data as cell_data on an unstructured grid 
+and use paraview to interpolate to the vertices. This will ofcourse 
+loose you some accuracy (interpolation usually assumes the cell data is 
+located at the cell centre)
+
+- maybe you can construct the surface directly from the point. I.e. 
+triangulate the points. vtk has a triangulation routine but I am not 
+sure it is mapped through into Paraview.
+
+Mattijs
+
+Henry J. Karpf wrote:
+> YOu seem to know alot about what you are talking about so let me show 
+> you what i am working with and you can give me some ideas maybe:
+> I have this program that outputs data and the followoing format:
+> ITEM: NUMBER OF CELLS
+> 1380
+> ITEM: CELLS
+> 111 0 0 0 -1 0.75 0.75 0
+> 112 0 0 0.75 -1 0.75 1.5 0
+> 113 0 0.75 0.75 -1 1.5 1.5 0
+> 114 0 0.75 0 -1 1.5 0.75 0
+> 115 0 0 0 0 0.75 0.75 1
+> 116 0 0 0.75 0 0.75 1.5 1
+> 
+> .....TO the number of cells, one line per cell
+> 
+> ITEM: NUMBER OF POINTS
+> 1914
+> ITEM: POINTS
+> 0 0 0 -1 -3
+> 1 0 0.75 -1 -3
+> 2 0.75 0.75 -1 -2.66927
+> 3 0.75 0 -1 -3
+> 4 0 0 0 -2
+> 5 0 0.75 0 -2
+> 6 0.75 0.75 0 -2
+> 7 0.75 0 0 -2
+> 8 0 1.5 -1 -2.87228
+> ....
+> 
+> THe cells are formated like the following:
+> <id> < procid > < xmin> < xmax > <ymin> <ymax> <zmin><zmax>
+> and the points like:
+> <id><x><y><z><level set value>
+> 
+> 
+> Any idea on how when give this data, produce a vtk file that paraview 
+> will read and generate the iso-surfaces and make the 3d model?  Thank 
+> you for your help or input.
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From Georg.Schulze-Icking at infineon.com  Thu Jun 10 01:03:51 2004
+From: Georg.Schulze-Icking at infineon.com (Georg.Schulze-Icking@infineon.com)
+Date: Thu Jun 10 01:04:01 2004
+Subject: [Paraview] Paraview on MacOS X?
+Message-ID: <5629C3F943FB7F42BF6DBB5DAAC56102135207@mucse204.muc.infineon.com>
+
+Hi all,
+
+as far a I understand it is possible to compile vtk, tcl/tk, and
+paraview on MaxOS X (10.3.4)...? However, I'm not a very experienced
+programmer or terminal-geek - and that is an understatement. Wouldn't it
+be possible to provide a paraview version as binary also for MacOS X,
+just as for Windows, Linux, etc.? It really would make life easier for
+us billions of Mac users out there... ;-)  
+And if for some reason it's unpractical to do so, can anybody help me in
+getting paraview up & running on my mac? Thanks a lot in advance!
+
+Georg Icking-Konert
+
+PS: thanks to the community for this great software!
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040610/df3e5490/attachment.htm
+From r.angeletti at auselda.it  Thu Jun 10 05:41:27 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Thu Jun 10 05:42:35 2004
+Subject: [Paraview] VRML Export  -  PointSet color -  Extrusion node
+Message-ID: <005001c44ecf$1a9bee40$2d1519ac@Rangeletti>
+
+I writed a code that write a PointSet Wrl file from LaserData.
+In the Wrl I use the point color array to have an OrtoImageColored
+point cloud.  
+Well, in ParaView I noticed that the point color array is not loaded
+and points have all the same color (white).
+So, my question is:  Is not yet implemented Wrl PointSet coloring in
+ParaView ?
+
+Second Question: Is just implemented the Extrusion Wrl node ?
+That because I have a ParaView crash loading a simple Extrusion Wrl.
+
+Third: How is possible to export to Wrl from ParaView ?  It needed
+to set menus or other ?
+
+
+Very Best Regards
+
+Roberto Angeletti
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040610/125a5cc8/attachment.htm
+From charles.law at kitware.com  Thu Jun 10 09:43:35 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Thu Jun 10 09:44:36 2004
+Subject: [Paraview] VRML Export  -  PointSet color -  Extrusion node
+In-Reply-To: <005001c44ecf$1a9bee40$2d1519ac@Rangeletti>
+Message-ID: <5.1.0.14.0.20040610094209.0211dc48@pop.biz.rr.com>
+
+Roberto,
+Make sure the point data attribute array you create in your reader has a 
+name.  ParaView ignores any array without a name.
+Charles.
+
+
+At 11:41 AM 6/10/2004 +0200, Roberto Angeletti wrote:
+>I writed a code that write a PointSet Wrl file from LaserData.
+>In the Wrl I use the point color array to have an OrtoImageColored
+>point cloud.
+>Well, in ParaView I noticed that the point color array is not loaded
+>and points have all the same color (white).
+>So, my question is:  Is not yet implemented Wrl PointSet coloring in
+>ParaView ?
+>
+>Second Question: Is just implemented the Extrusion Wrl node ?
+>That because I have a ParaView crash loading a simple Extrusion Wrl.
+>
+>Third: How is possible to export to Wrl from ParaView ?  It needed
+>to set menus or other ?
+>
+>
+>Very Best Regards
+>
+>Roberto Angeletti
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040610/9e647717/attachment.html
+From charles.law at kitware.com  Thu Jun 10 10:28:50 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Thu Jun 10 10:29:17 2004
+Subject: [Paraview] Will paraview calculate ISO-surfaces given...
+In-Reply-To: <40C74691.9090908@sandia.gov>
+References: <40C71459.3080604@nabla.co.uk> <40C70B22.1080909@sandia.gov>
+	<40C70E68.2080108@nabla.co.uk> <40C70FE9.70802@sandia.gov>
+	<40C71459.3080604@nabla.co.uk>
+Message-ID: <5.1.0.14.0.20040610102516.0214bdb8@pop.biz.rr.com>
+
+Henry,
+You will have to write a reader that uses a point locator to merge the 
+points and the cell vertices.
+Charles.
+
+
+At 11:19 AM 6/9/2004 -0600, Henry J. Karpf wrote:
+>YOu seem to know alot about what you are talking about so let me show you 
+>what i am working with and you can give me some ideas maybe:
+>I have this program that outputs data and the followoing format:
+>ITEM: NUMBER OF CELLS
+>1380
+>ITEM: CELLS
+>111 0 0 0 -1 0.75 0.75 0
+>112 0 0 0.75 -1 0.75 1.5 0
+>113 0 0.75 0.75 -1 1.5 1.5 0
+>114 0 0.75 0 -1 1.5 0.75 0
+>115 0 0 0 0 0.75 0.75 1
+>116 0 0 0.75 0 0.75 1.5 1
+>
+>.....TO the number of cells, one line per cell
+>
+>ITEM: NUMBER OF POINTS
+>1914
+>ITEM: POINTS
+>0 0 0 -1 -3
+>1 0 0.75 -1 -3
+>2 0.75 0.75 -1 -2.66927
+>3 0.75 0 -1 -3
+>4 0 0 0 -2
+>5 0 0.75 0 -2
+>6 0.75 0.75 0 -2
+>7 0.75 0 0 -2
+>8 0 1.5 -1 -2.87228
+>....
+>
+>THe cells are formated like the following:
+><id> < procid > < xmin> < xmax > <ymin> <ymax> <zmin><zmax>
+>and the points like:
+><id><x><y><z><level set value>
+>
+>
+>Any idea on how when give this data, produce a vtk file that paraview will 
+>read and generate the iso-surfaces and make the 3d model?  Thank you for 
+>your help or input.
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From steuwer at ill.fr  Fri Jun 11 06:27:34 2004
+From: steuwer at ill.fr (Axel Steuwer)
+Date: Fri Jun 11 06:27:58 2004
+Subject: [Paraview] VRML Export  -  PointSet color -  Extrusion node
+In-Reply-To: <5.1.0.14.0.20040610094209.0211dc48@pop.biz.rr.com>
+References: <005001c44ecf$1a9bee40$2d1519ac@Rangeletti>
+	<5.1.0.14.0.20040610094209.0211dc48@pop.biz.rr.com>
+Message-ID: <49952.195.83.126.10.1086949654.squirrel@mail.ill.fr>
+
+Hi,
+
+regarding the third question, is it possible to export VRML
+from ParaView, and if, how? That would interest me, too?!
+
+Axel
+
+
+> Roberto,
+> Make sure the point data attribute array you create in your reader has a
+>  name.  ParaView ignores any array without a name.
+> Charles.
+>
+>
+> At 11:41 AM 6/10/2004 +0200, Roberto Angeletti wrote:
+>>I writed a code that write a PointSet Wrl file from LaserData.
+>>In the Wrl I use the point color array to have an OrtoImageColored
+>> point cloud.
+>>Well, in ParaView I noticed that the point color array is not loaded
+>> and points have all the same color (white).
+>>So, my question is:  Is not yet implemented Wrl PointSet coloring in
+>> ParaView ?
+>>
+>>Second Question: Is just implemented the Extrusion Wrl node ?
+>>That because I have a ParaView crash loading a simple Extrusion Wrl.
+>>
+>>Third: How is possible to export to Wrl from ParaView ?  It needed to
+>> set menus or other ?
+>>
+>>
+>>Very Best Regards
+>>
+>>Roberto Angeletti
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From m.janssens at nabla.co.uk  Mon Jun 21 09:35:01 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Mon Jun 21 09:35:36 2004
+Subject: [Paraview] orientation axis
+In-Reply-To: <1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+References: <PAC14986@awe.co.uk>
+	<1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+Message-ID: <40D6E405.2040900@nabla.co.uk>
+
+Hello,
+
+Does anyone know how to change the color of the text for the 
+'orientation axes'? (the coord system display in the bottom left)
+
+The problem is that if I change the background colour to white I also 
+lose the axis names ('x', 'y', 'z') since they are white by default.
+
+Regards,
+
+Mattijs
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From amy.henderson at kitware.com  Mon Jun 21 09:41:54 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Mon Jun 21 09:43:44 2004
+Subject: [Paraview] orientation axis
+In-Reply-To: <40D6E405.2040900@nabla.co.uk>
+References: <PAC14986@awe.co.uk>
+	<1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+	<40D6E405.2040900@nabla.co.uk>
+Message-ID: <6.1.1.1.2.20040621094004.03a08c00@pop.biz.rr.com>
+
+Hi Mattijs,
+
+There is not currently a way to do this, but it should not be difficult to 
+add this functionality.  I'll look into it.
+
+- Amy
+
+At 09:35 AM 6/21/2004, Mattijs Janssens wrote:
+>Hello,
+>
+>Does anyone know how to change the color of the text for the 'orientation 
+>axes'? (the coord system display in the bottom left)
+>
+>The problem is that if I change the background colour to white I also lose 
+>the axis names ('x', 'y', 'z') since they are white by default.
+>
+>Regards,
+>
+>Mattijs
+>
+>--
+>/*---------------------------------------------------------*\
+>| ===========           Mattijs Janssens                    |
+>| \\        /           Development Engineer                |
+>|  \\      /                                                |
+>|   \\    /             Nabla Ltd.                          |
+>|    \\  /              The Mews, Picketts Lodge            |
+>|     \\/               Picketts Lane, Salfords,            |
+>|     F ield            Surrey RH1 5RG.                     |
+>|     O peration        Tel: +44 (0)1293 821272             |
+>|     A nd              Email: m.janssens@Nabla.co.uk       |
+>|     M anipulation     URL: http://www.Nabla.co.uk         |
+>\*---------------------------------------------------------*/
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From neau at imft.fr  Mon Jun 21 10:06:06 2004
+From: neau at imft.fr (Herve Neau)
+Date: Mon Jun 21 10:06:32 2004
+Subject: [Paraview] Loading binary Ensight data form Paraview
+Message-ID: <40D6EB4E.5020509@imft.fr>
+
+Dear All;
+
+I am a really beginner in using ParaView.
+I use a Fortran solver which generates binary Ensiht6 data. Paraview 
+reads *.case file but doesn't read geometry file and result files. If I 
+use ascii files, there is no problem.
+Is it possible to read binary ensight file generated by Fortran solver 
+using ensight reader of paraview?
+Does anyone know how to do this and could give me an example of Fortran 
+program doing this?
+
+Best Regards,
+
+Herve NEAU
+
+-- 
+
+=====================================================================
+NEAU Herv?   Institut de Mecanique des Fluides, UMR CNRS/INP-UPS 5502
+
+Institut National Polytechnique/ENSEEIHT    Tel:  (33) 05 61 28 59 23
+Allee du Professeur Camille SOULA           Fax:  (33) 05 61 28 58 99
+31400 TOULOUSE, FRANCE                      e-mail: neau@imft.fr
+_____________________________________________________________________
+
+From amy.henderson at kitware.com  Mon Jun 21 10:26:11 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Mon Jun 21 10:27:44 2004
+Subject: [Paraview] orientation axis
+In-Reply-To: <6.1.1.1.2.20040621094004.03a08c00@pop.biz.rr.com>
+References: <PAC14986@awe.co.uk>
+	<1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+	<40D6E405.2040900@nabla.co.uk>
+	<6.1.1.1.2.20040621094004.03a08c00@pop.biz.rr.com>
+Message-ID: <6.1.1.1.2.20040621102540.039de108@pop.biz.rr.com>
+
+The change has been made on the main ParaView CVS tree.
+
+- Amy
+
+At 09:41 AM 6/21/2004, Amy Henderson wrote:
+>Hi Mattijs,
+>
+>There is not currently a way to do this, but it should not be difficult to 
+>add this functionality.  I'll look into it.
+>
+>- Amy
+>
+>At 09:35 AM 6/21/2004, Mattijs Janssens wrote:
+>>Hello,
+>>
+>>Does anyone know how to change the color of the text for the 'orientation 
+>>axes'? (the coord system display in the bottom left)
+>>
+>>The problem is that if I change the background colour to white I also 
+>>lose the axis names ('x', 'y', 'z') since they are white by default.
+>>
+>>Regards,
+>>
+>>Mattijs
+>>
+>>--
+>>/*---------------------------------------------------------*\
+>>| ===========           Mattijs Janssens                    |
+>>| \\        /           Development Engineer                |
+>>|  \\      /                                                |
+>>|   \\    /             Nabla Ltd.                          |
+>>|    \\  /              The Mews, Picketts Lodge            |
+>>|     \\/               Picketts Lane, Salfords,            |
+>>|     F ield            Surrey RH1 5RG.                     |
+>>|     O peration        Tel: +44 (0)1293 821272             |
+>>|     A nd              Email: m.janssens@Nabla.co.uk       |
+>>|     M anipulation     URL: http://www.Nabla.co.uk         |
+>>\*---------------------------------------------------------*/
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From m.janssens at nabla.co.uk  Mon Jun 21 10:36:27 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Mon Jun 21 10:36:53 2004
+Subject: [Paraview] orientation axis
+In-Reply-To: <6.1.1.1.2.20040621102540.039de108@pop.biz.rr.com>
+References: <PAC14986@awe.co.uk>	<1085515598.12083.52.camel@fozzy.ran.sandia.gov>	<40D6E405.2040900@nabla.co.uk>	<6.1.1.1.2.20040621094004.03a08c00@pop.biz.rr.com>
+	<6.1.1.1.2.20040621102540.039de108@pop.biz.rr.com>
+Message-ID: <40D6F26B.2080207@nabla.co.uk>
+
+Thanks!
+
+Mattijs
+
+Amy Henderson wrote:
+> The change has been made on the main ParaView CVS tree.
+> 
+> - Amy
+> 
+> At 09:41 AM 6/21/2004, Amy Henderson wrote:
+> 
+>> Hi Mattijs,
+>>
+>> There is not currently a way to do this, but it should not be 
+>> difficult to add this functionality.  I'll look into it.
+>>
+>> - Amy
+>>
+>> At 09:35 AM 6/21/2004, Mattijs Janssens wrote:
+>>
+>>> Hello,
+>>>
+>>> Does anyone know how to change the color of the text for the 
+>>> 'orientation axes'? (the coord system display in the bottom left)
+>>>
+>>> The problem is that if I change the background colour to white I also 
+>>> lose the axis names ('x', 'y', 'z') since they are white by default.
+>>>
+>>> Regards,
+>>>
+>>> Mattijs
+>>>
+>>> -- 
+>>> /*---------------------------------------------------------*\
+>>> | ===========           Mattijs Janssens                    |
+>>> | \\        /           Development Engineer                |
+>>> |  \\      /                                                |
+>>> |   \\    /             Nabla Ltd.                          |
+>>> |    \\  /              The Mews, Picketts Lodge            |
+>>> |     \\/               Picketts Lane, Salfords,            |
+>>> |     F ield            Surrey RH1 5RG.                     |
+>>> |     O peration        Tel: +44 (0)1293 821272             |
+>>> |     A nd              Email: m.janssens@Nabla.co.uk       |
+>>> |     M anipulation     URL: http://www.Nabla.co.uk         |
+>>> \*---------------------------------------------------------*/
+>>>
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>
+>>
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From m.janssens at nabla.co.uk  Mon Jun 21 11:35:29 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Mon Jun 21 11:35:56 2004
+Subject: [Paraview] gl2ps into paraview
+In-Reply-To: <1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+References: <PAC14986@awe.co.uk>
+	<1085515598.12083.52.camel@fozzy.ran.sandia.gov>
+Message-ID: <40D70041.9020206@nabla.co.uk>
+
+Dear paraview users,
+
+I have a question about gl2ps. I changed the paraview compilation 
+options to compile vtk with gl2ps. Now I would like to be able to use 
+that from paraview. Anyone knows how to?
+
+- I saw there is a vtkGL2PSExporter.cxx exporting module so I assume I 
+have to use that. Is there a way of writing an xml wrapper to put into 
+the paraview filters? I tried grepping for a reference to any other 
+vtkExporter module in paraview but couldn't find one.
+
+Regards,
+
+Mattijs
+
+From m.janssens at nabla.co.uk  Mon Jun 21 13:17:08 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Mon Jun 21 13:17:34 2004
+Subject: [Paraview] cell data on polygonal cells
+In-Reply-To: <PAC14986@awe.co.uk>
+References: <PAC14986@awe.co.uk>
+Message-ID: <40D71814.4020401@nabla.co.uk>
+
+I have got legacy VTK files with point and cell data on polygons. In 
+1.4.2 I can visualize both point and cell data ok but if I use the cvs 
+version (from 16/6/4) I cannot visualize the cell data (point data is ok).
+
+Attached is a small test file which should have the same behaviour. Look 
+at field 'p' which should be both in point and in cell format.
+
+(my cvs version was compiled with gl2ps support switched on but I don't 
+expect that to mess up the standard rendering)
+
+Anyone any ideas? Known 'feature'?
+
+Regards,
+
+Mattijs
+-------------- next part --------------
+# vtk DataFile Version 2.0
+movingWall
+ASCII
+DATASET POLYDATA
+POINTS 42 float
+0 0.1 0 0.005 0.1 0 0.01 0.1 0 0.015 0.1 
+0 0.02 0.1 0 0.025 0.1 0 0.03 0.1 0 
+0.035 0.1 0 0.04 0.1 0 0.045 0.1 0 0.05 
+0.1 0 0.055 0.1 0 0.06 0.1 0 0.065 0.1 
+0 0.07 0.1 0 0.075 0.1 0 0.08 0.1 0 
+0.085 0.1 0 0.09 0.1 0 0.095 0.1 0 0.1 
+0.1 0 0 0.1 0.01 0.005 0.1 0.01 0.01 0.1 
+0.01 0.015 0.1 0.01 0.02 0.1 0.01 0.025 0.1 0.01 
+0.03 0.1 0.01 0.035 0.1 0.01 0.04 0.1 0.01 0.045 
+0.1 0.01 0.05 0.1 0.01 0.055 0.1 0.01 0.06 0.1 
+0.01 0.065 0.1 0.01 0.07 0.1 0.01 0.075 0.1 0.01 
+0.08 0.1 0.01 0.085 0.1 0.01 0.09 0.1 0.01 0.095 
+0.1 0.01 0.1 0.1 0.01 
+POLYGONS 20 100
+4 0 21 22 1 4 1 22 23 2 4 
+2 23 24 3 4 3 24 25 4 4 
+4 25 26 5 4 5 26 27 6 4 
+6 27 28 7 4 7 28 29 8 4 
+8 29 30 9 4 9 30 31 10 4 
+10 31 32 11 4 11 32 33 12 4 
+12 33 34 13 4 13 34 35 14 4 
+14 35 36 15 4 15 36 37 16 4 
+16 37 38 17 4 17 38 39 18 4 
+18 39 40 19 4 19 40 41 20 
+CELL_DATA 20
+FIELD attributes 3
+p2 1 20 float
+-4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 -0.123445 -0.0869407 -0.0525158 -0.0147668 
+0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 4.92005 
+p 1 20 float
+-4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 -0.123445 -0.0869407 -0.0525158 -0.0147668 
+0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 4.92005 
+U 3 20 float
+1 0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 1 
+0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 
+POINT_DATA 42
+FIELD attributes 3
+p2 1 42 float
+-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 -0.146751 -0.105193 -0.0697282 -0.0336413 
+0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 3.66651 4.92005 
+-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 -0.146751 -0.105193 -0.0697282 
+-0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 3.66651 
+4.92005 
+p 1 42 float
+-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 -0.146751 -0.105193 -0.0697282 -0.0336413 
+0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 3.66651 4.92005 
+-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 -0.146751 -0.105193 -0.0697282 
+-0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 3.66651 
+4.92005 
+U 3 42 float
+1 0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 1 
+0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 1 
+0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 1 
+0 0 1 0 0 1 0 0 1 0 
+0 1 0 0 1 0 0 1 0 0 
+1 0 0 1 0 0 1 0 0 1 
+0 0 1 0 0 
+From charles.law at kitware.com  Tue Jun 22 10:34:30 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Tue Jun 22 10:35:08 2004
+Subject: [Paraview] cell data on polygonal cells
+In-Reply-To: <40D71814.4020401@nabla.co.uk>
+References: <PAC14986@awe.co.uk>
+ <PAC14986@awe.co.uk>
+Message-ID: <5.1.0.14.0.20040622102957.020c77f0@pop.biz.rr.com>
+
+Mattijs,
+
+This is a bug.  I confirmed that ParaView does not color by vector cell 
+attributes properly.  You can get around this by using the array calculator 
+to generate a one component cell attribute which will color properly.
+
+Charles.
+
+
+At 06:17 PM 6/21/2004 +0100, Mattijs Janssens wrote:
+>I have got legacy VTK files with point and cell data on polygons. In 1.4.2 
+>I can visualize both point and cell data ok but if I use the cvs version 
+>(from 16/6/4) I cannot visualize the cell data (point data is ok).
+>
+>Attached is a small test file which should have the same behaviour. Look 
+>at field 'p' which should be both in point and in cell format.
+>
+>(my cvs version was compiled with gl2ps support switched on but I don't 
+>expect that to mess up the standard rendering)
+>
+>Anyone any ideas? Known 'feature'?
+>
+>Regards,
+>
+>Mattijs
+>
+>
+># vtk DataFile Version 2.0
+>movingWall
+>ASCII
+>DATASET POLYDATA
+>POINTS 42 float
+>0 0.1 0 0.005 0.1 0 0.01 0.1 0 0.015 0.1
+>0 0.02 0.1 0 0.025 0.1 0 0.03 0.1 0
+>0.035 0.1 0 0.04 0.1 0 0.045 0.1 0 0.05
+>0.1 0 0.055 0.1 0 0.06 0.1 0 0.065 0.1
+>0 0.07 0.1 0 0.075 0.1 0 0.08 0.1 0
+>0.085 0.1 0 0.09 0.1 0 0.095 0.1 0 0.1
+>0.1 0 0 0.1 0.01 0.005 0.1 0.01 0.01 0.1
+>0.01 0.015 0.1 0.01 0.02 0.1 0.01 0.025 0.1 0.01
+>0.03 0.1 0.01 0.035 0.1 0.01 0.04 0.1 0.01 0.045
+>0.1 0.01 0.05 0.1 0.01 0.055 0.1 0.01 0.06 0.1
+>0.01 0.065 0.1 0.01 0.07 0.1 0.01 0.075 0.1 0.01
+>0.08 0.1 0.01 0.085 0.1 0.01 0.09 0.1 0.01 0.095
+>0.1 0.01 0.1 0.1 0.01
+>POLYGONS 20 100
+>4 0 21 22 1 4 1 22 23 2 4
+>2 23 24 3 4 3 24 25 4 4
+>4 25 26 5 4 5 26 27 6 4
+>6 27 28 7 4 7 28 29 8 4
+>8 29 30 9 4 9 30 31 10 4
+>10 31 32 11 4 11 32 33 12 4
+>12 33 34 13 4 13 34 35 14 4
+>14 35 36 15 4 15 36 37 16 4
+>16 37 38 17 4 17 38 39 18 4
+>18 39 40 19 4 19 40 41 20
+>CELL_DATA 20
+>FIELD attributes 3
+>p2 1 20 float
+>-4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>-0.123445 -0.0869407 -0.0525158 -0.0147668
+>0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>4.92005
+>p 1 20 float
+>-4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>-0.123445 -0.0869407 -0.0525158 -0.0147668
+>0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>4.92005
+>U 3 20 float
+>1 0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0 1
+>0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0
+>POINT_DATA 42
+>FIELD attributes 3
+>p2 1 42 float
+>-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>-0.146751 -0.105193 -0.0697282 -0.0336413
+>0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>3.66651 4.92005
+>-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>-0.146751 -0.105193 -0.0697282
+>-0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 
+>1.8207 3.66651
+>4.92005
+>p 1 42 float
+>-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>-0.146751 -0.105193 -0.0697282 -0.0336413
+>0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>3.66651 4.92005
+>-4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>-0.146751 -0.105193 -0.0697282
+>-0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 
+>1.8207 3.66651
+>4.92005
+>U 3 42 float
+>1 0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0 1
+>0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0 1
+>0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0 1
+>0 0 1 0 0 1 0 0 1 0
+>0 1 0 0 1 0 0 1 0 0
+>1 0 0 1 0 0 1 0 0 1
+>0 0 1 0 0
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From m.janssens at nabla.co.uk  Tue Jun 22 10:59:28 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Tue Jun 22 10:59:38 2004
+Subject: [Paraview] cell data on polygonal cells
+In-Reply-To: <5.1.0.14.0.20040622102957.020c77f0@pop.biz.rr.com>
+References: <PAC14986@awe.co.uk> <PAC14986@awe.co.uk>
+	<5.1.0.14.0.20040622102957.020c77f0@pop.biz.rr.com>
+Message-ID: <40D84950.4050707@nabla.co.uk>
+
+Dear paraview developers,
+
+I have the same problem using a scalar cell attribute.
+
+(I would not care too much about a vector cell attribute since as you 
+said you can work around it)
+
+Regards,
+
+Mattijs
+
+p.s. some positive feedback as well: I am really enjoying paraview! None 
+of the weirdness / inconsistencies of some other postprocessors.
+
+Charles Law wrote:
+> Mattijs,
+> 
+> This is a bug.  I confirmed that ParaView does not color by vector cell 
+> attributes properly.  You can get around this by using the array 
+> calculator to generate a one component cell attribute which will color 
+> properly.
+> 
+> Charles.
+> 
+> 
+> At 06:17 PM 6/21/2004 +0100, Mattijs Janssens wrote:
+> 
+>> I have got legacy VTK files with point and cell data on polygons. In 
+>> 1.4.2 I can visualize both point and cell data ok but if I use the cvs 
+>> version (from 16/6/4) I cannot visualize the cell data (point data is 
+>> ok).
+>>
+>> Attached is a small test file which should have the same behaviour. 
+>> Look at field 'p' which should be both in point and in cell format.
+>>
+>> (my cvs version was compiled with gl2ps support switched on but I 
+>> don't expect that to mess up the standard rendering)
+>>
+>> Anyone any ideas? Known 'feature'?
+>>
+>> Regards,
+>>
+>> Mattijs
+>>
+>>
+>> # vtk DataFile Version 2.0
+>> movingWall
+>> ASCII
+>> DATASET POLYDATA
+>> POINTS 42 float
+>> 0 0.1 0 0.005 0.1 0 0.01 0.1 0 0.015 0.1
+>> 0 0.02 0.1 0 0.025 0.1 0 0.03 0.1 0
+>> 0.035 0.1 0 0.04 0.1 0 0.045 0.1 0 0.05
+>> 0.1 0 0.055 0.1 0 0.06 0.1 0 0.065 0.1
+>> 0 0.07 0.1 0 0.075 0.1 0 0.08 0.1 0
+>> 0.085 0.1 0 0.09 0.1 0 0.095 0.1 0 0.1
+>> 0.1 0 0 0.1 0.01 0.005 0.1 0.01 0.01 0.1
+>> 0.01 0.015 0.1 0.01 0.02 0.1 0.01 0.025 0.1 0.01
+>> 0.03 0.1 0.01 0.035 0.1 0.01 0.04 0.1 0.01 0.045
+>> 0.1 0.01 0.05 0.1 0.01 0.055 0.1 0.01 0.06 0.1
+>> 0.01 0.065 0.1 0.01 0.07 0.1 0.01 0.075 0.1 0.01
+>> 0.08 0.1 0.01 0.085 0.1 0.01 0.09 0.1 0.01 0.095
+>> 0.1 0.01 0.1 0.1 0.01
+>> POLYGONS 20 100
+>> 4 0 21 22 1 4 1 22 23 2 4
+>> 2 23 24 3 4 3 24 25 4 4
+>> 4 25 26 5 4 5 26 27 6 4
+>> 6 27 28 7 4 7 28 29 8 4
+>> 8 29 30 9 4 9 30 31 10 4
+>> 10 31 32 11 4 11 32 33 12 4
+>> 12 33 34 13 4 13 34 35 14 4
+>> 14 35 36 15 4 15 36 37 16 4
+>> 16 37 38 17 4 17 38 39 18 4
+>> 18 39 40 19 4 19 40 41 20
+>> CELL_DATA 20
+>> FIELD attributes 3
+>> p2 1 20 float
+>> -4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>> -0.123445 -0.0869407 -0.0525158 -0.0147668
+>> 0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>> 4.92005
+>> p 1 20 float
+>> -4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>> -0.123445 -0.0869407 -0.0525158 -0.0147668
+>> 0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>> 4.92005
+>> U 3 20 float
+>> 1 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0
+>> POINT_DATA 42
+>> FIELD attributes 3
+>> p2 1 42 float
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282 -0.0336413
+>> 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>> 3.66651 4.92005
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282
+>> -0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 
+>> 0.97649 1.8207 3.66651
+>> 4.92005
+>> p 1 42 float
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282 -0.0336413
+>> 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>> 3.66651 4.92005
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282
+>> -0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 
+>> 0.97649 1.8207 3.66651
+>> 4.92005
+>> U 3 42 float
+>> 1 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From julien.alizier-ausy at irsn.fr  Tue Jun 22 11:05:35 2004
+From: julien.alizier-ausy at irsn.fr (ALIZIER Julien AUSY)
+Date: Tue Jun 22 11:05:53 2004
+Subject: [Paraview] cell data on polygonal cells
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B227@OREADE.ipsn.fr>
+
+
+Hi,
+
+A few month ago I had some problems displaying cell scalars: it was because
+the checkbox "Use triangle strip" was checked.
+Using "Immediate Mode Rendering" made things work well.
+
+Maybe it will help...
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : Mattijs Janssens [mailto:m.janssens@nabla.co.uk]
+Envoy? : mardi 22 juin 2004 16:59
+? : Paraview List
+Objet : Re: [Paraview] cell data on polygonal cells
+
+
+Dear paraview developers,
+
+I have the same problem using a scalar cell attribute.
+
+(I would not care too much about a vector cell attribute since as you 
+said you can work around it)
+
+Regards,
+
+Mattijs
+
+p.s. some positive feedback as well: I am really enjoying paraview! None 
+of the weirdness / inconsistencies of some other postprocessors.
+
+Charles Law wrote:
+> Mattijs,
+> 
+> This is a bug.  I confirmed that ParaView does not color by vector cell 
+> attributes properly.  You can get around this by using the array 
+> calculator to generate a one component cell attribute which will color 
+> properly.
+> 
+> Charles.
+> 
+> 
+> At 06:17 PM 6/21/2004 +0100, Mattijs Janssens wrote:
+> 
+>> I have got legacy VTK files with point and cell data on polygons. In 
+>> 1.4.2 I can visualize both point and cell data ok but if I use the cvs 
+>> version (from 16/6/4) I cannot visualize the cell data (point data is 
+>> ok).
+>>
+>> Attached is a small test file which should have the same behaviour. 
+>> Look at field 'p' which should be both in point and in cell format.
+>>
+>> (my cvs version was compiled with gl2ps support switched on but I 
+>> don't expect that to mess up the standard rendering)
+>>
+>> Anyone any ideas? Known 'feature'?
+>>
+>> Regards,
+>>
+>> Mattijs
+>>
+>>
+>> # vtk DataFile Version 2.0
+>> movingWall
+>> ASCII
+>> DATASET POLYDATA
+>> POINTS 42 float
+>> 0 0.1 0 0.005 0.1 0 0.01 0.1 0 0.015 0.1
+>> 0 0.02 0.1 0 0.025 0.1 0 0.03 0.1 0
+>> 0.035 0.1 0 0.04 0.1 0 0.045 0.1 0 0.05
+>> 0.1 0 0.055 0.1 0 0.06 0.1 0 0.065 0.1
+>> 0 0.07 0.1 0 0.075 0.1 0 0.08 0.1 0
+>> 0.085 0.1 0 0.09 0.1 0 0.095 0.1 0 0.1
+>> 0.1 0 0 0.1 0.01 0.005 0.1 0.01 0.01 0.1
+>> 0.01 0.015 0.1 0.01 0.02 0.1 0.01 0.025 0.1 0.01
+>> 0.03 0.1 0.01 0.035 0.1 0.01 0.04 0.1 0.01 0.045
+>> 0.1 0.01 0.05 0.1 0.01 0.055 0.1 0.01 0.06 0.1
+>> 0.01 0.065 0.1 0.01 0.07 0.1 0.01 0.075 0.1 0.01
+>> 0.08 0.1 0.01 0.085 0.1 0.01 0.09 0.1 0.01 0.095
+>> 0.1 0.01 0.1 0.1 0.01
+>> POLYGONS 20 100
+>> 4 0 21 22 1 4 1 22 23 2 4
+>> 2 23 24 3 4 3 24 25 4 4
+>> 4 25 26 5 4 5 26 27 6 4
+>> 6 27 28 7 4 7 28 29 8 4
+>> 8 29 30 9 4 9 30 31 10 4
+>> 10 31 32 11 4 11 32 33 12 4
+>> 12 33 34 13 4 13 34 35 14 4
+>> 14 35 36 15 4 15 36 37 16 4
+>> 16 37 38 17 4 17 38 39 18 4
+>> 18 39 40 19 4 19 40 41 20
+>> CELL_DATA 20
+>> FIELD attributes 3
+>> p2 1 20 float
+>> -4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>> -0.123445 -0.0869407 -0.0525158 -0.0147668
+>> 0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>> 4.92005
+>> p 1 20 float
+>> -4.44268 -2.0507 -0.97831 -0.569803 -0.360867 -0.240873 -0.170058 
+>> -0.123445 -0.0869407 -0.0525158 -0.0147668
+>> 0.0302908 0.0873895 0.164404 0.275265 0.446318 0.72455 1.22843 2.41296 
+>> 4.92005
+>> U 3 20 float
+>> 1 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0
+>> POINT_DATA 42
+>> FIELD attributes 3
+>> p2 1 42 float
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282 -0.0336413
+>> 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>> 3.66651 4.92005
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282
+>> -0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 
+>> 0.97649 1.8207 3.66651
+>> 4.92005
+>> p 1 42 float
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282 -0.0336413
+>> 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 0.97649 1.8207 
+>> 3.66651 4.92005
+>> -4.44268 -3.24669 -1.51451 -0.774056 -0.465335 -0.30087 -0.205465 
+>> -0.146751 -0.105193 -0.0697282
+>> -0.0336413 0.007762 0.0588401 0.125897 0.219835 0.360792 0.585434 
+>> 0.97649 1.8207 3.66651
+>> 4.92005
+>> U 3 42 float
+>> 1 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0 1 0 0 1 0
+>> 0 1 0 0 1 0 0 1 0 0
+>> 1 0 0 1 0 0 1 0 0 1
+>> 0 0 1 0 0
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+From hjkarpf at sandia.gov  Wed Jun 23 13:51:48 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Wed Jun 23 14:09:55 2004
+Subject: [Paraview] Resolution of Iso-Surface generation
+Message-ID: <40D9C334.8010006@sandia.gov>
+
+Is there a way to make the resolution of the Iso-surface generation, 
+higher, as in better quality.  So that it is not just flat planes, but 
+some curved surfaces as well?
+Thank you
+Henry Karpf
+
+
+From berklist at nycap.rr.com  Wed Jun 23 14:29:19 2004
+From: berklist at nycap.rr.com (Berk Geveci)
+Date: Wed Jun 23 14:29:25 2004
+Subject: [Paraview] Resolution of Iso-Surface generation
+In-Reply-To: <40D9C334.8010006@sandia.gov>
+References: <40D9C334.8010006@sandia.gov>
+Message-ID: <1088015359.13351.5.camel@silverymoon>
+
+The "resolution" of an iso-surface is entirely dependent on the cell
+(element) size of the input. The iso-surface filter will generate one
+polygon per each appropriate cell. There are a few ways of making this
+iso-surface look smoother.
+1. Use normals. In some cases, the iso-surface filter will generate
+normals. In cases it doesn't, you can use the "Normals Generation"
+filter. The result this filter produces is not as nice as what the
+contour filter can do but it's better than nothing.
+2. Use subdivision (and normals). Try loop subdivision and normals
+generation.
+
+-Berk
+
+On Wed, 2004-06-23 at 13:51, Henry J. Karpf wrote:
+> Is there a way to make the resolution of the Iso-surface generation, 
+> higher, as in better quality.  So that it is not just flat planes, but 
+> some curved surfaces as well?
+> Thank you
+> Henry Karpf
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+From r.angeletti at auselda.it  Fri Jun 25 07:02:20 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Fri Jun 25 07:03:42 2004
+Subject: [Paraview] Tin creation from Vrml PointSet Cloud
+Message-ID: <005501c45aa3$e37e4990$2d1519ac@Rangeletti>
+
+I need to perform a Delaunay triangulation on my Vrml PointSet Cloud Data,
+to obtain a Tin surface.
+What are the steps to do this with ParaView ?
+
+Best Regards
+
+Roberto Angeletti
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040625/424b9e5f/attachment.htm
+From steuwer at ill.fr  Fri Jun 25 07:29:50 2004
+From: steuwer at ill.fr (Axel Steuwer)
+Date: Fri Jun 25 07:30:37 2004
+Subject: [Paraview] Tin creation from Vrml PointSet Cloud
+In-Reply-To: <005501c45aa3$e37e4990$2d1519ac@Rangeletti>
+Message-ID: <001401c45aa7$bb139ec0$70c536c0@ill.fr>
+
+Hi,
+ 
+I may be able to help you a little bit. First, you have to let paraview
+know that 
+you want to use the vtkDelaunay2D or 3D filter. This is done permanently
+(there are 
+some instances in the mailing list where people talk about this) for
+example 
+by creating a xml-file with the content (below) in a directory called
+e.g. "extensions"
+in your paraview installation directory. Then you have to point the
+environment
+variable PV_INTERFACE_PATH to that file location. If you only want to
+use this
+filter sporadically, then I think it is enough to "import package" the
+xml-file.
+This should make the filter available in paraview (given the right data
+format, I think).
+I am not sure what the structure of your VRML point cloud is, I use
+polydata such as this example
+ 
+# vtk DataFile Version 2.0
+Example data
+ASCII 
+DATASET POLYDATA
+POINTS 1000 float
+11.71441 -0.29446 -0.06840
+11.51223 -0.26540 -0.00054
+11.31058 -0.24298 0.00603
+11.10758 -0.28167 0.00724
+10.90453 -0.27109 0.00207
+.....
+ 
+ 
+and it works fine for me. If you consult the vtk description of the
+Delaunay filter, that might help.
+You can then play around with the parameters in the usual way.
+Alternatively, I sometimes use MayaVi, where you simply enter
+vtkDelaunay2D in the 
+UserDefined Filter window pop-up. Worth trying. 
+ 
+Hope that helps.
+ 
+Axel
+ 
+------------------------------------------------------------------------
+------put this in your xml file------------------------
+<ModuleInterfaces>
+<Module name="Delaunay3D" root_name="Delaunay3D" module_type="Filter">
+  <Filter class="vtkDelaunay3D">
+     <Input name="Input" class="vtkPointSet"/>
+  </Filter>
+  <InputMenu label="Input" help="Delaunay Triangulation"/>
+  <VectorEntry variable="Tolerance" trace_name="Tolerance" type="float"
+help="The tolerance" default_value="0.001" data_range="0. 10.0"/>
+  <VectorEntry variable="Alpha" trace_name="Alpha" type="float"
+help="The Alpha value" default_value="2.0" data_range="0. 10.0"/>
+  <VectorEntry variable="Offset" trace_name="Offset" type="float"
+help="The Offset value" default_value="2.5" data_range="0. 10.0"/>
+  <LabeledToggle variable="BoundingTriangulation"
+trace_name="BoundingTriangulation" help="controls whether bounding 
+  triangulation points (and associated triangles) are included in the
+output" default_value="0"/>
+</Module>
+<Module name="Delaunay2D" root_name="Delaunay2D" module_type="Filter">
+  <Filter class="vtkDelaunay2D">
+     <Input name="Input" class="vtkPointSet"/>
+  </Filter>
+  <InputMenu label="Input" help="Delaunay Triangulation"/>
+  <VectorEntry variable="Tolerance" trace_name="Tolerance" type="float"
+help="The tolerance" default_value="0.001" data_range="0. 10.0"/>
+  <VectorEntry variable="Alpha" trace_name="Alpha" type="float"
+help="The Alpha value" default_value="2.0" data_range="0. 10.0"/>
+  <VectorEntry variable="Offset" trace_name="Offset" type="float"
+help="The Offset value" default_value="2.5" data_range="0. 10.0"/>
+  <LabeledToggle variable="BoundingTriangulation"
+trace_name="BoundingTriangulation" help="controls whether bounding 
+  triangulation points (and associated triangles) are included in the
+output" default_value="0"/>
+</Module>
+</ModuleInterfaces>
+
+------------------------------------------------------------------------
+--------------------------------------------------------------
+ 
+ 
+
+-----Original Message-----
+From: paraview-bounces@paraview.org
+[mailto:paraview-bounces@paraview.org] On Behalf Of Roberto Angeletti
+Sent: 25 June 2004 13:02
+To: paraview@paraview.org
+
+
+I need to perform a Delaunay triangulation on my Vrml PointSet Cloud
+Data,
+to obtain a Tin surface.
+What are the steps to do this with ParaView ?
+ 
+Best Regards
+ 
+Roberto Angeletti
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040625/32aafe41/attachment.html
+From r.angeletti at auselda.it  Fri Jun 25 10:25:48 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Fri Jun 25 10:26:51 2004
+Subject: [Paraview] Set ParaView in Ascii mode
+Message-ID: <00a601c45ac0$4f6c3a10$2d1519ac@Rangeletti>
+
+Of course, there is a way to activate the saving of PVD files in ASCII mode in ParaView.
+
+But...  how ?
+
+Somebody can help me to set it, so I can read coordinate (and other) of objects from the 
+saved files ?
+
+
+Thank you in advance
+
+
+Roberto Angeletti
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040625/5cab0068/attachment.html
+From wej1 at yahoo.com  Fri Jun 25 11:49:41 2004
+From: wej1 at yahoo.com (Willie Johnson)
+Date: Fri Jun 25 11:49:43 2004
+Subject: [Paraview] Problems Creating a Reader
+Message-ID: <20040625154941.15992.qmail@web60104.mail.yahoo.com>
+
+Needless to say, I am a new Paraview/Vtk user.  I am
+trying to create my own reader in C++ that I can plug
+into Paraview.  When I try to import the reader, I get
+an error saying that the _Initialize function cannot
+be found in the library.  From what I've seen on the
+mailing list, I believe that I need to add
+client-server wrappings.  How is this best done?  I am
+using Paraview 1.4.2 on Redhat Linux.
+
+Does anyone have an example CMakeLists.txt that I can
+use to create the reader and an xml file that I can
+use to load the reader?
+
+Any other tips are welcome.
+
+Thanks in advance,
+Willie
+
+
+	
+		
+__________________________________
+Do you Yahoo!?
+New and Improved Yahoo! Mail - 100MB free storage!
+http://promotions.yahoo.com/new_mail 

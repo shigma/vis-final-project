@@ -1,0 +1,4713 @@
+From brad.king at kitware.com  Tue Mar  1 11:12:15 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar  1 11:20:32 2005
+Subject: [Paraview] paraview and vtk
+In-Reply-To: <Pine.LNX.4.44.0502281621380.11497-100000@hal>
+References: <Pine.LNX.4.44.0502281621380.11497-100000@hal>
+Message-ID: <4224945F.4020607@kitware.com>
+
+Weiguang Guan wrote:
+> I'm new to paraview. Just wonder why paraview keeps its own copy of vtk.  
+> If I download/install vtk, and want to link with the separately installed 
+> vtk rather than the one that comes with paraview, is there a switch in 
+> cmake (paraview's CMakeLists.txt) that allow me to do this?
+
+ParaView used to support an external VTK but it requires VTK to be built 
+with a specific set of options.  It also requires a matching version of 
+VTK (down to the second in CVS time).  We had too many problems with 
+users not having matching versios of VTK or building it with conflicting 
+options or compilers.  The solution is to include VTK with ParaView to 
+make it all do the right thing automatically.  It turns out that only a 
+minimal part of VTK needs to be built and that ParaView's VTK wouldn't 
+be that useful as a stand-alone VTK anyway.
+
+-Brad
+From brad.king at kitware.com  Tue Mar  1 11:49:44 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar  1 11:58:16 2005
+Subject: [Paraview] Compilation problem with Paraview 1.8.5...
+In-Reply-To: <20050224193947.2FC413411A@public.kitware.com>
+References: <20050224193947.2FC413411A@public.kitware.com>
+Message-ID: <42249D28.7040601@kitware.com>
+
+Renato N. Elias wrote:
+> --------------------------------------------
+> Building Utility maketcltk...
+> : command not founduild/Utilities/TclTk/build_tcltk.sh: line 2: 
+> /home/rnelias/tmp/build/Utilities/TclTk/build_tcltk.sh: line 31: syntax
+> error: unexpected end of file
+> -------------------------------------------
+> 
+> I suppose the problem is with the shell scripts inside the Utilities/TclTK
+> directory because after I have changed the files with those provided in a
+> previous version of Paraview (1.8.3) I got success withou any problem.
+
+There were no changes in the Utilities/TclTk directory between 1.8.3 and 
+1.8.5.  If you are still able to duplicate the problem please send me 
+the broken version of build_tcltk.sh and the working one.
+
+Thanks,
+-Brad
+From dfisher at as.arizona.edu  Tue Mar  1 12:51:38 2005
+From: dfisher at as.arizona.edu (don fisher)
+Date: Tue Mar  1 13:00:54 2005
+Subject: [Paraview] paraview and vtk
+In-Reply-To: <4224945F.4020607@kitware.com>
+References: <Pine.LNX.4.44.0502281621380.11497-100000@hal>
+	<4224945F.4020607@kitware.com>
+Message-ID: <4224ABAA.9020607@as.arizona.edu>
+
+Brad,
+
+When a separate VTK is built and installed, do you know whether there 
+is an overlap of files in the lib and include directories? It appeared 
+that there might be (even though there was a VTK subdir in lib) but I 
+did not have time to verify all of the load times.
+
+don
+
+Brad King wrote:
+> Weiguang Guan wrote:
+> 
+>> I'm new to paraview. Just wonder why paraview keeps its own copy of 
+>> vtk.  If I download/install vtk, and want to link with the separately 
+>> installed vtk rather than the one that comes with paraview, is there a 
+>> switch in cmake (paraview's CMakeLists.txt) that allow me to do this?
+> 
+> 
+> ParaView used to support an external VTK but it requires VTK to be built 
+> with a specific set of options.  It also requires a matching version of 
+> VTK (down to the second in CVS time).  We had too many problems with 
+> users not having matching versios of VTK or building it with conflicting 
+> options or compilers.  The solution is to include VTK with ParaView to 
+> make it all do the right thing automatically.  It turns out that only a 
+> minimal part of VTK needs to be built and that ParaView's VTK wouldn't 
+> be that useful as a stand-alone VTK anyway.
+> 
+> -Brad
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+-------------------------------------------------------------------
+|    Don Fisher				  dfisher@as.arizona.edu  |
+|    Steward Observatory		  			  |
+|    933 N. Cherry Ave.    		  VOICE: (520)888-7613	  |
+|    University of Arizona		                          |
+|    Tucson, AZ  85721                				  |
+-------------------------------------------------------------------
+
+From guanw at rhpcs.mcmaster.ca  Tue Mar  1 13:16:44 2005
+From: guanw at rhpcs.mcmaster.ca (Weiguang Guan)
+Date: Tue Mar  1 13:26:02 2005
+Subject: [Paraview] paraview and vtk
+In-Reply-To: <4224ABAA.9020607@as.arizona.edu>
+Message-ID: <Pine.LNX.4.44.0503011309090.12181-100000@hal>
+
+Yes, there is a fairly large overlap. When you "make install" paraview its
+own vtk will overwrite the separately built/installed vtk (if there is
+one). And this might cause some vtk-based applications broken as these two
+VTKs are "slightly" different versions and built with different cmake
+options as Brad pointed out.
+
+Weiguang
+-- 
+========================================================
+Weiguang Guan, Research Engineer
+RHPCS, McMaster University
+========================================================
+On Tue, 1 Mar 2005, don fisher wrote:
+
+> Brad,
+> 
+> When a separate VTK is built and installed, do you know whether there 
+> is an overlap of files in the lib and include directories? It appeared 
+> that there might be (even though there was a VTK subdir in lib) but I 
+> did not have time to verify all of the load times.
+> 
+> don
+> 
+> Brad King wrote:
+> > Weiguang Guan wrote:
+> > 
+> >> I'm new to paraview. Just wonder why paraview keeps its own copy of 
+> >> vtk.  If I download/install vtk, and want to link with the separately 
+> >> installed vtk rather than the one that comes with paraview, is there a 
+> >> switch in cmake (paraview's CMakeLists.txt) that allow me to do this?
+> > 
+> > 
+> > ParaView used to support an external VTK but it requires VTK to be built 
+> > with a specific set of options.  It also requires a matching version of 
+> > VTK (down to the second in CVS time).  We had too many problems with 
+> > users not having matching versios of VTK or building it with conflicting 
+> > options or compilers.  The solution is to include VTK with ParaView to 
+> > make it all do the right thing automatically.  It turns out that only a 
+> > minimal part of VTK needs to be built and that ParaView's VTK wouldn't 
+> > be that useful as a stand-alone VTK anyway.
+> > 
+> > -Brad
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> 
+> 
+
+From brad.king at kitware.com  Tue Mar  1 13:21:56 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar  1 13:31:06 2005
+Subject: [Paraview] paraview and vtk
+In-Reply-To: <Pine.LNX.4.44.0503011309090.12181-100000@hal>
+References: <Pine.LNX.4.44.0503011309090.12181-100000@hal>
+Message-ID: <4224B2C4.8090407@kitware.com>
+
+Weiguang Guan wrote:
+> Yes, there is a fairly large overlap. When you "make install" paraview its
+> own vtk will overwrite the separately built/installed vtk (if there is
+> one). And this might cause some vtk-based applications broken as these two
+> VTKs are "slightly" different versions and built with different cmake
+> options as Brad pointed out.
+
+I'm actually working on fixing this right now so that ParaView installs 
+its VTK in a separate place.  Hopefully I can get it fixed before the 
+next release.  Otherwise you'll have to use a different 
+CMAKE_INSTALL_PREFIX for paraview.
+
+-Brad
+From rnelias at superig.com.br  Tue Mar  1 20:15:41 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Tue Mar  1 20:17:00 2005
+Subject: [Paraview] Re: Re: paraview and vtk (Brad King)
+In-Reply-To: <20050301170007.7E0FD34B86@public.kitware.com>
+Message-ID: <20050302011657.9F8AD3479A@public.kitware.com>
+
+
+I think I found out what was the problem...
+
+I was trying to compile the source files provided in zip format in a Linux
+system. In reality, Linux systems are able to unzip files compressed in zip
+format without any problem, but I think these source files was generated in
+a DOS system, thus they aren't suitable for like-Unix systems.
+
+Regards
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+
+P.S.: It would be interesting warn the users on the download area about this
+small detail.
+
+
+------------------------------
+
+Message: 8
+Date: Tue, 01 Mar 2005 11:49:44 -0500
+From: Brad King <brad.king@kitware.com>
+Subject: Re: [Paraview] Compilation problem with Paraview 1.8.5...
+To: "Renato N. Elias" <rnelias@superig.com.br>
+Cc: paraview@paraview.org
+Message-ID: <42249D28.7040601@kitware.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+
+Renato N. Elias wrote:
+> --------------------------------------------
+> Building Utility maketcltk...
+> : command not founduild/Utilities/TclTk/build_tcltk.sh: line 2: 
+> /home/rnelias/tmp/build/Utilities/TclTk/build_tcltk.sh: line 31: syntax
+> error: unexpected end of file
+> -------------------------------------------
+> 
+> I suppose the problem is with the shell scripts inside the Utilities/TclTK
+> directory because after I have changed the files with those provided in a
+> previous version of Paraview (1.8.3) I got success withou any problem.
+
+There were no changes in the Utilities/TclTk directory between 1.8.3 and 
+1.8.5.  If you are still able to duplicate the problem please send me 
+the broken version of build_tcltk.sh and the working one.
+
+Thanks,
+-Brad
+
+
+------------------------------
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+End of ParaView Digest, Vol 11, Issue 1
+***************************************
+
+
+
+From brad.king at kitware.com  Tue Mar  1 23:10:33 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar  1 23:10:36 2005
+Subject: [Paraview] Re: paraview and vtk (Brad King)
+In-Reply-To: <200503020117.j221GtwM006236@mx2.biz.rr.com>
+References: <200503020117.j221GtwM006236@mx2.biz.rr.com>
+Message-ID: <42253CB9.1030609@kitware.com>
+
+Renato N. Elias wrote:
+> I think I found out what was the problem...
+> 
+> I was trying to compile the source files provided in zip format in a Linux
+> system. In reality, Linux systems are able to unzip files compressed in zip
+> format without any problem, but I think these source files was generated in
+> a DOS system, thus they aren't suitable for like-Unix systems.
+> 
+> Regards
+> 
+> Renato N. Elias
+> Rio de Janeiro/Brasil
+> 
+> P.S.: It would be interesting warn the users on the download area about this
+> small detail.
+
+Done.
+
+-Brad
+From hudson at mcs.anl.gov  Wed Mar  2 13:38:31 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Wed Mar  2 13:39:27 2005
+Subject: [Paraview] Writing my own client
+Message-ID: <6.2.1.2.2.20050302120310.0273ac30@pop.mcs.anl.gov>
+
+
+The paraview user guide mentions that one can write one's own paraview client.
+
+Are there code samples and documentation to which you can point me that would help me write my own client?
+
+Thanks.
+
+
+
+Randy.
+630 252 8690.
+
+From hudson at mcs.anl.gov  Thu Mar  3 11:17:30 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Thu Mar  3 11:18:26 2005
+Subject: [Paraview] separate build of pvclient?
+Message-ID: <6.2.1.2.2.20050303101338.038453b8@pop.mcs.anl.gov>
+
+
+The development distribution builds a separate executable, pvclient.
+
+Since the entire paraview build takes a long time on my laptop, and I just want to use the client there, is it possible to build only the client, and, if so, would that likely to save me much time?
+
+Thanks.
+
+
+
+Randy Hudson.
+
+From brad.king at kitware.com  Thu Mar  3 17:26:59 2005
+From: brad.king at kitware.com (Brad King)
+Date: Thu Mar  3 17:27:02 2005
+Subject: [Paraview] separate build of pvclient?
+In-Reply-To: <6.2.1.2.2.20050303101338.038453b8@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20050303101338.038453b8@pop.mcs.anl.gov>
+Message-ID: <42278F33.3030704@kitware.com>
+
+Randy Hudson wrote:
+> The development distribution builds a separate executable, pvclient.
+> 
+> Since the entire paraview build takes a long time on my laptop, and I just want to use the client there, is it possible to build only the client, and, if so, would that likely to save me much time?
+
+No, pvclient requires almost all of ParaView to build anwyay.
+
+-Brad
+From brad.king at kitware.com  Thu Mar  3 17:28:08 2005
+From: brad.king at kitware.com (Brad King)
+Date: Thu Mar  3 17:28:11 2005
+Subject: [Paraview] Writing my own client
+In-Reply-To: <6.2.1.2.2.20050302120310.0273ac30@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20050302120310.0273ac30@pop.mcs.anl.gov>
+Message-ID: <42278F78.1010103@kitware.com>
+
+Randy Hudson wrote:
+> The paraview user guide mentions that one can write one's own paraview client.
+> 
+> Are there code samples and documentation to which you can point me that would help me write my own client?
+
+Only the "ParaView Guide" book and the open-source code in GUI/Client is 
+available.  While it is possible to write your own client, it is a 
+non-trivial task.
+
+-Brad
+From rnelias at superig.com.br  Fri Mar  4 10:27:34 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Fri Mar  4 10:34:32 2005
+Subject: [Paraview] Stream Function question...
+In-Reply-To: <20041216170006.B55483451B@public.kitware.com>
+Message-ID: <20050304153424.06D573492D@public.kitware.com>
+
+
+Hello all,
+
+I was wondering if anybody could give me a hand about the following
+question:
+
+I'd like to cut a 3D CFD model (unstructured mesh) by a plane and compute
+the scalar stream function using this 2D plane. Furthermore, this stream
+function as a scalar parameter could be used to produce countour lines in
+the 2D plane. Note that this countour line would be equal the stream lines
+over the 2D plane.  
+
+When working with Ensight there is a function provided by the CFD calculator
+only to compute stream functions, vorticity, swirl, etc... But I'd rather
+use only Paraview in my visualizations. Ensight is too boring to use... 
+
+I've already tried something with the Paraview's calculator but I don't know
+how I could compute derivative greatness with this calculator. 
+
+Thanks in advance for any help
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+
+
+From berk.geveci at gmail.com  Fri Mar  4 11:08:27 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Mar  4 11:09:39 2005
+Subject: [Paraview] Stream Function question...
+In-Reply-To: <20050304153424.06D573492D@public.kitware.com>
+References: <20041216170006.B55483451B@public.kitware.com>
+	<20050304153424.06D573492D@public.kitware.com>
+Message-ID: <a2ab21560503040808172ec1f5@mail.gmail.com>
+
+Unfortunately, the array calculator is not capable of doing this.
+Neither is any filter that is in VTK. One would have to write a new
+filter. I do not have time but I would be happy to help any
+volunteers.
+
+-Berk
+
+
+On Fri, 4 Mar 2005 12:27:34 -0300, Renato N. Elias
+<rnelias@superig.com.br> wrote:
+> 
+> Hello all,
+> 
+> I was wondering if anybody could give me a hand about the following
+> question:
+> 
+> I'd like to cut a 3D CFD model (unstructured mesh) by a plane and compute
+> the scalar stream function using this 2D plane. Furthermore, this stream
+> function as a scalar parameter could be used to produce countour lines in
+> the 2D plane. Note that this countour line would be equal the stream lines
+> over the 2D plane.
+> 
+> When working with Ensight there is a function provided by the CFD calculator
+> only to compute stream functions, vorticity, swirl, etc... But I'd rather
+> use only Paraview in my visualizations. Ensight is too boring to use...
+> 
+> I've already tried something with the Paraview's calculator but I don't know
+> how I could compute derivative greatness with this calculator.
+> 
+> Thanks in advance for any help
+> 
+> Renato N. Elias
+> Rio de Janeiro/Brasil
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From anku04 at hotmail.com  Fri Mar  4 19:01:16 2005
+From: anku04 at hotmail.com (Simran ds)
+Date: Fri Mar  4 19:01:22 2005
+Subject: [Paraview] Delaunay3D
+Message-ID: <BAY18-F224D0884BF2DD6588003C5DA5D0@phx.gbl>
+
+
+Is there any plan to incorporate the Delaunay3D filter into the paraview ?
+
+I have a structure with only the boundary mesh data available.
+I have results for many interior points but with no mesh.
+In order to use the viz tools (isosurface, plane contours, cutter)  I need 
+to have a mesh, right?
+What would be the best way to do this. I was considering using
+Delaunay3D..is there any other filters available.
+
+Thanks
+
+Simran
+
+_________________________________________________________________
+FREE pop-up blocking with the new MSN Toolbar - get it now! 
+http://toolbar.msn.click-url.com/go/onm00200415ave/direct/01/
+
+From haifang_zhou at 163.com  Sun Mar  6 22:58:01 2005
+From: haifang_zhou at 163.com (nancy)
+Date: Sun Mar  6 23:00:02 2005
+Subject: [Paraview] question about scalable displays
+References: <20050304170008.8D25A34925@public.kitware.com>
+Message-ID: <002d01c522c9$ed895b20$1000a8c0@nancy>
+
+Hello all,
+
+   I was wondering if anybody could give me a hand about the following
+question:
+
+   Is paraview able to directly support scalable displays (using multiple projectors)?
+If not, who can tell me what software or tools can help paraview support this display mode?
+
+   Thanks in advance for any help.
+
+Best,
+Nancy
+
+
+From brad.king at kitware.com  Mon Mar  7 09:00:36 2005
+From: brad.king at kitware.com (Brad King)
+Date: Mon Mar  7 09:05:55 2005
+Subject: [Paraview] Delaunay3D
+In-Reply-To: <BAY18-F224D0884BF2DD6588003C5DA5D0@phx.gbl>
+References: <BAY18-F224D0884BF2DD6588003C5DA5D0@phx.gbl>
+Message-ID: <422C5E84.2070100@kitware.com>
+
+Simran ds wrote:
+> Is there any plan to incorporate the Delaunay3D filter into the paraview ?
+> 
+> I have a structure with only the boundary mesh data available.
+> I have results for many interior points but with no mesh.
+> In order to use the viz tools (isosurface, plane contours, cutter)  I 
+> need to have a mesh, right?
+> What would be the best way to do this. I was considering using
+> Delaunay3D..is there any other filters available.
+
+Please add this as a feature request here:
+
+http://www.paraview.org/Bug
+
+-Brad
+From berk.geveci at gmail.com  Mon Mar  7 09:38:40 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Mon Mar  7 09:44:15 2005
+Subject: [Paraview] Delaunay3D
+In-Reply-To: <BAY18-F224D0884BF2DD6588003C5DA5D0@phx.gbl>
+References: <BAY18-F224D0884BF2DD6588003C5DA5D0@phx.gbl>
+Message-ID: <a2ab2156050307063818630bec@mail.gmail.com>
+
+It is possible to "enable" any filter available in VTK by simply
+writing an xml module and loading it at run time. This is described in
+detail in the ParaView Guide as well as the mailing list archives.
+
+
+On Sat, 05 Mar 2005 00:01:16 +0000, Simran ds <anku04@hotmail.com> wrote:
+> 
+> Is there any plan to incorporate the Delaunay3D filter into the paraview ?
+> 
+> I have a structure with only the boundary mesh data available.
+> I have results for many interior points but with no mesh.
+> In order to use the viz tools (isosurface, plane contours, cutter)  I need
+> to have a mesh, right?
+> What would be the best way to do this. I was considering using
+> Delaunay3D..is there any other filters available.
+> 
+> Thanks
+> 
+> Simran
+> 
+> _________________________________________________________________
+> FREE pop-up blocking with the new MSN Toolbar - get it now!
+> http://toolbar.msn.click-url.com/go/onm00200415ave/direct/01/
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+From andy19191 at fsmail.net  Mon Mar  7 17:10:18 2005
+From: andy19191 at fsmail.net (Andy Manners)
+Date: Mon Mar  7 17:10:22 2005
+Subject: [Paraview] OSX: cmake problem
+Message-ID: <23761149.1110233418211.JavaMail.www@wwinf3003>
+
+OSX 10.3.8
+CMake 2.0.5
+Paraview 1.8.5
+
+I cannot get passed "Paraview requires an out of source Build". I have created a separate directory and run cmake from there but get the same message. CXX and CC are set. make is an old gmake (3.79) and not a bsd make. Typical output shown below:
+
+bolt:~/pub/paraview-1.8.5-bin $ cmake ../paraview-1.8.5
+-- Check for working C compiler: gcc -- works
+-- Check for working CXX compiler: c++ -- works
+ParaView requires an out of source Build. Please create a separate binary directory and run CMake there.
+-- Configuring done
+bolt:~/pub/paraview-1.8.5-bin $
+
+I get the same results running interactively.
+
+Any suggestions how to get passed this?
+
+
+-- 
+
+Whatever you Wanadoo:
+http://www.wanadoo.co.uk/time/
+
+This email has been checked for most known viruses - find out more at: http://www.wanadoo.co.uk/help/id/7098.htm
+
+From brad.king at kitware.com  Mon Mar  7 18:10:24 2005
+From: brad.king at kitware.com (Brad King)
+Date: Mon Mar  7 18:10:33 2005
+Subject: [Paraview] OSX: cmake problem
+In-Reply-To: <23761149.1110233418211.JavaMail.www@wwinf3003>
+References: <23761149.1110233418211.JavaMail.www@wwinf3003>
+Message-ID: <422CDF60.6030808@kitware.com>
+
+Andy Manners wrote:
+> OSX 10.3.8
+> CMake 2.0.5
+> Paraview 1.8.5
+> 
+> I cannot get passed "Paraview requires an out of source Build". I have created a separate directory and run cmake from there but get the same message. CXX and CC are set. make is an old gmake (3.79) and not a bsd make. Typical output shown below:
+> 
+> bolt:~/pub/paraview-1.8.5-bin $ cmake ../paraview-1.8.5
+> -- Check for working C compiler: gcc -- works
+> -- Check for working CXX compiler: c++ -- works
+> ParaView requires an out of source Build. Please create a separate binary directory and run CMake there.
+> -- Configuring done
+> bolt:~/pub/paraview-1.8.5-bin $
+> 
+> I get the same results running interactively.
+> 
+> Any suggestions how to get passed this?
+
+This means you already ran an in-source build.  You have to create a 
+fresh source tree with no extra files in it.  In particular, no 
+CMakeCache.txt file can be present there.
+
+-Brad
+From andy19191 at fsmail.net  Tue Mar  8 02:46:07 2005
+From: andy19191 at fsmail.net (Andy Manners)
+Date: Tue Mar  8 02:46:19 2005
+Subject: [Paraview] OSX: cmake problem
+Message-ID: <15190296.1110267967329.JavaMail.www@wwinf3101>
+
+ OSX 10.3.8
+ CMake 2.0.5
+ Paraview 1.8.5
+
+Clearing out and starting again enabled a compilation to start. I am now getting:
+
+Building object file vtkTkRenderWidget.o...
+In file included from /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h:81,
+                 from /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+                 from /Users/andy/pub/paraview-1.8.5/VTK/Utilities/TclTk/internals/tk8.4/tkInt.h:27,
+                 from /Users/andy/pub/paraview-1.8.5/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:19,
+                 from /Users/andy/pub/paraview-1.8.5-bin/VTK/Rendering/vtkTkInternals.h:34,
+                 from /Users/andy/pub/paraview-1.8.5/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+/Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:663: error: declaration
+   of C function `void XSetDashes(Display*, _XGC*, int, const char*, int)' 
+   conflicts with
+/usr/include/X11/Xlib.h:3792: error: previous declaration `int 
+   XSetDashes(Display*, _XGC*, int, const char*, int)' here
+/Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:686: error: declaration
+   of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)' 
+   conflicts with
+.
+.
+.
+
+This looks like an incorrect set of -D flags for tcl/tk?
+
+About a year ago with the previous version of paraview I lost a day trying to fix the paraview version of tcl/tk directly by editting the makefiles, headers, source and failed. If we assume it is primarily a configuration problem (tcl/tk runs on OSX) where should I look to change the configuration parameters?  Has paraview been successfully built on OSX?
+
+
+-- 
+
+Whatever you Wanadoo:
+http://www.wanadoo.co.uk/time/
+
+This email has been checked for most known viruses - find out more at: http://www.wanadoo.co.uk/help/id/7098.htm
+
+From mathieu.malaterre at kitware.com  Tue Mar  8 08:19:25 2005
+From: mathieu.malaterre at kitware.com (Mathieu Malaterre)
+Date: Tue Mar  8 08:26:53 2005
+Subject: [Paraview] OSX: cmake problem
+In-Reply-To: <15190296.1110267967329.JavaMail.www@wwinf3101>
+References: <15190296.1110267967329.JavaMail.www@wwinf3101>
+Message-ID: <422DA65D.7000104@kitware.com>
+
+Andy,
+
+	Are you building ParaView X11 version ? If not then turn the flag 
+VTK_USE_X to ON  in your CmakeCache. There has also been report of 
+successful build of Carbon version using Apple official tcl/tk. For more 
+info:
+
+http://public.kitware.com/pipermail/paraview/2004-December/001043.html
+
+HTH
+Mathieu
+
+Andy Manners wrote:
+>  OSX 10.3.8
+>  CMake 2.0.5
+>  Paraview 1.8.5
+> 
+> Clearing out and starting again enabled a compilation to start. I am now getting:
+> 
+> Building object file vtkTkRenderWidget.o...
+> In file included from /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/macosx/tkMacOSXPort.h:81,
+>                  from /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkPort.h:32,
+>                  from /Users/andy/pub/paraview-1.8.5/VTK/Utilities/TclTk/internals/tk8.4/tkInt.h:27,
+>                  from /Users/andy/pub/paraview-1.8.5/VTK/Utilities/TclTk/internals/tk8.4/tkMacOSXInt.h:19,
+>                  from /Users/andy/pub/paraview-1.8.5-bin/VTK/Rendering/vtkTkInternals.h:34,
+>                  from /Users/andy/pub/paraview-1.8.5/VTK/Rendering/vtkTkRenderWidget.cxx:21:
+> /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:663: error: declaration
+>    of C function `void XSetDashes(Display*, _XGC*, int, const char*, int)' 
+>    conflicts with
+> /usr/include/X11/Xlib.h:3792: error: previous declaration `int 
+>    XSetDashes(Display*, _XGC*, int, const char*, int)' here
+> /Users/andy/pub/paraview-1.8.5/Utilities/TclTk/tk8.4.5/generic/tkIntXlibDecls.h:686: error: declaration
+>    of C function `KeySym XKeycodeToKeysym(Display*, unsigned char, int)' 
+>    conflicts with
+> .
+> .
+> .
+> 
+> This looks like an incorrect set of -D flags for tcl/tk?
+> 
+> About a year ago with the previous version of paraview I lost a day trying to fix the paraview version of tcl/tk directly by editting the makefiles, headers, source and failed. If we assume it is primarily a configuration problem (tcl/tk runs on OSX) where should I look to change the configuration parameters?  Has paraview been successfully built on OSX?
+> 
+> 
+
+From andy19191 at fsmail.net  Tue Mar  8 13:47:32 2005
+From: andy19191 at fsmail.net (Andy Manners)
+Date: Tue Mar  8 13:47:39 2005
+Subject: [Paraview] OSX: cmake problem
+Message-ID: <11521650.1110307652573.JavaMail.www@wwinf3102>
+
+OSX 10.3.8
+CMake 2.0.5
+Paraview 1.8.5
+
+Thanks for the encouragement. Turning X on and carbon off in cmake allowed the build to continue. We have no particular preference for GUIs and are happy with X.
+
+The build then failed when linking paraview, pvbatch and pvserver. Adding the -noprebind flag allowed the build to complete.
+
+The tests all passed once I realized screen blanking was causing failure (I left for a cup of tea). MPI was not included in the build.
+
+Now to get some of our data in and see how well it works...
+
+ 
+
+-- 
+
+Whatever you Wanadoo:
+http://www.wanadoo.co.uk/time/
+
+This email has been checked for most known viruses - find out more at: http://www.wanadoo.co.uk/help/id/7098.htm
+
+From brad.king at kitware.com  Tue Mar  8 14:42:15 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar  8 14:42:17 2005
+Subject: [Paraview] OSX: cmake problem
+In-Reply-To: <11521650.1110307652573.JavaMail.www@wwinf3102>
+References: <11521650.1110307652573.JavaMail.www@wwinf3102>
+Message-ID: <422E0017.6030907@kitware.com>
+
+Andy Manners wrote:
+> OSX 10.3.8
+> CMake 2.0.5
+> Paraview 1.8.5
+> The build then failed when linking paraview, pvbatch and pvserver. Adding the -noprebind flag allowed the build to complete.
+
+I don't think the -noprebind flag should be needed.  According to the 
+Darwin linker documentation, this option is only needed to ignore the 
+LD_PREBIND environment variable.  Does your environment have the 
+LD_PREBIND environment variable set?
+
+-Brad
+From dfisher at as.arizona.edu  Tue Mar  8 17:57:15 2005
+From: dfisher at as.arizona.edu (don fisher)
+Date: Tue Mar  8 17:57:27 2005
+Subject: [Paraview] force execution of network
+Message-ID: <422E2DCB.7010601@as.arizona.edu>
+
+Is there a method to force paraview to ignore the time stamps and 
+update the entire network? If I place new data in a file, I cannot 
+find a way to get paraview to recognize that the file time stamp has 
+changed, or that it is updated.
+
+Also, with using glyphs, situations arise where the code appears to 
+feel everything is updated when it is not.
+
+Thanks
+don
+-- 
+-------------------------------------------------------------------
+|    Don Fisher				  dfisher@as.arizona.edu  |
+|    Steward Observatory		  			  |
+|    933 N. Cherry Ave.    		  VOICE: (520)888-7613	  |
+|    University of Arizona		                          |
+|    Tucson, AZ  85721                				  |
+-------------------------------------------------------------------
+
+From anku04 at hotmail.com  Wed Mar  9 07:05:38 2005
+From: anku04 at hotmail.com (Simran ds)
+Date: Wed Mar  9 07:05:43 2005
+Subject: [Paraview] VtkVRMLexporter .xml & .pvsm for paraview ?
+In-Reply-To: <a2ab2156050307063818630bec@mail.gmail.com>
+Message-ID: <BAY18-F24AD9FD75FE01C132CDFEDDA510@phx.gbl>
+
+Hi All
+
+I guess some of you may have already included the vtkVRMLexporter with the 
+paraview. In that case I would like to look at the code. Somehow I can 
+generate the vrml file but Cortona Viewer
+shows nothing.
+
+Thanks in advance.
+
+Simran
+
+_________________________________________________________________
+Express yourself instantly with MSN Messenger! Download today it's FREE! 
+http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
+
+From anku04 at hotmail.com  Wed Mar  9 07:08:48 2005
+From: anku04 at hotmail.com (Simran ds)
+Date: Wed Mar  9 07:08:55 2005
+Subject: [Paraview] How to create 3D mesh in paraview
+In-Reply-To: <422C5E84.2070100@kitware.com>
+Message-ID: <BAY18-F315BF5FBFC62FB79E99D23DA510@phx.gbl>
+
+Hi All
+
+I have a body with holes and the mesh is only on the external surfaces. Can 
+I mesh it in paraview. If I use Delaunay3D it totally ignores the hole ...
+Does anyone have any experience regarding this ?
+
+Simran
+
+_________________________________________________________________
+Express yourself instantly with MSN Messenger! Download today it's FREE! 
+http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
+
+From steuwer at ill.fr  Wed Mar  9 07:47:55 2005
+From: steuwer at ill.fr (A Steuwer)
+Date: Wed Mar  9 07:49:06 2005
+Subject: [Paraview] How to create 3D mesh in paraview
+In-Reply-To: <BAY18-F315BF5FBFC62FB79E99D23DA510@phx.gbl>
+Message-ID: <200503091247.j29CllLX002740@mail.ill.fr>
+
+Hi,
+
+what exactly do you mean by 'ignoring the hole?' 
+How does the size of the hole compare to the mesh?
+Did you play around with the parameters or tried 
+selected regions? There are also some other filters
+which can be used for surface reconstruction which 
+might be more robust.
+Also, I've only used the Delaunay2D/3D filter using 
+paraview before the pvsm files came into force. Could you
+post the xml/pvsm files that you are using?
+
+Axel
+
+
+----------------------------------------------
+FaME38 at the ESRF-ILL
+6, rue J. Horowitz, 38042 Grenoble CEDEX France
+Tel.: ++33-476-207945
+Mob.: ++33 (0)6688 16042
+Fax.: ++33-476-207943  
+----------------------------------------------
+
+-----Original Message-----
+From: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org]
+On Behalf Of Simran ds
+Sent: 09 March 2005 13:09
+To: paraview@paraview.org
+
+Hi All
+
+I have a body with holes and the mesh is only on the external surfaces. Can 
+I mesh it in paraview. If I use Delaunay3D it totally ignores the hole ...
+Does anyone have any experience regarding this ?
+
+Simran
+
+_________________________________________________________________
+Express yourself instantly with MSN Messenger! Download today it's FREE! 
+http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+Defend your privacy! Encrypt your email today! 
+http://www.bytefusion.com/secexmail 
+
+
+---Tag My Public Key---
+
+a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+
+
+---End SecExMail Tag---
+
+
+---Tag My Public Key---
+
+a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+
+
+---End SecExMail Tag---
+
+From anku04 at hotmail.com  Wed Mar  9 20:13:15 2005
+From: anku04 at hotmail.com (Simran ds)
+Date: Wed Mar  9 20:13:19 2005
+Subject: [Paraview] How to create 3D mesh in paraview
+In-Reply-To: <200503091247.j29CllLX002740@mail.ill.fr>
+Message-ID: <BAY18-F15A43F81AB9120A8FE128DA520@phx.gbl>
+
+Hi All
+
+If you have a 4x3x2 box with a cylindrical hole inside, vtkDelaunay3D fills 
+the hole with cells.
+Is there any way to let vtk or paraview know about the boundaries.
+Is voxelize an option.
+
+
+Simran
+
+
+
+
+
+
+
+
+
+>From: "A Steuwer" <steuwer@ill.fr>
+>To: "'Simran ds'" <anku04@hotmail.com>, <paraview@paraview.org>
+>Subject: [Paraview] How to create 3D mesh in paraview
+>Date: Wed, 9 Mar 2005 13:47:55 +0100
+>
+>Hi,
+>
+>what exactly do you mean by 'ignoring the hole?'
+>How does the size of the hole compare to the mesh?
+>Did you play around with the parameters or tried
+>selected regions? There are also some other filters
+>which can be used for surface reconstruction which
+>might be more robust.
+>Also, I've only used the Delaunay2D/3D filter using
+>paraview before the pvsm files came into force. Could you
+>post the xml/pvsm files that you are using?
+>
+>Axel
+>
+>
+>----------------------------------------------
+>FaME38 at the ESRF-ILL
+>6, rue J. Horowitz, 38042 Grenoble CEDEX France
+>Tel.: ++33-476-207945
+>Mob.: ++33 (0)6688 16042
+>Fax.: ++33-476-207943
+>----------------------------------------------
+>
+>-----Original Message-----
+>From: paraview-bounces@paraview.org [mailto:paraview-bounces@paraview.org]
+>On Behalf Of Simran ds
+>Sent: 09 March 2005 13:09
+>To: paraview@paraview.org
+>
+>Hi All
+>
+>I have a body with holes and the mesh is only on the external surfaces. Can
+>I mesh it in paraview. If I use Delaunay3D it totally ignores the hole ...
+>Does anyone have any experience regarding this ?
+>
+>Simran
+>
+>_________________________________________________________________
+>Express yourself instantly with MSN Messenger! Download today it's FREE!
+>http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+>
+>Defend your privacy! Encrypt your email today!
+>http://www.bytefusion.com/secexmail
+>
+>
+>---Tag My Public Key---
+>
+>a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+>Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+>bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+>aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+>S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+>NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+>VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+>TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+>c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+>TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+>U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+>d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+>Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+>SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+>MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+>ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+>NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+>Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+>MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+>VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+>SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+>WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+>RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+>RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+>UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+>
+>
+>---End SecExMail Tag---
+>
+>
+>---Tag My Public Key---
+>
+>a2V5aWQ6IHs3QUUxREZDMS0yMTFELTRFMDYtQjI3OC1CMTY1
+>Q0Q5QUUxQUF9DQpvd25lcjogQXhlbF9TdGV1d2VyDQplbWFp
+>bDogc3RldXdlckBpbGwuZnINCmVuYWJsZWQ6IHllcw0Kb3B0
+>aW9uczogbm9uZQ0KDQotLS0tLUJFR0lOIFJTQSBQVUJMSUMg
+>S0VZLS0tLS0KTUlJQ0NnS0NBZ0VBbkJQdmlzWXJCdGtSdWxG
+>NzZjMXJCS3hYMHdHRklpbzZ4ZGwvc2x1d2FDTjhScWxaSlZE
+>VApnQ3NDakxkaGpJTzc2QUFlUzlycVpnQklFV1BETWZONDgx
+>TmRDYXpjY0o2UDdzNmJWT2pvNUdXNzRkdWx0a2JTCnYvYzkx
+>c1ZjM0Q0STZjeFhoeHpiSTVnL2Zjd2swb3pDTmlQTVFCY05X
+>TW1ETWFnRHVtMEZWcm9jbTlFdmIyMjEKSzdOY3RZWFZkODBq
+>U05jUzE1WW1ibmQ3ODV0T1I5UjcyVG1DZTIvV25LTTdwWjVp
+>d2JnOXd6Q25wT0dNVDh4aQo5bmt4dnlmZnpIT2lmS0hROU5N
+>Mnp6OS9sV1R3cG1aYkIvbjlVV2h2WWQ2MDJLL2FqZ0dWZlZV
+>SlpvNXJsOURaCjVOdlRDZEU3QU9ldzJYbzY4VFNkYVRKVXFS
+>MHFYZU5vdktHMVp2MXAzbXB3OHpLYURtQnlIR3VHK1ZRZnFE
+>ZHUKdHgySTFhK3JPZnFmT3dvZjY5Mjgxc094MUErNDFtRDEx
+>NDc5ZFo1TElwU21GQmpRTjlxRHkwQ0RTRmhxZ3k5WAo1Ykhr
+>Ny82VU82TEZhMzJxVGtGajdUL05DQnYvdGlRQlI4bFJZVFQx
+>MmdWR0Y2OStuK0k0K21FTXRQcHVUWFQwCjVabmYrTjBKZThK
+>VUxieHZOTTZCTHJpcFMxL0s3NnN5ZEgvaG5DZnVZejhVMVZS
+>SndYVDZmQmxuSzVHb0tmUDMKdjJJVGlCcjRDeFJINkh2WSsy
+>WlIyL0lrakdkY1dnM0V0N2d2dDlDUTlpZDVYSWdnRFBHbGlT
+>RjZNcE0xdG1wSApQWVlublpISTlzVmIxdWd1UC9jeHhicmFE
+>RnducDFSbDQ5TDRwODZpSkhiV29LQ3U3N2k1bC9VQ0F3RUFB
+>UT09Ci0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0KDQo=
+>
+>
+>---End SecExMail Tag---
+>
+
+_________________________________________________________________
+Express yourself instantly with MSN Messenger! Download today it's FREE! 
+http://messenger.msn.click-url.com/go/onm00200471ave/direct/01/
+
+From sutradha at uiuc.edu  Thu Mar 10 19:21:49 2005
+From: sutradha at uiuc.edu (Alok Sutradhar)
+Date: Thu Mar 10 19:22:39 2005
+Subject: [Paraview] vtkVRMLexporter
+Message-ID: <6.2.1.2.2.20050310181850.03f66e50@express.cites.uiuc.edu>
+
+
+I am would like to know how to include VRML exporter in paraview.  In the 
+"paraview Guide" there
+are some instructions to Save window images as .png format. I was wondering 
+if we have to take
+this direction. Or we can include it using some kind of XML script.
+
+Please give some suggestions. 
+
+From rnelias at superig.com.br  Fri Mar 11 12:08:19 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Fri Mar 11 12:14:44 2005
+Subject: [Paraview] Querying extreme values...
+In-Reply-To: <20050311170007.AE46B34A9C@public.kitware.com>
+Message-ID: <20050311171443.30B6E347B5@public.kitware.com>
+
+
+Hello all,
+
+Does anybody know how I query extreme values (maximum and minimum) in
+Paraview? I was trying to use the probe filter but unfortunately it doesn't
+have this option yet :-(
+
+Thanks in advance for any help
+
+Reanto N. Elias
+
+
+From pknotz at sandia.gov  Fri Mar 11 12:21:34 2005
+From: pknotz at sandia.gov (Patrick Notz)
+Date: Fri Mar 11 12:22:01 2005
+Subject: [Paraview] Querying extreme values...
+In-Reply-To: <20050311171443.30B6E347B5@public.kitware.com>
+Message-ID: <BE5721AE.11071%pknotz@sandia.gov>
+
+If you create a contour of the field you're interested in the contour range
+will set itself to the min and max.  I'm not sure how precise it is...
+
+
+On 3/11/05 10:08 AM, "Renato N. Elias" <rnelias@superig.com.br> wrote:
+
+> 
+> Hello all,
+> 
+> Does anybody know how I query extreme values (maximum and minimum) in
+> Paraview? I was trying to use the probe filter but unfortunately it doesn't
+> have this option yet :-(
+> 
+> Thanks in advance for any help
+> 
+> Reanto N. Elias
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From dcthomp at sandia.gov  Fri Mar 11 15:53:49 2005
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Fri Mar 11 15:54:09 2005
+Subject: [Paraview] Querying extreme values...
+In-Reply-To: <BE5721AE.11071%pknotz@sandia.gov>
+References: <BE5721AE.11071%pknotz@sandia.gov>
+Message-ID: <1110574429.21286.801.camel@fozzy.ran.sandia.gov>
+
+> If you create a contour of the field you're interested in the contour range
+> will set itself to the min and max.  I'm not sure how precise it is...
+It is exact (to within the precision of the print statement) for linear
+cells -- extrema always occur at vertices and all vertices are examined.
+It is not exact if you have an unstructured grid with quadratic data,
+since only points are examined and the quadratic cells use a Lagrangian
+interpolant that is not bounded by the values taken on at vertices.
+
+	David
+
+> On 3/11/05 10:08 AM, "Renato N. Elias" <rnelias@superig.com.br> wrote:
+> 
+> > 
+> > Hello all,
+> > 
+> > Does anybody know how I query extreme values (maximum and minimum) in
+> > Paraview? I was trying to use the probe filter but unfortunately it doesn't
+> > have this option yet :-(
+> > 
+> > Thanks in advance for any help
+> > 
+> > Reanto N. Elias
+
+
+From eschenbe at psc.edu  Fri Mar 11 16:05:22 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Fri Mar 11 16:05:27 2005
+Subject: [Paraview] Re: Querying extreme values...
+Message-ID: <1CDD41ACF4455BCC75A8D583@harpo.psc.edu>
+
+What about us poor, forgotten cell data users? Contour won't even look at 
+our 3D data sets.
+
+--On March 11, 2005 12:53:49 PM <dcthomp@sandia.gov> wrote:
+>> If you create a contour of the field you're interested in the contour
+>> range will set itself to the min and max.  I'm not sure how precise it
+
+>> On 3/11/05 10:08 AM <rnelias@superig.com.br> wrote:
+> > Does anybody know how I query extreme values (maximum and minimum) in
+>> > Paraview? I was trying to use the probe filter but unfortunately it
+>> > doesn't have this option yet :-(
+
+Kent
+
+From jon.johansson at ualberta.ca  Fri Mar 11 18:51:21 2005
+From: jon.johansson at ualberta.ca (Jon Johansson)
+Date: Fri Mar 11 18:53:29 2005
+Subject: [Paraview] loading 
+Message-ID: <200503112353.j2BNrN2p007881@pilsener.srv.ualberta.ca>
+
+
+Hi,
+
+I have a set of polydata that I would like to load into ParaView.
+My problem is that it's taking way to long to load and it seems 
+to be spending most of its time in the Quadric Clustering filter.
+The data set looks like this:
+
+   # vtk DataFile Version 2.0
+   IBD stuff
+   ASCII
+   DATASET POLYDATA
+   POINTS 1180014 float
+   5.999289e+002  1.174816e+003  1.198756e+003  
+   5.999289e+002  1.174989e+003  1.196801e+003  
+   5.999289e+002  1.174927e+003  1.202675e+003  
+   ...
+
+There are over a million points each with a single scalar value
+associated. 
+
+When I cut the data set down to 10,000 points it takes 30 sec
+to load and if I use 100,000 points it loads in 1900 secs. Most 
+of the time the progress bar is indicating that the Quadric
+Clustering filter is working hard. I've never used it and I'd
+_really_ like to turn that filter off but I can't find a way to do
+that in the interface - it seems to be default behaviour on loading
+this data set.
+
+I'm not experienced with ParaView at all (just downloaded it
+yesterday), but this data set loads in both VTK and MayaVi in a
+small number of seconds.
+
+I'm using the latest binary of ParaView 1.8 on WinXP.
+
+Is there a way that I can change the behaviour of the loader
+so that the Quadric Clustering filter isn't called?
+
+Thank you,
+Jon.
+
+-- 
+Jon I Johansson             *  Research Computing Support
+jon.johansson@ualberta.ca   *  Computing and Network Services
+Tel.: (780) 492-9304        *  University of Alberta
+Fax.: (780) 492-1729        *  Edmonton, Alberta, CANADA
+ 
+
+From dfisher at as.arizona.edu  Mon Mar 14 12:56:17 2005
+From: dfisher at as.arizona.edu (don fisher)
+Date: Mon Mar 14 12:56:50 2005
+Subject: [Paraview] movie from CVS image
+Message-ID: <4235D041.2070808@as.arizona.edu>
+
+Hello,
+
+The no CVS version will not generate movies the way I desire. There 
+has been a lot of effort visible in the recent CVS downloads I have made.
+
+Last week, when I entered the first in a sequence of frames, Paraview 
+jumped into move mode and all of the command buttons, including 
+File-Quit where grayed out.
+
+This week the behavior with loading the first image is improved. But I 
+cannot locate the old animate bu filename sequence. The only thing 
+available is animate buy keyframe, and selecting the filename as the 
+animated property does not expose the rest of the sequence.
+
+If I View source, and depress timesteps, only the current image is 
+displayed in the right window. The left window contains 3 dots, but no 
+images to add. Browse also only returns a single image from the sequence.
+
+How does one generate a movie from a sequence of images. Is this 
+currently disabled in the CVS builds?
+
+Thanks for your help
+don
+-- 
+-------------------------------------------------------------------
+|    Don Fisher				  dfisher@as.arizona.edu  |
+|    Steward Observatory		  			  |
+|    933 N. Cherry Ave.    		  VOICE: (520)888-7613	  |
+|    University of Arizona		                          |
+|    Tucson, AZ  85721                				  |
+-------------------------------------------------------------------
+
+From eschenbe at psc.edu  Mon Mar 14 17:52:27 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Mon Mar 14 17:52:31 2005
+Subject: [Paraview] Getting CMake to Use Initial Cache File
+Message-ID: <894632893A47D2B674EA87A0@harpo.psc.edu>
+
+I've had good success getting CMake to use a cache initialization file with 
+a command like
+
+   cmake -DVTK_USE_MPI:BOOL=1
+      -DCMAKE_CXX_FLAGS:STRING
+      ="-D__USE_STD_IOSTREAM -pthread"
+      -DCMAKE_C_FLAGS:STRING="-pthread"
+      -c FixupLemieuxMPI.txt ../src
+
+The "-D" options were added because CMake seems to ignore these values when 
+they are in the initialization file (a bug report has been filed).
+
+Continuing: I'm now working on compiling with MPI and so added almost a 
+dozen more settings to the cache initialization file. And CMake ignores 
+every single one of them!
+
+I've attached this initialization file. Does anyone see what I've done 
+wrong?
+
+Thanks!
+Kent
+Pittsburgh Supercomputing Center
+-------------- next part --------------
+# Commands to set ParaView parameters to work on lemieux.psc.edu
+#    This file includes parameters for MPI versions
+#    INTERNAL variables are always put into cache else use the CACHE tag
+#    FORCE overrides user selections or previous versions in cache
+# Usage: cmake -c FixupLemieux.txt <source directory>
+# Kent Eschenberg, PSC  20050314 1548
+#
+#  Compilers
+#
+SET( CMAKE_C_COMPILER "/bin/cc" CACHE STRING "lemieux" FORCE )
+SET( CMAKE_C_FLAGS "-pthread" CACHE STRING "lemieux" FORCE )
+SET( CMAKE_CXX_COMPILER "/bin/cxx" CACHE STRING "lemieux" FORCE )
+SET( CMAKE_CXX_FLAGS "-D__USE_STD_IOSTREAM -pthread" CACHE STRING "lemieux" FORCE )
+#
+# Numbers
+#
+SET( SIZEOF_INT64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_FAST16_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_FAST32_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_FAST64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_FAST8_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_LEAST16_T 2 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_LEAST32_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_LEAST64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_INT_LEAST8_T 1 INTERNAL "lemieux" FORCE )
+#
+SET( SIZEOF_UINT64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_FAST16_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_FAST32_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_FAST64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_FAST8_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_LEAST16_T 2 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_LEAST32_T 4 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_LEAST64_T 8 INTERNAL "lemieux" FORCE )
+SET( SIZEOF_UINT_LEAST8_T 1 INTERNAL "lemieux" FORCE )
+#
+SET( SIZEOF___INT64 8 INTERNAL "lemieux" FORCE )
+#
+# VTK
+#
+
+SET( VTK_USE_64BIT_IDS ON CACHE BOOL "lemieux" FORCE )
+SET( VTK_SIZEOF___INT64 8 INTERNAL "lemieux" FORCE )
+SET( VTK_TYPE_SAME_LONG_AND___INT64 1 INTERNAL "lemieux" FORCE )
+SET( VTK_HAVE_OLD_STRSTREAM_H 1 INTERNAL "lemieux" FORCE )
+SET( VTK_ISTREAM_SUPPORTS_LONG_LONG 1 INTERNAL "lemieux" FORCE )
+SET( VTK_OSTREAM_SUPPORTS_LONG_LONG 1 INTERNAL "lemieux" FORCE )
+#
+# Misc
+#
+SET( ICE_HAVE_64BIT_STREAMS 1 INTERNAL "lemieux" FORCE )
+#
+# MPI and Other Parallel Issues
+#
+SET( CMAKE_USE_PTHREADS ON CACHE BOOL "lemieux" FORCE )
+SET( OSMESA_INCLUDE_DIR "/usr/include" CACHE PATH "lemieux" FORCE )
+SET( OSMESA_LIBRARY "/usr/lib/libOSMesa.so" CACHE FILEPATH "lemieux" FORCE )
+SET( SCPCOMMAND "/usr/psc/bin/scp" CACHE FILEPATH "lemieux" FORCE )
+SET( VTK_MPIRUN_EXE "/bin/prun" CACHE FILEPATH "lemieux" FORCE )
+SET( VTK_MPI_MAX_NUMPROCS "64" CACHE STRING "lemieux" FORCE )
+SET( VTK_MPI_NUMPROC_FLAG "-n" CACHE STRING "lemieux" FORCE )
+SET( VTK_MPI_PREFLAGS "-N $RMS_NODES" CACHE STRING "lemieux" FORCE )
+SET( VTK_OPENGL_HAS_OSMESA ON CACHE BOOL "lemieux" FORCE )
+SET( VTK_USE_CR OFF CACHE BOOL "lemieux" FORCE )
+SET( VTK_USE_EXECUTIVES OFF CACHE BOOL "lemieux" FORCE )
+From brad.king at kitware.com  Tue Mar 15 08:04:56 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 15 08:05:01 2005
+Subject: [Paraview] vtkVRMLexporter
+In-Reply-To: <6.2.1.2.2.20050310181850.03f66e50@express.cites.uiuc.edu>
+References: <6.2.1.2.2.20050310181850.03f66e50@express.cites.uiuc.edu>
+Message-ID: <4236DD78.1080001@kitware.com>
+
+Alok Sutradhar wrote:
+> 
+> I am would like to know how to include VRML exporter in paraview.  In 
+> the "paraview Guide" there
+> are some instructions to Save window images as .png format. I was 
+> wondering if we have to take
+> this direction. Or we can include it using some kind of XML script.
+
+Look in Servers/ServerManager/Resources/writers.xml and 
+GUI/Client/Resources/Writers.xml to see how the currently available 
+writers are configured.
+
+-Brad
+From brad.king at kitware.com  Tue Mar 15 08:12:19 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 15 08:12:26 2005
+Subject: [Paraview] Getting CMake to Use Initial Cache File
+In-Reply-To: <894632893A47D2B674EA87A0@harpo.psc.edu>
+References: <894632893A47D2B674EA87A0@harpo.psc.edu>
+Message-ID: <4236DF33.20200@kitware.com>
+
+Kent Eschenberg wrote:
+> I've had good success getting CMake to use a cache initialization file 
+> with a command like
+> 
+>   cmake -DVTK_USE_MPI:BOOL=1
+>      -DCMAKE_CXX_FLAGS:STRING
+>      ="-D__USE_STD_IOSTREAM -pthread"
+>      -DCMAKE_C_FLAGS:STRING="-pthread"
+>      -c FixupLemieuxMPI.txt ../src
+> 
+> The "-D" options were added because CMake seems to ignore these values 
+> when they are in the initialization file (a bug report has been filed).
+> 
+> Continuing: I'm now working on compiling with MPI and so added almost a 
+> dozen more settings to the cache initialization file. And CMake ignores 
+> every single one of them!
+> 
+> I've attached this initialization file. Does anyone see what I've done 
+> wrong?
+
+The option to use an initial cache file is a captial "-C" not a little "-c".
+
+-Brad
+From utkarsh.ayachit at kitware.com  Tue Mar 15 09:53:52 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Tue Mar 15 10:03:16 2005
+Subject: [Paraview] movie from CVS image
+In-Reply-To: <4235D041.2070808@as.arizona.edu>
+References: <4235D041.2070808@as.arizona.edu>
+Message-ID: <1110898432.14032.13.camel@localhost.localdomain>
+
+Assuming that you are using Raw (binary reader) (vtkImageReader) for
+reading the images, this is what you need to do to animate a sequence of
+images. 
+For sake of simplicity let's assume that we are trying to animate the 
+images in "ParaView/Data/Data/headsq". Here are the steps I follow:
+
+Load Data quarter.1 (ParaView will require you to select the type of
+reader, I choose Raw (binary) Files Reader.
+
+Next, click on Timesteps. It lists all the files in the directory
+"ParaView/Data/Data/headsq". Add a couple of files.
+Change File Dimensionality for the reader to 2.
+Change Extent for the reader to 0 63 0 63 1 64.
+Accept.
+
+Then, go to the animation interface via   "View" | "Keyframe Animation".
+In "Animation Settings", enable "Show all animatable properties".
+The reader should now be visible in the "Animation Tracks" pane.
+Expand the reader tree, and click on the track for "FilePrefix".
+
+This will add two key frames, first on initialized to the start of the
+timesteps we selected earlier and the last one to the end of them.
+
+One can now animate over the files.
+
+> If I View source, and depress timesteps, only the current image is 
+> displayed in the right window. The left window contains 3 dots, but no 
+> images to add. Browse also only returns a single image from the sequence.
+> 
+One reason, why the left window has not images to add is because the
+images are in different directory (?).
+
+Utkarsh.
+
+
+
+
+On Mon, 2005-03-14 at 10:56 -0700, don fisher wrote:
+> Hello,
+> 
+> The no CVS version will not generate movies the way I desire. There 
+> has been a lot of effort visible in the recent CVS downloads I have made.
+> 
+> Last week, when I entered the first in a sequence of frames, Paraview 
+> jumped into move mode and all of the command buttons, including 
+> File-Quit where grayed out.
+> 
+> This week the behavior with loading the first image is improved. But I 
+> cannot locate the old animate bu filename sequence. The only thing 
+> available is animate buy keyframe, and selecting the filename as the 
+> animated property does not expose the rest of the sequence.
+> 
+> If I View source, and depress timesteps, only the current image is 
+> displayed in the right window. The left window contains 3 dots, but no 
+> images to add. Browse also only returns a single image from the sequence.
+> 
+> How does one generate a movie from a sequence of images. Is this 
+> currently disabled in the CVS builds?
+> 
+> Thanks for your help
+> don
+
+From hudson at mcs.anl.gov  Tue Mar 15 13:45:53 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Tue Mar 15 13:46:16 2005
+Subject: [Paraview] Mirroring some contents of the "Parameters" and "Display"
+ notebook pages
+Message-ID: <6.2.1.2.2.20050315124002.02841430@pop.mcs.anl.gov>
+
+
+I'd like to mirror, on my own control panel (which might be a new notebook, or an extra page of an existing one) the contents of certain frames from the "Display" and "Parameters" pages of the "Source" notebook.
+
+I.e., I want to be able to create my own widgets, in my own panel, that are of the same type and the same values as those in the above-mentioned frames.
+
+How do I access that data?  (I've dug, for some time, in vtkPVSourceNotebook, vtkPVSource, vtkPVWidget, vtkKWWidget, etc., and how to get at that data is, so far, still hidden.)
+
+Thanks.
+
+
+
+Randy.
+630 252 8690.
+
+From hudson at mcs.anl.gov  Tue Mar 15 14:34:39 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Tue Mar 15 14:35:02 2005
+Subject: [Paraview] Re: Mirroring some contents of the "Parameters" and
+ "Display" notebook pages
+In-Reply-To: <6.2.1.2.2.20050315124002.02841430@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20050315124002.02841430@pop.mcs.anl.gov>
+Message-ID: <6.2.1.2.2.20050315132842.027f0a58@pop.mcs.anl.gov>
+
+
+I wasn't specific enough about the "Parameters" page.
+
+I want to reproduce the widgets (and their values) that are created, from the XML specs of various sources, inside the MainParameterFrame of vtkPVSourceNotebook (in addition to the widgets in certain frames from the "Display" page).
+
+At 3/15/2005 12:45 PM, Randy Hudson wrote:
+
+>I'd like to mirror, on my own control panel (which might be a new notebook, or an extra page of an existing one) the contents of certain frames from the "Display" and "Parameters" pages of the "Source" notebook.
+>
+>I.e., I want to be able to create my own widgets, in my own panel, that are of the same type and the same values as those in the above-mentioned frames.
+>
+>How do I access that data?  (I've dug, for some time, in vtkPVSourceNotebook, vtkPVSource, vtkPVWidget, vtkKWWidget, etc., and how to get at that data is, so far, still hidden.)
+
+
+Randy.
+630 252 8690.
+
+From geller150 at gmx.de  Wed Mar 16 02:56:21 2005
+From: geller150 at gmx.de (Sebastian Geller)
+Date: Wed Mar 16 03:00:00 2005
+Subject: [Paraview] Re: Mirroring some contents of the "Parameters" and
+ "Display" notebook pages
+In-Reply-To: <6.2.1.2.2.20050315132842.027f0a58@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20050315124002.02841430@pop.mcs.anl.gov>
+	<6.2.1.2.2.20050315132842.027f0a58@pop.mcs.anl.gov>
+Message-ID: <4237E6A5.7090709@gmx.de>
+
+Randy Hudson wrote:
+
+>I wasn't specific enough about the "Parameters" page.
+>
+>I want to reproduce the widgets (and their values) that are created, from the XML specs of various sources, inside the MainParameterFrame of vtkPVSourceNotebook (in addition to the widgets in certain frames from the "Display" page).
+>
+>At 3/15/2005 12:45 PM, Randy Hudson wrote:
+>
+>  
+>
+>>I'd like to mirror, on my own control panel (which might be a new notebook, or an extra page of an existing one) the contents of certain frames from the "Display" and "Parameters" pages of the "Source" notebook.
+>>
+>>I.e., I want to be able to create my own widgets, in my own panel, that are of the same type and the same values as those in the above-mentioned frames.
+>>
+>>How do I access that data?  (I've dug, for some time, in vtkPVSourceNotebook, vtkPVSource, vtkPVWidget, vtkKWWidget, etc., and how to get at that data is, so far, still hidden.)
+>>    
+>>
+for simple vtkSource-objects may be that copy of code will help:
+
+   vtkPVSource* pvs = this->Window->CreatePVSource("SphereSource");
+   pvs->CreateProperties();
+   if (pvs)
+   {
+      pvs->IsPermanentOn();
+      pvs->Accept(1, 1);
+      pvs->SetTraceReferenceObject(this->GetWindow());
+   }
+   vtkSMSourceProxy* proxy = pvs->GetProxy();
+   vtkSMProperty *prop = proxy->GetProperty("Center");
+   double x1=1.0;
+   double x2=1.0;
+   double x3=1.0;
+   double radius = 1.0;
+   vtkSMDoubleVectorProperty *doubleprop = 
+vtkSMDoubleVectorProperty::SafeDownCast(proxy->GetProperty("Center"));
+   doubleprop->SetElement(0, x1);
+   doubleprop->SetElement(1, x2);
+   doubleprop->SetElement(2, x3);
+   pvs->SetLabel("Ball");
+   doubleprop = 
+vtkSMDoubleVectorProperty::SafeDownCast(proxy->GetProperty("Radius"));
+   doubleprop->SetElement(0, radius);
+
+   pvs->GetPVWidget("Center")->ResetInternal();
+   pvs->GetPVWidget("Radius")->ResetInternal();
+
+   pvs->SetVisibility(TRUE);
+   pvs->AcceptCallback();
+   pvs->Update();
+
+
+If you/anybody find a way for complex objects
+like for the vtkUnstructuredGrid see code below - it would help me to !
+  
+   vtkPoints *points = vtkPoints::New();
+   vtkUnstructuredGrid *ugrid = vtkUnstructuredGrid::New();
+   vtkVoxel  *voxel  = vtkVoxel::New();
+   for(int u=0;u<numberOfVoxels;u++)  
+  {
+     vtkVoxel  *voxel  = vtkVoxel::New();
+     voxel->.....set data
+     ugrid->InsertNextCell(voxel->GetCellType(), voxel->GetPointIds());
+   }
+   ugrid->SetPoints(points);
+   vtkDataSetMapper *gridMapper = vtkDataSetMapper::New();
+   gridMapper->SetInput(ugrid);
+   vtkActor *gridActor = vtkActor::New();
+
+Greetings
+Sebastian
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050316/056c513c/attachment.htm
+From jlakshmi at iupui.edu  Wed Mar 16 14:45:22 2005
+From: jlakshmi at iupui.edu (Jagannathan Lakshmipathy)
+Date: Wed Mar 16 14:55:32 2005
+Subject: [Paraview] help on render-server-mode
+Message-ID: <LKEFLNLCIIIPIEMBGKBICEGNCAAA.jlakshmi@iupui.edu>
+
+Hi,
+
+I am trying to run paraview in render-server-mode. This what I would like to
+do. I using 3 compute nodes Render1, Render2 and Render3.
+
+I would like to run a data server and render server on render2 and another
+data server and render server on render3. Also I would like my
+render-server-client on render3. So, I did the following:
+
+On Render2:
+
+(*) Paraview -v
+(*) Paraview -rs -m=machine_file
+
+
+On Render3:
+(*) Paraview -v
+(*) Paraview -rs -m=machine_file
+
+
+On Render1:
+(*) praview -crs -h=render2 -rsh=render2
+
+My machine_file reads out like this:
+render2
+render3
+
+I expect a functional render-server connection between 2 of my
+render-servers and 2 of data servers with my client on render1. But on the
+contrary, render-server client connects to data-server and render-server on
+Render2. But my servers on the Render3 still waiting for connection. I can't
+figure out whats going on here. Any help will be appreciated.
+
+Thanks much
+-Jagan
+
+
+From Daniel.E.Goldstein at colorado.edu  Thu Mar 17 12:08:09 2005
+From: Daniel.E.Goldstein at colorado.edu (Daniel Goldstein)
+Date: Thu Mar 17 12:08:22 2005
+Subject: [Paraview] Grid connectivity,  Delaunay3D?
+Message-ID: <4239B979.7040704@colorado.edu>
+
+Hi
+
+   I have been working with ParaView recently to visualize velocity and 
+vorticity fields generated form an adaptive wavelet collocation solver,
+ which our group has been developing.  The data fields I have are an 
+adaptive subset of a regular grid. For each point in the field I have
+scalar or vector values and a field location.  I have been saving data 
+into an unstructured grid VTK file format, but I do not have any cell 
+information,
+just points in space.  This allows me to use glyphs but as far as I can 
+figure out I cannot do isosurfaces, volume visualizations, streamlines 
+and so on.
+If I understand correctly Paraview needs connectivity information 
+between the points to be able to do these things.  The Delaunay3D filter 
+has been mentioned
+recently on this list and from looking at the documentation the filter  
+might provide the connectivity  information I need. My questions are:
+
+1) Does the Delaunay3D filter seem applicable to my need for generating 
+connectivity information between points in space?
+
+2) Is there a reason the Delaunay3D filter was not included in ParaView
+
+3) Could someone who has already implemented the necessary xml files to 
+allow the Delaunay3D filter to be loaded by ParaView please
+    post them (or send them to me) so I do not have to duplicate your 
+work.  (I'll put in my IOU to do the same for others when I am up to speed
+    with ParaView and VTK)
+
+  Thanks in advance
+
+Dan Goldstein
+From jfavre at cscs.ch  Thu Mar 17 12:19:21 2005
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Mar 17 12:19:41 2005
+Subject: [Paraview] Grid connectivity,  Delaunay3D?
+In-Reply-To: <4239B979.7040704@colorado.edu>
+References: <4239B979.7040704@colorado.edu>
+Message-ID: <4239BC19.50202@cscs.ch>
+
+Daniel Goldstein wrote:
+
+> 3) Could someone who has already implemented the necessary xml files to 
+> allow the Delaunay3D filter to be loaded by ParaView please
+>    post them 
+
+I'll answer question 3 and let others do 1) and 2)
+
+Just use "import package" to activate it.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+-------------- next part --------------
+<ServerManagerConfiguration>
+  <ProxyGroup name="filters">
+
+   <SourceProxy name="Delaunay3D" class="vtkDelaunay3D">
+      <InputProperty
+         name="Input"
+         command="SetInput">
+           <ProxyGroupDomain name="groups">
+             <Group name="sources"/>
+             <Group name="filters"/>
+           </ProxyGroupDomain>
+           <DataTypeDomain name="input_type">
+             <DataType value="vtkPointSet"/>
+           </DataTypeDomain>
+      </InputProperty>
+
+     <DoubleVectorProperty
+        name="Tolerance"
+        command="SetTolerance"
+        number_of_elements="1"
+        default_values="0.001">
+       <DoubleRangeDomain name="range" min="0.0" max="1.0" />
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty
+        name="Alpha"
+        command="SetAlpha"
+        number_of_elements="1"
+        default_values="2.0">
+       <DoubleRangeDomain name="range" min="0.0" max="10.0" />
+     </DoubleVectorProperty>
+
+     <DoubleVectorProperty
+        name="Offset"
+        command="SetOffset"
+        number_of_elements="1"
+        default_values="2.5">
+       <DoubleRangeDomain name="range" min="2.5" max="10.0" />
+     </DoubleVectorProperty>
+
+     <IntVectorProperty
+        name="BoundingTriangulation"
+        command="SetBoundingTriangulation"
+        number_of_elements="1"
+        default_values="0">
+       <BooleanDomain name="bool"/>
+     </IntVectorProperty>
+   <!-- End Delaunay3D -->
+   </SourceProxy>
+ </ProxyGroup>
+
+</ServerManagerConfiguration>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: Delaunay3D.xml
+Type: text/xml
+Size: 1819 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050317/989ad75c/Delaunay3D.bin
+From brad.king at kitware.com  Thu Mar 17 13:27:38 2005
+From: brad.king at kitware.com (Brad King)
+Date: Thu Mar 17 13:27:44 2005
+Subject: [Paraview] Grid connectivity,  Delaunay3D?
+In-Reply-To: <4239B979.7040704@colorado.edu>
+References: <4239B979.7040704@colorado.edu>
+Message-ID: <4239CC1A.9050101@kitware.com>
+
+Daniel Goldstein wrote:
+>   I have been working with ParaView recently to visualize velocity and 
+> vorticity fields generated form an adaptive wavelet collocation solver,
+> which our group has been developing.  The data fields I have are an 
+> adaptive subset of a regular grid. For each point in the field I have
+> scalar or vector values and a field location.  I have been saving data 
+> into an unstructured grid VTK file format, but I do not have any cell 
+> information,
+> just points in space.  This allows me to use glyphs but as far as I can 
+> figure out I cannot do isosurfaces, volume visualizations, streamlines 
+> and so on.
+> If I understand correctly Paraview needs connectivity information 
+> between the points to be able to do these things.  The Delaunay3D filter 
+> has been mentioned
+> recently on this list and from looking at the documentation the filter  
+> might provide the connectivity  information I need. My questions are:
+> 
+> 1) Does the Delaunay3D filter seem applicable to my need for generating 
+> connectivity information between points in space?
+
+Yes, but since your points are already a subset of a regular grid your 
+adaptive sampling algorithm should be able to produce better 
+connectivity.  If by "adaptive subset of a regular grid" you mean an 
+octree, then it should be trivial to generate hexahedral cells for the 
+octree leaves.
+
+> 2) Is there a reason the Delaunay3D filter was not included in ParaView
+
+I don't think there is a particular reason.  It just has not been 
+commonly needed.
+
+> 3) Could someone who has already implemented the necessary xml files to 
+> allow the Delaunay3D filter to be loaded by ParaView please
+>    post them (or send them to me) so I do not have to duplicate your 
+> work.  (I'll put in my IOU to do the same for others when I am up to speed
+>    with ParaView and VTK)
+
+Please submit a feature request here:
+
+http://www.paraview.org/Bug
+
+and you will be notified automatically when the issue is resolved.
+
+-Brad
+From glsigismondi at bluewin.ch  Fri Mar 18 04:12:33 2005
+From: glsigismondi at bluewin.ch (gianlu)
+Date: Fri Mar 18 04:15:56 2005
+Subject: [Paraview] paraview user's guide
+Message-ID: <000601c52b9a$a2e9dac0$14b903d5@CPQ21700315045>
+
+Hallo, in your site i have only found a paraview user's guide for 1.6
+version.
+
+I would like to know if is possible and where to download (free) user's
+guides and documentation for version 1.8 and 2.0.
+
+ 
+
+Thanks
+
+ 
+
+g
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050318/bfe51147/attachment.html
+From berk.geveci at gmail.com  Fri Mar 18 08:53:23 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Fri Mar 18 08:53:40 2005
+Subject: [Paraview] paraview user's guide
+In-Reply-To: <000601c52b9a$a2e9dac0$14b903d5@CPQ21700315045>
+References: <000601c52b9a$a2e9dac0$14b903d5@CPQ21700315045>
+Message-ID: <a2ab2156050318055376381b65@mail.gmail.com>
+
+It is not possible. The ParaView Guide is sold at 
+http://www.kitware.com/products/paraviewguide.html
+
+-Berk
+
+On Fri, 18 Mar 2005 10:12:33 +0100, gianlu <glsigismondi@bluewin.ch> wrote:
+>  
+>  
+> 
+> Hallo, in your site i have only found a paraview user's guide for 1.6
+> version. 
+> 
+> I would like to know if is possible and where to download (free) user's
+> guides and documentation for version 1.8 and 2.0. 
+> 
+>   
+> 
+> Thanks 
+> 
+>   
+> 
+> g 
+> 
+>   
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+>
+From duprec at scorec.rpi.edu  Fri Mar 18 15:07:59 2005
+From: duprec at scorec.rpi.edu (Christophe Dupre)
+Date: Fri Mar 18 15:08:04 2005
+Subject: [Paraview] Need help with custom reader
+Message-ID: <Pine.GSO.4.58.0503181501250.13071@sinclair.scorec.rpi.edu>
+
+
+We have a custom reader that works fine in paraview 1.2. Since that seems
+to be obsolete, I'm trying to migrate it to the current paraview.
+So far, I have:
+- copied my vtk classes to VTK/Hydrid
+- updated VTK/Hybrid/CMakeList.txt (added reference to new .cxx files)
+
+I've also modified GUI/Client/Resources/Readers.xml to add a <Module>
+entry for my new reader.
+
+After compiling, paraview crashes when I open a data file using my reader.
+I can't find any documentation on the architecture changes between 1.2 and
+1.8, so some pointers would be appreciated.
+
+Thank you.
+
+--
+Christophe Dupre
+System Administrator, Scientific Computation Research Center
+Rensselaer Polytechnic Institute
+Troy, NY        USA
+Phone: (518) 276-2578  -  Fax: (518) 276-4886
+From brad.king at kitware.com  Fri Mar 18 17:41:20 2005
+From: brad.king at kitware.com (Brad King)
+Date: Fri Mar 18 17:41:29 2005
+Subject: [Paraview] Need help with custom reader
+In-Reply-To: <Pine.GSO.4.58.0503181501250.13071@sinclair.scorec.rpi.edu>
+References: <Pine.GSO.4.58.0503181501250.13071@sinclair.scorec.rpi.edu>
+Message-ID: <423B5910.7020600@kitware.com>
+
+Christophe Dupre wrote:
+> We have a custom reader that works fine in paraview 1.2. Since that seems
+> to be obsolete, I'm trying to migrate it to the current paraview.
+> So far, I have:
+> - copied my vtk classes to VTK/Hydrid
+> - updated VTK/Hybrid/CMakeList.txt (added reference to new .cxx files)
+> 
+> I've also modified GUI/Client/Resources/Readers.xml to add a <Module>
+> entry for my new reader.
+> 
+> After compiling, paraview crashes when I open a data file using my reader.
+> I can't find any documentation on the architecture changes between 1.2 and
+> 1.8, so some pointers would be appreciated.
+
+You also need to update Servers/ServerManager/Resources/readers.xml. 
+There is now a book "The ParaView Guide:
+
+http://www.kitware.com/products/paraviewguide.html
+
+that explains some of this.
+
+-Brad
+From biddisco at cscs.ch  Mon Mar 21 01:05:00 2005
+From: biddisco at cscs.ch (John Biddiscombe)
+Date: Mon Mar 21 01:05:17 2005
+Subject: [Paraview] netCDF, Multiple outputs, multiple point data arrays
+Message-ID: <423E640C.3090503@cscs.ch>
+
+I'm working on a netCDF reader which is working well on the majority of 
+datasets and will handle multiple point data arrays using the 
+PointDataArraySelection method that can be found in several of the more 
+advanced paraview readers. The Gui allows you to select which point data 
+to read. In this case, all the Variables present in the netCDF file are 
+basically the same size (identical x,y,z,t,spacing,origin etc)
+
+But...
+I've got some netCDF datasets that have mutiple Variables present in 
+them - with different sizes. So that either of the above mentioned 
+variables may be of different sizes. What I'd like to do, is create N 
+outputs, each with possibly M point data arrays. Effectively, calling 
+SetNumberOfOutputPorts in the execute information and assiging the 
+relevent information to them.
+
+Can the PointDataArraySelection method be extended to handle this case, 
+so that the user can configure reads from the paraview GUI? if so, can 
+anyone give me either an example or some clues as to what to modify. If 
+this case can't be handled, then it's not too serious and I'll just 
+output one (probably the largest) of the "sets" of data.
+
+thanks
+
+JB
+
+
+-- 
+John Biddiscombe,                            email:biddisco @ cscs.ch
+http://www.cscs.ch/about/BJohn.php
+CSCS, Swiss National Supercomputing Centre  | Tel:  +41 (91) 610.82.07
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From sebastien.barre at kitware.com  Mon Mar 21 13:09:55 2005
+From: sebastien.barre at kitware.com (Sebastien BARRE)
+Date: Mon Mar 21 13:10:59 2005
+Subject: [Paraview] KWWidgets / GUI updates
+Message-ID: <6.2.1.2.2.20050321124420.02ff5150@pop.fr.clara.net>
+
+Hi,
+
+I sneaked in several hundreds small commits this week-end, so here is a 
+little follow-up, in case your code is still conflicting with my changes, 
+or if you are wondering what happened to a couple of classes or methods.
+
+These changes are related to the ongoing effort to make KWWidgets (i.e. the 
+PV/GUI/Widgets) a separate/standalone project. BTW, please refrain from 
+putting anymore ParaView-related elements to Widgets/, add them to 
+PV/GUI/Client instead. Thank you.
+
+More infos can be found in PV/GUI/Widgets/README.txt
+
+The commits were three-fold:
+
+1) clean the vtkKWLabeled* widgets, i.e. a dozen or so classes that had 
+more or less the same interface and needed to be unified/cleaned-up before 
+they grow out of control. A "labeled widget" is a composite widget that 
+allows developers to associate a label (vtkKWLabel) to another widget. 
+Labeled widgets are now created automatically as subclasses of 
+vtkKWWidgetLabeled by configuring some templates. They all follow the new 
+classname pattern vtkKW*Labeled, and adopt the same API to manipulate the 
+internal vtkKWLabel.
+
+2) clean the vtkKW*Set widgets, i.e. again a good bunch of classes that had 
+more or less the same interface and needed to be unified/cleaned-up before 
+they grow out of control. A set of widgets is a basic container that allows 
+developers to delegate allocation, deletion, creation and packing of 
+multiple widgets to a single object called a set. Sets of widgets are 
+useful in situations that require dynamic numbers of widgets. They can also 
+be used to group related widgets together without maintaining ivars for 
+each one of them. Sets of widgets are now created automatically as 
+subclasses of vtkKWWidgetSet  by configuring some templates. The API to 
+manipulate the widgets and control the layout has been unified.
+
+3) the SetLabel(const char *) and SetText(const char *) methods were mixed 
+and matched among the core widgets. Some buttons used SetLabel(), other 
+SetText(). Some classes had inconsistent Set/Get pairs, e.g. vtkKWLabel* 
+GetLabel(), and SetLabel(const char*). The SetText()  is now the only one 
+in use for the core widgets. Composite widgets, including the labeled 
+widgets mentioned above, may provide a SetLabelText() method as a shortcut 
+to GetLabel()->SetText() for example.
+
+Check the migrations notes in README.txt if you are lost, or contact me. 
+This should be pretty straightforward though. Also check the Doxygen 
+documentation:
+	http://www.paraview.org/doc/nightly/html/classes.html
+
+Thanks
+
+--
+Sebastien Barre
+
+From rnelias at superig.com.br  Mon Mar 21 13:58:45 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Mon Mar 21 13:59:53 2005
+Subject: [Paraview] Changing the axis direction...
+In-Reply-To: <20050318170009.D747234993@public.kitware.com>
+Message-ID: <20050321185949.994FE34795@public.kitware.com>
+
+ 
+Hi all,
+
+I think I have a very simple Paraview's question that has been annoying
+me...
+
+Here in Brasil we are very used with the Z axis pointing upwards and the
+default of Paraview is the Y turned to up, thus, how may I change the
+default Z axis direction?
+
+Thanks in advance for any help...
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+
+From amy.squillacote at kitware.com  Tue Mar 22 10:38:19 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Mar 22 12:05:56 2005
+Subject: [Paraview] Announcing ParaView 2.0.0
+Message-ID: <6.2.1.2.2.20050322103256.04105518@pop.biz.rr.com>
+
+Hi All,
+
+The initial release of ParaView 2.0 is available for download from 
+ParaView's web site (http://www.paraview.org/HTML/Download.html).  Please 
+be aware that the files containing the precompiled binaries for Linux are 
+rather large (over 50 MB).  We are working on reducing the size of these 
+files, and they should be smaller in ParaView 2.0.1.
+
+- Amy
+
+
+From eschenbe at psc.edu  Tue Mar 22 21:50:24 2005
+From: eschenbe at psc.edu (Kent Eschenberg)
+Date: Tue Mar 22 21:51:10 2005
+Subject: [Paraview] Demo?
+Message-ID: <18675A0172E2CCA991C558CD@localhost.localdomain>
+
+Where is the demo mentioned under the Help button?
+From pauljwells at mac.com  Tue Mar 22 22:29:01 2005
+From: pauljwells at mac.com (Paul Wells)
+Date: Tue Mar 22 22:29:04 2005
+Subject: [Paraview] Fwd: Paraview on mac / linux
+In-Reply-To: <5343891.1111548228077.JavaMail.pauljwells@mac.com>
+References: <5343891.1111548228077.JavaMail.pauljwells@mac.com>
+Message-ID: <14026646.1111548541223.JavaMail.pauljwells@mac.com>
+
+ 
+I have been trying to compile paraview on a mac under yellow dog linux.
+
+The compilation goes well until it tries to build the paraview executable, then I get this:
+
+Can anyone help?
+
+
+
+--
+Regards
+Paul Wells
+
+Building object file ParaView.o...
+Building executable /home/paulwells/paraview-1.8.3-linux/bin/paraview...
+/usr/lib/gcc-lib/ppc64-yellowdog-linux/3.3.3/../../../../lib/crt1.o(.text+0x20): In function `_start':
+: relocation truncated to fit: R_PPC_REL24 __libc_start_main@@GLIBC_2.0
+/usr/lib/gcc-lib/ppc64-yellowdog-linux/3.3.3/../../../../lib/crti.o(.text+0x10): In function `call_gmon_start':
+: relocation truncated to fit: R_PPC_LOCAL24PC _GLOBAL_OFFSET_TABLE_+fffffffffffffffc
+ParaView.o(.text+0x90): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0xa4): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0xe0): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x110): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x124): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0x160): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x190): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x1a4): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0x200): In function `MyMain(int, char**)':
+: additional relocation overflows omitted from the output
+collect2: ld returned 1 exit status
+make[5]: *** [/home/paulwells/paraview-1.8.3-linux/bin/paraview] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Client] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_GUI] Error 2
+make: *** [default_target] Error 2
+-------------- next part --------------
+Building object file ParaView.o...
+Building executable /home/paulwells/paraview-1.8.3-linux/bin/paraview...
+/usr/lib/gcc-lib/ppc64-yellowdog-linux/3.3.3/../../../../lib/crt1.o(.text+0x20): In function `_start':
+: relocation truncated to fit: R_PPC_REL24 __libc_start_main@@GLIBC_2.0
+/usr/lib/gcc-lib/ppc64-yellowdog-linux/3.3.3/../../../../lib/crti.o(.text+0x10): In function `call_gmon_start':
+: relocation truncated to fit: R_PPC_LOCAL24PC _GLOBAL_OFFSET_TABLE_+fffffffffffffffc
+ParaView.o(.text+0x90): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0xa4): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0xe0): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x110): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x124): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0x160): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x190): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*)@@GLIBCPP_3.2
+ParaView.o(.text+0x1a4): In function `MyMain(int, char**)':
+: relocation truncated to fit: R_PPC_REL24 std::basic_ostream<char, std::char_traits<char> >::operator<<(std::basic_ostream<char, std::char_traits<char> >& (*)(std::basic_ostream<char, std::char_traits<char> >&))@@GLIBCPP_3.2
+ParaView.o(.text+0x200): In function `MyMain(int, char**)':
+: additional relocation overflows omitted from the output
+collect2: ld returned 1 exit status
+make[5]: *** [/home/paulwells/paraview-1.8.3-linux/bin/paraview] Error 1
+make[4]: *** [default_target] Error 2
+make[3]: *** [default_target_Client] Error 2
+make[2]: *** [default_target] Error 2
+make[1]: *** [default_target_GUI] Error 2
+make: *** [default_target] Error 2
+From giuseppe_gariup at libero.it  Wed Mar 23 06:19:16 2005
+From: giuseppe_gariup at libero.it (giuseppe_gariup@libero.it)
+Date: Wed Mar 23 06:19:22 2005
+Subject: [Paraview] Stress and strains
+Message-ID: <IDSY44$8A2FDC6749E70684319B210B83787A7B@libero.it>
+
+Hi everybody:
+I have to use paraview to display the output of a finite element programs. I have to be able to describe deformed solids and to draw on their surfaces the stress and strain field (different colors for different values of strenght on the nodes of the mesh) I am reading the paraview guide but still I haven't found anything similar on it...
+Do you know any solutions?
+bye and thanks
+
+giuseppe
+
+
+
+____________________________________________________________
+6X velocizzare la tua navigazione a 56k? 6X Web Accelerator di Libero!
+Scaricalo su INTERNET GRATIS 6X http://www.libero.it
+
+
+From amy.squillacote at kitware.com  Wed Mar 23 08:28:58 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Mar 23 08:29:44 2005
+Subject: [Paraview] Demo?
+In-Reply-To: <18675A0172E2CCA991C558CD@localhost.localdomain>
+References: <18675A0172E2CCA991C558CD@localhost.localdomain>
+Message-ID: <6.2.1.2.2.20050323081534.040d9b58@pop.biz.rr.com>
+
+Kent,
+
+When you run the demo from the Help menu, a Tcl script called Demo1.pvs is 
+called.  If you built ParaView from source, you can find this script in the 
+ParaView/GUI/Demos directory.
+
+- Amy
+
+At 09:50 PM 3/22/2005, Kent Eschenberg wrote:
+>Where is the demo mentioned under the Help button?
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From dussere at labri.fr  Wed Mar 23 13:40:38 2005
+From: dussere at labri.fr (Michael Dussere)
+Date: Wed Mar 23 13:40:46 2005
+Subject: [Paraview] Announcing ParaView 2.0.0
+Message-ID: <4241B826.7030300@labri.fr>
+
+
+-------------- next part --------------
+An embedded message was scrubbed...
+From: Michael Dussere <dussere@labri.fr>
+Subject: Re: [Paraview] Announcing ParaView 2.0.0
+Date: Wed, 23 Mar 2005 10:04:43 +0100
+Size: 2291
+Url: http://public.kitware.com/pipermail/paraview/attachments/20050323/a1f51ae0/ParaviewAnnouncingParaView2.0.mht
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: dussere.vcf
+Type: text/x-vcard
+Size: 543 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050323/a1f51ae0/dussere.vcf
+From amy.squillacote at kitware.com  Wed Mar 23 13:52:35 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Mar 23 13:52:42 2005
+Subject: [Paraview] Announcing ParaView 2.0.0
+In-Reply-To: <4241B826.7030300@labri.fr>
+References: <4241B826.7030300@labri.fr>
+Message-ID: <6.2.1.2.2.20050323134805.040c52b0@pop.biz.rr.com>
+
+I am still in the process of collecting a list of features and bug fixes 
+for the ParaView 2.0 release, but here is what I have so far.
+
+- The volume rendering editor has been completely reworked.
+- Several fixes have been made to quadratic cells, especially for clip and 
+cut to work properly.
+- vtkDataSetSurfaceFilter now properly removes internal faces for 
+penta/hexa wedges.
+- The animation interface has been completely reworked.  Now it supports 
+keyframe animation.  There is a "record" mode that stores and plays back 
+user operations.  There is also a "real-time" playback mode so that the 
+actual length of the animation can be specified, not just the length of 
+time between frames.
+- Sliders now allow users to edit values outside the current range.
+- The connection (for connecting and disconnecting in client/server mode) 
+button is now working.
+- An "invalid operation value" has been added the calculator.
+
+Amy
+
+At 01:40 PM 3/23/2005, Michael Dussere wrote:
+
+
+>Message-ID: <4241312B.50300@labri.fr>
+>Date: Wed, 23 Mar 2005 10:04:43 +0100
+>From: Michael Dussere <dussere@labri.fr>
+>User-Agent: Mozilla Thunderbird 0.9 (X11/20041127)
+>X-Accept-Language: en-us, en
+>MIME-Version: 1.0
+>To: Amy Squillacote <amy.squillacote@kitware.com>
+>Subject: Re: [Paraview] Announcing ParaView 2.0.0
+>References: <6.2.1.2.2.20050322103256.04105518@pop.biz.rr.com>
+>In-Reply-To: <6.2.1.2.2.20050322103256.04105518@pop.biz.rr.com>
+>Content-Type: multipart/mixed; boundary="------------010904010508000103010300"
+>
+>HI,
+>
+>Does anybody knows what's new in release 2.0.0 ?
+>
+>In the web site, I never found a page about the changes or the new 
+>features of the releases. It would be motivating for migrating to a newer 
+>release.
+>
+>Michael
+>
+>Amy Squillacote wrote:
+>>Hi All,
+>>The initial release of ParaView 2.0 is available for download from 
+>>ParaView's web site (http://www.paraview.org/HTML/Download.html).
+>>Please be aware that the files containing the precompiled binaries for 
+>>Linux are rather large (over 50 MB).  We are working on reducing the size 
+>>of these files, and they should be smaller in ParaView 2.0.1.
+>>- Amy
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From brad.king at kitware.com  Wed Mar 23 17:04:03 2005
+From: brad.king at kitware.com (Brad King)
+Date: Wed Mar 23 17:04:07 2005
+Subject: [Paraview] netCDF, Multiple outputs, multiple point data arrays
+In-Reply-To: <423E640C.3090503@cscs.ch>
+References: <423E640C.3090503@cscs.ch>
+Message-ID: <4241E7D3.4040508@kitware.com>
+
+John Biddiscombe wrote:
+> I'm working on a netCDF reader which is working well on the majority of 
+> datasets and will handle multiple point data arrays using the 
+> PointDataArraySelection method that can be found in several of the more 
+> advanced paraview readers. The Gui allows you to select which point data 
+> to read. In this case, all the Variables present in the netCDF file are 
+> basically the same size (identical x,y,z,t,spacing,origin etc)
+> 
+> But...
+> I've got some netCDF datasets that have mutiple Variables present in 
+> them - with different sizes. So that either of the above mentioned 
+> variables may be of different sizes. What I'd like to do, is create N 
+> outputs, each with possibly M point data arrays. Effectively, calling 
+> SetNumberOfOutputPorts in the execute information and assiging the 
+> relevent information to them.
+> 
+> Can the PointDataArraySelection method be extended to handle this case, 
+> so that the user can configure reads from the paraview GUI? if so, can 
+> anyone give me either an example or some clues as to what to modify. If 
+> this case can't be handled, then it's not too serious and I'll just 
+> output one (probably the largest) of the "sets" of data.
+
+This isn't very easy because ParaView creates a whole bunch of internal 
+objects according to the number of outputs the reader produces.  Once 
+this is set it cannot be changed without removing the reader and 
+creating a new one.  Therefore the set of outputs to read cannot be 
+configured by the GUI.
+
+Changing the number of output ports during execution is not a very 
+new-pipeline thing to do.  There is currently multiblock (or composite) 
+output support being developed, so you reader would produce one output 
+that consists of several blocks.  Each block would correspond to one of 
+what you are now calling outputs.
+
+-Brad
+From brad.king at kitware.com  Wed Mar 23 17:12:31 2005
+From: brad.king at kitware.com (Brad King)
+Date: Wed Mar 23 17:12:36 2005
+Subject: [Paraview] Fwd: Paraview on mac / linux
+In-Reply-To: <14026646.1111548541223.JavaMail.pauljwells@mac.com>
+References: <5343891.1111548228077.JavaMail.pauljwells@mac.com>
+	<14026646.1111548541223.JavaMail.pauljwells@mac.com>
+Message-ID: <4241E9CF.903@kitware.com>
+
+Paul Wells wrote:
+>  
+> I have been trying to compile paraview on a mac under yellow dog linux.
+> 
+> The compilation goes well until it tries to build the paraview executable, then I get this:
+[snip]
+> Building object file ParaView.o...
+> Building executable /home/paulwells/paraview-1.8.3-linux/bin/paraview...
+> /usr/lib/gcc-lib/ppc64-yellowdog-linux/3.3.3/../../../../lib/crt1.o(.text+0x20): In function `_start':
+> : relocation truncated to fit: R_PPC_REL24 __libc_start_main@@GLIBC_2.0
+
+It looks like the paraview executable might be too big for that system. 
+  Someone else has had a similar problem in another application:
+
+http://www.mail-archive.com/xmame@toybox.twisted.org.uk/msg07077.html
+
+You might be able to turn on BUILD_SHARED_LIBS to avoid such a large 
+executable.  Otherwise try following the instructions in the above link 
+and let us know.
+
+-Brad
+From biddisco at cscs.ch  Thu Mar 24 03:26:07 2005
+From: biddisco at cscs.ch (John Biddiscombe)
+Date: Thu Mar 24 03:26:23 2005
+Subject: [Paraview] netCDF, Multiple outputs, multiple point data arrays
+In-Reply-To: <4241E7D3.4040508@kitware.com>
+References: <423E640C.3090503@cscs.ch> <4241E7D3.4040508@kitware.com>
+Message-ID: <4242799F.8080707@cscs.ch>
+
+Brad,
+
+>
+> Changing the number of output ports during execution is not a very 
+> new-pipeline thing to do.  There is currently multiblock (or 
+> composite) output support being developed, so you reader would produce 
+> one output that consists of several blocks.  Each block would 
+> correspond to one of what you are now calling outputs.
+
+
+Thanks. I think this'll do what I need. Cheers
+
+JB
+
+From hudson at mcs.anl.gov  Thu Mar 24 10:49:14 2005
+From: hudson at mcs.anl.gov (Randy Hudson)
+Date: Thu Mar 24 10:50:00 2005
+Subject: [Paraview] Center of implicit plane in vtkPVImplicitPlaneWidget
+Message-ID: <6.2.1.2.2.20050324094841.03270a40@pop.mcs.anl.gov>
+
+
+(In case this needs correction...)
+
+In paraview 1.8.3, I spotted what looks like a wee error.  vtkPVImplicitPlaneWidget::GetNormal() calls 
+this->GetCenterInternal(), instead of this->GetNormalInternal().
+
+ From vtkPVImplicitPlaneWidget.cxx
+//----------------------------------------------------------------------------
+void vtkPVImplicitPlaneWidget::GetNormal(double pt[3])
+{
+  if(!this->IsCreated())
+    {
+    vtkErrorMacro("Not created yet");
+    return;
+    }
+  this->WidgetProxy->UpdateInformation();
+  this->GetCenterInternal(pt);
+}
+
+
+
+
+Randy.
+630 252 8690.
+
+From utkarsh.ayachit at kitware.com  Thu Mar 24 14:08:38 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Thu Mar 24 14:19:30 2005
+Subject: [Paraview] Center of implicit plane in vtkPVImplicitPlaneWidget
+In-Reply-To: <6.2.1.2.2.20050324094841.03270a40@pop.mcs.anl.gov>
+References: <6.2.1.2.2.20050324094841.03270a40@pop.mcs.anl.gov>
+Message-ID: <42431036.7020705@kitware.com>
+
+Thanks. It was indeed an error.
+It's fixed in current CVS.
+
+Utkarsh.
+
+Randy Hudson wrote:
+> (In case this needs correction...)
+> 
+> In paraview 1.8.3, I spotted what looks like a wee error.  vtkPVImplicitPlaneWidget::GetNormal() calls 
+> this->GetCenterInternal(), instead of this->GetNormalInternal().
+> 
+>  From vtkPVImplicitPlaneWidget.cxx
+> //----------------------------------------------------------------------------
+> void vtkPVImplicitPlaneWidget::GetNormal(double pt[3])
+> {
+>   if(!this->IsCreated())
+>     {
+>     vtkErrorMacro("Not created yet");
+>     return;
+>     }
+>   this->WidgetProxy->UpdateInformation();
+>   this->GetCenterInternal(pt);
+> }
+> 
+> 
+> 
+> 
+> Randy.
+> 630 252 8690.
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+From glsigismondi at bluewin.ch  Sat Mar 26 09:23:16 2005
+From: glsigismondi at bluewin.ch (gianlu)
+Date: Sat Mar 26 09:24:09 2005
+Subject: [Paraview] outputs translation problem
+Message-ID: <000001c5320f$608033c0$0eb603d5@CPQ21700315045>
+
+Hi,
+
+I want to visualize the outputs of a CFD code (solving a propeller for
+ship problem) with ParaView. Data files are in text format (Ascii) and
+they specify geometry (nodes coordinates of panels describing the
+blade..), values of pressure on the blades, Velocity, .. . I have to
+convert this files in a format that Paraview can accept and that is most
+portable as possible.
+
+What format file are the best for these specifics?
+
+Is also possible to create into Paraview (or VTK) a script to translate
+directly my output files?
+
+ 
+
+thanks
+
+gianluca  
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050326/a15797cd/attachment.htm
+From rnelias at superig.com.br  Sat Mar 26 16:43:20 2005
+From: rnelias at superig.com.br (Renato N. Elias)
+Date: Sat Mar 26 16:43:24 2005
+Subject: [Paraview] RES: outputs translation problem (gianlu)
+In-Reply-To: <20050326170008.938D534BCB@public.kitware.com>
+Message-ID: <20050326214320.37BAA3484D@public.kitware.com>
+
+
+Hi Gianluca,
+
+I've been using Paraview to visualize the results of my program (a 3D
+incompressible solver using finite element method). In attach follow the
+routines that I've been using to export my geometry (tetrahedra mesh) and
+result files (velocity vector, pressure and viscosity scalar fields) in
+Ensight's format (I think this format is one of the most known format in CFD
+area). I hope these routines may be useful for your purposes. 
+
+You may also take a look in the ASCII example files provided with the
+Paraview's distribution (C:\Program Files\ParaView 2.0\Data\Data, files
+elements.***) for further details about the Ensight's format.
+
+Regards
+
+Renato N. Elias
+Rio de Janeiro/Brasil
+http://www.nacad.ufrj.br/~rnelias
+
+
+
+----------------------------------------------------------------------------
+----------------------------------
+
+Date: Sat, 26 Mar 2005 15:23:16 +0100
+From: "gianlu" <glsigismondi@bluewin.ch>
+Subject: [Paraview] outputs translation problem
+To: <paraview@paraview.org>
+Message-ID: <000001c5320f$608033c0$0eb603d5@CPQ21700315045>
+Content-Type: text/plain; charset="us-ascii"
+
+Hi,
+
+I want to visualize the outputs of a CFD code (solving a propeller for ship
+problem) with ParaView. Data files are in text format (Ascii) and they
+specify geometry (nodes coordinates of panels describing the blade..),
+values of pressure on the blades, Velocity, .. . I have to convert this
+files in a format that Paraview can accept and that is most portable as
+possible.
+
+What format file are the best for these specifics?
+
+Is also possible to create into Paraview (or VTK) a script to translate
+directly my output files?
+
+ 
+
+thanks
+
+gianluca  
+
+ 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL:
+http://public.kitware.com/pipermail/paraview/attachments/20050326/a15797cd/a
+ttachment.html
+
+------------------------------
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+
+
+End of ParaView Digest, Vol 11, Issue 22
+****************************************
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: EnsightRoutines.zip
+Type: application/octet-stream
+Size: 1962 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050326/994d5c3c/EnsightRoutines.obj
+From amy.squillacote at kitware.com  Mon Mar 28 07:32:47 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Mon Mar 28 08:28:29 2005
+Subject: Fwd: Re: Fwd: Re: [Paraview] Announcing ParaView 2.0.0
+Message-ID: <6.2.1.2.2.20050328072717.037e3620@pop.biz.rr.com>
+
+Hi  Sam,
+
+Here is a description of the new animation interface as described by the 
+person who designed it.
+
+- Amy
+
+>Date: Sat, 26 Mar 2005 00:55:21 -0500
+>From: Utkarsh Ayachit <utkarsh.ayachit@kitware.com>
+>User-Agent: Mozilla Thunderbird 1.0 (Windows/20041206)
+>X-Accept-Language: en-us, en
+>To: Amy Squillacote <amy.squillacote@kitware.com>
+>Subject: Re: Fwd: Re: [Paraview] Announcing ParaView 2.0.0
+>
+>Hi Amy,
+>
+>I just wrote up some explanation of the interface. I am not sure if I 
+>should send it to the list or to the user.
+>So, I am sending it to you. Please do the appropriate.
+>
+>Utkarsh.
+>
+>//--------------------------------------------------------------------------------------------------
+>Using the key frame animation interface in ParaView 2.0
+>
+>The Animation Interface has two parts
+>1) The vertical pane on the left side of the window (which shows animation 
+>scene properties and active key frame information) and
+>2) The horizontal pane with the animation tracks which is used to create / 
+>manipulate the key frames.
+>
+>For every created source, there are a bunch of properties that can be 
+>animated. These sources and their properties are listed in the "Animation 
+>Tracks" pane with the animation track for each property. The properties 
+>are grouped according to the source to which they belong. The track 
+>adjacent to any non-leaf node is a "grouping track" which merely shows the 
+>bounding extents of the tracks of its children (if they have any), eg. the 
+>track adjacent to "Animation Tracks" or for a sphere source, the track 
+>adjacent to the name of the sphere. Key frames cannot be added to a 
+>"grouping track".
+>
+>Keyframes can be added/removed only from a track corresponding to 
+>properties, such as "Radius" for Sphere source.
+>
+>To create an animation, we must add key frames to at least one property of 
+>any source, which will be varied over time. For simplicity, let's assume 
+>that we have create just one sphere source named "Sphere1". The animation 
+>tracks will list the Sphere and it's properties (Center (0, 1, 2) , 
+>EndPhi, ....Radius...etc). Suppose we want to change the radius linearly 
+>from start to end of the animation. Simply, click on the track adjacent to 
+>"Radius". A key frame will be added. (ParaView 2.0 and the current CVS 
+>version differ slightly in this behavior, I will explain that later. 
+>Current discussion is for PV 2.0).  The added keyframe will be labeled "1" 
+>and will be the "active" key frame, hence, it's properties will be shown 
+>in the left pane. "Time" is the time in animation (in seconds) at which 
+>this key frame will have effect, and
+>"Value" is the value of the radius. (Whenever possible, paraview 
+>initializes the value of the left most key frame to be added to any track 
+>to the minimum value for that property and the right most key frame to be 
+>added to the track to the maximum value for the property. It min or max 
+>value cannot be determined, the value if the current value of the 
+>property). One can merely drag this key frame along the track to change 
+>the time at which it has effect. To delete a key frame, drag it out of the 
+>animation tracks till the pointer changes to a rectangle and release. (All 
+>key frames can be deleted from the Edit Menu).
+>
+>The "Interpolation" property of a key frame controls how the value is 
+>interpolated for the animation time between the key frame and the next 
+>consecutive key frame (if any). For any property to be animated, there 
+>must be at least two key frames.
+>
+>Going back to our sphere example, we have added one keyframe to the radius 
+>track. Click once more on the empty region in the track to add another 
+>keyframe. Move them around to when you want the change in radius to begin 
+>and end in the animation. You can also stretch the timeline by moving the 
+>key marker on the "group track" for the tree node that groups the property 
+>(in our case "Sphere1").
+>
+>Hit Play and you  have a simple animation in which the radius varies 
+>linearly between the start key frame and end key frame. As the animation 
+>is being played, one can also see the "current time marker". We can
+>press the right mouse button on the marker (or Ctrl + Left button) and 
+>drag the marker along to change the current time.
+>
+>Typically, the properties shown in the Animation Tracks pane for each 
+>source are a smaller subset (what we think the user is most likely to 
+>animate) of properties of the source / filter. Check the "Show all 
+>animatable properties" check box in the "Animation Settings" on the Left 
+>Animation pane to view all available properties.
+>
+>Another useful feature of the new animation interface is recording. The 
+>idea is that the user will create all the sources/filter which he wants to 
+>create an "animation scene" with. Next, enable recording (by pressing the 
+>Record button in the Animation Control (or Animation Toolbar)). Now change 
+>whatever properties you want to change of the source(s). (One can go back 
+>to the Source Properties pane from Select Menu). Once the changes are 
+>accepted (by pressing "Accept"), you can record the changes in the 
+>properties (as keyframes) by clicking the "Record a frame" button in the 
+>Animation Control (or Animation Toolbar). Note that the new keyframes get 
+>appended to the keyframes already present in the animation. So it might be 
+>a good idea to delete all keyframes before starting recording a new 
+>animation sequence. Repeat the process till you are done with the 
+>animation. Stop recording and Play to verify that your changes were indeed 
+>recorded. After recording, you are free to edit / fine tune individual 
+>keyframes (or interpolation types used).
+>
+>A major difference between ParaView 2.0 and the current CVS version is 
+>that now , the first keyframe in any track is always fixed at time 0. 
+>Thus, as soon as the user clicks to add a first keyframe to an animation 
+>track, ParaView also adds an immobile key frame at time 0 (if not 
+>present). The user can still edit the value/interpolation for this key 
+>frame at time 0 (referred to as Anchor key frame). However, it can deleted 
+>only if it is the only keyframe on the track.
+>
+>Also, presently Camera cannot be animated. So recording doesn't save 
+>camera changes.
+>
+>
+>
+>Amy Squillacote wrote:
+>
+>>Hi Utkarsh,
+>>
+>>This guy is looking for an overview of how to use the new animation 
+>>interface in ParaView.  Do you have anything written that explains the new GUI?
+>>
+>>- Amy
+>>
+>>>From: "SamuelKey" <samuelkey@comcast.net>
+>>>To: "Amy Squillacote" <amy.squillacote@kitware.com>
+>>>Subject: Re: [Paraview] Announcing ParaView 2.0.0
+>>>Date: Fri, 25 Mar 2005 13:27:09 -0700
+>>>Organization: FMA Development, LLC
+>>>X-Mailer: Microsoft Outlook Express 6.00.2800.1478
+>>>X-NAS-Bayes: #0: 2.37032E-093; #1: 1
+>>>X-NAS-Classification: 0
+>>>X-NAS-MessageID: 3535
+>>>X-NAS-Validation: {31391EF3-B3AC-4F12-94D8-DC2DA45E9526}
+>>>
+>>>Amy,
+>>>
+>>>This isn't exacly a ParaView version 2.0.0 error per se.
+>>>I have downloaded Version 2.0 and tried the Animation
+>>>capability. Boy is it different than before. I am a big fan
+>>>of animation, but inspite of the pop-up bubbles with lots
+>>>of explanation I have not yet caught on to what I am
+>>>supposed to do.
+>>>
+>>>Is there a 1-pager somewhere that has an overview of
+>>>how to approach the new animation feature to get it
+>>>to work successfully?
+>>>
+>>>Sam Key
+>>
+>>
+>>
+>>
+
+From samuelkey at comcast.net  Wed Mar 23 23:23:44 2005
+From: samuelkey at comcast.net (SamuelKey)
+Date: Mon Mar 28 09:59:32 2005
+Subject: [Paraview] Reading and Displaying Stress and Strain in PV
+References: <IDSY44$8A2FDC6749E70684319B210B83787A7B@libero.it>
+Message-ID: <004a01c53029$447f8f50$6e01a8c0@last>
+
+Giuseppe,
+
+Everything you want to do (and more) to display
+finite element structural analysis results is available
+in ParaView.
+
+The trick is to get your finite element method
+software to write nodal(point) data and element(cell)
+data to a file in a form that ParaView can read.
+
+Try looking at http://www.vtk.org/pdf/file-formats.pdf
+
+I have attached a Fortran-95 subroutine that writes
+vtk xml-formatted files that ParaView reads. It might
+be a little more complex than what you need since
+I use ParaView's parallel read capability to read
+individual files for each material in the mesh.
+
+Sam
+
+----- Original Message ----- 
+From: <giuseppe_gariup@libero.it>
+To: "paraview" <paraview@paraview.org>
+Sent: Wednesday, March 23, 2005 4:19 AM
+Subject: [Paraview] Stress and strains
+
+
+Hi everybody:
+I have to use paraview to display the output of a finite element programs. I
+have to be able to describe deformed solids and to draw on their surfaces
+the stress and strain field (different colors for different values of
+strenght on the nodes of the mesh) I am reading the paraview guide but still
+I haven't found anything similar on it...
+Do you know any solutions?
+bye and thanks
+
+giuseppe
+
+
+
+____________________________________________________________
+6X velocizzare la tua navigazione a 56k? 6X Web Accelerator di Libero!
+Scaricalo su INTERNET GRATIS 6X http://www.libero.it
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: resultsvtk.f
+Type: application/octet-stream
+Size: 50662 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20050323/bb6b364b/resultsvtk-0001.obj
+From berk.geveci at gmail.com  Mon Mar 28 10:07:41 2005
+From: berk.geveci at gmail.com (Berk Geveci)
+Date: Mon Mar 28 10:11:27 2005
+Subject: [Paraview] outputs translation problem
+In-Reply-To: <000001c5320f$608033c0$0eb603d5@CPQ21700315045>
+References: <000001c5320f$608033c0$0eb603d5@CPQ21700315045>
+Message-ID: <a2ab2156050328070783849df@mail.gmail.com>
+
+Depending on the data type, there are a few formats you can use:
+
+1. Plot3D for curvilinear grids. ASCII or binary. Not great if running
+in parallel
+2. EnSight for all types. Not great if running in parallel
+3. Legacy VTK (see VTK web site for the format). Not great in parallel
+4. New (XML based) VTK (see VTK web site). Works in parallel
+
+It is possible to write a small vtk script to do the conversion.
+However, it would probably be more efficient to write a Fortran or
+C/C++ program to do the conversion.
+
+
+-Berk
+
+On Sat, 26 Mar 2005 15:23:16 +0100, gianlu <glsigismondi@bluewin.ch> wrote:
+>  
+>  
+> 
+> Hi, 
+> 
+> I want to visualize the outputs of a CFD code (solving a propeller for ship
+> problem) with ParaView. Data files are in text format (Ascii) and they
+> specify geometry (nodes coordinates of panels describing the blade..),
+> values of pressure on the blades, Velocity, .. . I have to convert this
+> files in a format that Paraview can accept and that is most portable as
+> possible. 
+> 
+> What format file are the best for these specifics? 
+> 
+> Is also possible to create into Paraview (or VTK) a script to translate
+> directly my output files? 
+> 
+>   
+> 
+> thanks 
+> 
+> gianluca  
+> 
+>   
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+>
+From Daniel.E.Goldstein at colorado.edu  Mon Mar 28 13:15:39 2005
+From: Daniel.E.Goldstein at colorado.edu (Daniel Goldstein)
+Date: Mon Mar 28 13:15:44 2005
+Subject: Fwd: Re: Fwd: Re: [Paraview] Announcing ParaView 2.0.0
+In-Reply-To: <6.2.1.2.2.20050328072717.037e3620@pop.biz.rr.com>
+References: <6.2.1.2.2.20050328072717.037e3620@pop.biz.rr.com>
+Message-ID: <424849CB.8060400@colorado.edu>
+
+Thanks Amy for the explanation of key frames in ParaView 2.0.
+
+   The one thing that I want to do is change the camera angle, and 
+possibly zoom in, as the animation progresses.
+This is important to convey the 3D nature of the data when showing 
+complex simulation results.  Do I interpret the last line of your 
+explanation:
+
+>> Also, presently Camera cannot be animated. So recording doesn't save 
+>> camera changes.
+>>
+
+as saying this capability is not available in ParaView 2.0?  If it can 
+be done, can you give a short explanation of how to accomplish this?
+
+  Thank you
+
+Dan
+
+(daniel.e.goldstein@colorado.edu)
+From Brian.Dotson at netl.doe.gov  Mon Mar 28 13:23:14 2005
+From: Brian.Dotson at netl.doe.gov (Brian Dotson)
+Date: Mon Mar 28 13:23:49 2005
+Subject: [Paraview] Polyhedron Cells
+Message-ID: <s2480558.068@co.mgn.netl.doe.gov>
+
+Hi all,
+
+I am working with a group of folks that are developing computational
+fluid dynamics (CFD) software.  They plan on using an unstructured grid
+with polyhedron cells.  We have done some preliminary tests by creating
+unstructured grids with polyhedron (ConvexPointSet) cells in the vtk
+file format.  This method works, but when the cell counts are large, it
+can take minutes for Paraview to load the data.  I tried the same data
+that was meshed with tetrahedrons and it loaded within a few seconds.
+
+Does anyone have any ideas on how I can speed the load time up when
+loading large polyhedron data sets?
+
+Thanks in advance,
+
+Brian Dotson
+National Energy Technology Laboratory
+
+From amy.squillacote at kitware.com  Mon Mar 28 13:32:57 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Mon Mar 28 13:33:06 2005
+Subject: [Paraview] Announcing ParaView 2.0.0
+In-Reply-To: <424849CB.8060400@colorado.edu>
+References: <6.2.1.2.2.20050328072717.037e3620@pop.biz.rr.com>
+	<424849CB.8060400@colorado.edu>
+Message-ID: <6.2.1.2.2.20050328133116.038f5ec8@pop.biz.rr.com>
+
+Hi Dan,
+
+Please keep the discussion on the list so others can contribute and so 
+there is a record of the discussion.
+
+At 01:15 PM 3/28/2005, Daniel Goldstein wrote:
+>Thanks Amy for the explanation of key frames in ParaView 2.0.
+>
+>   The one thing that I want to do is change the camera angle, and 
+> possibly zoom in, as the animation progresses.
+>This is important to convey the 3D nature of the data when showing complex 
+>simulation results.  Do I interpret the last line of your explanation:
+>
+>>>Also, presently Camera cannot be animated. So recording doesn't save 
+>>>camera changes.
+>
+>as saying this capability is not available in ParaView 2.0?  If it can be 
+>done, can you give a short explanation of how to accomplish this?
+
+Yes, that is what I am saying.  In the current release of ParaView, you 
+cannot animate the camera.
+
+>  Thank you
+>
+>Dan
+>
+>(daniel.e.goldstein@colorado.edu)
+
+From wpfeng at 163.com  Tue Mar 29 06:18:09 2005
+From: wpfeng at 163.com (=?gb2312?B?d3BmZW5n?=)
+Date: Tue Mar 29 06:18:17 2005
+Subject: [Paraview] How to get the specific information about the class
+ hierarchy
+Message-ID: <42493971.00000D.03508@m230.163.com>
+
+Hello all.
+
+I'm trying to understand the hierarchy of the paraview class.
+I know that paraview can be divided into 4 parts: 
+Client, Server Manager, Data server and  Render server.
+
+But how to get the specific information about the class relationship? 
+
+(ps: the information about any version is ok.)
+
+Best regards,
+
+-------------------------------------------------
+
+Wang Panfeng
+wpfeng@163.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20050329/9e033168/attachment.htm
+From eugene.devilliers at btinternet.com  Tue Mar 29 06:27:38 2005
+From: eugene.devilliers at btinternet.com (Eugene BT)
+Date: Tue Mar 29 06:31:18 2005
+Subject: [Paraview] Copy object
+Message-ID: <42493BAA.8080906@btinternet.com>
+
+Hi,
+
+I have been using paraview for about a year and have some feedback 
+regarding stream traces:
+1. An option on the right-click object menu to replicate the current 
+object would really be useful.
+2. Confine to plane/surface option for generating streamlines on a surface.
+3. Streamline from a single point option.
+4. Ability to pick points (for cloud, lines and point line sources) via 
+a widget similar to the one that picks the centre of rotation.
+
+Thanks for a really great tool.
+
+Eugene
+
+From wolfheimer at temf.tu-darmstadt.de  Tue Mar 29 08:28:03 2005
+From: wolfheimer at temf.tu-darmstadt.de (Felix Wolfheimer)
+Date: Tue Mar 29 08:28:08 2005
+Subject: [Paraview] pvtr file format
+Message-ID: <424957E3.9010707@temf.tu-darmstadt.de>
+
+Hello!
+
+I'm trying to use the .pvtr file format to visualize a vector field 
+associated to a rectilinear grid. Unfortunately I get not the expected 
+result. I have two .vtr files which are connected via a .pvtr file. I'm 
+trying to visualize the datasets using only one instance of ParaView. 
+Maybe this is a problem? It seems to me, that the data from the second 
+vtr file is read and displayed incorrect. I will provide you a short 
+example to reproduce the problem. The dataset consists of  a vectorfield 
+distributed on two vtr files. The values in the first file contains a 
+field pointing only in x-direction and the second file contains field 
+values pointing only in y-direction.
+
+Any suggestions would be greatly appreciated. Thanks in advance
+
+Felix
+
+This is the .pvtr file:
+---------------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="PRectilinearGrid">
+<PRectilinearGrid WholeExtent="1 4 1 2 1 2" GhostLevel="0">
+<PPointData>
+  <PDataArray type="Float32" Name="Field" NumberOfComponents="3"/>
+</PPointData>
+<PCellData></PCellData>
+<PCoordinates>
+  <PDataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1"/>
+</PCoordinates>
+<Piece Extent="1 2 1 2 1 2" Source="test0.vtr"/>
+<Piece Extent="3 4 1 2 1 2" Source="test1.vtr"/>
+</PRectilinearGrid>
+</VTKFile>
+===================================================================================
+this is the file test0.vtr
+-----------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid" version="0.1">
+<RectilinearGrid WholeExtent="1 4 1 2 1 2">
+<Piece Extent="1 2 1 2 1 2">
+<PointData Vectors="Field">
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+========================================================================
+this is the file test1.vtr
+-------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid">
+<RectilinearGrid WholeExtent="1 4 1 2 1 2">
+<Piece Extent="3 4 1 2 1 2">
+<PointData>
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  3.000000E+000
+  4.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+-- 
+================================================================================
+Dipl.-Ing. Felix Wolfheimer
+Institut f?r Theorie Elektromagnetischer Felder
+Schlossgartenstr.8
+64289 Darmstadt
+Germany
+
+Tel.: +49 06151/16-2561
+
+From brad.king at kitware.com  Tue Mar 29 09:03:03 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 29 09:03:11 2005
+Subject: [Paraview] Copy object
+In-Reply-To: <42493BAA.8080906@btinternet.com>
+References: <42493BAA.8080906@btinternet.com>
+Message-ID: <42496017.5020309@kitware.com>
+
+Eugene BT wrote:
+> I have been using paraview for about a year and have some feedback 
+> regarding stream traces:
+> 1. An option on the right-click object menu to replicate the current 
+> object would really be useful.
+> 2. Confine to plane/surface option for generating streamlines on a surface.
+> 3. Streamline from a single point option.
+ > 4. Ability to pick points (for cloud, lines and point line sources) via
+ > a widget similar to the one that picks the centre of rotation.
+
+Please submit these each as feature requests here:
+
+http://www.paraview.org/Bug
+
+-Brad
+From brad.king at kitware.com  Tue Mar 29 09:12:40 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 29 09:12:43 2005
+Subject: [Paraview] How to get the specific information about the class
+	hierarchy
+In-Reply-To: <42493971.00000D.03508@m230.163.com>
+References: <42493971.00000D.03508@m230.163.com>
+Message-ID: <42496258.9000509@kitware.com>
+
+wpfeng wrote:
+> I'm trying to understand the hierarchy of the paraview class.
+> I know that paraview can be divided into 4 parts:
+> Client, Server Manager, Data server and Render server.
+
+The data server is where computation takes place, the render server is
+where rendering of the geometry takes place.  The server manager is a
+library to aid writing clients.  The Client is a desktop GUI that links
+to the server manager at build time and uses it at runtime to contact
+the data and render servers.  Optionally the data and render servers can
+be in the same process, or all three (client, data, and render) in one
+process.
+
+For small data on a single machine just running "paraview" will load all
+components in the same process.  On a network some machines can be
+designated data/render servers and then one machine running the GUI can
+connect to the servers.
+
+More information is available in the "ParaView Guide":
+
+http://www.kitware.com/products/paraviewguide.html
+
+-Brad
+From amy.squillacote at kitware.com  Tue Mar 29 09:35:20 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Tue Mar 29 09:35:26 2005
+Subject: [Paraview] Copy object
+In-Reply-To: <42496017.5020309@kitware.com>
+References: <42493BAA.8080906@btinternet.com>
+ <42496017.5020309@kitware.com>
+Message-ID: <6.2.1.2.2.20050329092346.039ecd80@pop.biz.rr.com>
+
+Eugene,
+
+What version of ParaView are you using?  Items 3 and 4 have been available 
+since at least version 1.2 of ParaView, released in February of last 
+year.  (The current release is 2.0, available for download from the 
+ParaView web site: www.paraview.org.)
+
+For item 3, after you have selected the streamline filter, make sure the 
+seed is a point cloud, and set the Radius to 0 and the Number of Points to 
+1.  For item 4, a point widget is available to help you with these 
+tasks.  For example, when streamlining with a point cloud, a point widget 
+is displayed showing the center of the point cloud.  It can be 
+interactively dragged with the mouse to a new location within the data 
+set.  Make sure the Visibility check box (at the bottom of the Seed part of 
+the interface) is checked.
+
+- Amy
+
+At 09:03 AM 3/29/2005, Brad King wrote:
+>Eugene BT wrote:
+>>I have been using paraview for about a year and have some feedback 
+>>regarding stream traces:
+>>1. An option on the right-click object menu to replicate the current 
+>>object would really be useful.
+>>2. Confine to plane/surface option for generating streamlines on a surface.
+>>3. Streamline from a single point option.
+> > 4. Ability to pick points (for cloud, lines and point line sources) via
+> > a widget similar to the one that picks the centre of rotation.
+>
+>Please submit these each as feature requests here:
+>
+>http://www.paraview.org/Bug
+>
+>-Brad
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From brad.king at kitware.com  Tue Mar 29 10:49:53 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 29 10:49:54 2005
+Subject: [Paraview] pvtr file format
+In-Reply-To: <424957E3.9010707@temf.tu-darmstadt.de>
+References: <424957E3.9010707@temf.tu-darmstadt.de>
+Message-ID: <42497921.3080808@kitware.com>
+
+Felix Wolfheimer wrote:
+> I'm trying to use the .pvtr file format to visualize a vector field 
+> associated to a rectilinear grid. Unfortunately I get not the expected 
+> result. I have two .vtr files which are connected via a .pvtr file. I'm 
+> trying to visualize the datasets using only one instance of ParaView. 
+> Maybe this is a problem? It seems to me, that the data from the second 
+> vtr file is read and displayed incorrect. I will provide you a short 
+> example to reproduce the problem. The dataset consists of  a vectorfield 
+> distributed on two vtr files. The values in the first file contains a 
+> field pointing only in x-direction and the second file contains field 
+> values pointing only in y-direction.
+[snip]
+> <VTKFile type="PRectilinearGrid">
+> <PRectilinearGrid WholeExtent="1 4 1 2 1 2" GhostLevel="0">
+> <PPointData>
+>  <PDataArray type="Float32" Name="Field" NumberOfComponents="3"/>
+> </PPointData>
+> <PCellData></PCellData>
+> <PCoordinates>
+>  <PDataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1"/>
+>  <PDataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1"/>
+>  <PDataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1"/>
+> </PCoordinates>
+> <Piece Extent="1 2 1 2 1 2" Source="test0.vtr"/>
+> <Piece Extent="3 4 1 2 1 2" Source="test1.vtr"/>
+
+When using multiple pieces like this they must have well-defined 
+boundaries.  The X extent "1 2" means there are two points with a cell 
+between them.  The X extent "3 4" means this also, but shifted over 2 
+units.  Defining the two pieces this way leaves a missing cell between 
+points 2 and 3.  The reader should produce an error message to indicate 
+this.  You need the extents to overlap by one point such as "1 2" and "2 3".
+
+-Brad
+From brad.king at kitware.com  Tue Mar 29 11:41:34 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 29 11:41:36 2005
+Subject: [Paraview] Polyhedron Cells
+In-Reply-To: <s2480558.068@co.mgn.netl.doe.gov>
+References: <s2480558.068@co.mgn.netl.doe.gov>
+Message-ID: <4249853E.8010403@kitware.com>
+
+Brian Dotson wrote:
+> I am working with a group of folks that are developing computational
+> fluid dynamics (CFD) software.  They plan on using an unstructured grid
+> with polyhedron cells.  We have done some preliminary tests by creating
+> unstructured grids with polyhedron (ConvexPointSet) cells in the vtk
+> file format.  This method works, but when the cell counts are large, it
+> can take minutes for Paraview to load the data.  I tried the same data
+> that was meshed with tetrahedrons and it loaded within a few seconds.
+> 
+> Does anyone have any ideas on how I can speed the load time up when
+> loading large polyhedron data sets?
+
+Are you using the .vtu file format (new VTK XML format) or a .vtk file 
+(legacy VTK format)?
+
+-Brad
+From Brian.Dotson at netl.doe.gov  Tue Mar 29 12:21:06 2005
+From: Brian.Dotson at netl.doe.gov (Brian Dotson)
+Date: Tue Mar 29 12:21:45 2005
+Subject: [Paraview] Polyhedron Cells
+Message-ID: <s2494848.037@co.mgn.netl.doe.gov>
+
+Brad,
+
+I am using the .vtu file format (new VTK XML format).
+
+Brian
+
+>>> Brad King <brad.king@kitware.com> 3/29/2005 11:41 AM >>>
+Brian Dotson wrote:
+> I am working with a group of folks that are developing computational
+> fluid dynamics (CFD) software.  They plan on using an unstructured
+grid
+> with polyhedron cells.  We have done some preliminary tests by
+creating
+> unstructured grids with polyhedron (ConvexPointSet) cells in the vtk
+> file format.  This method works, but when the cell counts are large,
+it
+> can take minutes for Paraview to load the data.  I tried the same
+data
+> that was meshed with tetrahedrons and it loaded within a few
+seconds.
+> 
+> Does anyone have any ideas on how I can speed the load time up when
+> loading large polyhedron data sets?
+
+Are you using the .vtu file format (new VTK XML format) or a .vtk file
+
+(legacy VTK format)?
+
+-Brad
+
+From brad.king at kitware.com  Tue Mar 29 13:18:04 2005
+From: brad.king at kitware.com (Brad King)
+Date: Tue Mar 29 13:18:08 2005
+Subject: [Paraview] Polyhedron Cells
+In-Reply-To: <s2494848.036@co.mgn.netl.doe.gov>
+References: <s2494848.036@co.mgn.netl.doe.gov>
+Message-ID: <42499BDC.6090806@kitware.com>
+
+Brian Dotson wrote:
+> I am using the .vtu file format (new VTK XML format).
+
+Please try to send me a small example of a polyhedral input file and 
+corresponding tetrahedral input file with a noticable time difference. 
+Just send it to me privately to avoid cluttering the list with big files.
+
+Thanks,
+-Brad
+
+>>>>Brad King <brad.king@kitware.com> 3/29/2005 11:41 AM >>>
+> 
+> Brian Dotson wrote:
+> 
+>>I am working with a group of folks that are developing computational
+>>fluid dynamics (CFD) software.  They plan on using an unstructured
+> 
+> grid
+> 
+>>with polyhedron cells.  We have done some preliminary tests by
+> 
+> creating
+> 
+>>unstructured grids with polyhedron (ConvexPointSet) cells in the vtk
+>>file format.  This method works, but when the cell counts are large,
+> 
+> it
+> 
+>>can take minutes for Paraview to load the data.  I tried the same
+> 
+> data
+> 
+>>that was meshed with tetrahedrons and it loaded within a few
+> 
+> seconds.
+> 
+>>Does anyone have any ideas on how I can speed the load time up when
+>>loading large polyhedron data sets?
+> 
+> 
+> Are you using the .vtu file format (new VTK XML format) or a .vtk file
+> 
+> (legacy VTK format)?
+> 
+> -Brad
+> 
+
+From eugene.devilliers at btinternet.com  Tue Mar 29 14:05:53 2005
+From: eugene.devilliers at btinternet.com (Eugene BT)
+Date: Tue Mar 29 14:06:33 2005
+Subject: [Paraview] Copy object
+In-Reply-To: <6.2.1.2.2.20050329092346.039ecd80@pop.biz.rr.com>
+References: <42493BAA.8080906@btinternet.com> <42496017.5020309@kitware.com>
+	<6.2.1.2.2.20050329092346.039ecd80@pop.biz.rr.com>
+Message-ID: <4249A711.5080001@btinternet.com>
+
+Hi Amy,
+
+I am using 1.85.
+Re item 3, can I set the default radius to 0 and no of points to 1?
+Re 4, I was referring to how the centre of rotation picker positions the 
+point on a surface.
+
+None of these things are a major concern really.
+
+In response to Brad:
+Just to confirm, if I have a suggestion, I should report it as a bug?
+Will do.
+
+Eugene
+
+Amy Squillacote wrote:
+
+> Eugene,
+>
+> What version of ParaView are you using?  Items 3 and 4 have been 
+> available since at least version 1.2 of ParaView, released in February 
+> of last year.  (The current release is 2.0, available for download 
+> from the ParaView web site: www.paraview.org.)
+>
+> For item 3, after you have selected the streamline filter, make sure 
+> the seed is a point cloud, and set the Radius to 0 and the Number of 
+> Points to 1.  For item 4, a point widget is available to help you with 
+> these tasks.  For example, when streamlining with a point cloud, a 
+> point widget is displayed showing the center of the point cloud.  It 
+> can be interactively dragged with the mouse to a new location within 
+> the data set.  Make sure the Visibility check box (at the bottom of 
+> the Seed part of the interface) is checked.
+>
+> - Amy
+>
+> At 09:03 AM 3/29/2005, Brad King wrote:
+>
+>> Eugene BT wrote:
+>>
+>>> I have been using paraview for about a year and have some feedback 
+>>> regarding stream traces:
+>>> 1. An option on the right-click object menu to replicate the current 
+>>> object would really be useful.
+>>> 2. Confine to plane/surface option for generating streamlines on a 
+>>> surface.
+>>> 3. Streamline from a single point option.
+>>
+>> > 4. Ability to pick points (for cloud, lines and point line sources) 
+>> via
+>> > a widget similar to the one that picks the centre of rotation.
+>>
+>> Please submit these each as feature requests here:
+>>
+>> http://www.paraview.org/Bug
+>>
+>> -Brad
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+
+From wolfheimer at temf.tu-darmstadt.de  Wed Mar 30 02:05:35 2005
+From: wolfheimer at temf.tu-darmstadt.de (Felix Wolfheimer)
+Date: Wed Mar 30 02:05:42 2005
+Subject: [Paraview] pvtr file format
+References: <424957E3.9010707@temf.tu-darmstadt.de>
+	<42497921.3080808@kitware.com>
+Message-ID: <424A4FBF.4040200@temf.tu-darmstadt.de>
+
+Thank you for your suggestion. Unfortunately ParaView doesn't display 
+the dataset correct even when I change the files as you suggested. Apart 
+from that I don't understand, how this should work. When I specify two 
+pieces one with the extend "1 2 1 2 1 2" and the other with extend "2 3 
+1 2 1 2" it seems to me as if the point with index 2 in x-direction is 
+duplicated. In which datafile should the point data for this point be or 
+should both datafiles contain the data for this point? It would be 
+great, if you would have any additional suggestion how to make ParaView 
+read and display the data correctly (or even better: a working pvtr 
+example file to learn how to create such a data file correctly). I 
+append the modified small example files to this text. By the way: 
+ParaView doesn't show a error message, when it reads the files (with and 
+without the changes)
+
+Thanks in advance
+
+Felix
+
+PS: I'm using ParaView 2.0.0.
+==================================================================================
+This is the pvtr file:
+----------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="PRectilinearGrid">
+<PRectilinearGrid WholeExtent="1 3 1 2 1 2" GhostLevel="0">
+<PPointData>
+  <PDataArray type="Float32" Name="Field" NumberOfComponents="3"/>
+</PPointData>
+<PCellData></PCellData>
+<PCoordinates>
+  <PDataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1"/>
+</PCoordinates>
+<Piece Extent="1 2 1 2 1 2" Source="test0.vtr"/>
+<Piece Extent="2 3 1 2 1 2" Source="test1.vtr"/>
+</PRectilinearGrid>
+</VTKFile>
+===================================================================================
+This is the first datafile:(test0.vtr)
+-----------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid" version="0.1">
+<RectilinearGrid WholeExtent="1 3 1 2 1 2">
+<Piece Extent="1 2 1 2 1 2">
+<PointData Vectors="Field">
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+===================================================================================
+This is the second datafile (test1.vtr)
+------------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid">
+<RectilinearGrid WholeExtent="1 3 1 2 1 2">
+<Piece Extent="2 3 1 2 1 2">
+<PointData>
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  3.000000E+000
+  4.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+======================================================================================
+
+
+Brad King schrieb:
+
+> Felix Wolfheimer wrote:
+>
+>> I'm trying to use the .pvtr file format to visualize a vector field 
+>> associated to a rectilinear grid. Unfortunately I get not the 
+>> expected result. I have two .vtr files which are connected via a 
+>> .pvtr file. I'm trying to visualize the datasets using only one 
+>> instance of ParaView. Maybe this is a problem? It seems to me, that 
+>> the data from the second vtr file is read and displayed incorrect. I 
+>> will provide you a short example to reproduce the problem. The 
+>> dataset consists of  a vectorfield distributed on two vtr files. The 
+>> values in the first file contains a field pointing only in 
+>> x-direction and the second file contains field values pointing only 
+>> in y-direction.
+>
+> [snip]
+>
+>> <VTKFile type="PRectilinearGrid">
+>> <PRectilinearGrid WholeExtent="1 4 1 2 1 2" GhostLevel="0">
+>> <PPointData>
+>>  <PDataArray type="Float32" Name="Field" NumberOfComponents="3"/>
+>> </PPointData>
+>> <PCellData></PCellData>
+>> <PCoordinates>
+>>  <PDataArray type="Float32" Name="X_COORDINATES" 
+>> NumberOfComponents="1"/>
+>>  <PDataArray type="Float32" Name="Y_COORDINATES" 
+>> NumberOfComponents="1"/>
+>>  <PDataArray type="Float32" Name="Z_COORDINATES" 
+>> NumberOfComponents="1"/>
+>> </PCoordinates>
+>> <Piece Extent="1 2 1 2 1 2" Source="test0.vtr"/>
+>> <Piece Extent="3 4 1 2 1 2" Source="test1.vtr"/>
+>
+>
+> When using multiple pieces like this they must have well-defined 
+> boundaries.  The X extent "1 2" means there are two points with a cell 
+> between them.  The X extent "3 4" means this also, but shifted over 2 
+> units.  Defining the two pieces this way leaves a missing cell between 
+> points 2 and 3.  The reader should produce an error message to 
+> indicate this.  You need the extents to overlap by one point such as 
+> "1 2" and "2 3".
+>
+> -Brad
+>
+
+-- 
+================================================================================
+Dipl.-Ing. Felix Wolfheimer
+Institut f?r Theorie Elektromagnetischer Felder
+Schlossgartenstr.8
+64289 Darmstadt
+Germany
+
+Tel.: +49 06151/16-2561
+
+
+From jalyvr at hotmail.com  Wed Mar 30 02:20:38 2005
+From: jalyvr at hotmail.com (John Lloyd)
+Date: Wed Mar 30 02:20:43 2005
+Subject: [Paraview] problems building 2.0.0 on gentoo linux 2.4.25 and nvidia
+Message-ID: <BAY14-F387DE9104727E5F93DF18BD5460@phx.gbl>
+
+As you might guess, I'm having problems getting this to build with a Nvidia 
+Nforce2 equipped motherboard.
+
+A few attempts have yielded...
+
+Building executable /home/paraview/bin/GraphicsCxxTests...
+/usr/X11R6/lib/libMesaGL.so: undefined reference to `_nv000996gl'
+/usr/X11R6/lib/libMesaGL.so: undefined reference to `_nv000919gl'
+....for several hundred lines including one like this....
+/usr/lib/libGLcore.so.1: undefined reference to `glBlendEquationSeparateNVX'
+...and several hundred lines more `nv0000xxxx`, then install messages ending 
+with...
+CMake Error: Error in cmake code at
+/home/paraview/Utilities/SPCTH/cmake_install.cmake:4:
+FILE cannot find file: /home/paraview/bin/libSPCTH.so to install.
+make: *** [install] Error 255
+
+Thinking this was somehow Nvidia and openGL related because of that "NVX", I 
+switched to non-Nvidia gl.h files, and got...
+
+Building executable /home/paraview/bin/GraphicsCxxTests...
+/usr/lib/gcc-lib/i486-pc-linux-gnu/3.3.4/../../../../i486-pc-linux-gnu/bin/ld: 
+/
+usr/lib/opengl/xfree/lib: No such file: File format not recognized
+collect2: ld returned 1 exit status
+...ending with....
+-- Installing /home/paraview/lib/vtk/libvtkParallel.so
+-- Installing /home/paraview/lib/libSPCTH.so
+CMake Error: Error in cmake code at
+/home/paraview/Utilities/SPCTH/cmake_install.cmake:4:
+FILE cannot find file: /home/paraview/bin/libSPCTH.so to install.
+make: *** [install] Error 255
+
+(I don't understand this message "File format not recognized" -- I gave a 
+directory for the opengl_gl_library question, not a .so file, yet it seems 
+to be expecting a shared object file.)
+
+Another attempt yielded
+
+Building shared library /home/paraview/bin/libvtkftgl.so...
+/usr/lib/gcc-lib/i486-pc-linux-gnu/3.3.4/../../../../i486-pc-linux-gnu/bin/ld: 
+/
+usr/lib/opengl/xfree/lib: No such file: File format not recognized
+collect2: ld returned 1 exit status
+....etc...
+-- Installing /home/paraview/lib/vtk/libvtkftgl.so
+CMake Error: Error in cmake code at
+/home/paraview/VTK/Utilities/ftgl/cmake_install.cmake:4:
+FILE cannot find file: /home/paraview/bin/libvtkftgl.so to install.
+make: *** [install] Error 255
+Tue Mar 29 12:41:35 PST 2005
+
+
+Needless to say I do not know what I am doing.  I guess my biggest question 
+is:  what versions are needed for things Paraview source tree does not 
+supply?
+
+-- gl.h, and particularly any extensions needed
+-- glibc
+-- gcc
+
+
+I am using gcc 3.3.4
+$ gcc -v
+Reading specs from /usr/lib/gcc-lib/i486-pc-linux-gnu/3.3.4/specs
+Configured with: /var/tmp/portage/gcc-3.3.4-r1/work/gcc-3.3.4/configure 
+--prefix=/usr --bindir=/usr/i486-pc-linux-gnu/gcc-bin/3.3 
+--includedir=/usr/lib/gcc-lib/i486-pc-linux-gnu/3.3.4/include 
+--datadir=/usr/share/gcc-data/i486-pc-linux-gnu/3.3 
+--mandir=/usr/share/gcc-data/i486-pc-linux-gnu/3.3/man 
+--infodir=/usr/share/gcc-data/i486-pc-linux-gnu/3.3/info --enable-shared 
+--host=i486-pc-linux-gnu --target=i486-pc-linux-gnu --with-system-zlib 
+--enable-languages=c,c++,f77 --enable-threads=posix --enable-long-long 
+--disable-checking --disable-libunwind-exceptions --enable-cstdio=stdio 
+--enable-version-specific-runtime-libs 
+--with-gxx-include-dir=/usr/lib/gcc-lib/i486-pc-linux-gnu/3.3.4/include/g++-v3 
+--with-local-prefix=/usr/local --enable-shared --enable-nls 
+--without-included-gettext --disable-multilib --enable-__cxa_atexit 
+--enable-clocale=generic
+Thread model: posix
+gcc version 3.3.4 20040623 (Gentoo Linux 3.3.4-r1, ssp-3.3.2-2, pie-8.7.6)
+
+The config variables are
+
+Variable Name: OPENGL_INCLUDE_DIR
+Description: What is the path where the file GL/gl.h can be found
+Current Value: /usr/share/doc/NVIDIA_GLX-1.0/include/GL
+New Value (Enter to keep current value):
+
+Variable Name: OPENGL_gl_LIBRARY
+Description: Where can one of the MesaGL or GL libraries be found
+Current Value: /usr/lib/opengl/nvidia/lib
+New Value (Enter to keep current value):
+
+Variable Name: OPENGL_glu_LIBRARY
+Description: Where can one of the MesaGLU or GLU libraries be found
+Current Value: /usr/lib/libGLU.so
+New Value (Enter to keep current value):
+
+Variable Name: OPENGL_xmesa_INCLUDE_DIR
+Description: What is the path where the file GL/xmesa.h can be found
+Current Value: OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+New Value (Enter to keep current value):
+
+Is there further documentation of the build configuration variables?
+
+
+I realize this is a complaint of the "help me it doesn't work" variety, but 
+any suggestions (or further questions) at all will be helpful.
+
+
+Thanks
+
+John
+
+
+From brad.king at kitware.com  Wed Mar 30 07:58:17 2005
+From: brad.king at kitware.com (Brad King)
+Date: Wed Mar 30 07:58:33 2005
+Subject: [Paraview] pvtr file format
+In-Reply-To: <424A4FBF.4040200@temf.tu-darmstadt.de>
+References: <424957E3.9010707@temf.tu-darmstadt.de>
+	<42497921.3080808@kitware.com>
+	<424A4FBF.4040200@temf.tu-darmstadt.de>
+Message-ID: <424AA269.8030904@kitware.com>
+
+Felix Wolfheimer wrote:
+> Thank you for your suggestion. Unfortunately ParaView doesn't display 
+> the dataset correct even when I change the files as you suggested. Apart 
+> from that I don't understand, how this should work. When I specify two 
+> pieces one with the extend "1 2 1 2 1 2" and the other with extend "2 3 
+> 1 2 1 2" it seems to me as if the point with index 2 in x-direction is 
+> duplicated. In which datafile should the point data for this point be or 
+> should both datafiles contain the data for this point?
+
+They have to have the same data for the duplicate points.  The idea is 
+that if the two files are loaded on different machines without shared 
+memory they need to have valid boundary conditions to achieve a 
+consisent computation.
+
+ > By the way:
+> ParaView doesn't show a error message, when it reads the files (with and 
+> without the changes)
+
+There should be a little red exclamation point in the lower right hand 
+corner when an error occurs.  Clicking on it should bring up the messages.
+
+-Brad
+From amy.squillacote at kitware.com  Wed Mar 30 08:50:04 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Mar 30 08:50:18 2005
+Subject: [Paraview] problems building 2.0.0 on gentoo linux 2.4.25
+	and nvidia
+In-Reply-To: <BAY14-F387DE9104727E5F93DF18BD5460@phx.gbl>
+References: <BAY14-F387DE9104727E5F93DF18BD5460@phx.gbl>
+Message-ID: <6.2.1.2.2.20050330084039.03a31100@pop.biz.rr.com>
+
+Hi John,
+
+For the variables you listed, if CMake is for a directory (e.g., 
+OPENGL_INCLUDE_DIR), then you should provide the path to that 
+directory.  If it asks for a library (e.g., OPENGL_gl_LIBRARY), then it 
+wants the full path and file name for the library file (e.g., 
+/usr/lib/opengl/nvidia/lib/libGL.so).  This may not entirely fix your 
+problem, but at least you'll be giving CMake the appropriate information.
+
+- Amy
+
+
+>The config variables are
+>
+>Variable Name: OPENGL_INCLUDE_DIR
+>Description: What is the path where the file GL/gl.h can be found
+>Current Value: /usr/share/doc/NVIDIA_GLX-1.0/include/GL
+>New Value (Enter to keep current value):
+>
+>Variable Name: OPENGL_gl_LIBRARY
+>Description: Where can one of the MesaGL or GL libraries be found
+>Current Value: /usr/lib/opengl/nvidia/lib
+>New Value (Enter to keep current value):
+>
+>Variable Name: OPENGL_glu_LIBRARY
+>Description: Where can one of the MesaGLU or GLU libraries be found
+>Current Value: /usr/lib/libGLU.so
+>New Value (Enter to keep current value):
+>
+>Variable Name: OPENGL_xmesa_INCLUDE_DIR
+>Description: What is the path where the file GL/xmesa.h can be found
+>Current Value: OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
+>New Value (Enter to keep current value):
+>
+>Is there further documentation of the build configuration variables?
+>
+>
+>I realize this is a complaint of the "help me it doesn't work" variety, 
+>but any suggestions (or further questions) at all will be helpful.
+>
+>
+>Thanks
+>
+>John
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From dan at chalkie.org.uk  Wed Mar 30 08:53:20 2005
+From: dan at chalkie.org.uk (Dr. Daniel James White PhD)
+Date: Wed Mar 30 08:53:31 2005
+Subject: [Paraview] Re: ParaView volume rendering?
+In-Reply-To: <20050330135014.464B234B63@public.kitware.com>
+References: <20050330135014.464B234B63@public.kitware.com>
+Message-ID: <366de26f910cdeca6410faa7bf6743fe@chalkie.org.uk>
+
+Hi,
+
+I loaded some volume data, a .vtk file into  paraview2,
+and I want to volume render it.
+
+I can only see the iso surface method in the GUI,
+
+Can I do proper volume rendering with ray casting and or texture 
+mapping?
+
+cheers
+Dan
+
+
+On Mar 24, 2005, at 7:00 PM, paraview-request@paraview.org wrote:
+
+> - The volume rendering editor has been completely reworked.
+
+Dr. Daniel James White BSc. (Hons.) PhD
+Bioimaging Coordinator
+Nanoscience Centre and
+Department of Biological and Environmental science
+Division of Molecular Recognition
+Ambiotica C242
+PO Box  35
+University of Jyv?skyl?
+Jyv?skyl? FIN 40014
+Finland
++358 14 260 4183 (work)
++358 468102840 (mobile)
+
+http://www.chalkie.org.uk
+dan@chalkie.org.uk
+white@cc.jyu.fi
+
+From wolfheimer at temf.tu-darmstadt.de  Wed Mar 30 08:55:43 2005
+From: wolfheimer at temf.tu-darmstadt.de (Felix Wolfheimer)
+Date: Wed Mar 30 08:55:59 2005
+Subject: [Paraview] pvtr file format
+References: <424957E3.9010707@temf.tu-darmstadt.de>
+	<42497921.3080808@kitware.com>
+	<424A4FBF.4040200@temf.tu-darmstadt.de>
+	<424AA269.8030904@kitware.com>
+Message-ID: <424AAFDF.7030200@temf.tu-darmstadt.de>
+
+Thank you again for your explanations. I have modified the datafiles as 
+you suggested (with duplicated point values at the boundaries). But 
+ParaView doesn't display the data correctly. The outline displayed by 
+the dataset is wrong and when I choose to set glyphs onto the datapoints 
+only the data from the first file seems to be used.
+I know the red exclamation point in the lower right corner of the GUI, 
+but it doesn't appear, even with the wrong datafiles containing no 
+duplicated point values. I will again enclose the simple example pvtr 
+and vtr files in the hope that you or someone else can help me to get 
+this working.
+
+Greetings
+
+ Felix
+
+=======================================================================================
+This is the pvtr file:
+-----------------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="PRectilinearGrid">
+<PRectilinearGrid WholeExtent="1 2 1 2 1 3" GhostLevel="0">
+<PPointData>
+  <PDataArray type="Float32" Name="Field" NumberOfComponents="3"/>
+</PPointData>
+<PCellData></PCellData>
+<PCoordinates>
+  <PDataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1"/>
+  <PDataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1"/>
+</PCoordinates>
+<Piece Extent="1 2 1 2 1 2" Source="test0.vtr"/>
+<Piece Extent="1 2 1 2 2 3" Source="test1.vtr"/>
+</PRectilinearGrid>
+</VTKFile>
+=======================================================================================
+This is the first vtr file (test0.vtr):
+-----------------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid" version="0.1">
+<RectilinearGrid WholeExtent="1 2 1 2 1 3">
+<Piece Extent="1 2 1 2 1 2">
+<PointData Vectors="Field">
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  1.000000E+000 0.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+=======================================================================================
+This is the second vtr file (test1.vtr)
+-----------------------------------------------------------------------------------------------------------------------------------
+<VTKFile type="RectilinearGrid">
+<RectilinearGrid WholeExtent="1 2 1 2 1 3">
+<Piece Extent="1 2 1 2 2 3">
+<PointData>
+<DataArray type="Float32" Name="Field" NumberOfComponents="3" 
+format="ascii">
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 1.000000E+000 0.000000E+000
+  0.000000E+000 0.000000E+000 1.000000E+000
+  0.000000E+000 0.000000E+000 1.000000E+000
+  0.000000E+000 0.000000E+000 1.000000E+000
+  0.000000E+000 0.000000E+000 1.000000E+000
+</DataArray>
+</PointData>
+<CellData></CellData>
+<Coordinates>
+<DataArray type="Float32" Name="X_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Y_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  1.000000E+000
+  2.000000E+000
+</DataArray>
+<DataArray type="Float32" Name="Z_COORDINATES" NumberOfComponents="1" 
+format="ascii">
+  2.000000E+000
+  3.000000E+000
+</DataArray>
+</Coordinates>
+</Piece>
+</RectilinearGrid>
+</VTKFile>
+--------------------------------------------------------------------------------------------------------------------
+
+ 
+
+-- 
+================================================================================
+Dipl.-Ing. Felix Wolfheimer
+Institut f?r Theorie Elektromagnetischer Felder
+Schlossgartenstr.8
+64289 Darmstadt
+Germany
+
+Tel.: +49 06151/16-2561
+
+
+From amy.squillacote at kitware.com  Wed Mar 30 09:01:39 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Wed Mar 30 09:01:48 2005
+Subject: [Paraview] Re: ParaView volume rendering?
+In-Reply-To: <366de26f910cdeca6410faa7bf6743fe@chalkie.org.uk>
+References: <20050330135014.464B234B63@public.kitware.com>
+	<366de26f910cdeca6410faa7bf6743fe@chalkie.org.uk>
+Message-ID: <6.2.1.2.2.20050330085551.03a12e00@pop.biz.rr.com>
+
+Hi Dan,
+
+ParaView only handles unstructured volume rendering, so your data must be 
+an unstructured grid for ParaView to volume render it.  It must also be 
+composed only of tetrahedral cells and contain a point-centered scalar 
+(single-component) array.
+
+- Amy
+
+At 08:53 AM 3/30/2005, Dr. Daniel James White PhD wrote:
+>Hi,
+>
+>I loaded some volume data, a .vtk file into  paraview2,
+>and I want to volume render it.
+>
+>I can only see the iso surface method in the GUI,
+>
+>Can I do proper volume rendering with ray casting and or texture mapping?
+>
+>cheers
+>Dan
+>
+>
+>On Mar 24, 2005, at 7:00 PM, paraview-request@paraview.org wrote:
+>
+>>- The volume rendering editor has been completely reworked.
+>
+>Dr. Daniel James White BSc. (Hons.) PhD
+>Bioimaging Coordinator
+>Nanoscience Centre and
+>Department of Biological and Environmental science
+>Division of Molecular Recognition
+>Ambiotica C242
+>PO Box  35
+>University of Jyv?skyl?
+>Jyv?skyl? FIN 40014
+>Finland
+>+358 14 260 4183 (work)
+>+358 468102840 (mobile)
+>
+>http://www.chalkie.org.uk
+>dan@chalkie.org.uk
+>white@cc.jyu.fi
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From JRenteria at arl.army.mil  Wed Mar 30 11:02:01 2005
+From: JRenteria at arl.army.mil (Renteria, Jose (Cont, ARL/CISD))
+Date: Wed Mar 30 11:02:12 2005
+Subject: [Paraview] Filters
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E207EDCD@ARLABML01.DS.ARL.ARMY.MIL>
+
+I am trying to create a new Paraview Filter that is a combination of
+two filters, a cut (vtkCutter) and pick filter (vtkPickFilter).  My
+goal is a cutplane filter that creates a cutplane by selecting
+(picking) three points.  
+
+I can create each filter independently, however joining them has been a
+problem.  Say I create a cutplane filter, how do I get the inputs from
+the cutplane filter to initialize the pick filter or vise versa? 
+
+Thanks,
+
+Jose
+From dan at chalkie.org.uk  Thu Mar 31 03:44:21 2005
+From: dan at chalkie.org.uk (Dr. Daniel James White PhD)
+Date: Thu Mar 31 03:44:28 2005
+Subject: [Paraview] Re: ParaView volume rendering
+In-Reply-To: <20050330170007.4202834C2D@public.kitware.com>
+References: <20050330170007.4202834C2D@public.kitware.com>
+Message-ID: <b4b596feac05bda441ea35149d5b4b90@chalkie.org.uk>
+
+Hi Amy,
+
+Seems rather odd....
+why not just use the VTK volume renderers on
+the usual kinds of data like structured grids and image stacks...?
+
+Why only unstructured grids?
+
+Dan
+
+
+
+On 30 Mar 2005, at 20:00, paraview-request@paraview.org wrote:
+
+> Hi Dan,
+>
+> ParaView only handles unstructured volume rendering, so your data must 
+> be
+> an unstructured grid for ParaView to volume render it.  It must also be
+> composed only of tetrahedral cells and contain a point-centered scalar
+> (single-component) array.
+>
+> - Amy
+>
+> At 08:53 AM 3/30/2005, Dr. Daniel James White PhD wrote:
+>> Hi,
+>>
+>> I loaded some volume data, a .vtk file into  paraview2,
+>> and I want to volume render it.
+>>
+>> I can only see the iso surface method in the GUI,
+>>
+>> Can I do proper volume rendering with ray casting and or texture 
+>> mapping?
+>>
+>> cheers
+>> Dan
+>>
+Dr. Daniel James White BSc. (Hons.) PhD
+Bioimaging Coordinator
+Nanoscience Centre and
+Department of Biological and Environmental science
+Division of Molecular Recognition
+Ambiotica C242
+PO Box  35
+University of Jyv?skyl?
+Jyv?skyl? FIN 40014
+Finland
++358 14 260 4183 (work)
++358 468102840 (mobile)
+
+http://www.chalkie.org.uk
+dan@chalkie.org.uk
+white@cc.jyu.fi
+
+From fhxie at tom.com  Thu Mar 31 05:07:08 2005
+From: fhxie at tom.com (=?gb2312?B?0Lu66LfJ?=)
+Date: Thu Mar 31 05:07:18 2005
+Subject: [Paraview] How to deal HDF5 data with paraview?
+Message-ID: <424BCBCC.0000FE.13235@bjapp15>
+
+I want to use paraview rendering the HDF5 data, but paraview only support hdf5 image data. Is anyone writed a hdf5 reader or a tool to translate the data to VTK data?  
+===============================================
+????? http://sms.tom.com/index2.php?inc=3&type=24
+?????? http://sms.tom.com/index2.php?inc=3&type=26
+????? http://sms.tom.com/index2.php?inc=3&type=25
+
+????? http://sms.tom.com/index2.php?inc=2
+????? http://sms.tom.com/index2.php?inc=2&type=3740
+????? http://sms.tom.com/index2.php?inc=2&type=30
+
+???? http://sms.tom.com/index2.php?inc=song
+===============================================
+From amy.squillacote at kitware.com  Thu Mar 31 08:46:33 2005
+From: amy.squillacote at kitware.com (Amy Squillacote)
+Date: Thu Mar 31 08:46:38 2005
+Subject: [Paraview] Re: ParaView volume rendering
+In-Reply-To: <b4b596feac05bda441ea35149d5b4b90@chalkie.org.uk>
+References: <20050330170007.4202834C2D@public.kitware.com>
+	<b4b596feac05bda441ea35149d5b4b90@chalkie.org.uk>
+Message-ID: <6.2.1.2.2.20050331084444.0399e7f8@pop.biz.rr.com>
+
+Hi Dan,
+
+This issue is that we don't want to compete with ourselves.  VolView, a 
+Kitware-produced proprietary application supports structured volume 
+rendering, and putting the same functionality into our own open-source 
+application didn't make much sense to us.
+
+- Amy
+
+At 03:44 AM 3/31/2005, Dr. Daniel James White PhD wrote:
+>Hi Amy,
+>
+>Seems rather odd....
+>why not just use the VTK volume renderers on
+>the usual kinds of data like structured grids and image stacks...?
+>
+>Why only unstructured grids?
+>
+>Dan
+>
+>
+>
+>On 30 Mar 2005, at 20:00, paraview-request@paraview.org wrote:
+>
+>>Hi Dan,
+>>
+>>ParaView only handles unstructured volume rendering, so your data must be
+>>an unstructured grid for ParaView to volume render it.  It must also be
+>>composed only of tetrahedral cells and contain a point-centered scalar
+>>(single-component) array.
+>>
+>>- Amy
+>>
+>>At 08:53 AM 3/30/2005, Dr. Daniel James White PhD wrote:
+>>>Hi,
+>>>
+>>>I loaded some volume data, a .vtk file into  paraview2,
+>>>and I want to volume render it.
+>>>
+>>>I can only see the iso surface method in the GUI,
+>>>
+>>>Can I do proper volume rendering with ray casting and or texture mapping?
+>>>
+>>>cheers
+>>>Dan
+>Dr. Daniel James White BSc. (Hons.) PhD
+>Bioimaging Coordinator
+>Nanoscience Centre and
+>Department of Biological and Environmental science
+>Division of Molecular Recognition
+>Ambiotica C242
+>PO Box  35
+>University of Jyv?skyl?
+>Jyv?skyl? FIN 40014
+>Finland
+>+358 14 260 4183 (work)
+>+358 468102840 (mobile)
+>
+>http://www.chalkie.org.uk
+>dan@chalkie.org.uk
+>white@cc.jyu.fi
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From dfisher at as.arizona.edu  Thu Mar 31 10:30:59 2005
+From: dfisher at as.arizona.edu (don fisher)
+Date: Thu Mar 31 10:31:31 2005
+Subject: [Paraview] Arrow Glyphs imapping velocity vectors in turbulent flow
+Message-ID: <424C17B3.9010102@as.arizona.edu>
+
+I am trying to visualize the vector field in explosive data 
+characterized by turbulent flow. I am searching for an algorithm, or 
+reference, to a technique that will "thin" the number of vectors. My 
+goal is to accomplish this without introducing patterns or artifacts 
+native to the thinning process.
+
+Any ideas or references would be appreciated.
+
+Thanks in advance.
+don
+From JRenteria at arl.army.mil  Thu Mar 31 15:46:36 2005
+From: JRenteria at arl.army.mil (Renteria, Jose (Cont, ARL/CISD))
+Date: Thu Mar 31 15:46:44 2005
+Subject: [Paraview] Filters
+Message-ID: <D9A8D98DDC682044806D5B46AF5C11E207EDD4@ARLABML01.DS.ARL.ARMY.MIL>
+
+Let me elaborate on my previous question. I am trying to create a new
+Paraview Filter that is a combination of two filters, a cut
+(vtkCutter) and pick filter (vtkPickFilter). My goal is a cutplane
+filter that creates a cutplane by selecting (picking) three points. 
+Here are two questions: 
+
+1. If I use xml modules to create a ParaView filter module using
+vtkPickfilter, then I can add any xml widget to the client-side. For
+example I can add the following:
+
+<!-- add widget for cutplane  menu  --> 
+<SelectWidget label="Cut Function"
+    trace_name="Cut Function"
+    property="CutFunction">
+    <Item label="Plane"
+          value="Plane">
+          <ImplicitPlaneWidget 
+               trace_name="Plane"
+               use_label="0"
+               input_menu="im1"
+               help="Adjusts the parameters of the plane to cut with."/>
+    </Item>
+</SelectWidget>
+
+<!-- add widget for picking  -->
+<SelectWidget 
+    label="Point Selection"
+    trace_name="PickMethod"
+    property="UseIdToPick">
+    <!-- add point widget -->
+    <Item label="World Point" 
+          value="0">
+          <PointWidget 
+	       trace_name="Point" 
+               variable="WorldPoint"
+               help="Pick closest point."/>
+    </Item>
+</SelectWidget>
+
+However on the server-side, I can only access the routines that are
+define in vtkPickfilter, like AddInput. I want access to vtkCutter
+routines as well, like SetInput.  Any pointers on how this is done?
+
+
+2. I created a new class vtkPV3PointCut that inherits PVSource in
+/Gui/Client directory of ParaView source tree. Since I can only use
+one filter in the client Filters.xml and server filters.xml modules, I
+used vtkPickfilter and follow the vtkPVPick implementation.  I then
+declare an instance of vtkCutter and attempt to initialize it in
+vtkPV3PointCut. However, I am not sure how to get the the Input from
+the vtkPickfilter used in the xml modules to initialize the vtkCutter
+in the C++ code.  Any pointers on how this is done?
+
+Any suggestions?
+
+Jose
+
+
+-----Original Message-----
+Sent:	Wed 3/30/2005 11:02 AM
+To:	paraview@paraview.org
+Cc:	
+Subject:	[Paraview] Filters
+I am trying to create a new Paraview Filter that is a combination of
+two filters, a cut (vtkCutter) and pick filter (vtkPickFilter).  My
+goal is a cutplane filter that creates a cutplane by selecting
+(picking) three points.  
+
+I can create each filter independently, however joining them has been a
+problem.  Say I create a cutplane filter, how do I get the inputs from
+the cutplane filter to initialize the pick filter or vise versa? 
+
+Thanks,
+
+Jose
+
+
+
+From bnwylie at sandia.gov  Thu Mar 31 16:02:08 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Mar 31 16:02:32 2005
+Subject: [Paraview] Re: ParaView volume rendering?
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11EB34137@ES20SNLNT.srn.sandia.gov>
+
+All,
+
+The only constraint on the volume rendering is unstructured grid. The current mappers will automatically tetralhedralize if necessary and you can render cell centered data as well (I believe Moreland added that a few months ago). Also if you have structured data you can do the silly thing of running the 'Tetrahedralize' filter on it and then of course you'll have unstructured data... :) 
+
+The whole "...not competing with VolView..." is an issue that I'm not going to touch with a ten foot pole. :)
+
+Also be aware that the volume rendering in ParaView is very much a work in progress, upcoming versions will have parallel, faster, higher quality techniques that Kitware and Sandia (and Utah for that matter) are currently working on.
+
+Brian Wylie - Org 9227
+Sandia National Laboratories
+MS 0822 - Building 880/A1-J
+(505)844-2238 FAX(505)845-0833                       
+     ____                  _    __
+    / __ \____  _________ | |  / (_)__ _      __ 
+   / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+  / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+ /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/                                                   
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Amy Squillacote
+> Sent: Wednesday, March 30, 2005 7:02 AM
+> To: paraview@paraview.org
+> Subject: Re: [Paraview] Re: ParaView volume rendering?
+> 
+> Hi Dan,
+> 
+> ParaView only handles unstructured volume rendering, so your 
+> data must be an unstructured grid for ParaView to volume 
+> render it.  It must also be composed only of tetrahedral 
+> cells and contain a point-centered scalar
+> (single-component) array.
+> 
+> - Amy
+> 
+> At 08:53 AM 3/30/2005, Dr. Daniel James White PhD wrote:
+> >Hi,
+> >
+> >I loaded some volume data, a .vtk file into  paraview2, and 
+> I want to 
+> >volume render it.
+> >
+> >I can only see the iso surface method in the GUI,
+> >
+> >Can I do proper volume rendering with ray casting and or 
+> texture mapping?
+> >
+> >cheers
+> >Dan
+> >
+> >
+> >On Mar 24, 2005, at 7:00 PM, paraview-request@paraview.org wrote:
+> >
+> >>- The volume rendering editor has been completely reworked.
+> >
+> >Dr. Daniel James White BSc. (Hons.) PhD Bioimaging Coordinator 
+> >Nanoscience Centre and Department of Biological and Environmental 
+> >science Division of Molecular Recognition Ambiotica C242 PO Box  35 
+> >University of Jyv?skyl? Jyv?skyl? FIN 40014 Finland
+> >+358 14 260 4183 (work)
+> >+358 468102840 (mobile)
+> >
+> >http://www.chalkie.org.uk
+> >dan@chalkie.org.uk
+> >white@cc.jyu.fi
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From bnwylie at sandia.gov  Thu Mar 31 16:10:59 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Mar 31 16:11:19 2005
+Subject: [Paraview] Arrow Glyphs imapping velocity vectors in
+	turbulent flow
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11EB34141@ES20SNLNT.srn.sandia.gov>
+
+Don,
+
+These methods may not be an 'formal' as you would like, but they are
+quite easy and useful
+
+1) Use calc to compute mag of vector and then apply 'Threshold' filter
+on the mag scalar array and threshold out the vectors with smaller
+magnitudes
+
+AND/OR
+
+2) Use the 'Mask Points' filter (with Random on) on the dataset and then
+glyph the result of mask points.
+
+Brian Wylie - Org 9227
+Sandia National Laboratories
+MS 0822 - Building 880/A1-J
+(505)844-2238 FAX(505)845-0833                       
+     ____                  _    __
+    / __ \____  _________ | |  / (_)__ _      __ 
+   / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+  / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+ /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of don fisher
+> Sent: Thursday, March 31, 2005 8:31 AM
+> To: paraview@paraview.org
+> Subject: [Paraview] Arrow Glyphs imapping velocity vectors in 
+> turbulent flow
+> 
+> I am trying to visualize the vector field in explosive data 
+> characterized by turbulent flow. I am searching for an 
+> algorithm, or reference, to a technique that will "thin" the 
+> number of vectors. My goal is to accomplish this without 
+> introducing patterns or artifacts native to the thinning process.
+> 
+> Any ideas or references would be appreciated.
+> 
+> Thanks in advance.
+> don
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+
+From bnwylie at sandia.gov  Thu Mar 31 16:13:00 2005
+From: bnwylie at sandia.gov (Wylie, Brian)
+Date: Thu Mar 31 16:13:16 2005
+Subject: [Paraview] Arrow Glyphs imapping velocity vectors in
+	turbulent flow
+Message-ID: <E4C1C0FFED3E6B49AC2C1DA9723BE11EB34142@ES20SNLNT.srn.sandia.gov>
+
+Ahh... Silly me... Method 2 is what I used before that functionality was
+combined with the glyph filter. :)
+
+Brian Wylie - Org 9227
+Sandia National Laboratories
+MS 0822 - Building 880/A1-J
+(505)844-2238 FAX(505)845-0833                       
+     ____                  _    __
+    / __ \____  _________ | |  / (_)__ _      __ 
+   / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+  / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+ /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/
+
+                                    Unleash the Beast
+ 
+
+> -----Original Message-----
+> From: Wylie, Brian 
+> Sent: Thursday, March 31, 2005 2:11 PM
+> To: 'don fisher'; paraview@paraview.org
+> Subject: RE: [Paraview] Arrow Glyphs imapping velocity 
+> vectors in turbulent flow
+> 
+> Don,
+> 
+> These methods may not be an 'formal' as you would like, but 
+> they are quite easy and useful
+> 
+> 1) Use calc to compute mag of vector and then apply 
+> 'Threshold' filter on the mag scalar array and threshold out 
+> the vectors with smaller magnitudes
+> 
+> AND/OR
+> 
+> 2) Use the 'Mask Points' filter (with Random on) on the 
+> dataset and then glyph the result of mask points.
+> 
+> Brian Wylie - Org 9227
+> Sandia National Laboratories
+> MS 0822 - Building 880/A1-J
+> (505)844-2238 FAX(505)845-0833                       
+>      ____                  _    __
+>     / __ \____  _________ | |  / (_)__ _      __ 
+>    / /_/ / __ `/ ___/ __ `/ | / / / _ \ | /| / /
+>   / ____/ /_/ / /  / /_/ /| |/ / /  __/ |/ |/ /
+>  /_/    \__,_/_/   \__,_/ |___/_/\___/|__/|__/                
+>                                    
+>                                     Unleash the Beast
+>  
+> 
+> > -----Original Message-----
+> > From: paraview-bounces@paraview.org
+> > [mailto:paraview-bounces@paraview.org] On Behalf Of don fisher
+> > Sent: Thursday, March 31, 2005 8:31 AM
+> > To: paraview@paraview.org
+> > Subject: [Paraview] Arrow Glyphs imapping velocity vectors in 
+> > turbulent flow
+> > 
+> > I am trying to visualize the vector field in explosive data 
+> > characterized by turbulent flow. I am searching for an 
+> algorithm, or 
+> > reference, to a technique that will "thin" the number of 
+> vectors. My 
+> > goal is to accomplish this without introducing patterns or 
+> artifacts 
+> > native to the thinning process.
+> > 
+> > Any ideas or references would be appreciated.
+> > 
+> > Thanks in advance.
+> > don
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> > 
+
+From Jean-Philippe.Marcotte at imi.cnrc-nrc.gc.ca  Thu Mar 31 17:23:47 2005
+From: Jean-Philippe.Marcotte at imi.cnrc-nrc.gc.ca (Marcotte, Jean-Philippe)
+Date: Thu Mar 31 17:23:16 2005
+Subject: [Paraview] Animation in ParaView 2.0
+Message-ID: <1C9DF24066AF954A8234B3C9AF5026A65B2584@webmail.imi.nrc.ca>
+
+Hi,
+
+I just switched to Paraview 2.0 and I'm no longer able to animate my solutions.  I found Utkarsh's description of the new animation interface in the discussion list, but this did not quite help me (though I was able to animate the sphere as described).
+
+To make it short, I have a series of data in Ensight Gold format (a .case file with some .dat files) from a Finite Element simulation.  I would like to show each set of data in one frame and make an animation.  In the Animation Tracks window, I only have access to the following "tracks":
+ByteOrder
+CaseFileName
+SetTimeValue
+
+How can I tell Paraview to show me one set of data per frame?
+
+Thank you!
+Jean-Philippe
+
+
+Jean-Philippe Marcotte
+Agent de recherche | Research Officer
+T?l. | tel. (450) 641-5285    Fax (450) 641-5106
+Institut des mat?riaux industriels | Industrial Materials Institute
+Conseil national de recherches Canada | National Research Council Canada
+
+From utkarsh.ayachit at kitware.com  Thu Mar 31 17:53:16 2005
+From: utkarsh.ayachit at kitware.com (Utkarsh Ayachit)
+Date: Thu Mar 31 17:54:28 2005
+Subject: [Paraview] Animation in ParaView 2.0
+In-Reply-To: <1C9DF24066AF954A8234B3C9AF5026A65B2584@webmail.imi.nrc.ca>
+References: <1C9DF24066AF954A8234B3C9AF5026A65B2584@webmail.imi.nrc.ca>
+Message-ID: <424C7F5C.4060306@kitware.com>
+
+Hi,
+
+Apparently, there is a bug in ParaView 2.0.
+I will look at it at the earliest possible.
+
+Utkarsh
+
+Marcotte, Jean-Philippe wrote:
+> Hi,
+> 
+> I just switched to Paraview 2.0 and I'm no longer able to animate my solutions.  I found Utkarsh's description of the new animation interface in the discussion list, but this did not quite help me (though I was able to animate the sphere as described).
+> 
+> To make it short, I have a series of data in Ensight Gold format (a .case file with some .dat files) from a Finite Element simulation.  I would like to show each set of data in one frame and make an animation.  In the Animation Tracks window, I only have access to the following "tracks":
+> ByteOrder
+> CaseFileName
+> SetTimeValue
+> 
+> How can I tell Paraview to show me one set of data per frame?
+> 
+> Thank you!
+> Jean-Philippe
+> 
+> 
+> Jean-Philippe Marcotte
+> Agent de recherche | Research Officer
+> T?l. | tel. (450) 641-5285    Fax (450) 641-5106
+> Institut des mat?riaux industriels | Industrial Materials Institute
+> Conseil national de recherches Canada | National Research Council Canada
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 

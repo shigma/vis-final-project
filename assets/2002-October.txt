@@ -1,0 +1,255 @@
+From dcthomp@sandia.gov  Tue Oct 15 01:39:33 2002
+From: dcthomp@sandia.gov (David Thompson)
+Date: 14 Oct 2002 17:39:33 -0700
+Subject: [Paraview] Color editor bug?
+Message-ID: <1034642374.3569.273.camel@fozzy>
+
+In the current CVS of ParaViewComplete, I have found
+a bug in the color map editor... to reproduce:
+1. Load the ironProt.vtk dataset
+2. Create a cutting plane, centered on object, w/ normal to camera.
+3. Go to the Display tab, click on "Edit Color Map..."
+4. Make the left color swatch #347ce2 and the right color swatch #ffffff
+   The color map will be a constant green.
+5. Change the right color swatch to #feffff.
+   The color map will be the expected gradient.
+
+
+
+
+From berk.geveci@kitware.com  Tue Oct 15 18:13:20 2002
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: 15 Oct 2002 13:13:20 -0400
+Subject: [Paraview] Color editor bug?
+In-Reply-To: <1034642374.3569.273.camel@fozzy>
+References: <1034642374.3569.273.camel@fozzy>
+Message-ID: <1034702003.16336.8.camel@caemlyn.kitwarein.com>
+
+I could reproduce the problem. Charles will fix it.
+Please let us know if you find any other bugs. We
+are very close to the 0.6 release.
+
+-Berk
+
+On Mon, 2002-10-14 at 20:39, David Thompson wrote:
+> In the current CVS of ParaViewComplete, I have found
+> a bug in the color map editor... to reproduce:
+> 1. Load the ironProt.vtk dataset
+> 2. Create a cutting plane, centered on object, w/ normal to camera.
+> 3. Go to the Display tab, click on "Edit Color Map..."
+> 4. Make the left color swatch #347ce2 and the right color swatch #ffffff
+>    The color map will be a constant green.
+> 5. Change the right color swatch to #feffff.
+>    The color map will be the expected gradient.
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+
+
+
+From jfavre@cscs.ch  Mon Oct 21 10:41:48 2002
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 21 Oct 2002 11:41:48 +0200
+Subject: [Paraview] compiling with MPI under Red Hat?
+Message-ID: <3DB3CBDC.48BF23F0@cscs.ch>
+
+Hello Paraview list
+
+I have been using Paraview for 3 months now and I am now trying to use
+it with MPI.
+I use the nightly developper (CVS) version compiled on my Linux box.
+
+Without MPI, it compiles and runs fine. With VTK_USE_MPI, I cannot link
+
+I use the i386-redhat-linux/2.96 gcc/g++ and when linking to produce
+pvtk, I get the following unresolved symbols.
+
+c++ -rdynamic -O2 -DHAVE_MPICHCONF_H paraTkAppInit.o 
+-L/local/apps/ParaViewComplete/lib -L/usr/X11R6/lib
+-L/local/apps/ParaViewComplete/tk8.3.2/unix -L/apps/mpich-1.2.4/lib
+-L/local/apps/ParaViewComplete/tcl8.3.2/unix -lpthread -ldl -lm
+-lvtkParallelTCL -lvtkParallel -lvtkPatentedTCL -lvtkPatented
+-lvtkHybridTCL -lvtkHybrid -lGLU -lGL -lX11 -lXext -ltk8.3 -lXt  -lSM
+-lICE  -L/usr/X11R6/lib -lX11 -lXext -lmpich -lvtkRenderingTCL
+-lvtkImagingTCL -lvtkGraphicsTCL -ltk8.3 -lvtkIOTCL -lvtkFilteringTCL
+-lvtkCommonTCL -ltcl8.3 -lvtkRendering -lvtkImaging -lvtkGraphics -lGLU
+-lGL -lXext -lX11 -lXt  -lSM -lICE  -L/usr/X11R6/lib -lX11 -lXext
+-lvtkIO -lvtktiff -lvtkpng -lvtkzlib -lvtkjpeg -lvtkexpat -lvtkFiltering
+-lvtkCommon -lpthread -lm -ldl
+-Wl,-rpath,/local/apps/ParaViewComplete/lib:/usr/X11R6/lib:/local/apps/ParaViewComplete/tk8.3.2/unix:/apps/mpich-1.2.4/lib:/local/apps/ParaViewComplete/tcl8.3.2/unix 
+-o /local/apps/ParaViewComplete/bin/pvtk
+
+global_ops.o(.text+0x384): undefined reference to `__mth_i_kcmp'
+global_ops.o(.text+0x2dc3): undefined reference to `__mth_i_kmul'
+global_ops.o(.text+0x3b44): undefined reference to `__mth_i_kcmpz'
+global_ops.o(.text+0x773a): undefined reference to `__mth_i_kcmp'
+/apps/mpich-1.2.4/lib/libmpich.a(debugutil.o): In function
+`MPIR_Breakpoint':
+/apps/archive/mpich-1.2.4/src/env/debugutil.c:113: undefined reference
+to `__pgdbg_stub'
+
+====
+
+I have tried adding other mpi libs, such as -lpmpich++, and other from
+the mpich-1.2.4 distribution, but without success.
+
+Has any one seen these errors before and can tell me what other flags or
+libs are missing?
+
+I have also tried my pgCC compilers without success...
+Thanks for the tips.
+
+Jean
+-- 
+Dr. Jean M. Favre,                            email:favre@cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From andy.cedilnik@kitware.com  Mon Oct 21 13:13:51 2002
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 21 Oct 2002 08:13:51 -0400
+Subject: [Paraview] compiling with MPI under Red Hat?
+In-Reply-To: <3DB3CBDC.48BF23F0@cscs.ch>
+References: <3DB3CBDC.48BF23F0@cscs.ch>
+Message-ID: <1035202431.792.4083.camel@xanth.kitwarein.com>
+
+Hello Jean,
+
+This is a long shot, but, have you compiled mpi? What mpich are you
+using anyway? If you are trying to use mpich++, make sure that it is
+compiled with the same compiler as paraview.
+
+Also, what version of VTK are you using? The CVS of ParaView needs CVS
+of VTK.
+
+				Andy
+
+On Mon, 2002-10-21 at 05:41, Jean M. Favre wrote:
+> I have been using Paraview for 3 months now and I am now trying to use
+> it with MPI.
+> I use the nightly developper (CVS) version compiled on my Linux box.
+> 
+> Without MPI, it compiles and runs fine. With VTK_USE_MPI, I cannot link
+> 
+> I use the i386-redhat-linux/2.96 gcc/g++ and when linking to produce
+> pvtk, I get the following unresolved symbols.
+> 
+> c++ -rdynamic -O2 -DHAVE_MPICHCONF_H paraTkAppInit.o 
+> -L/local/apps/ParaViewComplete/lib -L/usr/X11R6/lib
+> -L/local/apps/ParaViewComplete/tk8.3.2/unix -L/apps/mpich-1.2.4/lib
+> -L/local/apps/ParaViewComplete/tcl8.3.2/unix -lpthread -ldl -lm
+> -lvtkParallelTCL -lvtkParallel -lvtkPatentedTCL -lvtkPatented
+> -lvtkHybridTCL -lvtkHybrid -lGLU -lGL -lX11 -lXext -ltk8.3 -lXt  -lSM
+> -lICE  -L/usr/X11R6/lib -lX11 -lXext -lmpich -lvtkRenderingTCL
+> -lvtkImagingTCL -lvtkGraphicsTCL -ltk8.3 -lvtkIOTCL -lvtkFilteringTCL
+> -lvtkCommonTCL -ltcl8.3 -lvtkRendering -lvtkImaging -lvtkGraphics -lGLU
+> -lGL -lXext -lX11 -lXt  -lSM -lICE  -L/usr/X11R6/lib -lX11 -lXext
+> -lvtkIO -lvtktiff -lvtkpng -lvtkzlib -lvtkjpeg -lvtkexpat -lvtkFiltering
+> -lvtkCommon -lpthread -lm -ldl
+> -Wl,-rpath,/local/apps/ParaViewComplete/lib:/usr/X11R6/lib:/local/apps/ParaViewComplete/tk8.3.2/unix:/apps/mpich-1.2.4/lib:/local/apps/ParaViewComplete/tcl8.3.2/unix 
+> -o /local/apps/ParaViewComplete/bin/pvtk
+> 
+> global_ops.o(.text+0x384): undefined reference to `__mth_i_kcmp'
+> global_ops.o(.text+0x2dc3): undefined reference to `__mth_i_kmul'
+> global_ops.o(.text+0x3b44): undefined reference to `__mth_i_kcmpz'
+> global_ops.o(.text+0x773a): undefined reference to `__mth_i_kcmp'
+> /apps/mpich-1.2.4/lib/libmpich.a(debugutil.o): In function
+> `MPIR_Breakpoint':
+> /apps/archive/mpich-1.2.4/src/env/debugutil.c:113: undefined reference
+> to `__pgdbg_stub'
+> 
+> ====
+> 
+> I have tried adding other mpi libs, such as -lpmpich++, and other from
+> the mpich-1.2.4 distribution, but without success.
+> 
+> Has any one seen these errors before and can tell me what other flags or
+> libs are missing?
+> 
+> I have also tried my pgCC compilers without success...
+> Thanks for the tips.
+
+
+
+From berklist@nycap.rr.com  Mon Oct 21 14:03:56 2002
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: 21 Oct 2002 09:03:56 -0400
+Subject: [Paraview] compiling with MPI under Red Hat?
+In-Reply-To: <3DB3CBDC.48BF23F0@cscs.ch>
+References: <3DB3CBDC.48BF23F0@cscs.ch>
+Message-ID: <1035205437.1746.10.camel@caemlyn.kitwarein.com>
+
+Something is suspicious here. When I did a google search
+for the errors you are getting, a few of them were somehow
+linked to the portland compilers. Also, there is no pgCC
+in mpich. Are you by any chance mixing the two in your build ?
+
+-Berk
+
+On Mon, 2002-10-21 at 05:41, Jean M. Favre wrote:
+> Hello Paraview list
+> 
+> I have been using Paraview for 3 months now and I am now trying to use
+> it with MPI.
+> I use the nightly developper (CVS) version compiled on my Linux box.
+> 
+> Without MPI, it compiles and runs fine. With VTK_USE_MPI, I cannot link
+> 
+> I use the i386-redhat-linux/2.96 gcc/g++ and when linking to produce
+> pvtk, I get the following unresolved symbols.
+> 
+> c++ -rdynamic -O2 -DHAVE_MPICHCONF_H paraTkAppInit.o 
+> -L/local/apps/ParaViewComplete/lib -L/usr/X11R6/lib
+> -L/local/apps/ParaViewComplete/tk8.3.2/unix -L/apps/mpich-1.2.4/lib
+> -L/local/apps/ParaViewComplete/tcl8.3.2/unix -lpthread -ldl -lm
+> -lvtkParallelTCL -lvtkParallel -lvtkPatentedTCL -lvtkPatented
+> -lvtkHybridTCL -lvtkHybrid -lGLU -lGL -lX11 -lXext -ltk8.3 -lXt  -lSM
+> -lICE  -L/usr/X11R6/lib -lX11 -lXext -lmpich -lvtkRenderingTCL
+> -lvtkImagingTCL -lvtkGraphicsTCL -ltk8.3 -lvtkIOTCL -lvtkFilteringTCL
+> -lvtkCommonTCL -ltcl8.3 -lvtkRendering -lvtkImaging -lvtkGraphics -lGLU
+> -lGL -lXext -lX11 -lXt  -lSM -lICE  -L/usr/X11R6/lib -lX11 -lXext
+> -lvtkIO -lvtktiff -lvtkpng -lvtkzlib -lvtkjpeg -lvtkexpat -lvtkFiltering
+> -lvtkCommon -lpthread -lm -ldl
+> -Wl,-rpath,/local/apps/ParaViewComplete/lib:/usr/X11R6/lib:/local/apps/ParaViewComplete/tk8.3.2/unix:/apps/mpich-1.2.4/lib:/local/apps/ParaViewComplete/tcl8.3.2/unix 
+> -o /local/apps/ParaViewComplete/bin/pvtk
+> 
+> global_ops.o(.text+0x384): undefined reference to `__mth_i_kcmp'
+> global_ops.o(.text+0x2dc3): undefined reference to `__mth_i_kmul'
+> global_ops.o(.text+0x3b44): undefined reference to `__mth_i_kcmpz'
+> global_ops.o(.text+0x773a): undefined reference to `__mth_i_kcmp'
+> /apps/mpich-1.2.4/lib/libmpich.a(debugutil.o): In function
+> `MPIR_Breakpoint':
+> /apps/archive/mpich-1.2.4/src/env/debugutil.c:113: undefined reference
+> to `__pgdbg_stub'
+> 
+> ====
+> 
+> I have tried adding other mpi libs, such as -lpmpich++, and other from
+> the mpich-1.2.4 distribution, but without success.
+> 
+> Has any one seen these errors before and can tell me what other flags or
+> libs are missing?
+> 
+> I have also tried my pgCC compilers without success...
+> Thanks for the tips.
+> 
+> Jean
+> -- 
+> Dr. Jean M. Favre,                            email:favre@cscs.ch
+> http://www.cscs.ch/people/Favre.html
+> CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+> Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+> _______________________________________________
+> ParaView mailing list
+> ParaView@public.kitware.com
+> http://public.kitware.com/mailman/listinfo/paraview
+
+
+

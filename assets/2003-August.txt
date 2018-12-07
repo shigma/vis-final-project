@@ -1,0 +1,1354 @@
+From ferrell@diablotech.com  Tue Aug  5 00:08:12 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Mon, 4 Aug 2003 23:08:12 -0000 (GMT)
+Subject: [Paraview] Bug? w/ 1.0
+Message-ID: <2364.128.165.144.120.1060038492.squirrel@webmail.pair.com>
+
+I upgraded from 0.6 to 1.0 today.  I'm running on Win2K.  I get
+an error message, and not sure if it is serious or not.  Could be
+a bug in my environment.  I can send details if that would help.
+
+thanks,
+-robert
+
+Here's the log:
+
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+vtkDistributedDataFilter pvTemp
+    Returned Error on line 1:
+invalid command name "vtkDistributedDataFilter"
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+pvTemp AddObserver StartEvent {$Application LogStartEvent {Execute D3}}
+    Returned Error on line 1:
+invalid command name "pvTemp"
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+pvTemp AddObserver EndEvent {$Application LogEndEvent {Execute D3}}
+    Returned Error on line 1:
+invalid command name "pvTemp"
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+pvTemp SetInput ${LegaVTK0Output1}
+    Returned Error on line 1:
+invalid command name "pvTemp"
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+set {LegaVTK0Output1} [pvTemp GetOutput]
+    Returned Error on line 1:
+invalid command name "pvTemp"
+There was a VTK Error in file:
+C:\kitware\ParaView\ParaViewComplete\ParaView\Widgets\vtkKWApplication.cxx
+(407)
+
+    Script:
+pvTemp Delete
+    Returned Error on line 1:
+invalid command name "pvTemp"
+
+
+
+
+
+
+From ferrell@diablotech.com  Tue Aug  5 00:42:50 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Mon, 4 Aug 2003 23:42:50 -0000 (GMT)
+Subject: [Paraview] 2D meshes
+Message-ID: <2434.128.165.144.120.1060040570.squirrel@webmail.pair.com>
+
+I am not able to input a 2D mesh.  Should that work?  I can specify
+a flat 3D mesh, with all z coords == 0.0.  Is that what I should
+expect?
+
+thanks,
+-robert
+
+
+
+From ferrell@diablotech.com  Tue Aug  5 00:52:23 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Mon, 4 Aug 2003 23:52:23 -0000 (GMT)
+Subject: [Paraview] FIELD vs. SCALARS & VECTORS
+Message-ID: <2449.128.165.144.120.1060041143.squirrel@webmail.pair.com>
+
+What is the difference between specifying data as a FIELD with 1 component
+and specifying the data with a SCALARS attribute?  It seems that SCALARS
+is redundant, so I must be missing the point.
+
+thanks,
+-robert
+
+
+
+From Stephen.Wornom@sophia.inria.fr  Wed Aug  6 14:46:13 2003
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Wed, 06 Aug 2003 15:46:13 +0200
+Subject: [Paraview] documentation
+Message-ID: <3F3106A5.54C7D159@sophia.inria.fr>
+
+I am new to ParaView, where can I find the documentation for ParaView?
+Stephen
+
+--
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+
+
+
+From dussere@labri.fr  Wed Aug  6 15:15:59 2003
+From: dussere@labri.fr (Michael Dussere)
+Date: Wed, 06 Aug 2003 16:15:59 +0200
+Subject: [Paraview] documentation
+References: <3F3106A5.54C7D159@sophia.inria.fr>
+Message-ID: <3F310D9F.9030302@labri.fr>
+
+Have a look at http://www.paraview.org/HTML/Download.html
+
+Stephen Wornom wrote:
+> I am new to ParaView, where can I find the documentation for ParaView?
+> Stephen
+>=20
+> --
+> Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+> INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+> BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+>      France                        | Fax   : (33) 04 92 38 79 80
+>=20
+>=20
+>=20
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+--=20
+
+----------------------------------------------------------
+Michael Dussere
+Ing=E9nieur Expert INRIA
+UR Futurs, projet ScAlApplix
+
+E-mail: dussere@labri.fr
+----------------------------------------------------------
+
+
+From charles.law@kitware.com  Wed Aug  6 15:47:41 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Wed, 06 Aug 2003 10:47:41 -0400
+Subject: [Paraview] FIELD vs. SCALARS & VECTORS
+In-Reply-To: <2449.128.165.144.120.1060041143.squirrel@webmail.pair.com>
+Message-ID: <5.1.0.14.0.20030806104017.023a7fc8@pop.biz.rr.com>
+
+At 11:52 PM 8/4/2003 +0000, Robert Ferrell wrote:
+>What is the difference between specifying data as a FIELD with 1 component
+>and specifying the data with a SCALARS attribute?  It seems that SCALARS
+>is redundant, so I must be missing the point.
+
+Scalars are also stored in the field data, but scalars are marked as 
+special and many filters look for this special/default array.  If you 
+specify attribute data as a field, then you will have to do addition stuff 
+to get filters to process this array (or color an actor by this array).
+
+>I am not able to input a 2D mesh.  Should that work?  I can specify
+>a flat 3D mesh, with all z coords == 0.0.  Is that what I should
+>expect?
+
+VTK only has 3 component points, so for 2D meshes you would have to set one 
+component (z) to 0.0.
+
+
+Charles.
+
+
+
+From ferrell@diablotech.com  Wed Aug  6 16:23:20 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Wed, 6 Aug 2003 15:23:20 -0000 (GMT)
+Subject: [Paraview] FIELD vs. SCALARS & VECTORS
+In-Reply-To: <5.1.0.14.0.20030806104017.023a7fc8@pop.biz.rr.com>
+References: <2449.128.165.144.120.1060041143.squirrel@webmail.pair.com>
+ <5.1.0.14.0.20030806104017.023a7fc8@pop.biz.rr.com>
+Message-ID: <3784.128.165.144.120.1060183400.squirrel@webmail.pair.com>
+
+<quote who="Charles Law">
+> At 11:52 PM 8/4/2003 +0000, Robert Ferrell wrote:
+>>What is the difference between specifying data as a FIELD with 1
+>> component and specifying the data with a SCALARS attribute?  It seems
+>> that SCALARS is redundant, so I must be missing the point.
+>
+> Scalars are also stored in the field data, but scalars are marked as
+> special and many filters look for this special/default array.  If you
+> specify attribute data as a field, then you will have to do addition
+> stuff  to get filters to process this array (or color an actor by this
+> array).
+
+That's clear.  If I recall from some other email, it is possible to input
+only one SCALAR field, right?
+
+>
+>>I am not able to input a 2D mesh.  Should that work?  I can specify a
+>> flat 3D mesh, with all z coords == 0.0.  Is that what I should
+>>expect?
+>
+> VTK only has 3 component points, so for 2D meshes you would have to set
+> one  component (z) to 0.0.
+
+Thanks for the response.
+
+BTW, the upgrade from .6 to 1.0 is very smooth.  You guys have done a
+great job.
+
+Thanks,
+-robert
+
+
+
+From ferrell@diablotech.com  Wed Aug  6 18:20:52 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Wed, 6 Aug 2003 17:20:52 -0000 (GMT)
+Subject: [Paraview] Transient Data
+Message-ID: <4461.128.165.144.120.1060190452.squirrel@webmail.pair.com>
+
+Now that 1.0 is out, I'd like to learn how to input transient
+data.  For instance, I've got data at time step 1, 2, etc...  How do I
+tell ParaView about this?  Can I use the XML file format (.vts files)?  I
+think that for now I have to replicate the mesh in every file, right?  Is
+there some naming convention I should use for the different time steps?
+
+I've looked through the (very execellent) User Guide and Quick Start docs,
+but could not find this issue addressed.
+
+thanks,
+-robert
+
+
+
+From semeraro@ncsa.uiuc.edu  Thu Aug  7 15:40:01 2003
+From: semeraro@ncsa.uiuc.edu (Dave Semeraro)
+Date: Thu, 07 Aug 2003 09:40:01 -0500
+Subject: [Paraview] mpi startup
+Message-ID: <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+
+Hello,
+
+I would like to know how to start paraview under mpi on a linux cluster. I 
+have version 1.0 of
+paraview and have installed it on our cluster. I can try using mpirun with 
+the paraview executable
+but I dont know how to guarantee that the console will get the user 
+interface part of the app.
+Anyone out there been down this road before? Any help or advice would be 
+greatly appreciated.
+
+Dave
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+
+From andy.cedilnik@kitware.com  Thu Aug  7 16:18:28 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 07 Aug 2003 11:18:28 -0400
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+Message-ID: <1060269508.28679.26.camel@andoria>
+
+Hi Dave,
+
+We usually do something like:
+
+mpirun -np 8 paraview
+
+There are couple of issues though.
+
+1. Your mpi has to be configured properly.
+2. If you use binaries, they are not build with MPI. You should build
+paraview with mpi support.
+
+			Andy
+
+On Thu, 2003-08-07 at 10:40, Dave Semeraro wrote:
+> Hello,
+> 
+> I would like to know how to start paraview under mpi on a linux cluster. I 
+> have version 1.0 of
+> paraview and have installed it on our cluster. I can try using mpirun with 
+> the paraview executable
+> but I dont know how to guarantee that the console will get the user 
+> interface part of the app.
+> Anyone out there been down this road before? Any help or advice would be 
+> greatly appreciated.
+
+
+
+From charles.law@kitware.com  Thu Aug  7 17:39:11 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 07 Aug 2003 12:39:11 -0400
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.0.20030807123623.02516e78@pop.biz.rr.com>
+
+Dave,
+
+Just running ParaView with MPI will put the user interface on the MPI 
+process 0.
+
+You can also run paraview client/server:
+
+mpirun -np 4 paraview --server
+paraview --client --host=...
+
+
+The user interface is created on the client of course.
+
+Charles.
+
+
+
+
+
+
+At 09:40 AM 8/7/2003 -0500, Dave Semeraro wrote:
+
+>Hello,
+>
+>I would like to know how to start paraview under mpi on a linux cluster. I 
+>have version 1.0 of
+>paraview and have installed it on our cluster. I can try using mpirun with 
+>the paraview executable
+>but I dont know how to guarantee that the console will get the user 
+>interface part of the app.
+>Anyone out there been down this road before? Any help or advice would be 
+>greatly appreciated.
+>
+>Dave
+>
+>Dave Semeraro Ph.D.
+>Visualization and Virtual Environments Group
+>NCSA University of Illinois
+>605 E. Springfield Ave.
+>Champaign, IL 61820
+>Semeraro@ncsa.uiuc.edu
+>(217) 244-1852
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From ramakrishna.prakash@quest-global.com  Fri Aug  8 13:02:02 2003
+From: ramakrishna.prakash@quest-global.com (R K Shyamprakash)
+Date: Fri, 8 Aug 2003 17:32:02 +0530
+Subject: [Paraview] vtkLODActor
+Message-ID: <000d01c35da4$e1964fd0$de0ba8c0@qtwblr01.questglobal.com>
+
+Hello,
+	I am using vtkLOD actor and I have defined an LOD(by addLODMapper which
+takes output from vtkDecimatePro) . I have noticed that there is a delay of
+3 to 4 second when I try to move it for the first time after it has been
+loaded. Then onwards the object moves/rotates normally. This happens in
+Paraview(version .6) as well if I change the LOD threshold and try to move
+the object.(I am talking about reasonably large datasets 15 MB binary stl
+file) . Is there any workaround for this problem?
+
+Thanks
+Shyam
+
+
+From charles.law@kitware.com  Fri Aug  8 14:42:07 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 08 Aug 2003 09:42:07 -0400
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.2.20030807135237.02235d98@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.0.20030807123623.02516e78@pop.biz.rr.com>
+ <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.0.20030808093120.02534e80@pop.biz.rr.com>
+
+Dave,
+
+Tiled displays are being actively developed.  Two options have made it into 
+the ParaView 1.0 release (Chromium will be later).  ParaView has a native 
+option which is the default.  You have to run with the command line options 
+(for a 3x4 tiled display):
+
+server:
+mpirun -np 12 paraview --server
+client:
+paraview --client --host=serverName -td -tdx=4 -tdy=3
+
+This "render module"  will duplicate small geometry on all tile processes, 
+and composite large geometry.
+
+
+
+The second option uses the IceT rendering library developed at Sandia.
+You have to compile IceT (available by CVS on paraview.org) and configure 
+ParaView to link to the IceT libraries.
+You then can run:
+
+server:
+mpirun -np 12 paraview --server
+client:
+paraview --client --host=serverName -td -tdx=4 -tdy=3 
+--render-module=IceTDisplayRenderModule
+
+
+This module does not currently have all the features of the native tiled 
+display render module, but it has better compositing performance.
+
+Charles.
+
+
+
+At 01:56 PM 8/7/2003 -0500, you wrote:
+
+>Charles,
+>
+>I have heard Jim Ahrens say that Paraview can be configured to run on a 
+>tiled display. By that
+>I mean it can render to the tiles as a large image. Do you know how to get 
+>that functionality
+>to work or should I contact Jim? I see code called vtkPVTiled 
+>DisplayManager in the source
+>but I dont know how to use it. Any examples or doxygen docs exits for that 
+>stuff?
+
+
+
+From semeraro@ncsa.uiuc.edu  Fri Aug  8 16:35:23 2003
+From: semeraro@ncsa.uiuc.edu (Dave Semeraro)
+Date: Fri, 08 Aug 2003 10:35:23 -0500
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.0.20030807123623.02516e78@pop.biz.rr.com>
+References: <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.2.20030808103150.023ba638@mail.ncsa.uiuc.edu>
+
+Ok, success! I was able to fire up paraview on 4 nodes of our cluster. Our 
+cluster also runs
+a tiled display. I fired up the display to see what running across the 
+nodes would do. I was
+under the impression that running in parallel would place a render window 
+on each node. I
+saw no such behavior. I assume that geometry is created in parallel and the 
+head node
+renders in the default setup. I noticed some rendering controls on the 
+console. What are
+the settings for parallel rendering?
+
+Thanks,
+Dave
+
+At 12:39 PM 8/7/2003 -0400, Charles Law wrote:
+>Dave,
+>
+>Just running ParaView with MPI will put the user interface on the MPI 
+>process 0.
+>
+>You can also run paraview client/server:
+>
+>mpirun -np 4 paraview --server
+>paraview --client --host=...
+>
+>
+>The user interface is created on the client of course.
+>
+>Charles.
+>
+>
+>
+>
+>
+>
+>At 09:40 AM 8/7/2003 -0500, Dave Semeraro wrote:
+>
+>>Hello,
+>>
+>>I would like to know how to start paraview under mpi on a linux cluster. 
+>>I have version 1.0 of
+>>paraview and have installed it on our cluster. I can try using mpirun 
+>>with the paraview executable
+>>but I dont know how to guarantee that the console will get the user 
+>>interface part of the app.
+>>Anyone out there been down this road before? Any help or advice would be 
+>>greatly appreciated.
+>>
+>>Dave
+>>
+>>Dave Semeraro Ph.D.
+>>Visualization and Virtual Environments Group
+>>NCSA University of Illinois
+>>605 E. Springfield Ave.
+>>Champaign, IL 61820
+>>Semeraro@ncsa.uiuc.edu
+>>(217) 244-1852
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+
+Dave Semeraro Ph.D.
+Visualization and Virtual Environments Group
+NCSA University of Illinois
+605 E. Springfield Ave.
+Champaign, IL 61820
+Semeraro@ncsa.uiuc.edu
+(217) 244-1852
+
+
+From charles.law@kitware.com  Fri Aug  8 21:16:44 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 08 Aug 2003 16:16:44 -0400
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.2.20030808103150.023ba638@mail.ncsa.uiuc.edu>
+References: <5.1.0.14.0.20030807123623.02516e78@pop.biz.rr.com>
+ <5.1.0.14.2.20030807093626.024796d8@mail.ncsa.uiuc.edu>
+Message-ID: <5.1.0.14.0.20030808161237.00ab2098@pop.biz.rr.com>
+
+Dave,
+
+If geometry is small, then ParaView does not bother 
+compositing.  Everything gets rendered on client (or process 0 if running 
+straight MPI).
+
+There is a slider in view properties called composite threshold.  It allows 
+the user control when distributed rendering occurs.
+
+Charles
+
+
+At 10:35 AM 8/8/2003 -0500, Dave Semeraro wrote:
+
+>Ok, success! I was able to fire up paraview on 4 nodes of our cluster. Our 
+>cluster also runs
+>a tiled display. I fired up the display to see what running across the 
+>nodes would do. I was
+>under the impression that running in parallel would place a render window 
+>on each node. I
+>saw no such behavior. I assume that geometry is created in parallel and 
+>the head node
+>renders in the default setup. I noticed some rendering controls on the 
+>console. What are
+>the settings for parallel rendering?
+>
+>Thanks,
+>Dave
+>
+>At 12:39 PM 8/7/2003 -0400, Charles Law wrote:
+>>Dave,
+>>
+>>Just running ParaView with MPI will put the user interface on the MPI 
+>>process 0.
+>>
+>>You can also run paraview client/server:
+>>
+>>mpirun -np 4 paraview --server
+>>paraview --client --host=...
+>>
+>>
+>>The user interface is created on the client of course.
+>>
+>>Charles.
+>>
+>>
+>>
+>>
+>>
+>>
+>>At 09:40 AM 8/7/2003 -0500, Dave Semeraro wrote:
+>>
+>>>Hello,
+>>>
+>>>I would like to know how to start paraview under mpi on a linux cluster. 
+>>>I have version 1.0 of
+>>>paraview and have installed it on our cluster. I can try using mpirun 
+>>>with the paraview executable
+>>>but I dont know how to guarantee that the console will get the user 
+>>>interface part of the app.
+>>>Anyone out there been down this road before? Any help or advice would be 
+>>>greatly appreciated.
+>>>
+>>>Dave
+>>>
+>>>Dave Semeraro Ph.D.
+>>>Visualization and Virtual Environments Group
+>>>NCSA University of Illinois
+>>>605 E. Springfield Ave.
+>>>Champaign, IL 61820
+>>>Semeraro@ncsa.uiuc.edu
+>>>(217) 244-1852
+>>>
+>>>_______________________________________________
+>>>ParaView mailing list
+>>>ParaView@paraview.org
+>>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>Dave Semeraro Ph.D.
+>Visualization and Virtual Environments Group
+>NCSA University of Illinois
+>605 E. Springfield Ave.
+>Champaign, IL 61820
+>Semeraro@ncsa.uiuc.edu
+>(217) 244-1852
+
+
+
+From Michael Gronager" <mpg@uni-c.dk  Sat Aug  9 20:17:19 2003
+From: Michael Gronager" <mpg@uni-c.dk (Michael Gronager)
+Date: Sat, 9 Aug 2003 20:17:19 +0100
+Subject: [Paraview] Tiled Displays
+Message-ID: <00c401c35eaa$da4a9cc0$04361cac@F2GO>
+
+Hi ParaViewers...
+
+I have made a translator between vtk and OpenSceneGraph
+(www.openscenegraph.org),
+so that vtk actors can be displayed as OSG Geodes. The main purpose is to
+get a better
+and more flexible display than that ParaView can offer, enabling cluster
+support (such that
+2x4 PCs e.g. can render each (stereo) side in a 4 sided CAVE). I have
+already experimented
+a little with ParaViews Tiled display support, but have found that it
+doesn't work on windows(?)
+and can't see from the manual how it distributes each tile and how you
+specify which computer
+is connected to which part of your tiled display.
+
+What is currently beeing done on this in ParaView? Is CAVE support (via a PC
+cluster) on its way?
+or is my OSG coupling welcomed? Would it be easier to just use the existing
+framework in ParaView
+using MPI to do the job?
+
+Regards,
+
+Michael Gronager, PhD
+UNI-C
+
+
+
+--
+Michael Gronager, PhD
+Research and Developement, VR-C
+UNI-C
+DTU Building 304
+DK2800 Lyngby
+DENMARK
+
+Phone:  +45 3587 8889
+Fax:    +45 3587 8990
+Direct: +45 3587 8966
+Mobile: +45 2424 8207
+
+Email:   mpg@uni-c.dk
+
+
+From ferrell@diablotech.com  Thu Aug 14 00:24:53 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Wed, 13 Aug 2003 23:24:53 -0000 (GMT)
+Subject: [Paraview] Probe filter
+Message-ID: <1661.128.165.144.120.1060817093.squirrel@webmail.pair.com>
+
+I'd like to use the Probe filter in Paraview.  I've
+got a number of fields in my data, some scalar and some vector.
+How do I tell the probe which field to probe?  It seems
+to be probing one component of one of my vector fields.
+
+thanks,
+-robert
+
+
+
+From Stephen.Wornom@sophia.inria.fr  Thu Aug 14 14:00:56 2003
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Thu, 14 Aug 2003 15:00:56 +0200
+Subject: [Paraview] File question
+Message-ID: <3F3B8808.30D07046@sophia.inria.fr>
+
+I believe that the ParaView file are written correctly but only the mesh
+is plotted correctly. All the values for the density are zero. Any idea
+where to start looking to resolve the problem?
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From ferrell@diablotech.com  Thu Aug 14 22:23:11 2003
+From: ferrell@diablotech.com (Robert Ferrell)
+Date: Thu, 14 Aug 2003 21:23:11 -0000 (GMT)
+Subject: [Paraview] Probe
+Message-ID: <2334.128.165.144.120.1060896191.squirrel@webmail.pair.com>
+
+Thanks for the tip on using Probe.  Connecting to
+it from a Calculator works fine.
+
+Another question, though.  I'm having trouble updating the
+XY-plot.  I'd like the XY plot to be updated as I go through an animation.
+ That doesn't happen, though.  Instead, the only way I can get an update
+is to uncheck "Show XY-plot", Accept, check "Show XY-plot", Accept again,
+and then the correct information shows.  I probably have a misconception
+about how this should work.  But, is there a way to have the probe update
+automatically?
+
+thanks,
+-robert
+
+
+
+From charles.law@kitware.com  Fri Aug 15 16:44:59 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 15 Aug 2003 11:44:59 -0400
+Subject: [Paraview] Probe
+In-Reply-To: <2334.128.165.144.120.1060896191.squirrel@webmail.pair.com>
+Message-ID: <5.1.0.14.0.20030815113800.00ab3ae8@pop.biz.rr.com>
+
+
+
+
+At 09:23 PM 8/14/2003 +0000, Robert Ferrell wrote:
+>Thanks for the tip on using Probe.  Connecting to
+>it from a Calculator works fine.
+>
+>Another question, though.  I'm having trouble updating the
+>XY-plot.  I'd like the XY plot to be updated as I go through an animation.
+>  That doesn't happen, though.  Instead, the only way I can get an update
+>is to uncheck "Show XY-plot", Accept, check "Show XY-plot", Accept again,
+>and then the correct information shows.  I probably have a misconception
+>about how this should work.  But, is there a way to have the probe update
+>automatically?
+
+This is a bug.  As a work around, you can use the animation script editor 
+to update the probe module.
+
+Find the probe module name with (command prompt)
+
+vtkPVProbe ListInstances
+vtkTemp533
+
+Then call
+
+vtkTemp533 AcceptCallback
+as an animation script.
+
+Of course, the vtkTemp533 will replaced by what ever your probe module is 
+named.
+
+Charles.
+
+
+
+From apneto@impa.br  Thu Aug 14 16:01:52 2003
+From: apneto@impa.br (apneto@impa.br)
+Date: Thu, 14 Aug 2003 12:01:52 -0300
+Subject: [Paraview] convert plot3d files to vts files
+Message-ID: <1060873312.3f3ba460e0a15@webmail.impa.br>
+
+How i convert plot3d files from datasets distributed by NASA to vts files like
+the example of blunt fin on paraview quickstart guide?
+
+--Afonso
+
+Afonso Paiva Neto
+Laboratorio MatMidia - PUC-RIO
+Rio de Janeiro - Brasil  
+
+
+
+-------------------------------------------------
+This mail sent through IMP: http://horde.org/imp/
+
+From tigerwings@sbcglobal.net  Tue Aug 19 22:13:02 2003
+From: tigerwings@sbcglobal.net (Tiger Wings)
+Date: Tue, 19 Aug 2003 16:13:02 -0500
+Subject: [Paraview] mpi startup
+In-Reply-To: <5.1.0.14.0.20030808093120.02534e80@pop.biz.rr.com>
+Message-ID: <000801c36696$b0a4e530$e84fc183@THINKPAD>
+
+Hi, Charles,
+
+Could you please shed light on how to install IceT libraries? I can't
+find any IceT file thru CVS. Thank you very much.
+
+Tiger
+
+> -----Original Message-----
+> From: paraview-admin@paraview.org [mailto:paraview-admin@paraview.org]
+On
+> Behalf Of Charles Law
+> Sent: Friday, August 08, 2003 8:42 AM
+> To: Dave Semeraro
+> Cc: paraview@paraview.org
+> Subject: Re: [Paraview] mpi startup
+> 
+> Dave,
+> 
+> Tiled displays are being actively developed.  Two options have made it
+into
+> the ParaView 1.0 release (Chromium will be later).  ParaView has a
+native
+> option which is the default.  You have to run with the command line
+options
+> (for a 3x4 tiled display):
+> 
+> server:
+> mpirun -np 12 paraview --server
+> client:
+> paraview --client --host=serverName -td -tdx=4 -tdy=3
+> 
+> This "render module"  will duplicate small geometry on all tile
+processes,
+> and composite large geometry.
+> 
+> 
+> 
+> The second option uses the IceT rendering library developed at Sandia.
+> You have to compile IceT (available by CVS on paraview.org) and
+configure
+> ParaView to link to the IceT libraries.
+> You then can run:
+> 
+> server:
+> mpirun -np 12 paraview --server
+> client:
+> paraview --client --host=serverName -td -tdx=4 -tdy=3
+> --render-module=IceTDisplayRenderModule
+> 
+> 
+> This module does not currently have all the features of the native
+tiled
+> display render module, but it has better compositing performance.
+> 
+> Charles.
+> 
+> 
+> 
+> At 01:56 PM 8/7/2003 -0500, you wrote:
+> 
+> >Charles,
+> >
+> >I have heard Jim Ahrens say that Paraview can be configured to run on
+a
+> >tiled display. By that
+> >I mean it can render to the tiles as a large image. Do you know how
+to get
+> >that functionality
+> >to work or should I contact Jim? I see code called vtkPVTiled
+> >DisplayManager in the source
+> >but I dont know how to use it. Any examples or doxygen docs exits for
+that
+> >stuff?
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From charles.law@kitware.com  Fri Aug 22 13:28:55 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 22 Aug 2003 08:28:55 -0400
+Subject: [Paraview] mpi startup
+In-Reply-To: <000801c36696$b0a4e530$e84fc183@THINKPAD>
+References: <5.1.0.14.0.20030808093120.02534e80@pop.biz.rr.com>
+Message-ID: <5.1.0.14.0.20030821104604.02758e20@pop.biz.rr.com>
+
+Instructions to get IceT:
+
+cvs -d :pserver:anonymous@paraview.org:/cvsroot/IctT login
+
+password: icet
+
+cvs -d :pserver:anonymous@paraview.org:/cvsroot/IctT co IceT
+
+
+Charles.
+
+
+At 04:13 PM 8/19/2003 -0500, Tiger Wings wrote:
+>Hi, Charles,
+>
+>Could you please shed light on how to install IceT libraries? I can't
+>find any IceT file thru CVS. Thank you very much.
+>
+>Tiger
+>
+> > -----Original Message-----
+> > From: paraview-admin@paraview.org [mailto:paraview-admin@paraview.org]
+>On
+> > Behalf Of Charles Law
+> > Sent: Friday, August 08, 2003 8:42 AM
+> > To: Dave Semeraro
+> > Cc: paraview@paraview.org
+> > Subject: Re: [Paraview] mpi startup
+> >
+> > Dave,
+> >
+> > Tiled displays are being actively developed.  Two options have made it
+>into
+> > the ParaView 1.0 release (Chromium will be later).  ParaView has a
+>native
+> > option which is the default.  You have to run with the command line
+>options
+> > (for a 3x4 tiled display):
+> >
+> > server:
+> > mpirun -np 12 paraview --server
+> > client:
+> > paraview --client --host=serverName -td -tdx=4 -tdy=3
+> >
+> > This "render module"  will duplicate small geometry on all tile
+>processes,
+> > and composite large geometry.
+> >
+> >
+> >
+> > The second option uses the IceT rendering library developed at Sandia.
+> > You have to compile IceT (available by CVS on paraview.org) and
+>configure
+> > ParaView to link to the IceT libraries.
+> > You then can run:
+> >
+> > server:
+> > mpirun -np 12 paraview --server
+> > client:
+> > paraview --client --host=serverName -td -tdx=4 -tdy=3
+> > --render-module=IceTDisplayRenderModule
+> >
+> >
+> > This module does not currently have all the features of the native
+>tiled
+> > display render module, but it has better compositing performance.
+> >
+> > Charles.
+> >
+> >
+> >
+> > At 01:56 PM 8/7/2003 -0500, you wrote:
+> >
+> > >Charles,
+> > >
+> > >I have heard Jim Ahrens say that Paraview can be configured to run on
+>a
+> > >tiled display. By that
+> > >I mean it can render to the tiles as a large image. Do you know how
+>to get
+> > >that functionality
+> > >to work or should I contact Jim? I see code called vtkPVTiled
+> > >DisplayManager in the source
+> > >but I dont know how to use it. Any examples or doxygen docs exits for
+>that
+> > >stuff?
+> >
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From dan@chalkie.org.uk  Fri Aug 22 14:16:31 2003
+From: dan@chalkie.org.uk (Dr. Daniel James White PhD)
+Date: Fri, 22 Aug 2003 16:16:31 +0300
+Subject: [Paraview] minimal linux cluster for paraview, volume rendering
+Message-ID: <D8B12F4E-D4A2-11D7-AFF1-000393686412@chalkie.org.uk>
+
+Dear all,
+
+I am a parallel computing newbie.
+
+What would be a sensible small linux cluster for running paraview?
+Could I use say 4 nodes, each with just processor, RAM, motherboard and=20=
+
+ethernet card, with no videocard or hard disk, using a cheap ethernet=20
+hub/repeater, connected to my existing linux workstation?
+Has anyone made such a cluster recently, and how much would I expect to=20=
+
+spend on such a minimal cluster?
+
+Also, to the paraview developers,
+are there plans to implement the volume rendering functions of VTK in=20
+paraview,
+I mean the ray cast functions, composite and MIP, aswell as the=20
+existing isosurface implementation.
+Would these be parallelisable?
+Also would volume rendering for visualisation in quadbuffered hardware=20=
+
+stereo  on the master node, or a client,
+be speeded up by parallelisation of the volume rendering functions? I=20
+mean does the quadbuffered stereo enabling VTK code work in such a way=20=
+
+that generation of the left and right eye images would benefit from=20
+parallelisation of the volume rendering functionality?
+
+cheers
+
+Dan
+
+Dr. Daniel James White BSc. (Hons.) PhD
+Cell Biology
+Department of biological and environmental science
+PO Box  35
+University of Jyv=E4skyl=E4
+Jyv=E4skyl=E4 FIN 40014
+Finland
++358 (0)14 260 4183 (work)
++358 (0)414740463 (mob)
+
+http://www.chalkie.org.uk
+dan@chalkie.org.uk
+white@cc.jyu.fi=
+
+
+From andy.cedilnik@kitware.com  Fri Aug 22 14:44:47 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 22 Aug 2003 09:44:47 -0400
+Subject: [Paraview] minimal linux cluster for paraview, volume rendering
+In-Reply-To: <D8B12F4E-D4A2-11D7-AFF1-000393686412@chalkie.org.uk>
+References: <D8B12F4E-D4A2-11D7-AFF1-000393686412@chalkie.org.uk>
+Message-ID: <1061559887.1490.42.camel@andoria>
+
+Hi Dan,
+
+ParaView would work fine on 4 node Linux cluster. I would invest a bit
+of money to get a gigabit ethernet, otherwise the network file system
+will eat in your bandidth. Also, since you do not have graphics card,
+each node will have to do software rendering. Depending on the number of
+polygons ParaView will display, you will get various results. 
+
+So, I would say processor power, memory, and network are places where
+you should not be cheap. What hardware do you have in mind?
+
+			Andy
+
+On Fri, 2003-08-22 at 09:16, Dr. Daniel James White PhD wrote:
+> What would be a sensible small linux cluster for running paraview?
+> Could I use say 4 nodes, each with just processor, RAM, motherboard and 
+> ethernet card, with no videocard or hard disk, using a cheap ethernet 
+> hub/repeater, connected to my existing linux workstation?
+> Has anyone made such a cluster recently, and how much would I expect to 
+> spend on such a minimal cluster?
+
+
+
+From dan@chalkie.org.uk  Fri Aug 22 15:05:28 2003
+From: dan@chalkie.org.uk (Dr. Daniel James White PhD)
+Date: Fri, 22 Aug 2003 17:05:28 +0300
+Subject: [Paraview] minimal linux cluster for paraview, volume rendering
+In-Reply-To: <1061559887.1490.42.camel@andoria>
+Message-ID: <AF2980AA-D4A9-11D7-AFF1-000393686412@chalkie.org.uk>
+
+Hi Andy,
+
+So is it possible to have a good openGL enable graphics card on each=20
+node to do some number crunching, and send the results back to the=20
+master node.
+I thought  everything on the graphics card went in only 1 direction:=20
+out to the monitor?
+
+I was thinking 4 Athalon equipped motherboards with 1Gb ram and normal=20=
+
+ethernet cards, that each boot off the master node, so no hard disks or=20=
+
+video cards.
+I guess without the videocard hardware acceleration on each node, the=20
+nodes wouldn't really speed up the openGL display on the master node=20
+(with a nice videocard), since software rendering is so much slower=20
+than hardware?
+
+What i am looking for is fast interactive display of large datasets,=20
+using isosurfaces or even better true volume rendering (which I know=20
+isn't in paraview yet, but i can do it with some other vtk tools, ie=20
+Mayavi with the experimental volume module. Volume rendering with=20
+composite ray cast function is slow at high quality settings, that is=20
+what I want to speed up. It would be nice if the hardware stereo wasn't=20=
+
+swapped LR in the vtk raycastmapper... but that is another story...)
+
+Are you telling me that parrallelisation of the vtkVolumeRayCastMapper=20=
+
+or whatever it is called would not really help, since it is the=20
+graphics card that does most of the work anyway...?
+
+cheers
+
+Dan
+
+On Friday, August 22, 2003, at 04:44 PM, Andy Cedilnik wrote:
+
+> Hi Dan,
+>
+> ParaView would work fine on 4 node Linux cluster. I would invest a bit
+> of money to get a gigabit ethernet, otherwise the network file system
+> will eat in your bandidth. Also, since you do not have graphics card,
+> each node will have to do software rendering. Depending on the number=20=
+
+> of
+> polygons ParaView will display, you will get various results.
+>
+> So, I would say processor power, memory, and network are places where
+> you should not be cheap. What hardware do you have in mind?
+>
+> 			Andy
+>
+> On Fri, 2003-08-22 at 09:16, Dr. Daniel James White PhD wrote:
+>> What would be a sensible small linux cluster for running paraview?
+>> Could I use say 4 nodes, each with just processor, RAM, motherboard=20=
+
+>> and
+>> ethernet card, with no videocard or hard disk, using a cheap ethernet
+>> hub/repeater, connected to my existing linux workstation?
+>> Has anyone made such a cluster recently, and how much would I expect=20=
+
+>> to
+>> spend on such a minimal cluster?
+>
+>
+Dr. Daniel James White BSc. (Hons.) PhD
+Cell Biology
+Department of biological and environmental science
+PO Box  35
+University of Jyv=E4skyl=E4
+Jyv=E4skyl=E4 FIN 40014
+Finland
++358 (0)14 260 4183 (work)
++358 (0)414740463 (mob)
+
+http://www.chalkie.org.uk
+dan@chalkie.org.uk
+white@cc.jyu.fi
+
+
+From andy.cedilnik@kitware.com  Fri Aug 22 15:52:08 2003
+From: andy.cedilnik@kitware.com (Andy Cedilnik)
+Date: 22 Aug 2003 10:52:08 -0400
+Subject: [Paraview] minimal linux cluster for paraview, volume rendering
+In-Reply-To: <AF2980AA-D4A9-11D7-AFF1-000393686412@chalkie.org.uk>
+References: <AF2980AA-D4A9-11D7-AFF1-000393686412@chalkie.org.uk>
+Message-ID: <1061563928.1490.54.camel@andoria>
+
+Hi Dan,
+
+You should think of graphic card as two things:
+
+1. Almost general purpose computer wich is optimized for doing graphics
+stuff, such as OpenGL, ...
+2. Something that takes frame buffer and sends it to the monitor. 
+
+You can take frame buffer and send it back to the main CPU though. That
+is what ParaView does.
+
+On Fri, 2003-08-22 at 10:05, Dr. Daniel James White PhD wrote:
+> So is it possible to have a good openGL enable graphics card on each 
+> node to do some number crunching, and send the results back to the 
+> master node.
+> I thought  everything on the graphics card went in only 1 direction: 
+> out to the monitor?
+
+Depending on where the bottleneck is. If it is in the displaying, then
+you will lose. If it is in the number crunching, then you win. The
+second thing is especially the case when the number crunching part can
+be parallelized. ParaView does a great job in that. If you do not have
+space problem, then I would get cheap nVidia cards and put them in. They
+will speed-up the rendering, so no Mesa, more CPU for the other stuff.
+
+> I was thinking 4 Athalon equipped motherboards with 1Gb ram and normal 
+> ethernet cards, that each boot off the master node, so no hard disks or 
+> video cards.
+> I guess without the videocard hardware acceleration on each node, the 
+> nodes wouldn't really speed up the openGL display on the master node 
+> (with a nice videocard), since software rendering is so much slower 
+> than hardware?
+
+ParaView at this point does not support volume rendering. That said,
+volume rendering is primarly cpu intensive and not graphics intensive.
+(Except of-course if you use VolumePro or 3D texture mapper). In most
+cases all you need to do is display a 2D image, which can be almost as
+fast with no graphics card (if you do not do any zooming and panning).
+
+If you do isosurface, then you need to consider two things:
+
+1. Isosurface tends to be processor intensive and slow operation (if you
+do not use patented algorithms).
+
+2. It can produce lot's of polygons, which could be slow on software
+rendering.
+
+			Andy
+
+> What i am looking for is fast interactive display of large datasets, 
+> using isosurfaces or even better true volume rendering (which I know 
+> isn't in paraview yet, but i can do it with some other vtk tools, ie 
+> Mayavi with the experimental volume module. Volume rendering with 
+> composite ray cast function is slow at high quality settings, that is 
+> what I want to speed up. It would be nice if the hardware stereo wasn't 
+> swapped LR in the vtk raycastmapper... but that is another story...)
+> Are you telling me that parrallelisation of the vtkVolumeRayCastMapper 
+> or whatever it is called would not really help, since it is the 
+> graphics card that does most of the work anyway...?
+
+
+
+From Jouke.Hylkema@onecert.fr  Thu Aug 28 08:35:17 2003
+From: Jouke.Hylkema@onecert.fr (jouke hylkema)
+Date: Thu, 28 Aug 2003 09:35:17 +0200
+Subject: [Paraview] bug ??
+Message-ID: <20030828093517.5421896d.hylkema@cert.fr>
+
+Hello,
+
+Either I have not understood how to do this or I've found a bug. I want to
+isolate a subset of blocks in a multi block, structured mesh to generate
+glyphs representing the velocity vector only for these blocks.
+This is what I did :
+
+connectivity filter to find the blocks
+treshold filter to isolate blocks
+glyphs on the isolated blocks
+
+the problem is that it seems that paraview generates glyps on all blocks
+and not on the subset. Is this a bug or a feature ??
+
+Jouke
+
+From charles.law@kitware.com  Thu Aug 28 14:01:17 2003
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 28 Aug 2003 09:01:17 -0400
+Subject: [Paraview] bug ??
+In-Reply-To: <20030828093517.5421896d.hylkema@cert.fr>
+Message-ID: <5.1.0.14.0.20030828085805.0621ead0@pop.biz.rr.com>
+
+Jouke,
+
+I tried something similar (ParaView 1.0) and it worked for me.  Are you 
+sure that the input to your glyph filter is the threshold filter?
+
+If you want to send me your data set (or save your paraview session and 
+send me the pvs file), I will take a look at the issue.
+
+Charles.
+
+
+At 09:35 AM 8/28/2003 +0200, jouke hylkema wrote:
+>Hello,
+>
+>Either I have not understood how to do this or I've found a bug. I want to
+>isolate a subset of blocks in a multi block, structured mesh to generate
+>glyphs representing the velocity vector only for these blocks.
+>This is what I did :
+>
+>connectivity filter to find the blocks
+>treshold filter to isolate blocks
+>glyphs on the isolated blocks
+>
+>the problem is that it seems that paraview generates glyps on all blocks
+>and not on the subset. Is this a bug or a feature ??
+>
+>Jouke
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From Jouke.Hylkema@onecert.fr  Fri Aug 29 09:24:47 2003
+From: Jouke.Hylkema@onecert.fr (jouke hylkema)
+Date: Fri, 29 Aug 2003 10:24:47 +0200
+Subject: [Paraview] bug ??
+In-Reply-To: <5.1.0.14.0.20030828085805.0621ead0@pop.biz.rr.com>
+References: <20030828093517.5421896d.hylkema@cert.fr>
+ <5.1.0.14.0.20030828085805.0621ead0@pop.biz.rr.com>
+Message-ID: <20030829102447.5c97b850.hylkema@cert.fr>
+
+I think I did something wrong during compilation. I recompiled and now it
+seems to be working ?!
+Thanks for your reaction,
+
+Jouke
+
+
+On Thu, 28 Aug 2003 09:01:17 -0400
+Charles Law <charles.law@kitware.com> wrote:
+
+> Jouke,
+> 
+> I tried something similar (ParaView 1.0) and it worked for me.  Are you 
+> sure that the input to your glyph filter is the threshold filter?
+> 
+> If you want to send me your data set (or save your paraview session and 
+> send me the pvs file), I will take a look at the issue.
+> 
+> Charles.
+> 
+> 
+> At 09:35 AM 8/28/2003 +0200, jouke hylkema wrote:
+> >Hello,
+> >
+> >Either I have not understood how to do this or I've found a bug. I want
+> >to isolate a subset of blocks in a multi block, structured mesh to
+> >generate glyphs representing the velocity vector only for these blocks.
+> >This is what I did :
+> >
+> >connectivity filter to find the blocks
+> >treshold filter to isolate blocks
+> >glyphs on the isolated blocks
+> >
+> >the problem is that it seems that paraview generates glyps on all
+> >blocks and not on the subset. Is this a bug or a feature ??
+> >
+> >Jouke
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+

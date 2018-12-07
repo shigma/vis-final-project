@@ -1,0 +1,502 @@
+From baoseidon@yahoo.com.cn  Fri Jan  2 06:18:05 2004
+From: baoseidon@yahoo.com.cn (=?gb2312?q?seidon=20Po?=)
+Date: Fri, 2 Jan 2004 14:18:05 +0800 (CST)
+Subject: [Paraview] Some questions about ParaView
+In-Reply-To: <20040102055831.28845.68202.Mailman@public.kitware.com>
+Message-ID: <20040102061805.82553.qmail@web15204.mail.bjs.yahoo.com>
+
+--0-1731093001-1073024285=:81577
+Content-Type: text/plain; charset=gb2312
+Content-Transfer-Encoding: 8bit
+
+Paraview is really great.
+ 
+But I think it also have some shortcomings.It has not enough data readers for engineering analysis.It can't support animation for vector field visualization(not transient data) too.
+ 
+Paraview using splt frame packing mechanism is so weird. I don't know if it support fullscreen.
+And if I want to attach the VR device, What should we do?
+ 
+ 
+ 
+baoseidon@yahoo.com.cn
+VR Lab. IIC
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
+--0-1731093001-1073024285=:81577
+Content-Type: text/html; charset=gb2312
+Content-Transfer-Encoding: 8bit
+
+<DIV>Paraview is really great.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>But I think it also have some shortcomings.It has not enough data readers for engineering analysis.It can't support animation for vector field visualization(not transient data) too.</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Paraview using splt frame packing mechanism is so weird. I don't know if it support fullscreen.</DIV>
+<DIV>And if I want to attach the VR device, What&nbsp;should we do?</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>&nbsp;</DIV>
+<DIV><A href="mailto:baoseidon@yahoo.com.cn">baoseidon@yahoo.com.cn</A></DIV>
+<DIV>VR Lab. IIC</DIV><p>__________________________________________________<br>Do You Yahoo!?<br>Tired of spam?  Yahoo! Mail has the best spam protection around <br>http://mail.yahoo.com 
+--0-1731093001-1073024285=:81577--
+
+From berk.geveci@kitware.com  Fri Jan  2 13:55:00 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Fri, 02 Jan 2004 08:55:00 -0500
+Subject: [Paraview] Some questions about ParaView
+In-Reply-To: <20040102061805.82553.qmail@web15204.mail.bjs.yahoo.com>
+References: <20040102061805.82553.qmail@web15204.mail.bjs.yahoo.com>
+Message-ID: <1073051700.14435.6.camel@silverymoon>
+
+> Paraview is really great.
+
+Thanks.
+ 
+> But I think it also have some shortcomings.It has not enough data
+> readers for engineering analysis.
+
+I agree. We hope that with time people will contribute more readers
+to ParaView (or VTK). Our current priority is to implement readers used
+by our customers.
+
+> It can't support animation for vector field visualization(not
+> transient data) too.
+
+This will be in ParaView in the future. I don't know how soon though.
+ 
+> Paraview using splt frame packing mechanism is so weird. I don't know
+> if it support fullscreen.
+
+Sure it does. You can either run ParaView with a detach 3D window
+or in client-server mode. 
+
+> And if I want to attach the VR device, What should we do?
+
+ParaView has extensive support for large displays. It has two built
+in powerwall options: Ice-T and native. It is also possible to use
+Chromium with ParaView. Stereo support for Ice-T is in the works. 
+It is, of course, possible to modify the source code to make it work
+with a particular VR device.
+
+-Berk
+
+
+
+
+From baoseidon@yahoo.com.cn  Sat Jan  3 13:33:21 2004
+From: baoseidon@yahoo.com.cn (=?gb2312?q?seidon=20Po?=)
+Date: Sat, 3 Jan 2004 21:33:21 +0800 (CST)
+Subject: [Paraview] Some questions about ParaView
+In-Reply-To: <1073051700.14435.6.camel@silverymoon>
+Message-ID: <20040103133321.44123.qmail@web15206.mail.bjs.yahoo.com>
+
+--0-1270259507-1073136801=:42373
+Content-Type: text/plain; charset=gb2312
+Content-Transfer-Encoding: 8bit
+
+But I can't find how to detach 3D window in command line arguments. 
+ 
+How about dataglove/wand?
+ 
+thx,
+ 
+-Po Seidon
+ 
+Berk Geveci <berk.geveci@kitware.com> wrote:
+
+> Paraview is really great.
+
+Thanks.
+
+> But I think it also have some shortcomings.It has not enough data
+> readers for engineering analysis.
+
+I agree. We hope that with time people will contribute more readers
+to ParaView (or VTK). Our current priority is to implement readers used
+by our customers.
+
+> It can't support animation for vector field visualization(not
+> transient data) too.
+
+This will be in ParaView in the future. I don't know how soon though.
+
+> Paraview using splt frame packing mechanism is so weird. I don't know
+> if it support fullscreen.
+
+Sure it does. You can either run ParaView with a detach 3D window
+or in client-server mode. 
+
+> And if I want to attach the VR device, What should we do?
+
+ParaView has extensive support for large displays. It has two built
+in powerwall options: Ice-T and native. It is also possible to use
+Chromium with ParaView. Stereo support for Ice-T is in the works. 
+It is, of course, possible to modify the source code to make it work
+with a particular VR device.
+
+-Berk
+
+
+
+
+
+
+ 
+
+
+__________________________________________________
+Do You Yahoo!?
+Tired of spam?  Yahoo! Mail has the best spam protection around 
+http://mail.yahoo.com 
+--0-1270259507-1073136801=:42373
+Content-Type: text/html; charset=gb2312
+Content-Transfer-Encoding: 8bit
+
+<DIV>
+<DIV>But I can't find how to detach 3D window in command line arguments. </DIV>
+<DIV>&nbsp;</DIV>
+<DIV>How about dataglove/wand?</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>thx,</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>-Po Seidon</DIV>
+<DIV>&nbsp;</DIV>
+<DIV><B><I>Berk Geveci &lt;berk.geveci@kitware.com&gt;</I></B> wrote:</DIV>
+<BLOCKQUOTE class=replbq style="PADDING-LEFT: 5px; MARGIN-LEFT: 5px; BORDER-LEFT: #1010ff 2px solid">
+<P>&gt; Paraview is really great.<BR><BR>Thanks.<BR><BR>&gt; But I think it also have some shortcomings.It has not enough data<BR>&gt; readers for engineering analysis.<BR><BR>I agree. We hope that with time people will contribute more readers<BR>to ParaView (or VTK). Our current priority is to implement readers used<BR>by our customers.<BR><BR>&gt; It can't support animation for vector field visualization(not<BR>&gt; transient data) too.<BR><BR>This will be in ParaView in the future. I don't know how soon though.<BR><BR>&gt; Paraview using splt frame packing mechanism is so weird. I don't know<BR>&gt; if it support fullscreen.</P>
+<P>Sure it does. You can either run ParaView with a detach 3D window<BR>or in client-server mode. </P>
+<P>&gt; And if I want to attach the VR device, What should we do?<BR><BR>ParaView has extensive support for large displays. It has two built<BR>in powerwall options: Ice-T and native. It is also possible to use<BR>Chromium with ParaView. Stereo support for Ice-T is in the works. <BR>It is, of course, possible to modify the source code to make it work<BR>with a particular VR device.</P>
+<P>-Berk</P>
+<P><BR><BR><BR><BR><BR>&nbsp;</P></BLOCKQUOTE></DIV><p>__________________________________________________<br>Do You Yahoo!?<br>Tired of spam?  Yahoo! Mail has the best spam protection around <br>http://mail.yahoo.com 
+--0-1270259507-1073136801=:42373--
+
+From jfavre@cscs.ch  Mon Jan  5 10:39:32 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 05 Jan 2004 11:39:32 +0100
+Subject: [Paraview] error loading local library
+In-Reply-To: <3FE1DDF7.4020902@cscs.ch>
+References: <1071698014.26203.13.camel@nike.itc.virginia.edu>	 <1071698648.1606.190.camel@andoria>	 <1071698980.25589.1.camel@shavano.itc.Virginia.EDU>	 <1071753641.1605.1108.camel@andoria> <1071764116.25589.36.camel@shavano.itc.Virginia.EDU> <3FE1DDF7.4020902@cscs.ch>
+Message-ID: <3FF93EE4.3030604@cscs.ch>
+
+Hello List
+
+setting PV_INTERFACE_PATH to a user-defined XML file including a local 
+library works very well in the 1.0.4 version. I also have set 
+LD_LIBRARY_PATH and TCLLIBPATH and my local lib is loaded without any 
+problems in v 1.0.4.
+
+Using the same 3 env. variables but switching to the cvs dev version of 
+paraview, I get parsing errors which I do not know how to solve. Has the 
+  <Library name=""/> syntax been changed?
+
+
+Here is my XML file:
+
+<ModuleInterfaces>
+<Library name="vtkLocalTCL"/>
+  <Module name="MCOMmb" root_name="mcommb"
+    output="vtkPolyData"
+    class="vtkPVAdvancedReaderModule" module_type="Reader"
+    extensions=".db" file_description="Multi-Block Structured Files">
+   <Source class="vtkMCOMMultiBlockReader"/>
+   <ArraySelection trace_name="point_array_sel" attribute_name="Point"/>
+   </Module>
+</ModuleInterfaces>
+
+and the error message:
+
+
+ErrorMessage
+# Error or warning: ERROR: In 
+/local/apps/ParaView/ParaView/vtkPVXMLPackageParser.cxx, line 662
+vtkPVXMLPackageParser (0x8331d80): Error loading Library component 
+vtkLocalTCL
+
+ErrorMessage end
+
+Thanks for the help.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From berk.geveci@kitware.com  Mon Jan  5 14:27:09 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Mon, 05 Jan 2004 09:27:09 -0500
+Subject: [Paraview] error loading local library
+In-Reply-To: <3FF93EE4.3030604@cscs.ch>
+References: <1071698014.26203.13.camel@nike.itc.virginia.edu>
+ <1071698648.1606.190.camel@andoria>
+ <1071698980.25589.1.camel@shavano.itc.Virginia.EDU>
+ <1071753641.1605.1108.camel@andoria>
+ <1071764116.25589.36.camel@shavano.itc.Virginia.EDU>
+ <3FE1DDF7.4020902@cscs.ch>  <3FF93EE4.3030604@cscs.ch>
+Message-ID: <1073312829.21816.7.camel@silverymoon>
+
+> setting PV_INTERFACE_PATH to a user-defined XML file including a local 
+> library works very well in the 1.0.4 version. I also have set 
+> LD_LIBRARY_PATH and TCLLIBPATH and my local lib is loaded without any 
+> problems in v 1.0.4.
+> 
+> Using the same 3 env. variables but switching to the cvs dev version of 
+> paraview, I get parsing errors which I do not know how to solve. Has the 
+>   <Library name=""/> syntax been changed?
+
+The syntax did not change. However, we are no longer using Tcl as the
+communication language between ParaView client and server 
+(client/server design is also used when running as a single process).
+We are using a simple wrapping layer that is binary (no more converting
+float arguments to strings and strings to float) and more compact. This
+requires that you create wrappers for your library.  I will let Brad
+describe how you can do that since I have little experience with it
+so far.
+
+-Berk
+
+
+
+From brad.king@kitware.com  Mon Jan  5 16:36:46 2004
+From: brad.king@kitware.com (Brad King)
+Date: Mon, 5 Jan 2004 11:36:46 -0500 (EST)
+Subject: [Paraview] error loading local library
+In-Reply-To: <1073312829.21816.7.camel@silverymoon>
+Message-ID: <Pine.LNX.4.44.0401051134290.6142-100000@hythloth.kitwarein.com>
+
+On Mon, 5 Jan 2004, Berk Geveci wrote:
+
+> > setting PV_INTERFACE_PATH to a user-defined XML file including a local
+> > library works very well in the 1.0.4 version. I also have set
+> > LD_LIBRARY_PATH and TCLLIBPATH and my local lib is loaded without any
+> > problems in v 1.0.4.
+> >
+> > Using the same 3 env. variables but switching to the cvs dev version of
+> > paraview, I get parsing errors which I do not know how to solve. Has the
+> >   <Library name=""/> syntax been changed?
+>
+> The syntax did not change. However, we are no longer using Tcl as the
+> communication language between ParaView client and server
+> (client/server design is also used when running as a single process).
+> We are using a simple wrapping layer that is binary (no more converting
+> float arguments to strings and strings to float) and more compact. This
+> requires that you create wrappers for your library.  I will let Brad
+> describe how you can do that since I have little experience with it
+> so far.
+
+I'll have to setup some new support in the new client/server wrappers to
+build them for external packages.  Hopefully I will get this done in the
+next couple of days.
+
+-Brad
+
+
+From qing-hu.liao@polymtl.ca  Thu Jan  8 16:50:11 2004
+From: qing-hu.liao@polymtl.ca (Liao Qinghu)
+Date: Thu, 08 Jan 2004 11:50:11 -0500
+Subject: [Paraview] how to add the Transform class to paraview.
+Message-ID: <1073580611.2227.4.camel@linux.local>
+
+hi,
+
+I noticed the paraview is convient to add the reader, writer, filter new
+class just by write the xml deploy descriptor. however, I want to add
+the "vtkLinearTransform", "vtkLandmarkTransform",
+"vtkThinPlateSplineTransform" to paraview, how could I do this work?
+
+any hint will be great appreciated.
+
+regards
+Qinghu
+
+
+-- 
+Qinghu Liao
+Department of Computer Engineering,
+Polytechnique, University of Montreal
+CANADA
+
+qing-hu.liao@polymtl.ca
+qhliaok@hotmail.com
+
+
+
+From brad.king@kitware.com  Thu Jan 15 20:43:02 2004
+From: brad.king@kitware.com (Brad King)
+Date: Thu, 15 Jan 2004 15:43:02 -0500 (EST)
+Subject: [Paraview] error loading local library
+In-Reply-To: <Pine.LNX.4.44.0401051134290.6142-100000@hythloth.kitwarein.com>
+Message-ID: <Pine.LNX.4.44.0401151537551.17769-100000@hythloth.kitwarein.com>
+
+On Mon, 5 Jan 2004, Brad King wrote:
+
+> I'll have to setup some new support in the new client/server wrappers to
+> build them for external packages.  Hopefully I will get this done in the
+> next couple of days.
+
+This is now implemented.  A third-party project can build a ParaView
+plugin using CMake code like this:
+
+-----------------------------------------------------------------
+PROJECT(MYPACKAGE)
+INCLUDE_DIRECTORIES(${MYPACKAGE_SOURCE_DIR})
+
+# Import ParaView build settings.
+FIND_PACKAGE(ParaView)
+IF(ParaView_FOUND)
+  INCLUDE(${PARAVIEW_USE_FILE})
+ELSE(ParaView_FOUND)
+  MESSAGE(FATAL_ERROR "ParaView is required.  Set ParaView_DIR.")
+ENDIF(ParaView_FOUND)
+
+# List of classes for the plugin.
+SET(mypackage_SRCS vtkMyClass.cxx)
+
+# Create vtk client/server wrappers for the classes.
+VTK_WRAP_ClientServer(mypackage mypackageCS_SRCS ${mypackage_SRCS})
+
+# Build the package as a plugin for ParaView.
+ADD_LIBRARY(mypackage MODULE ${mypackage_SRCS} ${mypackageCS_SRCS})
+TARGET_LINK_LIBRARIES(mypackage vtkClientServer)
+-----------------------------------------------------------------
+
+Then you can write an XML package configuration file like this:
+
+<ModuleInterfaces>
+ <Library name="mypackage"/>
+ <!-- ... describe interfaces here ... -->
+</ModuleInterfaces>
+
+-Brad
+
+
+From Stephen.Wornom@sophia.inria.fr  Mon Jan 19 12:36:26 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Mon, 19 Jan 2004 13:36:26 +0100
+Subject: [Paraview] .pvs .tcl files
+Message-ID: <400BCF4A.919A99C0@sophia.inria.fr>
+
+1-I start ParaView and create an iso contour which I animate. I stop the
+animation and save the session.pvs file and the session.tcl files. When
+I restart ParaPview and load the session.pvs file, the contour animation
+starts in the cycle mode with no button to stop it (the stop button is
+not highlighted). Question: How does one stop the animation?
+
+2-I have the session.tcl script, how does one use it?
+
+3-I have 40+ sets of data (time-dependent output). Question: How can I
+run ParaView in the batch mode to load the data, save an image at each
+time step. ParaView in used in the sequential mode.
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From davidi@cs.uchicago.edu  Tue Jan 27 20:36:09 2004
+From: davidi@cs.uchicago.edu (david e ignacio)
+Date: Tue, 27 Jan 2004 14:36:09 -0600 (CST)
+Subject: [Paraview] Build Problem on Mac OSX
+Message-ID: <Pine.LNX.4.58.0401271421220.13433@champion.cs.uchicago.edu>
+
+When building ParaView on Mac OSx, I get the recurring error:
+
+Building object file vtkExtractCells.o...
+/Developer/ParaViewComplete/ParaView/Filters/vtkExtractCells.cxx: In
+member
+   function `void vtkExtractCells::CopyCellsUnstructuredGrid(vtkIdList*)':
+/Developer/ParaViewComplete/ParaView/Filters/vtkExtractCells.cxx:471:
+error: no
+   matching function for call to `vtkUnstructuredGrid::SetCells(
+   vtkUnsignedCharArray*&, vtkIdTypeArray*&, vtkCellArray*&)'
+/usr/local/include/vtk/vtkUnstructuredGrid.h:95: error: candidates are:
+void
+   vtkUnstructuredGrid::SetCells(int, vtkCellArray*)
+/usr/local/include/vtk/vtkUnstructuredGrid.h:96: error:
+void
+   vtkUnstructuredGrid::SetCells(int*, vtkCellArray*)
+/usr/local/include/vtk/vtkUnstructuredGrid.h:98: error:
+void
+   vtkUnstructuredGrid::SetCells(vtkUnsignedCharArray*, vtkIntArray*,
+   vtkCellArray*)
+
+
+This makes it seem like there is a problem in the actual source.  Those
+stray &'s in the code.  To make sure this wasn't a fluke, I have tested
+this using the ParaView CVS, ParaViewComplete CVS, and
+paraview-1.0.4.tar.gz
+
+All of them give me the same error.
+
+For background on my setup,
+I am running Mac OS 10.2.7, have fink installed, and using that, installed
+python2.3, tcltk, and hdf5 using fink.  I installed VTK using the nightly
+sources using the Hybrid/X11 rendering along with python and tcl wrapping.
+
+I can include the CMakeCache.txt files if needed.
+
+Thanks
+Dave
+
+From berklist@nycap.rr.com  Tue Jan 27 21:15:19 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Tue, 27 Jan 2004 16:15:19 -0500
+Subject: [Paraview] Build Problem on Mac OSX
+In-Reply-To: <Pine.LNX.4.58.0401271421220.13433@champion.cs.uchicago.edu>
+References: <Pine.LNX.4.58.0401271421220.13433@champion.cs.uchicago.edu>
+Message-ID: <1075238119.25180.142.camel@silverymoon>
+
+Try getting the ParaView-1-2 branch from CVS (make sure you get
+ParaViewComplete). 
+
+On Tue, 2004-01-27 at 15:36, david e ignacio wrote:
+> When building ParaView on Mac OSx, I get the recurring error:
+> 
+> Building object file vtkExtractCells.o...
+> /Developer/ParaViewComplete/ParaView/Filters/vtkExtractCells.cxx: In
+> member
+>    function `void vtkExtractCells::CopyCellsUnstructuredGrid(vtkIdList*)':
+> /Developer/ParaViewComplete/ParaView/Filters/vtkExtractCells.cxx:471:
+> error: no
+>    matching function for call to `vtkUnstructuredGrid::SetCells(
+>    vtkUnsignedCharArray*&, vtkIdTypeArray*&, vtkCellArray*&)'
+> /usr/local/include/vtk/vtkUnstructuredGrid.h:95: error: candidates are:
+> void
+>    vtkUnstructuredGrid::SetCells(int, vtkCellArray*)
+> /usr/local/include/vtk/vtkUnstructuredGrid.h:96: error:
+> void
+>    vtkUnstructuredGrid::SetCells(int*, vtkCellArray*)
+> /usr/local/include/vtk/vtkUnstructuredGrid.h:98: error:
+> void
+>    vtkUnstructuredGrid::SetCells(vtkUnsignedCharArray*, vtkIntArray*,
+>    vtkCellArray*)
+> 
+> 
+> This makes it seem like there is a problem in the actual source.  Those
+> stray &'s in the code.  To make sure this wasn't a fluke, I have tested
+> this using the ParaView CVS, ParaViewComplete CVS, and
+> paraview-1.0.4.tar.gz
+> 
+> All of them give me the same error.
+> 
+> For background on my setup,
+> I am running Mac OS 10.2.7, have fink installed, and using that, installed
+> python2.3, tcltk, and hdf5 using fink.  I installed VTK using the nightly
+> sources using the Hybrid/X11 rendering along with python and tcl wrapping.
+> 
+> I can include the CMakeCache.txt files if needed.
+> 
+> Thanks
+> Dave
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+

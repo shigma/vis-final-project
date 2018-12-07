@@ -1,0 +1,1549 @@
+From dcthomp@speakeasy.net  Sun Apr  4 21:38:44 2004
+From: dcthomp@speakeasy.net (David Thompson)
+Date: Sun, 04 Apr 2004 13:38:44 -0700
+Subject: [Paraview] ParaView 2 compile problems on x86_64
+Message-ID: <1081111122.9666.20.camel@localhost.localdomain>
+
+--=-NsqPIIZ+n4JGE0z7N3rp
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+
+Hi,
+
+	I've made a couple changes to get ParaView compiling and running on a
+Linux Athlon64 box with VTK_USE_64BIT_IDS turned on. I checked in one
+obvious CMake error, but there are a couple of issues I'm less certain
+about, so I'm attaching a patch in the hopes someone will tell me the
+correct way to go about fixing things:
+
+1. I had to add some member functions to vtkClientServerStream because
+it wasn't including a 64-bit type (long long int as opposed to long int
+on gcc 3.3.2). Should I be explicitly adding these
+	VTK_CLIENT_SERVER_OPERATOR(long long)
+	VTK_CLIENT_SERVER_OPERATOR(unsigned long long)
+	VTK_TYPE_FROM_NATIVE(long long,vtkTypeInt64);
+	VTK_TYPE_FROM_NATIVE(unsigned long long,vtkTypeUInt64)
+	VTK_CSS_GET_ARGUMENT(long long)
+	VTK_CSS_GET_ARGUMENT(unsigned long long)
+or is that what the VTK_TYPE_INT64_NOT_STANDARD ifdef is supposed to
+catch and it's just not being configured correctly? (I'm pretty sure
+that just checking in the patch below will break builds on other systems
+where sizeof(long) == sizeof(long long) or long long doesn't exist.
+
+2. Is the patch below for handling a system-provided libz OK or will it
+break other platforms?
+
+3. The MPI library I used (from www.lam-mpi.org) defines
+MPI_LONG_LONG_INT, not MPI_LONG_LONG (it appears that the MPI 1.1
+standard calls out MPI_LONG_LONG_INT while MPI 2 calls out
+MPI_LONG_LONG). This breaks the compile of
+VTK/Parallel/vtkMPICommunicator.cxx. I haven't included a patch... I
+just edited my mpi.h file, but it seems like we should check that one of
+the two is defined (assuming all MPI implementations use macros to
+define the constants).
+
+	Thanks for any help,
+	David
+
+--=-NsqPIIZ+n4JGE0z7N3rp
+Content-Disposition: attachment; filename=pv_x86_64.patch
+Content-Type: text/x-patch; name=pv_x86_64.patch; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+
+Index: Utilities/VTKClientServer/vtkClientServerStream.cxx
+===================================================================
+RCS file: /cvsroot/ParaView/ParaView/Utilities/VTKClientServer/vtkClientServerStream.cxx,v
+retrieving revision 1.11
+diff -r1.11 vtkClientServerStream.cxx
+442a443
+> VTK_CLIENT_SERVER_OPERATOR(long long)
+448a450
+> VTK_CLIENT_SERVER_OPERATOR(unsigned long long)
+520a523
+> VTK_CLIENT_SERVER_INSERT_ARRAY(long long)
+525a529
+> VTK_CLIENT_SERVER_INSERT_ARRAY(unsigned long long)
+816a821
+> VTK_CSS_GET_ARGUMENT(long long)
+820a826
+> VTK_CSS_GET_ARGUMENT(unsigned long long)
+Index: Utilities/VTKClientServer/vtkClientServerStream.h
+===================================================================
+RCS file: /cvsroot/ParaView/ParaView/Utilities/VTKClientServer/vtkClientServerStream.h,v
+retrieving revision 1.4
+diff -r1.4 vtkClientServerStream.h
+119a120
+>   int GetArgument(int message, int argument, long long* value) const;
+123a125
+>   int GetArgument(int message, int argument, unsigned long long* value) const;
+134a137
+>   int GetArgument(int message, int argument, long long* value, vtkTypeUInt32 length) const;
+138a142
+>   int GetArgument(int message, int argument, unsigned long long* value, vtkTypeUInt32 length) const;
+215a220
+>   vtkClientServerStream& operator << (long long value);
+220a226
+>   vtkClientServerStream& operator << (unsigned long long value);
+234a241
+>   static vtkClientServerStream::Array InsertArray(const long long*, int);
+239a247
+>   static vtkClientServerStream::Array InsertArray(const unsigned long long*, int);
+Index: Utilities/VTKClientServer/vtkTypeFromNative.h
+===================================================================
+RCS file: /cvsroot/ParaView/ParaView/Utilities/VTKClientServer/vtkTypeFromNative.h,v
+retrieving revision 1.4
+diff -r1.4 vtkTypeFromNative.h
+88a89,91
+> VTK_TYPE_FROM_NATIVE(long long,vtkTypeInt64);
+> VTK_TYPE_FROM_NATIVE(unsigned long long,vtkTypeUInt64);
+> 
+Index: CMakeLists.txt
+===================================================================
+RCS file: /cvsroot/ParaView/ParaView/CMakeLists.txt,v
+retrieving revision 1.18
+diff -r1.18 CMakeLists.txt
+124,127c124,132
+< SET(VTK_ZLIB_LIBRARIES vtkzlib)
+< SET(VTK_ZLIB_INCLUDE_DIRS
+<   ${ParaView_SOURCE_DIR}/VTK/Utilities/zlib
+<   ${ParaView_BINARY_DIR}/VTK/Utilities/zlib)
+---
+> IF(VTK_USE_SYSTEM_ZLIB)
+>   SET(VTK_ZLIB_LIBRARIES z)
+> ELSE(VTK_USE_SYSTEM_ZLIB)
+>   SET(VTK_ZLIB_LIBRARIES vtkzlib)
+>   SET(VTK_ZLIB_LIBRARIES vtkzlib)
+>   SET(VTK_ZLIB_INCLUDE_DIRS
+>     ${ParaView_SOURCE_DIR}/VTK/Utilities/zlib
+>     ${ParaView_BINARY_DIR}/VTK/Utilities/zlib)
+> ENDIF(VTK_USE_SYSTEM_ZLIB)
+
+--=-NsqPIIZ+n4JGE0z7N3rp--
+
+
+From brad.king@kitware.com  Mon Apr  5 14:12:57 2004
+From: brad.king@kitware.com (Brad King)
+Date: Mon, 05 Apr 2004 09:12:57 -0400
+Subject: [Paraview] ParaView 2 compile problems on x86_64
+In-Reply-To: <1081111122.9666.20.camel@localhost.localdomain>
+References: <1081111122.9666.20.camel@localhost.localdomain>
+Message-ID: <40715B59.9030509@kitware.com>
+
+David Thompson wrote:
+> Hi,
+> 
+> 	I've made a couple changes to get ParaView compiling and running on a
+> Linux Athlon64 box with VTK_USE_64BIT_IDS turned on. I checked in one
+> obvious CMake error, but there are a couple of issues I'm less certain
+> about, so I'm attaching a patch in the hopes someone will tell me the
+> correct way to go about fixing things:
+> 
+> 1. I had to add some member functions to vtkClientServerStream because
+> it wasn't including a 64-bit type (long long int as opposed to long int
+> on gcc 3.3.2). Should I be explicitly adding these
+> 	VTK_CLIENT_SERVER_OPERATOR(long long)
+> 	VTK_CLIENT_SERVER_OPERATOR(unsigned long long)
+> 	VTK_TYPE_FROM_NATIVE(long long,vtkTypeInt64);
+> 	VTK_TYPE_FROM_NATIVE(unsigned long long,vtkTypeUInt64)
+> 	VTK_CSS_GET_ARGUMENT(long long)
+> 	VTK_CSS_GET_ARGUMENT(unsigned long long)
+> or is that what the VTK_TYPE_INT64_NOT_STANDARD ifdef is supposed to
+> catch and it's just not being configured correctly? (I'm pretty sure
+> that just checking in the patch below will break builds on other systems
+> where sizeof(long) == sizeof(long long) or long long doesn't exist.
+
+As you guessed, this change will break elsewhere, but a modified version 
+may be needed.  Exactly one of the following should be true:
+
+   - sizeof(long) == 8
+   - VTK_TYPE_INT64_NOT_STANDARD is defined
+
+I suspect that the problem is that the type "long" is really 64-bit, but 
+vtkIdType is defined to "long long", which is also 64-bit.  Since "long" 
+provides the 64-bit type for vtkClientServerStream, it doesn't bother 
+adding the "long long" overloads.  Then code that uses vtkIdType breaks. 
+  I'll work on fixing this case soon.
+
+Someone else will have to comment on your other two questions.
+
+-Brad
+
+
+From Stephen.Wornom@sophia.inria.fr  Mon Apr  5 14:33:12 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Mon, 05 Apr 2004 15:33:12 +0200
+Subject: [Paraview] paraview and scripts for time-dependent data
+Message-ID: <40716018.C61D37D5@sophia.inria.fr>
+
+I have say 200 sets of data each at a different time step. To simplfy
+things let's say I have 8 time steps of data. I put the file names in
+two input files.
+
+file1.inp
+4
+'time1.vtk' 
+'time2.vtk'
+'time3.vtk'
+'time4.vtk'
+
+file2.inp
+4
+'time5.vtk'
+'time6.vtk'
+'time7.vtk'
+'time8.vtk'
+
+I want to process these file using two cpus taking advantage of the fact
+that they are independent and can be done in any order.
+I want to write a script such that process 0 reads and processes
+sequential the four files in file1.inp and processor 1 reads
+and processes the four files in file2.inp.
+
+Question is how do I write a script that will do this?
+Stephen
+
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From brad.king@kitware.com  Mon Apr  5 14:39:56 2004
+From: brad.king@kitware.com (Brad King)
+Date: Mon, 05 Apr 2004 09:39:56 -0400
+Subject: [Paraview] ParaView 2 compile problems on x86_64
+In-Reply-To: <40715B59.9030509@kitware.com>
+References: <1081111122.9666.20.camel@localhost.localdomain> <40715B59.9030509@kitware.com>
+Message-ID: <407161AC.20806@kitware.com>
+
+Brad King wrote:
+> David Thompson wrote:
+> 
+>> Hi,
+>>
+>>     I've made a couple changes to get ParaView compiling and running on a
+>> Linux Athlon64 box with VTK_USE_64BIT_IDS turned on. I checked in one
+>> obvious CMake error, but there are a couple of issues I'm less certain
+>> about, so I'm attaching a patch in the hopes someone will tell me the
+>> correct way to go about fixing things:
+>>
+>> 1. I had to add some member functions to vtkClientServerStream because
+>> it wasn't including a 64-bit type (long long int as opposed to long int
+>> on gcc 3.3.2). Should I be explicitly adding these
+>>     VTK_CLIENT_SERVER_OPERATOR(long long)
+>>     VTK_CLIENT_SERVER_OPERATOR(unsigned long long)
+>>     VTK_TYPE_FROM_NATIVE(long long,vtkTypeInt64);
+>>     VTK_TYPE_FROM_NATIVE(unsigned long long,vtkTypeUInt64)
+>>     VTK_CSS_GET_ARGUMENT(long long)
+>>     VTK_CSS_GET_ARGUMENT(unsigned long long)
+>> or is that what the VTK_TYPE_INT64_NOT_STANDARD ifdef is supposed to
+>> catch and it's just not being configured correctly? (I'm pretty sure
+>> that just checking in the patch below will break builds on other systems
+>> where sizeof(long) == sizeof(long long) or long long doesn't exist.
+> 
+> 
+> As you guessed, this change will break elsewhere, but a modified version 
+> may be needed.  Exactly one of the following should be true:
+> 
+>   - sizeof(long) == 8
+>   - VTK_TYPE_INT64_NOT_STANDARD is defined
+> 
+> I suspect that the problem is that the type "long" is really 64-bit, but 
+> vtkIdType is defined to "long long", which is also 64-bit.  Since "long" 
+> provides the 64-bit type for vtkClientServerStream, it doesn't bother 
+> adding the "long long" overloads.  Then code that uses vtkIdType breaks. 
+>  I'll work on fixing this case soon.
+
+I've committed a fix, but I'm unable to test it.  Please update 
+Utilities/VTKClientServer and try the build again.  Be sure to remove 
+your changes or you'll get conflicts when you update.
+
+Thanks,
+-Brad
+
+
+From Stephen.Wornom@sophia.inria.fr  Mon Apr  5 14:54:28 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Mon, 05 Apr 2004 15:54:28 +0200
+Subject: [Paraview] paraview and scripts for time-dependent data
+Message-ID: <40716514.7B0A2822@sophia.inria.fr>
+
+I have say 200 sets of data each at a different time step. To simplfy
+things let's say I have 8 time steps of data. I put the file names in
+two input files.
+
+file1.inp
+4
+'time1.vtk' 
+'time2.vtk'
+'time3.vtk'
+'time4.vtk'
+
+file2.inp
+4
+'time5.vtk'
+'time6.vtk'
+'time7.vtk'
+'time8.vtk'
+
+I want to process these file using two cpus taking advantage of the fact
+that they are independent and can be done in any order.
+I want to write a script such that process 0 reads and processes
+sequential the four files in file1.inp and processor 1 reads
+and processes the four files in file2.inp.
+
+Question is how do I write a script that will do this?
+Stephen
+
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From Stephen.Wornom@sophia.inria.fr  Mon Apr  5 15:20:46 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Mon, 05 Apr 2004 16:20:46 +0200
+Subject: [Paraview] paraview-1.2.1 Segmentation fault
+Message-ID: <40716B3E.386F3B68@sophia.inria.fr>
+
+I downloaded paraview-1.2.1
+./uncompress paraview-1.2.1-x86-linux.tar.Z
+ tar xvf paraview-1.2.1-x86-linux.tar
+./bin/paraview
+Segmentation fault
+paraview-1.04 worked ok. Any thoughts as to what could be the problem
+with 1.2.1?
+Stephen
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From dcthomp@speakeasy.net  Mon Apr  5 18:05:35 2004
+From: dcthomp@speakeasy.net (David Thompson)
+Date: Mon, 05 Apr 2004 10:05:35 -0700
+Subject: [Paraview] ParaView 2 compile problems on x86_64
+In-Reply-To: <407161AC.20806@kitware.com>
+References: <1081111122.9666.20.camel@localhost.localdomain>
+ <40715B59.9030509@kitware.com>  <407161AC.20806@kitware.com>
+Message-ID: <1081184735.5604.1.camel@localhost.localdomain>
+
+Brad King wrote: 
+> > David Thompson wrote:
+> >> I've made a couple changes to get ParaView compiling and running on a
+> >> Linux Athlon64 box with VTK_USE_64BIT_IDS turned on. I checked in one
+> >> obvious CMake error, but there are a couple of issues I'm less certain
+> >> about ...
+> I've committed a fix, but I'm unable to test it.  Please update 
+> Utilities/VTKClientServer and try the build again.  ...
+
+Your fix worked.
+
+	Thank you,
+	David
+
+
+From baghdadi@sickkids.ca  Mon Apr  5 22:53:47 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Mon, 5 Apr 2004 17:53:47 -0400 (EDT)
+Subject: [Paraview] paraview-1.2.1 Segmentation fault
+In-Reply-To: <40716B3E.386F3B68@sophia.inria.fr>
+Message-ID: <Pine.LNX.4.44.0404051752570.1037-100000@mouse18.phenogenomics.ca>
+
+Hi Stephen
+
+I am assuming you downloaded the binaries.
+
+Perhaps it is better if you got the source and build it on your own 
+machine.
+
+
+Leila
+
+On Mon, 5 Apr 2004, Stephen Wornom wrote:
+
+> I downloaded paraview-1.2.1
+> ./uncompress paraview-1.2.1-x86-linux.tar.Z
+>  tar xvf paraview-1.2.1-x86-linux.tar
+> ./bin/paraview
+> Segmentation fault
+> paraview-1.04 worked ok. Any thoughts as to what could be the problem
+> with 1.2.1?
+> Stephen
+> 
+> 
+
+-- 
+
+
+
+
+From ferrell@lanl.gov  Tue Apr  6 00:32:45 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Mon, 5 Apr 2004 17:32:45 -0600 (MDT)
+Subject: [Paraview] XML file name question
+Message-ID: <3165.128.165.144.120.1081207965.squirrel@webmail5.pair.com>
+
+I have a question about the file extension conventions for VTK XML files.
+
+Each data type and file type is paired with a particular file extension. 
+What is the purpose of having different file extensions?  The 'type'
+attribute of the root element (VTKFile) uniquely identifies the type of
+data contained in the root element.  So, the file extension information is
+redundant.  Also, why is the 'type' attribute needed on the root element? 
+The name of the first subordinate element must correspond the the 'type'.
+
+As I see it, there are three distinct items of information which all must
+match but all provide the same information:
+
+ * file extension
+ * type attribute of root element
+ * name of the first subordinate element
+
+Wouldn't everything be simpler if only the third item were used?  What
+would not work?
+
+This is not criticism.  I'm simply curious.
+
+thanks,
+-robert
+
+From jfavre@cscs.ch  Tue Apr  6 08:51:40 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Tue, 06 Apr 2004 09:51:40 +0200
+Subject: [Paraview] error loading local library
+In-Reply-To: <Pine.LNX.4.44.0401151537551.17769-100000@hythloth.kitwarein.com>
+References: <Pine.LNX.4.44.0401151537551.17769-100000@hythloth.kitwarein.com>
+Message-ID: <4072618C.3050605@cscs.ch>
+
+Brad King wrote:
+> On Mon, 5 Jan 2004, Brad King wrote:
+
+> This is now implemented.  A third-party project can build a ParaView
+> plugin using CMake code like this:
+> 
+> -----------------------------------------------------------------
+> PROJECT(MYPACKAGE)
+> INCLUDE_DIRECTORIES(${MYPACKAGE_SOURCE_DIR})
+> 
+> # Import ParaView build settings.
+> FIND_PACKAGE(ParaView)
+> IF(ParaView_FOUND)
+>   INCLUDE(${PARAVIEW_USE_FILE})
+> ELSE(ParaView_FOUND)
+>   MESSAGE(FATAL_ERROR "ParaView is required.  Set ParaView_DIR.")
+> ENDIF(ParaView_FOUND)
+> 
+> # List of classes for the plugin.
+> SET(mypackage_SRCS vtkMyClass.cxx)
+> 
+> # Create vtk client/server wrappers for the classes.
+> VTK_WRAP_ClientServer(mypackage mypackageCS_SRCS ${mypackage_SRCS})
+> 
+> # Build the package as a plugin for ParaView.
+> ADD_LIBRARY(mypackage MODULE ${mypackage_SRCS} ${mypackageCS_SRCS})
+> TARGET_LINK_LIBRARIES(mypackage vtkClientServer)
+
+
+I have problem building my 3rd party projects with the new CVS nightly 
+build architecture. After a fresh CVS update, I get the following error:
+
+  Invocation of macro "VTK_WRAP_ClientServer" with incorrect number of 
+arguments.
+
+Can someone suggest the corrections to apply to the CMake code given 
+above by Brad?
+
+TIA.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From ken.martin@kitware.com  Tue Apr  6 13:38:30 2004
+From: ken.martin@kitware.com (Ken Martin)
+Date: Tue, 6 Apr 2004 08:38:30 -0400
+Subject: [Paraview] error loading local library
+In-Reply-To: <4072618C.3050605@cscs.ch>
+Message-ID: <002001c41bd4$1471b730$6901a8c0@kitwarein.com>
+
+> > This is now implemented.  A third-party project can build a ParaView
+> > plugin using CMake code like this:
+> >
+> > -----------------------------------------------------------------
+> > PROJECT(MYPACKAGE)
+> > INCLUDE_DIRECTORIES(${MYPACKAGE_SOURCE_DIR})
+> >
+> > # Import ParaView build settings.
+> > FIND_PACKAGE(ParaView)
+> > IF(ParaView_FOUND)
+> >   INCLUDE(${PARAVIEW_USE_FILE})
+> > ELSE(ParaView_FOUND)
+> >   MESSAGE(FATAL_ERROR "ParaView is required.  Set ParaView_DIR.")
+> > ENDIF(ParaView_FOUND)
+> >
+> > # List of classes for the plugin.
+> > SET(mypackage_SRCS vtkMyClass.cxx)
+> >
+> > # Create vtk client/server wrappers for the classes.
+> > VTK_WRAP_ClientServer(mypackage mypackageCS_SRCS ${mypackage_SRCS})
+> >
+> > # Build the package as a plugin for ParaView.
+> > ADD_LIBRARY(mypackage MODULE ${mypackage_SRCS} ${mypackageCS_SRCS})
+> > TARGET_LINK_LIBRARIES(mypackage vtkClientServer)
+> 
+> 
+> I have problem building my 3rd party projects with the new CVS nightly
+> build architecture. After a fresh CVS update, I get the following error:
+> 
+>   Invocation of macro "VTK_WRAP_ClientServer" with incorrect number of
+> arguments.
+> 
+> Can someone suggest the corrections to apply to the CMake code given
+> above by Brad?
+
+
+
+VTK_WRAP_ClientServer(mypackage mypackageCS_SRCS "${mypackage_SRCS}")
+
+
+
+Ken
+
+
+
+From amy.henderson@kitware.com  Tue Apr  6 14:13:53 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 06 Apr 2004 09:13:53 -0400
+Subject: [Paraview] XML file name question
+In-Reply-To: <3165.128.165.144.120.1081207965.squirrel@webmail5.pair.com
+ >
+References: <3165.128.165.144.120.1081207965.squirrel@webmail5.pair.com>
+Message-ID: <6.0.3.0.2.20040406090517.01c53f58@pop.biz.rr.com>
+
+Hi Robert,
+
+The reason the file extensions are different is so that you know without 
+opening the file what type of data it contains. You can determine what 
+reader to use just by looking at the file extension. Yes, it's redundant 
+information, but it seemed to make more sense than having the same file 
+extension for files that contain completely different data set types. I 
+wasn't particularly involved in the XML design for the VTK file format, so 
+someone else will have to comment on the rest of your question.
+
+- Amy
+
+At 07:32 PM 4/5/2004, Robert Ferrell wrote:
+>I have a question about the file extension conventions for VTK XML files.
+>
+>Each data type and file type is paired with a particular file extension.
+>What is the purpose of having different file extensions?  The 'type'
+>attribute of the root element (VTKFile) uniquely identifies the type of
+>data contained in the root element.  So, the file extension information is
+>redundant.  Also, why is the 'type' attribute needed on the root element?
+>The name of the first subordinate element must correspond the the 'type'.
+>
+>As I see it, there are three distinct items of information which all must
+>match but all provide the same information:
+>
+>  * file extension
+>  * type attribute of root element
+>  * name of the first subordinate element
+>
+>Wouldn't everything be simpler if only the third item were used?  What
+>would not work?
+>
+>This is not criticism.  I'm simply curious.
+>
+>thanks,
+>-robert
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From brad.king@kitware.com  Tue Apr  6 17:53:12 2004
+From: brad.king@kitware.com (Brad King)
+Date: Tue, 06 Apr 2004 12:53:12 -0400
+Subject: [Paraview] paraview-1.2.1 Segmentation fault
+In-Reply-To: <Pine.LNX.4.44.0404051752570.1037-100000@mouse18.phenogenomics.ca>
+References: <Pine.LNX.4.44.0404051752570.1037-100000@mouse18.phenogenomics.ca>
+Message-ID: <4072E078.2080504@kitware.com>
+
+Leila Baghdadi wrote:
+> Hi Stephen
+> 
+> I am assuming you downloaded the binaries.
+> 
+> Perhaps it is better if you got the source and build it on your own 
+> machine.
+> 
+> 
+> Leila
+> 
+> On Mon, 5 Apr 2004, Stephen Wornom wrote:
+> 
+> 
+>>I downloaded paraview-1.2.1
+>>./uncompress paraview-1.2.1-x86-linux.tar.Z
+>> tar xvf paraview-1.2.1-x86-linux.tar
+>>./bin/paraview
+>>Segmentation fault
+>>paraview-1.04 worked ok. Any thoughts as to what could be the problem
+>>with 1.2.1?
+
+If you can get it working from source, I would like to work with you to 
+determine the difference between your build and the binary distribution. 
+  Whatever the cause of the crash, I would like to fix it for the next 
+release.
+
+Thanks,
+-Brad
+
+
+From Stephen.Wornom@sophia.inria.fr  Wed Apr  7 09:25:27 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Wed, 07 Apr 2004 10:25:27 +0200
+Subject: [Paraview] paraview-1.2.1 Segmentation fault
+References: <Pine.LNX.4.44.0404051752570.1037-100000@mouse18.phenogenomics.ca> <4072E078.2080504@kitware.com>
+Message-ID: <4073BAF7.F96BE833@sophia.inria.fr>
+
+Brad King wrote:
+> 
+> Leila Baghdadi wrote:
+> > Hi Stephen
+> >
+> > I am assuming you downloaded the binaries.
+> >
+> > Perhaps it is better if you got the source and build it on your own
+> > machine.
+> >
+> >
+> > Leila
+> >
+> > On Mon, 5 Apr 2004, Stephen Wornom wrote:
+> >
+> >
+> >>I downloaded paraview-1.2.1
+> >>./uncompress paraview-1.2.1-x86-linux.tar.Z
+> >> tar xvf paraview-1.2.1-x86-linux.tar
+> >>./bin/paraview
+> >>Segmentation fault
+> >>paraview-1.04 worked ok. Any thoughts as to what could be the problem
+> >>with 1.2.1?
+> 
+> If you can get it working from source, I would like to work with you to
+> determine the difference between your build and the binary distribution.
+>   Whatever the cause of the crash, I would like to fix it for the next
+> release.
+It seems to be related to the linux kernal which was recently upgraded
+to
+
+Red Hat Linux release 6.1 (Cartman)
+Kernel 2.4.23 on an i686
+from 2.4.17
+
+In fact I spoke too quickly as 1.04 was ok but now gives 
+Segmentation fault
+as well
+
+I will try a source installation and report back.
+Stephen
+
+
+
+
+
+
+
+> Thanks,
+> -Brad
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From tjtautg@sandia.gov  Thu Apr  8 16:38:08 2004
+From: tjtautg@sandia.gov (Tim Tautges)
+Date: Thu, 08 Apr 2004 10:38:08 -0500
+Subject: [Paraview] Showing reader-generated pipeline in selection window?
+Message-ID: <407571E0.7000007@sandia.gov>
+
+Hi all,
+   I'd like to have my custom reader generate multiple outputs, which 
+then get grouped using a group filter.  If I just implement that in the 
+normal way in the reader code, will those outputs and group(s) show up 
+in the paraview selection window?  If not, how would I go about making 
+them show up?  I guess that's making the selection window more of a 
+pipeline viewer - is that the intent of that window?
+
+Thanks.
+
+- tim
+
+-- 
+================================================================
+"You will keep in perfect peace him whose mind is
+   steadfast, because he trusts in you."               Isaiah 26:3
+
+              Tim Tautges            Sandia National Laboratories
+          (tjtautg@sandia.gov)       (telecommuting from UW-Madison)
+          phone: (608) 263-8485      1500 Engineering Dr.
+            fax: (608) 263-4499      Madison, WI 53706-1609
+
+
+From berklist@nycap.rr.com  Thu Apr  8 16:59:19 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Thu, 08 Apr 2004 11:59:19 -0400
+Subject: [Paraview] Showing reader-generated pipeline in selection
+ window?
+In-Reply-To: <407571E0.7000007@sandia.gov>
+References: <407571E0.7000007@sandia.gov>
+Message-ID: <1081439959.27704.24.camel@silverymoon>
+
+If you create a reader that produces multiple outputs, ParaView will
+automatically group them together. You can then extract one or more
+"parts" using Extract Parts. If you want the Extract Parts GUI display
+special name for parts, change your reader so that it creates an
+vtkUnsignedCharArray named "Name" and containing the name of the part
+and adds it to data object's field data. For an example, see
+vtkEnSight6Reader ::CreateUnstructuredGridOutput().
+
+-Berk
+
+On Thu, 2004-04-08 at 11:38, Tim Tautges wrote:
+> Hi all,
+>    I'd like to have my custom reader generate multiple outputs, which 
+> then get grouped using a group filter.  If I just implement that in the 
+> normal way in the reader code, will those outputs and group(s) show up 
+> in the paraview selection window?  If not, how would I go about making 
+> them show up?  I guess that's making the selection window more of a 
+> pipeline viewer - is that the intent of that window?
+> 
+> Thanks.
+> 
+> - tim
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From rajesh@petrotel.com  Thu Apr  8 18:10:07 2004
+From: rajesh@petrotel.com (Rajesh Bhairampally)
+Date: Thu, 8 Apr 2004 12:10:07 -0500
+Subject: [Paraview] MPI paraview
+Message-ID: <003b01c41d8c$57c212a0$bc00a8c0@rajeshdesktop>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_0038_01C41D62.6E905610
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+I am trying to get Paraview run with MPI. It runs properly if i run it =
+locally, with -localonly option on mpirun. it gives me following error =
+if i try to run without -localonly option (i.e. on two processors). I =
+printed out some info out of vtkWin32OpenGLRenderWindow.cxx and it shows =
+that context id returned by openGL call (wglCreateContext) is zero =
+although device context is not a NULL (in fact, i am forcing it to be =
+this->windowsId, which is again a non-NULL value). The very same =
+function returns a valid context id if i run with -localonly option.
+
+Any suggestions are greately appreciated. I saw few postigs with this =
+error message, but the difference is that i get this error only when i =
+run with mpi (on more than one processors).
+
+regards,
+rajesh
+
+ErrorMessage
+
+# Error or warning: ERROR: In =
+C:\vtk\paraview-1.2.1\VTK\Rendering\vtkWin32OpenGLRenderWindow.cxx, line =
+746
+
+vtkWin32OpenGLRenderWindow (0x03C9E328): wglCreateContext failed in =
+CreateAWindow(), error: 1114
+
+
+
+
+
+------=_NextPart_000_0038_01C41D62.6E905610
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>I am trying to get Paraview run with =
+MPI. It runs=20
+properly if i run it locally,&nbsp;with -localonly option on =
+mpirun.&nbsp;it=20
+gives me following error if i try to run without -localonly option (i.e. =
+on two=20
+processors). I printed out some info out of <FONT=20
+face=3D"Times New Roman">vtkWin32OpenGLRenderWindow.cxx </FONT><FONT=20
+face=3DArial>and it shows that context id returned by openGL call=20
+(wglCreateContext) is zero although device context is not a NULL (in =
+fact, i am=20
+forcing it to be this-&gt;windowsId, which is again a non-NULL value). =
+The very=20
+same function returns a valid context id if i run with -localonly=20
+option.</FONT></FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Any suggestions are greately =
+appreciated. I saw few=20
+postigs with this error message, but the difference is that i get this =
+error=20
+<STRONG>only</STRONG> when i run with mpi (on more than one=20
+processors).</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>regards,</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>rajesh</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT size=3D2>
+<P>ErrorMessage</P>
+<P># Error or warning: ERROR: In=20
+C:\vtk\paraview-1.2.1\VTK\Rendering\vtkWin32OpenGLRenderWindow.cxx, line =
+746</P>
+<P>vtkWin32OpenGLRenderWindow (0x03C9E328): wglCreateContext failed in=20
+CreateAWindow(), error: 1114</P>
+<P>&nbsp;</P>
+<P><FONT face=3DArial></FONT>&nbsp;</P></FONT></DIV></BODY></HTML>
+
+------=_NextPart_000_0038_01C41D62.6E905610--
+
+
+From julien.alizier-ausy@irsn.fr  Fri Apr  9 08:19:03 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Fri, 9 Apr 2004 09:19:03 +0200
+Subject: [Paraview] Showing reader-generated pipeline in selection win
+ dow?
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1A9@OREADE.ipsn.fr>
+
+Hi Berk,
+
+Wow, very goo tip. I was looking for some function to assign a name to =
+a
+part.
+You gave me the answer, thanks !
+
+-- Julien
+
+
+
+-----Message d'origine-----
+De : Berk Geveci [mailto:berklist@nycap.rr.com]
+Envoy=E9 : jeudi 8 avril 2004 17:59
+=C0 : Tim Tautges
+Cc : ParaView Mailing List
+Objet : Re: [Paraview] Showing reader-generated pipeline in selection
+window?
+
+
+If you create a reader that produces multiple outputs, ParaView will
+automatically group them together. You can then extract one or more
+"parts" using Extract Parts. If you want the Extract Parts GUI display
+special name for parts, change your reader so that it creates an
+vtkUnsignedCharArray named "Name" and containing the name of the part
+and adds it to data object's field data. For an example, see
+vtkEnSight6Reader ::CreateUnstructuredGridOutput().
+
+-Berk
+
+From Stephen.Wornom@sophia.inria.fr  Fri Apr  9 09:31:06 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Fri, 09 Apr 2004 10:31:06 +0200
+Subject: [Paraview] paraview-1.2.1 Segmentation fault
+References: <Pine.LNX.4.44.0404051752570.1037-100000@mouse18.phenogenomics.ca> <4072E078.2080504@kitware.com>
+Message-ID: <40765F4A.A2269F7E@sophia.inria.fr>
+
+Brad,
+The problem was not in paraview and not the linux kernel but problem
+with a recent change in my bash profile.
+Stephen
+
+Brad King wrote:
+> 
+> Leila Baghdadi wrote:
+> > Hi Stephen
+> >
+> > I am assuming you downloaded the binaries.
+> >
+> > Perhaps it is better if you got the source and build it on your own
+> > machine.
+> >
+> >
+> > Leila
+> >
+> > On Mon, 5 Apr 2004, Stephen Wornom wrote:
+> >
+> >
+> >>I downloaded paraview-1.2.1
+> >>./uncompress paraview-1.2.1-x86-linux.tar.Z
+> >> tar xvf paraview-1.2.1-x86-linux.tar
+> >>./bin/paraview
+> >>Segmentation fault
+> >>paraview-1.04 worked ok. Any thoughts as to what could be the problem
+> >>with 1.2.1?
+> 
+> If you can get it working from source, I would like to work with you to
+> determine the difference between your build and the binary distribution.
+>   Whatever the cause of the crash, I would like to fix it for the next
+> release.
+> 
+> Thanks,
+> -Brad
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From berk.geveci@kitware.com  Fri Apr  9 14:20:57 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Fri, 09 Apr 2004 09:20:57 -0400
+Subject: [Paraview] Showing reader-generated pipeline in selection
+ win	dow?
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1A9@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B1A9@OREADE.ipsn.fr>
+Message-ID: <1081516857.27703.157.camel@silverymoon>
+
+No problem.
+
+On Fri, 2004-04-09 at 03:19, ALIZIER Julien AUSY wrote:
+> Hi Berk,
+> 
+> Wow, very goo tip. I was looking for some function to assign a name to a
+> part.
+> You gave me the answer, thanks !
+> 
+> -- Julien
+> 
+> 
+> 
+> -----Message d'origine-----
+> De : Berk Geveci [mailto:berklist@nycap.rr.com]
+> Envoyé : jeudi 8 avril 2004 17:59
+> À : Tim Tautges
+> Cc : ParaView Mailing List
+> Objet : Re: [Paraview] Showing reader-generated pipeline in selection
+> window?
+> 
+> 
+> If you create a reader that produces multiple outputs, ParaView will
+> automatically group them together. You can then extract one or more
+> "parts" using Extract Parts. If you want the Extract Parts GUI display
+> special name for parts, change your reader so that it creates an
+> vtkUnsignedCharArray named "Name" and containing the name of the part
+> and adds it to data object's field data. For an example, see
+> vtkEnSight6Reader ::CreateUnstructuredGridOutput().
+> 
+> -Berk
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From asterminator@freesurf.fr  Tue Apr 20 08:47:05 2004
+From: asterminator@freesurf.fr (asterminator@freesurf.fr)
+Date: Tue, 20 Apr 2004 09:47:05 +0200 (CEST)
+Subject: [Paraview] error in batch mode
+Message-ID: <49831.192.54.193.24.1082447225.squirrel@arlette.freesurf.fr>
+
+Hi,
+
+paraview is really a great application !
+
+but i found an error in batch mode i didn't understand. I read in
+interactive mode an ensight file (there are some warnings during this
+reading, i suppose they are due to second order elements i have in my
+ensight files, the warning is :
+# Error or warning: There was a VTK Warning in file:
+/home/kitware/ParaViewReleaseRoot/paraview-1.2.1/VTK/IO/vtkEnSightGoldReader.cxx(1540)
+ Only vertex nodes of this element will be read.
+)
+then i save the batch file toto.pvb (File/Save Batch Script) and i exit.
+Finally i launch paraview in batch mode : > paraview -b toto.pvb. The error
+appears :
+Errors while exiting ParaView:
+ERROR: In
+/home/kitware/ParaViewReleaseRoot/paraview-1.2.1/ParaView/Filters/vtkPVEnSightMasterServerReader.cxx,line 177
+vtkPVEnSightMasterServerReader (0xa25a420): ExecuteInformation requires a
+Controller.
+
+Where am i wrong ?
+
+Thx
+
+PB
+
+
+
+
+
+
+
+From Patrick.Brockmann@cea.fr  Tue Apr 20 12:48:57 2004
+From: Patrick.Brockmann@cea.fr (Patrick Brockmann)
+Date: Tue, 20 Apr 2004 13:48:57 +0200
+Subject: [Paraview] GroupParts filter
+Message-ID: <40850E29.6090205@cea.fr>
+
+Hi all,
+
+A question about the use of the GroupParts filter.
+
+When I use a CleanUnstructuredGrid filter with a GroupParts dataset as 
+input,
+duplicate points are not removed correctly (the duplicate points between 
+the 2 datasets).
+Thus the 2 datasets with 4 hexahedrons each (64 points) used should be 
+cleaned up to 30 points.
+But I get  40 points.
+
+I have put dataset exemple at:
+http://dods.ipsl.jussieu.fr/brocksce/pv_bugs/groupparts/
+
+Any idea. Bug or feature ?
+
+Regards
+Patrick
+
+-- 
+
+mailto:Patrick.Brockmann@cea.fr
+01.69.08.72.23 --> LSCE (Orme des merisiers 701, Bureau 50)
+01.44.27.21.10 --> IPSL (Jussieu, Tour 44-45, 3eme)
+http://www.ipsl.jussieu.fr/~brocksce/
+
+
+
+
+From Stephen.Wornom@sophia.inria.fr  Tue Apr 20 13:08:58 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 20 Apr 2004 14:08:58 +0200
+Subject: [Paraview] a batch image question
+Message-ID: <408512DA.72C68E48@sophia.inria.fr>
+
+When I run my batch script (there are 100 data sets) the image appears
+on my desktop, get saved, and proceeds to correctly create the 100
+images.
+Question:
+I must leave the pview window untouched or the image get whatever
+appears in that window. Is there a way to avoid this as pview ties up
+the workstation for several hours.
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From Stephen.Wornom@sophia.inria.fr  Tue Apr 20 13:20:43 2004
+From: Stephen.Wornom@sophia.inria.fr (Stephen Wornom)
+Date: Tue, 20 Apr 2004 14:20:43 +0200
+Subject: [Paraview] running pview on cluster using multiple processes
+Message-ID: <4085159B.3DC40348@sophia.inria.fr>
+
+I have 100 sets of data to process. running ParaView in the mpi mode
+would be nice but I don't how to do this. Maybe I missed a users e-mail
+to explain this, if so, a copy would be appreciated.
+
+In the short term, mpi is not necessary as each data set is independent
+of each other let each processor run ParaView processing the data
+sequential (data set 1:15 go to process0r 0, 26-50 go processor 1,
+...etc).
+ Has anyone written a script that would send the data sets to the
+different processors?
+Stephen
+-- 
+Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+     France                        | Fax   : (33) 04 92 38 79 80
+
+From amy.henderson@kitware.com  Tue Apr 20 13:31:25 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 20 Apr 2004 08:31:25 -0400
+Subject: [Paraview] error in batch mode
+In-Reply-To: <49831.192.54.193.24.1082447225.squirrel@arlette.freesurf.f
+ r>
+References: <49831.192.54.193.24.1082447225.squirrel@arlette.freesurf.fr>
+Message-ID: <6.0.3.0.2.20040420082552.038c80f8@pop.biz.rr.com>
+
+You haven't done anything wrong, but you've run into a bug in the 1.2 
+release of ParaView. This problem has been corrected in the 1.4 version 
+scheduled to be released early next month.
+
+- Amy
+
+At 03:47 AM 4/20/2004, asterminator@freesurf.fr wrote:
+>Hi,
+>
+>paraview is really a great application !
+>
+>but i found an error in batch mode i didn't understand. I read in
+>interactive mode an ensight file (there are some warnings during this
+>reading, i suppose they are due to second order elements i have in my
+>ensight files, the warning is :
+># Error or warning: There was a VTK Warning in file:
+>/home/kitware/ParaViewReleaseRoot/paraview-1.2.1/VTK/IO/vtkEnSightGoldReader.cxx(1540)
+>  Only vertex nodes of this element will be read.
+>)
+>then i save the batch file toto.pvb (File/Save Batch Script) and i exit.
+>Finally i launch paraview in batch mode : > paraview -b toto.pvb. The error
+>appears :
+>Errors while exiting ParaView:
+>ERROR: In
+>/home/kitware/ParaViewReleaseRoot/paraview-1.2.1/ParaView/Filters/vtkPVEnSightMasterServerReader.cxx,line 
+>177
+>vtkPVEnSightMasterServerReader (0xa25a420): ExecuteInformation requires a
+>Controller.
+>
+>Where am i wrong ?
+>
+>Thx
+>
+>PB
+>
+>
+>
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From amy.henderson@kitware.com  Tue Apr 20 13:41:46 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 20 Apr 2004 08:41:46 -0400
+Subject: [Paraview] GroupParts filter
+In-Reply-To: <40850E29.6090205@cea.fr>
+References: <40850E29.6090205@cea.fr>
+Message-ID: <6.0.3.0.2.20040420083516.038ebc30@pop.biz.rr.com>
+
+Hi Patrick,
+
+This is actually the expected behavior in ParaView. The Group Parts filter 
+does not merge the input data sets into a single data set, but instead 
+groups the separate inputs so that a single filter can be applied to all of 
+the parts at the same time. When you run the CleanUnstructuredGrid filter 
+on the results of GroupParts, you are actually applying an instance of 
+CleanUnstructuredGrid to each individual part. The instances of 
+CleanUnstructuredGrid have no knowledge of each other, which would be 
+necessary in order to merge points across datasets.
+
+That said, this would be a feature request, not a bug. You could add it to 
+the ParaView bug tracker (http://www.paraview.org/Bug/) and mark it as a 
+feature request.
+
+- Amy
+
+At 07:48 AM 4/20/2004, Patrick Brockmann wrote:
+>Hi all,
+>
+>A question about the use of the GroupParts filter.
+>
+>When I use a CleanUnstructuredGrid filter with a GroupParts dataset as input,
+>duplicate points are not removed correctly (the duplicate points between 
+>the 2 datasets).
+>Thus the 2 datasets with 4 hexahedrons each (64 points) used should be 
+>cleaned up to 30 points.
+>But I get  40 points.
+>
+>I have put dataset exemple at:
+>http://dods.ipsl.jussieu.fr/brocksce/pv_bugs/groupparts/
+>
+>Any idea. Bug or feature ?
+>
+>Regards
+>Patrick
+>
+>--
+>
+>mailto:Patrick.Brockmann@cea.fr
+>01.69.08.72.23 --> LSCE (Orme des merisiers 701, Bureau 50)
+>01.44.27.21.10 --> IPSL (Jussieu, Tour 44-45, 3eme)
+>http://www.ipsl.jussieu.fr/~brocksce/
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From amy.henderson@kitware.com  Tue Apr 20 13:45:14 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 20 Apr 2004 08:45:14 -0400
+Subject: [Paraview] a batch image question
+In-Reply-To: <408512DA.72C68E48@sophia.inria.fr>
+References: <408512DA.72C68E48@sophia.inria.fr>
+Message-ID: <6.0.3.0.2.20040420084308.038c2f80@pop.biz.rr.com>
+
+Hi Stephen,
+
+Did you try the Offscreen option? It should solve your problem, and it is 
+available in the dialog box that comes up after you choose a filename for 
+saving the batch script.
+
+- Amy
+
+At 08:08 AM 4/20/2004, Stephen Wornom wrote:
+>When I run my batch script (there are 100 data sets) the image appears
+>on my desktop, get saved, and proceeds to correctly create the 100
+>images.
+>Question:
+>I must leave the pview window untouched or the image get whatever
+>appears in that window. Is there a way to avoid this as pview ties up
+>the workstation for several hours.
+>Stephen
+>--
+>Stephen Wornom                     | Email : Stephen.Wornom@inria.fr
+>INRIA Centre de Sophia Antipolis   | Phone : (33) 04 92 38 71 79
+>BP 93,06902 Sophia Antipolis CEDEX | Telex :      97 00 50 F
+>      France                        | Fax   : (33) 04 92 38 79 80
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From asterminator@freesurf.fr  Wed Apr 21 09:23:04 2004
+From: asterminator@freesurf.fr (asterminator@freesurf.fr)
+Date: Wed, 21 Apr 2004 10:23:04 +0200 (CEST)
+Subject: [Paraview] ensight gold reader
+Message-ID: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr>
+
+Hi,
+
+Is it possible to use with paraview the functionality described in the
+ensight gold format regarding the "undefined variables" ? In my example it
+doesn't work : not implemented or bug ?
+
+Thanks !
+
+PB
+
+
+
+From amy.henderson@kitware.com  Wed Apr 21 13:18:59 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Wed, 21 Apr 2004 08:18:59 -0400
+Subject: [Paraview] ensight gold reader
+In-Reply-To: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr>
+References: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr>
+Message-ID: <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+
+The EnSight gold reader in ParaView does not handle the undefined variables 
+functionality.
+
+- Amy
+
+At 04:23 AM 4/21/2004, asterminator@freesurf.fr wrote:
+>Hi,
+>
+>Is it possible to use with paraview the functionality described in the
+>ensight gold format regarding the "undefined variables" ? In my example it
+>doesn't work : not implemented or bug ?
+>
+>Thanks !
+>
+>PB
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From m.janssens@nabla.co.uk  Thu Apr 22 13:09:54 2004
+From: m.janssens@nabla.co.uk (Mattijs Janssens)
+Date: Thu, 22 Apr 2004 13:09:54 +0100
+Subject: [Paraview] centre of rotation
+In-Reply-To: <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+References: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr> <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+Message-ID: <4087B612.2090809@nabla.co.uk>
+
+Hello all,
+
+how do I change the centre of rotation in parallel projection?
+
+In perspective projection I can use the 'Pick center of rotation' button 
+and click on a visible object and it will put the centre of rotation on 
+the object as expected but this seems to behave differently in parallel 
+projection mode.
+
+Regards,
+
+Mattijs
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+From jfavre@cscs.ch  Thu Apr 22 14:41:48 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 22 Apr 2004 15:41:48 +0200
+Subject: [Paraview] centre of rotation
+In-Reply-To: <4087B612.2090809@nabla.co.uk>
+References: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr> <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com> <4087B612.2090809@nabla.co.uk>
+Message-ID: <4087CB9C.3080508@cscs.ch>
+
+Mattijs Janssens wrote:
+> Hello all,
+> 
+> how do I change the centre of rotation in parallel projection?
+> 
+> In perspective projection I can use the 'Pick center of rotation' button 
+> and click on a visible object and it will put the centre of rotation on 
+> the object as expected but this seems to behave differently in parallel 
+> projection mode.
+> 
+
+You can check the Bug Tracker and do a query. This is (was) a known 
+problem, bug #600, which as been fixed on the CVS version. (You did not 
+specify which version you are running)
+
+
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From amy.henderson@kitware.com  Thu Apr 22 14:41:33 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 22 Apr 2004 09:41:33 -0400
+Subject: [Paraview] centre of rotation
+In-Reply-To: <4087B612.2090809@nabla.co.uk>
+References: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr>
+ <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+ <4087B612.2090809@nabla.co.uk>
+Message-ID: <6.0.3.0.2.20040422094052.038d8518@pop.biz.rr.com>
+
+Hi Mattijis,
+
+This was a bug in the ParaView 1.2 release. It has been corrected for the 
+1.4 release which should come out early next month.
+
+- Amy
+
+At 08:09 AM 4/22/2004, Mattijs Janssens wrote:
+>Hello all,
+>
+>how do I change the centre of rotation in parallel projection?
+>
+>In perspective projection I can use the 'Pick center of rotation' button 
+>and click on a visible object and it will put the centre of rotation on 
+>the object as expected but this seems to behave differently in parallel 
+>projection mode.
+>
+>Regards,
+>
+>Mattijs
+>
+>--
+>/*---------------------------------------------------------*\
+>| ===========           Mattijs Janssens                    |
+>| \\        /           Development Engineer                |
+>|  \\      /                                                |
+>|   \\    /             Nabla Ltd.                          |
+>|    \\  /              The Mews, Picketts Lodge            |
+>|     \\/               Picketts Lane, Salfords,            |
+>|     F ield            Surrey RH1 5RG.                     |
+>|     O peration        Tel: +44 (0)1293 821272             |
+>|     A nd              Email: m.janssens@Nabla.co.uk       |
+>|     M anipulation     URL: http://www.Nabla.co.uk         |
+>\*---------------------------------------------------------*/
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From jfavre@cscs.ch  Fri Apr 23 15:05:07 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Fri, 23 Apr 2004 16:05:07 +0200
+Subject: [Paraview] executing a batch script with 3rd party reader
+In-Reply-To: <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+References: <38156.192.54.193.135.1082535784.squirrel@jose.freesurf.fr> <6.0.3.0.2.20040421081806.038fae38@pop.biz.rr.com>
+Message-ID: <40892293.2020106@cscs.ch>
+
+I use a 3rd party data reader for CFX5 which works under the 
+ParaView-1-4 version. I load my data, can save sessions, reload many 
+sessions. All works well, except the batch-mode scripting.
+
+I get the following error:
+
+ERROR: In /local/apps/ParaView/GUI/Widgets/vtkKWApplication.cxx, line 1309
+vtkPVApplication (0x8130740):
+     Script:
+/local/apps/ParaView/bin/bucker3.pvb
+     Returned Error on line 24:
+       invalid command name ""
+
+Lines 1-24 of the script is included below:
+Line 24 calls on the reader variable name.
+Looks like it is empty. Is there another environment setting that needs 
+to be done for batch execution of 3rd part readers? I tried the same 
+with the EnSight reader and did not get an error. Looks like the 
+$proxyManager needs to be made aware of the 3rd part readers. I have no 
+clue where to look.
+
+Thanks for the help
+====================================
+# ParaView Version 1.4
+
+
+#Initialization
+
+vtkSMApplication app
+app Initialize
+
+vtkSMObject foo
+set proxyManager [foo GetProxyManager]
+foo Delete
+
+set Ren1 [$proxyManager NewProxy rendering DefaultRenderer]
+   [$Ren1 GetProperty BackgroundColor] SetElements3 0.33 0.35 0.43
+   [$Ren1 GetProperty Size] SetElements2 830 818
+   [$Ren1 GetProperty CameraPosition] SetElements3 -0.127603 -0.365359 
+-0.0165491
+   [$Ren1 GetProperty CameraFocalPoint] SetElements3 -0.127603 
+-0.0954145 -0.0165491
+   [$Ren1 GetProperty CameraViewUp] SetElements3 1 0 0
+   [$Ren1 GetProperty CameraViewAngle] SetElements1 30
+   [$Ren1 GetProperty CameraClippingRange] SetElements2 0.192917 0.367557
+   [$Ren1 GetProperty OffScreenRendering] SetElement 0 0
+
+set pvTemp109 [$proxyManager NewProxy sources CFX5]
+   [$pvTemp109 GetProperty FileName] SetElement 0 {myfilename.trn}
+======================================
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From bcd@bcm.tmc.edu  Sat Apr 24 11:26:08 2004
+From: bcd@bcm.tmc.edu (BCM HUMAN RESOURCES)
+Date: Sat, 24 Apr 2004 05:26:08 -0500 (CDT)
+Subject: [Paraview] Re: ParaView digest, Vol 1 #237 - 1 msg
+Message-ID: <200404241026.FAA00813@canola.corp.bcm.tmc.edu>
+
+This user is no longer with Baylor College of Medicine. 
+
+
+Thanks,
+Baylor College of Medicine
+
+From bcd@bcm.tmc.edu  Sun Apr 25 11:27:16 2004
+From: bcd@bcm.tmc.edu (BCM HUMAN RESOURCES)
+Date: Sun, 25 Apr 2004 05:27:16 -0500 (CDT)
+Subject: [Paraview] Re: ParaView digest, Vol 1 #238 - 1 msg
+Message-ID: <200404251027.FAA15832@morpheus.corp.bcm.tmc.edu>
+
+This user is no longer with Baylor College of Medicine. 
+
+
+Thanks,
+Baylor College of Medicine
+
+From bcd@bcm.tmc.edu  Mon Apr 26 11:26:11 2004
+From: bcd@bcm.tmc.edu (BCM HUMAN RESOURCES)
+Date: Mon, 26 Apr 2004 05:26:11 -0500 (CDT)
+Subject: [Paraview] Re: ParaView digest, Vol 1 #239 - 1 msg
+Message-ID: <200404261026.FAA07008@cuda.corp.bcm.tmc.edu>
+
+This user is no longer with Baylor College of Medicine. 
+
+
+Thanks,
+Baylor College of Medicine
+
+From brad.king@kitware.com  Mon Apr 26 19:05:49 2004
+From: brad.king@kitware.com (Brad King)
+Date: Mon, 26 Apr 2004 14:05:49 -0400
+Subject: [Paraview] VTK Utility Library Mangling
+Message-ID: <408D4F7D.4080005@kitware.com>
+
+Hello,
+
+The zlib, png, jpeg, tiff, and expat libraries in the VTK/Utilities 
+directory now have all symbols mangled to begin with a vtk_ prefix. 
+This will avoid conflicts when applications try to link against vtkIO 
+and a system version of one of these libraries.
+
+For some reason, Visual Studio .NET does not recognize that the header 
+files for some of these libraries have changed and do not rebuild the 
+.dll files for them.  If you get unresolved symbol errors for one of 
+these libraries, just right-click on the library in the GUI and select 
+"rebuild".  Then try your build again.
+
+-Brad
+

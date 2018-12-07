@@ -1,0 +1,2429 @@
+From hjkarpf at sandia.gov  Thu Jul  1 09:02:37 2004
+From: hjkarpf at sandia.gov (Henry J. Karpf)
+Date: Thu Jul  1 09:04:01 2004
+Subject: [Paraview] MPI and files
+Message-ID: <40E40B6D.6000900@sandia.gov>
+
+So if I want to run paraview with MPI, and have a performance increase, 
+do I have to have parallel files, or is paraview smart enough to break 
+my serial file up and separate over processors?
+
+--Henry Karpf
+
+
+From m.janssens at nabla.co.uk  Thu Jul  1 09:54:10 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Thu Jul  1 09:54:18 2004
+Subject: [Paraview] Using GUI element Scale
+Message-ID: <40E41782.1070403@nabla.co.uk>
+
+Hello
+
+I am trying to write a reader for my data files. The problem is that my 
+data comes from multiple files so I cannot use the existing file readers 
+as example. Instead I am using a vtkdataSetSource. It all is starting to 
+hang together but I have one problem:
+
+I need to define a time step selector so
+
+In my PVFoamReader.xml I have:
+
+         <Scale variable="TimeStep"
+             trace_name="TimeStep"
+             type="int"
+             label="Time step"
+             range="0 1"
+             default_value="0"
+             display_entry="1"
+             display_value="1"
+             entry_and_label_on_top="0"
+             help="Set the current time step."
+             range_source="TimeStepRange" />
+
+which will setup a call to GetTimeStepRange to get the max and min for the
+slider.   This required the reader module to have a function of the form
+
+     float GetTimeValueRange();
+
+which is only allowed to return a single float.  How do I set the max 
+and min
+for the Scale widget using this function?
+
+Regards,
+
+Mattijs
+
+p.s. is there some more documentation on writing reader modules?
+
+From jfavre at cscs.ch  Thu Jul  1 12:01:17 2004
+From: jfavre at cscs.ch (Jean M. Favre)
+Date: Thu Jul  1 12:01:26 2004
+Subject: [Paraview] Using GUI element Scale
+In-Reply-To: <40E41782.1070403@nabla.co.uk>
+References: <40E41782.1070403@nabla.co.uk>
+Message-ID: <40E4354D.8000006@cscs.ch>
+
+Mattijs Janssens wrote:
+
+> I need to define a time step selector so
+> 
+> In my PVFoamReader.xml I have:
+> 
+>         <Scale variable="TimeStep"
+>             trace_name="TimeStep"
+>             type="int"
+>             label="Time step"
+>             range="0 1"
+>             default_value="0"
+>             display_entry="1"
+>             display_value="1"
+>             entry_and_label_on_top="0"
+>             help="Set the current time step."
+>             range_source="TimeStepRange" />
+> 
+> which will setup a call to GetTimeStepRange to get the max and min for the
+> slider.
+
+you are close to the solution.
+
+Your XML looks good.
+
+your reader should include:
+
+class VTK_IO_EXPORT vtkfoo : public vtk???
+{
+public:
+   vtkSetVector2Macro(TimeStepRange,int);
+   vtkGetVector2Macro(TimeStepRange,int);
+protected:
+   int TimeStepRange[2];
+};
+
+and your *.cxx reader source code can do the following during the 
+ExecuteInformation phase:
+
+this->SetTimeStepRange(0, this->NbTimeSteps-1);
+
+
+It works for me. I use PV1.5 nightly.
+
+Cheers
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/about/Favre.php
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+From m.janssens at nabla.co.uk  Thu Jul  1 13:24:40 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Thu Jul  1 13:24:43 2004
+Subject: [Paraview] Using GUI element Scale
+In-Reply-To: <40E4354D.8000006@cscs.ch>
+References: <40E41782.1070403@nabla.co.uk> <40E4354D.8000006@cscs.ch>
+Message-ID: <40E448D8.2080502@nabla.co.uk>
+
+Hello Jean,
+
+Thanks for that. I'll download the cvs version and give it a go.
+
+Regards,
+
+Mattijs
+
+Jean M. Favre wrote:
+> Mattijs Janssens wrote:
+> 
+>> I need to define a time step selector so
+>>
+>> In my PVFoamReader.xml I have:
+>>
+>>         <Scale variable="TimeStep"
+>>             trace_name="TimeStep"
+>>             type="int"
+>>             label="Time step"
+>>             range="0 1"
+>>             default_value="0"
+>>             display_entry="1"
+>>             display_value="1"
+>>             entry_and_label_on_top="0"
+>>             help="Set the current time step."
+>>             range_source="TimeStepRange" />
+>>
+>> which will setup a call to GetTimeStepRange to get the max and min for 
+>> the
+>> slider.
+> 
+> 
+> you are close to the solution.
+> 
+> Your XML looks good.
+> 
+> your reader should include:
+> 
+> class VTK_IO_EXPORT vtkfoo : public vtk???
+> {
+> public:
+>   vtkSetVector2Macro(TimeStepRange,int);
+>   vtkGetVector2Macro(TimeStepRange,int);
+> protected:
+>   int TimeStepRange[2];
+> };
+> 
+> and your *.cxx reader source code can do the following during the 
+> ExecuteInformation phase:
+> 
+> this->SetTimeStepRange(0, this->NbTimeSteps-1);
+> 
+> 
+> It works for me. I use PV1.5 nightly.
+> 
+> Cheers
+
+From mccdo at iastate.edu  Tue Jul  6 11:54:09 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Tue Jul  6 11:54:22 2004
+Subject: [Paraview] render module interface documentation
+Message-ID: <200407061554.i66FsAGE001194@mailhub-3.iastate.edu>
+
+Hello,
+     I am interested writing a render module for paraview 1.4. Is there any
+documentation on the interface required for this module? I have read various
+portions of the user's manual but can't seem to find what I am looking for.
+Also, is there a doxygen site for all the paraview source similiar to vtk?
+One last question, on the features page it mentions being able to describe
+new filters in an XML format and the ability to write added functions for
+the paraview interface, is there documentation somewhere for this
+functionality? Thanks for the help.
+
+Doug
+
+From charles.law at kitware.com  Tue Jul  6 12:23:39 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Tue Jul  6 12:23:48 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <200407061554.i66FsAGE001194@mailhub-3.iastate.edu>
+Message-ID: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+
+Doug,
+
+I am right in the middle of writing documentation for ParaView render 
+modules.  For the moment, the best advice I can give you is to look at the 
+"Cave" render module.  It is relatively straight forward 
+implementation.  Also,  the top level VTKRenderModule class implements a 
+very simple (single process) module that has no levels of details.
+
+The basic objects are:
+vtkCaveRenderManager:  This is a VTK class that synchronizes the lights, 
+and cameras in all of the processes.  This class also handles compositing 
+(but compositing is not needed for the cave module).
+
+vtkPVCaveRenderModule:  This object has methods for creating the render 
+windows, renders and managers on all appropriate processes.  It also has 
+the main render method and makes global LOD decisions.
+
+vtkPVCaveRenderModuleUI:  This object creates any special user interface 
+for controlling parameters for the specific render module.  As currently 
+implemented, this class must exist, even if it implements nothing.  The 
+name pattern much match the render module object.
+
+vtkPVPartDisplay:  This object handles creating all of the VTK objects that 
+are necessary for rendering a VTK data object.  This includes decimation 
+filters for creating LODs, geometry filters for creating a polydata 
+representation, and re partitioning filters for moving rendering geometry 
+around to different processes (used when switching between compositing and 
+local rendering on the client).  The render module acts like an object 
+factory and creates subclasses of this object as necessary.
+
+
+What exactly are you going implement in your new module?
+
+Charles.
+
+
+
+
+At 10:54 AM 7/6/2004 -0500, Doug McCorkle wrote:
+>Hello,
+>      I am interested writing a render module for paraview 1.4. Is there any
+>documentation on the interface required for this module? I have read various
+>portions of the user's manual but can't seem to find what I am looking for.
+>Also, is there a doxygen site for all the paraview source similiar to vtk?
+>One last question, on the features page it mentions being able to describe
+>new filters in an XML format and the ability to write added functions for
+>the paraview interface, is there documentation somewhere for this
+>functionality? Thanks for the help.
+>
+>Doug
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+From jharrop at acm.org  Tue Jul  6 14:18:39 2004
+From: jharrop at acm.org (John Harrop)
+Date: Tue Jul  6 14:15:33 2004
+Subject: [Paraview] Animation Scripting
+Message-ID: <1089137919.1969.3.camel@orion3>
+
+Hello,
+
+Could someone please direct me toward where examples of animation
+scripts might be?  I'm not clear on how the animation scripts fit in
+with the other vtk wrappers.  I don't see much email on this in the
+archive, but perhaps I wasn't going back far enough (more than 1.5
+years?).
+
+Thanks,
+
+John Harrop
+
+SJ Geophysics Ltd
+
+From mccdo at iastate.edu  Tue Jul  6 14:17:29 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Tue Jul  6 14:18:49 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+Message-ID: <200407061818.i66IIgP7026565@mailhub-3.iastate.edu>
+
+Charles,
+     Thanks for your detailed response.  I look forward to your more formal
+documentation. I would like to explore writing a plugin that would allow
+rendering with Performer by using the vtkActorToPF library out of UIUC. I
+would like to be able to take advantage of a scene graph and the
+functionality of paraview. Do you think this is feasible? Also, are there
+doxygen pages created for the vtk classes you mentioned?
+
+Doug
+
+>-----Original Message-----
+>From: Charles Law [mailto:charles.law@kitware.com]
+>Sent: Tuesday, July 06, 2004 11:24 AM
+>To: mccdo@iastate.edu; paraview@paraview.org
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Doug,
+>
+>I am right in the middle of writing documentation for ParaView render
+>modules.  For the moment, the best advice I can give you is to look at the
+>"Cave" render module.  It is relatively straight forward
+>implementation.  Also,  the top level VTKRenderModule class implements a
+>very simple (single process) module that has no levels of details.
+>
+>The basic objects are:
+>vtkCaveRenderManager:  This is a VTK class that synchronizes the lights,
+>and cameras in all of the processes.  This class also handles compositing
+>(but compositing is not needed for the cave module).
+>
+>vtkPVCaveRenderModule:  This object has methods for creating the render
+>windows, renders and managers on all appropriate processes.  It also has
+>the main render method and makes global LOD decisions.
+>
+>vtkPVCaveRenderModuleUI:  This object creates any special user interface
+>for controlling parameters for the specific render module.  As currently
+>implemented, this class must exist, even if it implements nothing.  The
+>name pattern much match the render module object.
+>
+>vtkPVPartDisplay:  This object handles creating all of the VTK objects that
+>are necessary for rendering a VTK data object.  This includes decimation
+>filters for creating LODs, geometry filters for creating a polydata
+>representation, and re partitioning filters for moving rendering geometry
+>around to different processes (used when switching between compositing and
+>local rendering on the client).  The render module acts like an object
+>factory and creates subclasses of this object as necessary.
+>
+>
+>What exactly are you going implement in your new module?
+>
+>Charles.
+>
+>
+>
+>
+>At 10:54 AM 7/6/2004 -0500, Doug McCorkle wrote:
+>>Hello,
+>>      I am interested writing a render module for paraview 1.4. Is there
+>any
+>>documentation on the interface required for this module? I have read
+>various
+>>portions of the user's manual but can't seem to find what I am looking
+>for.
+>>Also, is there a doxygen site for all the paraview source similiar to vtk?
+>>One last question, on the features page it mentions being able to describe
+>>new filters in an XML format and the ability to write added functions for
+>>the paraview interface, is there documentation somewhere for this
+>>functionality? Thanks for the help.
+>>
+>>Doug
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From mccdo at iastate.edu  Tue Jul  6 14:29:23 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Tue Jul  6 14:32:32 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+Message-ID: <200407061832.i66IWQP7028505@mailhub-3.iastate.edu>
+
+Also, where is the source code for the classes you mentioned below located?
+I downloaded the source for paraview 1.4 and can't seem to find it. Thanks
+again for the help.
+
+Doug
+
+>-----Original Message-----
+>From: Charles Law [mailto:charles.law@kitware.com]
+>Sent: Tuesday, July 06, 2004 11:24 AM
+>To: mccdo@iastate.edu; paraview@paraview.org
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Doug,
+>
+>I am right in the middle of writing documentation for ParaView render
+>modules.  For the moment, the best advice I can give you is to look at the
+>"Cave" render module.  It is relatively straight forward
+>implementation.  Also,  the top level VTKRenderModule class implements a
+>very simple (single process) module that has no levels of details.
+>
+>The basic objects are:
+>vtkCaveRenderManager:  This is a VTK class that synchronizes the lights,
+>and cameras in all of the processes.  This class also handles compositing
+>(but compositing is not needed for the cave module).
+>
+>vtkPVCaveRenderModule:  This object has methods for creating the render
+>windows, renders and managers on all appropriate processes.  It also has
+>the main render method and makes global LOD decisions.
+>
+>vtkPVCaveRenderModuleUI:  This object creates any special user interface
+>for controlling parameters for the specific render module.  As currently
+>implemented, this class must exist, even if it implements nothing.  The
+>name pattern much match the render module object.
+>
+>vtkPVPartDisplay:  This object handles creating all of the VTK objects that
+>are necessary for rendering a VTK data object.  This includes decimation
+>filters for creating LODs, geometry filters for creating a polydata
+>representation, and re partitioning filters for moving rendering geometry
+>around to different processes (used when switching between compositing and
+>local rendering on the client).  The render module acts like an object
+>factory and creates subclasses of this object as necessary.
+>
+>
+>What exactly are you going implement in your new module?
+>
+>Charles.
+>
+>
+>
+>
+>At 10:54 AM 7/6/2004 -0500, Doug McCorkle wrote:
+>>Hello,
+>>      I am interested writing a render module for paraview 1.4. Is there
+>any
+>>documentation on the interface required for this module? I have read
+>various
+>>portions of the user's manual but can't seem to find what I am looking
+>for.
+>>Also, is there a doxygen site for all the paraview source similiar to vtk?
+>>One last question, on the features page it mentions being able to describe
+>>new filters in an XML format and the ability to write added functions for
+>>the paraview interface, is there documentation somewhere for this
+>>functionality? Thanks for the help.
+>>
+>>Doug
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From mccdo at iastate.edu  Tue Jul  6 14:43:19 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Tue Jul  6 14:44:56 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+Message-ID: <200407061844.i66IimBd011860@mailhub-4.iastate.edu>
+
+
+Charles,
+     Disregard my last email. I found the source in the cvs version. Is this
+the only place this source exists or does it exist somewhere in the 1.4
+release?
+
+Doug
+>-----Original Message-----
+>From: Charles Law [mailto:charles.law@kitware.com]
+>Sent: Tuesday, July 06, 2004 11:24 AM
+>To: mccdo@iastate.edu; paraview@paraview.org
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Doug,
+>
+>I am right in the middle of writing documentation for ParaView render
+>modules.  For the moment, the best advice I can give you is to look at the
+>"Cave" render module.  It is relatively straight forward
+>implementation.  Also,  the top level VTKRenderModule class implements a
+>very simple (single process) module that has no levels of details.
+>
+>The basic objects are:
+>vtkCaveRenderManager:  This is a VTK class that synchronizes the lights,
+>and cameras in all of the processes.  This class also handles compositing
+>(but compositing is not needed for the cave module).
+>
+>vtkPVCaveRenderModule:  This object has methods for creating the render
+>windows, renders and managers on all appropriate processes.  It also has
+>the main render method and makes global LOD decisions.
+>
+>vtkPVCaveRenderModuleUI:  This object creates any special user interface
+>for controlling parameters for the specific render module.  As currently
+>implemented, this class must exist, even if it implements nothing.  The
+>name pattern much match the render module object.
+>
+>vtkPVPartDisplay:  This object handles creating all of the VTK objects that
+>are necessary for rendering a VTK data object.  This includes decimation
+>filters for creating LODs, geometry filters for creating a polydata
+>representation, and re partitioning filters for moving rendering geometry
+>around to different processes (used when switching between compositing and
+>local rendering on the client).  The render module acts like an object
+>factory and creates subclasses of this object as necessary.
+>
+>
+>What exactly are you going implement in your new module?
+>
+>Charles.
+>
+>
+>
+>
+>At 10:54 AM 7/6/2004 -0500, Doug McCorkle wrote:
+>>Hello,
+>>      I am interested writing a render module for paraview 1.4. Is there
+>any
+>>documentation on the interface required for this module? I have read
+>various
+>>portions of the user's manual but can't seem to find what I am looking
+>for.
+>>Also, is there a doxygen site for all the paraview source similiar to vtk?
+>>One last question, on the features page it mentions being able to describe
+>>new filters in an XML format and the ability to write added functions for
+>>the paraview interface, is there documentation somewhere for this
+>>functionality? Thanks for the help.
+>>
+>>Doug
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From r.angeletti at auselda.it  Wed Jul  7 10:19:05 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Wed Jul  7 10:20:06 2004
+Subject: [Paraview] Open ParaView from CommandLine
+Message-ID: <003801c4642d$5c48fe50$2d1519ac@Rangeletti>
+
+I need to open a Wrl file and perform an Elevation coloring from DOS commandLine.
+
+And I need to remain in ParaView viewing.
+
+I tried to use the  "-b" parameter, saving, before a batch script from Paraview.
+
+But, my batch saves a jpg file, and then closes ParaView.
+
+What is the settings to leave the program open ?
+
+
+
+Best regards
+
+Roberto Angeletti
+Auselda spa - Roma
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040707/3c250e7f/attachment.html
+From charles.law at kitware.com  Wed Jul  7 11:49:30 2004
+From: charles.law at kitware.com (Charles Law)
+Date: Wed Jul  7 11:49:43 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <200407061818.i66IIgP7026565@mailhub-3.iastate.edu>
+References: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+Message-ID: <5.1.0.14.0.20040707113121.0221d138@pop.biz.rr.com>
+
+Doug,
+
+I believe the cave render module classes I referenced were added after 
+1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be 
+easy enough to create the actor to PF translator object in a subclass of 
+vtkPVPartDisplay.  I assume that ParaView would keep its vtkRenderWindow 
+for the GUI, and Performer would manage its own rendering and cameras.  I 
+do not know enough about Performer to say any more.
+
+Charles.
+
+
+At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>Charles,
+>      Thanks for your detailed response.  I look forward to your more formal
+>documentation. I would like to explore writing a plugin that would allow
+>rendering with Performer by using the vtkActorToPF library out of UIUC. I
+>would like to be able to take advantage of a scene graph and the
+>functionality of paraview. Do you think this is feasible? Also, are there
+>doxygen pages created for the vtk classes you mentioned?
+>
+>Doug
+
+
+From mccdo at iastate.edu  Wed Jul  7 13:21:57 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Wed Jul  7 13:22:22 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <5.1.0.14.0.20040707113121.0221d138@pop.biz.rr.com>
+References: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com>
+	<5.1.0.14.0.20040707113121.0221d138@pop.biz.rr.com>
+Message-ID: <2403.198.99.246.101.1089220917.squirrel@mail.eng.iastate.edu>
+
+Charles,
+     That is exactly the info I was looking for. I greatly appreciate your
+help. I will keep you updated on the progress of the module as I am
+working on it. You are correct, I was planning on keeping the gui
+render window active. Thanks again for the info.
+
+Doug
+> Doug,
+>
+> I believe the cave render module classes I referenced were added after
+> 1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be
+> easy enough to create the actor to PF translator object in a subclass of
+> vtkPVPartDisplay.  I assume that ParaView would keep its vtkRenderWindow
+> for the GUI, and Performer would manage its own rendering and cameras.  I
+> do not know enough about Performer to say any more.
+>
+> Charles.
+>
+>
+> At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>>Charles,
+>>      Thanks for your detailed response.  I look forward to your more
+>> formal
+>>documentation. I would like to explore writing a plugin that would allow
+>>rendering with Performer by using the vtkActorToPF library out of UIUC. I
+>>would like to be able to take advantage of a scene graph and the
+>>functionality of paraview. Do you think this is feasible? Also, are there
+>>doxygen pages created for the vtk classes you mentioned?
+>>
+>>Doug
+>
+>
+>
+
+From dcthomp at sandia.gov  Wed Jul  7 13:55:36 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Wed Jul  7 13:55:52 2004
+Subject: [Paraview] Open ParaView from CommandLine
+In-Reply-To: <003801c4642d$5c48fe50$2d1519ac@Rangeletti>
+References: <003801c4642d$5c48fe50$2d1519ac@Rangeletti>
+Message-ID: <1089222935.11622.54.camel@fozzy.ran.sandia.gov>
+
+On Wed, 2004-07-07 at 07:19, Roberto Angeletti wrote:
+> I need to open a Wrl file and perform an Elevation coloring from DOS
+> commandLine.
+>  
+> And I need to remain in ParaView viewing.
+>  
+> I tried to use the  "-b" parameter, saving, before a batch script from
+> Paraview.
+>  
+> But, my batch saves a jpg file, and then closes ParaView.
+>  
+> What is the settings to leave the program open ?
+You don't want to use batch scripts; they are intended for
+non-interactive runs. Instead, use the "File->Save Session State" to
+save a ParaView script. Then, when you restart ParaView just give the
+name of the script you saved on the command line.
+
+
+From r.angeletti at auselda.it  Thu Jul  8 07:23:02 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Thu Jul  8 07:24:10 2004
+Subject: [Paraview] Open ParaView from CommandLine
+Message-ID: <003901c464dd$ee9a82f0$2d1519ac@Rangeletti>
+
+OK.   Now I can run ParaView from CommandLine, using pvs file.
+
+What I need to do:
+
+1) Load a WRL file (I create a new Wrl file from my application, with the same name,
+but different PointSet geometry inside).
+
+2) Perform automatically an Elevation coloring  (but I need a grey scale only !)
+
+3) Remain in ParaView
+
+
+I have problems with Elevation filtering, now.  In fact, the "Save Session State"
+produces a PVS status specific for  one Wrl file.  Changing the geometry, the
+parameters are not correct, and I can have wrong coloring (i.e. only red)  or
+wrong centering.
+There is a way to do a PVS file generic ?
+
+
+And, how can I have only grey scale elevation coloring ?
+
+
+
+Best Regards
+
+Roberto Angeletti
+Auselda spa - Roma
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040708/1a4b3df5/attachment.htm
+From Michael.Gronager at uni-c.dk  Thu Jul  8 07:33:08 2004
+From: Michael.Gronager at uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Thu Jul  8 07:33:25 2004
+Subject: [Paraview] render module interface documentation
+References: <5.1.0.14.0.20040706120510.02208aa0@pop.biz.rr.com><5.1.0.14.0.20040707113121.0221d138@pop.biz.rr.com>
+	<2403.198.99.246.101.1089220917.squirrel@mail.eng.iastate.edu>
+Message-ID: <018001c464df$57ff24c0$05361cac@GRONAGER>
+
+Hi,
+
+I would like to note that for those who want to run ParaView in Caves, but
+don't want to use
+performer - I've made a similar translator osgVTK for translation to
+OpenSceneGraph.
+
+Currently I am implementing a renderer based on this into Paraview - Till
+now I've just made
+it a Module filter, but this info could become handy ;-)
+
+Cheers,
+
+Michael
+
+----- Original Message ----- 
+From: "Doug McCorkle" <mccdo@iastate.edu>
+To: "Charles Law" <charles.law@kitware.com>
+Cc: <mccdo@iastate.edu>; <paraview@paraview.org>
+Sent: Wednesday, July 07, 2004 7:21 PM
+Subject: RE: [Paraview] render module interface documentation
+
+
+> Charles,
+>      That is exactly the info I was looking for. I greatly appreciate your
+> help. I will keep you updated on the progress of the module as I am
+> working on it. You are correct, I was planning on keeping the gui
+> render window active. Thanks again for the info.
+>
+> Doug
+> > Doug,
+> >
+> > I believe the cave render module classes I referenced were added after
+> > 1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be
+> > easy enough to create the actor to PF translator object in a subclass of
+> > vtkPVPartDisplay.  I assume that ParaView would keep its vtkRenderWindow
+> > for the GUI, and Performer would manage its own rendering and cameras.
+I
+> > do not know enough about Performer to say any more.
+> >
+> > Charles.
+> >
+> >
+> > At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+> >>Charles,
+> >>      Thanks for your detailed response.  I look forward to your more
+> >> formal
+> >>documentation. I would like to explore writing a plugin that would allow
+> >>rendering with Performer by using the vtkActorToPF library out of UIUC.
+I
+> >>would like to be able to take advantage of a scene graph and the
+> >>functionality of paraview. Do you think this is feasible? Also, are
+there
+> >>doxygen pages created for the vtk classes you mentioned?
+> >>
+> >>Doug
+> >
+> >
+> >
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+From mccdo at iastate.edu  Thu Jul  8 08:02:19 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Thu Jul  8 08:05:40 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <00e401c46464$5899acf0$05361cac@GRONAGER>
+Message-ID: <200407081205.i68C5P5k005453@mailhub-3.iastate.edu>
+
+
+Michael,
+    After I did the performer one I was going to do the same thing for OSG.
+I would be very interested in seeing how your module works. Is it possible I
+could get a copy of your source? I would also be interested in your strategy
+for implementing the osgVTK into a paraview renderer.
+
+Doug
+>-----Original Message-----
+>From: Michael Gr?nager [mailto:Michael.Gronager@uni-c.dk]
+>Sent: Wednesday, July 07, 2004 3:53 PM
+>To: mccdo@iastate.edu
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Hi,
+>
+>I would like to note that for those who want to run ParaView in Caves, but
+>don't want to use
+>performer - I've made a similar translator osgVTK for translation to
+>OpenSceneGraph.
+>
+>Currently I am implementing a renderer based on this into Paraview - Till
+>now I've just made
+>it a Module filter, but this info could become handy ;-)
+>
+>Cheers,
+>
+>Michael
+>
+>----- Original Message -----
+>From: "Doug McCorkle" <mccdo@iastate.edu>
+>To: "Charles Law" <charles.law@kitware.com>
+>Cc: <mccdo@iastate.edu>; <paraview@paraview.org>
+>Sent: Wednesday, July 07, 2004 7:21 PM
+>Subject: RE: [Paraview] render module interface documentation
+>
+>
+>> Charles,
+>>      That is exactly the info I was looking for. I greatly appreciate
+>your
+>> help. I will keep you updated on the progress of the module as I am
+>> working on it. You are correct, I was planning on keeping the gui
+>> render window active. Thanks again for the info.
+>>
+>> Doug
+>> > Doug,
+>> >
+>> > I believe the cave render module classes I referenced were added after
+>> > 1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be
+>> > easy enough to create the actor to PF translator object in a subclass
+>of
+>> > vtkPVPartDisplay.  I assume that ParaView would keep its
+>vtkRenderWindow
+>> > for the GUI, and Performer would manage its own rendering and cameras.
+>I
+>> > do not know enough about Performer to say any more.
+>> >
+>> > Charles.
+>> >
+>> >
+>> > At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>> >>Charles,
+>> >>      Thanks for your detailed response.  I look forward to your more
+>> >> formal
+>> >>documentation. I would like to explore writing a plugin that would
+>allow
+>> >>rendering with Performer by using the vtkActorToPF library out of UIUC.
+>I
+>> >>would like to be able to take advantage of a scene graph and the
+>> >>functionality of paraview. Do you think this is feasible? Also, are
+>there
+>> >>doxygen pages created for the vtk classes you mentioned?
+>> >>
+>> >>Doug
+>> >
+>> >
+>> >
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+
+
+From jharrop at acm.org  Thu Jul  8 13:21:29 2004
+From: jharrop at acm.org (John Harrop)
+Date: Thu Jul  8 13:18:26 2004
+Subject: [Paraview] Animating camera angle
+Message-ID: <1089307289.2441.8.camel@orion3>
+
+Hello,
+
+I would really appreciate some assistance with getting some camera
+animation scripts written.  Does anyone have some example scripts that
+can be shared?  An example would be very helpful at this point.  I'm
+still a little confused over what the scripting language actually is and
+how it fits into the Paraview/vtk system.  Since tcl/tk is not a
+language I'm particularly familiar with I may be asking about something
+that is obvious to others - but I haven't been able to track down
+examples or details in the FAQ or list archive.
+
+Regards,
+
+John Harrop
+
+From Michael.Gronager at uni-c.dk  Thu Jul  8 15:21:31 2004
+From: Michael.Gronager at uni-c.dk (=?iso-8859-1?Q?Michael_Gr=F8nager?=)
+Date: Thu Jul  8 15:21:49 2004
+Subject: [Paraview] render module interface documentation
+References: <200407081205.i68C5P5k005453@mailhub-3.iastate.edu>
+Message-ID: <01f601c46520$c727a700$05361cac@GRONAGER>
+
+Doug,
+
+Attached please find the source for the plugin...
+
+For now it only supports conversion from vtk format to osg and viewing in
+Producer.
+However, I'm implementing osgVR a  library for doing clustering with OSG and
+this will open
+up for full clustering support.
+
+My plan is first to finish the clustering (some time during august, as I go
+on vacation next week :-)
+then changing osgPV use osgVR will just be changing a few lines...
+
+As far as implementing it as a renderer in Paraview I was hoping to find an
+example of someone else doing exactly this...
+But a module is also kind of OK as a start.
+
+Another issue is of course  interaction with PV from VR, which I haven't
+solved either.
+
+How finished is you Performer link ? And on what platforms does it run ?
+(mine should work on all from windows to Unix and mac).
+
+Finally a note on osgPV: You need a to download (/CVS) openscenegraph,
+openproducer, openthreads and compile to make things compile and run.
+
+Have fun!
+
+Cheers,
+
+Michael
+
+----- Original Message ----- 
+From: "Doug McCorkle" <mccdo@iastate.edu>
+To: "'Michael Gr?nager'" <Michael.Gronager@uni-c.dk>;
+<paraview@paraview.org>
+Sent: Thursday, July 08, 2004 2:02 PM
+Subject: RE: [Paraview] render module interface documentation
+
+
+
+Michael,
+    After I did the performer one I was going to do the same thing for OSG.
+I would be very interested in seeing how your module works. Is it possible I
+could get a copy of your source? I would also be interested in your strategy
+for implementing the osgVTK into a paraview renderer.
+
+Doug
+>-----Original Message-----
+>From: Michael Gr?nager [mailto:Michael.Gronager@uni-c.dk]
+>Sent: Wednesday, July 07, 2004 3:53 PM
+>To: mccdo@iastate.edu
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Hi,
+>
+>I would like to note that for those who want to run ParaView in Caves, but
+>don't want to use
+>performer - I've made a similar translator osgVTK for translation to
+>OpenSceneGraph.
+>
+>Currently I am implementing a renderer based on this into Paraview - Till
+>now I've just made
+>it a Module filter, but this info could become handy ;-)
+>
+>Cheers,
+>
+>Michael
+>
+>----- Original Message -----
+>From: "Doug McCorkle" <mccdo@iastate.edu>
+>To: "Charles Law" <charles.law@kitware.com>
+>Cc: <mccdo@iastate.edu>; <paraview@paraview.org>
+>Sent: Wednesday, July 07, 2004 7:21 PM
+>Subject: RE: [Paraview] render module interface documentation
+>
+>
+>> Charles,
+>>      That is exactly the info I was looking for. I greatly appreciate
+>your
+>> help. I will keep you updated on the progress of the module as I am
+>> working on it. You are correct, I was planning on keeping the gui
+>> render window active. Thanks again for the info.
+>>
+>> Doug
+>> > Doug,
+>> >
+>> > I believe the cave render module classes I referenced were added after
+>> > 1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be
+>> > easy enough to create the actor to PF translator object in a subclass
+>of
+>> > vtkPVPartDisplay.  I assume that ParaView would keep its
+>vtkRenderWindow
+>> > for the GUI, and Performer would manage its own rendering and cameras.
+>I
+>> > do not know enough about Performer to say any more.
+>> >
+>> > Charles.
+>> >
+>> >
+>> > At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>> >>Charles,
+>> >>      Thanks for your detailed response.  I look forward to your more
+>> >> formal
+>> >>documentation. I would like to explore writing a plugin that would
+>allow
+>> >>rendering with Performer by using the vtkActorToPF library out of UIUC.
+>I
+>> >>would like to be able to take advantage of a scene graph and the
+>> >>functionality of paraview. Do you think this is feasible? Also, are
+>there
+>> >>doxygen pages created for the vtk classes you mentioned?
+>> >>
+>> >>Doug
+>> >
+>> >
+>> >
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org
+http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: osgPV.zip
+Type: application/x-zip-compressed
+Size: 6309 bytes
+Desc: not available
+Url : http://public.kitware.com/pipermail/paraview/attachments/20040708/769c51c4/osgPV.bin
+From suz at mito.ssd.ssg.fujitsu.com  Thu Jul  8 21:26:55 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Thu Jul  8 21:30:39 2004
+Subject: [Paraview] How to make Paraview with Mesa
+Message-ID: <20040709100804.0856.SUZ@mito.ssd.ssg.fujitsu.com>
+
+Hello, all
+
+ I want to make Paraview with Mesa (for software rendering).
+ But the following error occures in linkage.
+
+ What flags must be specified in ccmake ?
+ I specified ...
+	OPENGL_INCLUDE_DIR		/xxxxx/Mesa-6.0.1/include
+	OPENGL_gl_LIBRARY		/xxxxx/Mesa-6.0.1/lib/libGL.so
+	OPENGL_glu_LIBRARY		/xxxxx/Mesa-6.0.1/lib/libGLU.so
+	VTK_USE_MANGLED_MESA		ON
+
+ Other flags shold be specified ?
+
+ Best Regards..
+
+
+[Error messages]
+------------------------------------------------------------------------------------------------------------
+Undefined                       first referenced
+ symbol                             in file
+vtkMesaImageActor::New(void)        /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaVolumeTextureMapper2D::New(void)/wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaCamera::New(void)            /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaTexture::New(void)           /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaActor::New(void)             /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaLight::New(void)             /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaRayCastImageDisplayHelper::New(void)/wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaVolumeRayCastMapper::New(void)/wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaProperty::New(void)          /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkXMesaRenderWindow::New(void)     /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaPolyDataMapper::New(void)    /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+vtkMesaRenderer::New(void)          /wk/PDS/PARAVIEW/paraview/bin/libvtkRendering.a(vtkGraphicsFactory.o)
+ld: fatal: Symbol referencing errors. No output written to /wk/PDS/PARAVIEW/paraview/bin/GraphicsCxxTests
+collect2: ld returned 1 exit status
+
+
+---
+Koichiro Suzuki, Fujits ltd.
+suz.k@jp.fujitsu.com
+
+From mccdo at iastate.edu  Thu Jul  8 21:55:21 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Thu Jul  8 21:58:40 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <01f601c46520$c727a700$05361cac@GRONAGER>
+Message-ID: <200407090158.i691wRUG020702@mailhub-3.iastate.edu>
+
+
+Michael,
+	Thanks for all the info. I have just started the performer project
+so I have nothing to share yet. I would be glad to share my code as it
+progresses as I am interested in the osg paraview stuff. I plan to have the
+source for the performer project under lgpl or see if the paraview guys are
+interested at all with it. I am going on vacation this week so after that I
+will dig into your example. Thanks for all the info and code.
+
+Doug
+>-----Original Message-----
+>From: Michael Gr?nager [mailto:Michael.Gronager@uni-c.dk]
+>Sent: Thursday, July 08, 2004 2:22 PM
+>To: mccdo@iastate.edu; paraview@paraview.org
+>Subject: Re: [Paraview] render module interface documentation
+>
+>Doug,
+>
+>Attached please find the source for the plugin...
+>
+>For now it only supports conversion from vtk format to osg and viewing in
+>Producer.
+>However, I'm implementing osgVR a  library for doing clustering with OSG
+>and
+>this will open
+>up for full clustering support.
+>
+>My plan is first to finish the clustering (some time during august, as I go
+>on vacation next week :-)
+>then changing osgPV use osgVR will just be changing a few lines...
+>
+>As far as implementing it as a renderer in Paraview I was hoping to find an
+>example of someone else doing exactly this...
+>But a module is also kind of OK as a start.
+>
+>Another issue is of course  interaction with PV from VR, which I haven't
+>solved either.
+>
+>How finished is you Performer link ? And on what platforms does it run ?
+>(mine should work on all from windows to Unix and mac).
+>
+>Finally a note on osgPV: You need a to download (/CVS) openscenegraph,
+>openproducer, openthreads and compile to make things compile and run.
+>
+>Have fun!
+>
+>Cheers,
+>
+>Michael
+>
+>----- Original Message -----
+>From: "Doug McCorkle" <mccdo@iastate.edu>
+>To: "'Michael Gr?nager'" <Michael.Gronager@uni-c.dk>;
+><paraview@paraview.org>
+>Sent: Thursday, July 08, 2004 2:02 PM
+>Subject: RE: [Paraview] render module interface documentation
+>
+>
+>
+>Michael,
+>    After I did the performer one I was going to do the same thing for OSG.
+>I would be very interested in seeing how your module works. Is it possible
+>I
+>could get a copy of your source? I would also be interested in your
+>strategy
+>for implementing the osgVTK into a paraview renderer.
+>
+>Doug
+>>-----Original Message-----
+>>From: Michael Gr?nager [mailto:Michael.Gronager@uni-c.dk]
+>>Sent: Wednesday, July 07, 2004 3:53 PM
+>>To: mccdo@iastate.edu
+>>Subject: Re: [Paraview] render module interface documentation
+>>
+>>Hi,
+>>
+>>I would like to note that for those who want to run ParaView in Caves, but
+>>don't want to use
+>>performer - I've made a similar translator osgVTK for translation to
+>>OpenSceneGraph.
+>>
+>>Currently I am implementing a renderer based on this into Paraview - Till
+>>now I've just made
+>>it a Module filter, but this info could become handy ;-)
+>>
+>>Cheers,
+>>
+>>Michael
+>>
+>>----- Original Message -----
+>>From: "Doug McCorkle" <mccdo@iastate.edu>
+>>To: "Charles Law" <charles.law@kitware.com>
+>>Cc: <mccdo@iastate.edu>; <paraview@paraview.org>
+>>Sent: Wednesday, July 07, 2004 7:21 PM
+>>Subject: RE: [Paraview] render module interface documentation
+>>
+>>
+>>> Charles,
+>>>      That is exactly the info I was looking for. I greatly appreciate
+>>your
+>>> help. I will keep you updated on the progress of the module as I am
+>>> working on it. You are correct, I was planning on keeping the gui
+>>> render window active. Thanks again for the info.
+>>>
+>>> Doug
+>>> > Doug,
+>>> >
+>>> > I believe the cave render module classes I referenced were added after
+>>> > 1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would
+>be
+>>> > easy enough to create the actor to PF translator object in a subclass
+>>of
+>>> > vtkPVPartDisplay.  I assume that ParaView would keep its
+>>vtkRenderWindow
+>>> > for the GUI, and Performer would manage its own rendering and cameras.
+>>I
+>>> > do not know enough about Performer to say any more.
+>>> >
+>>> > Charles.
+>>> >
+>>> >
+>>> > At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>>> >>Charles,
+>>> >>      Thanks for your detailed response.  I look forward to your more
+>>> >> formal
+>>> >>documentation. I would like to explore writing a plugin that would
+>>allow
+>>> >>rendering with Performer by using the vtkActorToPF library out of
+>UIUC.
+>>I
+>>> >>would like to be able to take advantage of a scene graph and the
+>>> >>functionality of paraview. Do you think this is feasible? Also, are
+>>there
+>>> >>doxygen pages created for the vtk classes you mentioned?
+>>> >>
+>>> >>Doug
+>>> >
+>>> >
+>>> >
+>>>
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+From suz at mito.ssd.ssg.fujitsu.com  Fri Jul  9 19:52:49 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Fri Jul  9 19:57:59 2004
+Subject: [Paraview] How to make Paraview with Mesa
+In-Reply-To: <20040709100804.0856.SUZ@mito.ssd.ssg.fujitsu.com>
+References: <20040709100804.0856.SUZ@mito.ssd.ssg.fujitsu.com>
+Message-ID: <20040710083938.B86F.SUZ@mito.ssd.ssg.fujitsu.com>
+
+I found the answer.
+
+>  I want to make Paraview with Mesa (for software rendering).
+>  But the following error occures in linkage.
+> 
+>  What flags must be specified in ccmake ?
+>  I specified ...
+> 	OPENGL_INCLUDE_DIR		/xxxxx/Mesa-6.0.1/include
+> 	OPENGL_gl_LIBRARY		/xxxxx/Mesa-6.0.1/lib/libGL.so
+> 	OPENGL_glu_LIBRARY		/xxxxx/Mesa-6.0.1/lib/libGLU.so
+> 	VTK_USE_MANGLED_MESA		ON
+
+ I should specify not VTK_USE_MANGLED_MESA  but VTK_OPENGL_HAS_OSMESA .
+ I could make with this flag on Linux environment.
+
+ But on Solaris, the following error occurs.
+ Uuuum...
+
+
+In file included from /wk/PDS/PARAVIEW/paraview-1.4.2/VTK/Rendering/vtkXOpenGLRenderWindow.cxx:34:
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:119: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:132: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:142: syntax error before `void'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:174: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:184: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:202: syntax error before `void'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:218: syntax error before `void'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:233: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:249: syntax error before `GLAPIENTRY'
+/home/wws/arakawa/Mesa-6.0.1/include/GL/osmesa.h:260: syntax error before `void'
+
+--
+ Koichiro Suzuki, Fujits ltd.
+ suz.k@jp.fujitsu.com
+
+From ken.martin at kitware.com  Sun Jul 11 11:16:39 2004
+From: ken.martin at kitware.com (Ken Martin)
+Date: Sun Jul 11 11:16:46 2004
+Subject: [Paraview] Announce ParaView 1.4.3
+Message-ID: <003501c4675a$10cd8b00$6401a8c0@KenWork>
+
+ParaView 1.4.3 has been tagged and is available for download. ParaView 1.4.3 includes a number of bug fixes to 1.4.2 including a bug fix for mixed endian client server relationships and a fix for 64 bit builds on IRIX systems. You can download binaries and source from www.paraview.org.
+
+Thanks
+Ken  
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040711/5fa57cba/attachment.htm
+From nipedersen at grundfos.com  Wed Jul 14 08:33:38 2004
+From: nipedersen at grundfos.com (Nicholas Pedersen)
+Date: Wed Jul 14 08:33:50 2004
+Subject: [Paraview] Pause in batch script
+Message-ID: <OF2F956C83.96F9EC69-ONC1256ED1.0044351B@grundfos.com>
+
+
+
+
+
+Hi,
+
+I would like ParaView to act as visualizer for a transient CFD simulation
+'on-the-run', that is ParaView should load results files in Ensgiht format
+as soon as they appear in a specified data directory.
+
+For this means I could follow at least two different approaches:
+a) write a batch script that calls Paraview once but includes a 'pause'
+function waiting for new files to appear before proceeding. How do I
+accomplish this file testing _inside_ a *.pvs script?
+
+b) make the file testing outside paraview and then launch a *.pvs script
+telling Paraview to update the plot. How do l invoke a *.pvs script on an
+_existing_ Paraview session?
+
+Regards,
+
+Nicholas
+
+---------------------------------------------------------------------------------------------------------
+
+Nicholas Pedersen, Ph.D.            Email: nipedersen@grundfos.com
+Development Engineer                 Tel: +45 8750 4767 (direct)
+Fluid Dynamic Engineering          Fax: +45 8750 1491
+Grundfos Management A/S
+Poul Due Jensens Vej 7
+DK-8850 Bjerringbro
+---------------------------------------------------------------------------------------------------------
+
+From ahrenholz at cab.bau.tu-bs.de  Wed Jul 14 15:10:23 2004
+From: ahrenholz at cab.bau.tu-bs.de (Benjamin Ahrenholz)
+Date: Wed Jul 14 15:08:14 2004
+Subject: [Paraview] 64 Bit binaries?
+Message-ID: <20040714190759.A162C21C44@elrond.cab.bau.tu-bs.de>
+
+Hi all,
+
+we are trying to visualize huge binary datafiles with ParaView. Each one
+contains just single float values and has at least a size of 2 Gbyte (raw
+binary or hdf5). However, a splitting of these files is costly and not very
+usefull. Our hardware is theoretically capable of managing these amounts of
+data (an Opteron Cluster with 160Gbyte RAM and 96 Processors under SuSE
+64Bit and a VR-PC with Windows XP AMD64-Edition and 8Gbyte RAM. Our lack is
+a compiler which can build either binaries for Windows64 or SuSE-Linux. On
+Linux we already tried: PGI, gcc and Intel compilers - and failed :/
+On Windows we are waiting for VS.NET 2005 which should be capable of
+building optimized AMD64 code (the install of the May Preview did
+unfortunatly fail). My question now: Does anybody has experience with
+building binaries on 64Bit platforms? Or, can somebody provide binaries?
+Preferably for Windows, but SuSE Linux would help a lot, too. Any help is
+greatly appreciated.
+
+Thanks.
+
+kind regards,
+
+Benjamin Ahrenholz
+_________________________________
+
+From ezequiel at ipna.csic.es  Thu Jul 15 02:14:38 2004
+From: ezequiel at ipna.csic.es (Ezequiel Quintana Morales)
+Date: Thu Jul 15 03:28:07 2004
+Subject: [Paraview] 64 Bit binaries?
+In-Reply-To: <20040714190759.A162C21C44@elrond.cab.bau.tu-bs.de>
+References: <20040714190759.A162C21C44@elrond.cab.bau.tu-bs.de>
+Message-ID: <200407150814.38325.ezequiel@ipna.csic.es>
+
+Hi,
+I've compiled ParaView on a dual opteron, running SuSE Linux 9.1 x86_64. I can 
+send you a compressed tar of the compiled directory, or help you on building 
+it. That file tar.bz2 is about 30MB so, if you give me a place I can upload 
+it.
+Regards,
+Ezequiel
+
+P.S. What I have is CVS version of ParaView (08/07/2004) and SuSE 9.1 obtained 
+from FTP.
+
+El Mi?rcoles, 14 de Julio de 2004 21:10, Benjamin Ahrenholz escribi?:
+> Hi all,
+>
+> we are trying to visualize huge binary datafiles with ParaView. Each one
+> contains just single float values and has at least a size of 2 Gbyte (raw
+> binary or hdf5). However, a splitting of these files is costly and not very
+> usefull. Our hardware is theoretically capable of managing these amounts of
+> data (an Opteron Cluster with 160Gbyte RAM and 96 Processors under SuSE
+> 64Bit and a VR-PC with Windows XP AMD64-Edition and 8Gbyte RAM. Our lack is
+> a compiler which can build either binaries for Windows64 or SuSE-Linux. On
+> Linux we already tried: PGI, gcc and Intel compilers - and failed :/
+> On Windows we are waiting for VS.NET 2005 which should be capable of
+> building optimized AMD64 code (the install of the May Preview did
+> unfortunatly fail). My question now: Does anybody has experience with
+> building binaries on 64Bit platforms? Or, can somebody provide binaries?
+> Preferably for Windows, but SuSE Linux would help a lot, too. Any help is
+> greatly appreciated.
+>
+> Thanks.
+>
+> kind regards,
+>
+> Benjamin Ahrenholz
+> _________________________________
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+From m.janssens at nabla.co.uk  Thu Jul 15 05:41:14 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Thu Jul 15 05:41:19 2004
+Subject: [Paraview] 64 Bit binaries?
+In-Reply-To: <200407150814.38325.ezequiel@ipna.csic.es>
+References: <20040714190759.A162C21C44@elrond.cab.bau.tu-bs.de>
+	<200407150814.38325.ezequiel@ipna.csic.es>
+Message-ID: <40F6513A.8070207@nabla.co.uk>
+
+We compiled Paraview on a dual opteron on a SuSE Linux 9.1 x86_64 as 
+well. It compiles and runs fine when compiled in 32 bit mode (-m32) but 
+we had to dig around in the makefiles to compile/link 64 bit (-m64) and 
+then it coredumps somewhere in tcl. So did you manage to make it run in 
+64 bit mode?
+
+Regards,
+
+Mattijs
+
+(Traceback gives:
+
+#0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkCommonTCL.so
+(gdb) where
+#0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkCommonTCL.so
+#1  0x0000002a96adb764 in Tcl_ScanElement () from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkCommonTCL.so
+#2  0x0000002a96adba90 in Tcl_Merge () from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkCommonTCL.so
+#3  0x0000002a96439014 in vtkKWApplication::InitializeTcl ()
+    from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkKWWidgetsTCL.so
+#4  0x0000002a95f262d7 in vtkPVApplication::InitializeTcl ()
+    from 
+/home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/libvtkKWParaView.so
+#5  0x0000000000402b53 in MyMain ()
+#6  0x0000000000402f87 in main ()
+)
+
+
+Ezequiel Quintana Morales wrote:
+> Hi,
+> I've compiled ParaView on a dual opteron, running SuSE Linux 9.1 x86_64. I can 
+> send you a compressed tar of the compiled directory, or help you on building 
+> it. That file tar.bz2 is about 30MB so, if you give me a place I can upload 
+> it.
+> Regards,
+> Ezequiel
+> 
+> P.S. What I have is CVS version of ParaView (08/07/2004) and SuSE 9.1 obtained 
+> from FTP.
+> 
+> El Mi?rcoles, 14 de Julio de 2004 21:10, Benjamin Ahrenholz escribi?:
+> 
+>>Hi all,
+>>
+>>we are trying to visualize huge binary datafiles with ParaView. Each one
+>>contains just single float values and has at least a size of 2 Gbyte (raw
+>>binary or hdf5). However, a splitting of these files is costly and not very
+>>usefull. Our hardware is theoretically capable of managing these amounts of
+>>data (an Opteron Cluster with 160Gbyte RAM and 96 Processors under SuSE
+>>64Bit and a VR-PC with Windows XP AMD64-Edition and 8Gbyte RAM. Our lack is
+>>a compiler which can build either binaries for Windows64 or SuSE-Linux. On
+>>Linux we already tried: PGI, gcc and Intel compilers - and failed :/
+>>On Windows we are waiting for VS.NET 2005 which should be capable of
+>>building optimized AMD64 code (the install of the May Preview did
+>>unfortunatly fail). My question now: Does anybody has experience with
+>>building binaries on 64Bit platforms? Or, can somebody provide binaries?
+>>Preferably for Windows, but SuSE Linux would help a lot, too. Any help is
+>>greatly appreciated.
+>>
+>>Thanks.
+>>
+>>kind regards,
+>>
+>>Benjamin Ahrenholz
+>>_________________________________
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+
+From berklist at nycap.rr.com  Thu Jul 15 08:21:28 2004
+From: berklist at nycap.rr.com (Berk Geveci)
+Date: Thu Jul 15 08:21:37 2004
+Subject: [Paraview] Pause in batch script
+In-Reply-To: <OF2F956C83.96F9EC69-ONC1256ED1.0044351B@grundfos.com>
+References: <OF2F956C83.96F9EC69-ONC1256ED1.0044351B@grundfos.com>
+Message-ID: <1089894088.19635.10.camel@silverymoon>
+
+Hi.
+
+The most important thing you need to know is that all ParaView scripts
+are Tcl scripts (and support Tk). You can do anything you can do in Tcl
+in them. Here is an example .pvs script:
+
+set shouldCont 1
+while {1} {
+    if { $shouldCont } {
+# do something here
+        update
+    } else {
+        break
+    }
+}
+
+As you can see, this script continuously update the GUI (the update Tk
+call) if shouldCont is set to false. This means that while this script
+is running, the user will be able to interact with ParaView. To exit
+the script, the user has to set shouldCont to 0 in the command prompt.
+The simpler thing to do would be to create a pop-up window that has
+an exit button. 
+Inside the while loop, you can do whatever Tcl allows you to do. You can
+check if a file has been modified and update ParaView accordingly, you
+can even create a socket connection to some server to communicate. One
+word of caution: changing ParaView state while the user is interacting
+may lead to instability. For example, modifying a source while the
+user is changing parameters might have unexpected side effects.
+
+-Berk
+
+On Wed, 2004-07-14 at 08:33, Nicholas Pedersen wrote:
+> 
+> 
+> Hi,
+> 
+> I would like ParaView to act as visualizer for a transient CFD simulation
+> 'on-the-run', that is ParaView should load results files in Ensgiht format
+> as soon as they appear in a specified data directory.
+> 
+> For this means I could follow at least two different approaches:
+> a) write a batch script that calls Paraview once but includes a 'pause'
+> function waiting for new files to appear before proceeding. How do I
+> accomplish this file testing _inside_ a *.pvs script?
+> 
+> b) make the file testing outside paraview and then launch a *.pvs script
+> telling Paraview to update the plot. How do l invoke a *.pvs script on an
+> _existing_ Paraview session?
+> 
+> Regards,
+> 
+> Nicholas
+> 
+> ---------------------------------------------------------------------------------------------------------
+> 
+> Nicholas Pedersen, Ph.D.            Email: nipedersen@grundfos.com
+> Development Engineer                 Tel: +45 8750 4767 (direct)
+> Fluid Dynamic Engineering          Fax: +45 8750 1491
+> Grundfos Management A/S
+> Poul Due Jensens Vej 7
+> DK-8850 Bjerringbro
+> ---------------------------------------------------------------------------------------------------------
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+From ahrenholz at cab.bau.tu-bs.de  Thu Jul 15 09:24:23 2004
+From: ahrenholz at cab.bau.tu-bs.de (Benjamin Ahrenholz)
+Date: Thu Jul 15 09:22:16 2004
+Subject: [Paraview] 64 Bit binaries?
+In-Reply-To: <40F6513A.8070207@nabla.co.uk>
+Message-ID: <20040715132156.D880F21A9C@elrond.cab.bau.tu-bs.de>
+
+Hi,
+
+Thanks for your replies. We continue trying to compile with gcc34 (I guess
+it was gcc32 we've used, which produced an error of a strange kind) as we
+will try the binaries Ezequiel too. Somebody had any success on a windows64
+platform?
+
+Regards,
+
+Benjamin
+
+
+> -----Original Message-----
+> From: paraview-bounces@paraview.org 
+> [mailto:paraview-bounces@paraview.org] On Behalf Of Mattijs Janssens
+> Sent: Thursday, July 15, 2004 11:41 AM
+> Cc: paraview@paraview.org
+> Subject: Re: [Paraview] 64 Bit binaries?
+> 
+> We compiled Paraview on a dual opteron on a SuSE Linux 9.1 
+> x86_64 as well. It compiles and runs fine when compiled in 32 
+> bit mode (-m32) but we had to dig around in the makefiles to 
+> compile/link 64 bit (-m64) and then it coredumps somewhere in 
+> tcl. So did you manage to make it run in
+> 64 bit mode?
+> 
+> Regards,
+> 
+> Mattijs
+> 
+> (Traceback gives:
+> 
+> #0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from 
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkCommonTCL.so
+> (gdb) where
+> #0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from 
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkCommonTCL.so
+> #1  0x0000002a96adb764 in Tcl_ScanElement () from 
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkCommonTCL.so
+> #2  0x0000002a96adba90 in Tcl_Merge () from 
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkCommonTCL.so
+> #3  0x0000002a96439014 in vtkKWApplication::InitializeTcl ()
+>     from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkKWWidgetsTCL.so
+> #4  0x0000002a95f262d7 in vtkPVApplication::InitializeTcl ()
+>     from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc3
+> 4OptLAM/bin/libvtkKWParaView.so
+> #5  0x0000000000402b53 in MyMain ()
+> #6  0x0000000000402f87 in main ()
+> )
+> 
+> 
+> Ezequiel Quintana Morales wrote:
+> > Hi,
+> > I've compiled ParaView on a dual opteron, running SuSE Linux 9.1 
+> > x86_64. I can send you a compressed tar of the compiled 
+> directory, or 
+> > help you on building it. That file tar.bz2 is about 30MB so, if you 
+> > give me a place I can upload it.
+> > Regards,
+> > Ezequiel
+> > 
+> > P.S. What I have is CVS version of ParaView (08/07/2004) 
+> and SuSE 9.1 
+> > obtained from FTP.
+> > 
+> > El Mi?rcoles, 14 de Julio de 2004 21:10, Benjamin Ahrenholz 
+> escribi?:
+> > 
+> >>Hi all,
+> >>
+> >>we are trying to visualize huge binary datafiles with 
+> ParaView. Each 
+> >>one contains just single float values and has at least a size of 2 
+> >>Gbyte (raw binary or hdf5). However, a splitting of these files is 
+> >>costly and not very usefull. Our hardware is theoretically 
+> capable of 
+> >>managing these amounts of data (an Opteron Cluster with 
+> 160Gbyte RAM 
+> >>and 96 Processors under SuSE 64Bit and a VR-PC with Windows XP 
+> >>AMD64-Edition and 8Gbyte RAM. Our lack is a compiler which 
+> can build 
+> >>either binaries for Windows64 or SuSE-Linux. On Linux we already 
+> >>tried: PGI, gcc and Intel compilers - and failed :/ On 
+> Windows we are 
+> >>waiting for VS.NET 2005 which should be capable of building 
+> optimized 
+> >>AMD64 code (the install of the May Preview did unfortunatly 
+> fail). My 
+> >>question now: Does anybody has experience with building 
+> binaries on 64Bit platforms? Or, can somebody provide binaries?
+> >>Preferably for Windows, but SuSE Linux would help a lot, 
+> too. Any help 
+> >>is greatly appreciated.
+> >>
+> >>Thanks.
+> >>
+> >>kind regards,
+> >>
+> >>Benjamin Ahrenholz
+> >>_________________________________
+> >>
+> >>_______________________________________________
+> >>ParaView mailing list
+> >>ParaView@paraview.org
+> >>http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+From ezequiel at ipna.csic.es  Mon Jul 19 02:14:19 2004
+From: ezequiel at ipna.csic.es (Ezequiel Quintana Morales)
+Date: Mon Jul 19 03:26:21 2004
+Subject: [Paraview] 64 Bit binaries?
+In-Reply-To: <40F6513A.8070207@nabla.co.uk>
+References: <20040714190759.A162C21C44@elrond.cab.bau.tu-bs.de> <200407150814
+	.38325.ezequiel@ipna.csic.es> <40F6513A.8070207@nabla.co.uk>
+Message-ID: <200407190814.19439.ezequiel@ipna.csic.es>
+
+Hi,
+I had some problems with tcl also but I installed also tcl 8.3, and everything 
+went fine. The program runs well with my input files (h5 and pdb).
+I'm sending attached a file showing the output for 'file *' in the 
+paraview/bin directory.
+Regards,
+Ezequie
+
+El Jueves, 15 de Julio de 2004 11:41, Mattijs Janssens escribi?:
+> We compiled Paraview on a dual opteron on a SuSE Linux 9.1 x86_64 as
+> well. It compiles and runs fine when compiled in 32 bit mode (-m32) but
+> we had to dig around in the makefiles to compile/link 64 bit (-m64) and
+> then it coredumps somewhere in tcl. So did you manage to make it run in
+> 64 bit mode?
+>
+> Regards,
+>
+> Mattijs
+>
+> (Traceback gives:
+>
+> #0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkCommonTCL.so (gdb) where
+> #0  0x0000002a96adb7ac in Tcl_ScanCountedElement () from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkCommonTCL.so #1  0x0000002a96adb764 in Tcl_ScanElement () from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkCommonTCL.so #2  0x0000002a96adba90 in Tcl_Merge () from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkCommonTCL.so #3  0x0000002a96439014 in vtkKWApplication::InitializeTcl
+> ()
+>     from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkKWWidgetsTCL.so #4  0x0000002a95f262d7 in
+> vtkPVApplication::InitializeTcl ()
+>     from
+> /home/dm2/henry/foam/paraview-17-7-04/platforms/linuxAMD64Gcc34OptLAM/bin/l
+>ibvtkKWParaView.so #5  0x0000000000402b53 in MyMain ()
+> #6  0x0000000000402f87 in main ()
+> )
+>
+> Ezequiel Quintana Morales wrote:
+> > Hi,
+> > I've compiled ParaView on a dual opteron, running SuSE Linux 9.1 x86_64.
+> > I can send you a compressed tar of the compiled directory, or help you on
+> > building it. That file tar.bz2 is about 30MB so, if you give me a place I
+> > can upload it.
+> > Regards,
+> > Ezequiel
+> >
+> > P.S. What I have is CVS version of ParaView (08/07/2004) and SuSE 9.1
+> > obtained from FTP.
+> >
+> > El Mi?rcoles, 14 de Julio de 2004 21:10, Benjamin Ahrenholz escribi?:
+> >>Hi all,
+> >>
+> >>we are trying to visualize huge binary datafiles with ParaView. Each one
+> >>contains just single float values and has at least a size of 2 Gbyte (raw
+> >>binary or hdf5). However, a splitting of these files is costly and not
+> >> very usefull. Our hardware is theoretically capable of managing these
+> >> amounts of data (an Opteron Cluster with 160Gbyte RAM and 96 Processors
+> >> under SuSE 64Bit and a VR-PC with Windows XP AMD64-Edition and 8Gbyte
+> >> RAM. Our lack is a compiler which can build either binaries for
+> >> Windows64 or SuSE-Linux. On Linux we already tried: PGI, gcc and Intel
+> >> compilers - and failed :/ On Windows we are waiting for VS.NET 2005
+> >> which should be capable of building optimized AMD64 code (the install of
+> >> the May Preview did unfortunatly fail). My question now: Does anybody
+> >> has experience with building binaries on 64Bit platforms? Or, can
+> >> somebody provide binaries? Preferably for Windows, but SuSE Linux would
+> >> help a lot, too. Any help is greatly appreciated.
+> >>
+> >>Thanks.
+> >>
+> >>kind regards,
+> >>
+> >>Benjamin Ahrenholz
+> >>_________________________________
+> >>
+> >>_______________________________________________
+> >>ParaView mailing list
+> >>ParaView@paraview.org
+> >>http://www.paraview.org/mailman/listinfo/paraview
+> >
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-------------- next part --------------
+CommonCxxTests:              ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+ConvertImage:                ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+FilteringCxxTests:           ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+GenericCommunicator:         ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+GraphicsCxxTests:            ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+H5detect:                    ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+HybridCxxTests:              ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+ImagingCxxTests:             ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+IOCxxTests:                  ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+libkwsys.so:                 ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkClientServer.so:       ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkCommonCS.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkCommon.so:             ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkCommonTCL.so:          ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkDICOMParser.so:        ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkexpat.so:              ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkFilteringCS.so:        ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkFiltering.so:          ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkfreetype.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkftgl.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkGraphicsCS.so:         ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkGraphics.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkhdf5.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkHybridCS.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkHybrid.so:             ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkImagingCS.so:          ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkImaging.so:            ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkIOCS.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkIO.so:                 ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkjpeg.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkKWCommon.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkKWParaViewCS.so:       ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkKWParaView.so:         ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkKWWidgetsTCL.so:       ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkParallelCS.so:         ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkParallel.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkpng.so:                ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVCommonCS.so:         ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVCommon.so:           ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVFiltersCS.so:        ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVFilters.so:          ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVServerManager.so:    ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkPVServerManagerTCL.so: ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkRenderingCS.so:        ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkRendering.so:          ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtktiff.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkXdmfCS.so:             ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkXdmf.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libvtkzlib.so:               ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+libXdmf.so:                  ELF 64-bit LSB shared object, AMD x86-64, version 1 (SYSV), not stripped
+mkg3states:                  ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+ParallelIsoTest:             ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+paraview:                    ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+ProcessXML:                  ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+pvTestDriver:                ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+RenderingCxxTests:           ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+SocketClient:                ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+SocketServer:                ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TestCxxFeatures:             ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TestInstantiator:            ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TestPStream:                 ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TestRandom:                  ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+ThreadedCommunicator:        ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TimeRenderer:                ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+TimeRenderer2:               ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+vtkTestCommon:               ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+vtkTestFilters:              ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+vtkWrapClientServer:         ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+vtkWrapTcl:                  ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+vtkWrapTclInit:              ELF 64-bit LSB executable, AMD x86-64, version 1 (SYSV), for GNU/Linux 2.4.1, dynamically linked (uses shared libs), not stripped
+From welling at stat.cmu.edu  Mon Jul 19 21:04:25 2004
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Mon Jul 19 21:04:34 2004
+Subject: [Paraview] Paraview render servers and X
+Message-ID: <200407200104.i6K14Pd5019509@tingenek.stat.cmu.edu>
+
+
+Hi folks;
+  I'm trying to set up a strange Paraview client-server configuration in which 
+render servers running under MPI use Chromium to draw to the displays of 
+separate rendering service machines.  (Yes, I know; I can use mesa to do the 
+rendering off-screen on the render server hosts.  Just humor me for a minute). 
+ The Paraview render servers all need an X connection to their respective 
+rendering service machines, even though they don't run X widgets.  As far as I 
+can tell, the X DISPLAY environment variable is only used in 
+vtkXOpenGLRenderWindow, where it sets up certain window connection bits that 
+are then used with glX calls to set up the actual GL rendering context.
+  Does a Paraview render server do anything with X other than set up the GL 
+context using glX calls?  If not, I can modify vtkXOpenGLRenderWindow to use 
+the corresponding Chromium calls to set up the glX context and avoid touching 
+the X display per se.  If X is used for something else, like reading back from 
+the window or communicating redraw events to the render servers, that approach 
+is pretty hopeless and I'll have to figure out some other solution.  Has 
+anyone already created a vtkCrOpenGLRenderWindow class which will do this job?
+  Sorry to ask such an open-ended question.  Chromium I can handle, but I'm 
+very naive about vtk internals.
+
+Thanks,
+-Joel
+ welling@psc.edu
+
+
+
+From suz at mito.ssd.ssg.fujitsu.com  Tue Jul 20 22:11:20 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Tue Jul 20 09:14:53 2004
+Subject: [Paraview] How to run Paraview by MPI
+Message-ID: <040720221120.M0114091@cinq.mito.ssd.ssg.fujitsu.com>
+
+Hello, all
+
+ I ran paraview1.4.3 by mpirun , but following error occured.
+
+----------------------------------------------------------
+% mpirun -np 2 /home/suz/paraview143/bin/paraview --server
+Waiting for client...
+MPI_Recv: invalid tag argument (rank 1, comm 2)
+Rank (1, MPI_COMM_WORLD): Call stack within LAM:
+Rank (1, MPI_COMM_WORLD):  - MPI_Recv()
+Rank (1, MPI_COMM_WORLD):  - main()
+-----------------------------------------------------------------------------
+
+One of the processes started by mpirun has exited with a nonzero exit
+code.  This typically indicates that the process finished in error.
+If your process did not finish in error, be sure to include a "return
+0" or "exit(0)" in your C code before exiting the application.
+
+PID 19998 failed on node n0 with exit status 1.
+----------------------------------------------------------
+
+ 
+ Please tell me how do I run Paraview by MPI?
+
+ I made paraview with the following ccmake flags.
+
+ MPI_EXTRA_LIBRARY                /usr/lib/liblam.a
+ MPI_INCLUDE_PATH                 /usr/include
+ MPI_LIBRARY                      /usr/lib/libmpi.a
+ VTK_MPIRUN_EXE                   /usr/bin/mpirun
+ VTK_MPI_MAX_NUMPROCS             2
+ VTK_MPI_NUMPROC_FLAG             -np
+ VTK_USE_MPI                      ON
+
+
+ OS is RedHat 8.0.
+ 
+ Best Regards..
+
+
+-------
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From suz at mito.ssd.ssg.fujitsu.com  Fri Jul 23 10:02:59 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Thu Jul 22 21:03:05 2004
+Subject: [Paraview] Re: How to run Paraview by MPI
+In-Reply-To: Your message of "Tue, 20 Jul 2004 22:11:20 JST".
+	<040720221120.M0114091@cinq.mito.ssd.ssg.fujitsu.com>
+Message-ID: <040723100259.M0321260@cinq.mito.ssd.ssg.fujitsu.com>
+
+Hello,all
+
+>> Hello, all
+>> 
+>>  I ran paraview1.4.3 by mpirun , but following error occured.
+>> 
+>> ----------------------------------------------------------
+>> % mpirun -np 2 /home/suz/paraview143/bin/paraview --server
+>> Waiting for client...
+>> MPI_Recv: invalid tag argument (rank 1, comm 2)
+>> Rank (1, MPI_COMM_WORLD): Call stack within LAM:
+>> Rank (1, MPI_COMM_WORLD):  - MPI_Recv()
+>> Rank (1, MPI_COMM_WORLD):  - main()
+>> -----------------------------------------------------------------------------
+>> 
+>> One of the processes started by mpirun has exited with a nonzero exit
+>> code.  This typically indicates that the process finished in error.
+>> If your process did not finish in error, be sure to include a "return
+>> 0" or "exit(0)" in your C code before exiting the application.
+>> 
+>> PID 19998 failed on node n0 with exit status 1.
+>> ----------------------------------------------------------
+>> 
+>>  
+>>  Please tell me how do I run Paraview by MPI?
+
+ When I made with LAM/MPI, this error occurs.
+ But I made with MPI-CH, I can run paraview right.
+ I don't know the reason...
+
+ Ccmake's flags are following in the case of MPI-CH.
+
+ MPI_EXTRA_LIBRARY                MPI_EXTRA_LIBRARY-NOTFOUND
+ MPI_INCLUDE_PATH                 /home/suz/local/include
+ MPI_LIBRARY                      /home/suz/local/lib/libmpich.a
+
+ VTK_MPIRUN_EXE                   /home/suz/local/bin/mpirun
+ VTK_MPI_MAX_NUMPROCS             2
+ VTK_MPI_NUMPROC_FLAG             -np
+ VTK_MPI_POSTFLAGS
+ VTK_MPI_PREFLAGS
+ VTK_USE_MPI                      ON
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From berklist at nycap.rr.com  Fri Jul 23 08:12:18 2004
+From: berklist at nycap.rr.com (Berk Geveci)
+Date: Fri Jul 23 08:13:21 2004
+Subject: [Paraview] Re: How to run Paraview by MPI
+In-Reply-To: <040723100259.M0321260@cinq.mito.ssd.ssg.fujitsu.com>
+References: <040723100259.M0321260@cinq.mito.ssd.ssg.fujitsu.com>
+Message-ID: <1090584738.23434.1.camel@silverymoon>
+
+Which version of LAM are you using? LAM in general has better
+error reporting than mpich so something that runs fine on mpich
+might produce an error on LAM. I will look into this.
+
+-Berk
+
+On Thu, 2004-07-22 at 21:02, Koichiro Suzuki wrote:
+> Hello,all
+> 
+> >> Hello, all
+> >> 
+> >>  I ran paraview1.4.3 by mpirun , but following error occured.
+> >> 
+> >> ----------------------------------------------------------
+> >> % mpirun -np 2 /home/suz/paraview143/bin/paraview --server
+> >> Waiting for client...
+> >> MPI_Recv: invalid tag argument (rank 1, comm 2)
+> >> Rank (1, MPI_COMM_WORLD): Call stack within LAM:
+> >> Rank (1, MPI_COMM_WORLD):  - MPI_Recv()
+> >> Rank (1, MPI_COMM_WORLD):  - main()
+> >> -----------------------------------------------------------------------------
+> >> 
+> >> One of the processes started by mpirun has exited with a nonzero exit
+> >> code.  This typically indicates that the process finished in error.
+> >> If your process did not finish in error, be sure to include a "return
+> >> 0" or "exit(0)" in your C code before exiting the application.
+> >> 
+> >> PID 19998 failed on node n0 with exit status 1.
+> >> ----------------------------------------------------------
+> >> 
+> >>  
+> >>  Please tell me how do I run Paraview by MPI?
+> 
+>  When I made with LAM/MPI, this error occurs.
+>  But I made with MPI-CH, I can run paraview right.
+>  I don't know the reason...
+> 
+>  Ccmake's flags are following in the case of MPI-CH.
+> 
+>  MPI_EXTRA_LIBRARY                MPI_EXTRA_LIBRARY-NOTFOUND
+>  MPI_INCLUDE_PATH                 /home/suz/local/include
+>  MPI_LIBRARY                      /home/suz/local/lib/libmpich.a
+> 
+>  VTK_MPIRUN_EXE                   /home/suz/local/bin/mpirun
+>  VTK_MPI_MAX_NUMPROCS             2
+>  VTK_MPI_NUMPROC_FLAG             -np
+>  VTK_MPI_POSTFLAGS
+>  VTK_MPI_PREFLAGS
+>  VTK_USE_MPI                      ON
+> 
+> --
+> Koichiro Suzuki
+> suz@mito.ssd.ssg.fujitsu.com
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+From suz at mito.ssd.ssg.fujitsu.com  Fri Jul 23 21:27:19 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Fri Jul 23 08:27:30 2004
+Subject: [Paraview] Off screen rendering and software rendering
+Message-ID: <040723212719.M1921260@cinq.mito.ssd.ssg.fujitsu.com>
+
+Hello all,
+
+ I've just stuck on some points about "off screen rendering" and
+"software rendering" of ParaView.
+ Could you tell me?
+
+1. How does the process behave with/without "--use-offscreen-rendering" ?
+   Regardless of the option "--use-offscreen-rendering", the server process
+   does not have a window. Does "Off Screen Rendering" mean "no windows" ?
+   Without "--use-offscreen-rendering", is the rendering processed on a client
+  after objects are transfered to client ?
+
+2. What's the difference between 
+   ("--use-software-rendering" or "--use-satellite-software")  and
+   "--use-offscreen-rendering" options?
+
+ Best Regards.
+
+----
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+
+From suz at mito.ssd.ssg.fujitsu.com  Sat Jul 24 18:13:15 2004
+From: suz at mito.ssd.ssg.fujitsu.com (Koichiro Suzuki)
+Date: Sat Jul 24 05:13:47 2004
+Subject: [Paraview] Re: How to run Paraview by MPI
+In-Reply-To: Your message of "Fri, 23 Jul 2004 10:02:59 JST".
+	<040723100259.M0321260@cinq.mito.ssd.ssg.fujitsu.com>
+Message-ID: <040724181315.M0122871@cinq.mito.ssd.ssg.fujitsu.com>
+
+Hello Berk.
+
+>Which version of LAM are you using? LAM in general has better
+>error reporting than mpich so something that runs fine on mpich
+>might produce an error on LAM. I will look into this.
+
+ I used LAM 6.5.6, because RedHat 8.0 includes it.
+
+ Today, I installed LAM 7.0.6 and made ParaView with this new LAM.
+ Then ParaView worked well in parallel.
+
+ Thank you, Berk.
+
+--
+Koichiro Suzuki
+suz@mito.ssd.ssg.fujitsu.com
+From welling at stat.cmu.edu  Tue Jul 27 19:02:13 2004
+From: welling at stat.cmu.edu (Joel Welling)
+Date: Tue Jul 27 19:02:17 2004
+Subject: [Paraview] Build problem on Compaq Alpha OSF1: ProcessXML fails
+Message-ID: <200407272302.i6RN2DBA000321@tingenek.stat.cmu.edu>
+
+
+Hey folks;
+  We've been working through a series of problems building ParaView 1.4.3 on 
+our Compaq AlphaServer under OSF1 (aka Tru64 Unix).  The current issue is that 
+ProcessXML appears to be quitting about half way through the production of 
+Servers/ServerManager/vtkSMGeneratedModules.h .  The last few lines of the 
+generated file are:
+
+// Get single string
+char* vtkSMDefaultModulesfiltersGetInterfaces()
+{
+  int len = ( 0
+    + strlen(vtkSMDefaultModulesfilters0)
+    + strlen(vtkSMDefaultModulesfilters1)
+    + strlen(vtkSMDefaultModulesfilters2)
+
+(at which point the file ends without a terminating newline).  
+Servers/ServerManager/Resources/filters.xml is at least superficially 
+well-formed.  Is there any known problem with this?  Are there any hidden 
+debugging options on ProcessXML?
+
+Thanks,
+-Joel
+
+From hstreit at swri.edu  Thu Jul 29 13:49:27 2004
+From: hstreit at swri.edu (H. Streit)
+Date: Thu Jul 29 13:49:36 2004
+Subject: [Paraview] License Question
+Message-ID: <410938A7.3000309@swri.edu>
+
+Guys,
+	I think I've asked about this *way* back when, but is ParaView GLP? 
+If not, what license does it fall under?  The reason I ask is that one 
+of our QA guys here at work is asking quite a few questions about it. 
+  We're almost to the point of either not using it, or re-submitting a 
+lot of paperwork on the validity of the application.
+From berklist at nycap.rr.com  Thu Jul 29 13:58:19 2004
+From: berklist at nycap.rr.com (Berk Geveci)
+Date: Thu Jul 29 13:58:41 2004
+Subject: [Paraview] License Question
+In-Reply-To: <410938A7.3000309@swri.edu>
+References: <410938A7.3000309@swri.edu>
+Message-ID: <1091123899.11073.19.camel@silverymoon>
+
+Look at:
+
+http://www.paraview.org/HTML/Copyright.html
+
+It is a BSD type license, which is a lot less restrictive
+than GPL.
+
+-Berk
+
+On Thu, 2004-07-29 at 13:49, H. Streit wrote:
+> Guys,
+> 	I think I've asked about this *way* back when, but is ParaView GLP? 
+> If not, what license does it fall under?  The reason I ask is that one 
+> of our QA guys here at work is asking quite a few questions about it. 
+>   We're almost to the point of either not using it, or re-submitting a 
+> lot of paperwork on the validity of the application.
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+From dcthomp at sandia.gov  Thu Jul 29 14:02:31 2004
+From: dcthomp at sandia.gov (David C. Thompson)
+Date: Thu Jul 29 14:02:51 2004
+Subject: [Paraview] License Question
+In-Reply-To: <410938A7.3000309@swri.edu>
+References: <410938A7.3000309@swri.edu>
+Message-ID: <1091124151.2440.17.camel@fozzy.ran.sandia.gov>
+
+>         I think I've asked about this *way* back when, but is ParaView
+> GLP? If not, what license does it fall under? The reason I ask is that
+> one of our QA guys here at work is asking quite a few questions about
+> it.  We're almost to the point of either not using it, or
+> re-submitting a lot of paperwork on the validity of the application.
+
+ParaView's license is less strict than the GPL. See this link off the
+main ParaView web page for the exact conditions:
+http://www.paraview.org/HTML/Copyright.html
+
+
+From motti_adar at surfree.net.il  Fri Jul 30 05:08:41 2004
+From: motti_adar at surfree.net.il (Motti)
+Date: Fri Jul 30 04:24:11 2004
+Subject: [Paraview] paraview
+Message-ID: <opsbx00ro0mxyjxs@mail.surfree.net.il>
+
+Hi.
+
+I just installed paraview oon my linux PC (RedHat 9) and I am getting the 
+following error message -
+Xlib: extension "GLX" missing on display ":0.0".
+What does it mean?
+What do I have to do to make it work?
+Thanks
+Motti
+
+From m.janssens at nabla.co.uk  Fri Jul 30 04:41:37 2004
+From: m.janssens at nabla.co.uk (Mattijs Janssens)
+Date: Fri Jul 30 04:41:48 2004
+Subject: [Paraview] paraview
+In-Reply-To: <opsbx00ro0mxyjxs@mail.surfree.net.il>
+References: <opsbx00ro0mxyjxs@mail.surfree.net.il>
+Message-ID: <410A09C1.9040604@nabla.co.uk>
+
+I think it means that your X-server (Xfree or Xorg I assume) does not 
+know the GLX (OpenGL over X?) protocol.
+
+In Xfree you can load the module to implement the glx functionality. In 
+my /etc/X11/XF86Config file in the 'Module' section I have
+
+Section "Module"
+   Load         "dbe"
+   Load         "type1"
+   Load         "speedo"
+   Load         "freetype"
+   Load         "extmod"
+   Load         "glx"
+   Load         "v4l"
+#  Load         "dri"
+EndSection
+
+and I assume the glx module implements the GLX protocol. After changing 
+this file you probably have to restart the X server.
+
+Regards,
+
+Mattijs
+
+Motti wrote:
+> Hi.
+> 
+> I just installed paraview oon my linux PC (RedHat 9) and I am getting 
+> the following error message -
+> Xlib: extension "GLX" missing on display ":0.0".
+> What does it mean?
+> What do I have to do to make it work?
+> Thanks
+> Motti
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+From r.angeletti at auselda.it  Fri Jul 30 06:13:08 2004
+From: r.angeletti at auselda.it (Roberto Angeletti)
+Date: Fri Jul 30 06:14:12 2004
+Subject: [Paraview] ParaView on MacOSX ... ?
+Message-ID: <005801c4761d$cfe902e0$2d1519ac@Rangeletti>
+
+It's possible to download a MacOSX  ParaView  version ?
+If yes,  where ?
+
+If not, where it's possible to find documentation to recompile ParaView
+sources on MacOSX ?
+
+
+
+Best Regards
+
+Roberto Angeletti
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: http://public.kitware.com/pipermail/paraview/attachments/20040730/5b623e7a/attachment.html
+From motti_adar at surfree.net.il  Fri Jul 30 07:22:36 2004
+From: motti_adar at surfree.net.il (Motti)
+Date: Fri Jul 30 06:38:12 2004
+Subject: [Paraview] paraview
+Message-ID: <opsbx67ytgmxyjxs@mail.surfree.net.il>
+
+Hi.
+
+I just installed paraview on my linux PC (RedHat 9) and I am getting the 
+following error message -
+Xlib: extension "GLX" missing on display ":0.0".
+What does it mean?
+What do I have to do to make it work?
+Thanks
+Motti
+
+From amy.henderson at kitware.com  Fri Jul 30 08:28:58 2004
+From: amy.henderson at kitware.com (Amy Henderson)
+Date: Fri Jul 30 08:30:41 2004
+Subject: [Paraview] ParaView on MacOSX ... ?
+In-Reply-To: <005801c4761d$cfe902e0$2d1519ac@Rangeletti>
+References: <005801c4761d$cfe902e0$2d1519ac@Rangeletti>
+Message-ID: <6.1.2.0.2.20040730082325.03f1fbf0@pop.biz.rr.com>
+
+Hi Roberto,
+
+We do not have a precompiled binary for ParaView on the Mac, so you will 
+need to download the source code either from the ParaView web site 
+(http://www.paraview.org/HTML/Download.html) or through CVS.  Your version 
+of OSX must be at least Panther, and you must be using XWindows.  If you 
+have met these conditions, follow the instructions 
+(http://www.paraview.org/HTML/Install.html) for building ParaView on a 
+unix/linux system.
+
+- Amy
+
+At 06:13 AM 7/30/2004, Roberto Angeletti wrote:
+>It's possible to download a MacOSX  ParaView  version ?
+>If yes,  where ?
+>
+>If not, where it's possible to find documentation to recompile ParaView
+>sources on MacOSX ?
+>
+>
+>
+>Best Regards
+>
+>Roberto Angeletti
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From mccdo at iastate.edu  Sat Jul 31 22:21:08 2004
+From: mccdo at iastate.edu (Doug McCorkle)
+Date: Sat Jul 31 22:22:43 2004
+Subject: [Paraview] render module interface documentation
+In-Reply-To: <5.1.0.14.0.20040707113121.0221d138@pop.biz.rr.com>
+Message-ID: <200408010222.i712MaXl023788@mailhub-4.iastate.edu>
+
+Charles,
+      I again have time to look at the render module again. I have looked
+through the PVPartDisplay and am not sure where the actortopf translator
+would go. Which subclass were you thinking the translator would go in? 
+
+Doug
+
+>-----Original Message-----
+>From: Charles Law [mailto:charles.law@kitware.com]
+>Sent: Wednesday, July 07, 2004 10:50 AM
+>To: mccdo@iastate.edu; paraview@paraview.org
+>Subject: RE: [Paraview] render module interface documentation
+>
+>Doug,
+>
+>I believe the cave render module classes I referenced were added after
+>1.4.  I just looked at the vtkActorToPF web pages at UIUC.  It would be
+>easy enough to create the actor to PF translator object in a subclass of
+>vtkPVPartDisplay.  I assume that ParaView would keep its vtkRenderWindow
+>for the GUI, and Performer would manage its own rendering and cameras.  I
+>do not know enough about Performer to say any more.
+>
+>Charles.
+>
+>
+>At 01:17 PM 7/6/2004 -0500, Doug McCorkle wrote:
+>>Charles,
+>>      Thanks for your detailed response.  I look forward to your more
+>formal
+>>documentation. I would like to explore writing a plugin that would allow
+>>rendering with Performer by using the vtkActorToPF library out of UIUC. I
+>>would like to be able to take advantage of a scene graph and the
+>>functionality of paraview. Do you think this is feasible? Also, are there
+>>doxygen pages created for the vtk classes you mentioned?
+>>
+>>Doug
+>
+
+

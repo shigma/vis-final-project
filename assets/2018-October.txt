@@ -1,0 +1,681 @@
+From mathieu.westphal at kitware.com  Mon Oct  1 04:12:22 2018
+From: mathieu.westphal at kitware.com (Mathieu Westphal)
+Date: Mon, 1 Oct 2018 10:12:22 +0200
+Subject: [Paraview] Vive and Linux
+In-Reply-To: <CAHhX17dox1o7cv63SgXVrJRsLRQgE-zK=ey-0XqCwLoSsKvjBg@mail.gmail.com>
+References: <CAHhX17dUObdfd7HaYtZW1mM76f1ku=Egu2BL3XhyA9tsT2ohgg@mail.gmail.com>
+ <CANXz0SbgGqrdeYHeS+nn3VJFmxaJcsOsFUzq9ZE0C1-1w=3V0w@mail.gmail.com>
+ <5B721F7E-616E-4FB2-BF63-61D054EC0313@kitware.com>
+ <CAHhX17dox1o7cv63SgXVrJRsLRQgE-zK=ey-0XqCwLoSsKvjBg@mail.gmail.com>
+Message-ID: <CAC2t4UTH0Ktj+42OHNcrYewA7+2r1BAhFRy=QEqtpw-xEM43Tw@mail.gmail.com>
+
+This mailing list is getting closed.
+Feel free to head to https://discourse.paraview.org/ and open a new topic.
+
+Best,
+
+Mathieu Westphal
+
+
+On Fri, Sep 28, 2018 at 9:19 PM A <andrealphus at gmail.com> wrote:
+
+> Any update on Vive+PV? I'm looking to finally take my Vive out of the box
+> this weekend. If not, any non-PV suggestions? I'm on Ubuntu 16.04.
+>
+> thanks!
+> -a
+>
+> On Tue, Jun 26, 2018 at 7:02 AM David Thompson <david.thompson at kitware.com>
+> wrote:
+>
+>> > I think in the past PV with OpenVR has been built on Linux and worked.
+>> But that was months ago so I'm not sure the current state of it.
+>>
+>> I did manage to build and run it, but the drivers caused frequent hangs
+>> and crashes (not just ParaView, but all of Steam's apps, too).
+>>
+>>         David
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181001/afa92ecc/attachment.html>
+
+From joachim.pouderoux at kitware.com  Mon Oct  1 10:28:32 2018
+From: joachim.pouderoux at kitware.com (Joachim Pouderoux)
+Date: Mon, 01 Oct 2018 09:28:32 -0500
+Subject: [Paraview] Your latest invoice from Joachim Pouderoux - ADS-N78745
+Message-ID: <2890133051352217502.28D55DA2401603C0@paraview.org>
+
+Good day,
+
+
+
+Please note that we paid $1,083.58 against I.No.ADS-N78745 through Bank transfer.
+Kindly issue Credit Note against price difference of $262.10
+
+
+Best Regards,
+
+-
+Joachim Pouderoux
+T 475.914.7844  |  O 890.004.9162
+e:joachim.pouderoux at kitware.com
+
+-
+
+If you have any queries relating to the attached document please contact the accounts department.
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: ADS-N78745.doc
+Type: application/msword
+Size: 71296 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181001/d7287a14/attachment.doc>
+
+From johnpmooreiv at gmail.com  Mon Oct  8 15:44:07 2018
+From: johnpmooreiv at gmail.com (John Moore)
+Date: Mon, 8 Oct 2018 15:44:07 -0400
+Subject: [Paraview] .pvtu file distribution
+Message-ID: <CAPxeKp_STehaPkzDbrro4MuKFO9BnBkx_a8vz9Wm8X9t=YoYXg@mail.gmail.com>
+
+I am encountering issues loading parallel files in .pvtu format. Each .vtu
+file is ~ 4GB, and am running pvserver across four nodes, each with 6 GPUs.
+
+I can get the mesh to load if all the files (.pvtu, and .vtu) are on a
+Parallel File System. However, when only the .pvtu file is replicated
+across a non-shared file system, and the .vtu files are not, I get an error
+loading the file. Are the paraview readers supposed to support this kind of
+scenario, where each .vtu file is on a local (fast) filesystem?
+
+Best Regards,
+John
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181008/8f822ee4/attachment.html>
+
+From sabyasachi.ghoshdastidar at kuleuven.be  Thu Oct 18 03:31:36 2018
+From: sabyasachi.ghoshdastidar at kuleuven.be (Sabyasachi Ghosh Dastidar)
+Date: Thu, 18 Oct 2018 07:31:36 +0000
+Subject: [Paraview] Paraview-superbuild install fails on MacOS
+Message-ID: <a991311d47da428a8d509915d1e6a8b3@ICTS-S-EXMBX17.luna.kuleuven.be>
+
+
+Hi,
+
+I am trying to build and install paraview with the superbuild procedure on a MacOS. I have a few questions:
+
+1. When "ENABLE_QT5" is off, it builds successfully. However, "make install" fails due to the following error:
+
+----------------------
+
+[ 44%] Built target paraview
+[ 88%] Built target cxx11
+[100%] Built target cxx11_check
+Install the project...
+-- Install configuration: "Release"
+CTEST_FULL_OUTPUT
+CMake Error at /Library/paraview-superbuild/projects/paraview.bundle.common.cmake:99 (file):
+  file STRINGS file
+  "/Library/paraview-superbuild-build/install/Applications/paraview.app/Contents/Plugins/.plugins"
+  cannot be read.
+Call Stack (most recent call first):
+  /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:6 (include)
+  CMakeLists.txt:41 (include)
+
+
+CMake Error at /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:9 (message):
+  Creating the Apple package without the GUI is not supported.
+Call Stack (most recent call first):
+  CMakeLists.txt:41 (include)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Library/paraview-superbuild-build/cpack/paraview/DragNDrop/install/CMakeFiles/CMakeOutput.log".
+CMake Error at superbuild/cmake_install.cmake:46 (message):
+  Failed to configure the paraview/DragNDrop package.
+Call Stack (most recent call first):
+  cmake_install.cmake:37 (include)
+
+make: *** [install] Error 1
+
+---------------
+
+How can I approach to fix this or is this a bug specific to MacOS?
+
+2. When "Enable_QT5" is on, the configuration fails stating the following error:
+
+-------------------
+
+CMake Error at superbuild/projects/apple/qt5.cmake:2 (message):
+Please set the CMAKE_OSX_SDK to use in Qt5's build
+Call Stack (most recent call first):
+superbuild/cmake/SuperbuildMacros.cmake:894 (include)
+superbuild/CMakeLists.txt:147 (superbuild_process_dependencies)
+
+
+-------------------
+
+I was under the impression that superbuild has all dependencies of paraview (such as qt5) included. Therefore, this error was unexpected. To bypass this, should I now first build a version of qt5 (such as 5.8) from source and then configure preview-superbuild by specifying "QT5_DIR"?
+
+Looking forward to your answers.
+
+Best regards,
+Sabyasachi
+
+Reliable and Robust Design lab,
+KU Leuven Belgium?
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181018/b3f3b263/attachment.html>
+
+From cory.quammen at kitware.com  Thu Oct 18 09:26:23 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Thu, 18 Oct 2018 09:26:23 -0400
+Subject: [Paraview] Paraview-superbuild install fails on MacOS
+In-Reply-To: <a991311d47da428a8d509915d1e6a8b3@ICTS-S-EXMBX17.luna.kuleuven.be>
+References: <a991311d47da428a8d509915d1e6a8b3@ICTS-S-EXMBX17.luna.kuleuven.be>
+Message-ID: <CAB5Fpx7ZAAeCJdZ==HmPvG4hDZ6Nv1Tn6RwhaE8gXr=FUw_79Q@mail.gmail.com>
+
+Hi Sabyasachi,
+
+Would you mind posting this on discourse.paraview.org? We are retiring this
+mailing list soon and all new ParaView community discussion is on the
+Discourse site.
+
+Thanks,
+Cory
+
+On Thu, Oct 18, 2018 at 3:31 AM Sabyasachi Ghosh Dastidar <
+sabyasachi.ghoshdastidar at kuleuven.be> wrote:
+
+>
+> Hi,
+>
+> I am trying to build and install paraview with the superbuild procedure on
+> a MacOS. I have a few questions:
+>
+> 1. When ?ENABLE_QT5? is off, it builds successfully. However, ?make
+> install? fails due to the following error:
+>
+> ----------------------
+>
+> [ 44%] Built target paraview
+> [ 88%] Built target cxx11
+> [100%] Built target cxx11_check
+> Install the project...
+> -- Install configuration: "Release"
+> CTEST_FULL_OUTPUT
+> CMake Error at
+> /Library/paraview-superbuild/projects/paraview.bundle.common.cmake:99
+> (file):
+>   file STRINGS file
+>
+> "/Library/paraview-superbuild-build/install/Applications/paraview.app/Contents/Plugins/.plugins"
+>   cannot be read.
+> Call Stack (most recent call first):
+>   /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:6
+> (include)
+>   CMakeLists.txt:41 (include)
+>
+>
+> CMake Error at
+> /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:9
+> (message):
+>   Creating the Apple package without the GUI is not supported.
+> Call Stack (most recent call first):
+>   CMakeLists.txt:41 (include)
+>
+>
+> -- Configuring incomplete, errors occurred!
+> See also
+> "/Library/paraview-superbuild-build/cpack/paraview/DragNDrop/install/CMakeFiles/CMakeOutput.log".
+> CMake Error at superbuild/cmake_install.cmake:46 (message):
+>   Failed to configure the paraview/DragNDrop package.
+> Call Stack (most recent call first):
+>   cmake_install.cmake:37 (include)
+>
+> make: *** [install] Error 1
+>
+> ---------------
+>
+> How can I approach to fix this or is this a bug specific to MacOS?
+>
+> 2. When ?Enable_QT5? is on, the configuration fails stating the following
+> error:
+>
+> -------------------
+>
+> CMake Error at superbuild/projects/apple/qt5.cmake:2 (message):
+> Please set the CMAKE_OSX_SDK to use in Qt5's build
+> Call Stack (most recent call first):
+> superbuild/cmake/SuperbuildMacros.cmake:894 (include)
+> superbuild/CMakeLists.txt:147 (superbuild_process_dependencies)
+>
+>
+> -------------------
+>
+> I was under the impression that superbuild has all dependencies of
+> paraview (such as qt5) included. Therefore, this error was unexpected. To
+> bypass this, should I now first build a version of qt5 (such as 5.8) from
+> source and then configure preview-superbuild by specifying ?QT5_DIR??
+>
+> Looking forward to your answers.
+>
+> Best regards,
+> Sabyasachi
+>
+> Reliable and Robust Design lab,
+> KU Leuven Belgium?
+>
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181018/022b3a1a/attachment.html>
+
+From sandeepjella at gmail.com  Thu Oct 18 14:38:11 2018
+From: sandeepjella at gmail.com (Sandeep Jella)
+Date: Thu, 18 Oct 2018 14:38:11 -0400
+Subject: [Paraview] Integrate a variable along a streamline
+Message-ID: <CACPDpMcM==TyCTyTSzUsvL_XsYG_ZnTpo_CyTEU25KtKpdQOTQ@mail.gmail.com>
+
+Hello,
+
+Is there a way to obtain the cumulative value / distribution of a variable
+along a streamline (s) in paraview?
+
+Thanks,
+
+SJ.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181018/f9db93f7/attachment.html>
+
+From sabyasachi.ghoshdastidar at kuleuven.be  Thu Oct 18 17:27:39 2018
+From: sabyasachi.ghoshdastidar at kuleuven.be (Sabyasachi Ghosh Dastidar)
+Date: Thu, 18 Oct 2018 21:27:39 +0000
+Subject: [Paraview] Paraview-superbuild install fails on MacOS
+In-Reply-To: <CAB5Fpx7ZAAeCJdZ==HmPvG4hDZ6Nv1Tn6RwhaE8gXr=FUw_79Q@mail.gmail.com>
+References: <a991311d47da428a8d509915d1e6a8b3@ICTS-S-EXMBX17.luna.kuleuven.be>,
+ <CAB5Fpx7ZAAeCJdZ==HmPvG4hDZ6Nv1Tn6RwhaE8gXr=FUw_79Q@mail.gmail.com>
+Message-ID: <1539898059554.17397@kuleuven.be>
+
+Hi Cory,
+
+
+Sure, I can post it there.
+
+
+Thanks,
+
+Sabyasachi
+
+________________________________
+From: Cory Quammen <cory.quammen at kitware.com>
+Sent: Thursday, October 18, 2018 3:26 PM
+To: Sabyasachi Ghosh Dastidar
+Cc: paraview at public.kitware.com
+Subject: Re: [Paraview] Paraview-superbuild install fails on MacOS
+
+Hi Sabyasachi,
+
+Would you mind posting this on discourse.paraview.org<http://discourse.paraview.org>? We are retiring this mailing list soon and all new ParaView community discussion is on the Discourse site.
+
+Thanks,
+Cory
+
+On Thu, Oct 18, 2018 at 3:31 AM Sabyasachi Ghosh Dastidar <sabyasachi.ghoshdastidar at kuleuven.be<mailto:sabyasachi.ghoshdastidar at kuleuven.be>> wrote:
+
+
+Hi,
+
+I am trying to build and install paraview with the superbuild procedure on a MacOS. I have a few questions:
+
+1. When "ENABLE_QT5" is off, it builds successfully. However, "make install" fails due to the following error:
+
+----------------------
+
+[ 44%] Built target paraview
+[ 88%] Built target cxx11
+[100%] Built target cxx11_check
+Install the project...
+-- Install configuration: "Release"
+CTEST_FULL_OUTPUT
+CMake Error at /Library/paraview-superbuild/projects/paraview.bundle.common.cmake:99 (file):
+  file STRINGS file
+  "/Library/paraview-superbuild-build/install/Applications/paraview.app/Contents/Plugins/.plugins"
+  cannot be read.
+Call Stack (most recent call first):
+  /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:6 (include)
+  CMakeLists.txt:41 (include)
+
+
+CMake Error at /Library/paraview-superbuild/projects/apple/paraview.bundle.cmake:9 (message):
+  Creating the Apple package without the GUI is not supported.
+Call Stack (most recent call first):
+  CMakeLists.txt:41 (include)
+
+
+-- Configuring incomplete, errors occurred!
+See also "/Library/paraview-superbuild-build/cpack/paraview/DragNDrop/install/CMakeFiles/CMakeOutput.log".
+CMake Error at superbuild/cmake_install.cmake:46 (message):
+  Failed to configure the paraview/DragNDrop package.
+Call Stack (most recent call first):
+  cmake_install.cmake:37 (include)
+
+make: *** [install] Error 1
+
+---------------
+
+How can I approach to fix this or is this a bug specific to MacOS?
+
+2. When "Enable_QT5" is on, the configuration fails stating the following error:
+
+-------------------
+
+CMake Error at superbuild/projects/apple/qt5.cmake:2 (message):
+Please set the CMAKE_OSX_SDK to use in Qt5's build
+Call Stack (most recent call first):
+superbuild/cmake/SuperbuildMacros.cmake:894 (include)
+superbuild/CMakeLists.txt:147 (superbuild_process_dependencies)
+
+
+-------------------
+
+I was under the impression that superbuild has all dependencies of paraview (such as qt5) included. Therefore, this error was unexpected. To bypass this, should I now first build a version of qt5 (such as 5.8) from source and then configure preview-superbuild by specifying "QT5_DIR"?
+
+Looking forward to your answers.
+
+Best regards,
+Sabyasachi
+
+Reliable and Robust Design lab,
+KU Leuven Belgium?
+
+_______________________________________________
+Powered by www.kitware.com<http://www.kitware.com>
+
+ParaView discussion is moving! Please visit https://discourse.paraview.org/ for future posts.
+
+Visit other Kitware open-source projects at http://www.kitware.com/opensource/opensource.html
+
+Please keep messages on-topic and check the ParaView Wiki at: http://paraview.org/Wiki/ParaView
+
+Search the list archives at: http://markmail.org/search/?q=ParaView
+
+Follow this link to subscribe/unsubscribe:
+https://public.kitware.com/mailman/listinfo/paraview
+
+
+--
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181018/132818d6/attachment.html>
+
+From nicolas.vuaille at kitware.com  Fri Oct 19 03:43:07 2018
+From: nicolas.vuaille at kitware.com (Nicolas Vuaille)
+Date: Fri, 19 Oct 2018 09:43:07 +0200
+Subject: [Paraview] Integrate a variable along a streamline
+In-Reply-To: <CACPDpMcM==TyCTyTSzUsvL_XsYG_ZnTpo_CyTEU25KtKpdQOTQ@mail.gmail.com>
+References: <CACPDpMcM==TyCTyTSzUsvL_XsYG_ZnTpo_CyTEU25KtKpdQOTQ@mail.gmail.com>
+Message-ID: <CAL_QO9+0Bm=xTV4HD9pt=bsYVGUHRB8f-rv6vNVifjGd54k7cA@mail.gmail.com>
+
+Hi,
+
+As this list will be closed soon, it is not really active. You may want to
+post your question here  https://discourse.paraview.org/
+
+Nicolas
+
+Le jeu. 18 oct. 2018 ? 20:38, Sandeep Jella <sandeepjella at gmail.com> a
+?crit :
+
+> Hello,
+>
+> Is there a way to obtain the cumulative value / distribution of a variable
+> along a streamline (s) in paraview?
+>
+> Thanks,
+>
+> SJ.
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181019/eb90f92c/attachment.html>
+
+From david.owens at kitware.com  Mon Oct 22 15:29:47 2018
+From: david.owens at kitware.com (David Owens)
+Date: Mon, 22 Oct 2018 15:29:47 -0400
+Subject: [Paraview] test2
+Message-ID: <cd2be882ec88ac529d4ba0acd1e39d6c@mail.gmail.com>
+
+Test2
+
+
+
+
+
+
+
+David Owens
+
+Systems Administrator | Kitware
+
+david.owens at kitware.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181022/5e513182/attachment.html>
+
+From david.owens at kitware.com  Mon Oct 22 15:12:41 2018
+From: david.owens at kitware.com (David Owens)
+Date: Mon, 22 Oct 2018 15:12:41 -0400
+Subject: [Paraview] test
+Message-ID: <e9b7aacbdfbff5f2660d9feb6c0c9873@mail.gmail.com>
+
+test
+
+
+
+David Owens
+
+Systems Administrator | Kitware
+
+david.owens at kitware.com
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181022/091a9987/attachment.html>
+
+From andutta2 at gmail.com  Tue Oct 23 22:27:30 2018
+From: andutta2 at gmail.com (Anurag Dutta)
+Date: Wed, 24 Oct 2018 07:57:30 +0530
+Subject: [Paraview] Opening a PVD file in Paraview
+Message-ID: <CAC=naOA6d9q_AeEROmf47YJC9MJrTA-_=BgN15ZQ6XkkFb7zFQ@mail.gmail.com>
+
+Good Morning Community,
+
+I am an OpenSees user and using paraview for the first time.
+
+I did sinusoidal analysis of a single quad element in OpenSees and obtained
+a pvd output.
+
+Now, I am not being able to open it in Paraview as when I Open the pvd file
+in Paraview it shows some error like unstructured grid something like that.
+
+I am not being able to undertsand it. Please help me . I have attached my
+pvd output file here in my mail.
+
+Thank You in advance.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181024/84d02c11/attachment-0001.html>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: pvdRes.pvd
+Type: application/octet-stream
+Size: 440132 bytes
+Desc: not available
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181024/84d02c11/attachment-0001.obj>
+
+From cory.quammen at kitware.com  Tue Oct 23 22:36:12 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Tue, 23 Oct 2018 22:36:12 -0400
+Subject: [Paraview] Opening a PVD file in Paraview
+In-Reply-To: <CAC=naOA6d9q_AeEROmf47YJC9MJrTA-_=BgN15ZQ6XkkFb7zFQ@mail.gmail.com>
+References: <CAC=naOA6d9q_AeEROmf47YJC9MJrTA-_=BgN15ZQ6XkkFb7zFQ@mail.gmail.com>
+Message-ID: <CAB5Fpx7=M5FHH0r4t+95KPgpzwckgQgEJTNso9Z8n_LvheMcJQ@mail.gmail.com>
+
+Hi,
+
+Do you mind posting this question over on https://discourse.paraview.org/ ?
+This mailing list is shutting down soon.
+
+Thanks,
+Cory
+
+On Tue, Oct 23, 2018 at 10:27 PM Anurag Dutta <andutta2 at gmail.com> wrote:
+
+> Good Morning Community,
+>
+> I am an OpenSees user and using paraview for the first time.
+>
+> I did sinusoidal analysis of a single quad element in OpenSees and
+> obtained a pvd output.
+>
+> Now, I am not being able to open it in Paraview as when I Open the pvd
+> file in Paraview it shows some error like unstructured grid something like
+> that.
+>
+> I am not being able to undertsand it. Please help me . I have attached my
+> pvd output file here in my mail.
+>
+> Thank You in advance.
+> _______________________________________________
+> Powered by www.kitware.com
+>
+> ParaView discussion is moving! Please visit
+> https://discourse.paraview.org/ for future posts.
+>
+> Visit other Kitware open-source projects at
+> http://www.kitware.com/opensource/opensource.html
+>
+> Please keep messages on-topic and check the ParaView Wiki at:
+> http://paraview.org/Wiki/ParaView
+>
+> Search the list archives at: http://markmail.org/search/?q=ParaView
+>
+> Follow this link to subscribe/unsubscribe:
+> https://public.kitware.com/mailman/listinfo/paraview
+>
+
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181023/f2357b22/attachment.html>
+
+From cory.quammen at kitware.com  Wed Oct 24 11:18:42 2018
+From: cory.quammen at kitware.com (Cory Quammen)
+Date: Wed, 24 Oct 2018 11:18:42 -0400
+Subject: [Paraview] paraview@paraview.org is now retired
+Message-ID: <CAB5Fpx4Vvp0a8Dqx5fButwG1sHSM8x87h7hJ0iQayrzSgcPqdg@mail.gmail.com>
+
+Hello ParaView community!
+
+Having served us well since August 2001, the paraview at paraview.org mailing
+list is now retired. Please direct new questions and comments to
+
+https://discourse.paraview.org
+
+the new forum for the ParaView community.
+
+While the mailing list is being closed to new messages, the archives will
+remain available for searching and browsing:
+https://public.kitware.com/pipermail/paraview/
+
+New messages to this mailing list will not be sent out to the list
+membership. Instead, an automatic reply directing questions to the
+Discourse forum will be sent back to the sender.
+
+Thank you, and see you on Discourse!
+
+-- 
+Cory Quammen
+Staff R&D Engineer
+Kitware, Inc.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181024/ccd347b6/attachment.html>
+
+From wascott at sandia.gov  Wed Oct 24 14:01:03 2018
+From: wascott at sandia.gov (Scott, W Alan)
+Date: Wed, 24 Oct 2018 18:01:03 +0000
+Subject: [Paraview] test
+Message-ID: <46b45d9be34544b484755c2fea25d9a5@ES01AMSNLNT.srn.sandia.gov>
+
+test
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <https://public.kitware.com/pipermail/paraview/attachments/20181024/6a513205/attachment.html>
+

@@ -1,0 +1,4711 @@
+From jfavre@cscs.ch  Mon Mar  1 14:49:02 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Mon, 01 Mar 2004 15:49:02 +0100
+Subject: [Paraview] AVS file
+In-Reply-To: <200402291208.i1TC8Lw09889@zerg.astral.ro>
+References: <200402291208.i1TC8Lw09889@zerg.astral.ro>
+Message-ID: <40434D5E.7010700@cscs.ch>
+
+Diana Iliescu wrote:
+> 
+> I can't see the output of an AVS file. It is accepted but i 
+> can't see the grid. It says that the number of cells is 0. Why?
+> 
+
+That's not much information to help you debug your problem. Unless you 
+are more specific about what you think your AVS file contains, we cannot 
+help.
+
+I am the main author of the AVS reader, so please send me the file if it 
+is no bigger than a few mbytes.
+
+The AVS reader reads ASCII or binary UCD data that is NOT in the 
+multi-time step format. It does not read the *fld data of AVS.
+
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From M.Janssens@nabla.co.uk  Tue Mar  2 14:56:20 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Tue, 02 Mar 2004 14:56:20 +0000
+Subject: [Paraview] Pieces
+Message-ID: <4044A094.4050207@nabla.co.uk>
+
+I have written a PolyData file with multiple <Piece>s. Is there a way in 
+which to look at those pieces individually? Or do I have to split the 
+file into separate files?
+
+Mattijs
+
+
+From amy.henderson@kitware.com  Tue Mar  2 16:33:47 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 02 Mar 2004 11:33:47 -0500
+Subject: [Paraview] Pieces
+In-Reply-To: <4044A094.4050207@nabla.co.uk>
+References: <4044A094.4050207@nabla.co.uk>
+Message-ID: <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+
+Hi Mattijs,
+
+Once you have loaded your data into ParaView, you can run the Extract Parts 
+filter on it. To look at the pieces individually, run the Extract Parts 
+filter once per part on your data.
+
+- Amy
+
+At 09:56 AM 3/2/2004, Mattijs Janssens wrote:
+>I have written a PolyData file with multiple <Piece>s. Is there a way in 
+>which to look at those pieces individually? Or do I have to split the file 
+>into separate files?
+>
+>Mattijs
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From M.Janssens@nabla.co.uk  Tue Mar  2 18:03:24 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Tue, 02 Mar 2004 18:03:24 +0000
+Subject: [Paraview] Pieces
+In-Reply-To: <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+References: <4044A094.4050207@nabla.co.uk> <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+Message-ID: <4044CC6C.3050204@nabla.co.uk>
+
+This is a multi-part message in MIME format.
+--------------040402070100020908020401
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+The Extract Parts filter unfortunately does not appear in my list of
+Filters.
+
+I tried adding it to my own list of filters (I created a
+$PV_INTERFACE_PATH/standardFilters.xml with just the 'ExtractParts'
+module in it (copied from Paraview/ParaView/Resources/Filters.xml)) but
+that didn't help.
+
+Guess it checks the <GroupRequirement quantity="Multiple"/> and my data
+isn't actually multiple groups?
+
+A attach a simple Xml file with three <Piece>s. Could you have a look at it?
+
+Regards,
+
+Mattijs
+
+p.s. sorry Amy, just hit reply.
+
+Amy Henderson wrote:
+> Hi Mattijs,
+> 
+> Once you have loaded your data into ParaView, you can run the Extract 
+> Parts filter on it. To look at the pieces individually, run the Extract 
+> Parts filter once per part on your data.
+> 
+> - Amy
+> 
+> At 09:56 AM 3/2/2004, Mattijs Janssens wrote:
+> 
+>> I have written a PolyData file with multiple <Piece>s. Is there a way 
+>> in which to look at those pieces individually? Or do I have to split 
+>> the file into separate files?
+>>
+>> Mattijs
+>>
+>> _______________________________________________
+>> ParaView mailing list
+>> ParaView@paraview.org
+>> http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+--------------040402070100020908020401
+Content-Type: text/xml;
+ name="hex1_0.vtp"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="hex1_0.vtp"
+
+<?xml version="1.0"?>
+<VTKFile type="PolyData" version="0.1" byte_order="LittleEndian">
+<PolyData >
+    <Piece Name="movingWall" NumberOfPoints="4" NumberOfVerts="0" NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="1">
+        <Points >
+            <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+             0 1 0 1 1 0 0 1 1 1 1 1
+            </DataArray>
+        </Points>
+        <Polys >
+            <DataArray type="Int32" Name="connectivity" format="ascii">
+             0 2 3 1
+            </DataArray>
+            <DataArray type="Int32" Name="offsets" format="ascii">
+             4
+            </DataArray>
+        </Polys>
+    </Piece>
+    <Piece Name="fixedWalls" NumberOfPoints="8" NumberOfVerts="0" NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="3">
+        <Points >
+            <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+             0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+            </DataArray>
+        </Points>
+        <Polys >
+            <DataArray type="Int32" Name="connectivity" format="ascii">
+             0 4 6 2 1 3 7 5 0 1 5 4
+            </DataArray>
+            <DataArray type="Int32" Name="offsets" format="ascii">
+             4 8 12
+            </DataArray>
+        </Polys>
+    </Piece>
+    <Piece Name="frontAndBack" NumberOfPoints="8" NumberOfVerts="0" NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="2">
+        <Points >
+            <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+             0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+            </DataArray>
+        </Points>
+        <Polys >
+            <DataArray type="Int32" Name="connectivity" format="ascii">
+             0 2 3 1 4 5 7 6
+            </DataArray>
+            <DataArray type="Int32" Name="offsets" format="ascii">
+             4 8
+            </DataArray>
+        </Polys>
+    </Piece>
+</PolyData>
+</VTKFile>
+
+
+--------------040402070100020908020401--
+
+
+From amy.henderson@kitware.com  Tue Mar  2 18:20:16 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 02 Mar 2004 13:20:16 -0500
+Subject: [Paraview] Pieces
+In-Reply-To: <4044CC6C.3050204@nabla.co.uk>
+References: <4044A094.4050207@nabla.co.uk>
+ <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+ <4044CC6C.3050204@nabla.co.uk>
+Message-ID: <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+
+
+At 01:03 PM 3/2/2004, Mattijs Janssens wrote:
+>The Extract Parts filter unfortunately does not appear in my list of
+>Filters.
+>
+>I tried adding it to my own list of filters (I created a
+>$PV_INTERFACE_PATH/standardFilters.xml with just the 'ExtractParts'
+>module in it (copied from Paraview/ParaView/Resources/Filters.xml)) but
+>that didn't help.
+>
+>Guess it checks the <GroupRequirement quantity="Multiple"/> and my data
+>isn't actually multiple groups?
+
+You're right. I should have checked into this more carefully before my 
+initial reply; I mis-read "piece" as "part". The Extract Parts filter 
+requires that the reader / source / filter it's getting its input from 
+produces multiple outputs, and the reader of your file produces a single 
+output. It looks like splitting the data into separate files is probably 
+the best way to go.
+
+
+>A attach a simple Xml file with three <Piece>s. Could you have a look at it?
+>
+>Regards,
+>
+>Mattijs
+>
+>p.s. sorry Amy, just hit reply.
+
+No problem.
+
+>Amy Henderson wrote:
+>>Hi Mattijs,
+>>Once you have loaded your data into ParaView, you can run the Extract 
+>>Parts filter on it. To look at the pieces individually, run the Extract 
+>>Parts filter once per part on your data.
+>>- Amy
+>>At 09:56 AM 3/2/2004, Mattijs Janssens wrote:
+>>
+>>>I have written a PolyData file with multiple <Piece>s. Is there a way in 
+>>>which to look at those pieces individually? Or do I have to split the 
+>>>file into separate files?
+>>>
+>>>Mattijs
+>>>
+>>>_______________________________________________
+>>>ParaView mailing list
+>>>ParaView@paraview.org
+>>>http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>--
+>/*---------------------------------------------------------*\
+>| ===========           Mattijs Janssens                    |
+>| \\        /           Development Engineer                |
+>|  \\      /                                                |
+>|   \\    /             Nabla Ltd.                          |
+>|    \\  /              The Mews, Picketts Lodge            |
+>|     \\/               Picketts Lane, Salfords,            |
+>|     F ield            Surrey RH1 5RG.                     |
+>|     O peration        Tel: +44 (0)1293 821272             |
+>|     A nd              Email: m.janssens@Nabla.co.uk       |
+>|     M anipulation     URL: http://www.Nabla.co.uk         |
+>\*---------------------------------------------------------*/
+>
+>
+>
+><?xml version="1.0"?>
+><VTKFile type="PolyData" version="0.1" byte_order="LittleEndian">
+><PolyData >
+>     <Piece Name="movingWall" NumberOfPoints="4" NumberOfVerts="0" 
+> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="1">
+>         <Points >
+>             <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+>              0 1 0 1 1 0 0 1 1 1 1 1
+>             </DataArray>
+>         </Points>
+>         <Polys >
+>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>              0 2 3 1
+>             </DataArray>
+>             <DataArray type="Int32" Name="offsets" format="ascii">
+>              4
+>             </DataArray>
+>         </Polys>
+>     </Piece>
+>     <Piece Name="fixedWalls" NumberOfPoints="8" NumberOfVerts="0" 
+> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="3">
+>         <Points >
+>             <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+>              0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+>             </DataArray>
+>         </Points>
+>         <Polys >
+>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>              0 4 6 2 1 3 7 5 0 1 5 4
+>             </DataArray>
+>             <DataArray type="Int32" Name="offsets" format="ascii">
+>              4 8 12
+>             </DataArray>
+>         </Polys>
+>     </Piece>
+>     <Piece Name="frontAndBack" NumberOfPoints="8" NumberOfVerts="0" 
+> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="2">
+>         <Points >
+>             <DataArray type="Float32" NumberOfComponents="3" format="ascii">
+>              0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+>             </DataArray>
+>         </Points>
+>         <Polys >
+>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>              0 2 3 1 4 5 7 6
+>             </DataArray>
+>             <DataArray type="Int32" Name="offsets" format="ascii">
+>              4 8
+>             </DataArray>
+>         </Polys>
+>     </Piece>
+></PolyData>
+></VTKFile>
+
+
+
+
+From M.Janssens@nabla.co.uk  Tue Mar  2 18:41:52 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Tue, 02 Mar 2004 18:41:52 +0000
+Subject: [Paraview] Pieces
+In-Reply-To: <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+References: <4044A094.4050207@nabla.co.uk> <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com> <4044CC6C.3050204@nabla.co.uk> <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+Message-ID: <4044D570.6000406@nabla.co.uk>
+
+Thanks Amy.
+
+My problem is that I need to output the values on all of the regions on 
+the outside of my 3D mesh and would like to use polyData for that. Guess 
+I'll have to create a subdirectory for every region and create one file 
+per time in there. This would allow me to look at time evolution on a 
+region.
+
+Is there no file format/reader which has something of the like (regions, 
+named boundaries)?
+
+Thanks,
+
+Mattijs
+
+Amy Henderson wrote:
+> 
+> 
+> At 01:03 PM 3/2/2004, Mattijs Janssens wrote:
+> 
+>> The Extract Parts filter unfortunately does not appear in my list of
+>> Filters.
+>>
+>> I tried adding it to my own list of filters (I created a
+>> $PV_INTERFACE_PATH/standardFilters.xml with just the 'ExtractParts'
+>> module in it (copied from Paraview/ParaView/Resources/Filters.xml)) but
+>> that didn't help.
+>>
+>> Guess it checks the <GroupRequirement quantity="Multiple"/> and my data
+>> isn't actually multiple groups?
+> 
+> 
+> You're right. I should have checked into this more carefully before my 
+> initial reply; I mis-read "piece" as "part". The Extract Parts filter 
+> requires that the reader / source / filter it's getting its input from 
+> produces multiple outputs, and the reader of your file produces a single 
+> output. It looks like splitting the data into separate files is probably 
+> the best way to go.
+> 
+> 
+>> A attach a simple Xml file with three <Piece>s. Could you have a look 
+>> at it?
+>>
+>> Regards,
+>>
+>> Mattijs
+>>
+>> p.s. sorry Amy, just hit reply.
+> 
+> 
+> No problem.
+> 
+>> Amy Henderson wrote:
+>>
+>>> Hi Mattijs,
+>>> Once you have loaded your data into ParaView, you can run the Extract 
+>>> Parts filter on it. To look at the pieces individually, run the 
+>>> Extract Parts filter once per part on your data.
+>>> - Amy
+>>> At 09:56 AM 3/2/2004, Mattijs Janssens wrote:
+>>>
+>>>> I have written a PolyData file with multiple <Piece>s. Is there a 
+>>>> way in which to look at those pieces individually? Or do I have to 
+>>>> split the file into separate files?
+>>>>
+>>>> Mattijs
+>>>>
+>>>> _______________________________________________
+>>>> ParaView mailing list
+>>>> ParaView@paraview.org
+>>>> http://www.paraview.org/mailman/listinfo/paraview
+>>>
+>>>
+>>>
+>>> _______________________________________________
+>>> ParaView mailing list
+>>> ParaView@paraview.org
+>>> http://www.paraview.org/mailman/listinfo/paraview
+>>
+>>
+>> -- 
+>> /*---------------------------------------------------------*\
+>> | ===========           Mattijs Janssens                    |
+>> | \\        /           Development Engineer                |
+>> |  \\      /                                                |
+>> |   \\    /             Nabla Ltd.                          |
+>> |    \\  /              The Mews, Picketts Lodge            |
+>> |     \\/               Picketts Lane, Salfords,            |
+>> |     F ield            Surrey RH1 5RG.                     |
+>> |     O peration        Tel: +44 (0)1293 821272             |
+>> |     A nd              Email: m.janssens@Nabla.co.uk       |
+>> |     M anipulation     URL: http://www.Nabla.co.uk         |
+>> \*---------------------------------------------------------*/
+>>
+>>
+>>
+>> <?xml version="1.0"?>
+>> <VTKFile type="PolyData" version="0.1" byte_order="LittleEndian">
+>> <PolyData >
+>>     <Piece Name="movingWall" NumberOfPoints="4" NumberOfVerts="0" 
+>> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="1">
+>>         <Points >
+>>             <DataArray type="Float32" NumberOfComponents="3" 
+>> format="ascii">
+>>              0 1 0 1 1 0 0 1 1 1 1 1
+>>             </DataArray>
+>>         </Points>
+>>         <Polys >
+>>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>>              0 2 3 1
+>>             </DataArray>
+>>             <DataArray type="Int32" Name="offsets" format="ascii">
+>>              4
+>>             </DataArray>
+>>         </Polys>
+>>     </Piece>
+>>     <Piece Name="fixedWalls" NumberOfPoints="8" NumberOfVerts="0" 
+>> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="3">
+>>         <Points >
+>>             <DataArray type="Float32" NumberOfComponents="3" 
+>> format="ascii">
+>>              0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+>>             </DataArray>
+>>         </Points>
+>>         <Polys >
+>>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>>              0 4 6 2 1 3 7 5 0 1 5 4
+>>             </DataArray>
+>>             <DataArray type="Int32" Name="offsets" format="ascii">
+>>              4 8 12
+>>             </DataArray>
+>>         </Polys>
+>>     </Piece>
+>>     <Piece Name="frontAndBack" NumberOfPoints="8" NumberOfVerts="0" 
+>> NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="2">
+>>         <Points >
+>>             <DataArray type="Float32" NumberOfComponents="3" 
+>> format="ascii">
+>>              0 0 0 1 0 0 0 1 0 1 1 0 0 0 1 1 0 1 0 1 1 1 1 1
+>>             </DataArray>
+>>         </Points>
+>>         <Polys >
+>>             <DataArray type="Int32" Name="connectivity" format="ascii">
+>>              0 2 3 1 4 5 7 6
+>>             </DataArray>
+>>             <DataArray type="Int32" Name="offsets" format="ascii">
+>>              4 8
+>>             </DataArray>
+>>         </Polys>
+>>     </Piece>
+>> </PolyData>
+>> </VTKFile>
+> 
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+From jfavre@cscs.ch  Wed Mar  3 10:00:32 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Wed, 03 Mar 2004 11:00:32 +0100
+Subject: [Paraview] optional display at load time
+In-Reply-To: <4044A094.4050207@nabla.co.uk>
+References: <4044A094.4050207@nabla.co.uk>
+Message-ID: <4045ACC0.8030201@cscs.ch>
+
+I have many models composed of multiple outputs:
+	a) 3D cells which I never want to display
+	b) 2D cells which are the boundary parts of the model
+
+The boundary parts are all the external parts (or specific boundary 
+conditions) of the model and as such are most often interesting to display.
+
+The volumetric parts (3D cells) are only used in cutting, contouring, 
+streamlines, etc. and should not be displayed. However, when read in 
+ParaView, they are automatically passed thru vtkPVGeometryFilter (or 
+vtkDataSetSurfaceFilter). I am not sure which one and when actually. In 
+any case, this can be a very expensive computation (I am talking here of 
+volumetric models of 1-100 millions cells) and it is a complete waste of 
+resources since the external faces extracted are redundant with the 
+already present 2D bondary cells.
+
+My reader create in the order of a few hundreds of outputs, each with a 
+well-defined name. Using Extract Parts, I can easily select my 2D cells 
+for display.
+
+When programming directly in C++ or via the wrapping languages 
+interfaces, I can skip the extraction of external surfaces of the 3D 
+cells. Can the same be done in ParaView? What I would like is a default 
+of "no display, thus no extraction at all".
+
+Since ParaView is an application "designed with the need to visualize 
+large data sets in mind", it seems like this should be available.
+
+Any hints?
+TIA
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From charles.law@kitware.com  Wed Mar  3 15:29:45 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Wed, 03 Mar 2004 10:29:45 -0500
+Subject: [Paraview] optional display at load time
+In-Reply-To: <4045ACC0.8030201@cscs.ch>
+References: <4044A094.4050207@nabla.co.uk>
+ <4045ACC0.8030201@cscs.ch>
+Message-ID: <6.0.0.22.0.20040303093737.0337e7a8@pop.biz.rr.com>
+
+Jean,
+
+We have been talking about this for a while.
+
+Currently, ParaView will switch to an outline if the unstructured data has 
+a large number of cells.
+I am going to add a slider that allows the user to set the threshold.
+
+Longer term, I think we will allow the user to select visibility / 
+representation from the selection list before accept is called.
+
+Charles.
+
+
+
+At 05:00 AM 3/3/2004, you wrote:
+
+>I have many models composed of multiple outputs:
+>         a) 3D cells which I never want to display
+>         b) 2D cells which are the boundary parts of the model
+>
+>The boundary parts are all the external parts (or specific boundary 
+>conditions) of the model and as such are most often interesting to display.
+>
+>The volumetric parts (3D cells) are only used in cutting, contouring, 
+>streamlines, etc. and should not be displayed. However, when read in 
+>ParaView, they are automatically passed thru vtkPVGeometryFilter (or 
+>vtkDataSetSurfaceFilter). I am not sure which one and when actually. In 
+>any case, this can be a very expensive computation (I am talking here of 
+>volumetric models of 1-100 millions cells) and it is a complete waste of 
+>resources since the external faces extracted are redundant with the 
+>already present 2D bondary cells.
+>
+>My reader create in the order of a few hundreds of outputs, each with a 
+>well-defined name. Using Extract Parts, I can easily select my 2D cells 
+>for display.
+>
+>When programming directly in C++ or via the wrapping languages interfaces, 
+>I can skip the extraction of external surfaces of the 3D cells. Can the 
+>same be done in ParaView? What I would like is a default of "no display, 
+>thus no extraction at all".
+>
+>Since ParaView is an application "designed with the need to visualize 
+>large data sets in mind", it seems like this should be available.
+>
+>Any hints?
+>TIA
+>
+>--
+>Dr. Jean M. Favre,                            email:favre @ cscs.ch
+>http://www.cscs.ch/people/Favre.html
+>CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+>Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From dcthomp@sandia.gov  Wed Mar  3 18:57:51 2004
+From: dcthomp@sandia.gov (David Thompson)
+Date: Wed, 03 Mar 2004 10:57:51 -0800
+Subject: [Paraview] Problems with external modules
+Message-ID: <1078340270.9004.1376.camel@fozzy.ran.sandia.gov>
+
+Hi,
+
+	I've checked in some changes to ParaViewConfig.cmake that let me build
+a paraview module external to paraview, but there is still a problem. Is
+there any way to force a TCL wrapper library to be loaded from within an
+XML Module description? Here's why I ask:
+
+	I've created a widget which inherits from vtkPVWidget and has some
+callbacks. Unfortunately, the callbacks don't work; they generate an
+error message:
+
+	Object named: vtkTemp1130, could not find requested
+	method: BlahCallback or the method was called with
+	incorrect arguments.
+
+This is because the Tcl wrapper for the widget class hasn't been loaded.
+It's in a different library from the client server wrappers. If I open
+the ParaView command window and run
+
+	package require vtkblah
+
+(which loads libvtkBlahTCL.so), then everything works. So, is there any
+way to force a load of libvtkBlahTCL from within an XML module
+description?
+
+		Thanks,
+		David
+
+
+From berklist@nycap.rr.com  Wed Mar  3 19:11:20 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 03 Mar 2004 14:11:20 -0500
+Subject: [Paraview] Problems with external modules
+In-Reply-To: <1078340270.9004.1376.camel@fozzy.ran.sandia.gov>
+References: <1078340270.9004.1376.camel@fozzy.ran.sandia.gov>
+Message-ID: <1078341080.10962.59.camel@silverymoon>
+
+I am afraid you can't do that with current ParaView. However, I think
+that it is a good idea and we should add something similar to
+<Library name=""> or modify it to load Tcl shared libraries on the
+client side (note that the ClientServer wrapped libraries have to be
+loaded only on the server side).
+
+On Wed, 2004-03-03 at 13:57, David Thompson wrote:
+> Hi,
+> 
+> 	I've checked in some changes to ParaViewConfig.cmake that let me build
+> a paraview module external to paraview, but there is still a problem. Is
+> there any way to force a TCL wrapper library to be loaded from within an
+> XML Module description? Here's why I ask:
+> 
+> 	I've created a widget which inherits from vtkPVWidget and has some
+> callbacks. Unfortunately, the callbacks don't work; they generate an
+> error message:
+> 
+> 	Object named: vtkTemp1130, could not find requested
+> 	method: BlahCallback or the method was called with
+> 	incorrect arguments.
+> 
+> This is because the Tcl wrapper for the widget class hasn't been loaded.
+> It's in a different library from the client server wrappers. If I open
+> the ParaView command window and run
+> 
+> 	package require vtkblah
+> 
+> (which loads libvtkBlahTCL.so), then everything works. So, is there any
+> way to force a load of libvtkBlahTCL from within an XML module
+> description?
+> 
+> 		Thanks,
+> 		David
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From dcthomp@sandia.gov  Wed Mar  3 19:23:33 2004
+From: dcthomp@sandia.gov (David Thompson)
+Date: Wed, 03 Mar 2004 11:23:33 -0800
+Subject: [Paraview] Problems with external modules
+In-Reply-To: <1078341080.10962.59.camel@silverymoon>
+References: <1078340270.9004.1376.camel@fozzy.ran.sandia.gov>
+ <1078341080.10962.59.camel@silverymoon>
+Message-ID: <1078341813.9002.1383.camel@fozzy.ran.sandia.gov>
+
+On Wed, 2004-03-03 at 11:11, Berk Geveci wrote:
+> I am afraid you can't do that with current ParaView. However, I think
+> that it is a good idea and we should add something similar to
+> <Library name=""> or modify it to load Tcl shared libraries on the
+> client side (note that the ClientServer wrapped libraries have to be
+> loaded only on the server side).
+Is there a way to get a pointer to the vtkPVApplication from the
+ClientServerInterpreter? That way I could write a fake
+vtkBlah_Initialize() and add it to libvtkBlahTCL.
+
+		David
+
+
+From berklist@nycap.rr.com  Wed Mar  3 19:56:27 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Wed, 03 Mar 2004 14:56:27 -0500
+Subject: [Paraview] Problems with external modules
+In-Reply-To: <1078341813.9002.1383.camel@fozzy.ran.sandia.gov>
+References: <1078340270.9004.1376.camel@fozzy.ran.sandia.gov>
+ <1078341080.10962.59.camel@silverymoon>
+ <1078341813.9002.1383.camel@fozzy.ran.sandia.gov>
+Message-ID: <1078343787.10962.87.camel@silverymoon>
+
+> Is there a way to get a pointer to the vtkPVApplication from the
+> ClientServerInterpreter? That way I could write a fake
+> vtkBlah_Initialize() and add it to libvtkBlahTCL.
+
+There is but it is not necessarily forward compatible. The ID of
+the vtkPVApplication is hard-coded to be 1 in vtkPVProcessModule.
+Once you have the ID, you can get the pointer with GetObjectFromID().
+This is pretty hackish so don't tell anyone you heard it from me :-)
+
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From M.Janssens@nabla.co.uk  Thu Mar  4 10:09:10 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Thu, 04 Mar 2004 10:09:10 +0000
+Subject: [Paraview] polyData glyphs feature
+In-Reply-To: <6.0.0.22.0.20040303093737.0337e7a8@pop.biz.rr.com>
+References: <4044A094.4050207@nabla.co.uk> <4045ACC0.8030201@cscs.ch> <6.0.0.22.0.20040303093737.0337e7a8@pop.biz.rr.com>
+Message-ID: <40470046.7070406@nabla.co.uk>
+
+This is a multi-part message in MIME format.
+--------------080103080601070502060902
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+When I load in attached POLYDATA file which has points & point_data only 
+the Filter menu is disabled so I cannot put 'glyphs' at my points.
+
+However if I create any source from the Source menu (I used Glyph) and 
+then delete it the Filter menu stays enabled and I can finally put my 
+glyphs on my data.
+
+Bug? Feature?
+
+Regards,
+
+Mattijs
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+--------------080103080601070502060902
+Content-Type: text/plain;
+ name="testlagrange.vtk"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="testlagrange.vtk"
+
+# vtk DataFile Version 2.0
+Testing Lagrangian data
+ASCII
+DATASET POLYDATA
+POINTS 30 float
+0.762804 0.00143522 5e-08
+0.762532 0.00175542 5e-08
+0.762734 0.000914955 5e-08
+0.76249 0.00176378 5e-08
+0.763287 0.00117646 5e-08
+0.763412 0.000123404 5e-08
+0.763617 0.00222022 5e-08
+0.764292 0.000588995 5e-08
+0.764387 0.00199752 5e-08
+0.764376 0.00162392 5e-08
+0.764761 0.00291607 5e-08
+0.76504 0.00757752 5e-08
+0.765553 0.00331668 5e-08
+0.766418 0.00568523 5e-08
+0.766958 0.00248465 5e-08
+0.767156 0.0078146 5e-08
+0.767818 0.00874677 5e-08
+0.768756 0.0180823 5e-08
+0.769359 0.0165152 5e-08
+0.770172 0.016387 5e-08
+0.771446 0.0141496 5e-08
+0.771893 0.00738123 5e-08
+0.772853 0.00626732 5e-08
+0.774561 0.0260067 5e-08
+0.775051 0.0360077 5e-08
+0.777068 0.0440692 5e-08
+0.778643 0.0464936 5e-08
+0.779789 0.0546755 5e-08
+0.78155 0.0538644 5e-08
+0.783451 0.0533669 5e-08
+
+POINT_DATA 30
+SCALARS example_scalar_data float 1
+LOOKUP_TABLE default
+1.1
+1.2
+1.4
+1.5
+1.88
+1.5
+1.4
+1.3
+1.2
+1.88
+1.8
+1.7
+1.6
+1.55
+1.54
+1.34
+1.44
+1.43
+1.55
+1.31
+1.11
+1.14
+1.43
+1.43
+1.77
+1.54
+1.09
+1.99
+1.78
+1.76
+VECTORS example_vector_data float
+-0.00526126 -0.0436261 0.0
+-0.0072304 -0.111244 0.0
+-0.0102861 -0.251544 0.0
+-0.0102464 -0.106594 0.0
+-0.00808942 0.0477707 0.0
+-0.0115595 -0.170671 0.0
+-0.0117117 -0.0104736 0.0
+-0.0126091 -0.170565 0.0
+-0.0176217 -0.128053 0.0
+-0.0176831 -0.0725627 0.0
+-0.0250231 -0.330947 0.0
+-0.0253778 -0.039188 0.0
+-0.0272236 -0.268755 0.0
+-0.0283085 0.0425203 0.0
+-0.0293621 0.262252 0.0
+-0.0407347 -0.488724 0.0
+-0.0425404 -0.33879 0.0
+-0.0443968 -0.131777 0.0
+-0.0457758 -0.08564 0.0
+-0.0469222 0.158865 0.0
+-0.0508588 0.153176 0.0
+-0.0511709 0.372412 0.0
+-0.073817 -0.903309 0.0
+-0.07864 -0.76194 0.0
+-0.0797074 -0.604728 0.0
+-0.0857976 -0.531385 0.0
+-0.0905048 -0.372218 0.0
+-0.0924903 -0.277765 0.0
+-0.0963977 -0.0958826 0.0
+-0.0990774 0.138751 0.0
+
+
+
+
+
+--------------080103080601070502060902--
+
+
+From v.varadhan@californiadigital.com  Fri Mar  5 11:19:14 2004
+From: v.varadhan@californiadigital.com (v.varadhan@californiadigital.com)
+Date: Fri, 5 Mar 2004 03:19:14 -0800 (PST)
+Subject: [Paraview] Implementing a scrollbar and 1:1 image viewing
+Message-ID: <55126.202.144.120.5.1078485554.squirrel@californiadigital.com>
+
+Hi All,
+
+I have been trying to implement a scrollbar and 1:1 image rendering on
+Paraview.  I tried adding scrollbar using the tk script but while setting
+the "yscrollbar command" option, it gave me an error saying it can be
+configured only on a canvas or a label/text frame.
+
+So, now i am implementing scrollbar through vtkKWScale, however, i am not
+able to understand as to how to calculate the position of the camera to
+position it properly to get a 1:1 view of the image.
+
+Currently i am just arbitarily (hard code) fixing the position of the
+camera.  And also, how to make the picker work properly if I have certain
+widgets (ex: line widgets) over the image during scrolling?
+
+It would be much helpful if someone can throw some lights/hints to proceed
+further.
+
+TIA,
+
+Best Regards,
+
+
+V. Varadhan.
+
+
+
+-- 
+Veerapuram Varadhan,
+Systems Engineer,
+California Digital,
+Bangalore - 68.
+Ph- (080)-51158671
+
+
+
+From M.Janssens@nabla.co.uk  Mon Mar  8 14:25:31 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Mon, 08 Mar 2004 14:25:31 +0000
+Subject: [Paraview] glyphs
+In-Reply-To: <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+References: <4044A094.4050207@nabla.co.uk> <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com> <4044CC6C.3050204@nabla.co.uk> <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+Message-ID: <404C825B.6050905@nabla.co.uk>
+
+Is it possible to have as glyph a text string of the value at a point? 
+(instead of a sphere/cone)?
+
+(I would like to be able to display node numbers of my mesh)
+
+The text would ideally be just a 2D text string at a 3D position.
+
+Mattijs Janssens
+
+
+From ferrell@lanl.gov  Mon Mar  8 16:35:40 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Mon, 8 Mar 2004 09:35:40 -0700 (MST)
+Subject: [Paraview] Time series data
+Message-ID: <4379.128.165.144.120.1078763740.squirrel@webmail4.pair.com>
+
+I've got a set of time series data.  I display it using an animation.  The
+data is not at even time intervals.  Each time step has a time stamp.  Is
+there a way to display that time stamp?
+
+thanks,
+-robert
+
+From berklist@nycap.rr.com  Mon Mar  8 16:59:30 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 08 Mar 2004 11:59:30 -0500
+Subject: [Paraview] glyphs
+In-Reply-To: <404C825B.6050905@nabla.co.uk>
+References: <4044A094.4050207@nabla.co.uk>
+ <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+ <4044CC6C.3050204@nabla.co.uk>
+ <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+ <404C825B.6050905@nabla.co.uk>
+Message-ID: <1078765170.16128.110.camel@silverymoon>
+
+> Is it possible to have as glyph a text string of the value at a point? 
+> (instead of a sphere/cone)?
+> 
+> (I would like to be able to display node numbers of my mesh)
+> 
+> The text would ideally be just a 2D text string at a 3D position.
+
+You can't do this with glyphs. However, if you are using ParaView 1.2,
+you can simply enable "Label Point Ids" in the Display page. Currently,
+this is only available when running on 1 node. We will improve this feature
+in the future. Data interrogation is one of the big TO DO items in our list.
+
+-Berk
+
+
+
+From berklist@nycap.rr.com  Mon Mar  8 17:00:15 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 08 Mar 2004 12:00:15 -0500
+Subject: [Paraview] Time series data
+In-Reply-To: <4379.128.165.144.120.1078763740.squirrel@webmail4.pair.com>
+References: <4379.128.165.144.120.1078763740.squirrel@webmail4.pair.com>
+Message-ID: <1078765215.16127.112.camel@silverymoon>
+
+Which reader are you using (and which ParaView version) ?
+
+On Mon, 2004-03-08 at 11:35, Robert Ferrell wrote:
+> I've got a set of time series data.  I display it using an animation.  The
+> data is not at even time intervals.  Each time step has a time stamp.  Is
+> there a way to display that time stamp?
+> 
+> thanks,
+> -robert
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From s_hudson13@hotmail.com  Mon Mar  8 17:52:05 2004
+From: s_hudson13@hotmail.com (Steve Hudson)
+Date: Mon, 08 Mar 2004 17:52:05 +0000
+Subject: [Paraview] Merging vtkXMLStructuredGrid Files for viewing in Paraview
+Message-ID: <BAY1-F135q9PXKmr36P00009ab2@hotmail.com>
+
+I am using a parallel application where  different files are output for each 
+processor (representing different regions of the problem). I have made it 
+write them in vtkXMLStructuredGrid format. I would like to use Paraview 
+(v1.2.1) to view the whole problem, but am only able to view one file at a 
+time. What do I need to do to merge the files.
+
+If I have the multiple files in one directory, and load in the first, it 
+gives me a time line, which can be used to view the other files, but not all 
+at once.
+
+I have also tried creating a PStructuredGrid file and loading it in, but it 
+only seems to give me the first file. Should this do it? Do I need to try 
+this again?
+
+I have found the documentation on this a little unclear.
+
+Thanks
+
+Steve
+
+_________________________________________________________________
+Express yourself with cool new emoticons http://www.msn.co.uk/specials/myemo
+
+
+From berklist@nycap.rr.com  Mon Mar  8 18:10:18 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 08 Mar 2004 13:10:18 -0500
+Subject: [Paraview] Merging vtkXMLStructuredGrid Files for viewing in
+ Paraview
+In-Reply-To: <BAY1-F135q9PXKmr36P00009ab2@hotmail.com>
+References: <BAY1-F135q9PXKmr36P00009ab2@hotmail.com>
+Message-ID: <1078769418.16128.126.camel@silverymoon>
+
+You have to create a simple meta-file that points to the other files.
+The meta-file (.pvd extension, for ParaView data) is also in xml format
+and should look like this:
+
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian"
+         compressor="vtkZLibDataCompressor">
+  <Collection>
+    <DataSet part="0" file="multiblock/multiblock_0.vts"/>
+    <DataSet part="1" file="multiblock/multiblock_1.vts"/>
+    <DataSet part="2" file="multiblock/multiblock_2.vts"/>
+    <DataSet part="3" file="multiblock/multiblock_3.vts"/>
+    <DataSet part="4" file="multiblock/multiblock_4.vts"/>
+  </Collection>
+</VTKFile>
+
+If you then open the pvd file, ParaView should load all the parts.
+
+-Berk
+
+ 
+On Mon, 2004-03-08 at 12:52, Steve Hudson wrote:
+> I am using a parallel application where  different files are output for each 
+> processor (representing different regions of the problem). I have made it 
+> write them in vtkXMLStructuredGrid format. I would like to use Paraview 
+> (v1.2.1) to view the whole problem, but am only able to view one file at a 
+> time. What do I need to do to merge the files.
+> 
+> If I have the multiple files in one directory, and load in the first, it 
+> gives me a time line, which can be used to view the other files, but not all 
+> at once.
+> 
+> I have also tried creating a PStructuredGrid file and loading it in, but it 
+> only seems to give me the first file. Should this do it? Do I need to try 
+> this again?
+> 
+> I have found the documentation on this a little unclear.
+> 
+> Thanks
+> 
+> Steve
+> 
+> _________________________________________________________________
+> Express yourself with cool new emoticons http://www.msn.co.uk/specials/myemo
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From M.Janssens@nabla.co.uk  Mon Mar  8 18:17:48 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Mon, 08 Mar 2004 18:17:48 +0000
+Subject: [Paraview] glyphs
+In-Reply-To: <1078765170.16128.110.camel@silverymoon>
+References: <4044A094.4050207@nabla.co.uk>	 <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>	 <4044CC6C.3050204@nabla.co.uk>	 <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>	 <404C825B.6050905@nabla.co.uk> <1078765170.16128.110.camel@silverymoon>
+Message-ID: <404CB8CC.2020707@nabla.co.uk>
+
+Seems to work fine but since they are properly rendered 3D text it is 
+terribly slow. Is it possible to have just 2D text strings?
+
+Berk Geveci wrote:
+>>Is it possible to have as glyph a text string of the value at a point? 
+>>(instead of a sphere/cone)?
+>>
+>>(I would like to be able to display node numbers of my mesh)
+>>
+>>The text would ideally be just a 2D text string at a 3D position.
+> 
+> 
+> You can't do this with glyphs. However, if you are using ParaView 1.2,
+> you can simply enable "Label Point Ids" in the Display page. Currently,
+> this is only available when running on 1 node. We will improve this feature
+> in the future. Data interrogation is one of the big TO DO items in our list.
+> 
+> -Berk
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+From s_hudson13@hotmail.com  Mon Mar  8 18:50:16 2004
+From: s_hudson13@hotmail.com (Steve Hudson)
+Date: Mon, 08 Mar 2004 18:50:16 +0000
+Subject: [Paraview] Viewing vectors by components
+Message-ID: <BAY1-F159ycxY8kiBgo00009db1@hotmail.com>
+
+In the "color by" option under the display tab, my velocity vector comes up 
+as "velocity(3)". When I select this the image is coloured according to the 
+X-component of the velocity. Is it possible to colour by the Y, Z or 
+magnitude?
+
+Many Thanks
+
+Steve
+
+_________________________________________________________________
+Express yourself with cool new emoticons http://www.msn.co.uk/specials/myemo
+
+
+From berklist@nycap.rr.com  Mon Mar  8 18:52:53 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 08 Mar 2004 13:52:53 -0500
+Subject: [Paraview] glyphs
+In-Reply-To: <404CB8CC.2020707@nabla.co.uk>
+References: <4044A094.4050207@nabla.co.uk>
+ <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>
+ <4044CC6C.3050204@nabla.co.uk>
+ <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>
+ <404C825B.6050905@nabla.co.uk> <1078765170.16128.110.camel@silverymoon>
+ <404CB8CC.2020707@nabla.co.uk>
+Message-ID: <1078771973.16128.156.camel@silverymoon>
+
+The point ids are rendered as 2D not 3D. There really must be a lot of
+points if it's rendering slowly. We do not like the current
+implementation because of this reason (and because of the fact that it
+really clutters the scene). However, it is all we have for the moment.
+
+On Mon, 2004-03-08 at 13:17, Mattijs Janssens wrote:
+> Seems to work fine but since they are properly rendered 3D text it is 
+> terribly slow. Is it possible to have just 2D text strings?
+> 
+> Berk Geveci wrote:
+> >>Is it possible to have as glyph a text string of the value at a point? 
+> >>(instead of a sphere/cone)?
+> >>
+> >>(I would like to be able to display node numbers of my mesh)
+> >>
+> >>The text would ideally be just a 2D text string at a 3D position.
+> > 
+> > 
+> > You can't do this with glyphs. However, if you are using ParaView 1.2,
+> > you can simply enable "Label Point Ids" in the Display page. Currently,
+> > this is only available when running on 1 node. We will improve this feature
+> > in the future. Data interrogation is one of the big TO DO items in our list.
+> > 
+> > -Berk
+> > 
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> > 
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From amy.henderson@kitware.com  Mon Mar  8 18:57:11 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Mon, 08 Mar 2004 13:57:11 -0500
+Subject: [Paraview] Viewing vectors by components
+In-Reply-To: <BAY1-F159ycxY8kiBgo00009db1@hotmail.com>
+References: <BAY1-F159ycxY8kiBgo00009db1@hotmail.com>
+Message-ID: <6.0.3.0.2.20040308135438.031f1128@pop.biz.rr.com>
+
+At 01:50 PM 3/8/2004, Steve Hudson wrote:
+>In the "color by" option under the display tab, my velocity vector comes 
+>up as "velocity(3)". When I select this the image is coloured according to 
+>the X-component of the velocity. Is it possible to colour by the Y, Z or 
+>magnitude?
+
+Yes. Click on the "Edit Color Map..." button (in the same section as the 
+Color by menu). On the page that appears, there is a section labelled 
+"Vector". The second menu in that section allows you to select which 
+component to color by. (The first menu selects whether to color by a single 
+component of the vector or to color by the vector magnitude.)
+
+- Amy
+
+>Many Thanks
+>
+>Steve
+>
+>_________________________________________________________________
+>Express yourself with cool new emoticons http://www.msn.co.uk/specials/myemo
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From berklist@nycap.rr.com  Mon Mar  8 18:59:51 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Mon, 08 Mar 2004 13:59:51 -0500
+Subject: [Paraview] Viewing vectors by components
+In-Reply-To: <BAY1-F159ycxY8kiBgo00009db1@hotmail.com>
+References: <BAY1-F159ycxY8kiBgo00009db1@hotmail.com>
+Message-ID: <1078772391.16120.158.camel@silverymoon>
+
+> In the "color by" option under the display tab, my velocity vector comes up 
+> as "velocity(3)". When I select this the image is coloured according to the 
+> X-component of the velocity. Is it possible to colour by the Y, Z or 
+> magnitude?
+
+But of course :-) Click on "Edit Color Map..."
+
+
+
+From jharrop@acm.org  Sun Mar  7 18:05:59 2004
+From: jharrop@acm.org (John Harrop)
+Date: Sun, 07 Mar 2004 10:05:59 -0800
+Subject: [Paraview] GIS with ParaView - how to drape?
+Message-ID: <1078682760.10613.12.camel@cr517045-a>
+
+Our group is fairly new to ParaView/vtk but our initial results and
+impressions have been very favourable.  We work with 3D geophysical
+models that we build by geophysical inversion of (mostly) surface
+surveys.  ParaView has worked very well at enabling us to place drill
+hole traces through volumetric models.  It has also been very good at
+positioning 2D sections in a 3D model.
+
+One area we have not quite figured out yet is: How do you drape a 2D
+texture/image onto a surface?
+
+For example, suppose you have a satellite image or air photo of the
+surface of the area you have been modelling.  We usually also have a DEM
+so we can generate an elevation surface as a regular mesh or a TIN.  Can
+anyone make suggestions on where I can learn more about this kinds of
+draping/texture mapping.  (Incidentally, in this case the image is not
+being "corrected" by the terrain - its just being dropped vertically
+onto the surface with no horizontal adjustment of pixel positions.)
+
+Cheers,
+
+John Harrop
+
+
+
+
+From jharrop@acm.org  Sun Mar  7 18:23:58 2004
+From: jharrop@acm.org (John Harrop)
+Date: Sun, 07 Mar 2004 10:23:58 -0800
+Subject: [Paraview] Terminology?  Carpet plots == GIS Draping?
+Message-ID: <1078683840.10629.17.camel@cr517045-a>
+
+One of the greatest restrictions to cross discipline tools is
+terminology.  Geophysical inversion is largely the same as medical image
+reconstruction - at least in the maths and physics, but you wouldn't
+know it comparing the terminology in the two fields.
+
+Perhaps the recent post about carpet plots is exactly what I was
+describing in my last post?  I apologize if I'm asking the top newbie
+question in just a new terminology wrapping! ;-)
+
+Cheers
+
+John Harrop
+
+
+
+
+From M.Janssens@nabla.co.uk  Tue Mar  9 11:54:45 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Tue, 09 Mar 2004 11:54:45 +0000
+Subject: [Paraview] lighting
+In-Reply-To: <1078771973.16128.156.camel@silverymoon>
+References: <4044A094.4050207@nabla.co.uk>	 <6.0.3.0.2.20040302112750.03212d88@pop.biz.rr.com>	 <4044CC6C.3050204@nabla.co.uk>	 <6.0.3.0.2.20040302131544.0323c8a8@pop.biz.rr.com>	 <404C825B.6050905@nabla.co.uk> <1078765170.16128.110.camel@silverymoon>	 <404CB8CC.2020707@nabla.co.uk> <1078771973.16128.156.camel@silverymoon>
+Message-ID: <404DB085.4080705@nabla.co.uk>
+
+Is there a way to control the lighting in Paraview? Some things I would 
+like control over:
+- level of ambient light
+- number/position of spotlights
+- unidirectional/bidirectional lighting.
+
+I went through the user manual and the mailing lists but could not find 
+anything.
+
+Regards,
+
+Mattijs Janssens
+
+
+From bnwylie@sandia.gov  Tue Mar  9 14:25:35 2004
+From: bnwylie@sandia.gov (Wylie, Brian)
+Date: Tue, 9 Mar 2004 07:25:35 -0700
+Subject: [Paraview] lighting
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA4A@es10snlnt.sandia.gov>
+
+LightKit is what many people have been thinking that ParaView should have.
+I'm sure it's on Kitware's to-do list.... :)
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+     (505) 844-2238   FAX (505) 845-0833
+
+
+-----Original Message-----
+From: Mattijs Janssens [mailto:M.Janssens@nabla.co.uk] 
+Sent: Tuesday, March 09, 2004 4:55 AM
+Cc: ParaView Mailing List
+Subject: [Paraview] lighting
+
+
+Is there a way to control the lighting in Paraview? Some things I would 
+like control over:
+- level of ambient light
+- number/position of spotlights
+- unidirectional/bidirectional lighting.
+
+I went through the user manual and the mailing lists but could not find 
+anything.
+
+Regards,
+
+Mattijs Janssens
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+
+
+From berklist@nycap.rr.com  Tue Mar  9 15:01:13 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Tue, 09 Mar 2004 10:01:13 -0500
+Subject: [Paraview] GIS with ParaView - how to drape?
+In-Reply-To: <1078682760.10613.12.camel@cr517045-a>
+References: <1078682760.10613.12.camel@cr517045-a>
+Message-ID: <1078844473.32336.18.camel@silverymoon>
+
+If I understand it correctly, you want to perform two distinct
+operations:
+1. modify the z coordinate of each point of a regular grid with an
+elevation (this is what a carpet plot is and as explained in previous
+messages, it is easy to do this in ParaView using "warp")
+2. apply an image as a texture on a 2D surface (texture mapping).
+Although the underlying engine (VTK) supports this, ParaView does not
+yet support texture maps. Two reasons: 1. there has not been enough
+demand to make this a priority, 2. since ParaView is designed to run in
+parallel (and perform parallel rendering), there are some technical
+issues we haven't addressed.
+Depending on your requirements, you can use ParaView together with VTK
+(VTK supports C++, python, tcl and java development) or you can dig in
+ParaView code (with some help from developers) and try to enable texture
+mapping.
+
+-Berk
+
+On Sun, 2004-03-07 at 13:05, John Harrop wrote:
+> Our group is fairly new to ParaView/vtk but our initial results and
+> impressions have been very favourable.  We work with 3D geophysical
+> models that we build by geophysical inversion of (mostly) surface
+> surveys.  ParaView has worked very well at enabling us to place drill
+> hole traces through volumetric models.  It has also been very good at
+> positioning 2D sections in a 3D model.
+> 
+> One area we have not quite figured out yet is: How do you drape a 2D
+> texture/image onto a surface?
+> 
+> For example, suppose you have a satellite image or air photo of the
+> surface of the area you have been modelling.  We usually also have a DEM
+> so we can generate an elevation surface as a regular mesh or a TIN.  Can
+> anyone make suggestions on where I can learn more about this kinds of
+> draping/texture mapping.  (Incidentally, in this case the image is not
+> being "corrected" by the terrain - its just being dropped vertically
+> onto the surface with no horizontal adjustment of pixel positions.)
+> 
+> Cheers,
+> 
+> John Harrop
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From s_hudson13@hotmail.com  Tue Mar  9 15:55:07 2004
+From: s_hudson13@hotmail.com (Steve Hudson)
+Date: Tue, 09 Mar 2004 15:55:07 +0000
+Subject: [Paraview] Merging vtkXMLStructuredGrid Files for viewing in Paraview
+Message-ID: <BAY1-F83z4WolWa4lUb0000ce6d@hotmail.com>
+
+I have created the given pvd file which allows me to view the separate files 
+together. Thanks Berk!Now I'm wondering whether its possible to merge the 
+boundaries. At the moment, the points at the boundaries are repeated (so the 
+whole problem has extra points), but the same number of cells.
+Can this be done?
+
+Steve
+
+
+
+You have to create a simple meta-file that points to the other files.
+The meta-file (.pvd extension, for ParaView data) is also in xml format
+and should look like this:
+
+<?xml version="1.0"?>
+<VTKFile type="Collection" version="0.1" byte_order="LittleEndian"
+         compressor="vtkZLibDataCompressor">
+  <Collection>
+    <DataSet part="0" file="multiblock/multiblock_0.vts"/>
+    <DataSet part="1" file="multiblock/multiblock_1.vts"/>
+    <DataSet part="2" file="multiblock/multiblock_2.vts"/>
+    <DataSet part="3" file="multiblock/multiblock_3.vts"/>
+    <DataSet part="4" file="multiblock/multiblock_4.vts"/>
+  </Collection>
+</VTKFile>
+
+If you then open the pvd file, ParaView should load all the parts.
+
+-Berk
+
+
+On Mon, 2004-03-08 at 12:52, Steve Hudson wrote:
+>I am using a parallel application where  different files are output for 
+>each processor (representing different regions of the problem). I have made 
+>it write them in vtkXMLStructuredGrid format. I would like to use Paraview 
+>(v1.2.1) to view the whole problem, but am only able to view one file at a 
+>time. What do I need to do to merge the files.
+>
+>If I have the multiple files in one directory, and load in the first, it 
+>gives me a time line, which can be used to view the other files, but not 
+>all at once.
+>
+>I have also tried creating a PStructuredGrid file and loading it in, but it 
+>only seems to give me the first file. Should this do it? Do I need to try 
+>this again?
+>
+>I have found the documentation on this a little unclear.
+>
+>Thanks
+>
+>Steve
+>
+
+_________________________________________________________________
+It's fast, it's easy and it's free. Get MSN Messenger today! 
+http://www.msn.co.uk/messenger
+
+
+From berklist@nycap.rr.com  Tue Mar  9 16:17:30 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Tue, 09 Mar 2004 11:17:30 -0500
+Subject: [Paraview] Merging vtkXMLStructuredGrid Files for viewing in
+ Paraview
+In-Reply-To: <BAY1-F83z4WolWa4lUb0000ce6d@hotmail.com>
+References: <BAY1-F83z4WolWa4lUb0000ce6d@hotmail.com>
+Message-ID: <1078849049.32336.29.camel@silverymoon>
+
+Use "Append Datasets" and if necessary (I can't remember if appending
+removes duplicate points) "Clean To Grid".
+
+On Tue, 2004-03-09 at 10:55, Steve Hudson wrote:
+> I have created the given pvd file which allows me to view the separate files 
+> together. Thanks Berk!Now I'm wondering whether its possible to merge the 
+> boundaries. At the moment, the points at the boundaries are repeated (so the 
+> whole problem has extra points), but the same number of cells.
+> Can this be done?
+> 
+> Steve
+> 
+> 
+> 
+> You have to create a simple meta-file that points to the other files.
+> The meta-file (.pvd extension, for ParaView data) is also in xml format
+> and should look like this:
+> 
+> <?xml version="1.0"?>
+> <VTKFile type="Collection" version="0.1" byte_order="LittleEndian"
+>          compressor="vtkZLibDataCompressor">
+>   <Collection>
+>     <DataSet part="0" file="multiblock/multiblock_0.vts"/>
+>     <DataSet part="1" file="multiblock/multiblock_1.vts"/>
+>     <DataSet part="2" file="multiblock/multiblock_2.vts"/>
+>     <DataSet part="3" file="multiblock/multiblock_3.vts"/>
+>     <DataSet part="4" file="multiblock/multiblock_4.vts"/>
+>   </Collection>
+> </VTKFile>
+> 
+> If you then open the pvd file, ParaView should load all the parts.
+> 
+> -Berk
+> 
+> 
+> On Mon, 2004-03-08 at 12:52, Steve Hudson wrote:
+> >I am using a parallel application where  different files are output for 
+> >each processor (representing different regions of the problem). I have made 
+> >it write them in vtkXMLStructuredGrid format. I would like to use Paraview 
+> >(v1.2.1) to view the whole problem, but am only able to view one file at a 
+> >time. What do I need to do to merge the files.
+> >
+> >If I have the multiple files in one directory, and load in the first, it 
+> >gives me a time line, which can be used to view the other files, but not 
+> >all at once.
+> >
+> >I have also tried creating a PStructuredGrid file and loading it in, but it 
+> >only seems to give me the first file. Should this do it? Do I need to try 
+> >this again?
+> >
+> >I have found the documentation on this a little unclear.
+> >
+> >Thanks
+> >
+> >Steve
+> >
+> 
+> _________________________________________________________________
+> It's fast, it's easy and it's free. Get MSN Messenger today! 
+> http://www.msn.co.uk/messenger
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From s_hudson13@hotmail.com  Tue Mar  9 21:24:23 2004
+From: s_hudson13@hotmail.com (Steve Hudson)
+Date: Tue, 09 Mar 2004 21:24:23 +0000
+Subject: [Paraview] Running Paraview in Parallel
+Message-ID: <BAY1-F156nRcEhkVH1w0000e12d@hotmail.com>
+
+I want to try running paraview in parallel on a linux cluster, to speed up 
+the processing of operations such as streamlines, but I am at a loss as to 
+where to start. To run parallel jobs, I have to log into a front end node 
+which then submits jobs to a batch queue. In the Paraview manual its says 
+that you run paraview as any other MPI jobs, but I dont know how to assign 
+files to processors, or quite how I view the output, can someone give me a 
+typical command line? - or point me to somewhere that has more information?
+
+_________________________________________________________________
+Express yourself with cool emoticons - download MSN Messenger today! 
+http://www.msn.co.uk/messenger
+
+
+From johnh@sjgeophysics.com  Tue Mar  9 22:17:02 2004
+From: johnh@sjgeophysics.com (John Harrop)
+Date: 09 Mar 2004 14:17:02 -0800
+Subject: [Paraview] GIS with ParaView - how to drape?
+In-Reply-To: <1078844473.32336.18.camel@silverymoon>
+References: <1078682760.10613.12.camel@cr517045-a>
+ <1078844473.32336.18.camel@silverymoon>
+Message-ID: <1078870622.1514.377.camel@orion3>
+
+Berk,
+
+Thanks for your comments.  I think you understand the goal correctly. 
+Here is a little more background and some of our thinking and interests.
+
+On Tue, 2004-03-09 at 07:01, Berk Geveci wrote:
+> If I understand it correctly, you want to perform two distinct
+> operations:
+> 1. modify the z coordinate of each point of a regular grid with an
+> elevation (this is what a carpet plot is and as explained in previous
+> messages, it is easy to do this in ParaView using "warp")
+
+The elevation model may be in a regular grid - we could always convert
+it to that.  I had not been thinking of using ParaView to do this, I had
+assumed we would need to build an irregular 3D mesh.  There is some
+debate/confusion over whether this is a 3D or 2D object.  In GIS and
+geoscience we often call it a 2.5D (thats 2 1/2 D not a version number
+;-) surface.  The surface is constrained by the fact it cannot fold back
+over itself.  Categorical and continuous attributes are typically
+"projected" onto it, but generally the original projected data does not
+share nodes with the elevation model.
+
+> 2. apply an image as a texture on a 2D surface (texture mapping).
+> Although the underlying engine (VTK) supports this, ParaView does not
+> yet support texture maps. Two reasons: 1. there has not been enough
+> demand to make this a priority, 2. since ParaView is designed to run in
+> parallel (and perform parallel rendering), there are some technical
+> issues we haven't addressed.
+
+The visualization demands generated by mineral exploration are not very
+big in a business scale.  Consequently, we are presenting two papers at
+a conference in Toronto that suggest open source, freely available tools
+and much better collaboration with other fields may be the best economic
+model for supporting geoscience software in the mineral exploration
+industry.  Most GIS does not need full 3D support.
+
+A solution we have been evaluating is to stop expecting a 3D package
+that also supports high resolution paper and electronic map creation (2D
+world products).  Instead we are building a suite of modular filtering
+and inversion tools for processing data, and extending GIS systems such
+as GRASS which can support 2d map management and creation.  3D system
+generally have difficulty supporting the same resolution we need for
+surface mapping (think of publication quality map products).  Being able
+to export from the high-res 2D system and view this data in full
+resolution on a 2.5D surface (while 3D volumetric data remains at an
+appropriate lower resolution) would be a major success.
+
+> Depending on your requirements, you can use ParaView together with VTK
+> (VTK supports C++, python, tcl and java development) or you can dig in
+> ParaView code (with some help from developers) and try to enable texture
+> mapping.
+>
+
+We are looking at writing a series of GRASS export utilities to go from
+GRASS formats to vtk and thus ParaView or MayaVI.  For now we could
+convert to a dense regular grid with attached attribute data.
+
+We would be interested in digging into the code and looking at enabling
+texture mapping.  Sounds like it might be a co-op student size project.
+ 
+
+John Harrop
+
+
+> -Berk
+> 
+> On Sun, 2004-03-07 at 13:05, John Harrop wrote:
+> > Our group is fairly new to ParaView/vtk but our initial results and
+> > impressions have been very favourable.  We work with 3D geophysical
+> > models that we build by geophysical inversion of (mostly) surface
+> > surveys.  ParaView has worked very well at enabling us to place drill
+> > hole traces through volumetric models.  It has also been very good at
+> > positioning 2D sections in a 3D model.
+> > 
+> > One area we have not quite figured out yet is: How do you drape a 2D
+> > texture/image onto a surface?
+> > 
+> > For example, suppose you have a satellite image or air photo of the
+> > surface of the area you have been modelling.  We usually also have a DEM
+> > so we can generate an elevation surface as a regular mesh or a TIN.  Can
+> > anyone make suggestions on where I can learn more about this kinds of
+> > draping/texture mapping.  (Incidentally, in this case the image is not
+> > being "corrected" by the terrain - its just being dropped vertically
+> > onto the surface with no horizontal adjustment of pixel positions.)
+> > 
+> > Cheers,
+> > 
+> > John Harrop
+> > 
+> > 
+> > 
+> > _______________________________________________
+> > ParaView mailing list
+> > ParaView@paraview.org
+> > http://www.paraview.org/mailman/listinfo/paraview
+> -- 
+> Berk Geveci <berklist@nycap.rr.com>
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From Patrick.Brockmann@cea.fr  Wed Mar 10 17:10:26 2004
+From: Patrick.Brockmann@cea.fr (Patrick Brockmann)
+Date: Wed, 10 Mar 2004 18:10:26 +0100
+Subject: [Paraview] vtkBandedPolyDataContourFilter
+Message-ID: <404F4C02.1090208@cea.fr>
+
+Hi all,
+
+Some questions and wishes for someone who really appreciates
+the design and the features of paraview application.
+
+---------------------------------------
+* Is there a way to make isofilled countours ?
+I use the vtkBandedPolyDataContourFilter for this when I compute with 
+the VTK API
+but it is not available in paraview ?
+
+I read from the "Features" page that
+"any VTK <http://www.vtk.org> filter can be added by providing a simple 
+XML description"
+Is there a documentation for that ?
+
+---------------------------------------
+* I would like to specify different colors for each levels in the scalar 
+bar.
+For now I can only change the first and last colors.
+The values of the levels indicated in the scalar bar reflect only 
+regular steps.
+Can it be changed (in VTK API too) ?
+
+---------------------------------------
+* Last but big issue:
+
+In my community (climate research), there is a large aggrement to use 
+the python
+language. Many modules exist for many purpose
+(numeric processing with Numeric or numarray modules,  input/output and 
+computations with
+netCDF file with CDMS from the LLNL/PCMDI, ... ).
+
+With the VTK API (wrap in python) - that I am promotting,
+all the parts are here to build nice and usefull applications.
+Paraview application could be one of them. Unfortunately, it has been based
+on the Tcl/Tk toolkit where all the modules mentionned above are missing.
+
+Also could this project be re-oriented on python ?
+
+---------------------------------------
+
+Best regards
+
+PS: I use paraview-1.2.1 on a Linux-x86 machine
+
+-- Patrick
+
+
+
+
+From M.Janssens@nabla.co.uk  Wed Mar 10 17:22:20 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Wed, 10 Mar 2004 17:22:20 +0000
+Subject: [Paraview] vtkBandedPolyDataContourFilter
+In-Reply-To: <404F4C02.1090208@cea.fr>
+References: <404F4C02.1090208@cea.fr>
+Message-ID: <404F4ECC.5050708@nabla.co.uk>
+
+This is a multi-part message in MIME format.
+--------------070902060005020502090604
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Hi Patrick,
+
+I'll try to answer your second question:
+
+ > I read from the "Features" page that
+ > "any VTK <http://www.vtk.org> filter can be added by providing a simple
+ > XML description"
+ > Is there a documentation for that ?
+
+Yes, somewhere in the mailing list. Here is my version
+
+- attached an example of a config file. Put it somewhere and
+- setenv PV_INTERFACE_PATH to the directory it is in.
+
+Now when you start up paraview you'll have an extra filter 'ABCCellCentres'
+
+I just copied this one module description from the paraview sources:
+
+paraview-1.2.1/ParaView/ParaView/Resources/Filters.xml
+
+
+ > Python etc.
+Visit and/or mayaVi use vtk&python. Haven't used them so don't know how 
+good/active they are.
+
+Mattijs
+
+Patrick Brockmann wrote:
+> Hi all,
+> 
+> Some questions and wishes for someone who really appreciates
+> the design and the features of paraview application.
+> 
+> ---------------------------------------
+> * Is there a way to make isofilled countours ?
+> I use the vtkBandedPolyDataContourFilter for this when I compute with 
+> the VTK API
+> but it is not available in paraview ?
+> 
+> I read from the "Features" page that
+> "any VTK <http://www.vtk.org> filter can be added by providing a simple 
+> XML description"
+> Is there a documentation for that ?
+> 
+> ---------------------------------------
+> * I would like to specify different colors for each levels in the scalar 
+> bar.
+> For now I can only change the first and last colors.
+> The values of the levels indicated in the scalar bar reflect only 
+> regular steps.
+> Can it be changed (in VTK API too) ?
+> 
+> ---------------------------------------
+> * Last but big issue:
+> 
+> In my community (climate research), there is a large aggrement to use 
+> the python
+> language. Many modules exist for many purpose
+> (numeric processing with Numeric or numarray modules,  input/output and 
+> computations with
+> netCDF file with CDMS from the LLNL/PCMDI, ... ).
+> 
+> With the VTK API (wrap in python) - that I am promotting,
+> all the parts are here to build nice and usefull applications.
+> Paraview application could be one of them. Unfortunately, it has been based
+> on the Tcl/Tk toolkit where all the modules mentionned above are missing.
+> 
+> Also could this project be re-oriented on python ?
+> 
+> ---------------------------------------
+> 
+> Best regards
+> 
+> PS: I use paraview-1.2.1 on a Linux-x86 machine
+> 
+> -- Patrick
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+--------------070902060005020502090604
+Content-Type: text/xml;
+ name="standardFilters.xml"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="standardFilters.xml"
+
+<ModuleInterfaces>
+  <Module name="ABCCellCenters"
+          menu_name="ABCCell Centers"
+          root_name="Centers"
+          module_type="Filter"
+          long_help="Bla."
+          short_help="Bla.">
+    <Filter class="vtkCellCenters">
+      <Input name="Input"
+             class="vtkDataSet"/>
+    </Filter>
+    <InputMenu trace_name="Input" label="Input"
+               help="Set the input to this filter."
+               input_name="Input"/>
+    <LabeledToggle label="Generate vertices"
+                   trace_name="VertexCells"
+                   variable="VertexCells"
+                   help="Generate vertex as geometry of just points."
+                   default_value="0"/>
+  </Module>
+</ModuleInterfaces>
+
+--------------070902060005020502090604--
+
+
+From ferrell@lanl.gov  Wed Mar 10 18:39:00 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Wed, 10 Mar 2004 11:39:00 -0700 (MST)
+Subject: [Paraview] Generating contours
+Message-ID: <2592.128.165.144.120.1078943940.squirrel@webmail2.pair.com>
+
+I've just started using Paraview 1.2.  I sort of like the new interface
+for the Contour object.  I'm having two difficulties with it.
+
+1. I'm using a .pvd file to display a time series.  The new interface
+provides a nice way to generate a whole range of contour values.  However,
+the upper and lower bounds are limited by the range of data in the
+currently displayed time step, which does not span the whole range of
+values in the time series.  I try to manually set the upper and lower
+bounds, but I can't set bounds outside of the range of values at the
+current time step.  That is no good for me, since I need to create
+contours that showup in some time steps and not in others.  Please change
+the behavior so I can set any values.  It might be nice if there were a
+way to see the range of values over the whole time series.
+
+2. Also, rather than having a "Number of Values" widget, I'd rather have a
+"Spacing Between Contours" widget.
+
+thanks,
+-robert
+
+From berk.geveci@kitware.com  Wed Mar 10 18:48:08 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Wed, 10 Mar 2004 13:48:08 -0500
+Subject: [Paraview] vtkBandedPolyDataContourFilter
+In-Reply-To: <404F4C02.1090208@cea.fr>
+References: <404F4C02.1090208@cea.fr>
+Message-ID: <1078944488.28117.11.camel@silverymoon>
+
+> Hi all,
+> 
+> Some questions and wishes for someone who really appreciates
+> the design and the features of paraview application.
+> ---------------------------------------
+> * I would like to specify different colors for each levels in the scalar 
+> bar.
+> For now I can only change the first and last colors.
+> The values of the levels indicated in the scalar bar reflect only 
+> regular steps.
+> Can it be changed (in VTK API too) ?
+> 
+> ---------------------------------------
+
+Not currently. However, adding support for custom color maps is in our
+todo list.
+
+> * Last but big issue:
+> 
+> In my community (climate research), there is a large aggrement to use 
+> the python
+> language. Many modules exist for many purpose
+> (numeric processing with Numeric or numarray modules,  input/output and 
+> computations with
+> netCDF file with CDMS from the LLNL/PCMDI, ... ).  
+> 
+> With the VTK API (wrap in python) - that I am promotting,
+> all the parts are here to build nice and usefull applications.
+> Paraview application could be one of them. Unfortunately, it has been based
+> on the Tcl/Tk toolkit where all the modules mentionned above are missing.
+> 
+> Also could this project be re-oriented on python ?
+
+We have no intention of replacing the use of Tcl with Python. Tcl is and
+will be the main scripting interface for the ParaView GUI. However, we
+are working on separating the core of ParaView from the GUI. This core
+will be scriptable in any language VTK supports (tcl, python and java).
+We will also develop a language independent (probably xml based)
+interface to this core. This will also allow us (and everybody willing
+to invest the time) to write clients (GUI) in any language we want. This
+is in progress now and will start to appear in the next release (and
+will be finished before 1.6). 
+
+
+
+From jfavre@cscs.ch  Thu Mar 11 12:55:49 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 11 Mar 2004 13:55:49 +0100
+Subject: [Paraview] vtkBandedPolyDataContourFilter
+In-Reply-To: <404F4C02.1090208@cea.fr>
+References: <404F4C02.1090208@cea.fr>
+Message-ID: <405061D5.4040107@cscs.ch>
+
+This is a multi-part message in MIME format.
+--------------020402040503040807050006
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Patrick Brockmann wrote:
+
+> * Is there a way to make isofilled countours ?
+> I use the vtkBandedPolyDataContourFilter for this when I compute with 
+> the VTK API
+> but it is not available in paraview ?
+
+Here is my solution. Writing the XML was not big deal. In fact, it is 
+very similar to the Contour GUI panel. So I started from that, and added 
+the options specific to BandedContour. The real difficulty was to 
+understand why it did not allow selection of the cell-data in the 
+Display->"Color by" option. This is due to a current limitation of the 
+vtkBandedPolyDataContourFilter.cxx
+
+The filter does not name the FloatArray used to store the new cell 
+scalars. No name, means no display for ParaView. :-(
+
+I added a name on line 292 of the source code, recompiled and it worked 
+fine. Please note that I am working with the nightly CVS versions of VTK 
+and ParaView.
+
+One more thing: If GenerateContourEdges is OFF, everything works and you 
+get cell-based coloring. If it is ON, then ParaView has mixed outputs 
+and cannot generate the coloring. You need to use two ExtractParts, one 
+to extract the first output and use cell-based display of the bands. The 
+second one to extract the contour lines.
+
+Note finally that the iso-contour lines have no scalars associated with 
+them, thus a uniform color.
+
+That's the most complete solution I could find.
+
+I trust the VTK developpers will make that correction to 
+vtkBandedPolyDataContourFilter.cxx
+
+Cheers
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+--------------020402040503040807050006
+Content-Type: text/xml;
+ name="Filters.xml"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename="Filters.xml"
+
+<ModuleInterfaces>
+  <Module name="BandedPolyDataContour"
+          root_name="BandedContour"
+          module_type="Filter"
+          replace_input="0"
+          long_help="Filled contours are bands of cells that all have the same cell scalar value, and can therefore be colored the same."
+          short_help="Produces filled contours.">
+    <Filter class="vtkBandedPolyDataContourFilter">
+      <Input name="Input"
+             class="vtkPolyData">
+        <ArrayRequirement attribute="Point" components="1"/>
+      </Input>
+    </Filter>
+
+    // Do not change the tracename of the input menu, it is used by vtkPVContour
+    <InputMenu trace_name="Input"
+               id="im"
+               label="Input"
+               input_name="Input"
+               help="Set the input to this filter." />
+    // Do not change the tracename of the array menu, it is used by vtkPVContour
+    <ArrayMenu id="am"
+               input_name="Input"
+               attribute_type="Scalars"
+               label="Scalars"
+               trace_name="Scalars"
+               input_menu="im"
+               number_of_components="1"
+               help="Choose which scalar array you want to contour."/>
+    <ScalarRangeLabel id="srl"
+                      trace_name="ScalarRangeLabel"
+                      array_menu="am"/>
+    <ContourEntry label="Contour Values"
+                  trace_name="Contour Values"
+                  array_menu="am"
+                  set_number_command="SetNumberOfContours"
+                  set_contour_command="SetValue"
+                  help="List of current contour values." />
+    <LabeledToggle label="Set Clipping"
+                   variable="Clipping"
+                   default_value="0"
+                   trace_name="Set Clipping"
+                   help="Select whether to clip outside the range specified by the user" />
+    <LabeledToggle label="Generate Contour Edges"
+                   variable="GenerateContourEdges"
+                   default_value="0"
+                   trace_name="Set Generate Contour Edges"
+                   help="Select whether to compute contour edges"/>
+
+    <SelectionList variable="ScalarMode"
+                   trace_name="Set Scalar Mode"
+                   label="Scalar Mode"
+                   option_width="15"
+                   help="Select whether the cell scalars are output as an integer index or a scalar value"
+                   default_value="0">
+          <Item name="Index"
+                value="0"/>
+          <Item name="Value"
+                value="1"/>
+        </SelectionList>
+    <Documentation>
+    </Documentation>
+  </Module>
+</ModuleInterfaces>
+
+--------------020402040503040807050006--
+
+
+From pierre.puiseux@univ-pau.fr  Thu Mar 11 13:57:40 2004
+From: pierre.puiseux@univ-pau.fr (Puiseux Pierre)
+Date: 11 Mar 2004 14:57:40 +0100
+Subject: [Paraview] reading scalars
+Message-ID: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+
+Hello,
+
+Thanks for this beautiful tool.
+
+A problem with reader in paraview : 
+paraview (vtk?) seems to be unable to read two SCALARS
+In the following example, SCALAR "erreur" is ignored, or at least,
+cannot be accessed from paraview.
+(while, in Mayavi, the two SCALARS are read and accessible)
+Maybe a bug ?
+
+# vtk DataFile Version 3.0
+test puiseux/trujillo
+ASCII
+DATASET UNSTRUCTURED_GRID
+POINTS 216 float
+0.000000  0.000000  0.000000
+...
+1.000000  1.000000  1.000000
+CELLS 125  1125
+8 0  1  2  3  4  5  6  7
+.....
+8 172  173  179  178  208  209  215  214
+CELL_TYPES 125
+12
+...
+12
+POINT_DATA 216
+SCALARS solution_approchee float
+LOOKUP_TABLE default
+0.000000
+...
+0.100000
+0.000000
+SCALARS erreur float
+LOOKUP_TABLE default
+0.000000
+...
+0.000125
+
+
+-- 
+Puiseux Pierre <pierre.puiseux@univ-pau.fr>
+Université de Pau
+
+
+From jfavre@cscs.ch  Thu Mar 11 14:30:33 2004
+From: jfavre@cscs.ch (Jean M. Favre)
+Date: Thu, 11 Mar 2004 15:30:33 +0100
+Subject: [Paraview] reading scalars
+In-Reply-To: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+References: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+Message-ID: <40507809.9030900@cscs.ch>
+
+Puiseux Pierre wrote:
+> Hello,
+> 
+> Thanks for this beautiful tool.
+> 
+> A problem with reader in paraview : 
+> paraview (vtk?) seems to be unable to read two SCALARS
+> In the following example, SCALAR "erreur" is ignored, or at least,
+> cannot be accessed from paraview.
+
+Indeed, you are right, at least for the official release version 1.2.1.
+
+I tried it with the CVS nightly version and it worked well.
+
+-- 
+Dr. Jean M. Favre,                            email:favre @ cscs.ch
+http://www.cscs.ch/people/Favre.html
+CSCS, Swiss Center for Scientific Computing | Tel:  +41 (91) 610.82.40
+Via Cantonale, 6928 Manno, Switzerland      | Fax:  +41 (91) 610.82.82
+
+
+From amy.henderson@kitware.com  Thu Mar 11 14:31:38 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 11 Mar 2004 09:31:38 -0500
+Subject: [Paraview] reading scalars
+In-Reply-To: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+References: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+Message-ID: <6.0.3.0.2.20040311092504.03214080@pop.biz.rr.com>
+
+At 08:57 AM 3/11/2004, Puiseux Pierre wrote:
+>Hello,
+>
+>Thanks for this beautiful tool.
+>
+>A problem with reader in paraview :
+>paraview (vtk?) seems to be unable to read two SCALARS
+>In the following example, SCALAR "erreur" is ignored, or at least,
+>cannot be accessed from paraview.
+>(while, in Mayavi, the two SCALARS are read and accessible)
+>Maybe a bug ?
+
+No it isn't a bug. The legacy VTK file format (the format your example file=
+=20
+is in) only supports one SCALAR. At the time this file format was created,=
+=20
+VTK only allowed you to have one scalar array. If you needed more than one,=
+=20
+it needed to be in field data. Try making the changes I have noted in your=
+=20
+example below. The new XML-based VTK file formats do not have this=
+ limitation.
+
+># vtk DataFile Version 3.0
+>test puiseux/trujillo
+>ASCII
+>DATASET UNSTRUCTURED_GRID
+>POINTS 216 float
+>0.000000  0.000000  0.000000
+>...
+>1.000000  1.000000  1.000000
+>CELLS 125  1125
+>8 0  1  2  3  4  5  6  7
+>.....
+>8 172  173  179  178  208  209  215  214
+>CELL_TYPES 125
+>12
+>...
+>12
+>POINT_DATA 216
+>SCALARS solution_approchee float
+>LOOKUP_TABLE default
+>0.000000
+>...
+>0.100000
+>0.000000
+
+FIELD FieldData 1
+
+>SCALARS erreur float  <-- remove this line
+>LOOKUP_TABLE default  <-- remove this line too
+
+erreur 1 216 float <-- indicates that this is a single-component array with=
+=20
+216 entries
+
+>0.000000
+>...
+>0.000125
+>
+>
+>--
+>Puiseux Pierre <pierre.puiseux@univ-pau.fr>
+>Universit=E9 de Pau
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From M.Janssens@nabla.co.uk  Thu Mar 11 14:39:20 2004
+From: M.Janssens@nabla.co.uk (Mattijs Janssens)
+Date: Thu, 11 Mar 2004 14:39:20 +0000
+Subject: [Paraview] reading scalars
+In-Reply-To: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+References: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+Message-ID: <40507A18.6090107@nabla.co.uk>
+
+For multiple scalars you want to put them in a 'field':
+
+POINT_DATA 216
+FIELD attributes 2
+solution_approchee 1 216 float
+0.000
+..
+0.100
+erreurs 1 216 float
+0.000
+..
+0.00125
+
+Regards,
+
+Mattijs
+
+Puiseux Pierre wrote:
+> Hello,
+> 
+> Thanks for this beautiful tool.
+> 
+> A problem with reader in paraview : 
+> paraview (vtk?) seems to be unable to read two SCALARS
+> In the following example, SCALAR "erreur" is ignored, or at least,
+> cannot be accessed from paraview.
+> (while, in Mayavi, the two SCALARS are read and accessible)
+> Maybe a bug ?
+> 
+> # vtk DataFile Version 3.0
+> test puiseux/trujillo
+> ASCII
+> DATASET UNSTRUCTURED_GRID
+> POINTS 216 float
+> 0.000000  0.000000  0.000000
+> ...
+> 1.000000  1.000000  1.000000
+> CELLS 125  1125
+> 8 0  1  2  3  4  5  6  7
+> .....
+> 8 172  173  179  178  208  209  215  214
+> CELL_TYPES 125
+> 12
+> ...
+> 12
+> POINT_DATA 216
+> SCALARS solution_approchee float
+> LOOKUP_TABLE default
+> 0.000000
+> ...
+> 0.100000
+> 0.000000
+> SCALARS erreur float
+> LOOKUP_TABLE default
+> 0.000000
+> ...
+> 0.000125
+> 
+> 
+
+-- 
+/*---------------------------------------------------------*\
+| ===========           Mattijs Janssens                    |
+| \\        /           Development Engineer                |
+|  \\      /                                                |
+|   \\    /             Nabla Ltd.                          |
+|    \\  /              The Mews, Picketts Lodge            |
+|     \\/               Picketts Lane, Salfords,            |
+|     F ield            Surrey RH1 5RG.                     |
+|     O peration        Tel: +44 (0)1293 821272             |
+|     A nd              Email: m.janssens@Nabla.co.uk       |
+|     M anipulation     URL: http://www.Nabla.co.uk         |
+\*---------------------------------------------------------*/
+
+
+From berklist@nycap.rr.com  Thu Mar 11 15:11:25 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Thu, 11 Mar 2004 10:11:25 -0500
+Subject: [Paraview] reading scalars
+In-Reply-To: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+References: <1079013459.5654.349.camel@iplmat089.univ-pau.fr>
+Message-ID: <1079017885.1632.5.camel@silverymoon>
+
+This "problem" has been fixed. The next release will be able to read all
+scalars. However, I suggest that you switch to using the new XML based
+file formats.
+
+On Thu, 2004-03-11 at 08:57, Puiseux Pierre wrote:
+> Hello,
+> 
+> Thanks for this beautiful tool.
+> 
+> A problem with reader in paraview : 
+> paraview (vtk?) seems to be unable to read two SCALARS
+> In the following example, SCALAR "erreur" is ignored, or at least,
+> cannot be accessed from paraview.
+> (while, in Mayavi, the two SCALARS are read and accessible)
+> Maybe a bug ?
+> 
+> # vtk DataFile Version 3.0
+> test puiseux/trujillo
+> ASCII
+> DATASET UNSTRUCTURED_GRID
+> POINTS 216 float
+> 0.000000  0.000000  0.000000
+> ...
+> 1.000000  1.000000  1.000000
+> CELLS 125  1125
+> 8 0  1  2  3  4  5  6  7
+> .....
+> 8 172  173  179  178  208  209  215  214
+> CELL_TYPES 125
+> 12
+> ...
+> 12
+> POINT_DATA 216
+> SCALARS solution_approchee float
+> LOOKUP_TABLE default
+> 0.000000
+> ...
+> 0.100000
+> 0.000000
+> SCALARS erreur float
+> LOOKUP_TABLE default
+> 0.000000
+> ...
+> 0.000125
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From charles.law@kitware.com  Thu Mar 11 16:45:31 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 11 Mar 2004 11:45:31 -0500
+Subject: [Paraview] Running Paraview in Parallel
+In-Reply-To: <BAY1-F156nRcEhkVH1w0000e12d@hotmail.com>
+References: <BAY1-F156nRcEhkVH1w0000e12d@hotmail.com>
+Message-ID: <6.0.0.22.0.20040311104533.034ade70@pop.biz.rr.com>
+
+Steve,
+
+First, the conversion of the streamline filter from serial to parallel is 
+not yet complete.  The current distributed implementation of streamlines 
+does not speed up the processing over serial execution.
+
+The reader is responsible for assigning files to processes.  You would have 
+to look into the different parallel file formats like VTK's XML based readers.
+
+In Paraview's standard mode of execution, The output will be displayed on 
+the processes with the user interface.  This will be process 0 if you are 
+running straight MPI.  If running ParaView as a client and server, the 
+client has the UI and the rendering display.  There is also a tiled display 
+mode which I will not discuss more.
+
+Unfortunately, the feature you probably need does not work yet.  You will 
+most likely start the server using your batch interface, and then start the 
+ParaView client from an interactive session.  The problem is that the 
+server nodes still try to connect (unnecessarily) to an X server.  We are 
+in the process of fixing this.
+
+ParaView also allows you to export a script that can be run in batch.  The 
+output images/geometry are saved in files.  If you compile with Mesa the 
+images can be rendered off screen so ParaView can work without an X server 
+in this batch mode.   I do not know the status of this feature in version 1.2
+
+Charles.
+
+At 04:24 PM 3/9/2004, Steve Hudson wrote:
+>I want to try running paraview in parallel on a linux cluster, to speed up 
+>the processing of operations such as streamlines, but I am at a loss as to 
+>where to start. To run parallel jobs, I have to log into a front end node 
+>which then submits jobs to a batch queue. In the Paraview manual its says 
+>that you run paraview as any other MPI jobs, but I dont know how to assign 
+>files to processors, or quite how I view the output, can someone give me a 
+>typical command line? - or point me to somewhere that has more information?
+>
+>_________________________________________________________________
+>Express yourself with cool emoticons - download MSN Messenger today! 
+>http://www.msn.co.uk/messenger
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From ferrell@lanl.gov  Thu Mar 11 17:54:01 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 11 Mar 2004 10:54:01 -0700 (MST)
+Subject: [Paraview] Calculator not save properly with "save session"
+Message-ID: <3523.128.165.144.120.1079027641.squirrel@webmail2.pair.com>
+
+When I save a session, if I have a calculator which is taking cell data
+and producing cell data, that doesn't get saved properly.  When I reload
+the session, the calculator is in PointData mode, and generates an error.
+
+What do I have to add to the session file to get have the calculator get
+created for CellData?
+
+thanks,
+-robert
+
+PS I'm using ParaView 1.2, and I'm reading in .pvd files.
+
+From amy.henderson@kitware.com  Thu Mar 11 18:14:04 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 11 Mar 2004 13:14:04 -0500
+Subject: [Paraview] Calculator not save properly with "save session"
+In-Reply-To: <3523.128.165.144.120.1079027641.squirrel@webmail2.pair.com
+ >
+References: <3523.128.165.144.120.1079027641.squirrel@webmail2.pair.com>
+Message-ID: <6.0.3.0.2.20040311131128.03207db0@pop.biz.rr.com>
+
+Hi Robert,
+
+It looks like you found a bug in ParaView 1.2. Unfortunately, in the 
+current release, there is not a way from a session file (state or trace) to 
+set the Calculator to use cell data. I am fixing this in the CVS version, 
+and it will be corrected in the next ParaView release.
+
+- Amy
+
+At 12:54 PM 3/11/2004, Robert Ferrell wrote:
+>When I save a session, if I have a calculator which is taking cell data
+>and producing cell data, that doesn't get saved properly.  When I reload
+>the session, the calculator is in PointData mode, and generates an error.
+>
+>What do I have to add to the session file to get have the calculator get
+>created for CellData?
+>
+>thanks,
+>-robert
+>
+>PS I'm using ParaView 1.2, and I'm reading in .pvd files.
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From ferrell@lanl.gov  Thu Mar 11 18:21:27 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 11 Mar 2004 11:21:27 -0700 (MST)
+Subject: [Paraview] Contour widget doesn't see all scalars
+Message-ID: <3531.128.165.144.120.1079029287.squirrel@webmail2.pair.com>
+
+I'm trying to put isothermal contours on a cut.  The data comes out of a
+calculator, and is called ScaledTemperature.  I can create contours of
+ScaledTemperature, but I cannot color the contours by ScaledTemperature. 
+All my other scalars who up in the Property pull down, but not
+ScaledTemperature.
+
+I'm using the released 1.2.  This worked fine in 1.0.
+
+thanks,
+-robert
+
+From ferrell@lanl.gov  Thu Mar 11 18:33:32 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 11 Mar 2004 11:33:32 -0700 (MST)
+Subject: [Paraview] Calculator not save properly with "save session"
+In-Reply-To: <6.0.3.0.2.20040311131128.03207db0@pop.biz.rr.com>
+References: <3523.128.165.144.120.1079027641.squirrel@webmail2.pair.com>
+ <6.0.3.0.2.20040311131128.03207db0@pop.biz.rr.com>
+Message-ID: <3543.128.165.144.120.1079030012.squirrel@webmail2.pair.com>
+
+Amy Henderson said:
+> Hi Robert,
+>
+> It looks like you found a bug in ParaView 1.2. Unfortunately, in the
+> current release, there is not a way from a session file (state or trace)
+> to
+> set the Calculator to use cell data. I am fixing this in the CVS version,
+> and it will be corrected in the next ParaView release.
+
+Thanks,
+-robert
+
+From ferrell@lanl.gov  Thu Mar 11 20:16:54 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 11 Mar 2004 13:16:54 -0700 (MST)
+Subject: [Paraview] Calculated scalar does not display in contour
+Message-ID: <3637.128.165.144.120.1079036214.squirrel@webmail2.pair.com>
+
+Here's some more precise information about the trouble I have displaying a
+calculated scalar field, ScaledTemperature, with a Contour widget.  The
+problem seems to be caused by using a Cut.
+
+Here's what fails for me:
+1. Read a .vtu mesh file, containing cell field Temperature
+2. Filter CellDataToPointData
+3. Calculator to compute ScaledTemperature from PointTemperature
+4. Cut to display a planar crossection
+5. Contour the ScaledTemperature.  I can create the contours, but 
+ScaledTemperature does not show up in the Property pull down.  So I can't
+color the contours with ScaledTemperature.
+
+If I reverse the order, first contour, then cut, ScaledTemperature shows
+up fine.
+
+thanks,
+-robert
+
+
+From amy.henderson@kitware.com  Thu Mar 11 20:20:53 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Thu, 11 Mar 2004 15:20:53 -0500
+Subject: [Paraview] Calculated scalar does not display in contour
+In-Reply-To: <3637.128.165.144.120.1079036214.squirrel@webmail2.pair.com
+ >
+References: <3637.128.165.144.120.1079036214.squirrel@webmail2.pair.com>
+Message-ID: <6.0.3.0.2.20040311151947.0320f780@pop.biz.rr.com>
+
+Hi Robert,
+
+When you created the contour, was the Compute Scalars box (at the bottom of 
+the Parameters page) checked?
+
+- Amy
+
+At 03:16 PM 3/11/2004, Robert Ferrell wrote:
+>Here's some more precise information about the trouble I have displaying a
+>calculated scalar field, ScaledTemperature, with a Contour widget.  The
+>problem seems to be caused by using a Cut.
+>
+>Here's what fails for me:
+>1. Read a .vtu mesh file, containing cell field Temperature
+>2. Filter CellDataToPointData
+>3. Calculator to compute ScaledTemperature from PointTemperature
+>4. Cut to display a planar crossection
+>5. Contour the ScaledTemperature.  I can create the contours, but
+>ScaledTemperature does not show up in the Property pull down.  So I can't
+>color the contours with ScaledTemperature.
+>
+>If I reverse the order, first contour, then cut, ScaledTemperature shows
+>up fine.
+>
+>thanks,
+>-robert
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From ferrell@lanl.gov  Thu Mar 11 20:30:46 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Thu, 11 Mar 2004 13:30:46 -0700 (MST)
+Subject: [Paraview] Calculated scalar does not display in contour
+In-Reply-To: <6.0.3.0.2.20040311151947.0320f780@pop.biz.rr.com>
+References: <3637.128.165.144.120.1079036214.squirrel@webmail2.pair.com>
+ <6.0.3.0.2.20040311151947.0320f780@pop.biz.rr.com>
+Message-ID: <3657.128.165.144.120.1079037046.squirrel@webmail2.pair.com>
+
+Amy Henderson said:
+> Hi Robert,
+>
+> When you created the contour, was the Compute Scalars box (at the bottom
+> of
+> the Parameters page) checked?
+
+No:)  Once I check it, ScaledTemperature shows up fine.  Clearly user error.
+
+Thanks.
+
+-robert
+>
+> - Amy
+>
+> At 03:16 PM 3/11/2004, Robert Ferrell wrote:
+>>Here's some more precise information about the trouble I have displaying
+>> a
+>>calculated scalar field, ScaledTemperature, with a Contour widget.  The
+>>problem seems to be caused by using a Cut.
+>>
+>>Here's what fails for me:
+>>1. Read a .vtu mesh file, containing cell field Temperature
+>>2. Filter CellDataToPointData
+>>3. Calculator to compute ScaledTemperature from PointTemperature
+>>4. Cut to display a planar crossection
+>>5. Contour the ScaledTemperature.  I can create the contours, but
+>>ScaledTemperature does not show up in the Property pull down.  So I can't
+>>color the contours with ScaledTemperature.
+>>
+>>If I reverse the order, first contour, then cut, ScaledTemperature shows
+>>up fine.
+>>
+>>thanks,
+>>-robert
+>>
+>>_______________________________________________
+>>ParaView mailing list
+>>ParaView@paraview.org
+>>http://www.paraview.org/mailman/listinfo/paraview
+>
+>
+>
+>
+>
+>
+
+
+From jsjones@sandia.gov  Mon Mar 15 19:21:43 2004
+From: jsjones@sandia.gov (Jones, Jake S)
+Date: Mon, 15 Mar 2004 12:21:43 -0700
+Subject: [Paraview] paraview bug(?) data
+Message-ID: <03781128C7B74B4DBC27C55859C9D738034A5C19@es06snlnt.sandia.gov>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_000_01C40AC2.BF8F2D82
+Content-Type: text/plain;
+ charset=iso-8859-1
+Content-Transfer-Encoding: 7bit
+
+Attached is .pvd data that contains one quadratic hex and one quadratic
+line, with one cell variable. 
+
+When read & displayed in paraview (the latest cvs version and version 1.2),
+with the one cell variable mapped to color, the color of the line is wrong,
+and the quadratic hex has a portion(!) of it colored wrong as well (paraview
+is drawing the single quadratic hex element in TWO colors).
+
+The data is pretty simple. Can anyone verify that it is a problem in
+paraview, or verify that somehow the data is bad? The data was created by
+reading a simple saf file, and then using the "save data" option in
+paraview. 
+
+Thanks,
+
+Jake
+
+
+Jake Jones
+Sandia National Labs, Dept 9326
+jsjones@sandia.gov
+(615)423-7002
+
+
+
+------_=_NextPart_000_01C40AC2.BF8F2D82
+Content-Type: application/octet-stream;
+ name=test.tar.gz
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename=test.tar.gz
+
+H4sICDj9VUAAA3Rlc3QudGFyAO2W3XOiMBDA+9y/guG1MyWAos6UdqLg16mtVq+nLw5CoFggFKLU
+/vWX+FXaa20f2ru5u/weAmyW3XU37EpQShyLWNLR1wFAAZSKRXoFoKQVnl23HMkAKEW1pKky1ZMV
+jV6E4hfGtGeREisRhKN5OscRSt/Ue2//L4Xs6r+7mYLTJVl8qg9Ai6u9qHuu/kqhWNrXX1E1ql8s
+yNqRAD41ijf4z+t/dvEQBsISJamPI12UT4F4cX589n34re4HSCCrGOniKEpJsrDJIkFOI/Ed8ekF
+cCqLwmxF0BQnDkp0seMTEiAzcnwrEgUbh3GC0hTTnSW5m3T8mUEPWW0vFs+PBeHspQMmpOIrH9lI
+6C3CGUou3SvsRyTVRUUVhSd2uzUUBGwzv7cxwwyxV5njvUT6VcQs5AVUxB5hklirbSLqAbaISn30
+rJA+egGeWcEUBSicLq1EFFychBbRRSuOUeQgmijsuimiEpCPS3oK46XTTajph2LY/XKaTHo017lR
+D8VQKIivxvDc5ToPhwJoRbkU2DiKkE38pU9Wh3wrSs659FHrm7fTQ4ZVWfuY4RG1XN4ZZqLDZjXw
+itlNvbbJoYlj53N9gKXXTvAZ3JploQgosrHjR54uzqwUaYX1yRemsA8pNba02GJ4bNV11H6YjxvV
+DNZaTbrVgl1Tz+mO2L0Dc7rNWjZRYGY3qp7VmzezDoTzAYCT4cJL7fp9qW2MlFUjJqB3bSh9ValX
+XMMwH62uXcYdz5DbWQOVwdh9hKWYlNuDwepe9Yrt5UC5RvP0rnIDlYEBDAi8Svd24UfYrMZw1piE
+1YJ3OWjCvm2GZSrruNLo8u4E9sKT/qCVi7lqs7tufxdz1ssy+9KrUY2OYdyO8VC+KkvycBIPzOtV
+qjqZY7RKi9KtpfayylVHKSfDsfvjsSI1pQxKnq6/nbtsOL6peiZ0fAhNE9ayvO5m2euuhnWaTmje
+wU6m6+tq5gtHu6G0bYfnx3+6XX86u7F/Gi+dr/LxzvwHKp35z+e/SuHz/3fwoflfw0HAmjyOPn3y
+P5neNlWmdI2IEFvJZmy6NA7asF//nypKm/abN/Mvf64cDofD4XA4HA6Hw+FwOBwOh8PhcDgczkF+
+AhaE0l8AKAAA
+
+------_=_NextPart_000_01C40AC2.BF8F2D82--
+
+
+From bnwylie@sandia.gov  Mon Mar 15 23:02:43 2004
+From: bnwylie@sandia.gov (Wylie, Brian)
+Date: Mon, 15 Mar 2004 16:02:43 -0700
+Subject: [Paraview] Reguarding python question
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+
+> * Last but big issue:
+> 
+> In my community (climate research), there is a large aggrement to use
+> the python
+> language. Many modules exist for many purpose
+> (numeric processing with Numeric or numarray modules,  input/output and 
+> computations with
+> netCDF file with CDMS from the LLNL/PCMDI, ... ).  
+> 
+> With the VTK API (wrap in python) - that I am promotting,
+> all the parts are here to build nice and usefull applications. 
+> Paraview application could be one of them. Unfortunately, it has been 
+> based on the Tcl/Tk toolkit where all the modules mentionned above are 
+> missing.
+> 
+> Also could this project be re-oriented on python ?
+
+> We have no intention of replacing the use of Tcl with Python. Tcl is and
+will be the main scripting interface for the 
+> ParaView GUI. However, we are working on separating the core of ParaView
+from the GUI. This core will be scriptable 
+> in any language VTK supports (tcl, python and java). We will also develop
+a language independent (probably xml based) 
+> interface to this core. This will also allow us (and everybody willing to
+invest the time) to write clients (GUI) in 
+> any language we want. This is in progress now and will start to appear in
+the next release (and will be finished 
+> before 1.6). 
+
+
+I wanted to weigh in on this. Tcl/Tk is dying (I'm sure I'll get lots of
+flames for this). Realize it, start planning for it.
+
+Python and QT are now 'standards' within our Laboratory. They also have very
+good longevity outlooks. I know QT has issues with 'free' versions on
+windows. On the flip side open source projects should be international and
+the internationalization and localization support for QT is phenomenal. The
+international user base would be nothing less than orgasmic if they could
+have menus and help text in their native languages. 
+
+What percentage of ParaView contributors use windows?
+
+Also you can get QT for windows by buying a $30 book. So basically Unix/Mac
+is free... Want to develop on windows? Buy a $30 book.
+
+Okay, so perhaps I'm being a little unrealistic but I'm concerned about the
+long term development and support of ParaView that's based on a dying gui
+library.
+
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+     (505) 844-2238   FAX (505) 845-0833
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+
+
+From ferrell@lanl.gov  Mon Mar 15 23:40:54 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Mon, 15 Mar 2004 16:40:54 -0700 (MST)
+Subject: [Paraview] Reguarding python question
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+Message-ID: <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+
+<quote who="Wylie, Brian">
+>> * Last but big issue:
+>>
+>> In my community (climate research), there is a large aggrement to use
+>> the python
+>> language. Many modules exist for many purpose
+>> (numeric processing with Numeric or numarray modules,  input/output and
+>> computations with
+>> netCDF file with CDMS from the LLNL/PCMDI, ... ).
+>>
+>> With the VTK API (wrap in python) - that I am promotting,
+>> all the parts are here to build nice and usefull applications.
+>> Paraview application could be one of them. Unfortunately, it has been
+>> based on the Tcl/Tk toolkit where all the modules mentionned above are
+>> missing.
+>>
+>> Also could this project be re-oriented on python ?
+>
+>> We have no intention of replacing the use of Tcl with Python. Tcl is and
+> will be the main scripting interface for the
+>> ParaView GUI. However, we are working on separating the core of ParaView
+> from the GUI. This core will be scriptable
+>> in any language VTK supports (tcl, python and java). We will also
+>> develop
+> a language independent (probably xml based)
+>> interface to this core. This will also allow us (and everybody willing
+>> to
+> invest the time) to write clients (GUI) in
+>> any language we want. This is in progress now and will start to appear
+>> in
+> the next release (and will be finished
+>> before 1.6).
+>
+>
+> I wanted to weigh in on this. Tcl/Tk is dying (I'm sure I'll get lots of
+> flames for this). Realize it, start planning for it.
+>
+> Python and QT are now 'standards' within our Laboratory. They also have
+> very
+> good longevity outlooks. I know QT has issues with 'free' versions on
+> windows. On the flip side open source projects should be international and
+> the internationalization and localization support for QT is phenomenal.
+> The
+> international user base would be nothing less than orgasmic if they could
+> have menus and help text in their native languages.
+>
+> What percentage of ParaView contributors use windows?
+
+I'm not a contributor, but I am a user.  I use Windows.  I don't care much
+about free.  I care a lot about open source.  I have no problem spending
+$30 (or $300) for something that works well (e.g. Qt).  (In almost every
+case, buying software, even when it is expensive, is much cheaper than
+writing it myself.)
+
+I would very much like to see Python (and Qt) (PyQT?), become the
+foundation for ParaView.  I'm not adept at Tcl/Tk, and since it's dying,
+and I don't have much desire to become adept at it.  That limits what I
+can do to customize ParaView for myself.
+
+My $0.02, hardly a bargain at that price.
+
+-robert
+
+
+From prabhu@aero.iitm.ernet.in  Tue Mar 16 05:20:54 2004
+From: prabhu@aero.iitm.ernet.in (Prabhu Ramachandran)
+Date: Tue, 16 Mar 2004 10:50:54 +0530
+Subject: [Paraview] Reguarding python question
+In-Reply-To: <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+ <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+Message-ID: <16470.36534.639509.69061@monster.linux.in>
+
+>>>>> "RF" == Robert Ferrell <ferrell@lanl.gov> writes:
+
+    RF> <quote who="Wylie, Brian">
+    >> I wanted to weigh in on this. Tcl/Tk is dying (I'm sure I'll
+    >> get lots of flames for this). Realize it, start planning for
+    >> it.
+    >>
+    >> Python and QT are now 'standards' within our Laboratory. They
+    >> also have very good longevity outlooks. I know QT has issues
+    >> with 'free' versions on windows. On the flip side open source
+    >> projects should be international and the internationalization
+    >> and localization support for QT is phenomenal.  The
+    >> international user base would be nothing less than orgasmic if
+    >> they could have menus and help text in their native languages.
+    >>
+    >> What percentage of ParaView contributors use windows?
+
+    RF> I'm not a contributor, but I am a user.  I use Windows.  I
+    RF> don't care much about free.  I care a lot about open source.
+    RF> I have no problem spending $30 (or $300) for something that
+    RF> works well (e.g. Qt).  (In almost every case, buying software,
+    RF> even when it is expensive, is much cheaper than writing it
+    RF> myself.)
+
+    RF> I would very much like to see Python (and Qt) (PyQT?), become
+    RF> the foundation for ParaView.  I'm not adept at Tcl/Tk, and
+    RF> since it's dying, and I don't have much desire to become adept
+    RF> at it.  That limits what I can do to customize ParaView for
+    RF> myself.
+
+Since I'm one bloke who has put in effort in a relevant direction with
+MayaVi, here are my comments.
+
+ 1. The argument that internationalization would be great is quite
+    funny if you ask me.  There isn't that great a market for tools
+    like this.  Why?  I haven't seen one person who has the
+    time/energy to put in some time into any of the relevant projects.
+    If its anyone its folks from the academic/scientific community
+    (with a fair amount of higher education), not the average bloke
+    who needs to listen to music, send email and do routine things.
+    Researchers and academcians are a small minority and are extremely
+    busy.  Sorry, like it or not ParaView and tools like it are a
+    niche.  So arguments about internationalizing it being a big
+    selling point is incorrect.  Yes, it would be nice to have but its
+    not a big deal and not where ones priorities should be.
+
+ 2. I agree that Tcl/Tk is dying.  But from what Berk said, there will
+    be a nice enough interface for others to step in.  It takes time
+    to get to a point with a design.  With a decent enough
+    model-view-controller design you get best of all the worlds.  I'm
+    not sure kitware wants to go down the Python side since they like
+    and are used to Tcl a whole lot more.  Thats sad because from what
+    I have seen Python is a better language for scientific computing.
+    Of course, I am biased.
+
+ 3. If you want to really do something about a Python based tool, put
+    your money/time where your mouth is. ;-) The only relevant Python
+    based tool has been around three years now, and I haven't heard
+    anyone there clamoring for a Qt interface or for
+    internationalization.  Neither have I had a great hand at doing
+    much of the work.  So yeah, its all very nice when someone else
+    does the work.
+
+ 4. wxWindows/wxWidgets is another good option I'd say.  I don't like
+    Qt's licensing.
+
+I'm sorry to sound typically blunt and harsh.  From what I have seen
+so far, you are only going to get a free OSS tool written in
+Python/Qt, if I sit and write it. ;-D If not, you get a great Tcl
+based one from Kitware.  Or if you insist on Python, live with a
+simpler tool that does not handle large data in parallel (but works
+quite well for small data).  If you want to improve that project, help
+out.  If you think otherwise, show me the code and where the heck were
+you all these years? ;-)
+
+Luckily for me ParaView is not implemented in Python.  If it were, I'd
+have to find myself a new hobby. ;-)
+
+cheers,
+prabhu
+
+From bgeveci@nycap.rr.com  Tue Mar 16 16:01:28 2004
+From: bgeveci@nycap.rr.com (Berk Geveci)
+Date: Tue, 16 Mar 2004 11:01:28 -0500
+Subject: [Paraview] Reguarding python question
+In-Reply-To: <16470.36534.639509.69061@monster.linux.in>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+ <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+ <16470.36534.639509.69061@monster.linux.in>
+Message-ID: <1079452888.22819.77.camel@silverymoon>
+
+OK. You guys managed to make me put aside all the "important" work I am
+doing and think about this :-) Here is my 2c
+
+1. ParaView is not that heavily dependent on Tcl. Specially, with the
+changes we have been making in the last 6 months or so (and still
+continuing), it should not be too much work to replace Tcl with anything
+we want (and I personally try to keep the code I write flexible enough
+to allow this). It is important to keep in mind that "ParaView is
+written in C++".
+
+2. ParaView GUI is dependent on Tk. I personally do not like Tk
+(including Tkinter in Python). I like Qt. I hate Qt's license. Not
+necessarily for our own commercial projects but for open source
+projects. We usually reject depending on anything that is GPL'd because
+it restricts our commercial usage. Qt is similar in the sense that it
+would restrict us. So if I had a vote, I'd definitely cast it against
+Qt. I am definitely more in favor of wxWindows. However, I have very
+little knowledge of it (much less than Qt and Tk) and have not been
+convinced that it worth switching to. Please keep in mind that we have
+SIGNIFICANT effort invested in KW widgets and switching would mean
+serious work.
+
+>     RF> I would very much like to see Python (and Qt) (PyQT?), become
+>     RF> the foundation for ParaView.  I'm not adept at Tcl/Tk, and
+>     RF> since it's dying, and I don't have much desire to become adept
+>     RF> at it.  That limits what I can do to customize ParaView for
+>     RF> myself.
+
+ParaView's foundation is C++. It will always be so. C++ might be dying
+but I think it will outlive ParaView (and if it doesn't, we'll adapt).
+Tcl is the current scripting solution. However, as I said before, this
+is not hard to change.
+
+>  2. I agree that Tcl/Tk is dying.  But from what Berk said, there will
+>     be a nice enough interface for others to step in.  It takes time
+>     to get to a point with a design.  With a decent enough
+>     model-view-controller design you get best of all the worlds.  I'm
+>     not sure kitware wants to go down the Python side since they like
+>     and are used to Tcl a whole lot more.  Thats sad because from what
+>     I have seen Python is a better language for scientific computing.
+>     Of course, I am biased.
+
+I personally like Python whole lot more. I think that it is easier to
+use, cleaner, more flexible and very commonly used in scientific
+computing community. Whether this makes it a better scripting language
+for the ParaView GUI is debatable. I think that it is a better scripting
+language for the ParaView core (server manager).
+
+> I'm sorry to sound typically blunt and harsh.  From what I have seen
+> so far, you are only going to get a free OSS tool written in
+> Python/Qt, if I sit and write it. ;-D If not, you get a great Tcl
+> based one from Kitware.  Or if you insist on Python, live with a
+> simpler tool that does not handle large data in parallel (but works
+> quite well for small data).  If you want to improve that project, help
+> out.  If you think otherwise, show me the code and where the heck were
+> you all these years? ;-)
+
+I have to correct Prabhu here. The Sandia and LANL folks ARE ParaView
+contributors. They have put money, time, effort and in my opinion much
+more importantly heart in ParaView. 
+
+> Luckily for me ParaView is not implemented in Python.  If it were, I'd
+> have to find myself a new hobby. ;-)
+
+I am a fan of diversity. Honestly, I love to play with MayaVi, VisIt,
+ChomboVis and to borrow ideas from them. It would probably be more
+efficient if we were all focusing on one tool but not necessarily as
+creative. Having different tools that grow independently allows for
+different ideas to grow without being tied by a common architecture.
+
+
+
+From welling@stat.cmu.edu  Mon Mar 15 20:20:27 2004
+From: welling@stat.cmu.edu (Joel Welling)
+Date: Mon, 15 Mar 2004 15:20:27 -0500
+Subject: [Paraview] Parallel ParaView- file formats and Chromium
+In-Reply-To: Your message of "Fri, 12 Mar 2004 06:26:03 EST."
+ <20040312112603.5559.55565.Mailman@public.kitware.com>
+Message-ID: <200403152020.i2FKKRwv027938@tingenek.stat.cmu.edu>
+
+Hi folks;
+  We are coming up to speed on running ParaView in parallel under MPI, and I 
+have a few questions.
+
+1) Can someone send an example of an XML file which will cause ParaView to 
+read data in parallel across several processors?  For example, if I have 4 
+blocks of data and 4 PEs, I gather I need to produce a .pvd or .pvti file from 
+my 4 individual .vti files.  The only example I can find contains a reference 
+to only 1 .vti file and my attempts to generalize it seem to be failing.
+
+2) The documentation (1.2.1) stresses that if the DISPLAY environment variable 
+is set for all processes, the several workers will all open windows on the 
+display, causing problems for the rank 0 worker that is supposed to be 
+handling the UI.  Experimentally this doesn't seem to happen- I only get one 
+window.  Has the problem with multiple access to the DISPLAY been fixed?
+
+3) The default configuration seems to be for each worker to use Mesa to do its 
+own rendering (presumably off-screen), and then to read back the image.  The 
+images are then composited by ParaView itself.  We'd like to use Chromium, and 
+to let Chromium do the compositing.  I *guess* all that's really needed is to 
+keep ParaView from trying to do the compositing.  How does one set this up?
+
+Thanks, I hope;
+-Joel
+ welling@psc.edu
+
+
+From ferrell@lanl.gov  Tue Mar 16 16:28:50 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Tue, 16 Mar 2004 09:28:50 -0700 (MST)
+Subject: [Paraview] Reguarding python question
+In-Reply-To: <1079452888.22819.77.camel@silverymoon>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+ <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+ <16470.36534.639509.69061@monster.linux.in>
+ <1079452888.22819.77.camel@silverymoon>
+Message-ID: <2183.128.165.144.120.1079454530.squirrel@webmail2.pair.com>
+
+<quote who="Berk Geveci">
+> OK. You guys managed to make me put aside all the "important" work I am
+> doing and think about this :-) Here is my 2c
+
+I goofed here.  I meant:
+
+>>     RF> I would very much like to see Python (and Qt) (PyQT?), become
+>>     RF> the foundation for ParaView.
+
+"the foundation for ParaView scripting."
+                             ^^^^^^^^^
+
+>> I'm not adept at Tcl/Tk, and
+>>     RF> since it's dying, and I don't have much desire to become adept
+>>     RF> at it.  That limits what I can do to customize ParaView for
+>>     RF> myself.
+>
+> ParaView's foundation is C++. It will always be so. C++ might be dying
+> but I think it will outlive ParaView (and if it doesn't, we'll adapt).
+> Tcl is the current scripting solution. However, as I said before, this
+> is not hard to change.
+
+I did not mean to imply that I thought C++ should be replaced.  I'm
+interested in the scripting layer.
+
+-robert
+
+From berk.geveci@kitware.com  Tue Mar 16 17:05:20 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Tue, 16 Mar 2004 12:05:20 -0500
+Subject: [Paraview] Parallel ParaView- file formats and Chromium
+In-Reply-To: <200403152020.i2FKKRwv027938@tingenek.stat.cmu.edu>
+References: <200403152020.i2FKKRwv027938@tingenek.stat.cmu.edu>
+Message-ID: <1079456720.22819.110.camel@silverymoon>
+
+> 1) Can someone send an example of an XML file which will cause ParaView to 
+> read data in parallel across several processors?  For example, if I have 4 
+> blocks of data and 4 PEs, I gather I need to produce a .pvd or .pvti file from 
+> my 4 individual .vti files.  The only example I can find contains a reference 
+> to only 1 .vti file and my attempts to generalize it seem to be failing.
+
+The easiest way of producing an example is to run paraview on 4 procs,
+create a source of the type you want (for example, wavelet for images)
+and save a .pvt* or .pvd file. 
+IMPORTANT NOTE: There is an issue with the way structured data is
+divided in ParaView (actually, in VTK). It is not possible to load n
+disjoint blocks in parallel such that each block is on one processor.
+The boxes have to be parts of a larger structured data whose "whole"
+extent is given in the .pvt* file. For example:
+
+  <PImageData WholeExtent="-10 10 -10 10 -10 10" GhostLevel="0"
+Origin="0 0 0" S
+pacing="1 1 1">
+    <PPointData Scalars="RTData">
+      <PDataArray type="Float32" Name="RTData"/>
+      <PDataArray type="UInt8" Name="vtkGhostLevels"/>
+    </PPointData>
+    <Piece Extent="-10 10 -10 10 -10 0" Source="test_0_0.vti"/>
+    <Piece Extent="-10 10 -10 10 0 10" Source="test_0_1.vti"/>
+  </PImageData>
+
+In this case, the two pieces put together HAVE to fill the whole extent.
+If you want to load 4 completely disjoint boxes, you have to point to
+each file from a .pvd file like so:
+
+  <Collection>
+    <DataSet part="0" file="mb/mb_0.vts"/>
+    <DataSet part="1" file="mb/mb_1.vts"/>
+    <DataSet part="2" file="mb/mb_2.vts"/>
+    <DataSet part="3" file="mb/mb_3.vts"/>
+    <DataSet part="4" file="mb/mb_4.vts"/>
+  </Collection>
+
+In this case, every dataset in the collection will be automatically
+broken to n pieces (where n is the number of procs) and each processor
+will work on 1/nth of each piece.
+
+
+> 2) The documentation (1.2.1) stresses that if the DISPLAY environment variable 
+> is set for all processes, the several workers will all open windows on the 
+> display, causing problems for the rank 0 worker that is supposed to be 
+> handling the UI.  Experimentally this doesn't seem to happen- I only get one 
+> window.  Has the problem with multiple access to the DISPLAY been fixed?
+
+Not really. What is happening is this: There is a threshold (given in
+terms of the size of the polygonal data displayed - note that this is
+not the datasize, the size of the polygonal data produced by a filter,
+for example, in case of image data, this will be the outline, which is
+12 lines, which is tiny) below which all the polygonal data is collected
+to the first process (or client) and rendered locally. There is a slider
+labeled "Composite Threshold" in the 3D view settings. Try adjust that
+to force paraview to composite.
+
+> 3) The default configuration seems to be for each worker to use Mesa to do its 
+> own rendering (presumably off-screen), and then to read back the image.  The 
+> images are then composited by ParaView itself.  We'd like to use Chromium, and 
+> to let Chromium do the compositing.  I *guess* all that's really needed is to 
+> keep ParaView from trying to do the compositing.  How does one set this up?
+
+The default configuration uses hardware accelerated on-screen rendering.
+You have to compile with Mesa OS support (and probably mangled mesa if
+you want hardware acceleration AND off-screen rendering) for off-screen.
+Currently, there is no Chromium support for compositing.
+
+> 
+> Thanks, I hope;
+> -Joel
+>  welling@psc.edu
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From ferrell@lanl.gov  Tue Mar 16 21:59:51 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Tue, 16 Mar 2004 14:59:51 -0700 (MST)
+Subject: [Paraview] Wish list
+Message-ID: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+
+I generated a short(?) wish-list of capabilities I'd like to see added
+to ParaView.  I thought I'd share it with this list.
+
+I must start with the proviso that I find ParaView extremely useful.
+The ParaView team has delivered a great tool that myself and others on
+my team use extensively.  I recognize that only so much can be done,
+and since I am working on other things, I am not offering to help
+implement any of the requests I'm making.  This is simply a wishlist,
+which might be helpful for others to choose where to put development
+effort.
+
+Here goes.
+
+Time Series
+====================
+I'm using .pvd files with version 1.2 to display time series.  This
+works fairly well.  There are some enhancements that would be helpful,
+though.  In order of desirability.
+
+1. Look for an attribute such as SimulationTime in each DataSet and
+allow me to display that somewhere on the image.  That way I could
+easily see what simulation time I'm looking at. My time steps are
+rarely uniformly spaced in time, so there is no simple mapping between
+frame number and time value.
+
+2. Rather than just looking for a single attribute such as
+SimulationTime, let me include any number of attributes in the DataSet
+element, and give me some way to tell ParaView that I want to display
+some or all of those.  I often have a number of global attributes
+associated with a time step, for instance ComputationalStep and
+ExternalTemperature, and I'd like to display those values in the
+image.  A series of check boxes allowing me to choose which ones to
+display would be great.
+
+3. When I read in a .pvd file I get a slider that allows me to choose
+the time step.  I'd like sliders for other DataSet attributes,
+particularly SimulationTime.
+
+4. In the image, rather than just display the global attributes, such
+as SimulationTime, as a scalar, I'd like a thermometer type gauge that
+indicates how far through my time series I am.  In addition to static
+information, when I animate the time series that thermometer would
+give an indication of how quickly simulation time is advancing.  In
+know this won't be ideal, since my timesteps can vary between 1000
+seconds and a millisecond.
+
+Data Interrogation
+====================
+I haven't had much luck using the line probe.  Among other things, I'd
+like a line which changes with my animation.  Also, I can't figure out
+how to tell it which field to plot.  And, it would be great if I could
+display a few probed values in the image view.
+
+I'd also like to be able to interogate along a contour and generate a
+line plot.
+
+Finally, it would be really nice if I could enter a mode where I could
+mouse around and interrogate field values interactively.
+
+
+-robert
+
+
+
+
+From berk.geveci@kitware.com  Tue Mar 16 22:11:34 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Tue, 16 Mar 2004 17:11:34 -0500
+Subject: [Paraview] Wish list
+In-Reply-To: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+References: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+Message-ID: <1079475094.22820.167.camel@silverymoon>
+
+Thanks Robert. This is great feedback. Comments are embedded below:
+
+> Time Series
+> ====================
+> I'm using .pvd files with version 1.2 to display time series.  This
+> works fairly well.  There are some enhancements that would be helpful,
+> though.  In order of desirability.
+> 
+> 1. Look for an attribute such as SimulationTime in each DataSet and
+> allow me to display that somewhere on the image.  That way I could
+> easily see what simulation time I'm looking at. My time steps are
+> rarely uniformly spaced in time, so there is no simple mapping between
+> frame number and time value.
+> 
+> 2. Rather than just looking for a single attribute such as
+> SimulationTime, let me include any number of attributes in the DataSet
+> element, and give me some way to tell ParaView that I want to display
+> some or all of those.  I often have a number of global attributes
+> associated with a time step, for instance ComputationalStep and
+> ExternalTemperature, and I'd like to display those values in the
+> image.  A series of check boxes allowing me to choose which ones to
+> display would be great.
+> 
+> 3. When I read in a .pvd file I get a slider that allows me to choose
+> the time step.  I'd like sliders for other DataSet attributes,
+> particularly SimulationTime.
+> 
+> 4. In the image, rather than just display the global attributes, such
+> as SimulationTime, as a scalar, I'd like a thermometer type gauge that
+> indicates how far through my time series I am.  In addition to static
+> information, when I animate the time series that thermometer would
+> give an indication of how quickly simulation time is advancing.  In
+> know this won't be ideal, since my timesteps can vary between 1000
+> seconds and a millisecond.
+
+I understand your requirements. We need to seriously consider how we
+need to handle time (and potentially other attributes associated with
+datasets). This is in our todo list but not necessarily a short term
+goal. 
+
+> Data Interrogation
+> ====================
+> I haven't had much luck using the line probe.  Among other things, I'd
+> like a line which changes with my animation.  Also, I can't figure out
+> how to tell it which field to plot.  And, it would be great if I could
+> display a few probed values in the image view.
+
+This is in active development. Charles is working on improving it.
+
+> I'd also like to be able to interogate along a contour and generate a
+> line plot.
+
+I don't exactly understand what "along a contour" means. How would you
+define the (poly)line along which to interrogate?
+
+> Finally, it would be really nice if I could enter a mode where I could
+> mouse around and interrogate field values interactively.
+
+I wholeheartedly agree. This is on top of my personal wish list too.
+ParaView needs much better interrogation capabilities, including picking
+(cells, points, on surfaces), labeling (cells ids, point ids) and
+probing.
+
+=Berk
+
+
+
+From ferrell@lanl.gov  Tue Mar 16 23:31:32 2004
+From: ferrell@lanl.gov (Robert Ferrell)
+Date: Tue, 16 Mar 2004 16:31:32 -0700 (MST)
+Subject: [Paraview] Wish list
+In-Reply-To: <1079475094.22820.167.camel@silverymoon>
+References: <2843.128.165.144.120.1079474391.squirrel@webmail2.pair.com>
+ <1079475094.22820.167.camel@silverymoon>
+Message-ID: <2888.128.165.144.120.1079479892.squirrel@webmail2.pair.com>
+
+<quote who="Berk Geveci">
+> Thanks Robert. This is great feedback. Comments are embedded below:
+>
+>> Time Series
+>> ====================
+
+<snip>
+
+> I understand your requirements. We need to seriously consider how we
+> need to handle time (and potentially other attributes associated with
+> datasets). This is in our todo list but not necessarily a short term
+> goal.
+
+If there is something you can do "short term" which doesn't take too much
+time away from other important stuff :) that would be extremely helpful.
+
+>
+>> Data Interrogation
+>> ====================
+>> I haven't had much luck using the line probe.  Among other things, I'd
+>> like a line which changes with my animation.  Also, I can't figure out
+>> how to tell it which field to plot.  And, it would be great if I could
+>> display a few probed values in the image view.
+>
+> This is in active development. Charles is working on improving it.
+>
+>> I'd also like to be able to interogate along a contour and generate a
+>> line plot.
+>
+> I don't exactly understand what "along a contour" means. How would you
+> define the (poly)line along which to interrogate?
+
+Define a curve by a contour, e.g. all X such that T(X) = 137.5.  Then,
+make a line plot of some other variable, e.g. pressure, along that curve. 
+This would be even more useful if I could create contour of cell center
+coordinates.
+
+>
+>> Finally, it would be really nice if I could enter a mode where I could
+>> mouse around and interrogate field values interactively.
+>
+> I wholeheartedly agree. This is on top of my personal wish list too.
+> ParaView needs much better interrogation capabilities, including picking
+> (cells, points, on surfaces), labeling (cells ids, point ids) and
+> probing.
+
+Excellent.  Looking forward to it.
+
+thanks
+-robert
+
+From etstant@sandia.gov  Thu Mar 18 02:09:44 2004
+From: etstant@sandia.gov (Stanton, Eric T)
+Date: Wed, 17 Mar 2004 19:09:44 -0700
+Subject: [Paraview] Point picking in ParaView
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B6D9@es10snlnt.sandia.gov>
+
+Am I correct in assuming point picking is not implemented yet? I found the
+following from the email archives explaining that picking objects from a
+scene to be selected in the selection window is not due to the complexities
+of parallelism but I was wondering if this was also true for picking points
+of a dataset. 
+
+Thanks,
+Eric
+
+
+http://public.kitware.com/pipermail/paraview/2003-July/000199.html
+
+
+From berend@tfd.chalmers.se  Thu Mar 18 11:43:10 2004
+From: berend@tfd.chalmers.se (Berend van Wachem)
+Date: Thu, 18 Mar 2004 12:43:10 +0100
+Subject: [Paraview] Block ordering
+Message-ID: <40598B4E.8040906@tfd.chalmers.se>
+
+Hi,
+
+Thanks for ParaView - it seems impressive.
+
+I have a question about writing data from a block structured code to the 
+VTK-Paraview format.
+
+I want to write multiple structured, boundary fitted blocks at a same 
+time-level to a number of VTK files, and glue them with <Collection>. In 
+the files for each block, I give the geometry data in the form of 
+<Points> and the cell centered data in the form of <CellData>. This all 
+works fine.
+
+However, Paraview expects the numbering in the blocks always to be the 
+same (I,J,K). So the I numbering matches with increase in X, J->Y, and 
+K->Z. In the "VTK File Formats" manual it is stated as "Data with 
+implicit topology are ordered with x increasing fastest, then y, then z".
+In most block structured codes, this is however not the case. In one 
+block the I direction can lie in another direction than in another 
+block. This may not be so crucial when reading in the <Points>, but it 
+is when reading in the <CellData>. It seems that Paraview maps the 
+<CellData> to the (I,J,K) numbering instead of to the geometry given in 
+<Points>.
+
+Is there an easy way to overcome this in Paraview? So that the data 
+given in <CellData> corresponds directly with the geometric data given 
+in <Points>?
+
+Thanks in advance!
+
+Berend.
+
+From berklist@nycap.rr.com  Thu Mar 18 13:34:50 2004
+From: berklist@nycap.rr.com (Berk Geveci)
+Date: Thu, 18 Mar 2004 08:34:50 -0500
+Subject: [Paraview] Point picking in ParaView
+In-Reply-To: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B6D9@es10snlnt.sandia.gov>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30526B6D9@es10snlnt.sandia.gov>
+Message-ID: <1079616890.23136.1.camel@silverymoon>
+
+Picking is not implemented yet. It is in our todo list. Look at
+http://public.kitware.com/pipermail/paraview/2004-March/000570.html
+
+On Wed, 2004-03-17 at 21:09, Stanton, Eric T wrote:
+> Am I correct in assuming point picking is not implemented yet? I found the
+> following from the email archives explaining that picking objects from a
+> scene to be selected in the selection window is not due to the complexities
+> of parallelism but I was wondering if this was also true for picking points
+> of a dataset. 
+> 
+> Thanks,
+> Eric
+> 
+> 
+> http://public.kitware.com/pipermail/paraview/2003-July/000199.html
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+-- 
+Berk Geveci <berklist@nycap.rr.com>
+
+
+From steuwer@ill.fr  Thu Mar 18 13:57:38 2004
+From: steuwer@ill.fr (Axel Steuwer)
+Date: Thu, 18 Mar 2004 14:57:38 +0100
+Subject: [Paraview] animation scripting
+In-Reply-To: <1079616890.23136.1.camel@silverymoon>
+Message-ID: <002301c40cf0$fa0ae980$15a0a8c0@ill.fr>
+
+Hi,
+
+could anyone give me some examples of how to parameterise things
+in the animation scripts, in particular moving things (e.g. VRML
+objects)
+around, make them go in a loop, bounce etc? the sparse examples in the=20
+archives didn't help me much.
+
+axel
+
+ps is it possible to search the archives or download them as a whole?
+
+
+From charles.law@kitware.com  Thu Mar 18 08:34:24 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Thu, 18 Mar 2004 03:34:24 -0500
+Subject: [Paraview] animation scripting
+In-Reply-To: <002301c40cf0$fa0ae980$15a0a8c0@ill.fr>
+References: <1079616890.23136.1.camel@silverymoon>
+ <002301c40cf0$fa0ae980$15a0a8c0@ill.fr>
+Message-ID: <6.0.3.0.0.20040318032629.01b577c0@pop.biz.rr.com>
+
+Axel,
+
+I wrote this script in the animation editor which made the cone (pvSource 
+vtkTemp778) move,  but this would not be very useful for creating complex 
+motions.
+
+
+# globalPVTime is provided by the animation
+# interface for convenience.
+# It varies linearly between 0 and 1 (0 at the
+# first frame, 1 at the last frame).
+
+# The source modified is: vtkTemp778
+[vtkTemp778 GetPVOutput] SetActorTranslate $globalPVTime $globalPVTime 0
+
+
+
+The Animation interface is on our list for improvement.  I expect we will 
+finish a better version in about six months.
+
+For now I would suggest you write a ParaView script than generated the 
+motion you want.  A trace file would be a good starting point for your 
+script.  Generate you objects, move the translation/rotation sliders on the 
+display page then save and edit the trace file.
+
+Charles.
+
+
+
+At 08:57 AM 3/18/2004, Axel Steuwer wrote:
+
+>Hi,
+>
+>could anyone give me some examples of how to parameterise things
+>in the animation scripts, in particular moving things (e.g. VRML
+>objects)
+>around, make them go in a loop, bounce etc? the sparse examples in the
+>archives didn't help me much.
+>
+>axel
+>
+>ps is it possible to search the archives or download them as a whole?
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From bnwylie@sandia.gov  Fri Mar 19 19:55:13 2004
+From: bnwylie@sandia.gov (Wylie, Brian)
+Date: Fri, 19 Mar 2004 12:55:13 -0700
+Subject: [Paraview] Parallel ParaView- file formats and Chromium
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA90@es10snlnt.sandia.gov>
+
+-----Original Message-----
+From: Joel Welling [mailto:welling@stat.cmu.edu] 
+Sent: Monday, March 15, 2004 1:20 PM
+To: paraview@paraview.org
+Subject: [Paraview] Parallel ParaView- file formats and Chromium
+
+
+...
+
+3) The default configuration seems to be for each worker to use Mesa to do
+its 
+own rendering (presumably off-screen), and then to read back the image.  The
+
+images are then composited by ParaView itself.  We'd like to use Chromium,
+and 
+to let Chromium do the compositing.  I *guess* all that's really needed is
+to 
+keep ParaView from trying to do the compositing.  How does one set this up?
+
+
+Why would you want to use Chromium for compositing? ParaView has two very
+good compositing methods. In fact if you compile with IceT and start up the
+client with --render-module=DeskTopRenderModule you will get the fastest
+software compositor in the world. :)  (I'm sure the flames will be extra hot
+on that statement....but it's Friday and I'm feeling cheeky)
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+     (505) 844-2238   FAX (505) 845-0833
+
+_______________________________________________
+ParaView mailing list
+ParaView@paraview.org http://www.paraview.org/mailman/listinfo/paraview
+
+
+From charles.law@kitware.com  Fri Mar 19 07:12:22 2004
+From: charles.law@kitware.com (Charles Law)
+Date: Fri, 19 Mar 2004 02:12:22 -0500
+Subject: [Paraview] paraview bug(?) data
+In-Reply-To: <03781128C7B74B4DBC27C55859C9D738034A5C19@es06snlnt.sandia.
+ gov>
+References: <03781128C7B74B4DBC27C55859C9D738034A5C19@es06snlnt.sandia.gov>
+Message-ID: <6.0.3.0.0.20040319021017.01b4be18@pop.biz.rr.com>
+
+Jake,
+
+This bug has been fixed.  It will be in the next release (version 1.4) 
+coming up soon.
+
+Charles.
+
+
+At 02:21 PM 3/15/2004, Jones, Jake S wrote:
+>Attached is .pvd data that contains one quadratic hex and one quadratic
+>line, with one cell variable.
+>
+>When read & displayed in paraview (the latest cvs version and version 1.2),
+>with the one cell variable mapped to color, the color of the line is wrong,
+>and the quadratic hex has a portion(!) of it colored wrong as well (paraview
+>is drawing the single quadratic hex element in TWO colors).
+>
+>The data is pretty simple. Can anyone verify that it is a problem in
+>paraview, or verify that somehow the data is bad? The data was created by
+>reading a simple saf file, and then using the "save data" option in
+>paraview.
+>
+>Thanks,
+>
+>Jake
+>
+>
+>Jake Jones
+>Sandia National Labs, Dept 9326
+>jsjones@sandia.gov
+>(615)423-7002
+>
+>
+
+
+
+From tjtautg@sandia.gov  Fri Mar 19 22:16:14 2004
+From: tjtautg@sandia.gov (Tim Tautges)
+Date: Fri, 19 Mar 2004 16:16:14 -0600
+Subject: [Paraview] Exodus reader?
+Message-ID: <405B712E.5070905@sandia.gov>
+
+Hi all,
+   I've developed a mesh data library called MOAB, and I'm trying to 
+write a reader to read the data into vtk/paraview.  It would really help 
+to have a working reader, for a mesh format I'm somewhat familiar with, 
+to look over.  Is the Exodus reader available somewhere that I'd be able 
+to get to?  I have the exodus libs already, so I just need the vtk stuff.
+
+Incidentally, MOAB has an Exodus reader/writer which doesn't depend on 
+the exodus libraries, as well as readers for some other formats.  I'll 
+be releasing MOAB probably LGPL in the next few months.  If you'd like 
+to hear more about it, let me know.
+
+Thanks.
+
+- tim
+
+-- 
+================================================================
+"You will keep in perfect peace him whose mind is
+   steadfast, because he trusts in you."               Isaiah 26:3
+
+              Tim Tautges            Sandia National Laboratories
+          (tjtautg@sandia.gov)       (telecommuting from UW-Madison)
+          phone: (608) 263-8485      1500 Engineering Dr.
+            fax: (608) 263-4499      Madison, WI 53706-1609
+
+
+From bmclean@finlaylabs.net  Sat Mar 20 05:09:01 2004
+From: bmclean@finlaylabs.net (Ben McLean (finlaylabs))
+Date: Sat, 20 Mar 2004 13:09:01 +0800
+Subject: [Paraview] vti formats - multiple scalars ascii
+Message-ID: <002401c40e39$7fde3410$19f996d3@ravenouswolf>
+
+Hi all,
+
+I am a recent fan of Paraview, it is doing a great (and free) job of
+visualising my seismic data in 3D.
+
+Despite best efforts though I cannot simply get our proprietary software
+outputting correct formats for files to hold several scalar data... I have
+read and re-read the pdf widely available on vtk formats, and have tried
+many permutations of the following file, with no success. Does anyone know
+what the correct format should be?
+
+Note I do not want to do 3-component vectors.
+
+Thanks for the assistance, and the great tool!
+Ben.
+
+//***********************************************************
+<?xml version="1.0"?>
+
+<VTKFile type="ImageData" version="0.1" byte_order="LittleEndian">
+
+    <ImageData WholeExtent="0 49 0 49 0 49" Origin="0 0 0" Spacing="10 10
+10">
+
+        <Piece Extent="0 49 0 49 0 49">
+
+            <PointData Scalars="DispX" Scalars="DispY" Scalars="DispZ">
+
+                <DataArray type="Float64" Name="DispZ" format="ascii">
+
+                    2.91069e-032 -5.00162e-032 8.10231e-032
+3.40722e-031 -4.88671e-030... etc to n=50*50*50
+
+                <DataArray type="Float64" Name="DispZ" format="ascii">
+
+                    2.91069e-032 -5.00162e-032 8.10231e-032
+3.40722e-031 -4.88671e-030... etc
+
+                <DataArray type="Float64" Name="DispZ" format="ascii">
+
+                    2.91069e-032 -5.00162e-032 8.10231e-032
+3.40722e-031 -4.88671e-030... etc
+
+               </PointData>
+
+            <CellData>
+
+            </CellData>
+
+        </Piece>
+
+    </ImageData>
+
+    <AppendedData>
+
+    </AppendedData>
+
+</VTKFile>
+
+
+From prabhu@aero.iitm.ernet.in  Tue Mar 16 17:20:00 2004
+From: prabhu@aero.iitm.ernet.in (Prabhu Ramachandran)
+Date: Tue, 16 Mar 2004 22:50:00 +0530
+Subject: [Paraview] Reguarding python question
+In-Reply-To: <1079452888.22819.77.camel@silverymoon>
+References: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BA73@es10snlnt.sandia.gov>
+ <1617.128.165.144.120.1079394054.squirrel@webmail2.pair.com>
+ <16470.36534.639509.69061@monster.linux.in>
+ <1079452888.22819.77.camel@silverymoon>
+Message-ID: <16471.14144.27107.24437@monster.linux.in>
+
+>>>>> "BG" == Berk Geveci <bgeveci@nycap.rr.com> writes:
+
+    >> I'm sorry to sound typically blunt and harsh.  From what I have
+    >> seen so far, you are only going to get a free OSS tool written
+    >> in Python/Qt, if I sit and write it. ;-D If not, you get a
+    >> great Tcl based one from Kitware.  Or if you insist on Python,
+    >> live with a simpler tool that does not handle large data in
+    >> parallel (but works quite well for small data).  If you want to
+    >> improve that project, help out.  If you think otherwise, show
+    >> me the code and where the heck were you all these years? ;-)
+
+    BG> I have to correct Prabhu here. The Sandia and LANL folks ARE
+    BG> ParaView contributors. They have put money, time, effort and
+    BG> in my opinion much more importantly heart in ParaView.
+
+I stand corrected.  My apologies.
+
+cheers,
+prabhu
+
+From julien.alizier-ausy@irsn.fr  Mon Mar 22 09:55:46 2004
+From: julien.alizier-ausy@irsn.fr (ALIZIER Julien AUSY)
+Date: Mon, 22 Mar 2004 10:55:46 +0100
+Subject: [Paraview] Compiling ParaView for Sun
+Message-ID: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B15C@OREADE.ipsn.fr>
+
+This message is in MIME format. Since your mail reader does not understand
+this format, some or all of this message may not be legible.
+
+------_=_NextPart_001_01C40FF3.D8CDC4D0
+Content-Type: text/plain;
+	charset="iso-8859-1"
+
+Hi ParaView gurus,
+ 
+I'd like to compile ParaView on Solaris.
+I've tried with gcc 3.2 and it said that the Xresource.h and other X header
+file where obsolete.
+Then I tried with SunWorkshop 6 compiler and I get another error further in
+the compilation process.
+ 
+What compiler have you used to compile the version available on the website
+? (paraview-1.2.1-sparc-sunos57.tar.gz)
+ 
+Thanks
+ 
+-- Julien
+ 
+ 
+
+------_=_NextPart_001_01C40FF3.D8CDC4D0
+Content-Type: text/html;
+	charset="iso-8859-1"
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+
+
+<META content="MSHTML 5.50.4134.600" name=GENERATOR></HEAD>
+<BODY>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>Hi ParaView 
+gurus,</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>I'd like to compile 
+ParaView on Solaris.</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>I've tried with gcc 
+3.2 and it said that&nbsp;the Xresource.h and other X header file where 
+obsolete.</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>Then I tried with 
+SunWorkshop 6 compiler and I get another error further in the compilation 
+process.</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>What compiler have 
+you used to compile the version available on the website ? 
+(paraview-1.2.1-sparc-sunos57.tar.gz)</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2>Thanks</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial size=2>-- 
+Julien</FONT></SPAN></DIV>
+<DIV><SPAN class=823295009-22032004><FONT face=Arial 
+size=2></FONT></SPAN>&nbsp;</DIV>
+<DIV><SPAN class=823295009-22032004></SPAN>&nbsp;</DIV></BODY></HTML>
+
+------_=_NextPart_001_01C40FF3.D8CDC4D0--
+
+From brad.king@kitware.com  Mon Mar 22 14:17:00 2004
+From: brad.king@kitware.com (Brad King)
+Date: Mon, 22 Mar 2004 09:17:00 -0500
+Subject: [Paraview] vti formats - multiple scalars ascii
+In-Reply-To: <002401c40e39$7fde3410$19f996d3@ravenouswolf>
+References: <002401c40e39$7fde3410$19f996d3@ravenouswolf>
+Message-ID: <405EF55C.10301@kitware.com>
+
+Ben McLean (finlaylabs) wrote:
+
+> Hi all,
+> 
+> I am a recent fan of Paraview, it is doing a great (and free) job of
+> visualising my seismic data in 3D.
+> 
+> Despite best efforts though I cannot simply get our proprietary software
+> outputting correct formats for files to hold several scalar data... I have
+> read and re-read the pdf widely available on vtk formats, and have tried
+> many permutations of the following file, with no success. Does anyone know
+> what the correct format should be?
+[snip]
+>             <PointData Scalars="DispX" Scalars="DispY" Scalars="DispZ">
+
+The "Scalars" attribute on PointData cannot be repeated, and it is
+optional anyway.  It is only used to specify which nested array should
+be treated as the active scalars by default (this is a VTK thing).
+Otherwise the file looks fine on first glance.
+
+-Brad
+
+
+
+
+From luis.ibanez@kitware.com  Mon Mar 22 22:57:36 2004
+From: luis.ibanez@kitware.com (Luis Ibanez)
+Date: Mon, 22 Mar 2004 17:57:36 -0500
+Subject: [Paraview] Re: [Insight-users] which format should i save 4D data as
+In-Reply-To: <Bd959677826643.07248@mail>
+References: <Bd959677826643.07248@mail>
+Message-ID: <405F6F60.2070902@kitware.com>
+
+
+Hi Wavelethe,
+
+
+Probably your best option for visualizing time
+series is to use ParaView, which can be
+downloaded from:
+
+
+               www.paraview.org
+
+
+(You can get it as source code or as binary
+  versions for several platforms).
+
+---
+
+You can save your time sequence data using one 3D
+data file per time step in file formats: VTK (.vtk)
+or MetaImage (.mhd).  ParaView can read these two
+file formats directly.
+
+Try naming the files with a sequence such as
+
+
+    Image001.mhd
+    Image002.mhd
+    Image003.mhd
+    Image004.mhd
+     ...
+    Image100.mhd
+
+
+Once you have the set of 3D files (once per
+time step), you open ParaView and do:
+
+1) File--> Open Data
+
+    and select the first file "Image0001.mhd"
+
+    as soon as you click on Ok, ParaView will
+    load this first dataset and will analyze
+    the directory where the dataset is located.
+    It will then notice that there are N other
+    files with similar names and will show you
+    that in the lower part of the left panel,
+    in the form of a slider:    "Timestep 0"
+
+2) Go to the menu: "View ---> Animation",
+
+3) In the "Actions" frame click on the "Source"
+    selection widget. It will show you the reader
+    that you just used for loading the data.
+    Click on this reader.
+
+4) In the "Actions" frame click on the
+    "Parameter" selection widget. It will show
+    you options: { Filename, Script, None }.
+    Select "Filename". As soon as you select,
+    it ParaView will show two new fields with
+    labels "Start value" and "End value".
+
+5) Set the first and last value of file that you
+    want to visualize in the time series.  For the
+    example above, this will be 1 and 100 respectively.
+
+
+6) Click on the button "Add Action"
+
+
+7) In the "Animation Control" frame, click
+    on the "Play" button (the black triangle).
+
+8) Get your coffee, sit back and enjoy the
+    view as ParaView loads the datasets.
+    Note that the first pass will be slow
+    since data is being read from disk.
+
+    After that first pass, the data will be
+    cached in memory and subsequent passes
+    will be done faster.
+
+
+
+NOTE:
+    This assumes that you have enough memory
+    for holding the datasets simultaneously.
+    If that's not the case, you should probably
+    try selecting a cutting plane on your data
+    sets, so the only data to be cached in memory
+    is this visible plane and not the entire
+    datasets.
+
+
+
+
+   Regards,
+
+
+      Luis
+
+
+--------------------------------
+wavelethe@pku.org.cn wrote:
+
+> time sequence 3D data 
+> 
+> vtk is only for 2D or 3D
+> i have try the Analyze file format, but the result is a little strange in the view of volview.
+> 
+> 
+> _______________________________________________
+> Insight-users mailing list
+> Insight-users@itk.org
+> http://www.itk.org/mailman/listinfo/insight-users
+> 
+
+
+
+
+From bmclean@finlaylabs.net  Tue Mar 23 02:01:51 2004
+From: bmclean@finlaylabs.net (Ben McLean (finlaylabs))
+Date: Tue, 23 Mar 2004 10:01:51 +0800
+Subject: [Paraview] vti formats - multiple scalars ascii
+References: <002401c40e39$7fde3410$19f996d3@ravenouswolf> <405EF55C.10301@kitware.com>
+Message-ID: <000201c41088$88ed3460$dafa96d3@ravenouswolf>
+
+Hi Brad,
+
+thanks for the reply. Indeed when I cut out **** Scalars="DispX"
+Scalars="DispY" Scalars="DispZ" *** to leave <PointData> and everything else
+as is, it works perfectly.
+
+Thanks heaps,
+Ben.
+
+> Ben McLean (finlaylabs) wrote:
+>
+> > Hi all,
+> >
+> > I am a recent fan of Paraview, it is doing a great (and free) job of
+> > visualising my seismic data in 3D.
+> >
+> > Despite best efforts though I cannot simply get our proprietary software
+> > outputting correct formats for files to hold several scalar data... I
+have
+> > read and re-read the pdf widely available on vtk formats, and have tried
+> > many permutations of the following file, with no success. Does anyone
+know
+> > what the correct format should be?
+> [snip]
+> >             <PointData Scalars="DispX" Scalars="DispY" Scalars="DispZ">
+>
+> The "Scalars" attribute on PointData cannot be repeated, and it is
+> optional anyway.  It is only used to specify which nested array should
+> be treated as the active scalars by default (this is a VTK thing).
+> Otherwise the file looks fine on first glance.
+>
+> -Brad
+>
+>
+>
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+>
+
+
+From bnwylie@sandia.gov  Tue Mar 23 14:47:09 2004
+From: bnwylie@sandia.gov (Wylie, Brian)
+Date: Tue, 23 Mar 2004 07:47:09 -0700
+Subject: FW: [Paraview] Parallel ParaView- file formats and Chromium
+Message-ID: <AC89BDA1E3CCBC42B9CA5B50FE7934D30647BAA6@es10snlnt.sandia.gov>
+
+
+-----Original Message-----
+From: Joel Welling [mailto:welling@stat.cmu.edu] 
+Sent: Sunday, March 21, 2004 12:14 AM
+To: Wylie, Brian
+Cc: welling@psc.edu
+Subject: Re: [Paraview] Parallel ParaView- file formats and Chromium
+
+
+
+>Hi Brian;
+
+>> Why would you want to use Chromium for compositing? ParaView has two
+>> very good compositing methods. In fact if you compile with IceT and 
+>> start up the client with --render-module=DeskTopRenderModule you will 
+>> get the fastest software compositor in the world. :)  (I'm sure the 
+>> flames will be extra hot on that statement....but it's Friday and I'm 
+>> feeling cheeky)
+
+> Well, fair enough- I don't mind if ParaView does the compositing.  I 
+> do have
+> to do the rendering via Chromium, though, because that's the only way to
+get 
+> the polygons to the graphics cards.  In principle there's no reason the 
+> workers can't draw and read back via Chromium, then do the compositing.
+
+There must have been a mis-communication somewhere. ParaView does hardware
+rendering.
+
+We've gotten 1 billion tris/sec with Ice-T on a 128 node cluster (that was
+several years ago). We run ParaView on extremely large datasets on a daily
+basis, works great and less filling. Also, the easiest way to run ParaView
+is client server. You run the client on your desktop and do parallel
+hardware renderering on the server (cluster of PCs).
+
+I think a phone call might clear things up. Give me a ring 505-844-2238.
+
+	Brian Wylie
+	Sandia National Laboratories
+	MS 0822 - Org 9227 - Building 880/A1-J
+     (505) 844-2238   FAX (505) 845-0833
+
+
+
+
+From steuwer@ill.fr  Tue Mar 23 15:25:44 2004
+From: steuwer@ill.fr (Axel Steuwer)
+Date: Tue, 23 Mar 2004 16:25:44 +0100 (CET)
+Subject: [Paraview] PowerCrust in Filters
+In-Reply-To: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B15C@OREADE.ipsn.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B15C@OREADE.ipsn.fr>
+Message-ID: <54219.195.83.126.10.1080055544.squirrel@mail.ill.fr>
+
+Hi,
+
+has anyone tried accessing the PowerCrust SurfaceReconstruction algorithm
+(http://www.eastman.ucl.ac.uk/~thutton/powercrust/) as a filter in ParaView?
+I added it to the vtk-library, and I tried the following code but it doesn't
+work
+
+...
+<module>
+ <module name="PowerCrustSurfaceReconstruction"
+root_name="PowerCrustSurfaceReconstruction" module_type="Filter">
+  <Filter class="vtkPowerCrustSurfaceReconstruction">
+    <Input name="Input" class="vtkPolyData" />
+   <InputMenu trace_name="Input" label="Input" help="PowerCrust Surface
+reconstruction"/>
+   </Filter>
+</module>
+....
+
+
+Any ideas?
+
+Axel
+
+
+
+
+From amy.henderson@kitware.com  Tue Mar 23 16:01:27 2004
+From: amy.henderson@kitware.com (Amy Henderson)
+Date: Tue, 23 Mar 2004 11:01:27 -0500
+Subject: [Paraview] PowerCrust in Filters
+In-Reply-To: <54219.195.83.126.10.1080055544.squirrel@mail.ill.fr>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B15C@OREADE.ipsn.fr>
+ <54219.195.83.126.10.1080055544.squirrel@mail.ill.fr>
+Message-ID: <6.0.3.0.2.20040323105502.03281fa8@pop.biz.rr.com>
+
+Hi Axel,
+
+I just tried adding this algorithm to my build of VTK and then making it 
+available in ParaView. It worked fine for me. Here is my XML code:
+
+   <Module name="PowerCrust"
+           menu_name="Power Crust"
+           root_name="PowerCrust"
+           module_type="Filter"
+           long_help="power crust filter"
+           short_help="power crust filter">
+     <Filter class="vtkPowerCrustSurfaceReconstruction">
+       <Input name="Input"
+              class="vtkDataSet"/>
+     </Filter>
+     <InputMenu trace_name="Input" label="Input"
+                help="Set the input to this filter."
+                input_name="Input"/>
+   </Module>
+
+The differences I see from yours are that 1) the input accepts vtkDataSet, 
+not just vtkPolyData and 2) the InputMenu code should not go inside the 
+<Filter> </Filter> tags.
+
+If you added this code to Filters.xml, be sure to recompile ParaView. It 
+converts the XML to a header file. If you put this XML code in a separate 
+file, it needs to be loaded before you can use it (File menu | Import Package).
+
+- Amy
+
+At 10:25 AM 3/23/2004, Axel Steuwer wrote:
+>Hi,
+>
+>has anyone tried accessing the PowerCrust SurfaceReconstruction algorithm
+>(http://www.eastman.ucl.ac.uk/~thutton/powercrust/) as a filter in ParaView?
+>I added it to the vtk-library, and I tried the following code but it doesn't
+>work
+>
+>...
+><module>
+>  <module name="PowerCrustSurfaceReconstruction"
+>root_name="PowerCrustSurfaceReconstruction" module_type="Filter">
+>   <Filter class="vtkPowerCrustSurfaceReconstruction">
+>     <Input name="Input" class="vtkPolyData" />
+>    <InputMenu trace_name="Input" label="Input" help="PowerCrust Surface
+>reconstruction"/>
+>    </Filter>
+></module>
+>....
+>
+>
+>Any ideas?
+>
+>Axel
+>
+>
+>
+>_______________________________________________
+>ParaView mailing list
+>ParaView@paraview.org
+>http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+
+From berk.geveci@kitware.com  Tue Mar 23 16:32:41 2004
+From: berk.geveci@kitware.com (Berk Geveci)
+Date: Tue, 23 Mar 2004 11:32:41 -0500
+Subject: [Paraview] PowerCrust in Filters
+In-Reply-To: <6.0.3.0.2.20040323105502.03281fa8@pop.biz.rr.com>
+References: <4EB6E1738CC2E940BAD2EFBFBF5A38F101C3B15C@OREADE.ipsn.fr>
+ <54219.195.83.126.10.1080055544.squirrel@mail.ill.fr>
+ <6.0.3.0.2.20040323105502.03281fa8@pop.biz.rr.com>
+Message-ID: <1080059561.29139.18.camel@silverymoon>
+
+If you created your own xml file, make sure that the root element is the
+following:
+
+<ModuleInterfaces>
+</ModuleInterfaces>
+
+On Tue, 2004-03-23 at 11:01, Amy Henderson wrote:
+> Hi Axel,
+> 
+> I just tried adding this algorithm to my build of VTK and then making it 
+> available in ParaView. It worked fine for me. Here is my XML code:
+> 
+>    <Module name="PowerCrust"
+>            menu_name="Power Crust"
+>            root_name="PowerCrust"
+>            module_type="Filter"
+>            long_help="power crust filter"
+>            short_help="power crust filter">
+>      <Filter class="vtkPowerCrustSurfaceReconstruction">
+>        <Input name="Input"
+>               class="vtkDataSet"/>
+>      </Filter>
+>      <InputMenu trace_name="Input" label="Input"
+>                 help="Set the input to this filter."
+>                 input_name="Input"/>
+>    </Module>
+> 
+> The differences I see from yours are that 1) the input accepts vtkDataSet, 
+> not just vtkPolyData and 2) the InputMenu code should not go inside the 
+> <Filter> </Filter> tags.
+> 
+> If you added this code to Filters.xml, be sure to recompile ParaView. It 
+> converts the XML to a header file. If you put this XML code in a separate 
+> file, it needs to be loaded before you can use it (File menu | Import Package).
+> 
+> - Amy
+> 
+> At 10:25 AM 3/23/2004, Axel Steuwer wrote:
+> >Hi,
+> >
+> >has anyone tried accessing the PowerCrust SurfaceReconstruction algorithm
+> >(http://www.eastman.ucl.ac.uk/~thutton/powercrust/) as a filter in ParaView?
+> >I added it to the vtk-library, and I tried the following code but it doesn't
+> >work
+> >
+> >...
+> ><module>
+> >  <module name="PowerCrustSurfaceReconstruction"
+> >root_name="PowerCrustSurfaceReconstruction" module_type="Filter">
+> >   <Filter class="vtkPowerCrustSurfaceReconstruction">
+> >     <Input name="Input" class="vtkPolyData" />
+> >    <InputMenu trace_name="Input" label="Input" help="PowerCrust Surface
+> >reconstruction"/>
+> >    </Filter>
+> ></module>
+> >....
+> >
+> >
+> >Any ideas?
+> >
+> >Axel
+> >
+> >
+> >
+> >_______________________________________________
+> >ParaView mailing list
+> >ParaView@paraview.org
+> >http://www.paraview.org/mailman/listinfo/paraview
+> 
+> 
+> 
+> _______________________________________________
+> ParaView mailing list
+> ParaView@paraview.org
+> http://www.paraview.org/mailman/listinfo/paraview
+
+
+
+From baghdadi@sickkids.ca  Tue Mar 23 22:19:25 2004
+From: baghdadi@sickkids.ca (Leila Baghdadi)
+Date: Tue, 23 Mar 2004 17:19:25 -0500 (EST)
+Subject: [Paraview] 4D data
+Message-ID: <Pine.LNX.4.44.0403231718030.4386-100000@mouse1.ocgc.ca>
+
+Hi everyone
+
+can someone give me a hint about which class or section of code in 
+paraview takes care of 4D data.
+
+
+Thanks
+
+
+Leila
+
+-- 
+
+
+
+
+From ahrens@lanl.gov  Wed Mar 24 23:49:32 2004
+From: ahrens@lanl.gov (James Ahrens)
+Date: Wed, 24 Mar 2004 16:49:32 -0700
+Subject: [Paraview] Data Server / Rendering Server Split
+Message-ID: <E5C4180C-7DED-11D8-903C-000A95D7CEB6@lanl.gov>
+
+LANL and Kitware are working on a mode for ParaView in which there will 
+be a visualization/data server (that will run on the supercomputer 
+where the simulation data is created and stored), a rendering server (a 
+visualization machine/cluster and/or tiled display) and a client (the 
+current client GUI). This will eliminate the need for data movement 
+from the supercomputer where the data is created and stored to a 
+visualization resource. The visualization/data server will create 
+geometry, this geometry will be sent to the rendering server and GUI 
+for display. Brian and Joel, I think this will solve the problem Joel 
+was experiencing in terms of "getting the polygons to the graphics 
+cards".  An initial prototype should be available soon (on the order of 
+month or two).
+
+--Jim
+
+
+From arash@vije.ca  Thu Mar 25 15:11:49 2004
+From: arash@vije.ca (Arash Jahangir)
+Date: Thu, 25 Mar 2004 10:11:49 -0500
+Subject: [Paraview] Data Server / Rendering Server Split
+Message-ID: <011e01c4127b$bbc7d710$0aa2fea9@hal9000>
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_00FD_01C41251.961EAC20
+Content-Type: text/plain;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+Several years ago we used a package to "replace" X-Windows so that we =
+could access remote servers over the internet quickly (those were the =
+pre-broadband days).  I can't remember the name of the package (Go =
+Graphics?) but their approach was quite neat and perhaps of help to this =
+project.
+
+Instead of implementing the X client/server, they simply ran everything =
+on the remote server and used the Ethernet as a very long KVM cable.  =
+This is to say there was no communication between the client and the =
+server except for a set of mouse and keyboard movements sent from the =
+workstation to the server and a set of "video" signals encapsulated =
+within the IP packets back to the workstation.
+
+Not only this approach had very low overhead, it also removed many of =
+the compatibility issues across platforms as it really did not matter =
+what windowing system (or hardware) the server was running.
+
+hth,
+Arash
+
+
+
+> From: James Ahrens <ahrens@lanl.gov>
+> Date: Wed, 24 Mar 2004 16:49:32 -0700
+> To: paraview@paraview.org
+> Subject: [Paraview] Data Server / Rendering Server Split
+>=20
+> LANL and Kitware are working on a mode for ParaView in which there =
+will=20
+> be a visualization/data server (that will run on the supercomputer=20
+> where the simulation data is created and stored), a rendering server =
+(a=20
+> visualization machine/cluster and/or tiled display) and a client (the=20
+> current client GUI). This will eliminate the need for data movement=20
+> from the supercomputer where the data is created and stored to a=20
+> visualization resource. The visualization/data server will create=20
+> geometry, this geometry will be sent to the rendering server and GUI=20
+> for display. Brian and Joel, I think this will solve the problem Joel=20
+> was experiencing in terms of "getting the polygons to the graphics=20
+> cards".  An initial prototype should be available soon (on the order =
+of=20
+> month or two).
+>=20
+> --Jim
+>=20
+
+------=_NextPart_000_00FD_01C41251.961EAC20
+Content-Type: text/html;
+	charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-1">
+<META content=3D"MSHTML 6.00.2800.1400" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>Several years ago we used =
+a&nbsp;package to=20
+"replace" X-Windows so that we could access remote servers over the =
+internet=20
+quickly (those were the pre-broadband days).&nbsp; I can't remember the =
+name of=20
+the package (Go Graphics?) but their approach was quite neat and perhaps =
+of help=20
+to this project.</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Instead of implementing the X =
+client/server, they=20
+simply ran everything on the remote server and used the Ethernet as a =
+very long=20
+KVM cable.&nbsp; This is to say there was no communication between the =
+client=20
+and the server except for a set of mouse and keyboard movements sent =
+from the=20
+workstation to the server and a set of "video" signals encapsulated =
+within the=20
+IP packets back to the workstation.</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>Not only this approach had very low =
+overhead, it=20
+also removed many of the compatibility issues across platforms as it =
+really did=20
+not matter what windowing system (or hardware) the server was=20
+running.</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2>hth,</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>Arash</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2></FONT>&nbsp;</DIV>
+<DIV><FONT face=3DArial size=3D2></FONT><FONT face=3DArial =
+size=3D2></FONT>&nbsp;</DIV>
+<DIV>&gt; From: James Ahrens &lt;<A=20
+href=3D"mailto:ahrens@lanl.gov">ahrens@lanl.gov</A>&gt;<BR>&gt; Date: =
+Wed, 24 Mar=20
+2004 16:49:32 -0700<BR>&gt; To: <A=20
+href=3D"mailto:paraview@paraview.org">paraview@paraview.org</A><BR>&gt; =
+Subject:=20
+[Paraview] Data Server / Rendering Server Split<BR>&gt; <BR>&gt; LANL =
+and=20
+Kitware are working on a mode for ParaView in which there will <BR>&gt; =
+be a=20
+visualization/data server (that will run on the supercomputer <BR>&gt; =
+where the=20
+simulation data is created and stored), a rendering server (a <BR>&gt;=20
+visualization machine/cluster and/or tiled display) and a client (the =
+<BR>&gt;=20
+current client GUI). This will eliminate the need for data movement =
+<BR>&gt;=20
+from the supercomputer where the data is created and stored to a =
+<BR>&gt;=20
+visualization resource. The visualization/data server will create =
+<BR>&gt;=20
+geometry, this geometry will be sent to the rendering server and GUI =
+<BR>&gt;=20
+for display. Brian and Joel, I think this will solve the problem Joel =
+<BR>&gt;=20
+was experiencing in terms of "getting the polygons to the graphics =
+<BR>&gt;=20
+cards".&nbsp; An initial prototype should be available soon (on the =
+order of=20
+<BR>&gt; month or two).<BR>&gt; <BR>&gt; --Jim<BR>&gt; =
+<BR></DIV></BODY></HTML>
+
+------=_NextPart_000_00FD_01C41251.961EAC20--
+
+
+From tjtautg@sandia.gov  Fri Mar 26 13:24:47 2004
+From: tjtautg@sandia.gov (Tim Tautges)
+Date: Fri, 26 Mar 2004 07:24:47 -0600
+Subject: [Paraview] Reader Initialize() function
+Message-ID: <40642F1F.7090707@sandia.gov>
+
+Hi all,
+   I'm trying to write a reader using the instructions posted by Ben 
+last Sept.  I've written my custom reader, vtkMOABReader, and compiled 
+it using the boilerplate from the LocalExample in vtk.  It runs fine 
+from a tcl script, so now I'm trying to hook it up into paraview.
+
+Questions:
+1. When I start paraview, I get the error messages:
+
+-----------------
+   [tjtautg@marge ~/dualmod]$ paraview
+   ErrorMessage
+   # Error or warning: ERROR: In 
+/usr/local/ParaViewComplete/ParaView/ClientServer/vtkClientServerInterpreter.cxx, 
+   line 856
+   vtkClientServerInterpreter (0x81d1bc0): Cannot find function 
+"vtkMOABReaderTCL_Initialize" in 
+"/home/tjtautg/dualmod/bin/libvtkMOABReaderTCL.so".
+
+
+ERROR: In vtkPVXMLPackageParser.cxx, line 673
+vtkPVXMLPackageParser (0x8473c20): Error loading Library component 
+vtkMOABReaderTCL
+
+ErrorMessage end
+------------------
+
+So, it's finding the shared library, but can't find the function 
+vtkMOABReaderTCL_Initialize.  When I look in the files generated for 
+this example, they include vtkMOABReaderTCLInit.cxx, and in there is a 
+function Vtkmoabreadertcl_Init.  Is this the function that's being 
+looked for as ...TCL_Initialize?
+
+2. Why the case change from vtkMOABReader to Vtkmoabreadertcl in that file?
+
+3. I haven't implemented this as a child class of vtkPVReaderModule (my 
+impression is that this isn't absolutely necessary, since there are 
+other readers which aren't).  Is this true?
+
+Any other pointers anybody could offer to get this working would be 
+appreciated.
+
+Thanks.
+
+- tim
+
+
+-- 
+================================================================
+"You will keep in perfect peace him whose mind is
+  steadfast, because he trusts in you."               Isaiah 26:3
+
+             Tim Tautges            Sandia National Laboratories
+         (tjtautg@sandia.gov)       (telecommuting from UW-Madison)
+         phone: (608) 263-8485      1500 Engineering Dr.
+           fax: (608) 263-4499      Madison, WI 53706
+
+
+From Patrick.Brockmann@cea.fr  Tue Mar 30 18:42:00 2004
+From: Patrick.Brockmann@cea.fr (Patrick Brockmann)
+Date: Tue, 30 Mar 2004 20:42:00 +0200
+Subject: [Paraview] Camera clipping
+Message-ID: <4069BF78.7090703@cea.fr>
+
+Hi all,
+
+Is there a way to hide far side of 3D actors with paraview ?
+
+In my VTK python application, I can do this with :
+
+def MyClippingRange(obj, event):
+       camera=ren1.GetActiveCamera()
+       camera.SetFocalPoint(0,0,0)
+       camera_dist=camera.GetDistance()
+       camera.SetClippingRange(0.1,camera_dist)
+...
+ren.AddObserver("ResetCameraEvent",MyClippingRange)
+
+See http://dods.ipsl.jussieu.fr/brocksce/pv_ex/climat_models.png
+I would like to hide the back side of actors for more lisibility.
+
+Patrick
+
+-- 
+
+mailto:Patrick.Brockmann@cea.fr
+01.69.08.72.23 --> LSCE (Orme des merisiers 701, Bureau 50)
+01.44.27.21.10 --> IPSL (Jussieu, Tour 44-45, 3eme)
+http://www.ipsl.jussieu.fr/~brocksce/
+
+
+
+
