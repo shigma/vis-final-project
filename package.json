@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/Shigma/vis-final-project#readme",
   "devDependencies": {
-    "@marklet/core": "^3.2.4",
-    "eslint": "^5.9.0"
+    "d3": "^5.7.0",
+    "eslint": "^5.9.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue": "^2.5.18"
   }
 }
