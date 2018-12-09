@@ -1,10 +1,13 @@
-let isdebug = false//true
 const fs = require("fs")
+const metaAll = require('./meta.json')
 
-let metaAll = require('./meta.json')
+const weekdates = new Set(['Mon','Tue','Wed','Thu','Fir','Sat','Sun'])
+
+let isdebug = false//true
+
 let MailLength = metaAll.length
-//console.log(MailLength)
 let message_idArray = []
+let timeline = []
 
 /* give message_id and message_idArray, return id in metaAll or -1 if not found*/
 function messageID2id(message_id,message_idArray){
@@ -23,30 +26,42 @@ function messageID2id(message_id,message_idArray){
     return -1
 }
 
-if(isdebug)MailLength = 5
+if(isdebug)MailLength = 100
 
 for(let i=0;i<MailLength;i++){
     let tmp = metaAll[i].meta
-    //console.log(JSON.stringify(tmp))
     let obtmp = new Object()
     obtmp.id = i
-    //obtmp.FromString = tmp.From
     obtmp.idString = tmp.MessageID.substring(1,tmp.MessageID.length-2)
     message_idArray.push(obtmp)
-    //console.log(JSON.stringify(message_idArray[i]))
+
+    let obtmp2 = new Object()
+    obtmp2.id = i
+    //"Date": "Wed, 7 Nov 2001 22:42:09 +0100 (MET)",
+    let tmptime = tmp.Date.split(/ |, |:/)
+    let c = 0
+    obtmp2.wd = tmptime[c]
+    if(!(weekdates.has(obtmp2.wd))){
+        obtmp2.wd = '???'
+        c--;
+    }
+    obtmp2.day = tmptime[++c]
+    if(obtmp2.day.length<2)obtmp2.day = '0'+obtmp2.day
+    obtmp2.month = tmptime[++c]
+    obtmp2.year = tmptime[++c]
+    obtmp2.h = tmptime[++c]
+    obtmp2.m = tmptime[++c]
+    obtmp2.s = tmptime[++c]
+    obtmp2.delta = tmptime[++c]
+    timeline.push(obtmp2)
+    //console.log(JSON.stringify(obtmp2))
 }
 
 message_idArray.sort(function(a,b){
     return a.idString>b.idString
 })
 
-//for(let i=0;i<MailLength;i++){
-//    console.log(JSON.stringify(message_idArray[i]))
-//}
-//console.log(JSON.stringify(message_idArray[MailLength>>1]))
-//console.log(messageID2id("4E206C04.7070100@lbl.go",message_idArray))
-//console.log(messageID2id("4E206C04.707a0100@lbl.go",message_idArray))
-
-fs.writeFileSync("./messageidTable.json",JSON.stringify(message_idArray))
+fs.writeFileSync("./messageidTable.json",JSON.stringify(message_idArray,null,2))
+fs.writeFileSync('./timeline.json',JSON.stringify(timeline,null,2))
 console.log("finish!")
 
