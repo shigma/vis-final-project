@@ -9,6 +9,7 @@ let isdebug = false
 let MailLength = metaAll.length
 let message_idArray = []
 let timeline = []
+let inreplyto = []
 
 function stringcmp(as, bs){
   let la = as.length
@@ -31,9 +32,13 @@ function stringcmp(as, bs){
 
 /* give message_id and message_idArray, return id in metaAll or -1 if not found*/
 function messageID2id(message_id, message_idArray){
+  message_id = String(message_id)
   let l = 0, r = message_idArray.length-1
+  //console.log(message_id)
   while (l<=r){
+    //console.log(l*4+' '+r*4)
     let m = ((r - l) >> 1) + l
+    //console.log(message_id+' '+message_idArray[m].idString)
     if (stringcmp(message_id, message_idArray[m].idString)===1){
       l = m + 1
     } else if (stringcmp(message_id, message_idArray[m].idString)===-1){
@@ -42,19 +47,26 @@ function messageID2id(message_id, message_idArray){
       return message_idArray[m].id
     }
   }
-  console.log('error: cannot find messageID in messageID2id(): given '+message_id)
+  //console.log('error: cannot find messageID in messageID2id(): given '+message_id)
   return -1
 }
 
-if (isdebug)MailLength = 100
+if (isdebug)MailLength = 10
 
+console.log(MailLength)
 for (let i=0; i<MailLength; i++){
+  /* meta messageid */
   let tmp = metaAll[i].meta
   let obtmp = new Object()
   obtmp.id = i
-  obtmp.idString = tmp.MessageID.substring(1, tmp.MessageID.length-2)
+  if (tmp.MessageID[0]==='<')
+    tmp.MessageID = tmp.MessageID.substring(1)
+  if (tmp.MessageID[tmp.MessageID.length-1]==='>')
+    tmp.MessageID = tmp.MessageID.substring(0, tmp.MessageID.length-1)
+  obtmp.idString = tmp.MessageID
   message_idArray.push(obtmp)
 
+  /* meta date split */
   let obtmp2 = new Object()
   obtmp2.id = i
   let tmptime = tmp.Date.split(/ |, |:/)
@@ -73,19 +85,34 @@ for (let i=0; i<MailLength; i++){
   obtmp2.s = tmptime[++c]
   obtmp2.delta = tmptime[++c]
   timeline.push(obtmp2)
-  //console.log(JSON.stringify(obtmp2))
 }
 
 message_idArray.sort(function(a, b){
   return stringcmp(a.idString, b.idString)
 })
 
-/*let a = message_idArray[1].idString
-let b = message_idArray[2].idString
-console.log(a>b)
-console.log(stringcmp(a,b))*/
-console.log(messageID2id(message_idArray[1].idString, message_idArray))
+let extraref = 0
+let innerref = 0
+
+for (let i=0; i<MailLength; i++){
+  let tmp = metaAll[i].meta
+  /* meta inreplyto chains */  
+  let obtmp3 = new Object()
+  if (tmp.InReplyTo){
+    obtmp3.irtString = tmp.InReplyTo.split(/<|>/)[1]
+    obtmp3.irt_id = messageID2id(obtmp3.irtString, message_idArray)
+    if (obtmp3.irt_id===-1) extraref++; else innerref++ 
+  } else {
+    obtmp3.irtString = null
+    obtmp3.irt_id = -1
+  }
+  inreplyto.push(obtmp3)
+  //console.log(JSON.stringify(obtmp3))
+}
+console.log(messageID2id('20030711.130245.559.382281@webmail05.lax.untd.com', message_idArray))
+console.log(extraref+' '+innerref)
 
 fs.writeFileSync('./dist/messageidTable.json', JSON.stringify(message_idArray, null, 2))
 fs.writeFileSync('./dist/timeline.json', JSON.stringify(timeline, null, 2))
+fs.writeFileSync('./dist/inreplyto.json', JSON.stringify(inreplyto, null, 2))
 console.log('finish!')
