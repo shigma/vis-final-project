@@ -61,7 +61,6 @@ message_idArray.sort(function(a,b){
     return a.idString>b.idString
 })
 
-
 fs.writeFileSync("./dist/messageidTable.json",JSON.stringify(message_idArray,null,2))
 fs.writeFileSync('./dist/timeline.json',JSON.stringify(timeline,null,2))
 console.log("finish!")
