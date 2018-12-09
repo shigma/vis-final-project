@@ -53,7 +53,7 @@ function messageID2id(message_id, message_idArray){
 
 if (isdebug)MailLength = 10
 
-console.log(MailLength)
+//console.log(MailLength)
 for (let i=0; i<MailLength; i++){
   /* meta messageid */
   let tmp = metaAll[i].meta
@@ -91,26 +91,33 @@ message_idArray.sort(function(a, b){
   return stringcmp(a.idString, b.idString)
 })
 
-let extraref = 0
-let innerref = 0
+//let extraref = 0
+//let innerref = 0
 
 for (let i=0; i<MailLength; i++){
   let tmp = metaAll[i].meta
   /* meta inreplyto chains */  
   let obtmp3 = new Object()
+  obtmp3.p = -1
   if (tmp.InReplyTo){
     obtmp3.irtString = tmp.InReplyTo.split(/<|>/)[1]
     obtmp3.irt_id = messageID2id(obtmp3.irtString, message_idArray)
-    if (obtmp3.irt_id===-1) extraref++; else innerref++ 
+    //if (obtmp3.irt_id===-1) extraref++; else innerref++ 
   } else {
     obtmp3.irtString = null
     obtmp3.irt_id = -1
   }
   inreplyto.push(obtmp3)
-  //console.log(JSON.stringify(obtmp3))
 }
-console.log(messageID2id('20030711.130245.559.382281@webmail05.lax.untd.com', message_idArray))
-console.log(extraref+' '+innerref)
+
+for (let i=0; i<MailLength; i++){
+  if (!inreplyto[i].p) inreplyto[i].p = -1
+  if (inreplyto[i].irt_id!==-1){
+    inreplyto[inreplyto[i].irt_id].p = i
+  }
+}
+//console.log(messageID2id('20030711.130245.559.382281@webmail05.lax.untd.com', message_idArray))
+//console.log(extraref+' '+innerref)
 
 fs.writeFileSync('./dist/messageidTable.json', JSON.stringify(message_idArray, null, 2))
 fs.writeFileSync('./dist/timeline.json', JSON.stringify(timeline, null, 2))
