@@ -34,11 +34,8 @@ function stringcmp(as, bs){
 function messageID2id(message_id, message_idArray){
   message_id = String(message_id)
   let l = 0, r = message_idArray.length-1
-  //console.log(message_id)
   while (l<=r){
-    //console.log(l*4+' '+r*4)
     let m = ((r - l) >> 1) + l
-    //console.log(message_id+' '+message_idArray[m].idString)
     if (stringcmp(message_id, message_idArray[m].idString)===1){
       l = m + 1
     } else if (stringcmp(message_id, message_idArray[m].idString)===-1){
@@ -55,6 +52,7 @@ if (isdebug)MailLength = 10
 
 //console.log(MailLength)
 for (let i=0; i<MailLength; i++){
+  
   /* meta messageid */
   let tmp = metaAll[i].meta
   let obtmp = new Object()
@@ -98,7 +96,8 @@ for (let i=0; i<MailLength; i++){
   let tmp = metaAll[i].meta
   /* meta inreplyto chains */  
   let obtmp3 = new Object()
-  obtmp3.p = -1
+  obtmp3.id = i
+  obtmp3.pirt = -1
   if (tmp.InReplyTo){
     obtmp3.irtString = tmp.InReplyTo.split(/<|>/)[1]
     obtmp3.irt_id = messageID2id(obtmp3.irtString, message_idArray)
@@ -107,19 +106,40 @@ for (let i=0; i<MailLength; i++){
     obtmp3.irtString = null
     obtmp3.irt_id = -1
   }
+  obtmp3.ref = []
+  obtmp3.pref = -1
+  if (tmp.References){
+    let lj = tmp.References.length
+    for (let j=0; j<lj; j++){
+      let refString = tmp.References[j].split(/<|>/)[1]
+      let refid = messageID2id(refString, message_idArray)
+      if (refid!==-1) obtmp3.ref.push(refid)
+    }
+  }
   inreplyto.push(obtmp3)
 }
 
+//let maxref = 0
+//let maxrefi = -1
 for (let i=0; i<MailLength; i++){
-  if (!inreplyto[i].p) inreplyto[i].p = -1
+  if (!inreplyto[i].pirt) inreplyto[i].pirt = -1
   if (inreplyto[i].irt_id!==-1){
-    inreplyto[inreplyto[i].irt_id].p = i
+    inreplyto[inreplyto[i].irt_id].pirt = i
+  }
+  if (inreplyto[i].ref.length!==0){
+    let lj = inreplyto[i].ref.length
+    for (let j=0; j<lj; j++){
+      inreplyto[inreplyto[i].ref[j]].pref = i
+    }
+    //maxref = Math.max(maxref, lj)
+    //if (lj===24)maxrefi = i
   }
 }
+//console.log(maxrefi)
 //console.log(messageID2id('20030711.130245.559.382281@webmail05.lax.untd.com', message_idArray))
 //console.log(extraref+' '+innerref)
 
 fs.writeFileSync('./dist/messageidTable.json', JSON.stringify(message_idArray, null, 2))
 fs.writeFileSync('./dist/timeline.json', JSON.stringify(timeline, null, 2))
-fs.writeFileSync('./dist/inreplyto.json', JSON.stringify(inreplyto, null, 2))
+fs.writeFileSync('./dist/mail_ref_irtTable.json', JSON.stringify(inreplyto, null, 2))
 console.log('finish!')

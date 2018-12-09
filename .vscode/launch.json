@@ -4,7 +4,7 @@
             "name": "Launch",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/Tinreplyto.js",
+            "program": "${workspaceRoot}/metabuild.js",
             "stopOnEntry": false,
             "args": [],
             "cwd": "${workspaceRoot}",
