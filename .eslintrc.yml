@@ -42,7 +42,7 @@ rules:
       after: true
   indent:
     - warn
-    - 2
+    - 4
     - SwitchCase: 1
   key-spacing: warn
   keyword-spacing: warn
@@ -56,9 +56,7 @@ rules:
     - warn
     - single
   rest-spread-spacing: warn
-  semi:
-    - error
-    - never
+  semi: off
   semi-spacing: warn
   space-before-function-paren:
     - warn

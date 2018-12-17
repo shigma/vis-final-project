@@ -2,7 +2,7 @@
   "name": "project",
   "version": "1.0.0",
   "description": "",
-  "main": "build.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +18,13 @@
   },
   "homepage": "https://github.com/Shigma/vis-final-project#readme",
   "devDependencies": {
+    "@sfc2js/sass": "^2.0.0",
+    "commander": "^2.19.0",
     "d3": "^5.7.0",
+    "electron": "^3.0.12",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue": "^2.5.18"
+    "sfc2js": "^4.0.0-beta.2",
+    "vue": "^2.5.21"
   }
 }

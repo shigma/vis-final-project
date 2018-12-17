@@ -1,0 +1,12 @@
+{
+  "eslint.validate": [
+    "javascript",
+    "vue"
+  ],
+  "files.exclude": {
+    "package-lock.json": true,
+    "node_modules": true,
+    "**/*.js.map": true,
+  },
+  "editor.tabSize": 4
+}
