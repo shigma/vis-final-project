@@ -16,15 +16,21 @@ module.exports = {
     data: () => ({
         message: 'Hello World',
     }),
+    components: {
+        InReplyTo: require('./Vue_inreplyto.vue'),
+    },
 }
 
 </script>
 
 <template>
-    <div class="message">{{ message }}</div>
+    <div>
+        <span class="message" >{{ message }}</span>
+        <in-reply-to/>
+    </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 // scoped 的作用是限制这个 style 仅在当前组件内生效
 // scss 是 css 语法的超集，如果需要使用相关语法可以写

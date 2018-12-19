@@ -5,18 +5,18 @@ const n = irt.length
 
 let maxln = 0
 for (let i=0; i<n; i++){
-  let t = i
-  let ln = 1
-  while (irt[t].pirt!==-1){
-    ln++
-    t = irt[t].pirt
-  }
-  t = i
-  while (irt[t].irt_id!==-1){
-    ln++
-    t = irt[t].irt_id
-  }
-  maxln = Math.max(maxln, ln)
+    let t = i
+    let ln = 1
+    while (irt[t].pirt!==-1){
+        ln++
+        t = irt[t].pirt
+    }
+    t = i
+    while (irt[t].irt_id!==-1){
+        ln++
+        t = irt[t].irt_id
+    }
+    maxln = Math.max(maxln, ln)
 }
 console.log(maxln)
 
