@@ -18,6 +18,7 @@ module.exports = {
     }),
     components: {
         InReplyTo: require('./Vue_inreplyto.vue'),
+        MailList: require('./MailList.vue'),
     },
 }
 
