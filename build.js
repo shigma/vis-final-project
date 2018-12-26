@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const baseDir = path.resolve(__dirname, 'assets')
 
-fs.writeFileSync(path.resolve(__dirname, 'dist/output.json'), JSON.stringify(
+fs.writeFileSync(path.resolve(__dirname, 'dist/meta.json'), JSON.stringify(
   [].concat(...fs.readdirSync(baseDir)
     .map(name => fs.readFileSync(path.resolve(baseDir, name), 'utf8')
       .split(/(?=^From .+\r?\n(?:(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(\r?\n .+)*)+)/gmi)
