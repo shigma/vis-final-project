@@ -3,6 +3,8 @@ const fs = require('fs')
 
 const baseDir = path.resolve(__dirname, 'assets')
 
+let index = 0;
+
 fs.writeFileSync(path.resolve(__dirname, 'dist/meta.json'), JSON.stringify(
   [].concat(...fs.readdirSync(baseDir)
     .map(name => fs.readFileSync(path.resolve(baseDir, name), 'utf8')
@@ -12,6 +14,7 @@ fs.writeFileSync(path.resolve(__dirname, 'dist/meta.json'), JSON.stringify(
         const data = {}
         const heading = mail.match(/^From .+((\r?\n.+)+)/)
         //data.text = mail.slice(heading[0].length).trim()
+        data.ID = index++;
         data.meta = {}
         heading[1].match(/^(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(\r?\n .+)*/mg).forEach(meta => {
           const key = meta.match(/^[\w-]+/)[0]
