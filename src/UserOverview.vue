@@ -1,5 +1,11 @@
-
 <script>
+
+/**
+ * The Vue Module that display user information of one single user
+ * 
+ * @author He, Hao
+ * @since  2019-01-02
+ */
 
 module.exports = {
     data: () => ({
@@ -10,6 +16,7 @@ module.exports = {
         Contacts: []
     }),
     created: function () {
+        // For test of this module
         userdata = require('../dist/user.json');
         let userId = 0;
         for (let i = 0; i < userdata.length; ++i) {
@@ -20,12 +27,30 @@ module.exports = {
         }
         this.Name = userdata[userId].Name;
         this.MailAddress = userdata[userId].MailAddress;
+        this.MailSent = userdata[userId].MailSent;
         this.MailReceived = userdata[userId].MailReceived;
         this.Contacts = userdata[userId].Contacts;
-    }
+
+        this.initActivityPlot();
+
+        this.initWordCloud();
+
+        this.initSocialNetwork();
+    },
     methods: {
-        
-    }
+        initActivityPlot() {
+
+            return;
+        },
+        initWordCloud() {
+
+            return;
+        },
+        initSocialNetwork() {
+
+            return;
+        }
+    },
 }
 
 </script>
