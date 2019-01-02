@@ -18,7 +18,7 @@ module.exports = {
     }),
     components: {
         InReplyTo: require('./Vue_inreplyto.vue'),
-        MailList: require('./MailList.vue'),
+        UserOverview: require('./UserOverview.vue'),
     },
 }
 
@@ -28,6 +28,7 @@ module.exports = {
     <div>
         <span class="message" >{{ message }}</span>
         <in-reply-to/>
+        <user-overview/>
     </div>
 </template>
 
