@@ -1,7 +1,7 @@
 <script>
 
 /**
- * The Vue Module that display user information of one single user
+ * The Vue Module that displays information of one single user
  * 
  * @author He, Hao
  * @since  2019-01-02
@@ -13,33 +13,35 @@ module.exports = {
         MailAddress: '',
         MailSent: [],
         MailReceived: [],
-        Contacts: []
+        Contacts: [],
+        Activity: [],
+        WordCloud: [],
     }),
     created: function () {
         // For test of this module
-        userdata = require('../dist/user.json');
-        let userId = 0;
-        for (let i = 0; i < userdata.length; ++i) {
-            if (userdata[i].Name === "Michael Jackson") {
-                userId = i;
-                break;
+        {
+            userdata = require('../dist/user.json');
+            let userId = 0;
+            for (let i = 0; i < userdata.length; ++i) {
+                if (userdata[i].Name === "Michael Jackson") {
+                    userId = i;
+                    break;
+                }
             }
+            this.Name = userdata[userId].Name;
+            this.MailAddress = userdata[userId].MailAddress;
+            this.MailSent = userdata[userId].MailSent;
+            this.MailReceived = userdata[userId].MailReceived;
+            this.Contacts = userdata[userId].Contacts;
         }
-        this.Name = userdata[userId].Name;
-        this.MailAddress = userdata[userId].MailAddress;
-        this.MailSent = userdata[userId].MailSent;
-        this.MailReceived = userdata[userId].MailReceived;
-        this.Contacts = userdata[userId].Contacts;
 
         this.initActivityPlot();
-
         this.initWordCloud();
-
         this.initSocialNetwork();
     },
     methods: {
         initActivityPlot() {
-
+            
             return;
         },
         initWordCloud() {
@@ -73,16 +75,15 @@ module.exports = {
 
                 </svg>
             </div>
+        </div>
+        <div id="SocialNetwork">
 
         </div>
         <div id="WordCloud">
 
         </div>
         <div id="MailList">
-
-        </div>
-        <div id="SocialNetwork">
-
+            
         </div>
     </div>
 </template>

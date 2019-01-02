@@ -99,7 +99,7 @@ for (let i = 0; i < meta_data.length; ++i) {
     let other = userid_map.get(meta_data_map.get(item.InReplyTo).mail);
     if (other == null) continue; 
     
-    user_info[user_id].MailReceived.push(item.MessageID);
+    user_info[other].MailReceived.push(item.MessageID);
 
     let contact_id = -1;
     for (let j = 0; j < user_info[user_id].Contacts.length; ++j) {
