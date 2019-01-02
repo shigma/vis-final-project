@@ -3,11 +3,13 @@ type UserID = number
 
 interface Mail {
     id: MailID
-    from: UserID
+    userId: UserID
     date: string
     subject: string
     inReplyTo?: MailID
     references?: MailID[]
+    replies?: MailID[]
+    citations?: MailID[]
 }
 
 interface User {

@@ -2609,8 +2609,7 @@ From oshima at eng.niigata-u.ac.jp  Tue Dec  2 19:20:48 2008
 From: oshima at eng.niigata-u.ac.jp (Takuya OSHIMA)
 Date: Wed, 03 Dec 2008 09:20:48 +0900 (JST)
 Subject: [Paraview] Bug in Color Scale
-In-Reply-To: <20081202.231940.109504946.oshima@eng.niigata-u.ac.jp>
-	<49355F48.9050605@fluidyna.de>
+In-Reply-To: <49355F48.9050605@fluidyna.de>
 References: <20081128.234623.267060598.oshima@eng.niigata-u.ac.jp>
 	<C55997AA.55C8%kmorel@sandia.gov>
 	<20081202.231940.109504946.oshima@eng.niigata-u.ac.jp>
