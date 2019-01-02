@@ -2,6 +2,7 @@
  * This program requires file 'meta.json' created by 'build.js'
  * in meta_NumID.json we have:{
  *      ID: (Int) defined in meta.json
+ *      From: (string)
  *      Subject: (string)
  *      MessageID: (string)
  *      Date: {
@@ -90,6 +91,7 @@ for (let i=0; i<MailLength; i++){
     let obtmp = new Object()
     obtmp.ID = metaAll[i].ID
     obtmp.Subject = tmp.Subject
+    obtmp.From = tmp.From
     if (tmp.MessageID[0]==='<')
         tmp.MessageID = tmp.MessageID.substring(1)
     if (tmp.MessageID[tmp.MessageID.length-1]==='>')
@@ -114,6 +116,7 @@ for (let i=0; i<MailLength; i++){
     obtmp2.s = tmptime[++c]
     obtmp2.delta = tmptime[++c]
 
+    /* meta InReplyTo split */
     let obtmp3 = new Object()
     obtmp3.IsReplyedBy = []
     if (tmp.InReplyTo){
@@ -124,6 +127,7 @@ for (let i=0; i<MailLength; i++){
         obtmp3.InReplyToID = -1
     }
 
+    /* meta References split*/
     let obtmp4 = new Object()
     obtmp4.References = []
     obtmp4.ReferencesID = []
