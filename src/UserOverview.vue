@@ -17,10 +17,11 @@ module.exports = {
         mails: [],
         contacts: [],
         activity: [],
-        wordCloud: [],
+        keywords: [],
     }),
     components: {
-        UserActivityPlot: require("./UserActivityPlot.vue"),
+        UserActivityPlot: require('./UserActivityPlot.vue'),
+        UserKeywordCloud: require('./UserKeywordCloud.vue'),
     },
     created: function () {
         // For test of this module
@@ -70,6 +71,21 @@ module.exports = {
                 this.activity[activityIndex][1]++;
             }
         }
+
+        // Keyword Extraction
+        for (let i = 0; i < this.mails.length; ++i) {
+            let str = maildata[i].subject.replace(/[^a-zA-Z\s]/g, '').split(' ');
+            str.forEach((x)=>{
+                let id = this.keywords.findIndex((y)=>{
+                    return y.name.toUpperCase() === x.toUpperCase();
+                });
+                if (id === -1) {
+                    this.keywords.push({name: x.toLowerCase(), value: 1});
+                } else {
+                    this.keywords[id].value++;
+                }
+            });
+        }
     },
     mounted: function() {
         this.initActivityPlot();
@@ -111,11 +127,11 @@ module.exports = {
                 style="width:400px; height:200px;">
             </user-activity-plot>
         </div>
-        <div id="SocialNetwork">
-            
-        </div>
         <div id="WordCloud">
-
+            <user-keyword-cloud
+                v-bind:data="this.keywords"
+                style="width:400px; height:200px;">
+            </user-keyword-cloud>
         </div>
         <div id="MailList">
             
@@ -125,17 +141,8 @@ module.exports = {
 
 <style lang="scss">
 
-#UserOverview {
+#User {
     border-style:solid;
 }
-
-#Info {
-    border-style:none;
-}
-
-#Summary {
-    border-style:none;
-}
-
 
 </style>

@@ -64,7 +64,7 @@ module.exports = {
         },
         title: {
           left: "center",
-          text: "User Activity"
+          text: "Activity"
         },
         tooltip: {
           trigger: "axis"
