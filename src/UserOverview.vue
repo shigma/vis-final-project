@@ -7,6 +7,8 @@
  * @since  2019-01-02
  */
 
+var echarts = require('echarts');
+
 module.exports = {
     data: () => ({
         id: -1,
@@ -31,15 +33,42 @@ module.exports = {
                 break;
             }
         }
+
+        // Basic data
         this.id = userdata[userId].id;
         this.name = userdata[userId].name;
         this.address = userdata[userId].address;
         this.mails = userdata[userId].mails;
-        for (let i = 0; i < this.mails.length; i++) {
+
+        // Compute contacts data
+        for (let i = 0; i < this.mails.length; ++i) {
             let id = this.mails[i];
             if (this.contacts.find(
                 (x)=>{return x === maildata[id].userId; }) === undefined)
                 this.contacts.push(maildata[id].userId);
+        }
+
+        // Compute activity data
+        let minDate = new Date(maildata[this.mails[0]].date);
+        let maxDate = new Date(maildata[this.mails[0]].date);
+        for (let i = 0; i < this.mails.length; ++i) {
+            let date = new Date(maildata[this.mails[i]].date);
+            if (date < minDate) minDate = date;
+            if (date > maxDate) maxDate = date;
+        }
+        for (let i = minDate.getFullYear(); i <= maxDate.getFullYear(); ++i) {
+            for (let j = 1; j <= 12; ++j) {
+                this.activity.push([i + '-' + j, 0]);
+            }
+        }
+        for (let i = 0; i < this.mails.length; ++i) {
+            let date = new Date(maildata[this.mails[i]].date);
+            let ym = date.getFullYear() + "-" + date.getMonth();
+
+            let activityIndex = this.activity.findIndex((x)=>{return x[0] === ym;});
+            if (activityIndex != -1) {
+                this.activity[activityIndex][1]++;
+            }
         }
     },
     mounted: function() {
@@ -49,34 +78,7 @@ module.exports = {
     },
     methods: {
         initActivityPlot() {
-            var echarts = require('echarts');
-
-            let dom = this.$refs.ActivityPlot;
-            var myChart = echarts.init(dom);
-
-            // specify chart configuration item and data
-            var option = {
-                title: {
-                    text: 'ECharts entry example'
-                },
-                tooltip: {},
-                legend: {
-                    data:['Sales']
-                },
-                xAxis: {
-                    data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
-                },
-                yAxis: {},
-                series: [{
-                    name: 'Sales',
-                    type: 'bar',
-                    data: [5, 20, 36, 10, 10, 20]
-                }]
-            };
-
-            // use configuration item and data specified to show chart
-            myChart.setOption(option);
-
+            
             return;
         },
         initWordCloud() {
@@ -104,8 +106,10 @@ module.exports = {
                 发送邮件数：{{mails.length}}<br>
                 联系人数：{{contacts.length}}<br>
             </div>
-            <div id="Activity" ref="ActivityPlot" style="width:200px; height:150px;">
-            </div>
+            <user-activity-plot 
+                v-bind:data="this.activity"
+                style="width:400px; height:200px;">
+            </user-activity-plot>
         </div>
         <div id="SocialNetwork">
             
@@ -116,7 +120,6 @@ module.exports = {
         <div id="MailList">
             
         </div>
-        <user-activity-plot/>
     </div>
 </template>
 

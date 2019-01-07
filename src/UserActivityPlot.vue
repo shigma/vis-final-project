@@ -1,63 +1,105 @@
-
 <script>
 
-var ECharts = require('vue-echarts')
+/**
+ * @file UserActivityPlot.vue
+ * 
+ * @brief The components that plot user activity with line gradient
+ *  
+ * The props data should look like:
+ *     [["2001-01", 12], ["2001-02", 23], ..., ["2001-12", 23]]
+ * Reference:
+ *      https://www.jianshu.com/p/7994176fbcc4
+ *      http://www.echartsjs.com/examples/editor.html?c=line-gradient
+ * 
+ * @author He, Hao
+ * @since 2019-01-07
+ */
+var echarts = require("echarts");
 
 module.exports = {
-  components: {
-    'v-chart': ECharts
-  },
-  data: function () {
-    let data = []
-
-    for (let i = 0; i <= 360; i++) {
-        let t = i / 180 * Math.PI
-        let r = Math.sin(2 * t) * Math.cos(2 * t)
-        data.push([r, i])
+  data: () => ({
+    chart: {}
+  }),
+  props: {
+    data: {
+      required: true,
+      type: Object
     }
+  },
+  mounted: function() {
+    this.setEchart();
+  },
+  updated: function() {
+    if (!this.chart) {
+      this.setEchart();
+    }
+    this.chartChange();
+  },
+  computed: {
+    originalData() {
+      return this.data;
+    },
+    maxValue() {
+        return this.data.reduce((total, curr)=>{return total > curr[1] ? total : curr[1];});
+    },
+    option() {
+      let that = this;
 
-    return {
-      polar: {
+      var dateList = this.data.map(function(item) {
+        return item[0];
+      });
+
+      var valueList = this.data.map(function(item) {
+        return item[1];
+      });
+
+      let obj = {
+        // Make gradient line here
+        visualMap: {
+          show: false,
+          type: "continuous",
+          seriesIndex: 0,
+          min: 0,
+          max: this.maxValue,
+        },
         title: {
-          text: '极坐标双数值轴'
-        },
-        legend: {
-          data: ['line']
-        },
-        polar: {
-          center: ['50%', '54%']
+          left: "center",
+          text: "User Activity"
         },
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          }
+          trigger: "axis"
         },
-        angleAxis: {
-          type: 'value',
-          startAngle: 0
+        xAxis: {
+          data: dateList
         },
-        radiusAxis: {
-          min: 0
+        yAxis: {
+          splitLine: { show: false }
         },
-        series: [
-          {
-            coordinateSystem: 'polar',
-            name: 'line',
-            type: 'line',
-            showSymbol: false,
-            data: data
-          }
-        ],
-        animationDuration: 2000
-      }
+        series: {
+          type: "line",
+          showSymbol: false,
+          data: valueList
+        }
+      };
+      return obj;
+    }
+  },
+  methods: {
+    setEchart() {
+      let dom = this.$refs.activityplot;
+      this.chart = echarts.init(dom);
+      this.chart.setOption(this.option);
+    },
+    chartChange() {
+      // this function will be called if the chart is changed
     }
   }
-}
+};
 </script>
 
 <template>
-<v-chart :options="polar"/>
+  <div ref="activityplot">
+  </div>
 </template>
 
 <style>
