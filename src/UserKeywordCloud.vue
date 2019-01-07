@@ -1,5 +1,16 @@
 
 <script>
+
+/**
+ * @file UserKeywordCloud.vue
+ * 
+ * @brief The component that visualize a word cloud
+ * Each item in the prop data must have name and value field
+ * 
+ * @author He, Hao
+ * @since 2019-01-07
+ */
+
 var echarts = require("echarts");
 require("echarts-wordcloud");
 
