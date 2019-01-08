@@ -136,14 +136,14 @@ module.exports = {
             });
         },
         chartChange() {
-            this.myChart.setOption(this.option);
+            this.chart.setOption(this.option);
         }
     }
 };
 </script>
 
 <template>
-    <div ref="keywordcloud"></div>
+    <div ref="keywordcloud">{{data}}</div>
 </template>
 
 <style lang="scss">
