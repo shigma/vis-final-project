@@ -13,11 +13,15 @@
  * @author He, Hao
  * @since 2019-01-07
  */
-var echarts = require("echarts");
+
+const echarts = require("echarts");
+const eventBus = require("../src/EventBus.js");
 
 module.exports = {
     data: () => ({
-        chart: {}
+        chart: {},
+        beginDate: Date,
+        endDate: Date
     }),
     props: {
         data: {
@@ -46,11 +50,11 @@ module.exports = {
         option() {
             let that = this;
 
-            var dateList = this.data.map(function(item) {
+            let dateList = this.data.map(function(item) {
                 return item[0];
             });
 
-            var valueList = this.data.map(function(item) {
+            let valueList = this.data.map(function(item) {
                 return item[1];
             });
 
@@ -69,6 +73,21 @@ module.exports = {
                 },
                 tooltip: {
                     trigger: "axis"
+                },
+                toolbox: {
+                    feature: {
+                        brush: {
+                            type: ["lineX", "clear"]
+                        }
+                    }
+                },
+                brush: {
+                    xAxisIndex: "all",
+                    throttleType: "debounce",
+                    throttleDelay: 500,
+                    outOfBrush: {
+                        colorAlpha: 0.1
+                    }
                 },
                 xAxis: {
                     data: dateList
@@ -90,9 +109,29 @@ module.exports = {
             let dom = this.$refs.activityplot;
             this.chart = echarts.init(dom);
             this.chart.setOption(this.option);
+            this.chart.on("brush", params => {
+                this.beginDate = null;
+                this.endDate = null;
+                //console.log(params);
+
+                if (params.areas[0]) {
+                    let range = params.areas[0].coordRange;
+                    if (range[0] > 0 && range[0] < this.data.length) {
+                        this.beginDate = new Date(this.data[range[0]][0]);
+                    }
+                    if (range[1] > 0 && range[1] < this.data.length) {
+                        this.endDate = new Date(this.data[range[1]][0]);
+                    }
+                }
+
+                eventBus.$emit("date-filter-changed", [
+                    this.beginDate,
+                    this.endDate
+                ]);
+            });
         },
         chartChange() {
-            // this function will be called if the chart is changed
+            this.myChart.setOption(this.option);
         }
     }
 };

@@ -2,13 +2,15 @@
 /**
  * @file UserMailList.vue
  *
- * @brief The component that displays a mail list that was sent by one user.
+ * @brief The component that displays a mail list.
  *
  * @author He, Hao
  * @since 2019-01-07
  */
 
 Vue.use(require("element-ui"));
+const maildata = require("../dist/mails.json");
+const eventBus = require('../src/EventBus.js');
 
 module.exports = {
     props: {
@@ -19,41 +21,117 @@ module.exports = {
     },
     data: function() {
         return {
-            mailData: []
+            mailData: [],
+            search: "",
+            beginDate: null,
+            endDate: null,
         };
     },
     computed: {
-        
+        displayedMailData() {
+            return this.mailData.filter((data)=>{
+                let flag = true;
+                let date = new Date(data.date);
+                if (this.search.trim() != "")
+                    flag &= data.subject.toUpperCase().includes(this.search.toUpperCase());
+                if (this.beginDate != null)
+                    flag &= date > this.beginDate;
+                if (this.endDate != null) 
+                    flag &= date < this.endDate;
+                return flag;
+            });
+        },
     },
     mounted: function() {
-        const maildata = require('../dist/mails.json');
-        this.mailIds.forEach((id)=>{
+        this.mailIds.forEach(id => {
             this.mailData.push(maildata[id]);
         });
-        this.mailData.forEach((data)=>{
-            data.date = this.strYearMonthDate(data.date);
+        this.mailData.forEach(data => {
+            data.date = new Date(data.date);
+        });
+
+        eventBus.$on('date-filter-changed', (dateFilter) => {
+            if (dateFilter === null) {
+                this.beginDate = null;
+                this.endDate   = null;
+            } else {
+                this.beginDate = dateFilter[0];
+                this.endDate   = dateFilter[1];
+            }
+        });
+        eventBus.$on('keyword-changed', (keyword) => {
+            this.search = keyword;
         });
     },
     methods: {
-        strYearMonthDate(dateStr) {
-            let date = new Date(dateStr);
-            return date.getFullYear() +'-'+ date.getMonth() +'-'+ date.getDay();
-        },
+        spanMethod({ row, column, rowIndex, columnIndex }) {
+          if (columnIndex === 2) {
+            return [1, 2]; // first rowspan, second column span
+          } else if (columnIndex === 1) {
+            return [1, 1];
+          }
+      },
+      sortByDate(data1, data2) {
+          if (data1.date < data2.date) {
+              return -1;
+          } else if (data1.date > data2.date) {
+              return 1;
+          }
+          return 0;
+      }
     }
 };
 </script>
 
 <template>
     <div>
-        <el-table :data="mailData" ref="filterTable" stripe style="width: 100%" height="250">
+        <el-table
+            :data="displayedMailData"
+            :span-method="spanMethod"
+            ref="filterTable"
+            stripe
+            style="width: 100%"
+            height="250"
+        >
             <el-table-column type="expand">
                 <template slot-scope="props">
-                    <p>Date: {{ props.row.date }}</p>
-                    <p>Subject: {{ props.row.subject }}</p>
+                    <p>邮件ID：{{ props.row.id }}</p>
+                    <p>日期：{{ props.row.date.toLocaleDateString() }}</p>
+                    <p>主题：{{ props.row.subject }}</p>
+                    <div v-if="props.row.inReplyTo != undefined">
+                        <p>回复：{{ props.row.inReplyTo }}</p>
+                    </div>
+                    <div v-if="props.row.replies != undefined">
+                        <p>被回复：{{ props.row.replies}}</p>
+                    <div v-if="props.row.references != undefined">
+                        <p>引用： {{ props.row.references }}</p>
+                    </div>
+                    <div v-if="props.row.citations != undefined">
+                        <p>被引用：{{ props.row.citations }}</p>
+                    </div>
                 </template>
             </el-table-column>
-            <el-table-column label="Date" prop="date" width="100"></el-table-column>
-            <el-table-column label="Subject" prop="subject"></el-table-column>
+            <el-table-column
+                label="日期"
+                props="date"
+                width="100"
+                sortable
+                :sort-method="sortByDate">
+                <template slot-scope="scope">
+                    {{ scope.row.date.toLocaleDateString() }}
+                </template>
+            </el-table-column>
+            <el-table-column label="主题" prop="subject"></el-table-column>
+            <el-table-column>
+                <template slot="header" slot-scope="scope">
+                    <el-input
+                        v-model="search"
+                        align="right"
+                        size="mini"
+                        placeholder="Type to search"
+                    />
+                </template>
+            </el-table-column>
         </el-table>
     </div>
 </template>

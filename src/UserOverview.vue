@@ -6,7 +6,10 @@
  * @since  2019-01-02
  */
 
-var echarts = require("echarts");
+const echarts = require("echarts");
+const userdata = require("../dist/users.json");
+const maildata = require("../dist/mails.json");
+const eventBus = require("../src/EventBus.js");
 
 module.exports = {
     data: () => ({
@@ -25,8 +28,6 @@ module.exports = {
     },
     created: function() {
         // For test of this module
-        userdata = require("../dist/users.json");
-        maildata = require("../dist/mails.json");
         let userId = 0;
         for (let i = 0; i < userdata.length; ++i) {
             if (userdata[i].name === "Michael Jackson") {
@@ -282,22 +283,8 @@ module.exports = {
             });
         }
     },
-    mounted: function() {
-        this.initActivityPlot();
-        this.initWordCloud();
-        this.initSocialNetwork();
-    },
-    methods: {
-        initActivityPlot() {
-            return;
-        },
-        initWordCloud() {
-            return;
-        },
-        initSocialNetwork() {
-            return;
-        }
-    }
+    mounted: function() {},
+    methods: {}
 };
 </script>
 
@@ -322,9 +309,7 @@ module.exports = {
         </div>
         <div id="MailList">
             <h2>邮件列表</h2>
-            <user-mail-list
-                v-bind:mailIds="this.mails"
-            ></user-mail-list>
+            <user-mail-list v-bind:mailIds="this.mails"></user-mail-list>
         </div>
     </div>
 </template>
@@ -332,5 +317,6 @@ module.exports = {
 <style lang="scss">
 #User {
     border-style: solid;
+    font-family: sans-serif;
 }
 </style>
