@@ -19,6 +19,7 @@ module.exports = {
     components: {
         InReplyTo: require('./Vue_inreplyto.vue'),
         UserOverview: require('./UserOverview.vue'),
+        KeywordOverview: require('./KeywordOverview.vue'),
     },
 }
 
@@ -29,6 +30,7 @@ module.exports = {
         <span class="message" >{{ message }}</span>
         <in-reply-to/>
         <user-overview/>
+        <keyword-overview/>
     </div>
 </template>
 
