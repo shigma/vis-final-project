@@ -21,13 +21,22 @@ module.exports = {
     },
     data: function() {
         return {
-            mailData: [],
             search: "",
             beginDate: null,
             endDate: null,
         };
     },
     computed: {
+        mailData() {
+            let result = [];
+            this.mailIds.forEach(id => {
+                result.push(maildata[id]);
+            });
+            for (let i = 0; i < result.length; ++i) {
+                result[i].date = new Date(result[i].date);
+            }
+            return result;
+        },
         displayedMailData() {
             return this.mailData.filter((data)=>{
                 let flag = true;
@@ -43,13 +52,6 @@ module.exports = {
         },
     },
     mounted: function() {
-        this.mailIds.forEach(id => {
-            this.mailData.push(maildata[id]);
-        });
-        this.mailData.forEach(data => {
-            data.date = new Date(data.date);
-        });
-
         eventBus.$on('date-filter-changed', (dateFilter) => {
             if (dateFilter === null) {
                 this.beginDate = null;

@@ -27,13 +27,13 @@ module.exports = {
     <div>
         <span class="message">{{ message }}</span>
         <in-reply-to/>
-        <el-row :gutter="20">
-            <el-col :span="10">
+        <el-row :gutter="24">
+            <el-col :span="12">
                 <div class="grid-content">
                     <user-overview/>
                 </div>
             </el-col>
-            <el-col :span="10">
+            <el-col :span="12">
                 <div class="grid-content">
                     <keyword-overview/>
                 </div>
