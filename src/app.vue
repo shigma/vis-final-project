@@ -1,5 +1,4 @@
 <script>
-
 // 结构上请统一保持 script + template + style
 // 不同的快之间空一行
 // template 内部正常缩进，不用有行
@@ -14,28 +13,36 @@ module.exports = {
     // 这或许不是必要的，但是有助于规避潜在的问题
     // 深层次的原因可以参考 Vue 文档
     data: () => ({
-        message: 'Hello World',
+        message: "Hello World"
     }),
     components: {
-        InReplyTo: require('./Vue_inreplyto.vue'),
-        UserOverview: require('./UserOverview.vue'),
-        KeywordOverview: require('./KeywordOverview.vue'),
-    },
-}
-
+        InReplyTo: require("./Vue_inreplyto.vue"),
+        UserOverview: require("./UserOverview.vue"),
+        KeywordOverview: require("./KeywordOverview.vue")
+    }
+};
 </script>
 
 <template>
     <div>
-        <span class="message" >{{ message }}</span>
+        <span class="message">{{ message }}</span>
         <in-reply-to/>
-        <user-overview/>
-        <keyword-overview/>
+        <el-row :gutter="20">
+            <el-col :span="10">
+                <div class="grid-content">
+                    <user-overview/>
+                </div>
+            </el-col>
+            <el-col :span="10">
+                <div class="grid-content">
+                    <keyword-overview/>
+                </div>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
 <style lang="scss">
-
 // scoped 的作用是限制这个 style 仅在当前组件内生效
 // scss 是 css 语法的超集，如果需要使用相关语法可以写
 // 你甚至可以写多个 style，可以拥有不同的 scope 和 lang
@@ -50,6 +57,21 @@ module.exports = {
     &:hover {
         color: deepskyblue;
     }
+}
+
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+.el-col {
+    border-radius: 4px;
+}
+
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
 }
 
 </style>
