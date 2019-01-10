@@ -15,9 +15,6 @@ const echarts = require("echarts");
 require("echarts-wordcloud");
 
 module.exports = {
-    data: () => ({
-        chart: {}
-    }),
     props: {
         data: {
             required: true,
@@ -27,27 +24,25 @@ module.exports = {
             type: String
         }
     },
+    data: () => ({}),
     mounted: function() {
         this.setEchart();
     },
-    updated: function() {
-        if (!this.chart) {
+    watch: {
+        originalData: function(newData, oldData) {
             this.setEchart();
         }
-        this.chartChange();
     },
     computed: {
         originalData() {
             return this.data;
         },
         maxValue() {
-            return this.data.reduce((total, curr) => {
+            return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
             });
         },
         option() {
-            let that = this;
-
             let obj = {
                 series: [
                     {
@@ -119,7 +114,7 @@ module.exports = {
                         },
 
                         // Data is an array. Each array item must have name and value property.
-                        data: this.data
+                        data: this.originalData
                     }
                 ]
             };
@@ -128,36 +123,35 @@ module.exports = {
     },
     methods: {
         setEchart() {
-            let dom = this.$refs.keywordcloud;
-            this.chart = echarts.init(dom);
-            this.chart.setOption(this.option);
-            this.chart.on("click", params => {
-                // Emit different type of event according to tag
-                if (params.componentType === "series") {
-                    if (this.tag.includes("keyword")) {
-                        let keyword = params.data.name;
-                        eventBus.$emit("keyword-changed", {
-                            keyword: keyword,
-                            tag: this.tag
-                        });
-                    } else if (this.tag.includes("user")) {
-                        eventBus.$emit("user-changed", {
-                            userId: params.data.id,
-                            tag: this.tag
-                        });
+            if (this.chart === undefined) {
+                let dom = this.$refs.keywordcloud;
+                this.chart = echarts.init(dom);
+                this.chart.on("click", params => {
+                    // Emit different type of event according to tag
+                    if (params.componentType === "series") {
+                        if (this.tag.includes("keyword")) {
+                            let keyword = params.data.name;
+                            eventBus.$emit("keyword-changed", {
+                                keyword: keyword,
+                                tag: this.tag
+                            });
+                        } else if (this.tag.includes("user")) {
+                            eventBus.$emit("user-changed", {
+                                userId: params.data.id,
+                                tag: this.tag
+                            });
+                        }
                     }
-                }
-            });
-        },
-        chartChange() {
+                });
+            }
             this.chart.setOption(this.option);
-        }
+        },
     }
 };
 </script>
 
 <template>
-    <div ref="keywordcloud">{{data}}</div>
+    <div ref="keywordcloud"></div>
 </template>
 
 <style lang="scss" scoped>

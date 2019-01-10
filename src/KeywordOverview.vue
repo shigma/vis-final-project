@@ -37,7 +37,11 @@ module.exports = {
         // activity is an array, each element: [date, number]
         activity: function() {
             let result = [];
+            let resultIdMap = new Map();
+
             if (this.mailIds.length === 0) return result;
+
+            // set date values
             let minDate = new Date(maildata[this.mailIds[0]].date);
             let maxDate = new Date(maildata[this.mailIds[0]].date);
             for (let i = 0; i < this.mailIds.length; ++i) {
@@ -51,18 +55,20 @@ module.exports = {
                 ++i
             ) {
                 for (let j = 1; j <= 12; ++j) {
-                    result.push([i + "-" + j, 0]);
+                    let ym = i + "-" + j;
+                    result.push([ym, 0]);
+                    resultIdMap.set(ym, result.length - 1);
                 }
             }
+
+            // compute activity values
             for (let i = 0; i < this.mailIds.length; ++i) {
                 let date = new Date(maildata[this.mailIds[i]].date);
                 let ym = date.getFullYear() + "-" + date.getMonth();
 
-                let activityIndex = result.findIndex(x => {
-                    return x[0] === ym;
-                });
-                if (activityIndex != -1) {
-                    result[activityIndex][1]++;
+                let resultId = resultIdMap.get(ym);
+                if (resultId != undefined) {
+                    result[resultId][1]++;
                 }
             }
             return result;
@@ -70,6 +76,7 @@ module.exports = {
         // users is an array, each element has id, name and value field.
         users() {
             let result = [];
+            let resultIdMap = new Map();
             this.mailIds
                 .filter(id => {
                     let flag = true;
@@ -79,18 +86,18 @@ module.exports = {
                     return flag;
                 })
                 .forEach(id => {
-                    let userId = result.findIndex(
-                        x => x.id === maildata[id].userId
-                    );
-                    if (userId === -1) {
-                        if (maildata[id].userId === -1) return;
+                    let currUserId = maildata[id].userId;
+                    if (currUserId === -1) return;
+                    let resultId = resultIdMap.get(currUserId);
+                    if (resultId === undefined) {
                         result.push({
-                            id: maildata[id].userId,
-                            name: userdata[maildata[id].userId].name,
+                            id: currUserId,
+                            name: userdata[currUserId].name,
                             value: 1
                         });
+                        resultIdMap.set(currUserId, result.length - 1);
                     } else {
-                        result[userId].value++;
+                        result[resultId].value++;
                     }
                 });
             result.sort((a, b) => {
@@ -104,16 +111,15 @@ module.exports = {
         // relatedKeywords is an array, each element has name and value field
         relatedKeywords() {
             let result = [];
+            let resultIdMap = new Map();
             this.mailIds.forEach(id => {
-                keys = keywordExtraction.generateKeywords([
-                    maildata[id]
-                ]);
+                keys = keywordExtraction.generateKeywords([maildata[id]]);
                 keys.forEach(key => {
-                    if (key.name.toLowerCase() === this.keyword)
-                        return;
-                    resultId = result.findIndex(x => x.name.toLowerCase() === key.name);
-                    if (resultId === -1) {
+                    if (key.name.toLowerCase() === this.keyword) return;
+                    resultId = resultIdMap.get(key.name);
+                    if (resultId === undefined) {
                         result.push({ name: key.name, value: 1 });
+                        resultIdMap.set(key.name, result.length - 1);
                     } else {
                         result[resultId].value++;
                     }
@@ -140,9 +146,9 @@ module.exports = {
             this.endDate = dateFilter.endDate;
         });
         eventBus.$on("keyword-changed", param => {
-            this.keyword = param.keyword;
             this.beginDate = null;
             this.endDate = null;
+            this.keyword = param.keyword;
         });
     },
     updated: function() {},

@@ -189,6 +189,8 @@ const stopwords = [
     "you've"
 ];
 
+stopwords.push("paraview");
+
 module.exports = {
     generateKeywords(mails) {
         keywords = [];

@@ -18,35 +18,30 @@ module.exports = {
             type: String
         }
     },
-    data: () => ({
-        chart: {}
-    }),
+    data: () => ({}),
     mounted: function() {
         this.setEchart();
     },
-    updated: function() {
-        if (!this.chart) {
+    watch: {
+        originalData: function() {
             this.setEchart();
         }
-        this.chartChange();
     },
     computed: {
         originalData() {
             return this.data;
         },
         maxValue() {
-            return this.data.reduce((total, curr) => {
+            return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
             });
         },
         option() {
-            let that = this;
-
-            let nameList = this.data.map(function(item) {
+            let nameList = this.originalData.map(function(item) {
                 return item.name;
             });
 
-            let valueList = this.data.map(function(item) {
+            let valueList = this.originalData.map(function(item) {
                 return item.value;
             });
 
@@ -60,10 +55,10 @@ module.exports = {
                 },
                 title: {
                     left: "center",
-                    text: this.title,
+                    text: this.title
                 },
                 legend: {
-                    data: ['发送邮件数'],
+                    data: ["邮件数"]
                 },
                 grid: {
                     left: "3%",
@@ -80,7 +75,7 @@ module.exports = {
                 },
                 series: [
                     {
-                        name: '发送邮件数',
+                        name: "邮件数",
                         type: "bar",
                         label: {
                             normal: {
@@ -95,11 +90,12 @@ module.exports = {
             return obj;
         }
     },
-    watch: {},
     methods: {
         setEchart() {
-            let dom = this.$refs.barchart;
-            this.chart = echarts.init(dom);
+            if (this.chart === undefined) {
+                let dom = this.$refs.barchart;
+                this.chart = echarts.init(dom);
+            }
             this.chart.setOption(this.option);
         },
         chartChange() {
@@ -110,7 +106,7 @@ module.exports = {
 </script>
 
 <template>
-    <div ref="barchart">{{data}}</div>
+    <div ref="barchart"></div>
 </template>
 
 <style lang="scss" scoped>

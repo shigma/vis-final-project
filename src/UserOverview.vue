@@ -38,6 +38,8 @@ module.exports = {
         },
         activity() {
             let result = [];
+            let resultIdMap = new Map();
+
             let minDate = new Date(maildata[this.mailIds[0]].date);
             let maxDate = new Date(maildata[this.mailIds[0]].date);
             for (let i = 0; i < this.mailIds.length; ++i) {
@@ -51,17 +53,18 @@ module.exports = {
                 ++i
             ) {
                 for (let j = 1; j <= 12; ++j) {
-                    result.push([i + "-" + j, 0]);
+                    let ym = i + "-" + j;
+                    result.push([ym, 0]);
+                    resultIdMap.set(ym, result.length - 1);
                 }
             }
+
             for (let i = 0; i < this.mailIds.length; ++i) {
                 let date = new Date(maildata[this.mailIds[i]].date);
                 let ym = date.getFullYear() + "-" + date.getMonth();
 
-                let activityIndex = result.findIndex(x => {
-                    return x[0] === ym;
-                });
-                if (activityIndex != -1) {
+                let activityIndex = resultIdMap.get(ym);
+                if (activityIndex != undefined) {
                     result[activityIndex][1]++;
                 }
             }
@@ -88,21 +91,40 @@ module.exports = {
         },
         relatedUsers() {
             let result = [];
+            let resultIdMap = new Map();
             for (let i = 0; i < this.mailIds.length; ++i) {
-                let mailId = this.mailIds[i];
-                if (maildata[mailId].userId === -1) continue;
-                let contactsId = result.findIndex(
-                    x => x.name === userdata[maildata[mailId].userId].name
-                );
-                if (contactsId === -1) {
-                    result.push({
-                        id: maildata[mailId].userId,
-                        name: userdata[maildata[mailId].userId].name,
-                        value: 1
+                let currMailId = this.mailIds[i];
+                let mail = maildata[currMailId];
+                let currUserIds = [];
+                if (mail.inReplyTo != undefined)
+                    currUserIds.push(maildata[mail.inReplyTo].userId);
+                if (mail.replies != undefined)
+                    mail.replies.forEach(r => {
+                        currUserIds.push(maildata[r].userId);
                     });
-                } else {
-                    result[contactsId].value++;
-                }
+                if (mail.references != undefined)
+                    mail.references.forEach(r => {
+                        currUserIds.push(maildata[r].userId);
+                    });
+                if (mail.citations != undefined)
+                    mail.citations.forEach(c => {
+                        currUserIds.push(maildata[c].userId);
+                    });
+
+                currUserIds.forEach(currUserId => {
+                    if (currUserId === -1 || currUserId === this.id) return;
+                    let resultId = resultIdMap.get(currUserId);
+                    if (resultId === undefined) {
+                        result.push({
+                            id: currUserId,
+                            name: userdata[currUserId].name,
+                            value: 1
+                        });
+                        resultIdMap.set(currUserId, result.length - 1);
+                    } else {
+                        result[resultId].value++;
+                    }
+                });
             }
             result.sort((a, b) => {
                 if (a.value > b.value) return -1;
@@ -135,9 +157,9 @@ module.exports = {
             this.endDate = param.endDate;
         });
         eventBus.$on("user-changed", param => {
-            this.id = param.userId;
             this.beginDate = null;
             this.endDate = null;
+            this.id = param.userId;
         });
     },
     methods: {}

@@ -25,37 +25,35 @@ module.exports = {
     props: {
         data: {
             required: true,
-            type: Object,
+            type: Object
         },
         tag: {
-            type: String,
-        },
+            type: String
+        }
     },
     mounted: function() {
         this.setEchart();
     },
     watch: {
-        data: function(newData, oldData) {
+        originalData: function(newData, oldData) {
             this.setEchart();
-        },
+        }
     },
     computed: {
         originalData() {
             return this.data;
         },
         maxValue() {
-            return this.data.reduce((total, curr) => {
+            return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
             });
         },
         option() {
-            let that = this;
-
-            let dateList = this.data.map(function(item) {
+            let dateList = this.originalData.map(function(item) {
                 return item[0];
             });
 
-            let valueList = this.data.map(function(item) {
+            let valueList = this.originalData.map(function(item) {
                 return item[1];
             });
 
@@ -69,8 +67,12 @@ module.exports = {
                     max: this.maxValue
                 },
                 title: {
-                    left: "center",
+                    left: "left",
                     text: "Activity"
+                },
+                legend:{
+                    left: "center",
+                    data: ["邮件数"],
                 },
                 tooltip: {
                     trigger: "axis"
@@ -97,6 +99,7 @@ module.exports = {
                     splitLine: { show: false }
                 },
                 series: {
+                    name: "邮件数",
                     type: "line",
                     showSymbol: false,
                     data: valueList
@@ -105,35 +108,36 @@ module.exports = {
             return obj;
         }
     },
-    watch: {},
     methods: {
         setEchart() {
-            let dom = this.$refs.activityplot;
-            let chart = echarts.init(dom);
-            chart.setOption(this.option);
-            chart.on("brush", params => {
-                // null if no range is chosen
-                this.beginDate = null;
-                this.endDate = null;
-                //console.log(params);
+            if (this.chart === undefined) {
+                let dom = this.$refs.activityplot;
+                this.chart = echarts.init(dom);
+                this.chart.on("brush", params => {
+                    // null if no range is chosen
+                    this.beginDate = null;
+                    this.endDate = null;
+                    //console.log(params);
 
-                if (params.areas[0]) {
-                    let range = params.areas[0].coordRange;
-                    if (range[0] > 0 && range[0] < this.data.length) {
-                        this.beginDate = new Date(this.data[range[0]][0]);
+                    if (params.areas[0]) {
+                        let range = params.areas[0].coordRange;
+                        if (range[0] > 0 && range[0] < this.data.length) {
+                            this.beginDate = new Date(this.data[range[0]][0]);
+                        }
+                        if (range[1] > 0 && range[1] < this.data.length) {
+                            this.endDate = new Date(this.data[range[1]][0]);
+                        }
                     }
-                    if (range[1] > 0 && range[1] < this.data.length) {
-                        this.endDate = new Date(this.data[range[1]][0]);
-                    }
-                }
 
-                eventBus.$emit("date-filter-changed", {
-                    beginDate: this.beginDate,
-                    endDate: this.endDate,
-                    tag: this.tag,
+                    eventBus.$emit("date-filter-changed", {
+                        beginDate: this.beginDate,
+                        endDate: this.endDate,
+                        tag: this.tag
+                    });
                 });
-            });
-        },
+            }
+            this.chart.setOption(this.option);
+        }
     }
 };
 </script>
