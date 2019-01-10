@@ -3,6 +3,8 @@
  * @author He, Hao
  */
 
+maildata = require('../dist/mails.json');
+
 const stopwords = [
     "a",
     "able",
@@ -192,10 +194,11 @@ const stopwords = [
 stopwords.push("paraview");
 
 module.exports = {
-    generateKeywords(mails) {
+    generateKeywords(mailIds) {
         keywords = [];
 
-        mails.forEach(mail => {
+        mailIds.forEach(id => {
+            let mail = maildata[id];
             let str = mail.subject
                 .replace(/[^a-zA-Z\s\\/]/g, "")
                 .split(" ");

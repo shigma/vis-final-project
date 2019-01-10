@@ -188,6 +188,91 @@ threads.forEach(thread => {
     })
 })
 
+// 在users中增加activity属性
+console.log("\n");
+console.log("预计算user.activity...");
+const keywordExtraction = require("../src/Keyword.js");
+maildata = Array.from(mails.values());
+userdata = Array.from(users.values());
+users.forEach((user, address) => {
+    let result = [];
+    let resultIdMap = new Map();
+    let minDate = new Date(maildata[user.mails[0]].date);
+    let maxDate = new Date(maildata[user.mails[0]].date);
+    for (let i = 0; i < user.mails.length; ++i) {
+        let date = new Date(maildata[user.mails[i]].date);
+        if (date < minDate) minDate = date;
+        if (date > maxDate) maxDate = date;
+    }
+    for (
+        let i = minDate.getFullYear();
+        i <= maxDate.getFullYear();
+        ++i
+    ) {
+        for (let j = 1; j <= 12; ++j) {
+            let ym = i + "-" + j;
+            result.push([ym, 0]);
+            resultIdMap.set(ym, result.length - 1);
+        }
+    }
+    for (let i = 0; i < user.mails.length; ++i) {
+        let date = new Date(maildata[user.mails[i]].date);
+        let ym = date.getFullYear() + "-" + date.getMonth();
+        let activityIndex = resultIdMap.get(ym);
+        if (activityIndex != undefined) {
+            result[activityIndex][1]++;
+        }
+    }
+    user.activity = result;
+});
+
+// 在users中增加keywords属性
+console.log("预计算user.keywords...");
+users.forEach(user => {
+    user.keywords = keywordExtraction
+        .generateKeywords(user.mails)
+        .filter((word, index) => index <= 50);
+});
+
+// 在users中增加relatedUsers属性
+// 这里relatedUser定义为与之有过交互的所有用户，包括InReplyTo和replies
+console.log("预计算user.relatedUsers...");
+users.forEach(user => {
+    let result = [];
+    let resultIdMap = new Map();
+    user.mails.forEach(currMailId => {
+        let mail = maildata[currMailId];
+        let currUserIds = [];
+        if (mail.inReplyTo != undefined)
+            currUserIds.push(maildata[mail.inReplyTo].userId);
+        if (mail.replies != undefined)
+            mail.replies.forEach(r => {
+                currUserIds.push(maildata[r].userId);
+            });
+            
+        currUserIds.forEach(currUserId => {
+            if (currUserId === -1 || currUserId === user.id) return;
+            let resultId = resultIdMap.get(currUserId);
+            if (resultId === undefined) {
+                result.push({
+                    id: currUserId,
+                    name: userdata[currUserId].name,
+                    value: 1
+                });
+                resultIdMap.set(currUserId, result.length - 1);
+            } else {
+                result[resultId].value++;
+            }
+        });
+    });
+    result.sort((a, b) => {
+        if (a.value > b.value) return -1;
+        else if (a.value < b.value) return 1;
+        return 0;
+    });
+    user.relatedUsers = result.filter((user, index) => index <= 15);    
+});
+
 /** 输出到文件 */
 function dumpFile(fileName, data) {
     fs.writeFileSync(

@@ -37,46 +37,24 @@ module.exports = {
             return userdata[this.id].mails;
         },
         activity() {
-            let result = [];
-            let resultIdMap = new Map();
-
-            let minDate = new Date(maildata[this.mailIds[0]].date);
-            let maxDate = new Date(maildata[this.mailIds[0]].date);
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let date = new Date(maildata[this.mailIds[i]].date);
-                if (date < minDate) minDate = date;
-                if (date > maxDate) maxDate = date;
-            }
-            for (
-                let i = minDate.getFullYear();
-                i <= maxDate.getFullYear();
-                ++i
-            ) {
-                for (let j = 1; j <= 12; ++j) {
-                    let ym = i + "-" + j;
-                    result.push([ym, 0]);
-                    resultIdMap.set(ym, result.length - 1);
-                }
-            }
-
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let date = new Date(maildata[this.mailIds[i]].date);
-                let ym = date.getFullYear() + "-" + date.getMonth();
-
-                let activityIndex = resultIdMap.get(ym);
-                if (activityIndex != undefined) {
-                    result[activityIndex][1]++;
-                }
-            }
-            return result;
+            return userdata[this.id].activity;
         },
         keywords() {
-            let m = this.mailIds.filter(this.filterWithTime).map(x => maildata[x]);
+            // Use precomputed data
+            if (this.beginDate === null && this.endDate === null)
+                return userdata[this.id].keywords;
+
+            // Compute on-the-fly
             return keywordExtraction
-                .generateKeywords(m)
+                .generateKeywords(this.mailIds.filter(this.filterWithTime))
                 .filter((word, index) => index <= 50);
         },
         relatedUsers() {
+            // Use precomputed data
+            if (this.beginDate === null && this.endDate === null)
+                return userdata[this.id].relatedUsers;
+
+            // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
             this.mailIds.filter(this.filterWithTime).forEach(currMailId => {
@@ -84,19 +62,10 @@ module.exports = {
                 let currUserIds = [];
                 if (mail.inReplyTo != undefined)
                     currUserIds.push(maildata[mail.inReplyTo].userId);
-                /* // This segment severely affects performance
                 if (mail.replies != undefined)
                     mail.replies.forEach(r => {
                         currUserIds.push(maildata[r].userId);
                     });
-                if (mail.references != undefined)
-                    mail.references.forEach(r => {
-                        currUserIds.push(maildata[r].userId);
-                    });
-                if (mail.citations != undefined)
-                    mail.citations.forEach(c => {
-                        currUserIds.push(maildata[c].userId);
-                    });*/
 
                 currUserIds.forEach(currUserId => {
                     if (currUserId === -1 || currUserId === this.id) return;

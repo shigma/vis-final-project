@@ -19,6 +19,16 @@ interface User {
     name: string
     address: string
     mails: MailID[]
+    activity: [string, number][]
+    keywords: {
+        name: string
+        value: number
+    }
+    relatedUsers: {
+        id: UserID
+        name: string
+        value: number
+    }[]
 }
 
 interface Thread {
@@ -28,6 +38,10 @@ interface Thread {
         mails: MailID[]
     }[]
     mails: MailID[]
+}
+
+interface Keyword {
+    
 }
 
 export type MailsJSON = Mail[]

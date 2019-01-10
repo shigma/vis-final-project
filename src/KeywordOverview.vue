@@ -107,7 +107,7 @@ module.exports = {
             let result = [];
             let resultIdMap = new Map();
             this.mailIds.filter(this.filterWithTime).forEach(id => {
-                keys = keywordExtraction.generateKeywords([maildata[id]]);
+                keys = keywordExtraction.generateKeywords([id]);
                 keys.forEach(key => {
                     if (key.name.toLowerCase() === this.keyword) return;
                     resultId = resultIdMap.get(key.name);
