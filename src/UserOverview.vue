@@ -36,24 +36,6 @@ module.exports = {
         mailIds() {
             return userdata[this.id].mails;
         },
-        relatedUsers() {
-            let result = [];
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let mailId = this.mailIds[i];
-                let contactsId = result.findIndex(
-                    x => x === maildata[id].userId
-                );
-                if (contactsId === -1) {
-                    result.push({
-                        name: userdata[maildata[id].userId].name,
-                        value: 1
-                    });
-                } else {
-                    result[contactsId].value++;
-                }
-            }
-            return result;
-        },
         activity() {
             let result = [];
             let minDate = new Date(maildata[this.mailIds[0]].date);
@@ -103,6 +85,31 @@ module.exports = {
             return keywordExtraction
                 .generateKeywords(m)
                 .filter((word, index) => index <= 50);
+        },
+        relatedUsers() {
+            let result = [];
+            for (let i = 0; i < this.mailIds.length; ++i) {
+                let mailId = this.mailIds[i];
+                if (maildata[mailId].userId === -1) continue;
+                let contactsId = result.findIndex(
+                    x => x.name === userdata[maildata[mailId].userId].name
+                );
+                if (contactsId === -1) {
+                    result.push({
+                        id: maildata[mailId].userId,
+                        name: userdata[maildata[mailId].userId].name,
+                        value: 1
+                    });
+                } else {
+                    result[contactsId].value++;
+                }
+            }
+            result.sort((a, b) => {
+                if (a.value > b.value) return -1;
+                else if (a.value < b.value) return 1;
+                return 0;
+            });
+            return result.filter((user, index) => index <= 15);
         }
     },
     created: function() {
@@ -129,6 +136,8 @@ module.exports = {
         });
         eventBus.$on("user-changed", param => {
             this.id = param.userId;
+            this.beginDate = null;
+            this.endDate = null;
         });
     },
     methods: {}
@@ -158,6 +167,9 @@ module.exports = {
                 :beginDate="this.beginDate"
                 :endDate="this.endDate"
             ></user-mail-list>
+        </div>
+        <div id="SortedBarChart">
+            <user-related :data="this.relatedUsers" style="width:100%; height:200px;"/>
         </div>
     </div>
 </template>

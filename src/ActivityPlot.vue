@@ -19,7 +19,6 @@ const eventBus = require("../src/EventBus.js");
 
 module.exports = {
     data: () => ({
-        chart: {},
         beginDate: Date,
         endDate: Date
     }),
@@ -35,11 +34,10 @@ module.exports = {
     mounted: function() {
         this.setEchart();
     },
-    updated: function() {
-        if (!this.chart) {
+    watch: {
+        data: function(newData, oldData) {
             this.setEchart();
-        }
-        this.chartChange();
+        },
     },
     computed: {
         originalData() {
@@ -111,9 +109,9 @@ module.exports = {
     methods: {
         setEchart() {
             let dom = this.$refs.activityplot;
-            this.chart = echarts.init(dom);
-            this.chart.setOption(this.option);
-            this.chart.on("brush", params => {
+            let chart = echarts.init(dom);
+            chart.setOption(this.option);
+            chart.on("brush", params => {
                 // null if no range is chosen
                 this.beginDate = null;
                 this.endDate = null;
@@ -136,15 +134,12 @@ module.exports = {
                 });
             });
         },
-        chartChange() {
-            this.chart.setOption(this.option);
-        }
     }
 };
 </script>
 
 <template>
-    <div ref="activityplot">{{data}}</div>
+    <div ref="activityplot"></div>
 </template>
 
 <style lang="scss" scoped>

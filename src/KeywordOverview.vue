@@ -104,20 +104,27 @@ module.exports = {
         // relatedKeywords is an array, each element has name and value field
         relatedKeywords() {
             let result = [];
-            mailIds.forEach(id => {
+            this.mailIds.forEach(id => {
                 keys = keywordExtraction.generateKeywords([
-                    maildata[id].subject
+                    maildata[id]
                 ]);
                 keys.forEach(key => {
-                    resultId = result.findIndex(x => x.name === key);
+                    if (key.name.toLowerCase() === this.keyword)
+                        return;
+                    resultId = result.findIndex(x => x.name.toLowerCase() === key.name);
                     if (resultId === -1) {
-                        result.push({ name: key, value: 1 });
+                        result.push({ name: key.name, value: 1 });
                     } else {
                         result[resultId].value++;
                     }
                 });
             });
-            return result;
+            result.sort((a, b) => {
+                if (a.value > b.value) return -1;
+                else if (a.value < b.value) return 1;
+                return 0;
+            });
+            return result.filter((word, index) => index <= 15);
         }
     },
     created: function() {},
@@ -134,6 +141,8 @@ module.exports = {
         });
         eventBus.$on("keyword-changed", param => {
             this.keyword = param.keyword;
+            this.beginDate = null;
+            this.endDate = null;
         });
     },
     updated: function() {},
@@ -155,7 +164,7 @@ module.exports = {
             :beginDate="this.beginDate"
             :endDate="this.endDate"
         />
-        <keyword-related></keyword-related>
+        <keyword-related :data="this.relatedKeywords" style="width:100%; height:200px;"/>
     </div>
 </template>
 
