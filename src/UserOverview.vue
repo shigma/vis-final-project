@@ -71,20 +71,7 @@ module.exports = {
             return result;
         },
         keywords() {
-            let m = [];
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let flag = true;
-                let date = new Date(maildata[this.mailIds[i]].date);
-                if (this.beginDate) {
-                    flag &= date > this.beginDate;
-                }
-                if (this.endDate) {
-                    flag &= date < this.endDate;
-                }
-                if (flag) {
-                    m.push(maildata[i]);
-                }
-            }
+            let m = this.mailIds.filter(this.filterWithTime).map(x => maildata[x]);
             return keywordExtraction
                 .generateKeywords(m)
                 .filter((word, index) => index <= 50);
@@ -92,12 +79,12 @@ module.exports = {
         relatedUsers() {
             let result = [];
             let resultIdMap = new Map();
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let currMailId = this.mailIds[i];
+            this.mailIds.filter(this.filterWithTime).forEach(currMailId => {
                 let mail = maildata[currMailId];
                 let currUserIds = [];
                 if (mail.inReplyTo != undefined)
                     currUserIds.push(maildata[mail.inReplyTo].userId);
+                /* // This segment severely affects performance
                 if (mail.replies != undefined)
                     mail.replies.forEach(r => {
                         currUserIds.push(maildata[r].userId);
@@ -109,7 +96,7 @@ module.exports = {
                 if (mail.citations != undefined)
                     mail.citations.forEach(c => {
                         currUserIds.push(maildata[c].userId);
-                    });
+                    });*/
 
                 currUserIds.forEach(currUserId => {
                     if (currUserId === -1 || currUserId === this.id) return;
@@ -125,7 +112,7 @@ module.exports = {
                         result[resultId].value++;
                     }
                 });
-            }
+            });
             result.sort((a, b) => {
                 if (a.value > b.value) return -1;
                 else if (a.value < b.value) return 1;
@@ -162,7 +149,15 @@ module.exports = {
             this.id = param.userId;
         });
     },
-    methods: {}
+    methods: {
+        filterWithTime(mailId) {
+            let flag = true;
+            let date = new Date(maildata[mailId].date);
+            if (this.beginDate) flag &= date > this.beginDate;
+            if (this.endDate) flag &= date < this.endDate;
+            return flag;
+        }
+    }
 };
 </script>
 
@@ -171,27 +166,19 @@ module.exports = {
         <div id="UserOverview">
             <h3>{{name}}</h3>
             <user-activity-plot
-                v-bind:data="this.activity"
+                :data="activity"
                 tag="UserOverview"
                 style="width:100%; height:200px;"
             ></user-activity-plot>
         </div>
         <div id="WordCloud">
-            <user-keyword-cloud
-                v-bind:data="this.keywords"
-                tag="keyword"
-                style="width:100%; height:200px;"
-            ></user-keyword-cloud>
+            <user-keyword-cloud :data="keywords" tag="keyword" style="width:100%; height:200px;"></user-keyword-cloud>
         </div>
         <div id="MailList">
-            <user-mail-list
-                :mailIds="this.mailIds"
-                :beginDate="this.beginDate"
-                :endDate="this.endDate"
-            ></user-mail-list>
+            <user-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"></user-mail-list>
         </div>
         <div id="SortedBarChart">
-            <user-related :data="this.relatedUsers" style="width:100%; height:200px;"/>
+            <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
         </div>
     </div>
 </template>

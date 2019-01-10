@@ -78,13 +78,7 @@ module.exports = {
             let result = [];
             let resultIdMap = new Map();
             this.mailIds
-                .filter(id => {
-                    let flag = true;
-                    let date = new Date(maildata[id].date);
-                    if (this.beginDate) flag &= date > this.beginDate;
-                    if (this.endDate) flag &= date < this.endDate;
-                    return flag;
-                })
+                .filter(this.filterWithTime)
                 .forEach(id => {
                     let currUserId = maildata[id].userId;
                     if (currUserId === -1) return;
@@ -112,7 +106,7 @@ module.exports = {
         relatedKeywords() {
             let result = [];
             let resultIdMap = new Map();
-            this.mailIds.forEach(id => {
+            this.mailIds.filter(this.filterWithTime).forEach(id => {
                 keys = keywordExtraction.generateKeywords([maildata[id]]);
                 keys.forEach(key => {
                     if (key.name.toLowerCase() === this.keyword) return;
@@ -152,7 +146,15 @@ module.exports = {
         });
     },
     updated: function() {},
-    methods: {}
+    methods: {
+        filterWithTime(mailId) {
+            let flag = true;
+            let date = new Date(maildata[mailId].date);
+            if (this.beginDate) flag &= date > this.beginDate;
+            if (this.endDate) flag &= date < this.endDate;
+            return flag;
+        }
+    }
 };
 </script>
 
@@ -160,17 +162,13 @@ module.exports = {
     <div id="keyword-overview">
         <h2>{{keyword}}</h2>
         <keyword-popularity
-            v-bind:data="this.activity"
+            :data="activity"
             tag="KeywordOverview"
             style="width:100%; height:200px;"
         />
-        <keyword-user-cloud v-bind:data="this.users" tag="user" style="width:100%; height:200px;"/>
-        <keyword-mail-list
-            :mailIds="this.mailIds"
-            :beginDate="this.beginDate"
-            :endDate="this.endDate"
-        />
-        <keyword-related :data="this.relatedKeywords" style="width:100%; height:200px;"/>
+        <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
+        <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
+        <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
     </div>
 </template>
 
