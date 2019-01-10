@@ -26,8 +26,11 @@ module.exports = {
     props: {
         data: {
             required: true,
-            type: Object
-        }
+            type: Object,
+        },
+        tag: {
+            type: String,
+        },
     },
     mounted: function() {
         this.setEchart();
@@ -84,7 +87,7 @@ module.exports = {
                 brush: {
                     xAxisIndex: "all",
                     throttleType: "debounce",
-                    throttleDelay: 500,
+                    throttleDelay: 50000,
                     outOfBrush: {
                         colorAlpha: 0.1
                     }
@@ -104,12 +107,14 @@ module.exports = {
             return obj;
         }
     },
+    watch: {},
     methods: {
         setEchart() {
             let dom = this.$refs.activityplot;
             this.chart = echarts.init(dom);
             this.chart.setOption(this.option);
             this.chart.on("brush", params => {
+                // null if no range is chosen
                 this.beginDate = null;
                 this.endDate = null;
                 //console.log(params);
@@ -124,24 +129,25 @@ module.exports = {
                     }
                 }
 
-                eventBus.$emit("date-filter-changed", [
-                    this.beginDate,
-                    this.endDate
-                ]);
+                eventBus.$emit("date-filter-changed", {
+                    beginDate: this.beginDate,
+                    endDate: this.endDate,
+                    tag: this.tag,
+                });
             });
         },
         chartChange() {
-            this.myChart.setOption(this.option);
+            this.chart.setOption(this.option);
         }
     }
 };
 </script>
 
 <template>
-    <div ref="activityplot"></div>
+    <div ref="activityplot">{{data}}</div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .echarts {
     width: 100%;
     height: 100%;

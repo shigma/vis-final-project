@@ -14,12 +14,17 @@ const keywordExtraction = require("../src/Keyword.js");
 
 module.exports = {
     data: () => ({
+        // user ID
         id: -1,
+        // Filters
+        beginDate: null,
+        endDate: null
     }),
     components: {
-        UserActivityPlot: require("./UserActivityPlot.vue"),
-        UserKeywordCloud: require("./KeywordCloud.vue"),
-        UserMailList: require("./UserMailList.vue")
+        UserActivityPlot: require("./ActivityPlot.vue"),
+        UserKeywordCloud: require("./WordCloud.vue"),
+        UserMailList: require("./MailList.vue"),
+        UserRelated: require("./SortedBarChart.vue")
     },
     computed: {
         name() {
@@ -31,16 +36,21 @@ module.exports = {
         mailIds() {
             return userdata[this.id].mails;
         },
-        contacts() {
+        relatedUsers() {
             let result = [];
             for (let i = 0; i < this.mailIds.length; ++i) {
-                let id = this.mailIds[i];
-                if (
-                    result.find(x => {
-                        return x === maildata[id].userId;
-                    }) === undefined
-                )
-                    result.push(maildata[id].userId);
+                let mailId = this.mailIds[i];
+                let contactsId = result.findIndex(
+                    x => x === maildata[id].userId
+                );
+                if (contactsId === -1) {
+                    result.push({
+                        name: userdata[maildata[id].userId].name,
+                        value: 1
+                    });
+                } else {
+                    result[contactsId].value++;
+                }
             }
             return result;
         },
@@ -78,9 +88,21 @@ module.exports = {
         keywords() {
             let m = [];
             for (let i = 0; i < this.mailIds.length; ++i) {
-                m.push(maildata[i]);
+                let flag = true;
+                let date = new Date(maildata[this.mailIds[i]].date);
+                if (this.beginDate) {
+                    flag &= date > this.beginDate;
+                }
+                if (this.endDate) {
+                    flag &= date < this.endDate;
+                }
+                if (flag) {
+                    m.push(maildata[i]);
+                }
             }
-            return keywordExtraction.generateKeywords(m);
+            return keywordExtraction
+                .generateKeywords(m)
+                .filter((word, index) => index <= 50);
         }
     },
     created: function() {
@@ -96,23 +118,17 @@ module.exports = {
         this.id = userdata[userId].id;
     },
     mounted: function() {
-        // handle events for UserKeywordCloud
         eventBus.$on("date-filter-changed", param => {
-            let m = [];
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let flag = true;
-                let date = new Date(maildata[this.mailIds[i]].date);
-                if (param[0]) {
-                    flag &= date > param[0];
-                }
-                if (param[1]) {
-                    flag &= date < param[1];
-                }
-                if (flag) {
-                    m.push(maildata[i]);
-                }
+            // This event should not be responded
+            if (!param.tag.includes("UserOverview")) {
+                return;
             }
-            this.keywords = keywordExtraction.generateKeywords(m);
+            // Set the new date filter
+            this.beginDate = param.beginDate;
+            this.endDate = param.endDate;
+        });
+        eventBus.$on("user-changed", param => {
+            this.id = param.userId;
         });
     },
     methods: {}
@@ -123,15 +139,25 @@ module.exports = {
     <div id="User">
         <div id="UserOverview">
             <h3>{{name}}</h3>
-            {{address}}
-            <user-activity-plot v-bind:data="this.activity" style="width:100%; height:200px;"></user-activity-plot>
+            <user-activity-plot
+                v-bind:data="this.activity"
+                tag="UserOverview"
+                style="width:100%; height:200px;"
+            ></user-activity-plot>
         </div>
         <div id="WordCloud">
-            <user-keyword-cloud v-bind:data="this.keywords" style="width:100%; height:200px;"></user-keyword-cloud>
+            <user-keyword-cloud
+                v-bind:data="this.keywords"
+                tag="keyword"
+                style="width:100%; height:200px;"
+            ></user-keyword-cloud>
         </div>
         <div id="MailList">
-            <h2>邮件列表</h2>
-            <user-mail-list v-bind:mailIds="this.mailIds"></user-mail-list>
+            <user-mail-list
+                :mailIds="this.mailIds"
+                :beginDate="this.beginDate"
+                :endDate="this.endDate"
+            ></user-mail-list>
         </div>
     </div>
 </template>

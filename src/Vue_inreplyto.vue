@@ -71,7 +71,7 @@ circle {
     fill: #ff0000;
     stroke: #000000;
     stroke-width: 2;
-    opacity: 0;
+    opacity: 1;
     transition: 0.3s ease;
     &.selected, {
         opacity: 1;
