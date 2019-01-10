@@ -8,17 +8,20 @@
 
 const maildata = require("../dist/mails.json");
 const userdata = require("../dist/users.json");
-const eventbus = require("../src/EventBus.js");
+const eventBus = require("../src/EventBus.js");
+const keywordExtraction = require("../src/Keyword.js");
 
 module.exports = {
     components: {
-        KeywordUserCloud: require("./UserCloud.vue"),
-        KeywordPopularity: require("./UserActivityPlot.vue"),
-        KeywordMailList: require("./UserMailList.vue"),
-        KeywordRelated: require("./KeywordCloud.vue")
+        KeywordUserCloud: require("./WordCloud.vue"),
+        KeywordPopularity: require("./ActivityPlot.vue"),
+        KeywordMailList: require("./MailList.vue"),
+        KeywordRelated: require("./SortedBarChart.vue")
     },
     data: () => ({
-        keyword: "cmake"
+        keyword: "cmake",
+        beginDate: null,
+        endDate: null
     }),
     computed: {
         // mailIds is an array of numbers
@@ -64,32 +67,82 @@ module.exports = {
             }
             return result;
         },
-        // users is an object, with id, name and value field.
+        // users is an array, each element has id, name and value field.
         users() {
             let result = [];
-            this.mailIds.forEach(id => {
-                let userId = result.findIndex(
-                    x => x.id === maildata[id].userId
-                );
-                if (userId === -1) {
-                    if (maildata[id].userId === -1) return; 
-                    result.push({
-                        id: maildata[id].userId,
-                        name: userdata[maildata[id].userId].name,
-                        value: 1,
-                    });
-                } else {
-                    result[userId].value++;
-                }
+            this.mailIds
+                .filter(id => {
+                    let flag = true;
+                    let date = new Date(maildata[id].date);
+                    if (this.beginDate) flag &= date > this.beginDate;
+                    if (this.endDate) flag &= date < this.endDate;
+                    return flag;
+                })
+                .forEach(id => {
+                    let userId = result.findIndex(
+                        x => x.id === maildata[id].userId
+                    );
+                    if (userId === -1) {
+                        if (maildata[id].userId === -1) return;
+                        result.push({
+                            id: maildata[id].userId,
+                            name: userdata[maildata[id].userId].name,
+                            value: 1
+                        });
+                    } else {
+                        result[userId].value++;
+                    }
+                });
+            result.sort((a, b) => {
+                if (a.value > b.value) return -1;
+                if (a.vaule < b.value) return 1;
+                return 0;
             });
+            result = result.filter((a, index) => index <= 30);
             return result;
         },
-        relatedKeywords() {}
+        // relatedKeywords is an array, each element has name and value field
+        relatedKeywords() {
+            let result = [];
+            this.mailIds.forEach(id => {
+                keys = keywordExtraction.generateKeywords([
+                    maildata[id]
+                ]);
+                keys.forEach(key => {
+                    if (key.name.toLowerCase() === this.keyword)
+                        return;
+                    resultId = result.findIndex(x => x.name.toLowerCase() === key.name);
+                    if (resultId === -1) {
+                        result.push({ name: key.name, value: 1 });
+                    } else {
+                        result[resultId].value++;
+                    }
+                });
+            });
+            result.sort((a, b) => {
+                if (a.value > b.value) return -1;
+                else if (a.value < b.value) return 1;
+                return 0;
+            });
+            return result.filter((word, index) => index <= 15);
+        }
     },
     created: function() {},
     mounted: function() {
-        eventbus.$on("keyword-changed", keyword => {
-            this.keyword = keyword;
+        eventBus.$on("date-filter-changed", dateFilter => {
+            // this event should not be responded
+            if (!dateFilter.tag.includes("KeywordOverview")) {
+                return;
+            }
+
+            // change date filter data
+            this.beginDate = dateFilter.beginDate;
+            this.endDate = dateFilter.endDate;
+        });
+        eventBus.$on("keyword-changed", param => {
+            this.keyword = param.keyword;
+            this.beginDate = null;
+            this.endDate = null;
         });
     },
     updated: function() {},
@@ -100,10 +153,18 @@ module.exports = {
 <template>
     <div id="keyword-overview">
         <h2>{{keyword}}</h2>
-        <keyword-user-cloud v-bind:data="this.users"/>
-        <keyword-popularity v-bind:data="this.activity" style="width:100%; height:200px;"></keyword-popularity>
-        <keyword-mail-list v-bind:mailIds="this.mailIds"></keyword-mail-list>
-        <keyword-related></keyword-related>
+        <keyword-popularity
+            v-bind:data="this.activity"
+            tag="KeywordOverview"
+            style="width:100%; height:200px;"
+        />
+        <keyword-user-cloud v-bind:data="this.users" tag="user" style="width:100%; height:200px;"/>
+        <keyword-mail-list
+            :mailIds="this.mailIds"
+            :beginDate="this.beginDate"
+            :endDate="this.endDate"
+        />
+        <keyword-related :data="this.relatedKeywords" style="width:100%; height:200px;"/>
     </div>
 </template>
 

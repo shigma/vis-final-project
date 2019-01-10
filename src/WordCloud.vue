@@ -10,7 +10,7 @@
  * @since 2019-01-07
  */
 
-const eventBus = require('../src/EventBus.js');
+const eventBus = require("../src/EventBus.js");
 const echarts = require("echarts");
 require("echarts-wordcloud");
 
@@ -22,6 +22,9 @@ module.exports = {
         data: {
             required: true,
             type: Object
+        },
+        tag: {
+            type: String
         }
     },
     mounted: function() {
@@ -128,10 +131,21 @@ module.exports = {
             let dom = this.$refs.keywordcloud;
             this.chart = echarts.init(dom);
             this.chart.setOption(this.option);
-            this.chart.on("click", (params) => {
-                if (params.componentType === 'series') {
-                    let keyword = params.data.name;
-                    eventBus.$emit('keyword-changed', keyword);
+            this.chart.on("click", params => {
+                // Emit different type of event according to tag
+                if (params.componentType === "series") {
+                    if (this.tag.includes("keyword")) {
+                        let keyword = params.data.name;
+                        eventBus.$emit("keyword-changed", {
+                            keyword: keyword,
+                            tag: this.tag
+                        });
+                    } else if (this.tag.includes("user")) {
+                        eventBus.$emit("user-changed", {
+                            userId: params.data.id,
+                            tag: this.tag
+                        });
+                    }
                 }
             });
         },
@@ -146,6 +160,6 @@ module.exports = {
     <div ref="keywordcloud">{{data}}</div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 </style>
 

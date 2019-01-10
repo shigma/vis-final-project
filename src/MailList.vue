@@ -17,13 +17,19 @@ module.exports = {
         mailIds: {
             required: true,
             type: Object
-        }
+        },
+        beginDate: {
+            required: true,
+            type: Date,
+        },
+        endDate: {
+            required: true,
+            type: Date,
+        },
     },
     data: function() {
         return {
-            search: "",
-            beginDate: null,
-            endDate: null,
+            search: "", // For the text search box
         };
     },
     computed: {
@@ -51,20 +57,7 @@ module.exports = {
             });
         },
     },
-    mounted: function() {
-        eventBus.$on('date-filter-changed', (dateFilter) => {
-            if (dateFilter === null) {
-                this.beginDate = null;
-                this.endDate   = null;
-            } else {
-                this.beginDate = dateFilter[0];
-                this.endDate   = dateFilter[1];
-            }
-        });
-        eventBus.$on('keyword-changed', (keyword) => {
-            this.search = keyword;
-        });
-    },
+    mounted: function() {},
     methods: {
         spanMethod({ row, column, rowIndex, columnIndex }) {
           if (columnIndex === 2) {

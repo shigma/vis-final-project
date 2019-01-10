@@ -19,24 +19,25 @@ const eventBus = require("../src/EventBus.js");
 
 module.exports = {
     data: () => ({
-        chart: {},
         beginDate: Date,
         endDate: Date
     }),
     props: {
         data: {
             required: true,
-            type: Object
-        }
+            type: Object,
+        },
+        tag: {
+            type: String,
+        },
     },
     mounted: function() {
         this.setEchart();
     },
-    updated: function() {
-        if (!this.chart) {
+    watch: {
+        data: function(newData, oldData) {
             this.setEchart();
-        }
-        this.chartChange();
+        },
     },
     computed: {
         originalData() {
@@ -84,7 +85,7 @@ module.exports = {
                 brush: {
                     xAxisIndex: "all",
                     throttleType: "debounce",
-                    throttleDelay: 500,
+                    throttleDelay: 50000,
                     outOfBrush: {
                         colorAlpha: 0.1
                     }
@@ -104,12 +105,14 @@ module.exports = {
             return obj;
         }
     },
+    watch: {},
     methods: {
         setEchart() {
             let dom = this.$refs.activityplot;
-            this.chart = echarts.init(dom);
-            this.chart.setOption(this.option);
-            this.chart.on("brush", params => {
+            let chart = echarts.init(dom);
+            chart.setOption(this.option);
+            chart.on("brush", params => {
+                // null if no range is chosen
                 this.beginDate = null;
                 this.endDate = null;
                 //console.log(params);
@@ -124,15 +127,13 @@ module.exports = {
                     }
                 }
 
-                eventBus.$emit("date-filter-changed", [
-                    this.beginDate,
-                    this.endDate
-                ]);
+                eventBus.$emit("date-filter-changed", {
+                    beginDate: this.beginDate,
+                    endDate: this.endDate,
+                    tag: this.tag,
+                });
             });
         },
-        chartChange() {
-            this.myChart.setOption(this.option);
-        }
     }
 };
 </script>
@@ -141,7 +142,7 @@ module.exports = {
     <div ref="activityplot"></div>
 </template>
 
-<style>
+<style lang="scss" scoped>
 .echarts {
     width: 100%;
     height: 100%;
