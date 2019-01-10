@@ -24,8 +24,13 @@ function toCamelCase(source) {
 
 /** 显示进度 */
 const progress = new class {
+    constructor() {
+        this.restart()
+    }
+
     restart() {
         this._percentage = 0
+        return this
     }
 
     inspect(progress, callback) {
@@ -45,11 +50,13 @@ const progress = new class {
 // 第一个文件是空邮件, 无意义
 let mailIndex = -2
 let userIndex = 0
+let threadIndex = 0
 /** 全部邮件字典 */
 const mails = new Map()
 /** 全部用户字典 */
 const users = new Map()
-progress.restart()
+/** 全部 thread 列表 */
+const threads = []
 
 const metaMacro = '(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(?:\\r?\\n[ \\t].+)*'
 const metaRegExp = new RegExp('^' + metaMacro, 'gmi')
@@ -60,9 +67,9 @@ const files = fs.readdirSync(baseDir)
 files.forEach((fileName, fileIndex) => {
     const source = fs.readFileSync(path.resolve(baseDir, fileName), 'utf8')
     for (const mail of source.split(headingRegExp)) {
-        if (!mail || ++mailIndex === -1) continue
+        if (++mailIndex === -1) continue
         const data = { id: mailIndex }
-
+        let inReplyTo
         const heading = mail.match(/^From .+((\r?\n.+)+)/)[1]
         heading.match(metaRegExp).forEach(meta => {
             const key = meta.match(/^[\w-]+/)[0]
@@ -101,10 +108,10 @@ files.forEach((fileName, fileIndex) => {
                     break
                 case 'inReplyTo': {
                     const match = value.match(/<([^>]+)>/g)
-                    const messageId = match
+                    inReplyTo = match
                         ? match[0].replace(/\s+/g, '')
                         : `<${value}>` // 处理 4AD5C597.8020904@sara.nl 的特殊情况
-                    const mail = mails.get(messageId)
+                    const mail = mails.get(inReplyTo)
                     if (mail) {
                         if (!mail.replies) mail.replies = []
                         mail.replies.push(mailIndex)
@@ -126,12 +133,17 @@ files.forEach((fileName, fileIndex) => {
             data[camelKey] = value
         })
 
+        if (mails.has(data.messageId)) {
+            mailIndex -= 1
+            continue
+        }
+
         const refs = (data.references || [])
             .map(messageId => {
+                // 如果已经是回复, 就不再记录为引用了
+                if (messageId === inReplyTo) return
                 const mail = mails.get(messageId)
                 if (!mail) return
-                // 如果已经是回复, 就不再记录为引用了
-                if (mail.id === data.inReplyTo) return
                 if (!mail.citations) mail.citations = []
                 mail.citations.push(mailIndex)
                 return mail.id
@@ -140,12 +152,39 @@ files.forEach((fileName, fileIndex) => {
 
         data.references = refs.length ? refs : undefined
 
+        const mailInreplyTo = inReplyTo && mails.get(inReplyTo)
+        if (mailInreplyTo) {
+            data.threadId = mailInreplyTo.threadId
+            threads[mailInreplyTo.threadId].mails.push(mailIndex)
+        } else {
+            data.threadId = threadIndex
+            threads.push({
+                id: threadIndex++,
+                mails: [mailIndex],
+            })
+        }
+
         mails.set(data.messageId, data)
         delete data.messageId
     }
 
     progress.inspect((fileIndex + 1) / files.length, () => {
-        process.stdout.write(`共计 ${mails.size} 封邮件, ${users.size} 位用户. `)
+        process.stdout.write(`共计 ${mails.size} 封邮件, ${users.size} 位用户, ${threads.length} 条线. `)
+    })
+})
+
+const mailList = Array.from(mails.values())
+threads.forEach(thread => {
+    thread.users = []
+    thread.mails.forEach(index => {
+        const mail = mailList[index]
+        if (mail.userId === -1) return
+        const user = thread.users.find(user => user.id === mail.userId)
+        if (user) {
+            user.mails.push(index)
+        } else {
+            thread.users.push({ id: mail.userId, mails: [index] })
+        }
     })
 })
 
@@ -159,5 +198,6 @@ function dumpFile(fileName, data) {
 
 dumpFile('mails.json', mails)
 dumpFile('users.json', users)
+dumpFile('threads.json', threads)
 
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)

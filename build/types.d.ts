@@ -1,5 +1,6 @@
 type MailID = number
 type UserID = number
+type ThreadID = number
 
 interface Mail {
     id: MailID
@@ -10,6 +11,7 @@ interface Mail {
     references?: MailID[]
     replies?: MailID[]
     citations?: MailID[]
+    threadId: ThreadID
 }
 
 interface User {
@@ -19,5 +21,15 @@ interface User {
     mails: MailID[]
 }
 
+interface Thread {
+    id: ThreadID
+    users: {
+        id: UserID
+        mails: MailID[]
+    }[]
+    mails: MailID[]
+}
+
 export type MailsJSON = Mail[]
 export type UsersJSON = User[]
+export type ThreadsJSON = Thread[]
