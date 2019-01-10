@@ -1,7 +1,7 @@
 
 <script>
 /**
- * @file UserKeywordCloud.vue
+ * @file KeywordCloud.vue
  *
  * @brief The component that visualize a word cloud
  * Each item in the prop data must have name and value field

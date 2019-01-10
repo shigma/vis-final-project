@@ -1,141 +1,110 @@
 <script>
+/**
+ * A component that visualizes a set of data into a bubble cloud
+ * The data prop should have data.name and data.value field.
+ *
+ * References:
+ *     https://beta.observablehq.com/@mbostock/d3-bubble-chart
+ *     https://github.com/d3/d3/wiki/包布局
+ *     "Visualization of large hierarchical data by circle packing", SIGCHI'06
+ *
+ * @author He, Hao
+ * @since 2019-01-10
+ */
 
-const eventBus = require('../src/EventBus.js');
-const echarts = require("echarts");
-require("echarts-wordcloud");
+const eventBus = require("../src/EventBus.js");
+const d3 = require("d3");
 
 module.exports = {
-    data: () => ({
-        chart: {}
-    }),
     props: {
         data: {
             required: true,
             type: Object
         }
     },
-    mounted: function() {
-        this.setEchart();
-    },
-    updated: function() {
-        if (!this.chart) {
-            this.setEchart();
-        }
-        this.chartChange();
-    },
+    data: () => ({
+        chart: {},
+        width: 400,
+        height: 400
+    }),
     computed: {
-        originalData() {
-            return this.data;
+        tree() {
+            return this.pack(this.data);
         },
-        maxValue() {
-            return this.data.reduce((total, curr) => {
-                return total > curr[1] ? total : curr[1];
-            });
-        },
-        option() {
-            let that = this;
-
-            let obj = {
-                series: [
-                    {
-                        type: "wordCloud",
-
-                        // The shape of the "cloud" to draw. Can be any polar equation represented as a
-                        // callback function, or a keyword present. Available presents are circle (default),
-                        // cardioid (apple or heart shape curve, the most known polar equation), diamond (
-                        // alias of square), triangle-forward, triangle, (alias of triangle-upright, pentagon, and star.
-
-                        shape: "diamond",
-
-                        // A silhouette image which the white area will be excluded from drawing texts.
-                        // The shape option will continue to apply as the shape of the cloud to grow.
-
-                        //maskImage: maskImage,
-
-                        // Folllowing left/top/width/height/right/bottom are used for positioning the word cloud
-                        // Default to be put in the center and has 75% x 80% size.
-                        left: "center",
-                        top: "center",
-                        width: "70%",
-                        height: "80%",
-                        right: null,
-                        bottom: null,
-
-                        // Text size range which the value in data will be mapped to.
-                        // Default to have minimum 12px and maximum 60px size.
-
-                        sizeRange: [12, 60],
-
-                        // Text rotation range and step in degree. Text will be rotated randomly in range [-90, 90] by rotationStep 45
-
-                        rotationRange: [-0, 0],
-                        rotationStep: 45,
-
-                        // size of the grid in pixels for marking the availability of the canvas
-                        // the larger the grid size, the bigger the gap between words.
-
-                        gridSize: 6,
-
-                        // set to true to allow word being draw partly outside of the canvas.
-                        // Allow word bigger than the size of the canvas to be drawn
-                        drawOutOfBound: false,
-
-                        // Global text style
-                        textStyle: {
-                            normal: {
-                                fontFamily: "sans-serif",
-                                fontWeight: "bold",
-                                // Color can be a callback function or a color string
-                                color: function() {
-                                    // Random color
-                                    return (
-                                        "rgb(" +
-                                        [
-                                            Math.round(Math.random() * 160),
-                                            Math.round(Math.random() * 160),
-                                            Math.round(Math.random() * 160)
-                                        ].join(",") +
-                                        ")"
-                                    );
-                                }
-                            },
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowColor: "#333"
-                            }
-                        },
-
-                        // Data is an array. Each array item must have name and value property.
-                        data: this.data
-                    }
-                ]
-            };
-            return obj;
+        pack() {
+            return data =>
+                d3
+                    .pack()
+                    .size([this.width - 2, this.height - 2])
+                    .padding(3)(
+                    d3.hierarchy({ children: data }).sum(d => d.value)
+                );
         }
     },
-    methods: {
-        setEchart() {
-            let dom = this.$refs.usercloud;
-            this.chart = echarts.init(dom);
-            this.chart.setOption(this.option);
-            this.chart.on("click", (params) => {
-                if (params.componentType === 'series') {
-                    let keyword = params.data.name;
-                    eventBus.$emit('keyword-changed', keyword);
-                }
-            });
-        },
-        chartChange() {
-            this.chart.setOption(this.option);
-        }
+    mounted: function() {
+        console.log(this.tree.leaves());
+
+        const svg = d3.select(this.$refs.userCloud).append("svg");
+
+        const leaf = svg
+            .selectAll("g")
+            .data(this.tree.leaves())
+            .enter()
+            .append("g")
+            .attr("transform", d => `translate(${d.x + 1},${d.y + 1})`);
+
+        leaf.append("circle")
+            .attr("id", d => (d.leafUid = DOM.uid("leaf")).id)
+            .attr("r", d => d.r)
+            .attr("fill-opacity", 0.7)
+            .attr("fill", d => color(d.data.group));
+
+        leaf.append("clipPath")
+            .attr("id", d => (d.clipUid = DOM.uid("clip")).id)
+            .append("use")
+            .attr("xlink:href", d => d.leafUid.href);
+
+        leaf.append("text")
+            .attr("clip-path", d => d.clipUid)
+            .selectAll("tspan")
+            .data(d => d.data.name.split(/(?=[A-Z][^A-Z])/g))
+            .enter()
+            .append("tspan")
+            .attr("x", 0)
+            .attr("y", (d, i, nodes) => `${i - nodes.length / 2 + 0.8}em`)
+            .text(d => d);
+
+        leaf.append("title").text(d => `${d.data.title}\n${format(d.value)}`);
+
+        this.chart = svg.node();
     }
 };
 </script>
 
 <template>
-    <div ref="usercloud">{{data}}</div>
+    <div ref="usercloud">
+        <svg :width="width" :height="height">
+            <g
+                v-for="node in tree.leaves()"
+                :key="node.data"
+                :transform="'translate('+(node.x+1)+','+(node.y+1)+')'"
+            >
+                <circle :r="node.r"></circle>
+                <text>{{node.data.name}}</text>
+            </g>
+        </svg>
+    </div>
 </template>
 
-<style>
-
+<style lang="scss" scoped>
+.svg {
+    font-size: 1;
+    font-family: sans-serif;
+    text-anchor: middle;
+}
+.circle {
+    stroke: black;
+    stroke-width: 2;
+    fill: blue;
+}
 </style>

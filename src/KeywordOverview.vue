@@ -18,9 +18,10 @@ module.exports = {
         KeywordRelated: require("./KeywordCloud.vue")
     },
     data: () => ({
-        keyword: 'cmake',
+        keyword: "cmake"
     }),
     computed: {
+        // mailIds is an array of numbers
         mailIds: function() {
             let result = [];
             for (let i = 0; i < maildata.length; ++i) {
@@ -30,10 +31,10 @@ module.exports = {
             }
             return result;
         },
+        // activity is an array, each element: [date, number]
         activity: function() {
             let result = [];
-            if (this.mailIds.length === 0)
-                return result;
+            if (this.mailIds.length === 0) return result;
             let minDate = new Date(maildata[this.mailIds[0]].date);
             let maxDate = new Date(maildata[this.mailIds[0]].date);
             for (let i = 0; i < this.mailIds.length; ++i) {
@@ -62,11 +63,32 @@ module.exports = {
                 }
             }
             return result;
-        }
+        },
+        // users is an object, with id, name and value field.
+        users() {
+            let result = [];
+            this.mailIds.forEach(id => {
+                let userId = result.findIndex(
+                    x => x.id === maildata[id].userId
+                );
+                if (userId === -1) {
+                    if (maildata[id].userId === -1) return; 
+                    result.push({
+                        id: maildata[id].userId,
+                        name: userdata[maildata[id].userId].name,
+                        value: 1,
+                    });
+                } else {
+                    result[userId].value++;
+                }
+            });
+            return result;
+        },
+        relatedKeywords() {}
     },
     created: function() {},
     mounted: function() {
-        eventbus.$on("keyword-changed", (keyword)=>{
+        eventbus.$on("keyword-changed", keyword => {
             this.keyword = keyword;
         });
     },
@@ -78,6 +100,7 @@ module.exports = {
 <template>
     <div id="keyword-overview">
         <h2>{{keyword}}</h2>
+        <keyword-user-cloud v-bind:data="this.users"/>
         <keyword-popularity v-bind:data="this.activity" style="width:100%; height:200px;"></keyword-popularity>
         <keyword-mail-list v-bind:mailIds="this.mailIds"></keyword-mail-list>
         <keyword-related></keyword-related>
