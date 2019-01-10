@@ -8,8 +8,14 @@
 
 const maildata = require("../dist/mails.json");
 const userdata = require("../dist/users.json");
+const keywords = require("../dist/keywords.json");
 const eventBus = require("../src/EventBus.js");
 const keywordExtraction = require("../src/Keyword.js");
+
+let keywordMap = new Map();
+keywords.forEach(item => {
+    keywordMap.set(item.keyword, item);
+});
 
 module.exports = {
     components: {
@@ -26,74 +32,36 @@ module.exports = {
     computed: {
         // mailIds is an array of numbers
         mailIds: function() {
-            let result = [];
-            for (let i = 0; i < maildata.length; ++i) {
-                if (maildata[i].subject.toLowerCase().includes(this.keyword)) {
-                    result.push(maildata[i].id);
-                }
-            }
-            return result;
+            return keywordMap.get(this.keyword).mails;
         },
         // activity is an array, each element: [date, number]
         activity: function() {
-            let result = [];
-            let resultIdMap = new Map();
-
-            if (this.mailIds.length === 0) return result;
-
-            // set date values
-            let minDate = new Date(maildata[this.mailIds[0]].date);
-            let maxDate = new Date(maildata[this.mailIds[0]].date);
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let date = new Date(maildata[this.mailIds[i]].date);
-                if (date < minDate) minDate = date;
-                if (date > maxDate) maxDate = date;
-            }
-            for (
-                let i = minDate.getFullYear();
-                i <= maxDate.getFullYear();
-                ++i
-            ) {
-                for (let j = 1; j <= 12; ++j) {
-                    let ym = i + "-" + j;
-                    result.push([ym, 0]);
-                    resultIdMap.set(ym, result.length - 1);
-                }
-            }
-
-            // compute activity values
-            for (let i = 0; i < this.mailIds.length; ++i) {
-                let date = new Date(maildata[this.mailIds[i]].date);
-                let ym = date.getFullYear() + "-" + date.getMonth();
-
-                let resultId = resultIdMap.get(ym);
-                if (resultId != undefined) {
-                    result[resultId][1]++;
-                }
-            }
-            return result;
+            return keywordMap.get(this.keyword).activity;
         },
         // users is an array, each element has id, name and value field.
         users() {
+            // Use preecomputated data
+            if (this.beginDate === null && this.endDate === null)
+                return keywordMap.get(this.keyword).users;
+
+            // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
-            this.mailIds
-                .filter(this.filterWithTime)
-                .forEach(id => {
-                    let currUserId = maildata[id].userId;
-                    if (currUserId === -1) return;
-                    let resultId = resultIdMap.get(currUserId);
-                    if (resultId === undefined) {
-                        result.push({
-                            id: currUserId,
-                            name: userdata[currUserId].name,
-                            value: 1
-                        });
-                        resultIdMap.set(currUserId, result.length - 1);
-                    } else {
-                        result[resultId].value++;
-                    }
-                });
+            this.mailIds.filter(this.filterWithTime).forEach(id => {
+                let currUserId = maildata[id].userId;
+                if (currUserId === -1) return;
+                let resultId = resultIdMap.get(currUserId);
+                if (resultId === undefined) {
+                    result.push({
+                        id: currUserId,
+                        name: userdata[currUserId].name,
+                        value: 1
+                    });
+                    resultIdMap.set(currUserId, result.length - 1);
+                } else {
+                    result[resultId].value++;
+                }
+            });
             result.sort((a, b) => {
                 if (a.value > b.value) return -1;
                 if (a.vaule < b.value) return 1;
@@ -104,6 +72,11 @@ module.exports = {
         },
         // relatedKeywords is an array, each element has name and value field
         relatedKeywords() {
+            // Use preecomputated data
+            if (this.beginDate === null && this.endDate === null)
+                return keywordMap.get(this.keyword).relatedKeywords;
+
+            // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
             this.mailIds.filter(this.filterWithTime).forEach(id => {

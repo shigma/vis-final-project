@@ -7,6 +7,8 @@ const startTime = performance.now()
 const outDir = path.resolve(__dirname, '../dist')
 const baseDir = path.resolve(__dirname, '../assets')
 
+const keywordExtraction = require("../src/Keyword.js");
+
 // 如果 dist 文件夹不存在先创建之
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir)
 
@@ -57,6 +59,8 @@ const mails = new Map()
 const users = new Map()
 /** 全部 thread 列表 */
 const threads = []
+/** 全部关键词列表 */
+const keywords = new Map();
 
 const metaMacro = '(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(?:\\r?\\n[ \\t].+)*'
 const metaRegExp = new RegExp('^' + metaMacro, 'gmi')
@@ -164,12 +168,22 @@ files.forEach((fileName, fileIndex) => {
             })
         }
 
+        thisKeywordList = keywordExtraction.generateKeywords([data.id]);
+        thisKeywordList.forEach(word=> {
+            const w = keywords.get(word.name)
+            if (w) {
+                w.mails.push(data.id)
+            } else {
+                keywords.set(word.name, {keyword: word.name, mails: [data.id]})
+            }
+        })
+        
         mails.set(data.messageId, data)
         delete data.messageId
     }
 
     progress.inspect((fileIndex + 1) / files.length, () => {
-        process.stdout.write(`共计 ${mails.size} 封邮件, ${users.size} 位用户, ${threads.length} 条线. `)
+        process.stdout.write(`共计 ${mails.size} 封邮件, ${users.size} 位用户, ${keywords.size} 个关键词, ${threads.length} 条线. `)
     })
 })
 
@@ -191,7 +205,6 @@ threads.forEach(thread => {
 // 在users中增加activity属性
 console.log("\n");
 console.log("预计算user.activity...");
-const keywordExtraction = require("../src/Keyword.js");
 maildata = Array.from(mails.values());
 userdata = Array.from(users.values());
 users.forEach((user, address) => {
@@ -273,6 +286,95 @@ users.forEach(user => {
     user.relatedUsers = result.filter((user, index) => index <= 15);    
 });
 
+console.log("预计算keyword.activity...");
+keywords.forEach((keyword)=>{
+    let result = [];
+    let resultIdMap = new Map();
+    if (keyword.mails.length === 0) return result;
+    // set date values
+    let minDate = new Date(maildata[keyword.mails[0]].date);
+    let maxDate = new Date(maildata[keyword.mails[0]].date);
+    for (let i = 0; i < keyword.mails.length; ++i) {
+        let date = new Date(maildata[keyword.mails[i]].date);
+        if (date < minDate) minDate = date;
+        if (date > maxDate) maxDate = date;
+    }
+    for (
+        let i = minDate.getFullYear();
+        i <= maxDate.getFullYear();
+        ++i
+    ) {
+        for (let j = 1; j <= 12; ++j) {
+            let ym = i + "-" + j;
+            result.push([ym, 0]);
+            resultIdMap.set(ym, result.length - 1);
+        }
+    }
+    // compute activity values
+    for (let i = 0; i < keyword.mails.length; ++i) {
+        let date = new Date(maildata[keyword.mails[i]].date);
+        let ym = date.getFullYear() + "-" + date.getMonth();
+        let resultId = resultIdMap.get(ym);
+        if (resultId != undefined) {
+            result[resultId][1]++;
+        }
+    }
+    keyword.activity = result;
+});
+
+console.log("预计算keyword.users...")
+keywords.forEach(keyword => {
+    let result = [];
+    let resultIdMap = new Map();
+    keyword.mails.forEach(id => {
+        let currUserId = maildata[id].userId;
+        if (currUserId === -1) return;
+        let resultId = resultIdMap.get(currUserId);
+        if (resultId === undefined) {
+            result.push({
+                id: currUserId,
+                name: userdata[currUserId].name,
+                value: 1
+            });
+            resultIdMap.set(currUserId, result.length - 1);
+        } else {
+            result[resultId].value++;
+        }
+    });
+    result.sort((a, b) => {
+        if (a.value > b.value) return -1;
+        if (a.vaule < b.value) return 1;
+        return 0;
+    });
+    result = result.filter((a, index) => index <= 30);
+    keyword.users = result;
+});
+
+console.log("预计算keyword.relatedKeywords...")
+keywords.forEach(keyword => {
+    let result = [];
+    let resultIdMap = new Map();
+    keyword.mails.forEach(id => {
+        keys = keywordExtraction.generateKeywords([id]);
+        keys.forEach(key => {
+            if (key.name.toLowerCase() === keyword.keyword) return;
+            resultId = resultIdMap.get(key.name);
+            if (resultId === undefined) {
+                result.push({ name: key.name, value: 1 });
+                resultIdMap.set(key.name, result.length - 1);
+            } else {
+                result[resultId].value++;
+            }
+        });
+    });
+    result.sort((a, b) => {
+        if (a.value > b.value) return -1;
+        else if (a.value < b.value) return 1;
+        return 0;
+    });
+    keyword.relatedKeywords = result.filter((word, index) => index <= 15);
+});
+
 /** 输出到文件 */
 function dumpFile(fileName, data) {
     fs.writeFileSync(
@@ -284,5 +386,6 @@ function dumpFile(fileName, data) {
 dumpFile('mails.json', mails)
 dumpFile('users.json', users)
 dumpFile('threads.json', threads)
+dumpFile('keywords.json', keywords)
 
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)
