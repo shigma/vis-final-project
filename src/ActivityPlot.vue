@@ -35,14 +35,11 @@ module.exports = {
         this.setEchart();
     },
     watch: {
-        originalData: function(newData, oldData) {
+        data: function(newData, oldData) {
             this.setEchart();
         }
     },
     computed: {
-        originalData() {
-            return this.data;
-        },
         maxValue() {
             return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
@@ -110,6 +107,7 @@ module.exports = {
     },
     methods: {
         setEchart() {
+            this.originalData = Array.from(this.data);
             if (this.chart === undefined) {
                 let dom = this.$refs.activityplot;
                 this.chart = echarts.init(dom);
@@ -143,12 +141,11 @@ module.exports = {
 </script>
 
 <template>
-    <div ref="activityplot"></div>
+    <div id="activityplot" ref="activityplot"></div>
 </template>
 
 <style lang="scss" scoped>
-.echarts {
-    width: 100%;
-    height: 100%;
+#activityplot {
+    will-change: transform;
 }
 </style>

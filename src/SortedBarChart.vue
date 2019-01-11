@@ -23,14 +23,11 @@ module.exports = {
         this.setEchart();
     },
     watch: {
-        originalData: function() {
+        data: function() {
             this.setEchart();
         }
     },
     computed: {
-        originalData() {
-            return this.data;
-        },
         maxValue() {
             return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
@@ -92,6 +89,7 @@ module.exports = {
     },
     methods: {
         setEchart() {
+            this.originalData = Array.from(this.data);
             if (this.chart === undefined) {
                 let dom = this.$refs.barchart;
                 this.chart = echarts.init(dom);
@@ -106,8 +104,11 @@ module.exports = {
 </script>
 
 <template>
-    <div ref="barchart"></div>
+    <div id="barchart" ref="barchart"></div>
 </template>
 
 <style lang="scss" scoped>
+#barchart {
+    will-change: transform;
+}
 </style>

@@ -79,7 +79,7 @@ module.exports = {
 </script>
 
 <template>
-    <div>
+    <div id="MailList">
         <el-table
             :data="displayedMailData"
             :span-method="spanMethod"
@@ -131,5 +131,8 @@ module.exports = {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+#MailList {
+    will-change: transform;
+}
 </style>

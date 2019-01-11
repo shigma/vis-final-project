@@ -29,14 +29,11 @@ module.exports = {
         this.setEchart();
     },
     watch: {
-        originalData: function(newData, oldData) {
+        data: function(newData, oldData) {
             this.setEchart();
         }
     },
     computed: {
-        originalData() {
-            return this.data;
-        },
         maxValue() {
             return this.originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
@@ -123,6 +120,7 @@ module.exports = {
     },
     methods: {
         setEchart() {
+            this.originalData = Array.from(this.data);
             if (this.chart === undefined) {
                 let dom = this.$refs.keywordcloud;
                 this.chart = echarts.init(dom);
@@ -151,9 +149,12 @@ module.exports = {
 </script>
 
 <template>
-    <div ref="keywordcloud"></div>
+    <div id="wordcloud" ref="keywordcloud"></div>
 </template>
 
 <style lang="scss" scoped>
+#wordcloud {
+    will-change: transform;
+}
 </style>
 
