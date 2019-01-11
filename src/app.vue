@@ -16,9 +16,9 @@ module.exports = {
         message: "Hello World"
     }),
     components: {
-        InReplyTo: require("./Vue_inreplyto.vue"),
         UserOverview: require("./UserOverview.vue"),
-        KeywordOverview: require("./KeywordOverview.vue")
+        KeywordOverview: require("./KeywordOverview.vue"),
+        ThreadOverview: require('./ThreadOverView.vue'),
     }
 };
 </script>
@@ -26,7 +26,6 @@ module.exports = {
 <template>
     <div>
         <span class="message">{{ message }}</span>
-        <in-reply-to/>
         <el-row :gutter="24">
             <el-col :span="12">
                 <div class="grid-content">
@@ -36,6 +35,11 @@ module.exports = {
             <el-col :span="12">
                 <div class="grid-content">
                     <keyword-overview/>
+                </div>
+            </el-col>
+            <el-col :span="12">
+                <div class="grid-content">
+                    <thread-overview/>
                 </div>
             </el-col>
         </el-row>
