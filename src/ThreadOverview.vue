@@ -6,11 +6,12 @@ const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
 const eventBus = require('../src/EventBus.js');
 const trie = require('../src/keywordTrie.js');
+const keyworddata = require('../dist/keywords.json')
 
 module.exports = {
     data: () => ({
         id: -1,
-        keywordSet: ['paraview', 'cmake'],
+        keywordSet: [],
         DFAtree: [],
     }),
     components: {
@@ -43,7 +44,7 @@ module.exports = {
             }
             return data
         },
-        keyworddata(){
+        keywordvalue(){
             let data = [];
             let value = [];
             let size = this.keywordSet.length;
@@ -67,6 +68,10 @@ module.exports = {
     created() {
         this.id = 2339;
         this.DFAtree = trie.initTree(this.DFAtree);
+        let ksize = keyworddata.length;
+        for (let i=0; i<ksize; i++){
+            this.keywordSet.push(keyworddata[i].keyword);
+        }
         let size = this.keywordSet.length;
         for (let i=0; i<size; i++){
             this.DFAtree = trie.insert(this.DFAtree, this.keywordSet[i], i);
@@ -160,7 +165,7 @@ module.exports = {
             <h3>涉及邮件数:{{involvedMailNum}}</h3>
         </div>
         <div id="WordCloud">
-            <thread-keyword-cloud :data="keyworddata" tag="thread" style="width:100%; height:200px;"></thread-keyword-cloud>
+            <thread-keyword-cloud :data="keywordvalue" tag="thread" style="width:100%; height:200px;"></thread-keyword-cloud>
         </div>
         <div id="Table">
             <el-table
