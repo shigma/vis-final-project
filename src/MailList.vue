@@ -8,7 +8,6 @@
  * @since 2019-01-07
  */
 
-Vue.use(require("element-ui"));
 const maildata = require("../dist/mails.json");
 const eventBus = require('../src/EventBus.js');
 
@@ -44,7 +43,7 @@ module.exports = {
             return result;
         },
         displayedMailData() {
-            return this.mailData.filter((data)=>{
+            return this.mailData.filter(data => {
                 let flag = true;
                 let date = new Date(data.date);
                 if (this.search.trim() != "")

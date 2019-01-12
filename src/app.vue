@@ -1,81 +1,159 @@
 <script>
-// 结构上请统一保持 script + template + style
-// 不同的快之间空一行
-// template 内部正常缩进，不用有行
-// script 和 style 内的文本不缩进，但是开始和结束时各留一个空行
 
-// 保证 script 中有一个 module.exports
-// 其中的内容为你要输出的 Vue 组件
+Vue.use(require('element-ui'))
+
+const MIN_WIDTH = 0.1
+
 module.exports = {
-    // 不用写 el，transpile 会全权处理相关的事情
-
-    // data 请使用函数式
-    // 这或许不是必要的，但是有助于规避潜在的问题
-    // 深层次的原因可以参考 Vue 文档
-    data: () => ({
-        message: "Hello World"
-    }),
     components: {
-        UserOverview: require("./UserOverview.vue"),
-        KeywordOverview: require("./KeywordOverview.vue"),
+        UserOverview: require('./UserOverview.vue'),
+        KeywordOverview: require('./KeywordOverview.vue'),
         ThreadOverview: require('./ThreadOverView.vue'),
-    }
-};
+    },
+
+    data: () => ({
+        dragging: false,
+        display: {
+            user: {
+                show: true,
+                width: 0.3,
+            },
+            keyword: {
+                show: true,
+                width: 0.3,
+            },
+            thread: {
+                show: true,
+                width: 0.4,
+            },
+        },
+    }),
+
+    computed: {
+        leftBorderStyle() {
+            return {}
+        },
+        rightBorderStyle() {
+            return {}
+        },
+        userStyle() {
+            return {
+                left: '0',
+                width: this.display.user.width * 100 + '%',
+            }
+        },
+        keywordStyle() {
+            return {
+                left: this.display.user.width * 100 + '%',
+                width: this.display.keyword.width * 100 + '%',
+            }
+        },
+        threadStyle() {
+            return {
+                right: '0',
+                width: this.display.thread.width * 100 + '%',
+            }
+        },
+    },
+
+    mounted() {
+        addEventListener('mouseup', () => {
+            this.$refs.left.classList.remove('active')
+            this.$refs.right.classList.remove('active')
+            this.dragging = null
+        }, { passive: true })
+
+        addEventListener('mousemove', event => {
+            let left, right
+            if (this.dragging === 'left') {
+                left = 'user'
+                right = 'keyword'
+            } else if (this.dragging === 'right') {
+                left = 'keyword'
+                right = 'thread'
+            } else return
+
+            event.stopPropagation()
+
+            const baseWidth = innerWidth / this.totalWidth
+            const deltaX = (this.draggingLastX - event.clientX) / baseWidth
+            this.draggingLastX = event.clientX
+            if (this.display[left].width - deltaX < MIN_WIDTH) {
+                this.draggingLastX += (MIN_WIDTH - this.display[left].width + deltaX) * baseWidth
+                this.display[right].width += this.display[left].width - MIN_WIDTH
+                this.display[left].width = MIN_WIDTH
+            } else if (this.display[right].width + deltaX < MIN_WIDTH) {
+                this.draggingLastX -= (MIN_WIDTH - this.display[right].width - deltaX) * baseWidth
+                this.display[left].width -= MIN_WIDTH - this.display[right].width
+                this.display[right].width = MIN_WIDTH
+            } else {
+                this.display[left].width -= deltaX
+                this.display[right].width += deltaX
+            }
+        })
+    },
+
+    methods: {
+        startDrag(position, event) {
+            this.dragging = position
+            this.$refs[position].classList.add('active')
+            this.draggingLastX = event.clientX
+        },
+    },
+}
+
 </script>
 
 <template>
-    <div>
-        <span class="message">{{ message }}</span>
-        <el-row :gutter="24">
-            <el-col :span="12">
-                <div class="grid-content">
-                    <user-overview/>
-                </div>
-            </el-col>
-            <el-col :span="12">
-                <div class="grid-content">
-                    <keyword-overview/>
-                </div>
-            </el-col>
-            <el-col :span="12">
-                <div class="grid-content">
-                    <thread-overview/>
-                </div>
-            </el-col>
-        </el-row>
+    <div class="app" :class="{ dragging }">
+        <div class="view" :style="userStyle"><user-overview/></div>
+        <div class="border left" ref="left" :style="leftBorderStyle"
+            @mousedown.stop="startDrag('left', $event)"/>
+        <div class="view" :style="keywordStyle"><keyword-overview/></div>
+        <div class="border right" ref="right" :style="rightBorderStyle"
+            @mousedown.stop="startDrag('right', $event)"/>
+        <div class="view" :style="threadStyle"><thread-overview/></div>
     </div>
 </template>
 
 <style lang="scss">
-// scoped 的作用是限制这个 style 仅在当前组件内生效
-// scss 是 css 语法的超集，如果需要使用相关语法可以写
-// 你甚至可以写多个 style，可以拥有不同的 scope 和 lang
-// 转译会处理好这些事情，不必担心
 
-.message {
-    color: blueviolet;
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.view, .border {
+    position: absolute;
+    height: 100%;
+}
+
+.view {
+    overflow-y: scroll;
+}
+
+.border {
+    width: 2px;
+    z-index: 2;
+    opacity: 0;
+    user-select: none;
     transition: 0.3s ease;
 
-    // 父组件选择器 &
-    // 相当于 .message:hover
-    &:hover {
-        color: deepskyblue;
+    &.left {
+        left: 0;
+        margin-left: -1px;
+    }
+
+    &.right {
+        right: 0;
+        margin-right: -1px;
     }
 }
 
-.el-row {
-    margin-bottom: 20px;
-    &:last-child {
-        margin-bottom: 0;
+.app.dragging {
+    > .view, > .border {
+        transition: none !important;
     }
-}
-.el-col {
-    border-radius: 4px;
-}
-
-.grid-content {
-    border-radius: 4px;
-    min-height: 36px;
 }
 
 </style>
