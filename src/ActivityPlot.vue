@@ -19,8 +19,8 @@ const eventBus = require("../src/EventBus.js");
 
 module.exports = {
     data: () => ({
-        beginDate: Date,
-        endDate: Date
+        beginDate: null,
+        endDate: null
     }),
     props: {
         data: {
