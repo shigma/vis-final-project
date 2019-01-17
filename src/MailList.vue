@@ -28,11 +28,12 @@ module.exports = {
     },
     data: function() {
         return {
+            mailData: [],
             search: "", // For the text search box
         };
     },
-    computed: {
-        mailData() {
+    watch: {
+        mailIds: function(newData, oldData) {
             let result = [];
             this.mailIds.forEach(id => {
                 result.push(maildata[id]);
@@ -40,10 +41,12 @@ module.exports = {
             for (let i = 0; i < result.length; ++i) {
                 result[i].date = new Date(result[i].date);
             }
-            return result;
+            this.mailData = result;
         },
+    },
+    computed: {
         displayedMailData() {
-            return this.mailData.filter(data => {
+            displayedMailData = this.mailData.filter(data => {
                 let flag = true;
                 let date = new Date(data.date);
                 if (this.search.trim() != "")

@@ -28,17 +28,17 @@ module.exports = {
         }
     },
     computed: {
-        maxValue() {
-            return this.originalData.reduce((total, curr) => {
-                return total > curr[1] ? total : curr[1];
-            });
-        },
-        option() {
-            let nameList = this.originalData.map(function(item) {
+    },
+    methods: {
+        setEchart() {
+            let originalData = Array.from(this.data);
+            let dom = this.$refs.barchart;
+            this.chart = echarts.init(dom);
+            let nameList = originalData.map(function(item) {
                 return item.name;
             });
 
-            let valueList = this.originalData.map(function(item) {
+            let valueList = originalData.map(function(item) {
                 return item.value;
             });
 
@@ -52,7 +52,7 @@ module.exports = {
                 },
                 title: {
                     left: "center",
-                    text: this.title
+                    text: ""
                 },
                 legend: {
                     data: ["邮件数"]
@@ -84,21 +84,8 @@ module.exports = {
                     }
                 ]
             };
-            return obj;
-        }
-    },
-    methods: {
-        setEchart() {
-            this.originalData = Array.from(this.data);
-            if (this.chart === undefined) {
-                let dom = this.$refs.barchart;
-                this.chart = echarts.init(dom);
-            }
-            this.chart.setOption(this.option);
+            this.chart.setOption(obj);
         },
-        chartChange() {
-            this.chart.setOption(this.option);
-        }
     }
 };
 </script>

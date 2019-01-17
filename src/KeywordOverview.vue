@@ -25,7 +25,7 @@ module.exports = {
         KeywordRelated: require('./SortedBarChart.vue'),
     },
     data: () => ({
-        keyword: 'cmake',
+        keyword: 'mac',
         beginDate: null,
         endDate: null,
     }),
@@ -40,7 +40,7 @@ module.exports = {
         },
         // users is an array, each element has id, name and value field.
         users() {
-            // Use preecomputated data
+            // Use precomputed data
             if (this.beginDate === null && this.endDate === null)
                 return keywordMap.get(this.keyword).users;
 
@@ -72,7 +72,7 @@ module.exports = {
         },
         // relatedKeywords is an array, each element has name and value field
         relatedKeywords() {
-            // Use preecomputated data
+            // Use precomputed data
             if (this.beginDate === null && this.endDate === null)
                 return keywordMap.get(this.keyword).relatedKeywords;
 
@@ -113,8 +113,7 @@ module.exports = {
             this.endDate = dateFilter.endDate;
         });
         eventBus.$on('keyword-changed', param => {
-            this.beginDate = null;
-            this.endDate = null;
+            if (this.keyword === param.keyword) return;
             this.keyword = param.keyword;
         });
     },
@@ -140,8 +139,8 @@ module.exports = {
             style="width:100%; height:200px;"
         />
         <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
-        <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
         <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
+        <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
     </div>
 </template>
 

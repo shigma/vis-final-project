@@ -113,8 +113,7 @@ module.exports = {
             this.endDate = param.endDate;
         });
         eventBus.$on("user-changed", param => {
-            this.beginDate = null;
-            this.endDate = null;
+            if (this.id === param.userId) return;
             this.id = param.userId;
         });
     },
@@ -143,11 +142,11 @@ module.exports = {
         <div id="WordCloud">
             <user-keyword-cloud :data="keywords" tag="keyword" style="width:100%; height:200px;"></user-keyword-cloud>
         </div>
-        <div id="MailList">
-            <user-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"></user-mail-list>
-        </div>
         <div id="SortedBarChart">
             <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
+        </div>
+        <div id="MailList">
+            <user-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"></user-mail-list>
         </div>
     </div>
 </template>

@@ -39,18 +39,42 @@ module.exports = {
             this.setEchart();
         }
     },
-    computed: {
-        maxValue() {
-            return this.originalData.reduce((total, curr) => {
+    computed: {},
+    methods: {
+        setEchart() {
+            let originalData = Array.from(this.data);
+            let maxValue = originalData.reduce((total, curr) => {
                 return total > curr[1] ? total : curr[1];
             });
-        },
-        option() {
-            let dateList = this.originalData.map(function(item) {
+            let dom = this.$refs.activityplot;
+            let chart = echarts.init(dom);
+            chart.off("brush");
+            chart.on("brush", params => {
+                // null if no range is chosen
+                this.beginDate = null;
+                this.endDate = null;
+
+                if (params.areas[0]) {
+                    let range = params.areas[0].coordRange;
+                    if (range[0] > 0 && range[0] < originalData.length) {
+                        this.beginDate = new Date(originalData[range[0]][0]);
+                    }
+                    if (range[1] > 0 && range[1] < originalData.length) {
+                        this.endDate = new Date(originalData[range[1]][0]);
+                    }
+                }
+
+                eventBus.$emit("date-filter-changed", {
+                    beginDate: this.beginDate,
+                    endDate: this.endDate,
+                    tag: this.tag
+                });
+            });
+            let dateList = originalData.map(function(item) {
                 return item[0];
             });
 
-            let valueList = this.originalData.map(function(item) {
+            let valueList = originalData.map(function(item) {
                 return item[1];
             });
 
@@ -61,15 +85,15 @@ module.exports = {
                     type: "continuous",
                     seriesIndex: 0,
                     min: 0,
-                    max: this.maxValue
+                    max: maxValue
                 },
                 title: {
                     left: "left",
                     text: "Activity"
                 },
-                legend:{
+                legend: {
                     left: "center",
-                    data: ["邮件数"],
+                    data: ["邮件数"]
                 },
                 tooltip: {
                     trigger: "axis"
@@ -102,39 +126,7 @@ module.exports = {
                     data: valueList
                 }
             };
-            return obj;
-        }
-    },
-    methods: {
-        setEchart() {
-            this.originalData = Array.from(this.data);
-            if (this.chart === undefined) {
-                let dom = this.$refs.activityplot;
-                this.chart = echarts.init(dom);
-                this.chart.on("brush", params => {
-                    // null if no range is chosen
-                    this.beginDate = null;
-                    this.endDate = null;
-                    //console.log(params);
-
-                    if (params.areas[0]) {
-                        let range = params.areas[0].coordRange;
-                        if (range[0] > 0 && range[0] < this.data.length) {
-                            this.beginDate = new Date(this.data[range[0]][0]);
-                        }
-                        if (range[1] > 0 && range[1] < this.data.length) {
-                            this.endDate = new Date(this.data[range[1]][0]);
-                        }
-                    }
-
-                    eventBus.$emit("date-filter-changed", {
-                        beginDate: this.beginDate,
-                        endDate: this.endDate,
-                        tag: this.tag
-                    });
-                });
-            }
-            this.chart.setOption(this.option);
+            chart.setOption(obj);
         }
     }
 };

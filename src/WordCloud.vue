@@ -33,13 +33,30 @@ module.exports = {
             this.setEchart();
         }
     },
-    computed: {
-        maxValue() {
-            return this.originalData.reduce((total, curr) => {
-                return total > curr[1] ? total : curr[1];
+    computed: {},
+    methods: {
+        setEchart() {
+            let originalData = Array.from(this.data);
+            let dom = this.$refs.keywordcloud;
+            let chart = echarts.init(dom);
+            chart.off("click");
+            chart.on("click", params => {
+                // Emit different type of event according to tag
+                if (params.componentType === "series") {
+                    if (this.tag.includes("keyword")) {
+                        let keyword = params.data.name;
+                        eventBus.$emit("keyword-changed", {
+                            keyword: keyword,
+                            tag: this.tag
+                        });
+                    } else if (this.tag.includes("user")) {
+                        eventBus.$emit("user-changed", {
+                            userId: params.data.id,
+                            tag: this.tag
+                        });
+                    }
+                }
             });
-        },
-        option() {
             let obj = {
                 series: [
                     {
@@ -111,39 +128,12 @@ module.exports = {
                         },
 
                         // Data is an array. Each array item must have name and value property.
-                        data: this.originalData
+                        data: originalData
                     }
                 ]
             };
-            return obj;
+            chart.setOption(obj);
         }
-    },
-    methods: {
-        setEchart() {
-            this.originalData = Array.from(this.data);
-            if (this.chart === undefined) {
-                let dom = this.$refs.keywordcloud;
-                this.chart = echarts.init(dom);
-                this.chart.on("click", params => {
-                    // Emit different type of event according to tag
-                    if (params.componentType === "series") {
-                        if (this.tag.includes("keyword")) {
-                            let keyword = params.data.name;
-                            eventBus.$emit("keyword-changed", {
-                                keyword: keyword,
-                                tag: this.tag
-                            });
-                        } else if (this.tag.includes("user")) {
-                            eventBus.$emit("user-changed", {
-                                userId: params.data.id,
-                                tag: this.tag
-                            });
-                        }
-                    }
-                });
-            }
-            this.chart.setOption(this.option);
-        },
     }
 };
 </script>
