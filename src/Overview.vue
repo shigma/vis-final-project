@@ -6,14 +6,19 @@ const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
 const eventBus = require('../src/EventBus.js');
 const trie = require('../src/keywordTrie.js');
-const keyworddata = require('../dist/keywords.json')
+const keyworddata = require('../dist/keywords.json');
+
+let keywordMap = new Map();
+keyworddata.forEach(item => {
+    keywordMap.set(item.keyword, item);
+});
 
 module.exports = {
     data: () => ({
         StartDate: Date('Wed, 7 Nov 2001 02:09:35 +0100'),
         EndDate: Date('Sat, 29 Sep 2018 17:12:30 +0000'),
         startid: 0,
-        endid: 10,
+        endid: 42852,
         keywordSet: [],
         DFAtree: [],
         userSet: [],
@@ -27,11 +32,12 @@ module.exports = {
             let value = [];
             let size = this.keywordSet.length;
             for (let i=0; i<size; i++){
-                value[i] = 0;
+                //value[i] = 0;
+                value[i] = keyworddata[i].mails.length;
             }
-            for (let i=this.startid; i<this.endid; i++){
-                value = trie.searchDFA(this.DFAtree, maildata[i].subject, value)
-            }
+            //for (let i=this.startid; i<this.endid; i++){
+            //    value = trie.searchDFA(this.DFAtree, maildata[i].subject, value)
+            //}
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;
                 let tmp = new Object();
@@ -43,14 +49,17 @@ module.exports = {
             return data;
         },
         userclouddata(){
+            return this.userSet;
+            /*
             let data = [];
             let size = userdata.length;
             for (let i=0; i<size; i++){
+                this.userSet[i].name = userdata[i].name;
                 this.userSet[i].value = 0;
             }
             for (let i=this.startid; i<=this.endid; i++){
                 let uid = maildata[i].userId;
-                this.userSet[uid].value++;
+                if (uid>=0) this.userSet[uid].value++;
             }
             for (let i=0; i<size; i++){
                 if (this.userSet[i].value===0) continue;
@@ -61,6 +70,7 @@ module.exports = {
             }
             //console.log(JSON.stringify(data));
             return data;
+            */
 
         },
     },
@@ -81,13 +91,21 @@ module.exports = {
         for (let i=0; i<usize; i++){
             let tmp = new Object();
             tmp.name = userdata[i].name;
-            tmp.value = 0;
+            tmp.value = userdata[i].mails.length;
+            tmp.id = i;
             this.userSet.push(tmp);
         }
     },
     mounted() {
     },
     methods: {
+        filterWithTime(mailId) {
+            let flag = true;
+            let date = new Date(maildata[mailId].date);
+            if (this.StartDate) flag &= date > this.StartDate;
+            if (this.EndDate) flag &= date < this.EndDate;
+            return flag;
+        },
     },
 }
 </script>
