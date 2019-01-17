@@ -4,6 +4,13 @@ Vue.use(require('element-ui'))
 
 const MIN_WIDTH = 0.1
 
+Vue.prototype.dataset = {
+    keywords: require('../dist/keywords'),
+    mails: require('../dist/mails'),
+    threads: require('../dist/threads'),
+    users: require('../dist/users'),
+}
+
 module.exports = {
     components: {
         UserOverview: require('./UserOverview.vue'),

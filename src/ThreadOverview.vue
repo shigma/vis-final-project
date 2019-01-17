@@ -15,7 +15,7 @@ module.exports = {
         DFAtree: [],
     }),
     components: {
-        ThreadKeywordCloud: require("./WordCloud.vue"),
+        ThreadKeywordCloud: require('./WordCloud.vue'),
     },
     computed: {
         involvedMailNum(){
@@ -158,7 +158,7 @@ module.exports = {
 </script>
 
 <template>
-    <div id="Thread">
+    <div>
         <div id="BasicInfo">
             <h3>版主:{{owner}}</h3>
             <h3>涉及用户数:{{involvedUserNum}}</h3>
@@ -215,10 +215,6 @@ module.exports = {
 </template>
 
 <style lang="scss" scoped>
-#Thread {
-    border-style: solid;
-    font-family: sans-serif;
-}
 </style>
 
 

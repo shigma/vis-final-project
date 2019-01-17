@@ -131,7 +131,7 @@ module.exports = {
 </script>
 
 <template>
-    <div id="User">
+    <div>
         <div id="UserOverview">
             <h3>{{name}}</h3>
             <user-activity-plot
@@ -153,8 +153,4 @@ module.exports = {
 </template>
 
 <style lang="scss">
-#User {
-    border-style: solid;
-    font-family: sans-serif;
-}
 </style>
