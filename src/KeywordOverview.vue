@@ -118,7 +118,6 @@ module.exports = {
             this.keyword = param.keyword;
         });
     },
-    updated: function() {},
     methods: {
         filterWithTime(mailId) {
             let flag = true;
