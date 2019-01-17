@@ -15,7 +15,7 @@ module.exports = {
         DFAtree: [],
     }),
     components: {
-        ThreadKeywordCloud: require("./WordCloud.vue"),
+        ThreadKeywordCloud: require('./WordCloud.vue'),
     },
     computed: {
         involvedMailNum(){
@@ -79,7 +79,9 @@ module.exports = {
         this.DFAtree = trie.BuildSA(this.DFAtree);
     },
     mounted() {
-
+        eventBus.$on('mail-changed', param => {
+            this.id = param.threadId;
+        });
     },
     methods: {
         dateTrans(date){
@@ -138,7 +140,7 @@ module.exports = {
             }
             return ret;
         },
-        expandChange(row,expandedRows){
+        expandChange(row, expandedRows){
             if (expandedRows.length>1){
                 expandedRows.shift()
             }
@@ -150,7 +152,7 @@ module.exports = {
                 return 1;
             }
             return 0;
-        }
+        },
     },
 }
 /*
@@ -165,7 +167,7 @@ module.exports = {
             <h3>涉及邮件数:{{involvedMailNum}}</h3>
         </div>
         <div id="WordCloud">
-            <thread-keyword-cloud :data="keywordvalue" tag="thread" style="width:100%; height:200px;"></thread-keyword-cloud>
+            <thread-keyword-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"></thread-keyword-cloud>
         </div>
         <div id="Table">
             <el-table
