@@ -85,46 +85,8 @@ module.exports = {
     },
     methods: {
         dateTrans(date){
-            let tmp = date.split(/ |,|-/);
-            switch (tmp[1]){
-                case 'Jur': 
-                    tmp[0] = '01';
-                    break;
-                case 'Feb': 
-                    tmp[0] = '02';
-                    break;
-                case 'Mar': 
-                    tmp[0] = '03';
-                    break;
-                case 'Apr': 
-                    tmp[0] = '04';
-                    break;
-                case 'May': 
-                    tmp[0] = '05';
-                    break;
-                case 'Jun': 
-                    tmp[0] = '06';
-                    break;
-                case 'Jul': 
-                    tmp[0] = '07';
-                    break;
-                case 'Aug': 
-                    tmp[0] = '08';
-                    break;
-                case 'Sep': 
-                    tmp[0] = '09';
-                    break;
-                case 'Oct': 
-                    tmp[0] = '10';
-                    break;
-                case 'Nov': 
-                    tmp[0] = '11';
-                    break;
-                case 'Dec': 
-                    tmp[0] = '12';
-                    break;
-            }
-            return tmp[5]+'/'+tmp[0]+'/'+tmp[3]+' '+tmp[4];
+            let d = new Date(date);
+            return d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
         },
         getreferences(ref){
             let ret = [];
@@ -133,7 +95,7 @@ module.exports = {
             for (let i=0; i<size; i++){
                 let tmp = new Object();
                 let mId = tmp.id = ref[i];
-                tmp.date = maildata[mId].date;
+                tmp.date = this.dateTrans(maildata[mId].date);
                 tmp.subject = maildata[mId].subject;
                 tmp.user = userdata[maildata[mId].userId].name;
                 ret.push(tmp);

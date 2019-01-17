@@ -20,7 +20,7 @@ module.exports = {
         return tree;
     },
     insert(tree, str, strid){
-        str = ' '+str+' ';
+        str = ' '+str;
         let p = 1;
         for (let i=0; str[i]; i++){
             let si = str[i].charCodeAt();
@@ -82,7 +82,7 @@ module.exports = {
         return tree;
     },
     searchDFA(tree, str, ret){
-        str = str + ' ';
+        str = ' ' + str + ' ';
         let p = 1;
         for (let i=0; str[i]; i++){
             let si = str[i].charCodeAt();
