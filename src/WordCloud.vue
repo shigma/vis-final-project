@@ -58,6 +58,10 @@ module.exports = {
                 }
             });
             let obj = {
+                grid: {
+                    top: '20%',
+                    bottom: '10%',
+                },
                 series: [
                     {
                         type: "wordCloud",
@@ -78,8 +82,8 @@ module.exports = {
                         // Default to be put in the center and has 75% x 80% size.
                         left: "center",
                         top: "center",
-                        width: "70%",
-                        height: "80%",
+                        width: "80%",
+                        height: "90%",
                         right: null,
                         bottom: null,
 

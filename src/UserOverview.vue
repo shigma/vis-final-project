@@ -136,7 +136,7 @@ module.exports = {
             <user-activity-plot
                 :data="activity"
                 tag="UserOverview"
-                style="width:100%; height:200px;"
+                style="width:100%; height:150px;"
             ></user-activity-plot>
         </div>
         <div id="WordCloud">

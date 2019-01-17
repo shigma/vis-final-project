@@ -91,6 +91,10 @@ module.exports = {
                     left: "left",
                     text: "Activity"
                 },
+                grid: {
+                    top: 30,
+                    bottom: 20,
+                },
                 legend: {
                     left: "center",
                     data: ["邮件数"]

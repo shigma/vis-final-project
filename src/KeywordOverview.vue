@@ -135,7 +135,7 @@ module.exports = {
         <keyword-popularity
             :data="activity"
             tag="KeywordOverview"
-            style="width:100%; height:200px;"
+            style="width:100%; height:150px;"
         />
         <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
         <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>

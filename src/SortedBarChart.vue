@@ -52,14 +52,15 @@ module.exports = {
                 },
                 title: {
                     left: "center",
-                    text: ""
+                    text: "Most Related"
                 },
                 legend: {
-                    data: ["邮件数"]
+                    data: ["数量"]
                 },
                 grid: {
                     left: "3%",
                     right: "4%",
+                    top: 30,
                     bottom: "3%",
                     containLabel: true
                 },
