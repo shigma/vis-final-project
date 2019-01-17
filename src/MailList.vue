@@ -62,20 +62,20 @@ module.exports = {
     mounted: function() {},
     methods: {
         spanMethod({ row, column, rowIndex, columnIndex }) {
-          if (columnIndex === 2) {
-            return [1, 2]; // first rowspan, second column span
-          } else if (columnIndex === 1) {
-            return [1, 1];
-          }
-      },
-      sortByDate(data1, data2) {
-          if (data1.date < data2.date) {
-              return -1;
-          } else if (data1.date > data2.date) {
-              return 1;
-          }
-          return 0;
-      }
+            if (columnIndex === 2) {
+                return [1, 2]; // first rowspan, second column span
+            } else if (columnIndex === 1) {
+                return [1, 1];
+            }
+        },
+        sortByDate(data1, data2) {
+            if (data1.date < data2.date) {
+                return -1;
+            } else if (data1.date > data2.date) {
+                return 1;
+            }
+            return 0;
+        }
     }
 };
 </script>

@@ -11,6 +11,11 @@ Vue.prototype.dataset = {
     users: require('../dist/users'),
 }
 
+Vue.prototype.getMailText = function(mailId) {
+    const fileIndex = Math.floor(mailId / 100)
+    return require('../dist/text/' + fileIndex)[mailId % 100]
+}
+
 module.exports = {
     components: {
         UserOverview: require('./UserOverview.vue'),
@@ -136,7 +141,31 @@ body {
 }
 
 .view {
+    overflow-x: hidden;
     overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 0.6em;
+        height: 0.4em;
+    }
+
+    &::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
+        border-radius: 0.6em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 0.6em;
+    }
+    
+    &::-webkit-scrollbar-track:hover {
+        -box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
 }
 
 .border {
