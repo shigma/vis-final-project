@@ -6,11 +6,11 @@
  * @since 2019-1-9
  */
 
-const maildata = require("../dist/mails.json");
-const userdata = require("../dist/users.json");
-const keywords = require("../dist/keywords.json");
-const eventBus = require("../src/EventBus.js");
-const keywordExtraction = require("../src/Keyword.js");
+const maildata = require('../dist/mails.json');
+const userdata = require('../dist/users.json');
+const keywords = require('../dist/keywords.json');
+const eventBus = require('../src/EventBus.js');
+const keywordExtraction = require('../src/Keyword.js');
 
 let keywordMap = new Map();
 keywords.forEach(item => {
@@ -19,15 +19,15 @@ keywords.forEach(item => {
 
 module.exports = {
     components: {
-        KeywordUserCloud: require("./WordCloud.vue"),
-        KeywordPopularity: require("./ActivityPlot.vue"),
-        KeywordMailList: require("./MailList.vue"),
-        KeywordRelated: require("./SortedBarChart.vue")
+        KeywordUserCloud: require('./WordCloud.vue'),
+        KeywordPopularity: require('./ActivityPlot.vue'),
+        KeywordMailList: require('./MailList.vue'),
+        KeywordRelated: require('./SortedBarChart.vue'),
     },
     data: () => ({
-        keyword: "cmake",
+        keyword: 'cmake',
         beginDate: null,
-        endDate: null
+        endDate: null,
     }),
     computed: {
         // mailIds is an array of numbers
@@ -55,7 +55,7 @@ module.exports = {
                     result.push({
                         id: currUserId,
                         name: userdata[currUserId].name,
-                        value: 1
+                        value: 1,
                     });
                     resultIdMap.set(currUserId, result.length - 1);
                 } else {
@@ -80,10 +80,10 @@ module.exports = {
             let result = [];
             let resultIdMap = new Map();
             this.mailIds.filter(this.filterWithTime).forEach(id => {
-                keys = keywordExtraction.generateKeywords([id]);
+                const keys = keywordExtraction.generateKeywords([id]);
                 keys.forEach(key => {
                     if (key.name.toLowerCase() === this.keyword) return;
-                    resultId = resultIdMap.get(key.name);
+                    const resultId = resultIdMap.get(key.name);
                     if (resultId === undefined) {
                         result.push({ name: key.name, value: 1 });
                         resultIdMap.set(key.name, result.length - 1);
@@ -102,9 +102,9 @@ module.exports = {
     },
     created: function() {},
     mounted: function() {
-        eventBus.$on("date-filter-changed", dateFilter => {
+        eventBus.$on('date-filter-changed', dateFilter => {
             // this event should not be responded
-            if (!dateFilter.tag.includes("KeywordOverview")) {
+            if (!dateFilter.tag.includes('KeywordOverview')) {
                 return;
             }
 
@@ -112,7 +112,7 @@ module.exports = {
             this.beginDate = dateFilter.beginDate;
             this.endDate = dateFilter.endDate;
         });
-        eventBus.$on("keyword-changed", param => {
+        eventBus.$on('keyword-changed', param => {
             this.beginDate = null;
             this.endDate = null;
             this.keyword = param.keyword;
@@ -126,13 +126,13 @@ module.exports = {
             if (this.beginDate) flag &= date > this.beginDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
-        }
-    }
+        },
+    },
 };
 </script>
 
 <template>
-    <div id="keyword-overview">
+    <div>
         <h2>{{keyword}}</h2>
         <keyword-popularity
             :data="activity"
@@ -146,8 +146,4 @@ module.exports = {
 </template>
 
 <style>
-#keyword-overview {
-    border-style: solid;
-    font-family: sans-serif;
-}
 </style>
