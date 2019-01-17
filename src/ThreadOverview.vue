@@ -56,6 +56,7 @@ module.exports = {
                 value = trie.searchDFA(this.DFAtree, maildata[threaddata[this.id].mails[i]].subject, value)
             }
             for (let i=0; i<size; i++){
+                if (value[i]===0) continue;
                 let tmp = new Object();
                 tmp.name = this.keywordSet[i];
                 tmp.value = value[i];

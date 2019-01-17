@@ -21,6 +21,7 @@ module.exports = {
         UserOverview: require('./UserOverview.vue'),
         KeywordOverview: require('./KeywordOverview.vue'),
         ThreadOverview: require('./ThreadOverView.vue'),
+        Overview: require('./Overview.vue'),
     },
 
     data: () => ({
@@ -28,15 +29,19 @@ module.exports = {
         display: {
             user: {
                 show: true,
-                width: 0.3,
+                width: 0.25,
             },
             keyword: {
                 show: true,
-                width: 0.3,
+                width: 0.25,
             },
             thread: {
                 show: true,
-                width: 0.4,
+                width: 0.25,
+            },
+            overview: {
+                show: true,
+                width: 0.25,
             },
         },
     }),
@@ -64,6 +69,12 @@ module.exports = {
             return {
                 right: '0',
                 width: this.display.thread.width * 100 + '%',
+            }
+        },
+        overviewStyle() {
+            return {
+                right: this.display.thread.width * 100 + '%',
+                width: this.display.overview.width * 100 + '%',
             }
         },
     },
@@ -125,6 +136,7 @@ module.exports = {
         <div class="border right" ref="right" :style="rightBorderStyle"
             @mousedown.stop="startDrag('right', $event)"/>
         <div class="view" :style="threadStyle"><thread-overview/></div>
+        <div class="view" :style="overviewStyle"><overview/></div>
     </div>
 </template>
 
