@@ -25,8 +25,8 @@ module.exports = {
         <div class="title" @mousedown.middle.prevent.stop="handleClose">
             <i v-if="envelop !== undefined" @click.left.stop="triggerMailList"
                 class="icon-envelop" :class="{ active: showMailList }"/>
-            {{ title }}
             <i class="icon-close" @click.left.stop="handleClose"/>
+            <span v-text="title"/>
         </div>
         <div class="mail-list-container" :class="{ active: showMailList }">
             <slot name="mail-list"/>
@@ -43,6 +43,7 @@ module.exports = {
     transition: 0.5s ease;
     display: inline-block;
     position: relative;
+    box-sizing: border-box;
 
     > .title, > .container, > .mail-list-container {
         position: absolute;
@@ -60,6 +61,15 @@ module.exports = {
         font-size: 4vh;
         text-align: center;
         z-index: 10;
+        white-space: nowrap;
+
+        span {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            position: absolute;
+            left: 4vw;
+            right: 4vw;
+        }
 
         i {
             color: #909399;

@@ -150,6 +150,8 @@ module.exports = {
 <style lang="scss" scoped>
 
 .card.thread > .container > .mail-list {
+    height: 100%;
+    
     > .word-cloud, > .bar-chart {
         height: 28vh;
         width: 100%;
