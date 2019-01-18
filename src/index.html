@@ -16,7 +16,7 @@
   <body>
     <div id="app"></div>
     <script>
-       require('../build/transpile').then((result) => {
+        require('../build/transpile').then((result) => {
 	        const style = document.createElement('style')
 	        style.innerText = result.css
 	        document.head.appendChild(style)

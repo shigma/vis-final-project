@@ -102,11 +102,8 @@ module.exports = {
 </script>
 
 <template>
-    <div id="barchart" ref="barchart"></div>
+    <div class="bar-chart" ref="barchart"></div>
 </template>
 
 <style lang="scss" scoped>
-#barchart {
-    will-change: transform;
-}
 </style>

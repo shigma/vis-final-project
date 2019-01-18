@@ -24,14 +24,10 @@ const staticOptions = {
         seriesIndex: 0,
         min: 0,
     },
-    title: {
-        left: 'left',
-        text: 'Activity',
-    },
-    legend: {
-        left: 'center',
-        data: ['邮件数'],
-    },
+    // legend: {
+    //     left: 'center',
+    //     data: ['邮件数'],
+    // },
     tooltip: {
         trigger: 'axis',
     },
@@ -137,7 +133,7 @@ module.exports = {
 </script>
 
 <template>
-    <div></div>
+    <div class="line-chart"/>
 </template>
 
 <style lang="scss" scoped>
