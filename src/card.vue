@@ -7,19 +7,23 @@ module.exports = {
 </script>
 
 <template>
-    <div class="view">
-        <div class="title">{{ title }}</div>
+    <div class="card">
+        <div class="title"
+            @mousedown.middle.prevent.stop="$root.closeCard(type)">
+            {{ title }}
+        </div>
         <div class="container"><slot/></div>
     </div>
 </template>
 
 <style lang="scss" scoped>
 
-.view {
+.card {
     height: 100%;
     overflow: hidden;
-    overflow-y: hidden;
-    position: absolute;
+    transition: 0.5s ease;
+    display: inline-block;
+    position: relative;
 
     > .title, > .container {
         position: absolute;
@@ -31,6 +35,7 @@ module.exports = {
         top: 0;
         height: 6%;
         user-select: none;
+        cursor: -webkit-grab;
         background: #c0c3cc;
         line-height: 6vh;
         font-size: 4vh;

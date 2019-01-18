@@ -131,7 +131,7 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="name">
+    <Card :title="name" type="user">
         <div id="UserOverview">
             <user-activity-plot
                 :data="activity"

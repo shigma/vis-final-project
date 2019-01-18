@@ -142,7 +142,7 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="owner">
+    <Card :title="owner" type="thread">
         <div id="BasicInfo">
             <h3>涉及用户数:{{involvedUserNum}}</h3>
             <h3>涉及邮件数:{{involvedMailNum}}</h3>

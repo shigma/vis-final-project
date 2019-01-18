@@ -131,7 +131,7 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="keyword">
+    <Card :title="keyword" type="keyword">
         <keyword-popularity
             :data="activity"
             tag="KeywordOverview"

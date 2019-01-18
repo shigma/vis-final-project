@@ -120,7 +120,7 @@ module.exports = {
 </script>
 
 <template>
-    <Card title="Overview">
+    <Card title="Overview" type="overview">
         <mails-activity-plot
             :data="activity"
             tag="overview"

@@ -23,6 +23,7 @@ module.exports = {
         Keyword: require('./KeywordOverview.vue'),
         Thread: require('./ThreadOverView.vue'),
         Overview: require('./Overview.vue'),
+        Draggable: require('vuedraggable'),
     },
 
     data: () => ({
@@ -68,54 +69,67 @@ module.exports = {
     mounted() {
         addEventListener('resize', () => eventBus.$emit('resize'))
 
-        // dragging events
-        addEventListener('mouseup', () => {
-            // this.$refs.left.classList.remove('active')
-            // this.$refs.right.classList.remove('active')
-            this.dragging = null
-        }, { passive: true })
+        // // dragging events
+        // addEventListener('mouseup', () => {
+        //     // this.$refs.left.classList.remove('active')
+        //     // this.$refs.right.classList.remove('active')
+        //     this.dragging = null
+        // }, { passive: true })
 
-        addEventListener('mousemove', event => {
-            let left, right
-            if (this.dragging === 'left') {
-                left = 'user'
-                right = 'keyword'
-            } else if (this.dragging === 'right') {
-                left = 'keyword'
-                right = 'thread'
-            } else return
+        // addEventListener('mousemove', event => {
+        //     let left, right
+        //     if (this.dragging === 'left') {
+        //         left = 'user'
+        //         right = 'keyword'
+        //     } else if (this.dragging === 'right') {
+        //         left = 'keyword'
+        //         right = 'thread'
+        //     } else return
 
-            event.stopPropagation()
+        //     event.stopPropagation()
 
-            const baseWidth = innerWidth / this.totalWidth
-            const deltaX = (this.draggingLastX - event.clientX) / baseWidth
-            this.draggingLastX = event.clientX
-            if (this.display[left].width - deltaX < MIN_WIDTH) {
-                this.draggingLastX += (MIN_WIDTH - this.display[left].width + deltaX) * baseWidth
-                this.display[right].width += this.display[left].width - MIN_WIDTH
-                this.display[left].width = MIN_WIDTH
-            } else if (this.display[right].width + deltaX < MIN_WIDTH) {
-                this.draggingLastX -= (MIN_WIDTH - this.display[right].width - deltaX) * baseWidth
-                this.display[left].width -= MIN_WIDTH - this.display[right].width
-                this.display[right].width = MIN_WIDTH
-            } else {
-                this.display[left].width -= deltaX
-                this.display[right].width += deltaX
-            }
-        })
+        //     const baseWidth = innerWidth / this.totalWidth
+        //     const deltaX = (this.draggingLastX - event.clientX) / baseWidth
+        //     this.draggingLastX = event.clientX
+        //     if (this.display[left].width - deltaX < MIN_WIDTH) {
+        //         this.draggingLastX += (MIN_WIDTH - this.display[left].width + deltaX) * baseWidth
+        //         this.display[right].width += this.display[left].width - MIN_WIDTH
+        //         this.display[left].width = MIN_WIDTH
+        //     } else if (this.display[right].width + deltaX < MIN_WIDTH) {
+        //         this.draggingLastX -= (MIN_WIDTH - this.display[right].width - deltaX) * baseWidth
+        //         this.display[left].width -= MIN_WIDTH - this.display[right].width
+        //         this.display[right].width = MIN_WIDTH
+        //     } else {
+        //         this.display[left].width -= deltaX
+        //         this.display[right].width += deltaX
+        //     }
+        // })
     },
 
     methods: {
-        startDrag(position, event) {
-            this.dragging = position
-            this.$refs[position].classList.add('active')
-            this.draggingLastX = event.clientX
+        openCard() {},
+        closeCard(type) {
+            const index = this.cards.findIndex(card => card.type === type)
+            if (index >= 0) this.cards.splice(index, 1)
         },
-        getCardStyle(card, index) {
+        startDrag(position, event) {
+            // this.dragging = position
+            // this.$refs[position].classList.add('active')
+            // this.draggingLastX = event.clientX
+        },
+        getCardStyle() {
             return {
-                left: 100 / this.cards.length * index + '%',
-                width: 100 / this.cards.length + '%',
+                width: 100 / this.cards.length + 'vw',
             }
+        },
+        // Tranision Hooks
+        beforeTransition(el) {
+            el.style.left = el.offsetLeft + 'px'
+            el.style.position = 'absolute'
+        },
+        afterTransition(el) {
+            el.style.left = null
+            el.style.position = 'relative'
         },
     },
 }
@@ -124,14 +138,16 @@ module.exports = {
 
 <template>
     <div class="app" :class="{ dragging }">
-        <transition-group>
-            <component v-for="(card, index) in cards" :key="index" :is="card.type"
-                :style="getCardStyle(card, index)"/>
-        </transition-group>
-        <!-- <div class="border left" ref="left" :style="leftBorderStyle"
-            @mousedown.stop="startDrag('left', $event)"/> -->
-        <!-- <div class="border right" ref="right" :style="rightBorderStyle"
-            @mousedown.stop="startDrag('right', $event)"/> -->
+        <Draggable :list="cards" @start="dragging = true" @end="dragging = false"
+            :options="{ animation: 150, ghostClass: 'drag-ghost', handle: '.title' }">
+            <transition-group tag="div" name="card" class="cards"
+                :move-class="dragging ? 'no-transition' : ''"
+                @beforeEnter="beforeTransition" @afterEnter="afterTransition"
+                @beforeLeave="beforeTransition" @afterLeave="afterTransition">
+                <component v-for="(card, index) in cards" :key="index" :is="card.type"
+                    :style="getCardStyle(card, index)"/>
+            </transition-group>
+        </Draggable>
     </div>
 </template>
 
@@ -141,6 +157,26 @@ body {
     margin: 0;
     overflow: hidden;
 }
+
+.no-transition {
+    transition: none !important;
+}
+
+.drag-ghost {
+    opacity: 0.3;
+}
+
+.cards {
+    float: left;
+    top: 0px;
+    height: 100%;
+    position: absolute;
+    display: flex;
+}
+
+.card-enter { opacity: 0; transform: translateX(-100%) }
+.card-leave-to { opacity: 0; transform: translateY(-100%) }
+.card-enter-active, .card-leave-active { transition: 0.5s ease }
 
 .border {
     position: absolute;
