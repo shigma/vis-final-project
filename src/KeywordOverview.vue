@@ -19,6 +19,7 @@ keywords.forEach(item => {
 
 module.exports = {
     components: {
+        Card: require('./card.vue'),
         KeywordUserCloud: require('./WordCloud.vue'),
         KeywordPopularity: require('./ActivityPlot.vue'),
         KeywordMailList: require('./MailList.vue'),
@@ -131,8 +132,7 @@ module.exports = {
 </script>
 
 <template>
-    <div>
-        <h2>{{keyword}}</h2>
+    <Card :title="keyword">
         <keyword-popularity
             :data="activity"
             tag="KeywordOverview"
@@ -141,7 +141,7 @@ module.exports = {
         <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
         <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
         <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
-    </div>
+    </Card>
 </template>
 
 <style>

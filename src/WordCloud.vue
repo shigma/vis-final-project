@@ -6,7 +6,7 @@
  * @brief The component that visualize a word cloud
  * Each item in the prop data must have name and value field
  *
- * @author He, Hao
+ * @author He, Hao; Shigma
  * @since 2019-01-07
  */
 

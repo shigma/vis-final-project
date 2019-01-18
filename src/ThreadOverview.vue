@@ -1,6 +1,5 @@
 <script>
 
-const echarts = require('echarts');
 const userdata = require('../dist/users.json');
 const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
@@ -16,6 +15,7 @@ module.exports = {
         DFAtree: [],
     }),
     components: {
+        Card: require('./card.vue'),
         ThreadKeywordCloud: require('./WordCloud.vue'),
         UserRelated: require('./SortedBarChart.vue'),
     },
@@ -143,9 +143,8 @@ module.exports = {
 </script>
 
 <template>
-    <div>
+    <Card :title="owner">
         <div id="BasicInfo">
-            <h3>版主:{{owner}}</h3>
             <h3>涉及用户数:{{involvedUserNum}}</h3>
             <h3>涉及邮件数:{{involvedMailNum}}</h3>
         </div>
@@ -199,7 +198,7 @@ module.exports = {
                 label="用户">
             </el-table-column>
             </el-table>
-    </div>
+    </Card>
 </template>
 
 <style lang="scss" scoped>

@@ -20,6 +20,7 @@ module.exports = {
         endDate: null
     }),
     components: {
+        Card: require('./card.vue'),
         UserActivityPlot: require('./ActivityPlot.vue'),
         UserKeywordCloud: require('./WordCloud.vue'),
         UserMailList: require('./MailList.vue'),
@@ -131,9 +132,8 @@ module.exports = {
 </script>
 
 <template>
-    <div>
+    <Card :title="name">
         <div id="UserOverview">
-            <h3>{{name}}</h3>
             <user-activity-plot
                 :data="activity"
                 tag="UserOverview"
@@ -149,7 +149,7 @@ module.exports = {
         <div id="SortedBarChart">
             <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
         </div>
-    </div>
+    </Card>
 </template>
 
 <style lang="scss">

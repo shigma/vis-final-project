@@ -2,7 +2,7 @@
 
 Vue.use(require('element-ui'))
 
-const EventBus = require('./EventBus')
+const eventBus = require('./EventBus')
 const MIN_WIDTH = 0.1
 
 Vue.prototype.dataset = {
@@ -19,14 +19,32 @@ Vue.prototype.getMailText = function(mailId) {
 
 module.exports = {
     components: {
-        UserOverview: require('./UserOverview.vue'),
-        KeywordOverview: require('./KeywordOverview.vue'),
-        ThreadOverview: require('./ThreadOverView.vue'),
+        User: require('./UserOverview.vue'),
+        Keyword: require('./KeywordOverview.vue'),
+        Thread: require('./ThreadOverView.vue'),
         Overview: require('./Overview.vue'),
     },
 
     data: () => ({
         dragging: false,
+        cards: [
+            {
+                type: 'user',
+                width: 1,
+            },
+            {
+                type: 'keyword',
+                width: 1,
+            },
+            {
+                type: 'thread',
+                width: 1,
+            },
+            {
+                type: 'overview',
+                width: 1,
+            },
+        ],
         display: {
             user: {
                 show: true,
@@ -47,48 +65,13 @@ module.exports = {
         },
     }),
 
-    computed: {
-        leftBorderStyle() {
-            return {}
-        },
-        rightBorderStyle() {
-            return {}
-        },
-        userStyle() {
-            return {
-                left: '0',
-                width: this.display.user.width * 100 + '%',
-            }
-        },
-        keywordStyle() {
-            return {
-                left: this.display.user.width * 100 + '%',
-                width: this.display.keyword.width * 100 + '%',
-            }
-        },
-        threadStyle() {
-            return {
-                right: '0',
-                width: this.display.thread.width * 100 + '%',
-            }
-        },
-        overviewStyle() {
-            return {
-                right: this.display.thread.width * 100 + '%',
-                width: this.display.overview.width * 100 + '%',
-            }
-        },
-    },
-
     mounted() {
+        addEventListener('resize', () => eventBus.$emit('resize'))
 
-        addEventListener('resize', () => {
-            EventBus.$emit('resize')
-        })
-
+        // dragging events
         addEventListener('mouseup', () => {
-            this.$refs.left.classList.remove('active')
-            this.$refs.right.classList.remove('active')
+            // this.$refs.left.classList.remove('active')
+            // this.$refs.right.classList.remove('active')
             this.dragging = null
         }, { passive: true })
 
@@ -128,6 +111,12 @@ module.exports = {
             this.$refs[position].classList.add('active')
             this.draggingLastX = event.clientX
         },
+        getCardStyle(card, index) {
+            return {
+                left: 100 / this.cards.length * index + '%',
+                width: 100 / this.cards.length + '%',
+            }
+        },
     },
 }
 
@@ -135,14 +124,14 @@ module.exports = {
 
 <template>
     <div class="app" :class="{ dragging }">
-        <div class="view" :style="userStyle"><user-overview/></div>
-        <div class="border left" ref="left" :style="leftBorderStyle"
-            @mousedown.stop="startDrag('left', $event)"/>
-        <div class="view" :style="keywordStyle"><keyword-overview/></div>
-        <div class="border right" ref="right" :style="rightBorderStyle"
-            @mousedown.stop="startDrag('right', $event)"/>
-        <div class="view" :style="threadStyle"><thread-overview/></div>
-        <div class="view" :style="overviewStyle"><overview/></div>
+        <transition-group>
+            <component v-for="(card, index) in cards" :key="index" :is="card.type"
+                :style="getCardStyle(card, index)"/>
+        </transition-group>
+        <!-- <div class="border left" ref="left" :style="leftBorderStyle"
+            @mousedown.stop="startDrag('left', $event)"/> -->
+        <!-- <div class="border right" ref="right" :style="rightBorderStyle"
+            @mousedown.stop="startDrag('right', $event)"/> -->
     </div>
 </template>
 
@@ -153,40 +142,9 @@ body {
     overflow: hidden;
 }
 
-.view, .border {
+.border {
     position: absolute;
     height: 100%;
-}
-
-.view {
-    overflow-x: hidden;
-    overflow-y: scroll;
-
-    &::-webkit-scrollbar {
-        width: 0.6em;
-        height: 0.4em;
-    }
-
-    &::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
-        border-radius: 0.6em;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 0.6em;
-    }
-    
-    &::-webkit-scrollbar-track:hover {
-        -box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
-}
-
-.border {
     width: 2px;
     z-index: 2;
     opacity: 0;

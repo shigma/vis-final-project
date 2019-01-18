@@ -10,7 +10,7 @@
  *      https://www.jianshu.com/p/7994176fbcc4
  *      http://www.echartsjs.com/examples/editor.html?c=line-gradient
  *
- * @author He, Hao
+ * @author He, Hao; Shigma
  * @since 2019-01-07
  */
 

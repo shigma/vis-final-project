@@ -11,6 +11,7 @@ module.exports = {
         EndDate: null,
     }),
     components: {
+        Card: require('./card.vue'),
         WordCloud: require('./WordCloud.vue'),
         MailsActivityPlot: require('./ActivityPlot.vue'),
     },
@@ -119,7 +120,7 @@ module.exports = {
 </script>
 
 <template>
-    <div>
+    <Card title="Overview">
         <mails-activity-plot
             :data="activity"
             tag="overview"
@@ -131,7 +132,7 @@ module.exports = {
         <div ref="userCloud">
             <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;"/>
         </div>
-    </div>
+    </Card>
 </template>
 
 <style lang="scss" scoped>
