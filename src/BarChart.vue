@@ -90,7 +90,11 @@ module.exports = {
     methods: {
         setOption() {
             if (!this.chart) return;
-            let originalData = Array.from(this.data);
+            let originalData = Array.from(this.data).sort((a, b) => {
+                if (a.value > b.value) return 1;
+                if (a.value < b.value) return -1;
+                return 0;
+            });
             let dom = this.$refs.barchart;
             this.chart = echarts.init(dom);
             let nameList = originalData.map(function(item) {
