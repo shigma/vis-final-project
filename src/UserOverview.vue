@@ -52,7 +52,7 @@ module.exports = {
         relatedUsers() {
             // Use precomputed data
             if (this.beginDate === null && this.endDate === null)
-                return userdata[this.id].relatedUsers;
+                return userdata[this.id].relatedUsers.reverse();
 
             // Compute on-the-fly
             let result = [];
@@ -87,7 +87,7 @@ module.exports = {
                 else if (a.value < b.value) return 1;
                 return 0;
             });
-            return result.filter((user, index) => index <= 15);
+            return result.filter((user, index) => index <= 15).reverse();
         }
     },
     created() {

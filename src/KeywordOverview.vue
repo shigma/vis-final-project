@@ -75,7 +75,7 @@ module.exports = {
         relatedKeywords() {
             // Use precomputed data
             if (this.beginDate === null && this.endDate === null)
-                return keywordMap.get(this.keyword).relatedKeywords;
+                return keywordMap.get(this.keyword).relatedKeywords.reverse();
 
             // Compute on-the-fly
             let result = [];
@@ -98,7 +98,7 @@ module.exports = {
                 else if (a.value < b.value) return 1;
                 return 0;
             });
-            return result.filter((word, index) => index <= 15);
+            return result.filter((word, index) => index <= 15).reverse();
         }
     },
     created: function() {},
