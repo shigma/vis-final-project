@@ -23,7 +23,6 @@
     "@sfc2js/sass": "^2.0.0",
     "@shigma/svg-font": "^1.0.0",
     "commander": "^2.19.0",
-    "d3": "^5.7.0",
     "electron": "^3.0.12",
     "eslint": "^5.9.0",
     "eslint-plugin-vue": "^5.0.0",
@@ -34,6 +33,7 @@
     "echarts": "^4.2.0-rc.2",
     "echarts-wordcloud": "^1.1.3",
     "element-ui": "^2.4.11",
+    "neat-scroll": "^2.0.1",
     "throttle-debounce": "^2.1.0",
     "vuedraggable": "^2.17.0"
   }

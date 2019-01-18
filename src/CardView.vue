@@ -21,7 +21,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" :class="type">
         <div class="title" @mousedown.middle.prevent.stop="handleClose">
             <i v-if="envelop !== undefined" @click.left.stop="triggerMailList"
                 class="icon-envelop" :class="{ active: showMailList }"/>
@@ -107,27 +107,8 @@ module.exports = {
         overflow: hidden;
     }
 
-    ::-webkit-scrollbar {
-        width: 0.6em;
-        height: 0.4em;
-    }
-
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
-        border-radius: 0.6em;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2);
-        border-radius: 0.6em;
-    }
-    
-    ::-webkit-scrollbar-track:hover {
-        -box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4);
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+    &:not(:last-child) {
+        border-right: 2px solid #c0c4cc;
     }
 }
 

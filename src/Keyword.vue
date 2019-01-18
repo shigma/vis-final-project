@@ -18,9 +18,6 @@ keywords.forEach(item => {
 });
 
 module.exports = {
-    components: {
-        CardView: require('./card.vue'),
-    },
     data: () => ({
         keyword: 'mac',
         beginDate: null,
@@ -127,7 +124,7 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="keyword" type="keyword" class="keyword" envelop>
+    <card-view :title="keyword" type="keyword" envelop>
         <line-chart :data="activity" tag="KeywordOverview"/>
         <word-cloud :data="users" tag="user"/>
         <bar-chart :data="relatedKeywords" tag="keyword"/>
@@ -140,6 +137,10 @@ module.exports = {
 
 .card.keyword > .container > * {
     width: 100%;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #ebeef5;
+    }
 
     &.line-chart { height: 34vh }
     &.word-cloud { height: 30vh }
