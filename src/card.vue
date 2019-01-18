@@ -1,7 +1,7 @@
 <script>
 
 module.exports = {
-    props: ['type', 'title'],
+    props: ['type', 'title', 'envelop'],
 }
 
 </script>
@@ -10,7 +10,7 @@ module.exports = {
     <div class="card">
         <div class="title"
             @mousedown.middle.prevent.stop="$root.closeCard(type)">
-            <i class="icon-envelop" @click.stop=""/>
+            <i v-if="envelop !== undefined" class="icon-envelop" @click.stop=""/>
             {{ title }}
             <i class="icon-close" @click.stop="$root.closeCard(type)"/>
         </div>

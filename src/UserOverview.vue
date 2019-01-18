@@ -20,11 +20,7 @@ module.exports = {
         endDate: null,
     }),
     components: {
-        Card: require('./card.vue'),
-        MailList: require('./MailList.vue'),
-        LineChart: require('./ActivityPlot.vue'),
-        WordCloud: require('./WordCloud.vue'),
-        BarChart: require('./SortedBarChart.vue'),
+        CardView: require('./card.vue'),
     },
     computed: {
         name() {
@@ -131,12 +127,12 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="name" type="user" class="user">
+    <card-view :title="name" type="user" class="user" envelop>
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
         <mail-list :mails="mailIds" :startDate="beginDate" :endDate="endDate" trigger-thread/>
         <bar-chart :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
-    </Card>
+    </card-view>
 </template>
 
 <style lang="scss" scoped>
