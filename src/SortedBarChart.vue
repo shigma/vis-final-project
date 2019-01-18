@@ -5,18 +5,18 @@
  * @since 2019-01-10
  */
 
-const echarts = require("echarts");
-const eventBus = require("../src/EventBus.js");
+const echarts = require('echarts');
+const eventBus = require('./EventBus.js');
 
 module.exports = {
     props: {
         data: {
             required: true,
-            type: Object
+            type: Object,
         },
         tag: {
-            type: String
-        }
+            type: String,
+        },
     },
     data: () => ({}),
     mounted: function() {
@@ -25,7 +25,7 @@ module.exports = {
     watch: {
         originalData: function() {
             this.setEchart();
-        }
+        },
     },
     computed: {
         originalData() {
@@ -47,48 +47,48 @@ module.exports = {
 
             let obj = {
                 tooltip: {
-                    trigger: "axis",
+                    trigger: 'axis',
                     axisPointer: {
                         // 坐标轴指示器，坐标轴触发有效
-                        type: "shadow" // 默认为直线，可选为：'line' | 'shadow'
-                    }
+                        type: 'shadow', // 默认为直线，可选为："line' | 'shadow'
+                    },
                 },
                 title: {
-                    left: "center",
-                    text: this.title
+                    left: 'center',
+                    text: this.title,
                 },
                 legend: {
-                    data: ["邮件数"]
+                    data: ['邮件数'],
                 },
                 grid: {
-                    left: "3%",
-                    right: "4%",
-                    bottom: "3%",
-                    containLabel: true
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true,
                 },
                 xAxis: {
-                    type: "value"
+                    type: 'value',
                 },
                 yAxis: {
-                    type: "category",
-                    data: nameList
+                    type: 'category',
+                    data: nameList,
                 },
                 series: [
                     {
-                        name: "邮件数",
-                        type: "bar",
+                        name: '邮件数',
+                        type: 'bar',
                         label: {
                             normal: {
                                 show: true,
-                                position: "insideRight"
-                            }
+                                position: 'insideRight',
+                            },
                         },
-                        data: valueList
-                    }
-                ]
+                        data: valueList,
+                    },
+                ],
             };
             return obj;
-        }
+        },
     },
     methods: {
         setEchart() {
@@ -100,8 +100,8 @@ module.exports = {
         },
         chartChange() {
             this.chart.setOption(this.option);
-        }
-    }
+        },
+    },
 };
 </script>
 
