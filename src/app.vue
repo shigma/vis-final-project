@@ -2,8 +2,8 @@
 
 Vue.use(require('element-ui'))
 
-const eventBus = require('./EventBus')
-const MIN_WIDTH = 0.1
+// const MIN_WIDTH = 0.1
+const eventBus = Vue.prototype.$eventBus = require('./EventBus')
 
 Vue.prototype.dataset = {
     keywords: require('../dist/keywords'),
@@ -39,6 +39,7 @@ module.exports = {
             },
             {
                 type: 'thread',
+                id: null,
                 width: 1,
             },
             {
@@ -107,6 +108,11 @@ module.exports = {
     },
 
     methods: {
+        setCard(type, data) {
+            console.log(type, data)
+            const index = this.cards.findIndex(card => card.type === type)
+            if (index >= 0) Object.assign(this.cards[index], data)
+        },
         openCard() {},
         closeCard(type) {
             const index = this.cards.findIndex(card => card.type === type)
@@ -145,7 +151,7 @@ module.exports = {
                 @beforeEnter="beforeTransition" @afterEnter="afterTransition"
                 @beforeLeave="beforeTransition" @afterLeave="afterTransition">
                 <component v-for="(card, index) in cards" :key="index" :is="card.type"
-                    :style="getCardStyle(card, index)"/>
+                    :style="getCardStyle(card, index)" :data="card"/>
             </transition-group>
         </Draggable>
     </div>

@@ -8,6 +8,7 @@ const trie = require('./keywordTrie.js');
 const keyword_top100 = require('../dist/keywords_top100.json');
 
 module.exports = {
+    props: ['data'],
     data: () => ({
         id: -1,
         keywordSet: [],
@@ -19,22 +20,25 @@ module.exports = {
         UserRelated: require('./SortedBarChart.vue'),
     },
     computed: {
+        thread() {
+            return threaddata[typeof this.data.id === 'number' ? this.data.id : 2339]
+        },
         involvedMailNum(){
-            return threaddata[this.id].mails.length;
+            return this.thread.mails.length;
         },
         involvedUserNum(){
-            return threaddata[this.id].users.length;
+            return this.thread.users.length;
         },
         owner(){
-            let fmid = threaddata[this.id].mails[0];
+            let fmid = this.thread.mails[0];
             let ownerid = maildata[fmid].userId;
             return userdata[ownerid].name;
         },
         tabledata(){
             let data = [];
-            let size = threaddata[this.id].mails.length;
+            let size = this.thread.mails.length;
             for (let i=0; i<size; i++){
-                let mId = threaddata[this.id].mails[i];
+                let mId = this.thread.mails[i];
                 let tmp = new Object();
                 tmp.date = this.dateTrans(maildata[mId].date);
                 tmp.subject = maildata[mId].subject;
@@ -52,9 +56,9 @@ module.exports = {
             for (let i=0; i<size; i++){
                 value[i] = 0;
             }
-            let tsize = threaddata[this.id].mails.length;
+            let tsize = this.thread.mails.length;
             for (let i=0; i<tsize; i++){
-                value = trie.searchDFA(this.DFAtree, maildata[threaddata[this.id].mails[i]].subject, value)
+                value = trie.searchDFA(this.DFAtree, maildata[this.thread.mails[i]].subject, value)
             }
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;
@@ -68,7 +72,7 @@ module.exports = {
         },
         relatedUsers(){
             let data = [];
-            let users = threaddata[this.id].users;
+            let users = this.thread.users;
             let size = users.length;
             for (let i=0; i<size; i++){
                 data.push({
@@ -86,7 +90,6 @@ module.exports = {
         },
     },
     created() {
-        this.id = 2339;
         this.DFAtree = trie.initTree(this.DFAtree);
         let ksize = keyword_top100.length;
         for (let i=0; i<ksize; i++){
@@ -99,9 +102,6 @@ module.exports = {
         this.DFAtree = trie.BuildSA(this.DFAtree);
     },
     mounted() {
-        eventBus.$on('mail-changed', param => {
-            this.id = param.threadId;
-        });
     },
     methods: {
         dateTrans(date){
