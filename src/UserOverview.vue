@@ -52,7 +52,7 @@ module.exports = {
         relatedUsers() {
             // Use precomputed data
             if (this.beginDate === null && this.endDate === null)
-                return userdata[this.id].relatedUsers;
+                return userdata[this.id].relatedUsers.reverse();
 
             // Compute on-the-fly
             let result = [];
@@ -87,7 +87,7 @@ module.exports = {
                 else if (a.value < b.value) return 1;
                 return 0;
             });
-            return result.filter((user, index) => index <= 15);
+            return result.filter((user, index) => index <= 15).reverse();
         }
     },
     created() {
@@ -135,7 +135,7 @@ module.exports = {
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
         <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate"/>
-        <bar-chart :data="relatedUsers" style="width:100%; height:200px;"/>
+        <bar-chart :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
     </Card>
 </template>
 
