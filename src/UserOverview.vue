@@ -88,7 +88,7 @@ module.exports = {
                 return 0;
             });
             return result.filter((user, index) => index <= 15).reverse();
-        }
+        },
     },
     created() {
         // For test of this module
@@ -125,8 +125,8 @@ module.exports = {
             if (this.beginDate) flag &= date > this.beginDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
-        }
-    }
+        },
+    },
 };
 </script>
 

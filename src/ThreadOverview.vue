@@ -58,7 +58,8 @@ module.exports = {
             }
             let tsize = this.thread.mails.length;
             for (let i=0; i<tsize; i++){
-                value = trie.searchDFA(this.DFAtree, maildata[this.thread.mails[i]].subject, value)
+                //value = trie.searchDFA(this.DFAtree, maildata[this.thread.mails[i]].subject, value)
+                value = trie.searchDFA(this.DFAtree, this.getMailText(this.thread.mails[i]), value);
             }
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;
@@ -151,7 +152,7 @@ module.exports = {
             <thread-keyword-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"></thread-keyword-cloud>
         </div>
         <div id="SortedBarChart">
-            <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
+            <user-related :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
         </div>
         <div id="Table">
             <el-table
