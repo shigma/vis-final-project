@@ -8,6 +8,7 @@ const eventBus = require('../src/EventBus.js');
 const trie = require('../src/keywordTrie.js');
 const keyworddata = require('../dist/keywords.json');
 const keyword_100data = require('../dist/keywords_top100.json');
+const activityData = require('../dist/overviewActivityData.json');
 
 const keywordMap = new Map();
 keyworddata.forEach(item => {
@@ -28,6 +29,7 @@ module.exports = {
     }),
     components: {
         WordCloud: require('./WordCloud.vue'),
+        MailsActivityPlot: require("./ActivityPlot.vue"),
     },
     computed: {
         keywordclouddata(){
@@ -63,6 +65,7 @@ module.exports = {
             return data;
         },
         userclouddata(){
+            console.log(JSON.stringify(this.userSet));
             return this.userSet;
             /*
             let data = [];
@@ -86,6 +89,9 @@ module.exports = {
             return data;
             */
 
+        },
+        activity(){
+            return activityData;
         },
     },
     created() {
@@ -131,6 +137,11 @@ module.exports = {
             <h3>time_start:{{StartDate}}</h3>
             <h3>time_end:{{EndDate}}</h3>
         </div> -->
+        <mails-activity-plot
+            :data="activity"
+            tag="Overview"
+            style="width:100%; height:200px;"
+        ></mails-activity-plot>
         <div ref="wordCloud">
             <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;"/>
         </div>

@@ -12,7 +12,6 @@ const keyworddata = require('../dist/keywords.json')
 let keywordSet = [];
 
 let skipwords = new Set(['over']);
-//let sameRootWord = new Map([]);
 
 let size = keyworddata.length;
 for (let i=0; i<size; i++){
@@ -25,6 +24,10 @@ for (let i=0; i<size; i++){
         value_users: keyworddata[i].users.length, 
     });
 }
+
+let sameRootWord = new Map();
+//Map.set(, 'files')
+
 keywordSet.sort((a, b) => {
     if (a.value_mails > b.value_mails) return -1;
     if (a.value_mails < b.value_mails) return 1;
