@@ -6,7 +6,8 @@ module.exports = {
     props: ['mails', 'startDate', 'endDate', 'triggerThread'],
 
     data: () => ({
-        activeIndex: null,
+        activeId: null,
+        activeIndex: -1,
         activeText: '',
         currentText: '',
     }),
@@ -31,6 +32,13 @@ module.exports = {
         },
     },
 
+    watch: {
+        filteredMails(value) {
+            this.activeIndex = value.indexOf(this.activeId)
+            if (this.activeIndex < 0) this.activeId = null
+        },
+    },
+
     mounted() {
         this.neatScroll = new NeatScroll(this.$refs.list, {
             speed: 200,
@@ -45,11 +53,13 @@ module.exports = {
         handleClick(id, index) {
             if (this.triggerThread === undefined) {
                 if (this.activeIndex === index) {
-                    this.activeIndex = null
+                    this.activeIndex = -1
+                    this.activeId = null
                 } else {
                     this.currentText = this.activeText
                     this.activeText = this.getMailText(id)
                     this.activeIndex = index
+                    this.activeId = id
                 }
             } else {
                 this.$root.setCard('thread', { id: this.getMail(id).threadId })
@@ -103,10 +113,8 @@ module.exports = {
 .list {
     overflow-x: hidden;
     overflow-y: auto;
-    user-select: none;
 
     .mail {
-        cursor: pointer;
         font-size: 2vh;
         padding: 0.6vh 0.6vw;
         transition: 0.3s ease;

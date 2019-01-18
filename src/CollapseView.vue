@@ -54,7 +54,7 @@ module.exports = {
 </script>
 
 <template>
-    <div :class="{ header: $slots.header, closed: isClosed }">
+    <div class="collapse-view" :class="{ header: $slots.header, closed: isClosed }">
         <div class="slot-header" @click="onClickHeader" v-if="$slots.header">
             <slot name="header"/>
         </div>
@@ -68,20 +68,17 @@ module.exports = {
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
-& {
+.collapse-view {
     position: relative;
     background-color: transparent;
     width: -webkit-fill-available;
     transition: background-color 0.3s ease;
-    border-bottom: 1px solid #ebeef5;
 
     > .slot-header {
+        user-select: none;
         color: #303133;
-        padding: 8px 16px;
-        font-size: 20px;
-        line-height: 1.5em;
         font-weight: bold;
         border: none;
         outline: none;
@@ -94,9 +91,9 @@ module.exports = {
         position: relative;
         transition: 0.3s ease;
     }
-}
 
-&.header:hover { background-color: #f5f7fa }
-&.closed:not(.header) { border-bottom: none }
+    &.header:hover { background-color: #f5f7fa }
+    &.closed:not(.header) { border-bottom: none }
+}
 
 </style>
