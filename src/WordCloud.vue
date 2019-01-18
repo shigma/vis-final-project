@@ -112,17 +112,17 @@ module.exports = {
                     eventBus.$emit('keyword-changed', {
                         keyword: params.data.name,
                         tag: this.tag,
-                    });
+                    })
                 } else if (this.tag.includes('user')) {
                     eventBus.$emit('user-changed', {
                         userId: params.data.id,
                         tag: this.tag,
-                    });
+                    })
                 }
             }
         })
         this.setData()
-        eventBus.$on('resize', debounce(() => {
+        eventBus.$on('resize', debounce(100, () => {
             if (!this.chart) return
             this.chart.resize()
         }))
