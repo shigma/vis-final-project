@@ -142,9 +142,11 @@ module.exports = {
         <div id="WordCloud">
             <user-keyword-cloud :data="keywords" tag="keyword" style="width:100%; height:200px;"></user-keyword-cloud>
         </div>
+        <!--
         <div id="MailList">
             <user-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"></user-mail-list>
         </div>
+        -->
         <div id="SortedBarChart">
             <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
         </div>

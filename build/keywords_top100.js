@@ -23,7 +23,12 @@ let sameRootWord = new Map();
 sameRootWord.set('files', 9);
 sameRootWord.set('ver', 22);
 sameRootWord.set('verions', 22);
-
+sameRootWord.set('displays', 107);
+sameRootWord.set('displayed', 107);
+sameRootWord.set('issues', 359);
+sameRootWord.set('programming', 287);
+sameRootWord.set('programm', 287);
+sameRootWord.set('filters', 70);
 
 let size = keyworddata.length;
 for (let i=0; i<size; i++){

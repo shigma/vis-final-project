@@ -139,7 +139,7 @@ module.exports = {
             style="width:100%; height:200px;"
         />
         <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
-        <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
+        <!--<keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>-->
         <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
     </Card>
 </template>
