@@ -5,6 +5,16 @@ const NeatScroll = require('neat-scroll')
 module.exports = {
     props: ['mails', 'startDate', 'endDate', 'triggerThread'],
 
+    data: () => ({
+        activeIndex: null,
+        activeText: '',
+        currentText: '',
+    }),
+
+    components: {
+        CollapseView: require('./CollapseView.vue'),
+    },
+
     computed: {
         filteredMails() {
             return this.mails.filter(id => {
@@ -12,16 +22,11 @@ module.exports = {
                 let flag = true;
                 if (this.startDate) flag &= d > this.startDate;
                 if (this.endDate) flag &= d < this.endDate;
-                console.log(this.startDate + ';' + d + ',' + this.endDate + ';' + flag);
                 return flag;
             }).sort((a, b) => {
-                let d1 = this.getMail(a).date;
-                let d2 = this.getMail(b).date;
-                let ret = 0;
-                if (d1>d2) ret = 1;
-                if (d1<d2) ret = -1;
-                //console.log(d1+':'+d2+':'+ret)
-                return ret;
+                const d1 = this.getMail(a).date;
+                const d2 = this.getMail(b).date;
+                return d1 > d2 ? 1 : d1 < d2 ? -1 : 0;
             });
         },
     },
@@ -37,19 +42,27 @@ module.exports = {
         getMail(id) {
             return this.dataset.mails[id]
         },
-        handleClick(id) {
-            if (this.triggerThread === undefined) return
-            this.$root.setCard('thread', { id: this.getMail(id).threadId })
+        handleClick(id, index) {
+            if (this.triggerThread === undefined) {
+                if (this.activeIndex === index) {
+                    this.activeIndex = null
+                } else {
+                    this.currentText = this.activeText
+                    this.activeText = this.getMailText(id)
+                    this.activeIndex = index
+                }
+            } else {
+                this.$root.setCard('thread', { id: this.getMail(id).threadId })
+            }
         },
         handleScroll(event) {
             this.neatScroll.scrollByDelta(event.deltaY)
         },
-        getAuthor(id){
+        getAuthor(id) {
             return this.dataset.users[this.getMail(id).userId].name;
         },
-        getDate(id){
-            const date = this.getMail(id).date
-            return date;
+        getDate(id) {
+            return this.getMail(id).date
         },
     },
 }
@@ -63,10 +76,14 @@ module.exports = {
         </div>
         <slot/>
         <div ref="list" class="list" @mousewheel.prevent.stop="handleScroll">
-            <div class="mail" v-for="id in filteredMails" :key="id" @click.left.stop="handleClick(id)">
-                <div class="subject">{{ dataset.mails[id].subject }}</div>
-                <div class="mail-info">{{ getDate(id) }}, By {{ getAuthor(id) }}</div>
-            </div>
+            <collapse-view class="mail" v-for="(id, index) in filteredMails" :key="id"
+                :open="activeIndex === index" @toggle="handleClick(id, index)">
+                <template slot="header">
+                    <div class="subject">{{ dataset.mails[id].subject }}</div>
+                    <div class="mail-info">{{ getDate(id) }}, by {{ getAuthor(id) }}</div>
+                </template>
+                {{ activeIndex === index ? activeText : currentText }}
+            </collapse-view>
         </div>
     </div>
 </template>
@@ -92,18 +109,19 @@ module.exports = {
         cursor: pointer;
         font-size: 2vh;
         padding: 0.6vh 0.6vw;
+        transition: 0.3s ease;
         border-top: 1px solid #ebeef5;
 
         &:hover {
             background: #f5f7fa;
         }
 
-        > .subject {
+        .subject {
             font-size: 2.4vh;
             font-weight: bold;
         }
 
-        > .mail-info {
+        .mail-info {
             color: #606266;
         }
     }
