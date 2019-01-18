@@ -49,6 +49,9 @@ module.exports = {
             }
             return data;
         },
+        mailIds(){
+            return this.thread.mails;
+        },
         keywordvalue(){
             let data = [];
             let value = [];
@@ -148,13 +151,10 @@ module.exports = {
             <h3>涉及用户数:{{involvedUserNum}}</h3>
             <h3>涉及邮件数:{{involvedMailNum}}</h3>
         </div>
-        <div id="WordCloud">
-            <thread-keyword-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"></thread-keyword-cloud>
-        </div>
-        <div id="SortedBarChart">
-            <user-related :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
-        </div>
-        <div id="Table">
+        <word-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"/>
+        <bar-chart :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
+        <mail-list :mails="mailIds"/>
+        <!-- <div id="Table">
             <el-table
             :data="tabledata"
             style="width: 100%"
@@ -197,7 +197,7 @@ module.exports = {
                 prop="user"
                 label="用户">
             </el-table-column>
-            </el-table>
+            </el-table> -->
     </Card>
 </template>
 
