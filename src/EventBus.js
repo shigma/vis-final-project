@@ -19,5 +19,7 @@
  *        endDate: Date, must be Javascript Date() Object
  *        tag: String, for custom tagging
  *    }
+ * 4. resize
+ *    Emitted when layout changed.
  */
 module.exports = new Vue();

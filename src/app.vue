@@ -2,6 +2,7 @@
 
 Vue.use(require('element-ui'))
 
+const EventBus = require('./EventBus')
 const MIN_WIDTH = 0.1
 
 Vue.prototype.dataset = {
@@ -80,6 +81,11 @@ module.exports = {
     },
 
     mounted() {
+
+        addEventListener('resize', () => {
+            EventBus.$emit('resize')
+        })
+
         addEventListener('mouseup', () => {
             this.$refs.left.classList.remove('active')
             this.$refs.right.classList.remove('active')
