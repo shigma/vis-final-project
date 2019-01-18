@@ -9,7 +9,7 @@
  */
 
 const maildata = require("../dist/mails.json");
-const eventBus = require('../src/EventBus.js');
+const eventBus = require('./EventBus.js');
 
 module.exports = {
     props: {

@@ -4,8 +4,8 @@ const echarts = require('echarts');
 const userdata = require('../dist/users.json');
 const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
-const eventBus = require('../src/EventBus.js');
-const trie = require('../src/keywordTrie.js');
+const eventBus = require('./EventBus.js');
+const trie = require('./keywordTrie.js');
 const keyworddata = require('../dist/keywords.json')
 
 module.exports = {

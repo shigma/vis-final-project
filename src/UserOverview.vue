@@ -6,11 +6,10 @@
  * @since  2019-01-02
  */
 
-const echarts = require("echarts");
-const userdata = require("../dist/users.json");
-const maildata = require("../dist/mails.json");
-const eventBus = require("../src/EventBus.js");
-const keywordExtraction = require("../src/Keyword.js");
+const userdata = require('../dist/users');
+const maildata = require('../dist/mails');
+const eventBus = require('./EventBus');
+const keywordExtraction = require('./Keyword');
 
 module.exports = {
     data: () => ({
@@ -21,10 +20,10 @@ module.exports = {
         endDate: null
     }),
     components: {
-        UserActivityPlot: require("./ActivityPlot.vue"),
-        UserKeywordCloud: require("./WordCloud.vue"),
-        UserMailList: require("./MailList.vue"),
-        UserRelated: require("./SortedBarChart.vue")
+        UserActivityPlot: require('./ActivityPlot.vue'),
+        UserKeywordCloud: require('./WordCloud.vue'),
+        UserMailList: require('./MailList.vue'),
+        UserRelated: require('./SortedBarChart.vue')
     },
     computed: {
         name() {
@@ -60,9 +59,9 @@ module.exports = {
             this.mailIds.filter(this.filterWithTime).forEach(currMailId => {
                 let mail = maildata[currMailId];
                 let currUserIds = [];
-                if (mail.inReplyTo != undefined)
+                if (mail.inReplyTo)
                     currUserIds.push(maildata[mail.inReplyTo].userId);
-                if (mail.replies != undefined)
+                if (mail.replies)
                     mail.replies.forEach(r => {
                         currUserIds.push(maildata[r].userId);
                     });
@@ -70,11 +69,11 @@ module.exports = {
                 currUserIds.forEach(currUserId => {
                     if (currUserId === -1 || currUserId === this.id) return;
                     let resultId = resultIdMap.get(currUserId);
-                    if (resultId === undefined) {
+                    if (!resultId) {
                         result.push({
                             id: currUserId,
                             name: userdata[currUserId].name,
-                            value: 1
+                            value: 1,
                         });
                         resultIdMap.set(currUserId, result.length - 1);
                     } else {
@@ -90,29 +89,30 @@ module.exports = {
             return result.filter((user, index) => index <= 15);
         }
     },
-    created: function() {
+    created() {
         // For test of this module
         let userId = 0;
         for (let i = 0; i < userdata.length; ++i) {
-            if (userdata[i].name === "Michael Jackson") {
+            if (userdata[i].name === 'Michael Jackson') {
                 userId = i;
                 break;
             }
         }
         // Basic data
         this.id = userdata[userId].id;
-    },
-    mounted: function() {
-        eventBus.$on("date-filter-changed", param => {
+        console.log(1)
+
+        eventBus.$on('date-filter-changed', param => {
             // This event should not be responded
-            if (!param.tag.includes("UserOverview")) {
+            if (!param.tag.includes('UserOverview')) {
                 return;
             }
             // Set the new date filter
             this.beginDate = param.beginDate;
             this.endDate = param.endDate;
         });
-        eventBus.$on("user-changed", param => {
+        window.foo=eventBus
+        eventBus.$on('user-changed', param => {
             this.beginDate = null;
             this.endDate = null;
             this.id = param.userId;

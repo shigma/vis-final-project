@@ -9,8 +9,8 @@
 const maildata = require('../dist/mails.json');
 const userdata = require('../dist/users.json');
 const keywords = require('../dist/keywords.json');
-const eventBus = require('../src/EventBus.js');
-const keywordExtraction = require('../src/Keyword.js');
+const eventBus = require('./EventBus.js');
+const keywordExtraction = require('./Keyword.js');
 
 let keywordMap = new Map();
 keywords.forEach(item => {
