@@ -18,8 +18,8 @@
  * @date   2018-12-26
  */
 
-fs = require('fs');
-meta_data = require('./dist/meta.json');
+let fs = require('fs');
+let meta_data = require('./dist/meta.json');
 
 // The output data structure that stores user information
 let user_info = [];
@@ -36,7 +36,7 @@ for (let i = 0; i < meta_data.length; ++i) {
     let name = name_regex.exec(item.From);
 
     // Discard malformed data
-    if (mail === null || name == null) {
+    if (mail === null || name === null) {
         console.log('Discarded malfromed data: ' + item.From);
         continue;
     }
@@ -55,7 +55,7 @@ for (let i = 0; i < meta_data.length; ++i) {
             break;
         }
     }
-    if (user_id == -1) { 
+    if (user_id === -1) { 
         // No user, add a new item
         let user = new Object();
         user.Name = name;
@@ -97,13 +97,13 @@ for (let i = 0; i < meta_data.length; ++i) {
 
     let user_id = userid_map.get(item.mail);
     let other = userid_map.get(meta_data_map.get(item.InReplyTo).mail);
-    if (other == null) continue; 
+    if (other === null) continue; 
     
     user_info[other].MailReceived.push(item.MessageID);
 
     let contact_id = -1;
     for (let j = 0; j < user_info[user_id].Contacts.length; ++j) {
-        if (user_info[other].MailAddress == user_info[user_id].Contacts[j].MailAddress) {
+        if (user_info[other].MailAddress === user_info[user_id].Contacts[j].MailAddress) {
             contact_id = j;
             break;
         }
@@ -120,5 +120,5 @@ for (let i = 0; i < meta_data.length; ++i) {
     }
 }
 
-console.log("Total number of users: " + user_info.length);
+console.log('Total number of users: ' + user_info.length);
 fs.writeFileSync('./dist/user.json', JSON.stringify(user_info, null, 2));

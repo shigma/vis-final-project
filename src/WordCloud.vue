@@ -143,5 +143,8 @@ module.exports = {
 </template>
 
 <style lang="scss" scoped>
+#wordcloud {
+    will-change: transform;
+}
 </style>
 
