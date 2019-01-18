@@ -21,7 +21,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" :class="type">
         <div class="title" @mousedown.middle.prevent.stop="handleClose">
             <i v-if="envelop !== undefined" @click.left.stop="triggerMailList"
                 class="icon-envelop" :class="{ active: showMailList }"/>
@@ -105,6 +105,10 @@ module.exports = {
         bottom: 0;
         z-index: 0;
         overflow: hidden;
+    }
+
+    &:not(:last-child) {
+        border-right: 2px solid #c0c4cc;
     }
 }
 

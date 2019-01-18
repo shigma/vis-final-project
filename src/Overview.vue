@@ -10,9 +10,6 @@ module.exports = {
         StartDate: null,
         EndDate: null,
     }),
-    components: {
-        CardView: require('./card.vue'),
-    },
     computed: {
         startYM(){
             if (this.StartDate===null){

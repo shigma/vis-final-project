@@ -24,7 +24,7 @@ module.exports = {
     },
 
     mounted() {
-        this.neatScroll = new NeatScroll(this.$el, {
+        this.neatScroll = new NeatScroll(this.$refs.list, {
             speed: 200,
             smooth: 24,
         })
@@ -54,13 +54,16 @@ module.exports = {
 </script>
 
 <template>
-    <div class="mail-list" @mousewheel.prevent.stop="handleScroll">
+    <div class="mail-list">
         <div class="general-info">
             <div>Total Mails: {{ filteredMails.length }}</div>
         </div>
-        <div class="mail" v-for="id in filteredMails" :key="id" @click.left.stop="handleClick(id)">
-            <div class="subject">{{ dataset.mails[id].subject }}</div>
-            <div class="mail-info">{{ getDate(id) }}, By {{ getAuthor(id) }}</div>
+        <slot/>
+        <div ref="list" class="list" @mousewheel.prevent.stop="handleScroll">
+            <div class="mail" v-for="id in filteredMails" :key="id" @click.left.stop="handleClick(id)">
+                <div class="subject">{{ dataset.mails[id].subject }}</div>
+                <div class="mail-info">{{ getDate(id) }}, By {{ getAuthor(id) }}</div>
+            </div>
         </div>
     </div>
 </template>
@@ -68,16 +71,22 @@ module.exports = {
 <style lang="scss">
 
 .mail-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.general-info {
+    font-size: 2.4vh;
+    padding: 0.6vh 0.6vw;
+}
+
+.list {
     overflow-x: hidden;
     overflow-y: auto;
     user-select: none;
 
-    .general-info {
-        font-size: 2.4vh;
-        padding: 0.6vh 0.6vw;
-    }
-
     .mail {
+        cursor: pointer;
         font-size: 2vh;
         padding: 0.6vh 0.6vw;
         border-top: 1px solid #ebeef5;

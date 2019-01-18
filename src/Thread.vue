@@ -1,11 +1,10 @@
 <script>
 
-const userdata = require('../dist/users.json');
-const maildata = require('../dist/mails.json');
-const threaddata = require('../dist/threads.json');
-const eventBus = require('./EventBus.js');
-const trie = require('./keywordTrie.js');
-const keyword_top100 = require('../dist/keywords_top100.json');
+const userdata = require('../dist/users');
+const maildata = require('../dist/mails');
+const threaddata = require('../dist/threads');
+const trie = require('./keywordTrie');
+const keyword_top100 = require('../dist/keywords_top100');
 
 module.exports = {
     props: ['data'],
@@ -14,11 +13,6 @@ module.exports = {
         keywordSet: [],
         DFAtree: [],
     }),
-    components: {
-        Card: require('./card.vue'),
-        ThreadKeywordCloud: require('./WordCloud.vue'),
-        UserRelated: require('./SortedBarChart.vue'),
-    },
     computed: {
         thread() {
             return threaddata[typeof this.data.id === 'number' ? this.data.id : 2339]
@@ -141,67 +135,26 @@ module.exports = {
         },
     },
 }
-/*
-*/
+
 </script>
 
 <template>
-    <Card :title="owner" type="thread">
-        <div id="BasicInfo">
-            <h3>涉及用户数:{{involvedUserNum}}</h3>
-            <h3>涉及邮件数:{{involvedMailNum}}</h3>
-        </div>
-        <word-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"/>
-        <bar-chart :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
-        <mail-list :mails="mailIds"/>
-        <!-- <div id="Table">
-            <el-table
-            :data="tabledata"
-            style="width: 100%"
-            @expand-change="expandChange"
-            stripe
-            height="400"
-            heightlight-cur-row>
-            <el-table-column type="expand" label="回复链表">
-                <template slot-scope="props">
-                    <el-table
-                    :data="getreferences(props.row.references)"
-                    style="width: 100%"
-                    stripe>
-                    <el-table-column
-                        prop="id"
-                        label="引用ID">
-                    </el-table-column>
-                    <el-table-column
-                        prop="date"
-                        label="时间">
-                    </el-table-column>
-                    <el-table-column
-                        prop="user"
-                        label="用户">
-                    </el-table-column>
-                    </el-table>
-                </template>
-            </el-table-column>
-            <el-table-column
-                prop="date"
-                label="日期"
-                sortable
-                :sort-method="sortByDate">
-            </el-table-column>
-            <el-table-column
-                prop="subject"
-                label="主题">
-            </el-table-column>
-            <el-table-column
-                prop="user"
-                label="用户">
-            </el-table-column>
-            </el-table> -->
-    </Card>
+    <card-view :title="owner" type="thread">
+        <mail-list :mails="mailIds">
+            <word-cloud :data="keywordvalue" tag="keyword"/>
+            <bar-chart :data="relatedUsers" tag="user"/>
+        </mail-list>
+    </card-view>
 </template>
 
 <style lang="scss" scoped>
+
+.card.thread > .container > .mail-list {
+    > .word-cloud, > .bar-chart {
+        height: 28vh;
+        width: 100%;
+        border-top: 1px solid #ebeef5;
+    }
+}
+
 </style>
-
-

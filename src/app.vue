@@ -1,6 +1,7 @@
 <script>
 
 Vue.use(require('element-ui'))
+Vue.component('card-view', require('./CardView.vue'))
 Vue.component('mail-list', require('./MailList.vue'))
 Vue.component('line-chart', require('./LineChart.vue'))
 Vue.component('bar-chart', require('./BarChart.vue'))
@@ -23,9 +24,9 @@ Vue.prototype.getMailText = function(mailId) {
 
 module.exports = {
     components: {
-        User: require('./UserOverview.vue'),
-        Keyword: require('./KeywordOverview.vue'),
-        Thread: require('./ThreadOverView.vue'),
+        User: require('./User.vue'),
+        Keyword: require('./Keyword.vue'),
+        Thread: require('./Thread.vue'),
         Overview: require('./Overview.vue'),
         Draggable: require('vuedraggable'),
     },

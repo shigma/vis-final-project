@@ -19,9 +19,6 @@ module.exports = {
         beginDate: null,
         endDate: null,
     }),
-    components: {
-        CardView: require('./card.vue'),
-    },
     computed: {
         name() {
             return userdata[this.id].name;
@@ -127,7 +124,7 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="name" type="user" class="user" envelop>
+    <card-view :title="name" type="user" envelop>
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
         <bar-chart :data="relatedUsers" tag="user"/>
@@ -140,6 +137,10 @@ module.exports = {
 
 .card.user > .container > * {
     width: 100%;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #ebeef5;
+    }
 
     &.line-chart { height: 34vh }
     &.word-cloud { height: 30vh }
