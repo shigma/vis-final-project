@@ -21,6 +21,7 @@
   "homepage": "https://github.com/Shigma/vis-final-project#readme",
   "devDependencies": {
     "@sfc2js/sass": "^2.0.0",
+    "@shigma/svg-font": "^1.0.0",
     "commander": "^2.19.0",
     "d3": "^5.7.0",
     "electron": "^3.0.12",

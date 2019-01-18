@@ -1,4 +1,5 @@
 const { performance } = require('perf_hooks')
+const svgFont = require('@shigma/svg-font')
 const readline = require('readline')
 const path = require('path')
 const fs = require('fs')
@@ -13,6 +14,11 @@ const keywordExtraction = require('../src/Keyword.js');
 // 如果 dist 文件夹不存在先创建之
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir)
 if (!fs.existsSync(textDir)) fs.mkdirSync(textDir)
+
+svgFont({
+    srcFile: path.resolve(__dirname, 'icons.svg'),
+    outFile: path.resolve(outDir, 'icons.css'),
+})
 
 /**
  * 将字符串转换成 camelCase

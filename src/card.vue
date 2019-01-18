@@ -10,7 +10,9 @@ module.exports = {
     <div class="card">
         <div class="title"
             @mousedown.middle.prevent.stop="$root.closeCard(type)">
+            <i class="icon-envelop" @click.stop=""/>
             {{ title }}
+            <i class="icon-close" @click.stop="$root.closeCard(type)"/>
         </div>
         <div class="container"><slot/></div>
     </div>
@@ -40,6 +42,27 @@ module.exports = {
         line-height: 6vh;
         font-size: 4vh;
         text-align: center;
+
+        i {
+            color: #909399;
+            cursor: pointer;
+            line-height: 4vh;
+            transition: 0.3s ease;
+        }
+
+        i:hover { color: #606266 }
+
+        i.icon-envelop {
+            float: left;
+            font-size: 3vh;
+            padding: 1vh 1.6vh;
+        }
+
+        i.icon-close {
+            float: right;
+            font-size: 2vh;
+            padding: 1vh 1.6vh;
+        }
     }
 
     > .container {
