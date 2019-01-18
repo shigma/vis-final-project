@@ -9,7 +9,7 @@ const trie = require('../src/keywordTrie.js');
 const keyworddata = require('../dist/keywords.json');
 const keyword_100data = require('../dist/keywords_top100.json');
 
-let keywordMap = new Map();
+const keywordMap = new Map();
 keyworddata.forEach(item => {
     keywordMap.set(item.keyword, item);
 });
@@ -18,8 +18,8 @@ module.exports = {
     data: () => ({
         StartDate: Date('Wed, 7 Nov 2001 02:09:35 +0100'),
         EndDate: Date('Sat, 29 Sep 2018 17:12:30 +0000'),
-        startYM: {y: 0, m: 1 },
-        endYM: {y: 17, m: 12 },
+        startYM: { y: 0, m: 1 },
+        endYM: { y: 17, m: 12 },
         startid: 0,
         endid: 42852,
         keywordSet: [],
@@ -27,7 +27,7 @@ module.exports = {
         userSet: [],
     }),
     components: {
-        OverviewKeywordCloud: require('./WordCloud.vue'),
+        WordCloud: require('./WordCloud.vue'),
     },
     computed: {
         keywordclouddata(){
@@ -123,21 +123,22 @@ module.exports = {
     },
 }
 </script>
+
 <template>
     <div>
-        <div id="BasicInfo">
+        <!-- <div id="BasicInfo">
             <h3>Overview</h3>
             <h3>time_start:{{StartDate}}</h3>
             <h3>time_end:{{EndDate}}</h3>
+        </div> -->
+        <div ref="wordCloud">
+            <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;"/>
         </div>
-        <div id="WordCloud">
-            <overview-keyword-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;"></overview-keyword-cloud>
-        </div>
-        <div id="UserCloud">
-            <overview-keyword-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;"></overview-keyword-cloud>
+        <div ref="userCloud">
+            <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;"/>
         </div>
     </div>
 </template>
+
 <style lang="scss" scoped>
 </style>
-

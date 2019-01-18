@@ -94,7 +94,7 @@ module.exports = {
     },
     data: () => ({}),
     watch: {
-        data: 'setData',
+        data: 'setOption',
     },
     computed: {
         maxValue() {
@@ -105,7 +105,7 @@ module.exports = {
     },
     mounted() {
         this.chart = echarts.init(this.$el)
-        this.chart.on('click', params => {
+        this.chart.on('click', debounce(100, params => {
             // Emit different type of event according to tag
             if (params.componentType === 'series') {
                 if (this.tag.includes('keyword')) {
@@ -120,15 +120,15 @@ module.exports = {
                     })
                 }
             }
-        })
-        this.setData()
+        }))
+        this.setOption()
         eventBus.$on('resize', debounce(100, () => {
             if (!this.chart) return
             this.chart.resize()
         }))
     },
     methods: {
-        setData() {
+        setOption() {
             this.chart.setOption({
                 series: [{ ...staticOptions, data: this.data }],
             });
