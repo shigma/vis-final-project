@@ -139,12 +139,9 @@ module.exports = {
 </script>
 
 <template>
-    <div></div>
+    <div class="word-cloud"/>
 </template>
 
 <style lang="scss" scoped>
-#wordcloud {
-    will-change: transform;
-}
 </style>
 

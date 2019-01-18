@@ -17,14 +17,14 @@ module.exports = {
         id: -1,
         // Filters
         beginDate: null,
-        endDate: null
+        endDate: null,
     }),
     components: {
         Card: require('./card.vue'),
-        UserActivityPlot: require('./ActivityPlot.vue'),
-        UserKeywordCloud: require('./WordCloud.vue'),
-        UserMailList: require('./MailList.vue'),
-        UserRelated: require('./SortedBarChart.vue')
+        MailList: require('./MailList.vue'),
+        LineChart: require('./ActivityPlot.vue'),
+        WordCloud: require('./WordCloud.vue'),
+        BarChart: require('./SortedBarChart.vue'),
     },
     computed: {
         name() {
@@ -131,27 +131,36 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="name" type="user">
-        <div id="UserOverview">
-            <user-activity-plot
-                :data="activity"
-                tag="UserOverview"
-                style="width:100%; height:150px;"
-            ></user-activity-plot>
-        </div>
-        <div id="WordCloud">
-            <user-keyword-cloud :data="keywords" tag="keyword" style="width:100%; height:200px;"></user-keyword-cloud>
-        </div>
-        <!--
-        <div id="MailList">
-            <user-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"></user-mail-list>
-        </div>
-        -->
-        <div id="SortedBarChart">
-            <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
-        </div>
+    <Card :title="name" type="user" class="user">
+        <line-chart :data="activity" tag="UserOverview"/>
+        <word-cloud :data="keywords" tag="keyword"/>
+        <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate"/>
+        <bar-chart :data="relatedUsers" style="width:100%; height:200px;"/>
     </Card>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.card.user > .container {
+    > .line-chart {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .word-cloud {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .mail-list {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .bar-chart {
+        width: 100%;
+        height: 24vh;
+    }
+}
+
 </style>

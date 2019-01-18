@@ -16,7 +16,7 @@ module.exports = {
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .card {
     height: 100%;

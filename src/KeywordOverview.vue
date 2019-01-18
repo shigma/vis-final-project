@@ -20,10 +20,10 @@ keywords.forEach(item => {
 module.exports = {
     components: {
         Card: require('./card.vue'),
-        KeywordUserCloud: require('./WordCloud.vue'),
-        KeywordPopularity: require('./ActivityPlot.vue'),
-        KeywordMailList: require('./MailList.vue'),
-        KeywordRelated: require('./SortedBarChart.vue'),
+        MailList: require('./MailList.vue'),
+        WordCloud: require('./WordCloud.vue'),
+        LineChart: require('./ActivityPlot.vue'),
+        BarChart: require('./SortedBarChart.vue'),
     },
     data: () => ({
         keyword: 'mac',
@@ -131,17 +131,36 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="keyword" type="keyword">
-        <keyword-popularity
-            :data="activity"
-            tag="KeywordOverview"
-            style="width:100%; height:150px;"
-        />
-        <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
-        <!--<keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>-->
-        <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
+    <Card :title="keyword" type="keyword" class="keyword">
+        <line-chart :data="activity" tag="KeywordOverview"/>
+        <word-cloud :data="users" tag="user"/>
+        <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate"/>
+        <bar-chart :data="relatedKeywords"/>
     </Card>
 </template>
 
-<style>
+<style lang="scss" scoped>
+
+.card.keyword > .container {
+    > .line-chart {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .word-cloud {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .mail-list {
+        width: 100%;
+        height: 24vh;
+    }
+
+    > .bar-chart {
+        width: 100%;
+        height: 24vh;
+    }
+}
+
 </style>
