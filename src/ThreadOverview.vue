@@ -16,6 +16,7 @@ module.exports = {
     }),
     components: {
         ThreadKeywordCloud: require('./WordCloud.vue'),
+        UserRelated: require('./SortedBarChart.vue'),
     },
     computed: {
         involvedMailNum(){
@@ -42,7 +43,7 @@ module.exports = {
                 //console.log(tmp.references)
                 data.push(tmp);
             }
-            return data
+            return data;
         },
         keywordvalue(){
             let data = [];
@@ -65,6 +66,24 @@ module.exports = {
             //console.log(JSON.stringify(data));
             return data;
         },
+        relatedUsers(){
+            let data = [];
+            let users = threaddata[this.id].users;
+            let size = users.length;
+            for (let i=0; i<size; i++){
+                data.push({
+                    id: users[i].id,
+                    value: users[i].mails.length,
+                    name: userdata[users[i].id].name,
+                });
+            }
+            data.sort((a, b) => {
+                if (a.value > b.value) return 1;
+                if (a.value < b.value) return -1;
+                return 0;
+            })
+            return data;
+        }
     },
     created() {
         this.id = 2339;
@@ -131,6 +150,9 @@ module.exports = {
         </div>
         <div id="WordCloud">
             <thread-keyword-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"></thread-keyword-cloud>
+        </div>
+        <div id="SortedBarChart">
+            <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
         </div>
         <div id="Table">
             <el-table
