@@ -1,30 +1,14 @@
 <script>
 
-const echarts = require('echarts');
-const userdata = require('../dist/users.json');
-const maildata = require('../dist/mails.json');
-const threaddata = require('../dist/threads.json');
 const eventBus = require('./EventBus.js');
-const trie = require('./keywordTrie.js');
-const keyworddata = require('../dist/keywords.json');
 const keyword_100data = require('../dist/keywords_top100.json');
 const usercountdata = require('../dist/users_countByMonth.json');
 const activityData = require('../dist/overviewActivityData.json');
-
-const keywordMap = new Map();
-keyworddata.forEach(item => {
-    keywordMap.set(item.keyword, item);
-});
 
 module.exports = {
     data: () => ({
         StartDate: null,
         EndDate: null,
-        startid: 0,
-        endid: 42852,
-        keywordSet: [],
-        DFAtree: [],
-        userSet: [],
     }),
     components: {
         WordCloud: require('./WordCloud.vue'),
@@ -117,26 +101,6 @@ module.exports = {
         },
     },
     created() {
-        this.DFAtree = trie.initTree(this.DFAtree);
-        let ksize = keyworddata.length;
-        for (let i=0; i<ksize; i++){
-            this.keywordSet.push(keyworddata[i].keyword);
-        }
-        let size = this.keywordSet.length;
-        for (let i=0; i<size; i++){
-            this.DFAtree = trie.insert(this.DFAtree, this.keywordSet[i], i);
-        }
-        this.DFAtree = trie.BuildSA(this.DFAtree);
-
-        this.userSet = [];
-        let usize = userdata.length;
-        for (let i=0; i<usize; i++){
-            let tmp = new Object();
-            tmp.name = userdata[i].name;
-            tmp.value = userdata[i].mails.length;
-            tmp.id = i;
-            this.userSet.push(tmp);
-        }
     },
     mounted() {
         eventBus.$on('date-filter-changed', dateFilter => {
@@ -147,8 +111,6 @@ module.exports = {
             // change date filter data
             this.StartDate = dateFilter.beginDate;
             this.EndDate = dateFilter.endDate;
-            //console.log(this.StartDate);
-            //console.log(JSON.stringify(this.startYM));
         });
     },
     methods: {
@@ -158,11 +120,6 @@ module.exports = {
 
 <template>
     <div>
-        <!-- <div id="BasicInfo">
-            <h3>Overview</h3>
-            <h3>time_start:{{StartDate}}</h3>
-            <h3>time_end:{{EndDate}}</h3>
-        </div> -->
         <mails-activity-plot
             :data="activity"
             tag="overview"
