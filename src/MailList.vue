@@ -1,5 +1,7 @@
 <script>
 
+const NeatScroll = require('neat-scroll')
+
 module.exports = {
     props: ['mails', 'startDate', 'endDate', 'triggerThread'],
 
@@ -21,6 +23,13 @@ module.exports = {
         },
     },
 
+    mounted() {
+        this.neatScroll = new NeatScroll(this.$el, {
+            speed: 200,
+            smooth: 24,
+        })
+    },
+
     methods: {
         getMail(id) {
             return this.dataset.mails[id]
@@ -28,6 +37,9 @@ module.exports = {
         handleClick(id) {
             if (this.triggerThread === undefined) return
             this.$root.setCard('thread', { id: this.getMail(id).threadId })
+        },
+        handleScroll(event) {
+            this.neatScroll.scrollByDelta(event.deltaY)
         },
         getAuthor(id){
             return this.dataset.users[this.getMail(id).userId].name;
@@ -42,7 +54,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="mail-list">
+    <div class="mail-list" @mousewheel.prevent.stop="handleScroll">
         <div class="general-info">
             <div>Total Mails: {{ filteredMails.length }}</div>
         </div>
@@ -57,7 +69,7 @@ module.exports = {
 
 .mail-list {
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     user-select: none;
 
     .general-info {
