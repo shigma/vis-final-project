@@ -91,10 +91,10 @@ module.exports = {
             if (params.areas[0]) {
                 let range = params.areas[0].coordRange;
                 if (range[0] > 0 && range[0] < this.data.length) {
-                    this.beginDate = new Date(this.data[range[0]][0]);
+                    this.beginDate = this.data[range[0]][0];
                 }
                 if (range[1] > 0 && range[1] < this.data.length) {
-                    this.endDate = new Date(this.data[range[1]][0]);
+                    this.endDate = this.data[range[1]][0];
                 }
             }
 

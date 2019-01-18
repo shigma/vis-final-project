@@ -117,7 +117,7 @@ module.exports = {
     methods: {
         filterWithTime(mailId) {
             let flag = true;
-            let date = new Date(maildata[mailId].date);
+            let date = maildata[mailId].date;
             if (this.beginDate) flag &= date > this.beginDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;

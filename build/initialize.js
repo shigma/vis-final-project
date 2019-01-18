@@ -194,7 +194,14 @@ files.forEach((fileName, fileIndex) => {
                 keywords.set(word.name, { keyword: word.name, mails: [data.id] })
             }
         })
-        
+        data.date = (date => {
+            let d = new Date(date);
+            let ret = d.getFullYear() + '/' + (d.getMonth()+1 < 10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1)) + 
+                '/' + (d.getDate() < 10 ? '0' + d.getDate() : d.getDate());
+            //console.log(ret);
+            return ret;
+        })(data.date);
+        //console.log(data.date);
         mails.set(data.messageId, data)
         delete data.messageId
     }

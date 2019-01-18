@@ -8,18 +8,20 @@ module.exports = {
     methods: {
         mailFilter() {
             return this.mails.filter(id => {
-                let d = new Date(maildata[id].date);
+                let d = maildata[id].date;
                 let flag = true;
-                if (this.startDate) flag &= d > new Date(this.startDate);
-                if (this.endDate) flag &= d < new Date(this.endDate);
+                if (this.startDate) flag &= d > this.startDate;
+                if (this.endDate) flag &= d < this.endDate;
                 console.log(this.startDate + ';' + d + ',' + this.endDate + ';' + flag);
                 return flag;
             }).sort((a, b) => {
-                let d1 = new Date(maildata[a].date);
-                let d2 = new Date(maildata[b].date);
-                if (d1>d1) return 1;
-                if (d1<d2) return -1;
-                return 0;
+                let d1 = maildata[a].date;
+                let d2 = maildata[b].date;
+                let ret = 0;
+                if (d1>d2) ret = 1;
+                if (d1<d2) ret = -1;
+                //console.log(d1+':'+d2+':'+ret)
+                return ret;
             });
         },
         onClick(id) {
@@ -33,8 +35,7 @@ module.exports = {
             return maildata[id].subject;
         },
         date(id){
-            let d = new Date(maildata[id].date);
-            return d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate();
+            return maildata[id].date;
         },
     },
 }
