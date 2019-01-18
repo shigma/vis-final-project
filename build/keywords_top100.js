@@ -3,6 +3,8 @@
 // 每年的第0月代表本年和
 // oid 是在原先的keywords中的id
 
+let debug = 0;
+
 const mailsdata = require('../dist/mails.json');
 const fs = require('fs');
 const path = require('path');
@@ -13,22 +15,40 @@ const keyworddata = require('../dist/keywords.json')
 //DFAtree = trie.initTree(DFAtree);
 let keywordSet = [];
 
-let skipwords = new Set(['over']);
+let skipwords = new Set([
+    'over',
+    'very',
+]);
+let sameRootWord = new Map();
+sameRootWord.set('files', 9);
+sameRootWord.set('ver', 22);
+sameRootWord.set('verions', 22);
+
 
 let size = keyworddata.length;
 for (let i=0; i<size; i++){
-    if (skipwords.has(keyworddata[i].keyword)) continue;
     keywordSet.push({
         id: i,
         oid: i,
         name: keyworddata[i].keyword,
         value_mails: keyworddata[i].mails.length,
-        value_users: keyworddata[i].users.length, 
+        mails: keyworddata[i].mails,
     });
 }
-
-let sameRootWord = new Map();
-//Map.set(, 'files')
+if (!debug)
+    for (let i=0; i<size; i++){
+        if (skipwords.has(keyworddata[i].keyword)){
+            keywordSet[i].value_mails = 0;
+            keywordSet[i].mails = [];
+        }
+        if (sameRootWord.has(keyworddata[i].keyword)){
+            let id = sameRootWord.get(keyworddata[i].keyword);
+            keywordSet[id].value_mails += keywordSet[i].value_mails;
+            keywordSet[id].mails = Array.from((new Set(keywordSet[i].mails.concat(keywordSet[id].mails))).values());
+            keywordSet[i].value_mails = 0;
+            keywordSet[i].mails = [];
+        }
+    }
 
 keywordSet.sort((a, b) => {
     if (a.value_mails > b.value_mails) return -1;
@@ -38,12 +58,22 @@ keywordSet.sort((a, b) => {
 let kw = [];
 size = keywordSet.length;
 for (let i=0; i<size; i++){
-    kw.push(keywordSet[i].name);
+    if (keyworddata[keywordSet[i].oid].keyword!==keywordSet[i].name){
+        console.log(keywordSet[i].name);
+    }
+    kw.push({
+        id: keywordSet[i].oid,
+        name: keywordSet[i].name,
+    });
 }
 size = 100;
 for (let i=0; i<size; i++){
-    let id = keywordSet[i].id;
-    let mdata = keyworddata[id].mails;
+    keywordSet[i].mails.sort((a, b) => {
+        if (a > b) return 1;
+        if (a < b) return -1;
+        return 0;
+    });
+    let mdata = keywordSet[i].mails;
     let msize = mdata.length;
     let year = [];
     for (let j=0; j<18; j++){
@@ -61,5 +91,7 @@ for (let i=0; i<size; i++){
 }
 //console.log(JSON.stringify(keywordSet.slice(start, start + 10), null, 2));
 fs.writeFileSync(path.resolve(outDir, 'keywords_top100.json'), JSON.stringify(keywordSet.slice(0, 100), null, 2));
+fs.writeFileSync(path.resolve(outDir, 'kwtmp.json'), JSON.stringify(kw, null, 2));
+
 
 

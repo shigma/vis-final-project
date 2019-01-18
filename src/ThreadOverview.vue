@@ -6,7 +6,8 @@ const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
 const eventBus = require('./EventBus.js');
 const trie = require('./keywordTrie.js');
-const keyworddata = require('../dist/keywords.json')
+const keyworddata = require('../dist/keywords.json');
+const keyword_top100 = require('../dist/keywords_top100.json');
 
 module.exports = {
     data: () => ({
@@ -88,9 +89,9 @@ module.exports = {
     created() {
         this.id = 2339;
         this.DFAtree = trie.initTree(this.DFAtree);
-        let ksize = keyworddata.length;
+        let ksize = keyword_top100.length;
         for (let i=0; i<ksize; i++){
-            this.keywordSet.push(keyworddata[i].keyword);
+            this.keywordSet.push(keyword_top100[i].name);
         }
         let size = this.keywordSet.length;
         for (let i=0; i<size; i++){
