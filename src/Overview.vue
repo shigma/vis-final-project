@@ -17,10 +17,8 @@ keyworddata.forEach(item => {
 
 module.exports = {
     data: () => ({
-        StartDate: Date('Wed, 7 Nov 2001 02:09:35 +0100'),
-        EndDate: Date('Sat, 29 Sep 2018 17:12:30 +0000'),
-        startYM: { y: 0, m: 1 },
-        endYM: { y: 17, m: 12 },
+        StartDate: null,
+        EndDate: null,
         startid: 0,
         endid: 42852,
         keywordSet: [],
@@ -29,9 +27,34 @@ module.exports = {
     }),
     components: {
         WordCloud: require('./WordCloud.vue'),
-        MailsActivityPlot: require("./ActivityPlot.vue"),
+        MailsActivityPlot: require('./ActivityPlot.vue'),
     },
     computed: {
+        startYM(){
+            if (this.StartDate===null){
+                return {
+                    'y': 0, m: 11,
+                }
+            }
+            let d = new Date(this.StartDate);
+            return {
+                'y': d.getFullYear() - 2001,
+                'm': d.getMonth() + 1,
+            };
+        },
+        endYM(){
+            if (this.EndDate===null){
+                return {
+                    'y': 17, m: 9,
+                }
+            }
+            let date = new Date(this.EndDate);
+            return {
+                'y': date.getFullYear() - 2001,
+                'm': date.getMonth() + 1,
+            };
+        },
+        
         keywordclouddata(){
             let data = [];
             let value = [];
@@ -65,7 +88,7 @@ module.exports = {
             return data;
         },
         userclouddata(){
-            console.log(JSON.stringify(this.userSet));
+            //console.log(JSON.stringify(this.userSet));
             return this.userSet;
             /*
             let data = [];
@@ -117,15 +140,19 @@ module.exports = {
         }
     },
     mounted() {
+        eventBus.$on('date-filter-changed', dateFilter => {
+            // this event should not be responded
+            if (!dateFilter.tag.includes('overview')) {
+                return;
+            }
+            // change date filter data
+            this.StartDate = dateFilter.beginDate;
+            this.EndDate = dateFilter.endDate;
+            console.log(this.StartDate);
+            console.log(JSON.stringify(this.startYM));
+        });
     },
     methods: {
-        filterWithTime(mailId) {
-            let flag = true;
-            let date = new Date(maildata[mailId].date);
-            if (this.StartDate) flag &= date > this.StartDate;
-            if (this.EndDate) flag &= date < this.EndDate;
-            return flag;
-        },
     },
 }
 </script>
@@ -139,7 +166,7 @@ module.exports = {
         </div> -->
         <mails-activity-plot
             :data="activity"
-            tag="Overview"
+            tag="overview"
             style="width:100%; height:200px;"
         ></mails-activity-plot>
         <div ref="wordCloud">
