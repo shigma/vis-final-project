@@ -88,6 +88,7 @@ for (let i=0; i<size; i++){
     }
     keywordSet[i].count = year;
     keywordSet[i].id = i;
+    delete keywordSet[i].mails;
 }
 //console.log(JSON.stringify(keywordSet.slice(start, start + 10), null, 2));
 fs.writeFileSync(path.resolve(outDir, 'keywords_top100.json'), JSON.stringify(keywordSet.slice(0, 100), null, 2));

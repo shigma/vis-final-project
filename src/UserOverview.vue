@@ -101,7 +101,6 @@ module.exports = {
         }
         // Basic data
         this.id = userdata[userId].id;
-        console.log(1)
 
         eventBus.$on('date-filter-changed', param => {
             // This event should not be responded
