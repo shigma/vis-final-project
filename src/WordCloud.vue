@@ -105,6 +105,7 @@ module.exports = {
     },
     mounted() {
         this.chart = echarts.init(this.$el)
+        this.setOption()
         this.chart.on('click', debounce(100, params => {
             // Emit different type of event according to tag
             if (params.componentType !== 'series') return
@@ -120,8 +121,6 @@ module.exports = {
                 })
             }
         }))
-        this.setOption()
-        window.bar=eventBus
         eventBus.$on('resize', debounce(100, () => {
             if (!this.chart) return
             this.chart.resize()
@@ -129,16 +128,18 @@ module.exports = {
     },
     methods: {
         setOption() {
+            if (!this.chart) return
             this.chart.setOption({
                 series: [{ ...staticOptions, data: this.data }],
             });
         },
     },
-};
+}
+
 </script>
 
 <template>
-    <div ref="keywordcloud"></div>
+    <div></div>
 </template>
 
 <style lang="scss" scoped>
