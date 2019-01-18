@@ -5,6 +5,8 @@
 
 const mailsdata = require('../dist/mails.json');
 const fs = require('fs');
+const path = require('path');
+const outDir = path.resolve(__dirname, '../dist');
 //const trie = require('../src/keywordTrie.js');
 const keyworddata = require('../dist/keywords.json')
 //let DFAtree = [];
@@ -58,6 +60,6 @@ for (let i=0; i<size; i++){
     keywordSet[i].id = i;
 }
 //console.log(JSON.stringify(keywordSet.slice(start, start + 10), null, 2));
-fs.writeFileSync('./dist/keywords_top100.json', JSON.stringify(keywordSet.slice(0, 100), null, 2));
+fs.writeFileSync(path.resolve(outDir, 'keywords_top100.json'), JSON.stringify(keywordSet.slice(0, 100), null, 2));
 
 

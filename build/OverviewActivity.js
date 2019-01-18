@@ -1,5 +1,7 @@
 const maildata = require('../dist/mails.json');
 const fs = require('fs');
+const path = require('path');
+const outDir = path.resolve(__dirname, '../dist');
 let activity = [];
 for (let i=0; i<18; i++){
     activity.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
@@ -18,4 +20,4 @@ for (let i=0; i<18; i++){
         ]);
     }
 }
-fs.writeFileSync('./dist/overviewActivityData.json', JSON.stringify(ret, null, 2));
+fs.writeFileSync(path.resolve(outDir, 'overviewActivityData.json'), JSON.stringify(ret, null, 2));

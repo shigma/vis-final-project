@@ -8,6 +8,7 @@ const eventBus = require('../src/EventBus.js');
 const trie = require('../src/keywordTrie.js');
 const keyworddata = require('../dist/keywords.json');
 const keyword_100data = require('../dist/keywords_top100.json');
+const usercountdata = require('../dist/users_countByMonth.json');
 const activityData = require('../dist/overviewActivityData.json');
 
 const keywordMap = new Map();
@@ -75,43 +76,41 @@ module.exports = {
             }
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;
-                let tmp = new Object();
-                tmp.name = this.keywordSet[i];
-                tmp.value = value[i];
                 data.push({
                     id: keyword_100data[i].oid,
                     name: keyword_100data[i].name,
                     value: value[i],
                 });
             }
-            //console.log(JSON.stringify(data));
             return data;
         },
         userclouddata(){
-            //console.log(JSON.stringify(this.userSet));
-            return this.userSet;
-            /*
             let data = [];
-            let size = userdata.length;
+            let value = [];
+            let size = usercountdata.length;
             for (let i=0; i<size; i++){
-                this.userSet[i].name = userdata[i].name;
-                this.userSet[i].value = 0;
-            }
-            for (let i=this.startid; i<=this.endid; i++){
-                let uid = maildata[i].userId;
-                if (uid>=0) this.userSet[uid].value++;
+                value[i] = 0;
+                let y = this.startYM.y;
+                let m = this.startYM.m;
+                for (let j=m; j<=12; j++){
+                    value[i] += usercountdata[i].count[y][j];
+                }
+                for (let j=y+1; j<this.endYM.y; j++){
+                    value[i] += usercountdata[i].count[j][0];
+                }
+                for (let j=1; j<=this.endYM.m; j++){
+                    value[i] += usercountdata[i].count[this.endYM.y][j];
+                }
             }
             for (let i=0; i<size; i++){
-                if (this.userSet[i].value===0) continue;
-                let tmp = new Object();
-                tmp.name = this.userSet[i].name;
-                tmp.value = this.userSet[i].value;
-                data.push(tmp);
+                if (value[i]===0) continue;
+                data.push({
+                    id: usercountdata[i].id,
+                    name: usercountdata[i].name,
+                    value: value[i],
+                });
             }
-            //console.log(JSON.stringify(data));
             return data;
-            */
-
         },
         activity(){
             return activityData;
@@ -148,8 +147,8 @@ module.exports = {
             // change date filter data
             this.StartDate = dateFilter.beginDate;
             this.EndDate = dateFilter.endDate;
-            console.log(this.StartDate);
-            console.log(JSON.stringify(this.startYM));
+            //console.log(this.StartDate);
+            //console.log(JSON.stringify(this.startYM));
         });
     },
     methods: {
