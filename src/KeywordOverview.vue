@@ -9,8 +9,8 @@
 const maildata = require('../dist/mails.json');
 const userdata = require('../dist/users.json');
 const keywords = require('../dist/keywords.json');
-const eventBus = require('../src/EventBus.js');
-const keywordExtraction = require('../src/Keyword.js');
+const eventBus = require('./EventBus.js');
+const keywordExtraction = require('./Keyword.js');
 
 let keywordMap = new Map();
 keywords.forEach(item => {
@@ -19,6 +19,7 @@ keywords.forEach(item => {
 
 module.exports = {
     components: {
+        Card: require('./card.vue'),
         KeywordUserCloud: require('./WordCloud.vue'),
         KeywordPopularity: require('./ActivityPlot.vue'),
         KeywordMailList: require('./MailList.vue'),
@@ -130,17 +131,16 @@ module.exports = {
 </script>
 
 <template>
-    <div>
-        <h2>{{keyword}}</h2>
+    <Card :title="keyword">
         <keyword-popularity
             :data="activity"
             tag="KeywordOverview"
             style="width:100%; height:150px;"
         />
         <keyword-user-cloud :data="users" tag="user" style="width:100%; height:200px;"/>
+        <!--<keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>-->
         <keyword-related :data="relatedKeywords" style="width:100%; height:200px;"/>
-        <keyword-mail-list :mailIds="mailIds" :beginDate="beginDate" :endDate="endDate"/>
-    </div>
+    </Card>
 </template>
 
 <style>

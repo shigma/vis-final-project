@@ -1,12 +1,11 @@
 <script>
 
-const echarts = require('echarts');
 const userdata = require('../dist/users.json');
 const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
-const eventBus = require('../src/EventBus.js');
-const trie = require('../src/keywordTrie.js');
-const keyworddata = require('../dist/keywords.json')
+const eventBus = require('./EventBus.js');
+const trie = require('./keywordTrie.js');
+const keyword_top100 = require('../dist/keywords_top100.json');
 
 module.exports = {
     data: () => ({
@@ -15,7 +14,9 @@ module.exports = {
         DFAtree: [],
     }),
     components: {
+        Card: require('./card.vue'),
         ThreadKeywordCloud: require('./WordCloud.vue'),
+        UserRelated: require('./SortedBarChart.vue'),
     },
     computed: {
         involvedMailNum(){
@@ -42,7 +43,7 @@ module.exports = {
                 //console.log(tmp.references)
                 data.push(tmp);
             }
-            return data
+            return data;
         },
         keywordvalue(){
             let data = [];
@@ -56,6 +57,7 @@ module.exports = {
                 value = trie.searchDFA(this.DFAtree, maildata[threaddata[this.id].mails[i]].subject, value)
             }
             for (let i=0; i<size; i++){
+                if (value[i]===0) continue;
                 let tmp = new Object();
                 tmp.name = this.keywordSet[i];
                 tmp.value = value[i];
@@ -64,13 +66,31 @@ module.exports = {
             //console.log(JSON.stringify(data));
             return data;
         },
+        relatedUsers(){
+            let data = [];
+            let users = threaddata[this.id].users;
+            let size = users.length;
+            for (let i=0; i<size; i++){
+                data.push({
+                    id: users[i].id,
+                    value: users[i].mails.length,
+                    name: userdata[users[i].id].name,
+                });
+            }
+            data.sort((a, b) => {
+                if (a.value > b.value) return 1;
+                if (a.value < b.value) return -1;
+                return 0;
+            })
+            return data;
+        },
     },
     created() {
         this.id = 2339;
         this.DFAtree = trie.initTree(this.DFAtree);
-        let ksize = keyworddata.length;
+        let ksize = keyword_top100.length;
         for (let i=0; i<ksize; i++){
-            this.keywordSet.push(keyworddata[i].keyword);
+            this.keywordSet.push(keyword_top100[i].name);
         }
         let size = this.keywordSet.length;
         for (let i=0; i<size; i++){
@@ -85,46 +105,8 @@ module.exports = {
     },
     methods: {
         dateTrans(date){
-            let tmp = date.split(/ |,|-/);
-            switch (tmp[1]){
-                case 'Jur': 
-                    tmp[0] = '01';
-                    break;
-                case 'Feb': 
-                    tmp[0] = '02';
-                    break;
-                case 'Mar': 
-                    tmp[0] = '03';
-                    break;
-                case 'Apr': 
-                    tmp[0] = '04';
-                    break;
-                case 'May': 
-                    tmp[0] = '05';
-                    break;
-                case 'Jun': 
-                    tmp[0] = '06';
-                    break;
-                case 'Jul': 
-                    tmp[0] = '07';
-                    break;
-                case 'Aug': 
-                    tmp[0] = '08';
-                    break;
-                case 'Sep': 
-                    tmp[0] = '09';
-                    break;
-                case 'Oct': 
-                    tmp[0] = '10';
-                    break;
-                case 'Nov': 
-                    tmp[0] = '11';
-                    break;
-                case 'Dec': 
-                    tmp[0] = '12';
-                    break;
-            }
-            return tmp[5]+'/'+tmp[0]+'/'+tmp[3]+' '+tmp[4];
+            let d = new Date(date);
+            return d.getFullYear() + '/' + (d.getMonth()+1) + '/' + d.getDate();
         },
         getreferences(ref){
             let ret = [];
@@ -133,7 +115,7 @@ module.exports = {
             for (let i=0; i<size; i++){
                 let tmp = new Object();
                 let mId = tmp.id = ref[i];
-                tmp.date = maildata[mId].date;
+                tmp.date = this.dateTrans(maildata[mId].date);
                 tmp.subject = maildata[mId].subject;
                 tmp.user = userdata[maildata[mId].userId].name;
                 ret.push(tmp);
@@ -160,14 +142,16 @@ module.exports = {
 </script>
 
 <template>
-    <div>
+    <Card :title="owner">
         <div id="BasicInfo">
-            <h3>版主:{{owner}}</h3>
             <h3>涉及用户数:{{involvedUserNum}}</h3>
             <h3>涉及邮件数:{{involvedMailNum}}</h3>
         </div>
         <div id="WordCloud">
             <thread-keyword-cloud :data="keywordvalue" tag="keyword" style="width:100%; height:200px;"></thread-keyword-cloud>
+        </div>
+        <div id="SortedBarChart">
+            <user-related :data="relatedUsers" style="width:100%; height:200px;"/>
         </div>
         <div id="Table">
             <el-table
@@ -213,7 +197,7 @@ module.exports = {
                 label="用户">
             </el-table-column>
             </el-table>
-    </div>
+    </Card>
 </template>
 
 <style lang="scss" scoped>

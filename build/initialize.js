@@ -34,7 +34,6 @@ const progress = new class {
 
     restart() {
         this._percentage = 0
-        return this
     }
 
     inspect(progress, callback) {
@@ -43,8 +42,8 @@ const progress = new class {
             this._percentage = percentage
             readline.clearLine(process.stdout, 0)
             readline.cursorTo(process.stdout, 0)
-            callback()
-            if (percentage !== 100) {
+            callback(percentage)
+            if (percentage < 100) {
                 process.stdout.write(percentage + '%')
             }
         }
@@ -219,7 +218,7 @@ console.log('\n');
 console.log('预计算user.activity...');
 const maildata = Array.from(mails.values());
 const userdata = Array.from(users.values());
-users.forEach((user, address) => {
+users.forEach(user => {
     let result = [];
     let resultIdMap = new Map();
     let minDate = new Date(maildata[user.mails[0]].date);
@@ -376,7 +375,7 @@ keywords.forEach(keyword => {
                 resultIdMap.set(key.name, result.length - 1);
             } else {
                 result[resultId].value++;
-            }s
+            }
         });
     });
     result.sort((a, b) => {
@@ -400,8 +399,14 @@ dumpFile('users', users)
 dumpFile('threads', threads)
 dumpFile('keywords', keywords)
 
+progress.restart()
+
 for (let index = 0; index < mailData.length / 100; ++index) {
     dumpFile('text/' + index, mailData.slice(index, index + 100))
+
+    progress.inspect((index + 1) * 100 / mailData.length, percentage => {
+        process.stdout.write(percentage < 100 ? '正在输出邮件内容... ' : '邮件内容输出完毕. ')
+    })
 }
 
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)
