@@ -67,6 +67,21 @@ module.exports = {
     mounted() {
         this.chart = echarts.init(this.$el);
         this.setOption();
+        this.chart.on('click', debounce(100, params => {
+            // Emit different type of event according to tag
+            if (params.componentType !== 'series') return
+            if (this.tag.includes('keyword')) {
+                eventBus.$emit('keyword-changed', {
+                    keyword: this.data[params.dataIndex].name,
+                    tag: this.tag,
+                })
+            } else if (this.tag.includes('user')) {
+                eventBus.$emit('user-changed', {
+                    userId: this.data[params.dataIndex].id,
+                    tag: this.tag,
+                })
+            }
+        }))
         eventBus.$on('resize', debounce(100, () => {
             if (!this.chart) return
             this.chart.resize()
