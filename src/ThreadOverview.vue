@@ -1,12 +1,10 @@
 <script>
 
-const echarts = require('echarts');
 const userdata = require('../dist/users.json');
 const maildata = require('../dist/mails.json');
 const threaddata = require('../dist/threads.json');
 const eventBus = require('./EventBus.js');
 const trie = require('./keywordTrie.js');
-const keyworddata = require('../dist/keywords.json');
 const keyword_top100 = require('../dist/keywords_top100.json');
 
 module.exports = {
@@ -84,7 +82,7 @@ module.exports = {
                 return 0;
             })
             return data;
-        }
+        },
     },
     created() {
         this.id = 2339;
