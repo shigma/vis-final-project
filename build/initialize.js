@@ -118,7 +118,7 @@ files.forEach((fileName, fileIndex) => {
                 }
                 case 'subject':
                     // 清理换行和 tab
-                    value = value.replace(/\s+/g, ' ')
+                    value = value.replace(/\s+/g, ' ').replace(/\[Paraview\]/i, '')
                     break
                 case 'inReplyTo': {
                     const match = value.match(/<([^>]+)>/g)

@@ -113,7 +113,6 @@ module.exports = {
 
     methods: {
         setCard(type, data) {
-            console.log(type, data)
             const index = this.cards.findIndex(card => card.type === type)
             if (index >= 0) Object.assign(this.cards[index], data)
         },
