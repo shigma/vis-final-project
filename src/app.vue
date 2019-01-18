@@ -1,6 +1,10 @@
 <script>
 
 Vue.use(require('element-ui'))
+Vue.component('mail-list', require('./MailList.vue'))
+Vue.component('line-chart', require('./LineChart.vue'))
+Vue.component('bar-chart', require('./BarChart.vue'))
+Vue.component('word-cloud', require('./WordCloud.vue'))
 
 // const MIN_WIDTH = 0.1
 const eventBus = Vue.prototype.$eventBus = require('./EventBus')

@@ -19,11 +19,7 @@ keywords.forEach(item => {
 
 module.exports = {
     components: {
-        Card: require('./card.vue'),
-        MailList: require('./MailList.vue'),
-        WordCloud: require('./WordCloud.vue'),
-        LineChart: require('./ActivityPlot.vue'),
-        BarChart: require('./SortedBarChart.vue'),
+        CardView: require('./card.vue'),
     },
     data: () => ({
         keyword: 'mac',
@@ -99,10 +95,10 @@ module.exports = {
                 return 0;
             });
             return result.filter((word, index) => index <= 15).reverse();
-        }
+        },
     },
-    created: function() {},
-    mounted: function() {
+    created() {},
+    mounted() {
         eventBus.$on('date-filter-changed', dateFilter => {
             // this event should not be responded
             if (!dateFilter.tag.includes('KeywordOverview')) {
@@ -131,12 +127,12 @@ module.exports = {
 </script>
 
 <template>
-    <Card :title="keyword" type="keyword" class="keyword">
+    <card-view :title="keyword" type="keyword" class="keyword" envelop>
         <line-chart :data="activity" tag="KeywordOverview"/>
         <word-cloud :data="users" tag="user"/>
         <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate" trigger-thread/>
         <bar-chart :data="relatedKeywords" tag="keyword"/>
-    </Card>
+    </card-view>
 </template>
 
 <style lang="scss" scoped>

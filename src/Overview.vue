@@ -11,9 +11,7 @@ module.exports = {
         EndDate: null,
     }),
     components: {
-        Card: require('./card.vue'),
-        WordCloud: require('./WordCloud.vue'),
-        MailsActivityPlot: require('./ActivityPlot.vue'),
+        CardView: require('./card.vue'),
     },
     computed: {
         startYM(){
@@ -120,19 +118,16 @@ module.exports = {
 </script>
 
 <template>
-    <Card title="Overview" type="overview">
-        <mails-activity-plot
-            :data="activity"
-            tag="overview"
-            style="width:100%; height:200px;"
-        ></mails-activity-plot>
+    <card-view title="Overview" type="overview">
+        <line-chart :data="activity" tag="overview"
+            style="width:100%; height:200px;"/>
         <div ref="wordCloud">
             <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;"/>
         </div>
         <div ref="userCloud">
             <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;"/>
         </div>
-    </Card>
+    </card-view>
 </template>
 
 <style lang="scss" scoped>
