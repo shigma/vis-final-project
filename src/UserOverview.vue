@@ -130,33 +130,20 @@ module.exports = {
     <card-view :title="name" type="user" class="user" envelop>
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
-        <mail-list :mails="mailIds" :startDate="beginDate" :endDate="endDate" trigger-thread/>
-        <bar-chart :data="relatedUsers" tag="user" style="width:100%; height:200px;"/>
+        <bar-chart :data="relatedUsers" tag="user"/>
+        <mail-list slot="mail-list" :mails="mailIds"
+            :startDate="beginDate" :endDate="endDate" trigger-thread/>
     </card-view>
 </template>
 
 <style lang="scss" scoped>
 
-.card.user > .container {
-    > .line-chart {
-        width: 100%;
-        height: 24vh;
-    }
+.card.user > .container > * {
+    width: 100%;
 
-    > .word-cloud {
-        width: 100%;
-        height: 24vh;
-    }
-
-    > .mail-list {
-        width: 100%;
-        height: 24vh;
-    }
-
-    > .bar-chart {
-        width: 100%;
-        height: 24vh;
-    }
+    &.line-chart { height: 34vh }
+    &.word-cloud { height: 30vh }
+    &.bar-chart { height: 30vh }
 }
 
 </style>

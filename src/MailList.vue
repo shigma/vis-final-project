@@ -23,7 +23,7 @@ module.exports = {
             });
         },
         onClick(id) {
-            if (!this.triggerThread) return
+            if (this.triggerThread === undefined) return
             this.$root.setCard('thread', { id: this.dataset.mails[id].threadId })
         },
         writer(id){
