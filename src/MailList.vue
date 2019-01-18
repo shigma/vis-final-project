@@ -2,11 +2,12 @@
 const maildata = require('../dist/mails.json');
 const userdata = require('../dist/users.json');
 module.exports = {
-    props: ['mails', 'startDate', 'endDate'],
+    props: ['mails', 'startDate', 'endDate', 'triggerThread'],
     computed: {
     },
     methods: {
         onClick(id) {
+            if (!this.triggerThread) return
             this.$root.setCard('thread', { id: this.dataset.mails[id].threadId })
         },
         writer(id){

@@ -134,7 +134,7 @@ module.exports = {
     <Card :title="keyword" type="keyword" class="keyword">
         <line-chart :data="activity" tag="KeywordOverview"/>
         <word-cloud :data="users" tag="user"/>
-        <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate"/>
+        <mail-list :mails="mailIds" :beginDate="beginDate" :endDate="endDate" trigger-thread/>
         <bar-chart :data="relatedKeywords" tag="keyword"/>
     </Card>
 </template>
