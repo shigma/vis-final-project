@@ -11,7 +11,8 @@ const keyworddata = require('../dist/keywords.json')
 //DFAtree = trie.initTree(DFAtree);
 let keywordSet = [];
 
-let skipwords = new Set([]);
+let skipwords = new Set(['over']);
+//let sameRootWord = new Map([]);
 
 let size = keyworddata.length;
 for (let i=0; i<size; i++){

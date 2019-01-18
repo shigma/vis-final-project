@@ -7,6 +7,7 @@ const threaddata = require('../dist/threads.json');
 const eventBus = require('../src/EventBus.js');
 const trie = require('../src/keywordTrie.js');
 const keyworddata = require('../dist/keywords.json');
+const keyword_100data = require('../dist/keywords_top100.json');
 
 let keywordMap = new Map();
 keyworddata.forEach(item => {
@@ -17,6 +18,8 @@ module.exports = {
     data: () => ({
         StartDate: Date('Wed, 7 Nov 2001 02:09:35 +0100'),
         EndDate: Date('Sat, 29 Sep 2018 17:12:30 +0000'),
+        startYM: {y: 0, m: 1 },
+        endYM: {y: 17, m: 12 },
         startid: 0,
         endid: 42852,
         keywordSet: [],
@@ -30,20 +33,31 @@ module.exports = {
         keywordclouddata(){
             let data = [];
             let value = [];
-            let size = this.keywordSet.length;
+            let size = keyword_100data.length;
             for (let i=0; i<size; i++){
-                //value[i] = 0;
-                value[i] = keyworddata[i].mails.length;
+                value[i] = 0;
+                let y = this.startYM.y;
+                let m = this.startYM.m;
+                for (let j=m; j<=12; j++){
+                    value[i] += keyword_100data[i].count[y][j];
+                }
+                for (let j=y+1; j<this.endYM.y; j++){
+                    value[i] += keyword_100data[i].count[j][0];
+                }
+                for (let j=1; j<=this.endYM.m; j++){
+                    value[i] += keyword_100data[i].count[this.endYM.y][j];
+                }
             }
-            //for (let i=this.startid; i<this.endid; i++){
-            //    value = trie.searchDFA(this.DFAtree, maildata[i].subject, value)
-            //}
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;
                 let tmp = new Object();
                 tmp.name = this.keywordSet[i];
                 tmp.value = value[i];
-                data.push(tmp);
+                data.push({
+                    id: keyword_100data[i].oid,
+                    name: keyword_100data[i].name,
+                    value: value[i],
+                });
             }
             //console.log(JSON.stringify(data));
             return data;
