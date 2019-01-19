@@ -99,8 +99,6 @@ module.exports = {
         }
         this.DFAtree = trie.BuildSA(this.DFAtree);
     },
-    mounted() {
-    },
     methods: {
         dateTrans(date){
             let d = new Date(date);

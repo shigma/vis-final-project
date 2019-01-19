@@ -30,9 +30,11 @@ module.exports = {
         cards: [
             {
                 type: 'user',
+                id: null,
             },
             {
                 type: 'keyword',
+                id: null,
             },
             {
                 type: 'thread',

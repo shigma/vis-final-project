@@ -6,13 +6,7 @@
  *        keyword: String, represents the new keyword
  *        tag: String, for custom tagging
  *    }
- * 2. user-changed
- *    This event is emitted when the user clicks a user somewhere in the app
- *    Parameter: Object {
- *        userId: Number, the user ID that uniquely identify a user
- *        tag: String, for custom tagging
- *    }
- * 3. resize
+ * 2. resize
  *    Emitted when layout changed.
  *    Parameter: source: String
  */

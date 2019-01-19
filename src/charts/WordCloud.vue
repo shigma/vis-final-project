@@ -103,10 +103,7 @@ module.exports = {
                         tag: this.tag
                     });
                 } else if (this.tag.includes("user")) {
-                    eventBus.$emit("user-changed", {
-                        userId: params.data.id,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('user', { id: params.data.id })
                 }
             })
         );

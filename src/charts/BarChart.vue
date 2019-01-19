@@ -67,10 +67,7 @@ module.exports = {
                         tag: this.tag
                     });
                 } else if (this.tag.includes("user")) {
-                    eventBus.$emit("user-changed", {
-                        userId: this.data[params.dataIndex].id,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('user', { id: this.data[params.dataIndex].id })
                 }
             })
         );

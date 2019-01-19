@@ -6,6 +6,7 @@ const usercountdata = require('../dist/users_countByMonth.json');
 const activityData = require('../dist/overviewActivityData.json');
 
 module.exports = {
+    props: ['data'],
     data: () => ({
         startDate: null,
         endDate: null,

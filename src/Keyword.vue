@@ -18,6 +18,7 @@ keywords.forEach(item => {
 });
 
 module.exports = {
+    props: ['data'],
     data: () => ({
         keyword: 'mac',
         startDate: null,
