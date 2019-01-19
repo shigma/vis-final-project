@@ -44,6 +44,7 @@ require('./transpile').then(() => {
     })
     
     fs.copyFileSync(fullPath('temp/index.css'), fullPath('out/index.css'))
+    fs.copyFileSync(fullPath('temp/icons.css'), fullPath('out/icons.css'))
     
     fs.writeFileSync(
         fullPath('out/index.html'),

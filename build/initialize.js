@@ -26,7 +26,7 @@ mkdir(fullPath('out'))
 
 svgFont({
     srcFile: path.resolve(__dirname, 'icons.svg'),
-    outFile: path.resolve(outDir, 'icons.css'),
+    outFile: path.resolve(fullPath('out'), 'icons.css'),
 })
 
 /**
