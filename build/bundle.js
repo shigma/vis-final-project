@@ -1,5 +1,5 @@
 // 这个文件的作用是打包生成最终的代码文件，平常调试可以不用运行
-const { fullPath } = require('./utilities')
+const { fullPath, depPath, mkdir } = require('./utilities')
 const webpack = require('webpack')
 const program = require('commander')
 const html = require('minify-html')
@@ -13,13 +13,18 @@ program
 
 const env = program.prod ? 'production' : 'development'
 
+mkdir('out')
+fs.copyFileSync(depPath('vue/dist/vue.runtime.min.js'), fullPath('out/vue.runtime.min.js'))
+fs.copyFileSync(depPath('echarts/dist/echarts-en.min.js'), fullPath('out/echarts-en.min.js'))
+fs.copyFileSync(depPath('echarts-wordcloud/dist/echarts-wordcloud.min.js'), fullPath('out/echarts-wordcloud.min.js'))
+
 require('./transpile').then(() => {
     const compiler = webpack({
         target: 'web',
         mode: env,
         entry: fullPath('temp/app.vue.js'),
         output: {
-            path: fullPath('dist'),
+            path: fullPath('out'),
             filename: 'index.js',
             library: 'app',
             libraryTarget: 'umd',
@@ -38,10 +43,10 @@ require('./transpile').then(() => {
         }
     })
     
-    fs.copyFileSync(fullPath('temp/index.css'), fullPath('dist/index.css'))
+    fs.copyFileSync(fullPath('temp/index.css'), fullPath('out/index.css'))
     
     fs.writeFileSync(
-        fullPath('dist/index.html'),
+        fullPath('out/index.html'),
         html.minify(
             fs.readFileSync(fullPath('src/index.html'), 'utf8')
                 .replace('<!-- stylesheet -->', () => '<link href=index.css rel=stylesheet>')

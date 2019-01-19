@@ -1,5 +1,5 @@
 const { performance } = require('perf_hooks')
-const { fullPath } = require('./utilities')
+const { fullPath, mkdir } = require('./utilities')
 const program = require('commander')
 const svgFont = require('@shigma/svg-font')
 const readline = require('readline')
@@ -20,8 +20,8 @@ const textDir = fullPath('dist', 'text')
 const keywordExtraction = require('../src/Keyword')
 
 // 如果 dist 文件夹不存在先创建之
-if (!fs.existsSync(outDir)) fs.mkdirSync(outDir)
-if (!fs.existsSync(textDir)) fs.mkdirSync(textDir)
+mkdir(outDir)
+mkdir(textDir)
 
 svgFont({
     srcFile: path.resolve(__dirname, 'icons.svg'),
