@@ -9,19 +9,12 @@ const keyword_top100 = require('../dist/keywords_top100');
 module.exports = {
     props: ['data'],
     data: () => ({
-        id: -1,
         keywordSet: [],
         DFAtree: [],
     }),
     computed: {
         thread() {
             return threaddata[typeof this.data.id === 'number' ? this.data.id : 2339]
-        },
-        involvedMailNum(){
-            return this.thread.mails.length;
-        },
-        involvedUserNum(){
-            return this.thread.users.length;
         },
         owner(){
             let fmid = this.thread.mails[0];
@@ -138,7 +131,8 @@ module.exports = {
 
 <template>
     <card-view :title="owner" type="thread">
-        <mail-list :mails="mailIds" origin="thread">
+        <mail-list :mails="thread.mails" origin="thread">
+            <div slot="general-info">Related Users: {{ thread.users.length }}</div>
             <word-cloud :data="keywordvalue" tag="keyword" origin="thread"/>
             <bar-chart :data="relatedUsers" tag="user" origin="thread"/>
         </mail-list>

@@ -71,6 +71,7 @@ module.exports = {
     <div class="mail-list">
         <div class="general-info">
             <div>Total Mails: {{ filteredMails.length }}</div>
+            <slot name="general-info"/>
         </div>
         <slot/>
         <div ref="list" class="list" @mousewheel.prevent.stop="handleScroll">
