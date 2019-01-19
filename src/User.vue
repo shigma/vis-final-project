@@ -8,49 +8,38 @@
 
 const userdata = require("../dist/users");
 const maildata = require("../dist/mails");
-const eventBus = require("./EventBus");
 const keywordExtraction = require("./Keyword");
 
 module.exports = {
+    props: ['data'],
     data: () => ({
-        // user ID
-        id: -1,
-        // Filters
-        beginDate: null,
-        endDate: null
+        startDate: null,
+        endDate: null,
     }),
     computed: {
-        name() {
-            return userdata[this.id].name;
-        },
-        address() {
-            return userdata[this.id].address;
-        },
-        mailIds() {
-            return userdata[this.id].mails;
-        },
-        activity() {
-            return userdata[this.id].activity;
+        user() {
+            console.log(this.dataset.users[typeof this.data.id === 'number' ? this.data.id : 0])
+            return this.dataset.users[typeof this.data.id === 'number' ? this.data.id : 0]
         },
         keywords() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
-                return userdata[this.id].keywords;
+            if (this.startDate === null && this.endDate === null)
+                return this.user.keywords;
 
             // Compute on-the-fly
             return keywordExtraction
-                .generateKeywords(this.mailIds.filter(this.filterWithTime))
+                .generateKeywords(this.user.mails.filter(this.filterWithTime))
                 .filter((word, index) => index <= 50);
         },
         relatedUsers() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
-                return userdata[this.id].relatedUsers;
+            if (this.startDate === null && this.endDate === null)
+                return this.user.relatedUsers;
 
             // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
-            this.mailIds.filter(this.filterWithTime).forEach(currMailId => {
+            this.user.mails.filter(this.filterWithTime).forEach(currMailId => {
                 let mail = maildata[currMailId];
                 let currUserIds = [];
                 if (mail.inReplyTo)
@@ -61,7 +50,7 @@ module.exports = {
                     });
 
                 currUserIds.forEach(currUserId => {
-                    if (currUserId === -1 || currUserId === this.id) return;
+                    if (currUserId === -1 || currUserId === this.user.id) return;
                     let resultId = resultIdMap.get(currUserId);
                     if (!resultId) {
                         result.push({
@@ -81,41 +70,19 @@ module.exports = {
                 return 0;
             });
             return result.filter((user, index) => index <= 15);
-        }
+        },
     },
-    created() {
-        // For test of this module
-        let userId = 0;
-        for (let i = 0; i < userdata.length; ++i) {
-            if (userdata[i].name === "Michael Jackson") {
-                userId = i;
-                break;
-            }
-        }
-        // Basic data
-        this.id = userdata[userId].id;
-
-        eventBus.$on("date-filter-changed", param => {
-            // This event should not be responded
-            if (!param.tag.includes("UserOverview")) {
-                return;
-            }
-            // Set the new date filter
-            this.beginDate = param.beginDate;
-            this.endDate = param.endDate;
-        });
-        window.foo = eventBus;
-        eventBus.$on("user-changed", param => {
-            this.beginDate = null;
-            this.endDate = null;
-            this.id = param.userId;
-        });
+    watch: {
+        'data.id'() {
+            this.startDate = null
+            this.endDate = null
+        },
     },
     methods: {
         filterWithTime(mailId) {
             let flag = true;
             let date = maildata[mailId].date;
-            if (this.beginDate) flag &= date > this.beginDate;
+            if (this.startDate) flag &= date > this.startDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
         }
@@ -124,20 +91,16 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="name" type="user" envelop>
-        <div class="metadata">Mail Address: {{ address }} 
-            <br>Total Mails: {{ mailIds.length }}
+    <card-view :title="user.name" type="user" envelop>
+        <div class="metadata">Mail Address: {{ user.address }} 
+            <br>Total Mails: {{ user.mails.length }}
         </div>
-        <line-chart :data="activity" tag="UserOverview"/>
-        <word-cloud :data="keywords" tag="keyword"/>
-        <bar-chart :data="relatedUsers" tag="user"/>
-        <mail-list
-            slot="mail-list"
-            :mails="mailIds"
-            :startDate="beginDate"
-            :endDate="endDate"
-            trigger-thread
-        />
+        <line-chart :data="user.activity" tag="UserOverview" origin="user"
+            :start-date.sync="startDate" :end-date.sync="endDate"/>
+        <word-cloud :data="keywords" tag="keyword" origin="user"/>
+        <bar-chart :data="relatedUsers" tag="user" origin="user"/>
+        <mail-list slot="mail-list" origin="user-mail-list" trigger-thread
+            :mails="user.mails" :startDate="startDate" :endDate="endDate"/>
     </card-view>
 </template>
 

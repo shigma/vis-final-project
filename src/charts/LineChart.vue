@@ -14,7 +14,7 @@
  * @since 2019-01-07
  */
 
-const eventBus = require('./EventBus')
+const eventBus = require('../EventBus')
 const { debounce } = require('throttle-debounce')
 
 const staticOptions = {
@@ -68,22 +68,8 @@ const staticOptions = {
 }
 
 module.exports = {
-    data: () => ({
-        beginDate: null,
-        endDate: null,
-    }),
-    props: {
-        data: {
-            required: true,
-            type: Object,
-        },
-        tag: {
-            type: String,
-        },
-    },
-    watch: {
-        data: 'setOption',
-    },
+    extends: require('.'),
+    props: ['startDate', 'endDate'],
     computed: {
         maxValue() {
             return this.data.reduce((total, curr) => {
@@ -92,32 +78,23 @@ module.exports = {
         },
     },
     mounted() {
-        this.chart = echarts.init(this.$el)
-        this.setOption()
         this.chart.on('brush', debounce(100, params => {
             // null if no range is chosen
-            this.beginDate = null;
+            this.startDate = null;
             this.endDate = null;
 
             if (params.areas[0]) {
                 let range = params.areas[0].coordRange;
                 if (range[0] > 0 && range[0] < this.data.length) {
-                    this.beginDate = this.data[range[0]][0];
+                    this.startDate = this.data[range[0]][0];
                 }
                 if (range[1] > 0 && range[1] < this.data.length) {
                     this.endDate = this.data[range[1]][0];
                 }
             }
 
-            eventBus.$emit('date-filter-changed', {
-                beginDate: this.beginDate,
-                endDate: this.endDate,
-                tag: this.tag,
-            });
-        }))
-        eventBus.$on('resize', debounce(100, () => {
-            if (!this.chart) return
-            this.chart.resize()
+            this.$emit('update:startDate', this.startDate)
+            this.$emit('update:endDate', this.endDate)
         }))
     },
     methods: {

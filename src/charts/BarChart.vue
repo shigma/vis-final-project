@@ -5,7 +5,7 @@
  * @since 2019-01-10
  */
 
-const eventBus = require("./EventBus.js");
+const eventBus = require("../EventBus.js");
 const { debounce } = require("throttle-debounce");
 
 const staticOption = {
@@ -56,47 +56,18 @@ const staticOption = {
 };
 
 module.exports = {
-    data: () => ({}),
-    props: {
-        data: {
-            required: true,
-            type: Object
-        },
-        tag: {
-            type: String
-        }
-    },
-    watch: {
-        data: "setOption"
-    },
-    computed: {},
+    extends: require('.'),
     mounted() {
-        this.chart = echarts.init(this.$el);
-        this.setOption();
         this.chart.on(
             "click",
             debounce(100, params => {
                 // Emit different type of event according to tag
                 if (params.componentType !== "series") return;
                 if (this.tag.includes("keyword")) {
-                    eventBus.$emit("keyword-changed", {
-                        keyword: this.data[params.dataIndex].name,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('keyword', { word: this.data[params.dataIndex].name })
                 } else if (this.tag.includes("user")) {
-                    eventBus.$emit("user-changed", {
-                        userId: this.data[params.dataIndex].id,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('user', { id: this.data[params.dataIndex].id })
                 }
-            })
-        );
-        eventBus.$on(
-            "resize",
-            debounce(100, () => {
-                if (!this.chart) return;
-
-                this.chart.resize();
             })
         );
     },
@@ -108,8 +79,7 @@ module.exports = {
                 if (a.value < b.value) return -1;
                 return 0;
             });
-            let dom = this.$refs.barchart;
-            this.chart = echarts.init(dom);
+            this.chart = echarts.init(this.$el);
             let width = this.chart.getWidth();
             let height = this.chart.getHeight();
             let nameList = originalData.map(function(item) {
@@ -142,7 +112,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="bar-chart" ref="barchart"></div>
+    <div class="bar-chart"/>
 </template>
 
 <style lang="scss" scoped>

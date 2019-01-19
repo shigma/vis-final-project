@@ -10,7 +10,7 @@
  * @since 2019-01-07
  */
 
-const eventBus = require("./EventBus");
+const eventBus = require("../EventBus");
 const { debounce } = require("throttle-debounce");
 
 const staticOptions = {
@@ -83,19 +83,7 @@ const staticOptions = {
 };
 
 module.exports = {
-    props: {
-        data: {
-            required: true,
-            type: Object
-        },
-        tag: {
-            type: String
-        }
-    },
-    data: () => ({}),
-    watch: {
-        data: "setOption"
-    },
+    extends: require('.'),
     computed: {
         maxValue() {
             return this.data.reduce((total, curr) => {
@@ -104,37 +92,16 @@ module.exports = {
         }
     },
     mounted() {
-        this.chart = echarts.init(this.$el);
-        this.setOption();
         this.chart.on(
             "click",
             debounce(100, params => {
                 // Emit different type of event according to tag
                 if (params.componentType !== "series") return;
                 if (this.tag.includes("keyword")) {
-                    eventBus.$emit("keyword-changed", {
-                        keyword: params.data.name,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('keyword', { word: params.data.name })
                 } else if (this.tag.includes("user")) {
-                    eventBus.$emit("user-changed", {
-                        userId: params.data.id,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('user', { id: params.data.id })
                 }
-            })
-        );
-        eventBus.$on(
-            "resize",
-            debounce(100, () => {
-                if (!this.chart) return;
-                this.chart.resize();
-
-                let width = this.chart.getWidth();
-                let height = this.chart.getHeight();
-                this.chart.setOption({
-                    series: [{ ...staticOptions, data: this.data }]
-                });
             })
         );
     },

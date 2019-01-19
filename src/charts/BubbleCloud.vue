@@ -12,7 +12,7 @@
  * @since 2019-01-10
  */
 
-const eventBus = require("../src/EventBus.js");
+const eventBus = require("../EventBus.js");
 const d3 = require("d3");
 
 module.exports = {

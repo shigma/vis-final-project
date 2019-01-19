@@ -22,6 +22,7 @@ const keywordExtraction = require('../src/Keyword')
 // 如果 dist 文件夹不存在先创建之
 mkdir(outDir)
 mkdir(textDir)
+mkdir(fullPath('out'))
 
 svgFont({
     srcFile: path.resolve(__dirname, 'icons.svg'),
@@ -163,7 +164,7 @@ files.forEach((fileName, fileIndex) => {
         data.text = mail
             .slice(heading[0].length)
             .replace(/^>.*(\r?\n)?/mg, '')
-            .replace(/----+ ?Original Message( Follows)? ?----+[\s\S]*/mg, '')
+            .replace(/(^.+ wrote:\s*)?----+ ?Original Message( Follows)? ?----+[\s\S]*/mg, '')
             .trim()
 
         const refs = (data.references || [])

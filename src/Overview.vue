@@ -6,30 +6,31 @@ const usercountdata = require('../dist/users_countByMonth.json');
 const activityData = require('../dist/overviewActivityData.json');
 
 module.exports = {
+    props: ['data'],
     data: () => ({
-        StartDate: null,
-        EndDate: null,
+        startDate: null,
+        endDate: null,
     }),
     computed: {
         startYM(){
-            if (this.StartDate===null){
+            if (this.startDate===null){
                 return {
                     'y': 0, m: 11,
                 }
             }
-            let d = new Date(this.StartDate);
+            let d = new Date(this.startDate);
             return {
                 'y': d.getFullYear() - 2001,
                 'm': d.getMonth() + 1,
             };
         },
         endYM(){
-            if (this.EndDate===null){
+            if (this.endDate===null){
                 return {
                     'y': 17, m: 9,
                 }
             }
-            let date = new Date(this.EndDate);
+            let date = new Date(this.endDate);
             return {
                 'y': date.getFullYear() - 2001,
                 'm': date.getMonth() + 1,
@@ -96,33 +97,19 @@ module.exports = {
             return activityData;
         },
     },
-    created() {
-    },
-    mounted() {
-        eventBus.$on('date-filter-changed', dateFilter => {
-            // this event should not be responded
-            if (!dateFilter.tag.includes('overview')) {
-                return;
-            }
-            // change date filter data
-            this.StartDate = dateFilter.beginDate;
-            this.EndDate = dateFilter.endDate;
-        });
-    },
-    methods: {
-    },
 }
 </script>
 
 <template>
-    <card-view title="Overview" type="overview">
+    <card-view title="Overview" type="overview" uncloseable>
         <line-chart :data="activity" tag="overview"
-            style="width:100%; height:200px;"/>
+            style="width:100%; height:200px;"
+            :start-date.sync="startDate" :end-date.sync="endDate"/>
         <div ref="wordCloud">
-            <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;"/>
+            <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;" origin="overview"/>
         </div>
         <div ref="userCloud">
-            <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;"/>
+            <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;" origin="overview"/>
         </div>
     </card-view>
 </template>
