@@ -20,4 +20,4 @@ for (let i=0; i<18; i++){
         ]);
     }
 }
-fs.writeFileSync(path.resolve(outDir, 'overviewActivityData.json'), JSON.stringify(ret, null, 2));
+fs.writeFileSync(path.resolve(outDir, 'overviewActivityData.json'), JSON.stringify(ret));

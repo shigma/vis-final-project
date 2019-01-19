@@ -3,8 +3,16 @@
 module.exports = {
     props: ['open', 'mail'],
 
+    data: () => ({
+        text: '',
+    }),
+
     components: {
         CollapseView: require('./CollapseView.vue'),
+    },
+
+    async created() {
+        this.text = await this.getMailText(this.mail.id)
     },
 }
 
@@ -16,7 +24,7 @@ module.exports = {
             <div class="subject">{{ mail.subject }}</div>
             <div class="mail-info">{{ mail.date }}, by {{ dataset.users[mail.userId].name }}</div>
         </template>
-        <pre v-html="mail.text"/>
+        <pre v-html="text"/>
     </collapse-view>
 </template>
 

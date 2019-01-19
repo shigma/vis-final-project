@@ -1,5 +1,5 @@
 // 这个文件的作用是打包生成最终的代码文件，平常调试可以不用运行
-const { fullPath, depPath, mkdir } = require('./utilities')
+const { fullPath, depPath } = require('./utilities')
 const webpack = require('webpack')
 const program = require('commander')
 const html = require('minify-html')
@@ -25,6 +25,7 @@ require('./transpile').then(() => {
         output: {
             path: fullPath('out'),
             filename: 'index.js',
+            chunkFilename: '[name].chunk.js',
             library: 'app',
             libraryTarget: 'umd',
         },

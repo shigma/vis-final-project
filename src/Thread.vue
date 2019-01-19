@@ -10,6 +10,7 @@ module.exports = {
     props: ['data'],
     data: () => ({
         keywordSet: [],
+        keywordValue: [],
         DFAtree: [],
     }),
     computed: {
@@ -30,36 +31,13 @@ module.exports = {
                 tmp.date = this.dateTrans(maildata[mId].date);
                 tmp.subject = maildata[mId].subject;
                 tmp.user = userdata[maildata[mId].userId].name;
-                tmp.references = maildata[mId].references;
-                //console.log(tmp.references)
+                tmp.references = maildata[mId].references
                 data.push(tmp);
             }
             return data;
         },
         mailIds(){
             return this.thread.mails;
-        },
-        keywordvalue(){
-            let data = [];
-            let value = [];
-            let size = this.keywordSet.length;
-            for (let i=0; i<size; i++){
-                value[i] = 0;
-            }
-            let tsize = this.thread.mails.length;
-            for (let i=0; i<tsize; i++){
-                //value = trie.searchDFA(this.DFAtree, maildata[this.thread.mails[i]].subject, value)
-                value = trie.searchDFA(this.DFAtree, this.dataset.mails[this.thread.mails[i]].text, value);
-            }
-            for (let i=0; i<size; i++){
-                if (value[i]===0) continue;
-                let tmp = new Object();
-                tmp.name = this.keywordSet[i];
-                tmp.value = value[i];
-                data.push(tmp);
-            }
-            //console.log(JSON.stringify(data));
-            return data;
         },
         relatedUsers(){
             let data = [];
@@ -80,6 +58,9 @@ module.exports = {
             return data;
         },
     },
+    watch: {
+        thread: 'updateKeywordValue',
+    },
     created() {
         this.DFAtree = trie.initTree(this.DFAtree);
         let ksize = keyword_top100.length;
@@ -91,6 +72,7 @@ module.exports = {
             this.DFAtree = trie.insert(this.DFAtree, this.keywordSet[i], i);
         }
         this.DFAtree = trie.BuildSA(this.DFAtree);
+        this.updateKeywordValue()
     },
     methods: {
         dateTrans(date){
@@ -124,6 +106,27 @@ module.exports = {
             }
             return 0;
         },
+        async updateKeywordValue() {
+            let data = [];
+            let value = [];
+            let size = this.keywordSet.length;
+            for (let i=0; i<size; i++){
+                value[i] = 0;
+            }
+            let tsize = this.thread.mails.length;
+            for (let i=0; i<tsize; i++){
+                const text = await this.getMailText(this.thread.mails[i])
+                value = trie.searchDFA(this.DFAtree, text, value);
+            }
+            for (let i=0; i<size; i++){
+                if (value[i]===0) continue;
+                let tmp = new Object();
+                tmp.name = this.keywordSet[i];
+                tmp.value = value[i];
+                data.push(tmp);
+            }
+            this.keywordValue = data
+        }
     },
 }
 
@@ -133,7 +136,7 @@ module.exports = {
     <card-view :title="owner" type="thread">
         <mail-list :mails="thread.mails" origin="thread">
             <div slot="general-info">Related Users: {{ thread.users.length }}</div>
-            <word-cloud :data="keywordvalue" tag="keyword" origin="thread"/>
+            <word-cloud :data="keywordValue" tag="keyword" origin="thread"/>
             <bar-chart :data="relatedUsers" tag="user" origin="thread"/>
         </mail-list>
     </card-view>

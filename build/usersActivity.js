@@ -28,4 +28,4 @@ for (let i=0; i<size; i++){
         count: year,
     });
 }
-fs.writeFileSync(path.resolve(outDir, 'users_countByMonth.json'), JSON.stringify(userSet, null, 2));
+fs.writeFileSync(path.resolve(outDir, 'users_countByMonth.json'), JSON.stringify(userSet));

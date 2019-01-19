@@ -77,6 +77,7 @@ const users = new Map()
 const threads = []
 /** 全部关键词列表 */
 const keywords = new Map()
+const mailTexts = []
 
 const metaMacro = '(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(?:\\r?\\n[ \\t].+)*'
 const metaRegExp = new RegExp('^' + metaMacro, 'gmi')
@@ -161,11 +162,11 @@ files.forEach((fileName, fileIndex) => {
         }
 
         // 邮件内容
-        data.text = mail
+        mailTexts.push(mail
             .slice(heading[0].length)
             .replace(/^>.*(\r?\n)?/mg, '')
             .replace(/(^.+ wrote:\s*)?----+ ?Original Message( Follows)? ?----+[\s\S]*/mg, '')
-            .trim()
+            .trim())
 
         const refs = (data.references || [])
             .map(messageId => {
@@ -422,5 +423,9 @@ dumpFile('mails', mails)
 dumpFile('users', users)
 dumpFile('threads', threads)
 dumpFile('keywords', keywords)
+
+for (let index = 0; index < mailTexts.length; index += 200) {
+    dumpFile('text/' + index / 200, mailTexts.slice(index, index + 200))
+}
 
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)

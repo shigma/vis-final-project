@@ -16,6 +16,11 @@ Vue.prototype.dataset = {
     users: require('../dist/users'),
 }
 
+Vue.prototype.getMailText = async id => {
+    const chunk = await import(`../dist/text/${Math.floor(id / 200)}`)
+    return chunk[id % 200]
+}
+
 module.exports = {
     components: {
         User: require('./User.vue'),
