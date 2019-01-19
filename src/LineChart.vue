@@ -24,10 +24,21 @@ const staticOptions = {
         seriesIndex: 0,
         min: 0,
     },
+    title: {
+        left: 'center',
+        text: 'Activity',
+        textStyle: {
+            fontSize: 18,
+        }
+    },
     // legend: {
     //     left: 'center',
     //     data: ['邮件数'],
     // },
+    grid: {
+        top: 25,
+        bottom: 20,
+    },
     tooltip: {
         trigger: 'axis',
     },

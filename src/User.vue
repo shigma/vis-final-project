@@ -6,10 +6,10 @@
  * @since  2019-01-02
  */
 
-const userdata = require('../dist/users');
-const maildata = require('../dist/mails');
-const eventBus = require('./EventBus');
-const keywordExtraction = require('./Keyword');
+const userdata = require("../dist/users");
+const maildata = require("../dist/mails");
+const eventBus = require("./EventBus");
+const keywordExtraction = require("./Keyword");
 
 module.exports = {
     data: () => ({
@@ -17,7 +17,7 @@ module.exports = {
         id: -1,
         // Filters
         beginDate: null,
-        endDate: null,
+        endDate: null
     }),
     computed: {
         name() {
@@ -67,7 +67,7 @@ module.exports = {
                         result.push({
                             id: currUserId,
                             name: userdata[currUserId].name,
-                            value: 1,
+                            value: 1
                         });
                         resultIdMap.set(currUserId, result.length - 1);
                     } else {
@@ -81,13 +81,13 @@ module.exports = {
                 return 0;
             });
             return result.filter((user, index) => index <= 15);
-        },
+        }
     },
     created() {
         // For test of this module
         let userId = 0;
         for (let i = 0; i < userdata.length; ++i) {
-            if (userdata[i].name === 'Michael Jackson') {
+            if (userdata[i].name === "Michael Jackson") {
                 userId = i;
                 break;
             }
@@ -95,17 +95,17 @@ module.exports = {
         // Basic data
         this.id = userdata[userId].id;
 
-        eventBus.$on('date-filter-changed', param => {
+        eventBus.$on("date-filter-changed", param => {
             // This event should not be responded
-            if (!param.tag.includes('UserOverview')) {
+            if (!param.tag.includes("UserOverview")) {
                 return;
             }
             // Set the new date filter
             this.beginDate = param.beginDate;
             this.endDate = param.endDate;
         });
-        window.foo=eventBus
-        eventBus.$on('user-changed', param => {
+        window.foo = eventBus;
+        eventBus.$on("user-changed", param => {
             this.beginDate = null;
             this.endDate = null;
             this.id = param.userId;
@@ -118,23 +118,31 @@ module.exports = {
             if (this.beginDate) flag &= date > this.beginDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
-        },
-    },
+        }
+    }
 };
 </script>
 
 <template>
     <card-view :title="name" type="user" envelop>
+        <div id="Metadata">
+            Mail Address: {{address}} <br>
+            Total Mails: {{mailIds.length}} <br>
+        </div>
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
         <bar-chart :data="relatedUsers" tag="user"/>
-        <mail-list slot="mail-list" :mails="mailIds"
-            :startDate="beginDate" :endDate="endDate" trigger-thread/>
+        <mail-list
+            slot="mail-list"
+            :mails="mailIds"
+            :startDate="beginDate"
+            :endDate="endDate"
+            trigger-thread
+        />
     </card-view>
 </template>
 
 <style lang="scss" scoped>
-
 .card.user > .container > * {
     width: 100%;
 
@@ -142,9 +150,20 @@ module.exports = {
         border-bottom: 1px solid #ebeef5;
     }
 
-    &.line-chart { height: 34vh }
-    &.word-cloud { height: 30vh }
-    &.bar-chart { height: 30vh }
+    &.line-chart {
+        height: 14vh;
+    }
+    &.word-cloud {
+        height: 30vh;
+    }
+    &.bar-chart {
+        height: 43vh;
+    }
 }
 
+#Metadata {
+    white-space: nowrap;
+    -moz-white-space: nowrap;
+    overflow: scroll;
+}
 </style>
