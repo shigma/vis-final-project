@@ -140,9 +140,9 @@ module.exports = {
 
 <template>
     <card-view :title="owner" type="thread">
-        <mail-list :mails="mailIds">
-            <word-cloud :data="keywordvalue" tag="keyword"/>
-            <bar-chart :data="relatedUsers" tag="user"/>
+        <mail-list :mails="mailIds" origin="thread">
+            <word-cloud :data="keywordvalue" tag="keyword" origin="thread"/>
+            <bar-chart :data="relatedUsers" tag="user" origin="thread"/>
         </mail-list>
     </card-view>
 </template>

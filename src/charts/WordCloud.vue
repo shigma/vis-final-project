@@ -10,7 +10,7 @@
  * @since 2019-01-07
  */
 
-const eventBus = require("./EventBus");
+const eventBus = require("../EventBus");
 const { debounce } = require("throttle-debounce");
 
 const staticOptions = {
@@ -83,19 +83,7 @@ const staticOptions = {
 };
 
 module.exports = {
-    props: {
-        data: {
-            required: true,
-            type: Object
-        },
-        tag: {
-            type: String
-        }
-    },
-    data: () => ({}),
-    watch: {
-        data: "setOption"
-    },
+    extends: require('.'),
     computed: {
         maxValue() {
             return this.data.reduce((total, curr) => {
@@ -104,8 +92,6 @@ module.exports = {
         }
     },
     mounted() {
-        this.chart = echarts.init(this.$el);
-        this.setOption();
         this.chart.on(
             "click",
             debounce(100, params => {
@@ -122,19 +108,6 @@ module.exports = {
                         tag: this.tag
                     });
                 }
-            })
-        );
-        eventBus.$on(
-            "resize",
-            debounce(100, () => {
-                if (!this.chart) return;
-                this.chart.resize();
-
-                let width = this.chart.getWidth();
-                let height = this.chart.getHeight();
-                this.chart.setOption({
-                    series: [{ ...staticOptions, data: this.data }]
-                });
             })
         );
     },

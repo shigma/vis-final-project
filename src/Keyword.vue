@@ -20,7 +20,7 @@ keywords.forEach(item => {
 module.exports = {
     data: () => ({
         keyword: 'mac',
-        beginDate: null,
+        startDate: null,
         endDate: null,
     }),
     computed: {
@@ -35,7 +35,7 @@ module.exports = {
         // users is an array, each element has id, name and value field.
         users() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
+            if (this.startDate === null && this.endDate === null)
                 return keywordMap.get(this.keyword).users;
 
             // Compute on-the-fly
@@ -67,7 +67,7 @@ module.exports = {
         // relatedKeywords is an array, each element has name and value field
         relatedKeywords() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
+            if (this.startDate === null && this.endDate === null)
                 return keywordMap.get(this.keyword).relatedKeywords;
 
             // Compute on-the-fly
@@ -96,16 +96,6 @@ module.exports = {
     },
     created() {},
     mounted() {
-        eventBus.$on('date-filter-changed', dateFilter => {
-            // this event should not be responded
-            if (!dateFilter.tag.includes('KeywordOverview')) {
-                return;
-            }
-
-            // change date filter data
-            this.beginDate = dateFilter.beginDate;
-            this.endDate = dateFilter.endDate;
-        });
         eventBus.$on('keyword-changed', param => {
             if (this.keyword === param.keyword) return;
             this.keyword = param.keyword;
@@ -115,7 +105,7 @@ module.exports = {
         filterWithTime(mailId) {
             let flag = true;
             let date = maildata[mailId].date;
-            if (this.beginDate) flag &= date > this.beginDate;
+            if (this.startDate) flag &= date > this.startDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
         },
@@ -128,11 +118,12 @@ module.exports = {
         <div class="metadata"> Related Mails: {{ mailIds.length }}
             <br>Related Users: {{ users.length }}
         </div>
-        <line-chart :data="activity" tag="KeywordOverview"/>
-        <word-cloud :data="users" tag="user"/>
-        <bar-chart :data="relatedKeywords" tag="keyword"/>
-        <mail-list slot="mail-list" :mails="mailIds"
-            :startDate="beginDate" :endDate="endDate" trigger-thread/>
+        <line-chart :data="activity" tag="KeywordOverview" origin="keyword"
+            :start-date.sync="startDate" :end-date.sync="endDate"/>
+        <word-cloud :data="users" tag="user" origin="keyword"/>
+        <bar-chart :data="relatedKeywords" tag="keyword" origin="keyword"/>
+        <mail-list slot="mail-list" :mails="mailIds" origin="keyword-mail-list"
+            :startDate="startDate" :endDate="endDate" trigger-thread/>
     </card-view>
 </template>
 

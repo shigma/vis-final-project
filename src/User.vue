@@ -16,7 +16,7 @@ module.exports = {
         // user ID
         id: -1,
         // Filters
-        beginDate: null,
+        startDate: null,
         endDate: null
     }),
     computed: {
@@ -34,7 +34,7 @@ module.exports = {
         },
         keywords() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
+            if (this.startDate === null && this.endDate === null)
                 return userdata[this.id].keywords;
 
             // Compute on-the-fly
@@ -44,7 +44,7 @@ module.exports = {
         },
         relatedUsers() {
             // Use precomputed data
-            if (this.beginDate === null && this.endDate === null)
+            if (this.startDate === null && this.endDate === null)
                 return userdata[this.id].relatedUsers;
 
             // Compute on-the-fly
@@ -94,19 +94,8 @@ module.exports = {
         }
         // Basic data
         this.id = userdata[userId].id;
-
-        eventBus.$on("date-filter-changed", param => {
-            // This event should not be responded
-            if (!param.tag.includes("UserOverview")) {
-                return;
-            }
-            // Set the new date filter
-            this.beginDate = param.beginDate;
-            this.endDate = param.endDate;
-        });
-        window.foo = eventBus;
         eventBus.$on("user-changed", param => {
-            this.beginDate = null;
+            this.startDate = null;
             this.endDate = null;
             this.id = param.userId;
         });
@@ -115,7 +104,7 @@ module.exports = {
         filterWithTime(mailId) {
             let flag = true;
             let date = maildata[mailId].date;
-            if (this.beginDate) flag &= date > this.beginDate;
+            if (this.startDate) flag &= date > this.startDate;
             if (this.endDate) flag &= date < this.endDate;
             return flag;
         }
@@ -128,13 +117,15 @@ module.exports = {
         <div class="metadata">Mail Address: {{ address }} 
             <br>Total Mails: {{ mailIds.length }}
         </div>
-        <line-chart :data="activity" tag="UserOverview"/>
-        <word-cloud :data="keywords" tag="keyword"/>
-        <bar-chart :data="relatedUsers" tag="user"/>
+        <line-chart :data="activity" tag="UserOverview" origin="user"
+            :start-date.sync="startDate" :end-date.sync="endDate"/>
+        <word-cloud :data="keywords" tag="keyword" origin="user"/>
+        <bar-chart :data="relatedUsers" tag="user" origin="user"/>
         <mail-list
             slot="mail-list"
+            origin="user-mail-list"
             :mails="mailIds"
-            :startDate="beginDate"
+            :startDate="startDate"
             :endDate="endDate"
             trigger-thread
         />

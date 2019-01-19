@@ -13,7 +13,6 @@ program
 
 const env = program.prod ? 'production' : 'development'
 
-mkdir('out')
 fs.copyFileSync(depPath('vue/dist/vue.runtime.min.js'), fullPath('out/vue.runtime.min.js'))
 fs.copyFileSync(depPath('echarts/dist/echarts-en.min.js'), fullPath('out/echarts-en.min.js'))
 fs.copyFileSync(depPath('echarts-wordcloud/dist/echarts-wordcloud.min.js'), fullPath('out/echarts-wordcloud.min.js'))

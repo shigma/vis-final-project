@@ -12,14 +12,8 @@
  *        userId: Number, the user ID that uniquely identify a user
  *        tag: String, for custom tagging
  *    }
- * 3. date-filter-changed
- *    This event is emitted when the user specifies a new date range in the app
- *    Parameter: Object {
- *        beginDate: Date, must be Javascript Date() Object
- *        endDate: Date, must be Javascript Date() Object
- *        tag: String, for custom tagging
- *    }
- * 4. resize
+ * 3. resize
  *    Emitted when layout changed.
+ *    Parameter: source: String
  */
 module.exports = new Vue();

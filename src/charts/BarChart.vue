@@ -5,7 +5,7 @@
  * @since 2019-01-10
  */
 
-const eventBus = require("./EventBus.js");
+const eventBus = require("../EventBus.js");
 const { debounce } = require("throttle-debounce");
 
 const staticOption = {
@@ -54,23 +54,8 @@ const staticOption = {
 };
 
 module.exports = {
-    data: () => ({}),
-    props: {
-        data: {
-            required: true,
-            type: Object
-        },
-        tag: {
-            type: String
-        }
-    },
-    watch: {
-        data: "setOption"
-    },
-    computed: {},
+    extends: require('.'),
     mounted() {
-        this.chart = echarts.init(this.$el);
-        this.setOption();
         this.chart.on(
             "click",
             debounce(100, params => {
@@ -89,14 +74,6 @@ module.exports = {
                 }
             })
         );
-        eventBus.$on(
-            "resize",
-            debounce(100, () => {
-                if (!this.chart) return;
-
-                this.chart.resize();
-            })
-        );
     },
     methods: {
         setOption() {
@@ -106,8 +83,7 @@ module.exports = {
                 if (a.value < b.value) return -1;
                 return 0;
             });
-            let dom = this.$refs.barchart;
-            this.chart = echarts.init(dom);
+            this.chart = echarts.init(this.$el);
             let width = this.chart.getWidth();
             let height = this.chart.getHeight();
             let nameList = originalData.map(function(item) {
@@ -140,7 +116,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="bar-chart" ref="barchart"></div>
+    <div class="bar-chart"/>
 </template>
 
 <style lang="scss" scoped>

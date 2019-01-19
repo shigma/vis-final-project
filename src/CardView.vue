@@ -1,7 +1,7 @@
 <script>
 
 module.exports = {
-    props: ['type', 'title', 'envelop'],
+    props: ['type', 'title', 'envelop', 'uncloseable'],
 
     data: () => ({
         showMailList: false,
@@ -25,7 +25,7 @@ module.exports = {
         <div class="title" @mousedown.middle.prevent.stop="handleClose">
             <i v-if="envelop !== undefined" @click.left.stop="triggerMailList"
                 class="icon-envelop" :class="{ active: showMailList }"/>
-            <i class="icon-close" @click.left.stop="handleClose"/>
+            <i v-if="uncloseable === undefined" class="icon-close" @click.left.stop="handleClose"/>
             <span v-text="title"/>
         </div>
         <div class="mail-list-container" :class="{ active: showMailList }">

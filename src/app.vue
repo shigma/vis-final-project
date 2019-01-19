@@ -1,11 +1,10 @@
 <script>
 
-Vue.use(require('element-ui'))
 Vue.component('card-view', require('./CardView.vue'))
-Vue.component('mail-list', require('./MailList.vue'))
-Vue.component('line-chart', require('./LineChart.vue'))
-Vue.component('bar-chart', require('./BarChart.vue'))
-Vue.component('word-cloud', require('./WordCloud.vue'))
+Vue.component('mail-list', require('./charts/MailList.vue'))
+Vue.component('line-chart', require('./charts/LineChart.vue'))
+Vue.component('bar-chart', require('./charts/BarChart.vue'))
+Vue.component('word-cloud', require('./charts/WordCloud.vue'))
 
 // const MIN_WIDTH = 0.1
 const eventBus = Vue.prototype.$eventBus = require('./EventBus')
@@ -31,40 +30,18 @@ module.exports = {
         cards: [
             {
                 type: 'user',
-                width: 1,
             },
             {
                 type: 'keyword',
-                width: 1,
             },
             {
                 type: 'thread',
                 id: null,
-                width: 1,
             },
             {
                 type: 'overview',
-                width: 1,
             },
         ],
-        display: {
-            user: {
-                show: true,
-                width: 0.25,
-            },
-            keyword: {
-                show: true,
-                width: 0.25,
-            },
-            thread: {
-                show: true,
-                width: 0.25,
-            },
-            overview: {
-                show: true,
-                width: 0.25,
-            },
-        },
     }),
 
     mounted() {
@@ -110,9 +87,12 @@ module.exports = {
     methods: {
         setCard(type, data) {
             const index = this.cards.findIndex(card => card.type === type)
-            if (index >= 0) Object.assign(this.cards[index], data)
+            if (index >= 0) {
+                Object.assign(this.cards[index], data)
+            } else {
+                this.cards.unshift(Object.assign(data, { type }))
+            }
         },
-        openCard() {},
         closeCard(type) {
             const index = this.cards.findIndex(card => card.type === type)
             if (index >= 0) this.cards.splice(index, 1)
