@@ -35,6 +35,7 @@ module.exports = {
     pre {
         margin: 1vh 0;
         font-family: inherit;
+        white-space: pre-wrap;
     }
 
     .subject {

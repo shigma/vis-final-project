@@ -125,9 +125,8 @@ module.exports = {
 
 <template>
     <card-view :title="name" type="user" envelop>
-        <div id="Metadata">
-            Mail Address: {{address}} <br>
-            Total Mails: {{mailIds.length}} <br>
+        <div class="metadata">Mail Address: {{ address }} 
+            <br>Total Mails: {{ mailIds.length }}
         </div>
         <line-chart :data="activity" tag="UserOverview"/>
         <word-cloud :data="keywords" tag="keyword"/>
@@ -143,27 +142,26 @@ module.exports = {
 </template>
 
 <style lang="scss" scoped>
+
 .card.user > .container > * {
     width: 100%;
+    box-sizing: border-box;
+
+    &.metadata {
+        font-size: 2.4vh;
+        padding: 0.6vh 0.6vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
     &:not(:last-child) {
         border-bottom: 1px solid #ebeef5;
     }
 
-    &.line-chart {
-        height: 14vh;
-    }
-    &.word-cloud {
-        height: 30vh;
-    }
-    &.bar-chart {
-        height: 43vh;
-    }
+    &.line-chart { height: 20vh }
+    &.word-cloud { height: 24vh }
+    &.bar-chart { height: 42vh }
 }
 
-#Metadata {
-    white-space: nowrap;
-    -moz-white-space: nowrap;
-    overflow: scroll;
-}
 </style>

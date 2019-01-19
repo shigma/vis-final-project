@@ -11,7 +11,7 @@ program
     .option('-p, --prod')
     .parse(process.argv)
 
-const env = program.prod ? 'production' : 'development'
+const env = program.dev ? 'development' : 'production'
 
 const startTime = performance.now()
 const outDir = fullPath('dist')

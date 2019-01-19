@@ -125,9 +125,8 @@ module.exports = {
 
 <template>
     <card-view :title="keyword" type="keyword" envelop>
-        <div id="Metadata">
-            Related Mails: {{mailIds.length}}<br>
-            Related Users: {{users.length}}<br>
+        <div class="metadata"> Related Mails: {{ mailIds.length }}
+            <br>Related Users: {{ users.length }}
         </div>
         <line-chart :data="activity" tag="KeywordOverview"/>
         <word-cloud :data="users" tag="user"/>
@@ -141,20 +140,23 @@ module.exports = {
 
 .card.keyword > .container > * {
     width: 100%;
+    box-sizing: border-box;
+
+    &.metadata {
+        font-size: 2.4vh;
+        padding: 0.6vh 0.6vw;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
     &:not(:last-child) {
         border-bottom: 1px solid #ebeef5;
     }
 
-    &.line-chart { height: 14vh }
-    &.word-cloud { height: 30vh }
-    &.bar-chart { height: 43vh }
-}
-
-#Metadata {
-    white-space: nowrap;
-    -moz-white-space: nowrap;
-    overflow: scroll;
+    &.line-chart { height: 20vh }
+    &.word-cloud { height: 24vh }
+    &.bar-chart { height: 42vh }
 }
 
 </style>
