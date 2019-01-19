@@ -18,7 +18,6 @@ module.exports = {
     }),
     computed: {
         user() {
-            console.log(this.dataset.users[typeof this.data.id === 'number' ? this.data.id : 0])
             return this.dataset.users[typeof this.data.id === 'number' ? this.data.id : 0]
         },
         keywords() {

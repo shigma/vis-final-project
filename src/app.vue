@@ -30,6 +30,12 @@ module.exports = {
         cards: [{ type: 'overview' }],
     }),
 
+    watch: {
+        'cards.length'() {
+            this.$nextTick(() => eventBus.$emit('resize'))
+        },
+    },
+
     mounted() {
         addEventListener('resize', () => eventBus.$emit('resize'))
 
