@@ -47,8 +47,10 @@ const staticOption = {
         label: {
             normal: {
                 show: true,
-                position: "insideRight"
-            }
+                position: "right",
+                formatter: '{b}: {@c}',
+                color: 'black',
+            },           
         }
     }
 };
