@@ -64,6 +64,22 @@ const staticOptions = {
         name: '邮件数',
         type: 'line',
         showSymbol: false,
+        itemStyle: {
+            normal: {
+                color: '#d68262'
+            }
+        },
+        areaStyle: {
+            normal: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                    offset: 0,
+                    color: '#d68262'
+                }, {
+                    offset: 1,
+                    color: '#ffe'
+                }])
+            }
+        },
     },
 }
 

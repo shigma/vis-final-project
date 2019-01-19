@@ -64,9 +64,9 @@ module.exports = {
                 // Emit different type of event according to tag
                 if (params.componentType !== "series") return;
                 if (this.tag.includes("keyword")) {
-                    this.$root.setCard('keyword', { word: this.data[params.dataIndex].name })
+                    this.$root.setCard('keyword', { word: this.originalData[params.dataIndex].name })
                 } else if (this.tag.includes("user")) {
-                    this.$root.setCard('user', { id: this.data[params.dataIndex].id })
+                    this.$root.setCard('user', { id: this.originalData[params.dataIndex].id })
                 }
             })
         );
@@ -74,7 +74,7 @@ module.exports = {
     methods: {
         setOption() {
             if (!this.chart) return;
-            let originalData = Array.from(this.data).sort((a, b) => {
+            this.originalData = Array.from(this.data).sort((a, b) => {
                 if (a.value > b.value) return 1;
                 if (a.value < b.value) return -1;
                 return 0;
@@ -82,10 +82,10 @@ module.exports = {
             this.chart = echarts.init(this.$el);
             let width = this.chart.getWidth();
             let height = this.chart.getHeight();
-            let nameList = originalData.map(function(item) {
+            let nameList = this.originalData.map(function(item) {
                 return item.name;
             });
-            let valueList = originalData.map(function(item) {
+            let valueList = this.originalData.map(function(item) {
                 return item.value;
             });
             this.chart.setOption({
