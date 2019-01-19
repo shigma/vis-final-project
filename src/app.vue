@@ -120,15 +120,15 @@ module.exports = {
 
 <template>
     <div class="app" :class="{ dragging }">
-        <Draggable :list="cards" @start="dragging = true" @end="dragging = false"
+        <Draggable :list="cards" @start="dragging = true" @end="dragging = false" class="cards"
             :options="{ animation: 150, ghostClass: 'drag-ghost', handle: '.title' }">
-            <transition-group tag="div" name="card" class="cards"
+            <!-- <transition-group tag="div" name="card" class="cards"
                 :move-class="dragging ? 'no-transition' : ''"
                 @beforeEnter="beforeTransition" @afterEnter="afterTransition"
-                @beforeLeave="beforeTransition" @afterLeave="afterTransition">
+                @beforeLeave="beforeTransition" @afterLeave="afterTransition"> -->
                 <component v-for="(card, index) in cards" :key="index" :is="card.type"
                     :style="getCardStyle(card, index)" :data="card"/>
-            </transition-group>
+            <!-- </transition-group> -->
         </Draggable>
     </div>
 </template>
