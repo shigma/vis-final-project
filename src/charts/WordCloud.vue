@@ -117,7 +117,7 @@ module.exports = {
 </script>
 
 <template>
-    <div class="word-cloud"/>
+    <div class="word-cloud" :class="tag"/>
 </template>
 
 <style lang="scss" scoped>

@@ -1,6 +1,5 @@
 <script>
 
-const eventBus = require('./EventBus.js');
 const keyword_100data = require('../dist/keywords_top100.json');
 const usercountdata = require('../dist/users_countByMonth.json');
 const activityData = require('../dist/overviewActivityData.json');
@@ -10,6 +9,7 @@ module.exports = {
     data: () => ({
         startDate: null,
         endDate: null,
+        vertical: false,
     }),
     computed: {
         startYM(){
@@ -93,8 +93,25 @@ module.exports = {
             }
             return data;
         },
-        activity(){
+        activity() {
             return activityData;
+        },
+    },
+    watch: {
+        vertical() {
+            this.$nextTick(() => this.$eventBus.$emit('resize', 'overview'))
+        },
+    },
+    mounted() {
+        this.checkLayout()
+        this.$eventBus.$on('resize', origin => {
+            if (origin) return
+            this.checkLayout()
+        })
+    },
+    methods: {
+        checkLayout() {
+            this.vertical = this.$el.offsetHeight / this.$el.offsetWidth > 1
         },
     },
 }
@@ -102,17 +119,70 @@ module.exports = {
 
 <template>
     <card-view title="Overview" type="overview" uncloseable>
-        <line-chart :data="activity" tag="overview"
-            style="width:100%; height:200px;"
+        <line-chart :data="activity" tag="overview" hide-title
             :start-date.sync="startDate" :end-date.sync="endDate"/>
-        <div ref="wordCloud">
-            <word-cloud :data="keywordclouddata" tag="keyword" style="width:100%; height:200px;" origin="overview"/>
-        </div>
-        <div ref="userCloud">
-            <word-cloud :data="userclouddata" tag="user" style="width:100%; height:200px;" origin="overview"/>
-        </div>
+        <word-cloud :data="keywordclouddata" tag="keyword" origin="overview"/>
+        <word-cloud :data="userclouddata" tag="user" origin="overview"/>
     </card-view>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+.card.overview > .container > * {
+    width: 100%;
+    box-sizing: border-box;
+
+    &:not(:last-child) {
+        border-bottom: 1px solid #ebeef5;
+    }
+
+    &.line-chart { height: 30vh }
+    &.word-cloud.keyword { height: 32vh }
+    &.word-cloud.user { height: 32vh }
+}
+
+// .card.overview > .container > * {
+//     position: absolute;
+// }
+
+// .card.overview.vertical > .container > * {
+//     left: 0;
+//     width: 100%;
+
+//     &.line-chart {
+//         top: 0;
+//         height: 30vh;
+//     }
+
+//     &.word-cloud {
+//         height: 30vh;
+
+//         &.user { top: 32vh }
+//         &.keyword { top: 62vh }
+//     }
+// }
+
+// .card.overview:not(.vertical) > .container > * {
+//     &.line-chart {
+//         top: 2vh;
+//         left: 4%;
+//         height: 40vh;
+//         width: 92%;
+//     }
+
+//     &.word-cloud {
+//         width: 44%;
+//         top: 46vh;
+//         height: 42vh;
+
+//         &.user {
+//             left: 3%;
+//         }
+
+//         &.keyword {
+//             right: 3%;
+//         }
+//     }
+// }
+
 </style>

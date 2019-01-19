@@ -24,17 +24,6 @@ const staticOptions = {
         seriesIndex: 0,
         min: 0,
     },
-    title: {
-        left: 'center',
-        text: 'Activity',
-        textStyle: {
-            fontSize: 18,
-        }
-    },
-    // legend: {
-    //     left: 'center',
-    //     data: ['邮件数'],
-    // },
     grid: {
         top: 25,
         bottom: 20,
@@ -85,7 +74,7 @@ const staticOptions = {
 
 module.exports = {
     extends: require('.'),
-    props: ['startDate', 'endDate'],
+    props: ['startDate', 'endDate', 'hideTitle'],
     computed: {
         maxValue() {
             return this.data.reduce((total, curr) => {
@@ -116,7 +105,7 @@ module.exports = {
     methods: {
         setOption() {
             if (!this.chart) return
-            this.chart.setOption({
+            const options = {
                 ...staticOptions,
                 visualMap: {
                     ...staticOptions.visualMap,
@@ -129,7 +118,17 @@ module.exports = {
                     ...staticOptions.series,
                     data: this.data.map(item => item[1]),
                 },
-            });
+            }
+            if (this.hideTitle === undefined) {
+                options.title = {
+                    left: 'center',
+                    text: 'Activity',
+                    textStyle: {
+                        fontSize: 18,
+                    }
+                };
+            }
+            this.chart.setOption(options);
         },
     },
 }
