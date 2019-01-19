@@ -62,10 +62,7 @@ module.exports = {
                 // Emit different type of event according to tag
                 if (params.componentType !== "series") return;
                 if (this.tag.includes("keyword")) {
-                    eventBus.$emit("keyword-changed", {
-                        keyword: this.data[params.dataIndex].name,
-                        tag: this.tag
-                    });
+                    this.$root.setCard('keyword', { word: this.data[params.dataIndex].name })
                 } else if (this.tag.includes("user")) {
                     this.$root.setCard('user', { id: this.data[params.dataIndex].id })
                 }

@@ -9,10 +9,9 @@
 const maildata = require('../dist/mails.json');
 const userdata = require('../dist/users.json');
 const keywords = require('../dist/keywords.json');
-const eventBus = require('./EventBus.js');
 const keywordExtraction = require('./Keyword.js');
 
-let keywordMap = new Map();
+const keywordMap = new Map();
 keywords.forEach(item => {
     keywordMap.set(item.keyword, item);
 });
@@ -20,29 +19,23 @@ keywords.forEach(item => {
 module.exports = {
     props: ['data'],
     data: () => ({
-        keyword: 'mac',
         startDate: null,
         endDate: null,
     }),
     computed: {
-        // mailIds is an array of numbers
-        mailIds: function() {
-            return keywordMap.get(this.keyword).mails;
-        },
-        // activity is an array, each element: [date, number]
-        activity: function() {
-            return keywordMap.get(this.keyword).activity;
+        keyword() {
+            return keywordMap.get(this.data.word || 'mac')
         },
         // users is an array, each element has id, name and value field.
         users() {
             // Use precomputed data
             if (this.startDate === null && this.endDate === null)
-                return keywordMap.get(this.keyword).users;
+                return this.keyword.users;
 
             // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
-            this.mailIds.filter(this.filterWithTime).forEach(id => {
+            this.keyword.mails.filter(this.filterWithTime).forEach(id => {
                 let currUserId = maildata[id].userId;
                 if (currUserId === -1) return;
                 let resultId = resultIdMap.get(currUserId);
@@ -69,15 +62,15 @@ module.exports = {
         relatedKeywords() {
             // Use precomputed data
             if (this.startDate === null && this.endDate === null)
-                return keywordMap.get(this.keyword).relatedKeywords;
+                return this.keyword.relatedKeywords;
 
             // Compute on-the-fly
             let result = [];
             let resultIdMap = new Map();
-            this.mailIds.filter(this.filterWithTime).forEach(id => {
+            this.keyword.mails.filter(this.filterWithTime).forEach(id => {
                 const keys = keywordExtraction.generateKeywords([id]);
                 keys.forEach(key => {
-                    if (key.name.toLowerCase() === this.keyword) return;
+                    if (key.name.toLowerCase() === this.word) return;
                     const resultId = resultIdMap.get(key.name);
                     if (resultId === undefined) {
                         result.push({ name: key.name, value: 1 });
@@ -95,13 +88,6 @@ module.exports = {
             return result.filter((word, index) => index <= 15);
         },
     },
-    created() {},
-    mounted() {
-        eventBus.$on('keyword-changed', param => {
-            if (this.keyword === param.keyword) return;
-            this.keyword = param.keyword;
-        });
-    },
     methods: {
         filterWithTime(mailId) {
             let flag = true;
@@ -115,15 +101,15 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="keyword" type="keyword" envelop>
-        <div class="metadata"> Related Mails: {{ mailIds.length }}
+    <card-view :title="data.word" type="keyword" envelop>
+        <div class="metadata"> Related Mails: {{ keyword.mails.length }}
             <br>Related Users: {{ users.length }}
         </div>
-        <line-chart :data="activity" tag="KeywordOverview" origin="keyword"
+        <line-chart :data="keyword.activity" tag="KeywordOverview" origin="keyword"
             :start-date.sync="startDate" :end-date.sync="endDate"/>
         <word-cloud :data="users" tag="user" origin="keyword"/>
         <bar-chart :data="relatedKeywords" tag="keyword" origin="keyword"/>
-        <mail-list slot="mail-list" :mails="mailIds" origin="keyword-mail-list"
+        <mail-list slot="mail-list" :mails="keyword.mails" origin="keyword-mail-list"
             :startDate="startDate" :endDate="endDate" trigger-thread/>
     </card-view>
 </template>

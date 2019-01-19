@@ -27,23 +27,7 @@ module.exports = {
 
     data: () => ({
         dragging: false,
-        cards: [
-            {
-                type: 'user',
-                id: null,
-            },
-            {
-                type: 'keyword',
-                id: null,
-            },
-            {
-                type: 'thread',
-                id: null,
-            },
-            {
-                type: 'overview',
-            },
-        ],
+        cards: [{ type: 'overview' }],
     }),
 
     mounted() {
