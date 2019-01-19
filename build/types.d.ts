@@ -7,6 +7,7 @@ interface Mail {
     userId: UserID
     date: string
     subject: string
+    text: string
     inReplyTo?: MailID
     references?: MailID[]
     replies?: MailID[]

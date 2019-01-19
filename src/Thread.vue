@@ -56,7 +56,7 @@ module.exports = {
             let tsize = this.thread.mails.length;
             for (let i=0; i<tsize; i++){
                 //value = trie.searchDFA(this.DFAtree, maildata[this.thread.mails[i]].subject, value)
-                value = trie.searchDFA(this.DFAtree, this.getMailText(this.thread.mails[i]), value);
+                value = trie.searchDFA(this.DFAtree, this.dataset.mails[this.thread.mails[i]].text, value);
             }
             for (let i=0; i<size; i++){
                 if (value[i]===0) continue;

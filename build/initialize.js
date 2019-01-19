@@ -1,15 +1,23 @@
 const { performance } = require('perf_hooks')
+const { fullPath } = require('./utilities')
+const program = require('commander')
 const svgFont = require('@shigma/svg-font')
 const readline = require('readline')
 const path = require('path')
 const fs = require('fs')
 
-const startTime = performance.now()
-const outDir = path.resolve(__dirname, '../dist')
-const textDir = path.resolve(outDir, 'text')
-const baseDir = path.resolve(__dirname, '../assets')
+program
+    .option('-d, --dev')
+    .option('-p, --prod')
+    .parse(process.argv)
 
-const keywordExtraction = require('../src/Keyword.js');
+const env = program.prod ? 'production' : 'development'
+
+const startTime = performance.now()
+const outDir = fullPath('dist')
+const textDir = fullPath('dist', 'text')
+
+const keywordExtraction = require('../src/Keyword')
 
 // 如果 dist 文件夹不存在先创建之
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir)
@@ -68,17 +76,15 @@ const users = new Map()
 const threads = []
 /** 全部关键词列表 */
 const keywords = new Map()
-/** 邮件文本内容 */
-const mailData = []
 
 const metaMacro = '(?:From|Date|Subject|Message-ID|In-Reply-To|References): .+(?:\\r?\\n[ \\t].+)*'
 const metaRegExp = new RegExp('^' + metaMacro, 'gmi')
 const headingRegExp = new RegExp(`^(?=From .+\r?\n(?:${metaMacro})+)`, 'gmi')
 const fromRegExp = /(?:^|<)((?:\S+(?:@| at ))?\S+)[ \t]+\((.*)\)$/
 
-const files = fs.readdirSync(baseDir)
+const files = fs.readdirSync(fullPath('assets'))
 files.forEach((fileName, fileIndex) => {
-    const source = fs.readFileSync(path.resolve(baseDir, fileName), 'utf8')
+    const source = fs.readFileSync(fullPath('assets', fileName), 'utf8')
     for (const mail of source.split(headingRegExp)) {
         if (++mailIndex === -1) continue
         const data = { id: mailIndex }
@@ -154,9 +160,10 @@ files.forEach((fileName, fileIndex) => {
         }
 
         // 邮件内容
-        mailData[mailIndex] = mail
+        data.text = mail
             .slice(heading[0].length)
             .replace(/^>.*(\r?\n)?/mg, '')
+            .replace(/----+ ?Original Message( Follows)? ?----+[\s\S]*/mg, '')
             .trim()
 
         const refs = (data.references || [])
@@ -401,9 +408,12 @@ keywords.forEach(keyword => {
 
 /** 输出到文件 */
 function dumpFile(fileName, data) {
+    data = Array.from(data.values())
     fs.writeFileSync(
         path.resolve(outDir, fileName + '.json'),
-        JSON.stringify(Array.from(data.values()), null, 2),
+        env === 'production'
+            ? JSON.stringify(data)
+            : JSON.stringify(data, null, 2)
     )
 }
 
@@ -411,15 +421,5 @@ dumpFile('mails', mails)
 dumpFile('users', users)
 dumpFile('threads', threads)
 dumpFile('keywords', keywords)
-
-progress.restart()
-
-for (let index = 0; index < mailData.length / 100; ++index) {
-    dumpFile('text/' + index, mailData.slice(index, index + 100))
-
-    progress.inspect((index + 1) * 100 / mailData.length, percentage => {
-        process.stdout.write(percentage < 100 ? '正在输出邮件内容... ' : '邮件内容输出完毕. ')
-    })
-}
 
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)

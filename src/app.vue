@@ -17,11 +17,6 @@ Vue.prototype.dataset = {
     users: require('../dist/users'),
 }
 
-Vue.prototype.getMailText = function(mailId) {
-    const fileIndex = Math.floor(mailId / 100)
-    return require('../dist/text/' + fileIndex)[mailId % 100]
-}
-
 module.exports = {
     components: {
         User: require('./User.vue'),
