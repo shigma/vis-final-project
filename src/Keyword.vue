@@ -70,7 +70,8 @@ module.exports = {
             this.keyword.mails.filter(this.filterWithTime).forEach(id => {
                 const keys = keywordExtraction.generateKeywords([id]);
                 keys.forEach(key => {
-                    if (key.name.toLowerCase() === this.word) return;
+                    //console.log(this.data.word);
+                    if (key.name.toLowerCase() === this.data.word) return;
                     const resultId = resultIdMap.get(key.name);
                     if (resultId === undefined) {
                         result.push({ name: key.name, value: 1 });
