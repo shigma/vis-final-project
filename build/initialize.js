@@ -17,7 +17,191 @@ const startTime = performance.now()
 const outDir = fullPath('dist')
 const textDir = fullPath('dist', 'text')
 
-const keywordExtraction = require('../src/Keyword')
+const stopwords = [
+    'a',
+    'able',
+    'about',
+    'across',
+    'after',
+    'all',
+    'almost',
+    'also',
+    'am',
+    'among',
+    'an',
+    'and',
+    'any',
+    'are',
+    'as',
+    'at',
+    'be',
+    'because',
+    'been',
+    'but',
+    'by',
+    'can',
+    'cannot',
+    'could',
+    'dear',
+    'did',
+    'do',
+    'does',
+    'either',
+    'else',
+    'ever',
+    'every',
+    'for',
+    'from',
+    'get',
+    'got',
+    'had',
+    'has',
+    'have',
+    'he',
+    'her',
+    'hers',
+    'him',
+    'his',
+    'how',
+    'however',
+    'i',
+    'if',
+    'in',
+    'into',
+    'is',
+    'it',
+    'its',
+    'just',
+    'least',
+    'let',
+    'like',
+    'likely',
+    'may',
+    'me',
+    'might',
+    'most',
+    'must',
+    'my',
+    'neither',
+    'no',
+    'nor',
+    'not',
+    'of',
+    'off',
+    'often',
+    'on',
+    'only',
+    'or',
+    'other',
+    'our',
+    'own',
+    'rather',
+    'said',
+    'say',
+    'says',
+    'she',
+    'should',
+    'since',
+    'so',
+    'some',
+    'than',
+    'that',
+    'the',
+    'their',
+    'them',
+    'then',
+    'there',
+    'these',
+    'they',
+    'this',
+    'tis',
+    'to',
+    'too',
+    'twas',
+    'us',
+    'wants',
+    'was',
+    'we',
+    'were',
+    'what',
+    'when',
+    'where',
+    'which',
+    'while',
+    'who',
+    'whom',
+    'why',
+    'will',
+    'with',
+    'would',
+    'yet',
+    'you',
+    'your',
+    'ain\'t',
+    'aren\'t',
+    'can\'t',
+    'could\'ve',
+    'couldn\'t',
+    'didn\'t',
+    'doesn\'t',
+    'don\'t',
+    'hasn\'t',
+    'he\'d',
+    'he\'ll',
+    'he\'s',
+    'how\'d',
+    'how\'ll',
+    'how\'s',
+    'i\'d',
+    'i\'ll',
+    'i\'m',
+    'i\'ve',
+    'isn\'t',
+    'it\'s',
+    'might\'ve',
+    'mightn\'t',
+    'must\'ve',
+    'mustn\'t',
+    'shan\'t',
+    'she\'d',
+    'she\'ll',
+    'she\'s',
+    'should\'ve',
+    'shouldn\'t',
+    'that\'ll',
+    'that\'s',
+    'there\'s',
+    'they\'d',
+    'they\'ll',
+    'they\'re',
+    'they\'ve',
+    'wasn\'t',
+    'we\'d',
+    'we\'ll',
+    'we\'re',
+    'weren\'t',
+    'what\'d',
+    'what\'s',
+    'when\'d',
+    'when\'ll',
+    'when\'s',
+    'where\'d',
+    'where\'ll',
+    'where\'s',
+    'who\'d',
+    'who\'ll',
+    'who\'s',
+    'why\'d',
+    'why\'ll',
+    'why\'s',
+    'won\'t',
+    'would\'ve',
+    'wouldn\'t',
+    'you\'d',
+    'you\'ll',
+    'you\'re',
+    'you\'ve',
+]
 
 // 如果 dist 文件夹不存在先创建之
 mkdir(outDir)
@@ -194,15 +378,6 @@ files.forEach((fileName, fileIndex) => {
             })
         }
 
-        const thisKeywordList = keywordExtraction.generateKeywords([data.id]);
-        thisKeywordList.forEach(word => {
-            const w = keywords.get(word.name)
-            if (w) {
-                w.mails.push(data.id)
-            } else {
-                keywords.set(word.name, { keyword: word.name, mails: [data.id] })
-            }
-        })
         data.date = (date => {
             let d = new Date(date);
             let ret = d.getFullYear() + '/' + (d.getMonth()+1 < 10 ? '0'+(d.getMonth()+1) : (d.getMonth()+1)) + 
@@ -237,9 +412,59 @@ threads.forEach(thread => {
 
 // 在users中增加activity属性
 console.log('\n');
-console.log('预计算user.activity...');
+
 const maildata = Array.from(mails.values());
 const userdata = Array.from(users.values());
+
+for (let i = 0; i < maildata.length; ++i) {
+    const thisKeywordList = generateKeywords([maildata[i].id], maildata);
+    thisKeywordList.forEach(word => {
+        const w = keywords.get(word.name)
+        if (w) {
+            w.mails.push(maildata[i].id)
+        } else {
+            keywords.set(word.name, { keyword: word.name, mails: [maildata[i].id] })
+        }
+    })
+}
+
+function generateKeywords(mailIds, maildata) {
+    let keywords = [];
+
+    mailIds.forEach(id => {
+        const mail = maildata[id];
+        let str = mail.subject
+            .replace(/[^a-zA-Z\s\\/]/g, '')
+            .split(' ');
+        str.forEach(x => {
+            x = x.toLowerCase();
+            if (x.length <= 2) return;
+            if (stopwords.includes(x)) return;
+            let id = keywords.findIndex(y => {
+                return y.name === x;
+            });
+            if (id === -1) {
+                keywords.push({ name: x, value: 1 });
+            } else {
+                keywords[id].value++;
+            }
+        });
+    });
+
+    keywords.sort((w1, w2) => {
+        if (w1.value < w2.value) {
+            return 1;
+        } else if (w1.value > w2.value) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+
+    return keywords;
+}
+
+console.log('预计算user.activity...');
 users.forEach(user => {
     let result = [];
     let resultIdMap = new Map();
@@ -275,8 +500,7 @@ users.forEach(user => {
 // 在users中增加keywords属性
 console.log('预计算user.keywords...');
 users.forEach(user => {
-    user.keywords = keywordExtraction
-        .generateKeywords(user.mails)
+    user.keywords = generateKeywords(user.mails, maildata)
         .filter((word, index) => index <= 50);
 });
 
@@ -388,7 +612,7 @@ keywords.forEach(keyword => {
     let result = [];
     let resultIdMap = new Map();
     keyword.mails.forEach(id => {
-        const keys = keywordExtraction.generateKeywords([id]);
+        const keys = generateKeywords([id], maildata);
         keys.forEach(key => {
             if (key.name.toLowerCase() === keyword.keyword) return;
             const resultId = resultIdMap.get(key.name);

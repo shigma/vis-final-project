@@ -2,6 +2,8 @@
 
 ![](result.png)
 
+Video: https://youtu.be/jobkJ6Yaik8
+
 ## How to make this into a webpage
 1. Download all the dependencies
 
