@@ -89,6 +89,11 @@ module.exports = {
             return result.filter((word, index) => index <= 15);
         },
     },
+    watch: {
+        'data.word'() {
+            this.$refs.card.showMailList = false
+        },
+    },
     methods: {
         filterWithTime(mailId) {
             let flag = true;
@@ -102,7 +107,7 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="data.word" type="keyword" envelop>
+    <card-view :title="data.word" type="keyword" envelop ref="card">
         <div class="metadata"> Related Mails: {{ keyword.mails.length }}
             <br>Related Users: {{ users.length }}
         </div>

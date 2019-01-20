@@ -35,7 +35,6 @@ module.exports = {
         dragging: false,
         cards: [
             { type: 'overview' },
-            // { type: 'thread', id: 100 },
         ],
     }),
 

@@ -75,6 +75,7 @@ module.exports = {
         'data.id'() {
             this.startDate = null
             this.endDate = null
+            this.$refs.card.showMailList = false
         },
     },
     methods: {
@@ -90,7 +91,7 @@ module.exports = {
 </script>
 
 <template>
-    <card-view :title="user.name" type="user" envelop>
+    <card-view :title="user.name" type="user" envelop ref="card">
         <div class="metadata">Mail Address: {{ user.address }} 
             <br>Total Mails: {{ user.mails.length }}
         </div>

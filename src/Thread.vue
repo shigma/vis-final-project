@@ -134,7 +134,7 @@ module.exports = {
 
 <template>
     <card-view :title="owner" type="thread">
-        <mail-list :mails="thread.mails" origin="thread">
+        <mail-list :mails="thread.mails" :mail-id="data.mailId" origin="thread">
             <div slot="general-info">Related Users: {{ thread.users.length }}</div>
             <word-cloud :data="keywordValue" tag="keyword" origin="thread"/>
             <bar-chart :data="relatedUsers" tag="user" origin="thread"/>

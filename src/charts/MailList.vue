@@ -3,10 +3,9 @@
 const NeatScroll = require('neat-scroll')
 
 module.exports = {
-    props: ['mails', 'startDate', 'endDate', 'triggerThread', 'origin'],
+    props: ['mails', 'startDate', 'endDate', 'triggerThread', 'origin', 'mailId'],
 
     data: () => ({
-        activeId: null,
     }),
 
     components: {
@@ -32,14 +31,6 @@ module.exports = {
         },
     },
 
-    watch: {
-        filteredMails(value) {
-            if (!value.includes(this.activeId)) {
-                this.activeId = null
-            }
-        },
-    },
-
     mounted() {
         this.neatScroll = new NeatScroll(this.$refs.list, {
             speed: 200,
@@ -52,21 +43,13 @@ module.exports = {
             return this.dataset.mails[id]
         },
         handleClick(id) {
-            if (this.isThread) {
-                if (this.activeId === id) {
-                    this.activeId = null
-                } else {
-                    this.activeId = id
-                }
-            } else {
-                this.$root.setCard('thread', { id: this.getMail(id).threadId })
-            }
+            this.$root.setCard('thread', {
+                id: this.getMail(id).threadId,
+                mailId: this.isThread && this.mailId === id ? null : id,
+            })
         },
         handleScroll(event) {
             this.neatScroll.scrollByDelta(event.deltaY)
-        },
-        handleNavigate(id) {
-            this.handleClick(id)
         },
     },
 }
@@ -82,7 +65,7 @@ module.exports = {
         <slot/>
         <div ref="list" class="list" @mousewheel.prevent.stop="handleScroll">
             <mail-view v-for="id in filteredMails" :key="id" :mail="dataset.mails[id]"
-                :open="activeId === id" @toggle="handleClick(id)" :show-text="isThread" @navigate="handleNavigate"/>
+                :open="mailId === id" @toggle="handleClick(id)" :show-text="isThread" @navigate="handleClick"/>
         </div>
     </div>
 </template>

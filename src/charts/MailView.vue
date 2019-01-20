@@ -42,6 +42,20 @@ module.exports = {
                     @click="$emit('navigate', id)">{{ getUserName(dataset.mails[id].userId) }}</li>
             </ul>
         </div>
+        <div class="further" v-if="mail.references">
+            <span class="header">References: </span>
+            <ul>
+                <li v-for="id in mail.references" :key="id"
+                    @click="$emit('navigate', id)">{{ getUserName(dataset.mails[id].userId) }}</li>
+            </ul>
+        </div>
+        <div class="further" v-if="mail.citations">
+            <span class="header">Referenced by: </span>
+            <ul>
+                <li v-for="id in mail.citations" :key="id"
+                    @click="$emit('navigate', id)">{{ getUserName(dataset.mails[id].userId) }}</li>
+            </ul>
+        </div>
     </collapse-view>
 </template>
 
@@ -72,11 +86,12 @@ module.exports = {
         }
 
         ul {
-            margin: 1vh 0;
+            margin: 0.8vh 0;
+
+            li { line-height: 1.2 }
         }
 
         a, li {
-            line-height: 1;
             color: blue;
             cursor: pointer;
 
