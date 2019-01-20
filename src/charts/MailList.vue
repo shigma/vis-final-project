@@ -27,6 +27,9 @@ module.exports = {
                 return d1 > d2 ? 1 : d1 < d2 ? -1 : 0;
             });
         },
+        isThread() {
+            return this.triggerThread === undefined
+        },
     },
 
     watch: {
@@ -49,7 +52,7 @@ module.exports = {
             return this.dataset.mails[id]
         },
         handleClick(id) {
-            if (this.triggerThread === undefined) {
+            if (this.isThread) {
                 if (this.activeId === id) {
                     this.activeId = null
                 } else {
@@ -61,6 +64,9 @@ module.exports = {
         },
         handleScroll(event) {
             this.neatScroll.scrollByDelta(event.deltaY)
+        },
+        handleNavigate(id) {
+            this.handleClick(id)
         },
     },
 }
@@ -76,7 +82,7 @@ module.exports = {
         <slot/>
         <div ref="list" class="list" @mousewheel.prevent.stop="handleScroll">
             <mail-view v-for="id in filteredMails" :key="id" :mail="dataset.mails[id]"
-                :open="activeId === id" @toggle="handleClick(id)"/>
+                :open="activeId === id" @toggle="handleClick(id)" :show-text="isThread" @navigate="handleNavigate"/>
         </div>
     </div>
 </template>

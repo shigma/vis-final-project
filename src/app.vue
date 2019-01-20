@@ -17,6 +17,7 @@ Vue.prototype.dataset = {
 }
 
 Vue.prototype.getMailText = async id => {
+    // const chunk = require(`../dist/text/${Math.floor(id / 200)}`)
     const chunk = await import(`../dist/text/${Math.floor(id / 200)}`)
     return chunk[id % 200]
 }
@@ -32,7 +33,10 @@ module.exports = {
 
     data: () => ({
         dragging: false,
-        cards: [{ type: 'overview' }],
+        cards: [
+            { type: 'overview' },
+            // { type: 'thread', id: 100 },
+        ],
     }),
 
     watch: {
