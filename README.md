@@ -20,4 +20,5 @@
   ```
   node build/bundle.js
   ```
-4. Open `out/index.html` in browser
+4. Open `out/index.html` in browser. If you want to run this on an HTTP server, use the entire `out/` folder as our webpage. 
+
