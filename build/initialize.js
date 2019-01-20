@@ -652,4 +652,151 @@ for (let index = 0; index < mailTexts.length; index += 200) {
     dumpFile('text/' + index / 200, mailTexts.slice(index, index + 200))
 }
 
+// 生成Keyword_top100
+// 使用频率前100的关键词
+// count记录了每年（-2001） 每月（1-12）的使用数量
+// 每年的第0月代表本年和
+// oid 是在原先的keywords中的id
+// 手动列了一些同根词表
+console.log('正在生成Overview关键词表...');
+const mailsdata = Array.from(mails.values());
+//const trie = require('../src/keywordTrie.js');
+const keyworddata = Array.from(keywords.values());
+//let DFAtree = [];
+//DFAtree = trie.initTree(DFAtree);
+let keywordSet = [];
+
+let skipwords = new Set([
+    'over',
+    'very',
+]);
+let sameRootWord = new Map();
+sameRootWord.set('files', 9);
+sameRootWord.set('ver', 22);
+sameRootWord.set('verions', 22);
+sameRootWord.set('displays', 107);
+sameRootWord.set('displayed', 107);
+sameRootWord.set('issues', 359);
+sameRootWord.set('programming', 287);
+sameRootWord.set('programm', 287);
+sameRootWord.set('filters', 70);
+
+let size = keyworddata.length;
+for (let i=0; i<size; i++){
+    keywordSet.push({
+        id: i,
+        oid: i,
+        name: keyworddata[i].keyword,
+        value_mails: keyworddata[i].mails.length,
+        mails: keyworddata[i].mails,
+    });
+}
+for (let i=0; i<size; i++){
+    if (skipwords.has(keyworddata[i].keyword)){
+        keywordSet[i].value_mails = 0;
+        keywordSet[i].mails = [];
+    }
+    if (sameRootWord.has(keyworddata[i].keyword)){
+        let id = sameRootWord.get(keyworddata[i].keyword);
+        keywordSet[id].value_mails += keywordSet[i].value_mails;
+        keywordSet[id].mails = Array.from((new Set(keywordSet[i].mails.concat(keywordSet[id].mails))).values());
+        keywordSet[i].value_mails = 0;
+        keywordSet[i].mails = [];
+    }
+}
+keywordSet.sort((a, b) => {
+    if (a.value_mails > b.value_mails) return -1;
+    if (a.value_mails < b.value_mails) return 1;
+    return 0;
+})
+let kw = [];
+size = keywordSet.length;
+for (let i=0; i<size; i++){
+    if (keyworddata[keywordSet[i].oid].keyword!==keywordSet[i].name){
+        console.log(keywordSet[i].name);
+    }
+    kw.push({
+        id: keywordSet[i].oid,
+        name: keywordSet[i].name,
+    });
+}
+size = 100;
+for (let i=0; i<size; i++){
+    keywordSet[i].mails.sort((a, b) => {
+        if (a > b) return 1;
+        if (a < b) return -1;
+        return 0;
+    });
+    let mdata = keywordSet[i].mails;
+    let msize = mdata.length;
+    let year = [];
+    for (let j=0; j<18; j++){
+        year.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
+    for (let j=0; j<msize; j++){
+        let date = new Date(mailsdata[mdata[j]].date);
+        let y = date.getFullYear() - 2001;
+        let m = date.getMonth() + 1;
+        year[y][m]++;
+        year[y][0]++;
+    }
+    keywordSet[i].count = year;
+    keywordSet[i].id = i;
+    delete keywordSet[i].mails;
+}
+fs.writeFileSync(path.resolve(outDir, 'keywords_top100.json'), JSON.stringify(keywordSet.slice(0, size)));
+console.log('生成Overview关键词表完成');
+
+// 生成OverviewActivity 用于Overview的词云
+console.log('生成OverviewActivity...');
+let activity = [];
+for (let i=0; i<18; i++){
+    activity.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+}
+size = mailsdata.length;
+for (let i=0; i<size; i++){
+    let date = new Date(mailsdata[i].date);
+    activity[date.getFullYear()-2001][date.getMonth()]++;
+}
+let ret = [];
+for (let i=0; i<18; i++){
+    for (let j=0; j<12; j++){
+        ret.push([
+            (i + 2001) + '/' + (j + 1),
+            activity[i][j],
+        ]);
+    }
+}
+fs.writeFileSync(path.resolve(outDir, 'overviewActivityData.json'), JSON.stringify(ret));
+console.log('生成OverviewActivity完成');
+
+console.log('生成UserCountByMonth...');
+const usersdata = Array.from(users.values());
+size = usersdata.length;
+
+let userSet = [];
+for (let i=0; i<size; i++){
+    let mdata = usersdata[i].mails;
+    let msize = mdata.length;
+    let year = [];
+    for (let j=0; j<18; j++){
+        year.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    }
+    for (let j=0; j<msize; j++){
+        let date = new Date(mailsdata[mdata[j]].date);
+        let y = date.getFullYear() - 2001;
+        let m = date.getMonth() + 1;
+        year[y][m]++;
+        year[y][0]++;
+    }
+    userSet.push({
+        id: i,
+        name: usersdata[i].name,
+        value_mails: msize,
+        count: year,
+    });
+}
+fs.writeFileSync(path.resolve(outDir, 'users_countByMonth.json'), JSON.stringify(userSet));
+console.log('生成UserCountByMonth完成');
+
 console.log(`\n总共用时 ${((performance.now() - startTime) / 1000).toFixed(3)} 秒.`)
